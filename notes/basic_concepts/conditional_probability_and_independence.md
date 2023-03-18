@@ -16,6 +16,38 @@ $$
 P(\text{King}|\text{Heart}) = \frac{P(\text{King} \cap \text{Heart})}{P(\text{Heart})} = \frac{1/52}{13/52} = \frac{1}{13}
 $$
 
+### Example 
+
+**Example**: What is the probability that the birthdays of two randomly selected people are different (B2)?
+
+$$
+P(B_2) = 1 - \frac{1}{365}
+$$
+
+What is the probability that the birthdays of three randomly selected people are different (B3)?
+
+Let A3 be the event "the birthday of the third person is different from the birthdays of the first two people":
+
+$$
+P(B_3) = P(A_3 \cap B_2) = P(A_3 | B_2) P(B_2)
+$$
+
+$$
+P(A_3 | B_2) = 1 - \frac{2}{365} \Rightarrow P(B_3) = P(A_3 | B_2) P(B_2) = \left(1 - \frac{2}{365}\right) \left(1 - \frac{1}{365}\right) = 0.9918
+$$
+
+For n people, we have:
+
+$$
+P(B_n) = P(A_n | B_{n-1}) \cdots P(A_3 | B_2) P(B_2)
+$$
+
+Note: When solving problems, it is important to identify which event is the condition:
+
+$$
+P(A \cap B) = P(A | B) P(B) \quad \text{or} \quad P(A \cap B) = P(B | A) P(A)
+$$
+
 ### The Multiplication Rule
 
 The multiplication rule is used to find the probability of two events A and B happening together:
@@ -44,6 +76,48 @@ In a deck of 52 playing cards, drawing two cards without replacement. Are the ev
 
 No, they are not independent. After drawing a king on the first draw, there are only 3 kings and 51 cards left in the deck. So, the probability of drawing a king on the second draw is affected by the first draw.
 
+### Example
+
+Consider two events defined on the set of integers from 1 to 100:
+
+- A: The randomly drawn number from this set is divisible by 3
+- B: The randomly drawn number is divisible by 7
+
+Are events A and B statistically independent?
+
+$$
+P(A) = \frac{33}{100}, \quad P(B) = \frac{14}{100}, \quad P(A \cap B) = \frac{4}{100}
+$$
+
+Since $P(A) \cdot P(B) \neq P(A \cap B)$, the events are not statistically independent.
+
+However, when we extend the set by numbers 101, 102, 103, 104, and 105, we have:
+
+$$
+P(A) = \frac{35}{105}, \quad P(B) = \frac{15}{105}, \quad P(A \cap B) = \frac{5}{105}
+$$
+
+Now, $P(A) \cdot P(B) = P(A \cap B)$, so the events are statistically independent in this case.
+
+
+### Example: Probability of at least one of n independent events occurring
+
+For n = 3:
+
+$$
+P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C)
+$$
+
+We can reach this result more easily by using the probability of the complementary event.
+
+For n independent events, the probability of none of the events occurring is the product of the probabilities of their complementary events. Thus, the probability of at least one event occurring is the complement of this probability:
+
+$$
+P(A \cup B \cup \cdots \cup_n) = 1 - P(A^c) \cdot P(B^c) \cdot \cdots \cdot P_n^c)
+$$
+
+where $A^c, B^c, \ldots, P_n^c$ are the complementary events of $A, B, \ldots, P_n$.
+
 ### The Law of Total Probability
 
 The law of total probability is used to calculate the probability of an event A occurring, given a partition of the sample space into events B1, B2, ..., Bn. The formula for the law of total probability is:
@@ -53,15 +127,58 @@ P(A) = \sum_{i=1}^{n} P(A|B_i) \times P(B_i)
 $$
 
 ### Example
-
 In a bag, there are 3 red balls, 4 blue balls, and 5 green balls. We draw two balls without replacement. What is the probability that the second ball is red?
 
 Partition the sample space into events B1 (first ball is red), B2 (first ball is blue), and B3 (first ball is green). Then, use the law of total probability:
+
+1. If the first ball is red (B1), there are 2 red balls left out of 11 total balls. So, $P(\text{Red}|\text{B1}) = \frac{2}{11}$, and $P(\text{B1}) = \frac{3}{12}$.
+2. If the first ball is blue (B2), there are still 3 red balls left out of 11 total balls. So, $P(\text{Red}|\text{B2}) = \frac{3}{11}$, and $P(\text{B2}) = \frac{4}{12}$.
+3. If the first ball is green (B3), again there are 3 red balls left out of 11 total balls. So, $P(\text{Red}|\text{B3}) = \frac{3}{11}$, and $P(\text{B3}) = \frac{5}{12}$.
 
 $$
 P(\text{Second ball is red}) = P(\text{Red}|\text{B1})P(\text{B1}) + P(\text{Red}|\text{B2})P(\text{B2}) + P(\text{Red}|\text{B3})P(\text{B3}) \\
 = \frac{2}{11} \times \frac{3}{12} + \frac{3}{11} \times \frac{4}{12} + \frac{3}{11} \times \frac{5}{12} = \frac{18}{44} = \frac{9}{22}
 $$
+
+### Example 1: Probability of drawing a white ball
+
+Given n+1 urns with white and black balls, the ratio of the number of white balls to the total number of balls for the i-th urn is i/n (i=0, 1, 2, ..., n). We randomly draw one ball from a randomly chosen urn. What is the probability that the chosen ball is white?
+
+The conditional probability of drawing a white ball from the i-th urn is:
+
+$$
+P(W | U_i) = \frac{i}{n}
+$$
+
+Where:
+- `W` represents the event of drawing a white ball.
+- `U_i` represents the event of choosing the i-th urn.
+
+The probability of choosing each urn is equal:
+
+$$
+P(U_i) = \frac{1}{n+1}
+$$
+
+The desired probability of drawing a white ball is determined using the total probability formula:
+
+$$
+P(W) = \sum_{i=0}^{n} P(W | U_i) \cdot P(U_i) = \frac{1}{n+1} \sum_{i=0}^{n} \frac{i}{n} = \frac{1}{n(n+1)} \sum_{i=0}^{n} i
+$$
+
+Using the formula for the sum of the first n integers:
+
+$$
+\sum_{i=0}^{n} i = \frac{n(n+1)}{2}
+$$
+
+Now substitute this into the previous equation:
+
+$$
+P(W) = \frac{1}{n(n+1)} \cdot \frac{n(n+1)}{2} = \frac{1}{2}
+$$
+
+
 
 ### Bayes' Theorem
 
@@ -94,6 +211,43 @@ P(A|B) = \frac{0.95 \times 0.02}{(0.95 \times 0.02) + (0.05 \times 0.98)} = \fra
 $$
 
 So, there is approximately a 32.76% chance that the person actually has the disease, given that they tested positive.
+
+
+### Example 2: BSE "mad cow" disease test
+
+Assuming the test result is positive, what is the probability that a cow has BSE?
+
+Given quantities:
+
+$$
+P(T | B) = 0.70, P(T | B^c) = 0.10, P(B) = 0.02
+$$
+
+Where:
+- `B` represents the event that a cow has BSE.
+- `T` represents the event of a positive test result.
+- `B^c` represents the complement of the event B, i.e., the event that a cow does not have BSE.
+
+We are looking for the conditional probability:
+
+$$
+P(B | T) = \frac{P(B \cap T)}{P(T)} = \frac{P(T | B) \cdot P(B)}{P(T | B) \cdot P(B) + P(T | B^c) \cdot P(B^c)}
+$$
+
+First, we need to find the probability of a cow not having BSE:
+
+$$
+P(B^c) = 1 - P(B) = 1 - 0.02 = 0.98
+$$
+
+Now, we can calculate the conditional probability:
+
+$$
+P(B | T) = \frac{0.70 \cdot 0.02}{0.70 \cdot 0.02 + 0.10 \cdot 0.98} \approx 0.125
+$$
+
+The probability that a cow has BSE given a positive test result is approximately 0.125.
+
 
 ## Inclusion-Exclusion Principle
 
