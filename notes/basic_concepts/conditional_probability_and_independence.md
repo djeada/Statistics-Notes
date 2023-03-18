@@ -116,7 +116,7 @@ $$p_n = \left(1 - \frac{5}{6}\right)^n + \binom{6}{2}\left(1 - \frac{4}{6}\right
 The sought probability is:
 
 * 1-pn is the probability that during n rolls each face will appear at least once.
-* $p_10 ≈ 0.73$, $p_12 ≈ 0.56$, $p_13 ≈ 0.50$, $p_15 ≈ 0.35$, $p_20 ≈ 0.03$, $p_25 ≈ 0.001$
+* $p_{10} ≈ 0.73$, $p_{12} ≈ 0.56$, $p_{13} ≈ 0.50$, $p_{15} ≈ 0.35$, $p_{20} ≈ 0.03$, $p_{25} ≈ 0.001$
 
 ## Probability Trees
 
