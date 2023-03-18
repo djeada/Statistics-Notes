@@ -136,6 +136,36 @@ $$P(A) = \frac{\text{Number of outcomes in A}}{\text{Total unique outcomes}} = 9
 
 $$P(B) = \frac{\text{Number of outcomes in B}}{\text{Total unique outcomes}} = 6 / 10$$
 
+## Geometric Probability
+
+Example:
+
+The elementary event space is defined by the set of points (x, y) in the plane and fills the interior of the square [0 ≤ x ≤ 1; 0 ≤ y ≤ 1]. Find the probability that any point inside the square is at a distance less than r from a chosen corner of the square.
+
+The sought probability is expressed as the ratio of the area of the common part of the circle with radius r and the square to the area of the square (equal to 1):
+
+For r < 1:
+
+$$
+P(r) = \int_{0}^{r} \sqrt{r^2 - x^2} dx =$$
+
+$$
+\frac{1}{2} (x \sqrt{r^2-x^2}+r^2\arcsin\frac{x}{r}) |^r_0= \frac{\pi r^2}{4}
+$$
+
+For r > 1:
+
+$$
+P(r) = \int_{0}^{r} \sqrt{r^2 - x^2} dx - 2 \int_{1}^{r} \sqrt{r^2 - x^2} dx = $$
+
+$$
+\frac{\pi r^2}{4} - 2(\frac{\pi r^2}{4} - \frac{1}{2}\sqrt{r^2-1}- \frac{1}{2}r^2\arcsin\frac{1}{r}) = $$
+
+$$\sqrt{r^2-1} + r^2\arcsin\frac{1}{r} - \frac{\pi r^2}{4}
+$$
+
+As can be seen, for $r = \sqrt{2}$, the probability reaches a value equal to 1.
+
 ## Applications and Importance
 
 Probability has a wide range of applications in various fields, including but not limited to:
