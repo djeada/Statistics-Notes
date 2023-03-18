@@ -1,20 +1,27 @@
 # Statistics
 
-* https://www.reddit.com/r/datascience/comments/qdai89/i_just_explained_recallprecision_to_a_nonds_and/?utm_source=share&utm_medium=ios_app&utm_name=iossmf
-* https://www.reddit.com/r/HomeworkHelp/comments/r52slc/university_statistics_probability_density/?utm_source=share&utm_medium=ios_app&utm_name=iossmf
-* https://therickysen.medium.com/understanding-principle-component-analysis-pca-from-scratch-db7ceda623eb
-* https://youtu.be/GMz0HAxubuU
-* https://youtu.be/TGxseSNW_-0
-* http://allendowney.blogspot.com/2016/06/there-is-still-only-one-test.html
-* https://www.youtube.com/c/zedstatistics
+This repository contains notes, explanations, and code snippets related to essential statistics concepts and techniques. The materials cover a range of topics, from basic probability and descriptive statistics to more advanced concepts like hypothesis testing and confidence intervals.
 
+## Requirements
 
-# Bibliography
+The code examples are provided in Python, making use of libraries such as NumPy, SciPy, and pandas for implementing statistical techniques.
+
+## Refrences
 
 * https://projects.iq.harvard.edu/stat110
 * https://www.edx.org/course/fundamentals-of-statistics
-    All of Statistics by Larry Wasserman
+* https://allendowney.github.io/ThinkBayes2/
+* https://link.springer.com/book/10.1007/978-0-387-21736-9
+* https://link.springer.com/book/10.1007/978-1-4614-7138-7
+* https://github.com/wzchen/probability_cheatsheet
+* http://allendowney.blogspot.com/2016/06/there-is-still-only-one-test.html
+* https://saylordotorg.github.io/text_introductory-statistics/index.html
+* https://www.statisticshowto.datasciencecentral.com/probability-and-statistics/probability-main-index/
 
-    Think Stats and Think Bayes by Allan B. Downey
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-    An Introduction to Statistical Learning with Applications in R by Gareth James, et. al. (I've read this one)
+Please make sure to update tests as appropriate.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
