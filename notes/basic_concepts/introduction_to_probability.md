@@ -1,23 +1,43 @@
 # Introduction to Probability
 
 Probability theory offers a structured approach to assessing the probability of events, allowing for logical and systematic reasoning about their likelihood.
-
 ## Terminology
 
-* **Experiment**: A process that produces one of several possible outcomes, such as repeatedly tossing a die or coin.
-* **Sample Space (S)**: The complete set of possible outcomes for an experiment. For example, when tossing a die, S = {1, 2, 3, 4, 5, 6}.
-* **Event (E)**: A subset of the sample space, representing a specific occurrence. Examples include rolling a 5 or obtaining a sum of 7 from two dice rolls.
+* **Experiment**: A process that produces one of several possible outcomes, such as repeatedly tossing a die or coin, or observing the number of accidents at an intersection in a month.
+* **Sample Space (S)**: The complete set of possible outcomes for an experiment. For example, when tossing a die, S = {1, 2, 3, 4, 5, 6}. In a single coin flip, S = {"heads", "tails"}. When tossing two coins, S = {(H,H), (H,T), (T,H), (T,T)}.
+* **Event (E)**: A subset of the sample space, representing a specific occurrence. Examples include rolling a 5, obtaining a sum of 7 from two dice rolls, or two people sitting in a corner of a square table.
 * **Probability of an Outcome (P(s))**: A numerical value assigned to each outcome in the sample space, satisfying two properties:
   * For each outcome s, 0 ≤ P(s) ≤ 1.
   * The sum of probabilities for all outcomes in the sample space equals 1: $\sum p(s) = 1$.
-* **Probability of an Event (P(E))**: The sum of the probabilities of all outcomes within the event: 
+* **Probability of an Event (P(E))**: The sum of the probabilities of all outcomes within the event:
 
 $$P(E) = \sum_{s\in E} P(s)$$
 
-* **Random Variable (V)**: A numerical function that allocates a value to each outcome in a probability space.
+* **Random Variable (V)**: A numerical function that allocates a value to each outcome in a probability space. Examples include the number of points obtained by rolling two dice or the life span of a light bulb.
 * **Expected Value of a Random Variable (E(V))**: The weighted average of the values of the random variable, calculated as 
 
 $$E(V) = \sum_{s\in S} P(s) * V(s)$$
+
+## Examples
+
+* Number of accidents at an intersection in a month: S = {1, 2, 3, ...} or S = {1, 2, 3, ..., 1000}.
+* Life span of a light bulb: elementary events are any positive numbers, t > 0, and the space is infinite; but in a specific problem, it may be better to choose S = {1, 2, 3, ...} hours/days/months.
+* Birth month: S = {Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec}.
+* A radioactive nucleus can decay (D) or not (N) in successive intervals of 1 second. The space of elementary events is infinite: D, ND, NND, NNND, ...
+* Rolling two dice: S = {x, y}, where x = 1,...,6 and y = 1,...,6.
+* Sum of points obtained by rolling two dice: S = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}.
+* Two people at a square table - we are interested in event A: "they sit in a corner". Examples of different choices of the space of elementary events (each cell represents a possible outcome):
+
+|   | 1   | 2   | 3   | 4   | 5   | 6   |
+|---|-----|-----|-----|-----|-----|-----|
+| 1 | (1,1)| (1,2)| (1,3)| (1,4)| (1,5)| (1,6)|
+| 2 | (2,1)| (2,2)| (2,3)| (2,4)| (2,5)| (2,6)|
+| 3 | (3,1)| (3,2)| (3,3)| (3,4)| (3,5)| (3,6)|
+| 4 | (4,1)| (4,2)| (4,3)| (4,4)| (4,5)| (4,6)|
+| 5 | (5,1)| (5,2)| (5,3)| (5,4)| (5,5)| (5,6)|
+| 6 | (6,1)| (6,2)| (6,3)| (6,4)| (6,5)| (6,6)|
+
+In this table, each pair of numbers represents the position of the two people at the table. For example, (1,1) means both are sitting in the first corner, (1,2) means the first person is in the first corner and the second person is in the second corner, and so on. The event "they sit in a corner" corresponds to the outcomes (1,1), (2,2), (3,3), and (4,4).
 
 ## Definition of Probability
 
@@ -34,6 +54,90 @@ In a standard deck of 52 playing cards, there are 4 suits (hearts, diamonds, clu
 $$
 P(\text{Heart}) = \frac{\text{Number of hearts}}{\text{Total number of cards}} = \frac{13}{52} = \frac{1}{4}
 $$
+
+### Distinguishable Balls
+
+Placing r = 3 distinguishable balls (a, b, c) in n = 3 cells:
+
+Elementary events (each row represents a possible outcome):
+
+| Index | Cell 1 | Cell 2 | Cell 3 |
+|-------|--------|--------|--------|
+| 1     | abc    |        |        |
+| 2     |        | abc    |        |
+| 3     |        |        | abc    |
+| 4     | ab     | c      |        |
+| 5     | ac     | b      |        |
+| 6     | bc     | a      |        |
+| 7     | ab     |        | c      |
+| 8     | ac     |        | b      |
+| 9     | bc     |        | a      |
+| 10    | c      | ab     |        |
+| 11    | b      | ac     |        |
+| 12    | a      | bc     |        |
+| 13    |        | ab     | c      |
+| 14    |        | ac     | b      |
+| 15    |        | bc     | a      |
+| 16    | c      |        | ab     |
+| 17    | b      |        | ac     |
+| 18    | a      |        | bc     |
+| 19    |        | c      | ab     |
+| 20    |        | b      | ac     |
+| 21    |        | a      | bc     |
+| 22    | a      | b      | c      |
+| 23    | a      | c      | b      |
+| 24    | b      | a      | c      |
+| 25    | b      | c      | a      |
+| 26    | c      | a      | b      |
+| 27    | c      | b      | a      |
+
+* Event A: "at least two balls are in one cell" - elementary events 1-21
+* Event B: "the first cell is not empty" - elementary events 1, 4-12, 16-18, 22-27
+* Event C: "both A and B occur" - elementary events 1, 4-12, 16-18
+* Event D: "either A or B occurs" - elementary events 1-27
+
+Let's calculate probabilities for these events (assuming each outcome is equally likely):
+There are $3^3 = 27$ possible outcomes in total.
+
+$$P(A) = \frac{Number of outcomes in A}{Total \quad outcomes} = 21 / 27$$
+
+$$P(B) = \frac{Number of outcomes in B}{Total \quad outcomes} = 19 / 27$$
+
+$$P(C) = \frac{Number of outcomes in C}{Total \quad outcomes} = 12 / 27$$
+
+$$P(D) = \frac{Number of outcomes in D}{Total \quad outcomes} = 27 / 27$$
+
+### Indistinguishable Balls
+
+Placing r = 3 indistinguishable balls in n = 3 cells:
+
+Elementary events (each row represents a possible outcome):
+
+| Index | Cell 1 | Cell 2 | Cell 3 |
+|-------|--------|--------|--------|
+| 1     | ooo    |        |        |
+| 2     |        | ooo    |        |
+| 3     |        |        | ooo    |
+| 4     | oo     | o      |        |
+| 5     | oo     |        | o      |
+| 6     | o      | oo     |        |
+| 7     |        | oo     | o      |
+| 8     | o      |        | oo     |
+| 9     |        | o      | oo     |
+| 10    | o      | o      | o      |
+
+* Event A: "at least two balls are in one cell" - elementary events 1, 2, 3, 4, 7, 8, 9, 10
+* Event B: "the first cell is not empty" - elementary events 1, 2, 3, 4, 5, 6, 7
+
+Let's calculate probabilities for these events (assuming each outcome is equally likely):
+There are 10 unique outcomes in total.
+
+P(A) = Number of outcomes in A / Total unique outcomes = 8 / 10
+
+P(B) = Number of outcomes in B / Total unique outcomes = 7 / 10
+
+The example demonstrates the distribution of 3 indistinguishable balls (denoted as 'o') in 3 cells, and the probabilities of different events happening. The table shows the elementary events corresponding to each outcome, and the probabilities are calculated based on the number of outcomes in each event divided by the total number of unique outcomes.
+
 
 ## Applications and Importance
 
