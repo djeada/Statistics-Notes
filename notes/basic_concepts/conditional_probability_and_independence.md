@@ -1,14 +1,3 @@
-## Independence, Conditional, Compound
-Independent Events: A and B are independent iff:
-* $P(A \cap B) = P(A)P(B)$
-* $P(A|B) = P(A)$
-* $P(B|A) = P(B)$
-
-* Conditional Probability: $P(A|B) = \frac{P(A,B)}{P(B)}$
-* Bayes Theorem: $P(A|B) = \frac{P(B|A)P(A)}{P(B)}$
-* Joint Probability: $P(A,B) = P(B|A)P(A)$
-* Marginal Probability: $P(A)$
-
 ## Conditional Probability and Independence
 
 ### Definition of Conditional Probability
@@ -106,7 +95,30 @@ $$
 
 So, there is approximately a 32.76% chance that the person actually has the disease, given that they tested positive.
 
-# Probability Trees
+## Inclusion-Exclusion Principle
+
+Example: What is the probability that during n dice rolls, at least one of the faces of the die does not appear even once?
+
+Let Ai denote the event that face i does not appear during n dice rolls, i = 1,..., 6
+
+Theorem: The Inclusion-Exclusion Principle allows us to find bounds on the sought probability. Introducing the following notation:
+
+$$p_n(S_1, \dots, S_n) \equiv P(A_1 \cup A_2 \cup \dots \cup A_n) = P(A_1) - P(A_1 \cap A_2) + P(A_1 \cap A_2 \cap A_3) - \dots$$
+
+We have:
+
+$$p_n(S_1) \leq p_n(S_1, S_2) \geq p_n(S_1, S_2, S_3) \leq \dots$$
+
+Calculate probabilities (i < j < k < ...):
+
+$$p_n = \left(1 - \frac{5}{6}\right)^n + \binom{6}{2}\left(1 - \frac{4}{6}\right)^n - \binom{6}{3}\left(1 - \frac{3}{6}\right)^n + \binom{6}{4}\left(1 - \frac{2}{6}\right)^n - \binom{6}{5}\left(1 - \frac{1}{6}\right)^n$$
+
+The sought probability is:
+
+* 1-pn is the probability that during n rolls each face will appear at least once.
+* $p_10 ≈ 0.73$, $p_12 ≈ 0.56$, $p_13 ≈ 0.50$, $p_15 ≈ 0.35$, $p_20 ≈ 0.03$, $p_25 ≈ 0.001$
+
+## Probability Trees
 
 Probability trees are a useful graphical tool to represent the possible outcomes of an experiment and their associated probabilities. They help in visualizing the structure of a probability problem and are particularly useful when dealing with conditional probabilities and independent events.
 
