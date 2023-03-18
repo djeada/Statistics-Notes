@@ -126,18 +126,15 @@ Elementary events (each row represents a possible outcome):
 | 9     |        | o      | oo     |
 | 10    | o      | o      | o      |
 
-* Event A: "at least two balls are in one cell" - elementary events 1, 2, 3, 4, 7, 8, 9, 10
-* Event B: "the first cell is not empty" - elementary events 1, 2, 3, 4, 5, 6, 7
+* Event A: "at least two balls are in one cell" - elementary events 1-9
+* Event B: "the first cell is not empty" - elementary events 1, 4-6, 8, 10
 
 Let's calculate probabilities for these events (assuming each outcome is equally likely):
 There are 10 unique outcomes in total.
 
-$$P(A) = \frac{\text{Number of outcomes in A}}{\text{Total unique outcomes}} = 8 / 10$$
+$$P(A) = \frac{\text{Number of outcomes in A}}{\text{Total unique outcomes}} = 9 / 10$$
 
-$$P(B) = \frac{\text{Number of outcomes in B}}{\text{Total unique outcomes}} = 7 / 10$$
-
-The example demonstrates the distribution of 3 indistinguishable balls (denoted as 'o') in 3 cells, and the probabilities of different events happening. The table shows the elementary events corresponding to each outcome, and the probabilities are calculated based on the number of outcomes in each event divided by the total number of unique outcomes.
-
+$$P(B) = \frac{\text{Number of outcomes in B}}{\text{Total unique outcomes}} = 6 / 10$$
 
 ## Applications and Importance
 
