@@ -99,13 +99,13 @@ Elementary events (each row represents a possible outcome):
 Let's calculate probabilities for these events (assuming each outcome is equally likely):
 There are $3^3 = 27$ possible outcomes in total.
 
-$$P(A) = \frac{Number of outcomes in A}{Total \quad outcomes} = 21 / 27$$
+$$P(A) = \frac{\text{Number of outcomes in A}}{\text{Total outcomes}} = 21 / 27$$
 
-$$P(B) = \frac{Number of outcomes in B}{Total \quad outcomes} = 19 / 27$$
+$$P(B) = \frac{\text{Number of outcomes in B}}{\text{Total outcomes}} = 19 / 27$$
 
-$$P(C) = \frac{Number of outcomes in C}{Total \quad outcomes} = 12 / 27$$
+$$P(C) = \frac{\text{Number of outcomes in C}}{\text{Total outcomes}} = 12 / 27$$
 
-$$P(D) = \frac{Number of outcomes in D}{Total \quad outcomes} = 27 / 27$$
+$$P(D) = \frac{\text{Number of outcomes in D}}{\text{Total outcomes}} = 27 / 27$$
 
 ### Indistinguishable Balls
 
@@ -132,9 +132,9 @@ Elementary events (each row represents a possible outcome):
 Let's calculate probabilities for these events (assuming each outcome is equally likely):
 There are 10 unique outcomes in total.
 
-P(A) = Number of outcomes in A / Total unique outcomes = 8 / 10
+$$P(A) = \frac{\text{Number of outcomes in A}}{\text{Total unique outcomes}} = 8 / 10$$
 
-P(B) = Number of outcomes in B / Total unique outcomes = 7 / 10
+$$P(B) = \frac{\text{Number of outcomes in B}}{\text{Total unique outcomes}} = 7 / 10$$
 
 The example demonstrates the distribution of 3 indistinguishable balls (denoted as 'o') in 3 cells, and the probabilities of different events happening. The table shows the elementary events corresponding to each outcome, and the probabilities are calculated based on the number of outcomes in each event divided by the total number of unique outcomes.
 
