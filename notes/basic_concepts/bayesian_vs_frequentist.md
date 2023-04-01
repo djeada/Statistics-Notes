@@ -1,10 +1,10 @@
-Title: Bayesian vs Frequentist Statistics
+## Bayesian vs Frequentist Statistics
 
-1. Introduction
+## Introduction
    - Bayesian and frequentist statistics are two main approaches to statistical inference.
    - Both aim to make conclusions about the underlying population based on sample data.
 
-2. Frequentist Statistics
+## Frequentist Statistics
    A. Key concepts
       - Parameters are fixed but unknown quantities.
       - Confidence intervals: range of values where a parameter is likely to fall, with a certain level of confidence.
@@ -16,7 +16,7 @@ Title: Bayesian vs Frequentist Statistics
       - Can lead to counterintuitive results, especially for small sample sizes.
       - Does not incorporate prior knowledge.
 
-3. Bayesian Statistics
+## Bayesian Statistics
    A. Key concepts
       - Parameters are treated as random variables with probability distributions.
       - Prior: existing knowledge about a parameter's distribution before observing data.
@@ -31,24 +31,24 @@ Title: Bayesian vs Frequentist Statistics
       - More computationally demanding.
       - Results can be sensitive to the choice of prior.
 
-4. Bayesian vs Frequentist Convergence
+## Bayesian vs Frequentist Convergence
    - With a large number of samples, Bayesian and frequentist methods converge.
    - When using uninformed priors (i.e., no prior knowledge), Bayesian and frequentist results are the same.
 
-5. Coin Flip Example
+## Coin Flip Example
    - Flipping a coin 5 times and getting all heads: Bayesian methods allow incorporating prior knowledge about the prevalence of fair and unfair coins.
    - Flipping a coin 1000 times and getting 1000 heads: Bayesian methods can update the prior assumption and conclude the coin is likely unfair.
 
-6. Incorporating Prior Knowledge
+## Incorporating Prior Knowledge
    - Even without specific knowledge about a topic, some outcomes can be deemed implausible based on general understanding.
    - Example: Snake lifespan model. A 1000-year lifespan is less plausible than a 10-year lifespan, even without detailed knowledge about snakes.
 
-7. Choosing an Approach
+## Choosing an Approach
    - Consider the problem's context and the availability of prior knowledge.
    - Assess the sample size and computational resources available.
    - Understand the goals of the analysis and the desired interpretation of results.
 
-8. Conclusion
+## Conclusion
    - Both Bayesian and frequentist statistics have strengths and limitations.
    - The choice between the two depends on the specific problem, available data, and goals of the analysis.
    - Bayesian methods offer a flexible and rigorous approach to incorporate prior knowledge and assumptions, making them particularly useful for small datasets and when prior information is available.
