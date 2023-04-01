@@ -10,9 +10,11 @@ A. Key concepts
    - Parameters are fixed but unknown quantities.
    - Confidence intervals: range of values where a parameter is likely to fall, with a certain level of confidence.
    - Null hypothesis testing: comparing observed data with what's expected under a null hypothesis.
+   
 B. Advantages
    - Simpler and easier to understand for non-specialists.
    - Well-established methods for large sample sizes.
+   
 C. Limitations
    - Can lead to counterintuitive results, especially for small sample sizes.
    - Does not incorporate prior knowledge.
@@ -24,11 +26,13 @@ A. Key concepts
    - Prior: existing knowledge about a parameter's distribution before observing data.
    - Likelihood: how probable the observed data is under different parameter values.
    - Posterior: updated probability distribution of a parameter after incorporating observed data.
+
 B. Advantages
    - Allows for incorporation of prior knowledge.
    - Can produce more intuitive results, particularly for small sample sizes.
    - Provides a probabilistic interpretation of parameter estimates.
    - Rigorous framework for making assumptions, even when dealing with small datasets.
+
 C. Limitations
    - More computationally demanding.
    - Results can be sensitive to the choice of prior.
