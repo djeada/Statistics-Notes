@@ -27,5 +27,3 @@ In the context of the pharmaceutical company, if the new drug is indeed effectiv
 Deciding the acceptable levels of Type I and Type II errors depends largely on the context of the test. In some cases, Type I errors may be more costly (e.g., convicting an innocent person based on wrongly rejecting the null hypothesis of innocence), and in others, Type II errors might have a greater impact (e.g., not providing a beneficial treatment to patients based on a failure to reject the null hypothesis that the treatment is ineffective).
 
 Often, there's a trade-off between these two types of errors. Decreasing the likelihood of Type I errors (by setting a smaller α) will increase the likelihood of Type II errors, and vice versa.
-
-Therefore, it's crucial to consider the specific context and the potential implications of each type of error when designing a study and interpreting the results of hypothesis tests.
