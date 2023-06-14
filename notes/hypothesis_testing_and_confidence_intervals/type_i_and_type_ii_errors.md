@@ -1,25 +1,31 @@
-## Type I and Type II Errors
+## Errors in Hypothesis Testing
 
-In hypothesis testing, there are two types of errors that can occur: Type I errors and Type II errors.
+When conducting hypothesis tests, we encounter two types of potential errors, namely Type I and Type II errors. Understanding these errors is crucial for interpreting the results of tests and making appropriate decisions.
 
 ### Type I Error (False Positive)
 
-A Type I error occurs when the null hypothesis is true, but it is incorrectly rejected. This is also known as a false positive. The probability of making a Type I error is denoted by the significance level, α.
+A Type I error, often denoted as α (alpha), occurs when we reject the null hypothesis, even though it is actually true. In other words, we find evidence of an effect or relationship that does not truly exist. This is sometimes referred to as a "false positive".
+
+The probability of making a Type I error corresponds to the significance level of a test. For example, with a significance level of 0.05, we are willing to accept a 5% chance that we might commit a Type I error.
 
 **Example:**
 
-Suppose a pharmaceutical company is testing a new drug for treating a disease. The null hypothesis states that the drug is not effective. If the test results incorrectly indicate that the drug is effective (i.e., the null hypothesis is rejected when it is true), a Type I error has occurred. In this case, the company might waste resources on a drug that is not actually effective.
+Let's consider a pharmaceutical company that is testing a new drug. The null hypothesis would be "the new drug has no effect on the disease". If the clinical trial results lead to the rejection of this null hypothesis despite it being true (i.e., the drug is not effective), we commit a Type I error. Such a situation could lead to unnecessary expenditures in further development and trials of an ineffective drug.
 
 ### Type II Error (False Negative)
 
-A Type II error occurs when the null hypothesis is false, but it is not rejected. This is also known as a false negative. The probability of making a Type II error is denoted by β.
+A Type II error, often denoted as β (beta), takes place when we fail to reject the null hypothesis when it's actually false. This means we overlook an effect or relationship that truly exists, leading to a "false negative".
+
+Unlike α, β is not typically set in advance. Instead, we often consider the power of a test, which is (1 - β). Power indicates the ability of a test to correctly reject a false null hypothesis.
 
 **Example:**
 
-Continuing with the pharmaceutical company example, suppose the new drug is actually effective, but the test results fail to show this effectiveness (i.e., the null hypothesis is not rejected when it is false). In this case, a Type II error has occurred. The company might miss out on a potentially effective treatment for the disease.
+In the context of the pharmaceutical company, if the new drug is indeed effective but the results of the trial fail to reject the null hypothesis of "the new drug has no effect on the disease", we commit a Type II error. This error could potentially lead to dismissal of a useful drug.
 
 ### Balancing Type I and Type II Errors
 
-In practice, it is important to balance the risks of making Type I and Type II errors. Reducing the significance level (α) reduces the risk of making a Type I error but increases the risk of making a Type II error. Conversely, reducing the probability of a Type II error (β) increases the risk of making a Type I error.
+Deciding the acceptable levels of Type I and Type II errors depends largely on the context of the test. In some cases, Type I errors may be more costly (e.g., convicting an innocent person based on wrongly rejecting the null hypothesis of innocence), and in others, Type II errors might have a greater impact (e.g., not providing a beneficial treatment to patients based on a failure to reject the null hypothesis that the treatment is ineffective).
 
-The power of a test, denoted as (1 - β), is the probability of correctly rejecting the null hypothesis when it is false. Ideally, researchers aim for high power and low Type I error rates, but these goals are often in conflict. It is crucial to consider the specific context of the study and the consequences of each type of error when deciding on an appropriate balance between Type I and Type II error rates.
+Often, there's a trade-off between these two types of errors. Decreasing the likelihood of Type I errors (by setting a smaller α) will increase the likelihood of Type II errors, and vice versa.
+
+Therefore, it's crucial to consider the specific context and the potential implications of each type of error when designing a study and interpreting the results of hypothesis tests.
