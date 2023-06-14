@@ -1,33 +1,58 @@
 ## Multiple Comparisons
 
-When performing multiple hypothesis tests simultaneously, the chance of making a type I error (falsely rejecting a true null hypothesis) increases. This phenomenon is known as the multiple comparisons problem. To account for this issue, several correction methods have been developed.
+When conducting multiple hypothesis tests simultaneously, the likelihood of committing at least one Type I error (falsely rejecting a true null hypothesis) increases. This increase is due to the problem known as the "multiple comparisons problem" or the "look-elsewhere effect". The methods to address this issue typically involve adjustments to the significance level or p-values, and each has its advantages and disadvantages. 
 
 ### Family-wise Error Rate (FWER)
 
-Family-wise error rate (FWER) is the probability of making at least one type I error across all tests in a family. It is important to control the FWER when conducting multiple tests to maintain the overall confidence in the results.
+The family-wise error rate (FWER) is the probability of making at least one Type I error among all the tests in a family. Controlling FWER maintains overall confidence in the results when conducting multiple tests.
 
 #### Bonferroni Correction
 
-One of the most common methods for controlling FWER is the Bonferroni correction. This method adjusts the significance level (α) by dividing it by the number of tests performed:
+The Bonferroni correction is a common method for controlling the FWER. It adjusts the significance level (α) by dividing it by the number of tests performed (n):
 
 $$
-\alpha_{adjusted} = \frac{\alpha}{n}
+\alpha_{\text{{adjusted}}} = \frac{\alpha}{n}
 $$
 
-where $n$ is the number of tests being conducted. This adjusted significance level is then used to determine the critical value for each test. The Bonferroni correction is considered to be conservative, as it may be too strict, especially when there is a large number of tests.
+This adjusted significance level is then used to compute the critical values for each test. The Bonferroni correction is inherently conservative, making it more likely to commit Type II errors (falsely accepting a false null hypothesis), especially when there are many tests or the tests are not independent.
+
+#### Example
+
+Suppose we have α = 0.05 and we are conducting 20 independent tests. Then, the Bonferroni corrected α is:
+
+$$
+\alpha_{\text{{adjusted}}} = \frac{0.05}{20} = 0.0025
+$$
+
+Thus, for each test, we would reject the null hypothesis only if the p-value is less than 0.0025.
 
 ### False Discovery Rate (FDR)
 
-An alternative approach to controlling the FWER is controlling the false discovery rate (FDR), which is the expected proportion of false positives among all rejected null hypotheses. This approach is less conservative than controlling the FWER and can be more powerful in certain situations.
+In contrast to FWER, the false discovery rate (FDR) controls for the expected proportion of false positives among all rejected null hypotheses. FDR controlling procedures are generally more powerful than FWER controlling methods, making them particularly suitable for exploratory studies where the discovery of new findings is prioritized.
 
 #### Benjamini-Hochberg Procedure
 
-The Benjamini-Hochberg (BH) procedure is a widely used method for controlling the FDR. It works by ordering the p-values from the multiple tests and comparing each p-value to an adjusted significance level:
+The Benjamini-Hochberg (BH) procedure is widely used for controlling the FDR. This method involves ordering the p-values from smallest to largest and then comparing each p-value to an adjusted significance level that depends on its rank (i) and the total number of tests (n):
 
 $$
-\alpha_{adjusted} = \frac{\alpha \times i}{n}
+\alpha_{\text{{adjusted}}} = \frac{\alpha \times i}{n}
 $$
 
-where $i$ is the rank of the p-value in the ordered list and $n$ is the number of tests. The null hypothesis is rejected for all tests with p-values less than or equal to the adjusted significance level. The BH procedure is less conservative than the Bonferroni correction and provides better control of the FDR.
+We reject the null hypothesis for all tests where the p-value is less than or equal to the adjusted significance level. 
 
-It is important to choose an appropriate method for adjusting for multiple comparisons based on the specific goals and requirements of the study.
+#### Example
+
+Suppose we have a set of p-values {0.001, 0.008, 0.039, 0.041, 0.042, 0.06} for six tests with α = 0.05. 
+
+We order the p-values and compare to the adjusted α:
+
+1. 0.001 < 0.05 * 1/6 = 0.00833 - reject
+2. 0.008 < 0.05 * 2/6 = 0.01667 - reject
+3. 0.039 < 0.05 * 3/6 = 0.02500 - reject
+4. 0.041 < 0.05 * 4/6 = 0.03333 - reject
+5. 0.042 > 0.05 * 5/6 = 0.04167 - fail to reject
+6. 0.06 > 0.05 * 6/6 = 0.05000 - fail to reject
+
+Thus, we would reject the null hypothesis for the first four tests and fail to reject for the last two.
+
+In the world of multiple comparisons, researchers must carefully balance the risk of Type I and Type II errors based on the context and goals of their study.
