@@ -1,19 +1,27 @@
 ## Null Hypotheses and Alternative Hypotheses
 
-In hypothesis testing, we start with a null hypothesis (H0) and an alternative hypothesis (H1). The null hypothesis is a statement that assumes there is no effect or relationship between the variables being tested. The alternative hypothesis is a statement that contradicts the null hypothesis, suggesting that there is an effect or relationship.
+In hypothesis testing, two conflicting hypotheses are constructed: the null hypothesis (denoted by $H_0$) and the alternative hypothesis (denoted by $H_1$ or $H_a$). The null hypothesis represents a statement of no effect or no difference, or the status quo, while the alternative hypothesis represents a statement of an effect, difference, or change.
 
-### Why "Fail to reject null hypothesis" instead of "Accepting Alternative Hypothesis"?
+### The Language of Hypothesis Testing
 
-When we have a high p-value, it means we fail to reject the null hypothesis. This does not necessarily mean that the alternative hypothesis is true. A high p-value indicates that the data is consistent with the null hypothesis, but it does not rule out the possibility that the data could also be consistent with other hypotheses.
+The terminology in hypothesis testing is carefully chosen to reflect the inherent uncertainty. We either "reject the null hypothesis" or "fail to reject the null hypothesis". Rejecting $H_0$ is a strong statement implying that the evidence against $H_0$ is compelling. 
 
-The reason we say "fail to reject" instead of "accepting alternative hypothesis" is that not having enough evidence against the null hypothesis does not automatically mean that the opposite is true. In other words, the data may be consistent with the null hypothesis but could also be consistent with other hypotheses.
+However, failing to reject $H_0$ is a more nuanced statement. It does not mean that we accept $H_0$ as true, but rather that we don't have enough evidence against it. Importantly, it does not mean that we've demonstrated that the alternative hypothesis $H_1$ is false. 
+
+### Interpretation of the P-value
+
+A common misconception is that the p-value is the probability that the null hypothesis is true. However, the p-value is the probability of obtaining a result as extreme as, or more extreme than, the observed data, assuming that the null hypothesis is true. A small p-value implies that such extreme results are unlikely if $H_0$ is true, hence the evidence against $H_0$ is strong. 
+
+Conversely, a large p-value suggests that the observed data is not unlikely under $H_0$, and hence does not provide strong evidence against $H_0$. It's important to remember, however, that a large p-value is not evidence in favor of $H_0$; rather, it's a lack of evidence against $H_0$.
 
 ### Example: Coin Toss
 
-For example, suppose we test the null hypothesis that a coin is fair (p[heads] = 0.5) and observe 6 tails and 4 heads in 10 flips. This result seems consistent with a fair coin, and we would not reject the null hypothesis using a standard test.
+To illustrate these concepts, consider a simple experiment: flipping a coin. We could construct the null hypothesis $H_0$ as "the coin is fair", i.e., $P(\text{{heads}}) = 0.5$, and the alternative hypothesis $H_1$ as "the coin is not fair", i.e., $P(\text{{heads}}) \neq 0.5$.
 
-However, this does not mean that the coin is necessarily fair. The data is more consistent with p[heads] = 0.4 than the null hypothesis. In this case, a high p-value would simply indicate that the data is consistent with the coin being fair, but it does not rule out the possibility that the coin is biased.
+Let's say we flip the coin 10 times and observe 4 heads and 6 tails. If we calculate the p-value for this outcome assuming $H_0$, we get a relatively large value (for example, using a binomial test), indicating that such an outcome is not unlikely if the coin is indeed fair.
 
-To make a stronger conclusion, we would need more data, better experimental design, or additional tests that take into account other information or background knowledge.
+Despite the high p-value, this does not mean the coin is necessarily fair. We failed to find evidence against the null hypothesis, but this lack of evidence should not be mistaken for proof of the null hypothesis. The data is also consistent with other possibilities, such as $P(\text{{heads}}) = 0.4$. 
 
-The key takeaway is that failing to reject the null hypothesis does not automatically mean that the alternative hypothesis is false. It only means that there is not enough evidence to reject the null hypothesis, and further investigation might be required to draw more accurate conclusions.
+In order to make more definitive conclusions, we would need additional data or more refined testing strategies. This could involve more coin flips or perhaps a physical examination of the coin to check for bias.
+
+In summary, failing to reject the null hypothesis does not imply that the null hypothesis is true, nor does it mean the alternative hypothesis is false. It is a statement about the strength of the evidence against $H_0$ provided by the data.
