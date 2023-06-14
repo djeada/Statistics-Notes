@@ -24,6 +24,8 @@ In the context of the pharmaceutical company, if the new drug is indeed effectiv
 
 ### Balancing Type I and Type II Errors
 
-Deciding the acceptable levels of Type I and Type II errors depends largely on the context of the test. In some cases, Type I errors may be more costly (e.g., convicting an innocent person based on wrongly rejecting the null hypothesis of innocence), and in others, Type II errors might have a greater impact (e.g., not providing a beneficial treatment to patients based on a failure to reject the null hypothesis that the treatment is ineffective).
+In the real world, neither error is desirable, but sometimes we have to make hard choices. Here are some key points to remember:
 
-Often, there's a trade-off between these two types of errors. Decreasing the likelihood of Type I errors (by setting a smaller α) will increase the likelihood of Type II errors, and vice versa.
+- Reducing Type I errors (false positives) increases Type II errors (false negatives), and vice versa. It's a seesaw - you push down on one side, the other one goes up.
+- The 'power' of a test is its ability to avoid Type II errors - that is, the likelihood of catching a guilty person. Ideally, we want a high-powered test (more "guilty" verdicts for actual criminals), but we have to balance this against the risk of more Type I errors (more "innocents" getting wrongly convicted).
+- There's no 'one-size-fits-all' answer here. The best balance depends on the specific context and what's at stake in terms of these two types of errors.
