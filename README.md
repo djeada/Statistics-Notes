@@ -4,7 +4,47 @@ This repository contains notes, explanations, and code snippets related to essen
 
 ## Requirements
 
-The code examples are provided in Python, making use of libraries such as NumPy, SciPy, and pandas for implementing statistical techniques.
+The programming examples in this repository are primarily implemented in Python due to its simplicity, versatility, and the robustness of its scientific computing ecosystem. The code exploits various widely-used libraries such as NumPy for numerical computing, SciPy for advanced scientific computations, and pandas for data manipulation and analysis. As a result, a basic understanding of Python programming and its scientific libraries would be beneficial for comprehending and utilizing the code snippets.
+
+To ensure you can run the code snippets and notebooks seamlessly, please make sure your environment fulfills the Python dependencies. We recommend setting up a virtual environment to avoid any package conflicts.
+
+You can set up a virtual environment using the following steps:
+
+```bash
+# Create a virtual environment
+python3 -m venv env
+```
+
+To activate the virtual environment, the command differs based on your operating system:
+
+```bash
+# On Windows, use:
+env\Scripts\activate
+
+# On Unix or MacOS, use:
+source env/bin/activate
+```
+
+Once the virtual environment is activated, install the necessary packages using pip:
+
+```bash
+pip install -r requirements.txt
+```
+
+Now, you should be ready to run the code in this repository.
+
+```bash
+# Here's an example of how you can run a Python script
+python src/basic_concepts/basic_concepts.py
+```
+
+Remember to replace 'src/basic_concepts/basic_concepts.py' with the actual name of the script you wish to run.
+
+When you're done working, you can deactivate the virtual environment by simply running the deactivate command.
+
+```bash
+deactivate
+```
 
 ## Topics
 
