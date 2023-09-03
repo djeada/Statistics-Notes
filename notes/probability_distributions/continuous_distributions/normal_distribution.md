@@ -6,7 +6,9 @@ A continuous random variable X follows a normal distribution, denoted as $X \sim
 
 The PDF of a normal distribution is given by:
 
-$$f(x) = \frac{1}{{\sigma \sqrt {2\pi } }}e^{{{ - \left( {x - \mu } \right)^2 } \mathord{\left/ {\vphantom {{ - \left( {x - \mu } \right)^2 } {2\sigma ^2 }}} \right. } {2\sigma ^2 }}}$$
+$$
+f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
+$$
 
 ### Cumulative Distribution Function (CDF)
 
