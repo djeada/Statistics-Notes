@@ -6,7 +6,6 @@ Statistics is the science of collecting, organizing, analyzing, interpreting, an
 
 * **Population:** The complete set of all elements or individuals in a study.
 
-* **Sample:** A subset of the population selected for analysis. Samples are used to make inferences about the population.
 
 * **Parameter:** A numerical characteristic of a population, such as its mean, median, or standard deviation.
 
@@ -53,4 +52,82 @@ Statistics has numerous applications across various domains, including:
 * **Sports and Gaming:** Coaches and analysts apply statistical techniques to assess player performance, devise game strategies, and make predictions.
 
 * **Machine Learning and Artificial Intelligence:** Machine learning algorithms use statistical techniques to recognize patterns, make predictions, and improve performance based on data.
+
+
+## Variables and Data
+
+* variables: when we collect data, we make, mesurments, observation. characteristics we choos to measure, observe are called variablse.
+
+* data: the values of variables
+
+* **Sample:** A subset of the population selected for analysis. Samples are used to make inferences about the population.
+
+```
+   O   O   O   O   O
+  /|\ /|\ /|\ /|\ /|\
+  / \ / \ / \ / \ / \
+```
+
+Each one of those guy wil have it's own weight, heigh, gender
+
+
++-------+--------+--------+--------+
+| Name  | Gender | Weight | Height |
++-------+--------+--------+--------+
+| Alice | Female |  135   |  5'6"  |
+| Bob   |  Male  |  180   |  6'0"  |
+| Carol | Female |  140   |  5'5"  |
+| David |  Male  |  175   |  5'11" |
+| Eve   | Female |  150   |  5'7"  |
++-------+--------+--------+--------+
+
+```
+                  All Variables
+                   /            \
+            Numerical       Categorical
+           /        \       
+   Discrete  Continuous 
+```
+
+- "Numerical" refers to data that consists of numbers.
+
+  - "Discrete" represents data with separate, distinct values (e.g., number of siblings).
+  - "Continuous" represents data with a range of values (e.g., height or weight).
+
+-  "Categorical" represents data that falls into categories or groups.
+
+ 
+ ere's a list ofrandom categories (variables) with their corresponding types:
+
+Fruits (Categorical)
+Car Brands (Categorical)
+Temperature in Degrees Celsius (Numerical - Continuous)
+Animal Species (Categorical)
+Shoe Sizes (Categorical)
+Ages of People (Numerical - Continuous)
+Book Genres (Categorical)
+Wind Speed in mph (Numerical - Continuous)
+Movie Ratings (Categorical)
+Types of Beverages (Categorical)
+Number of Children in a Family (Numerical - Discrete)
+Number of Bedrooms in a House (Numerical - Discrete)
+Count of Emails Received in a Day (Numerical - Discrete)
+Number of Cars in a Parking Lot (Numerical - Discrete)
+Quantity of Books on a Shelf (Numerical - Discrete)
+
+|   Name   | Age | Height (inches) | Income ($) | Education Level | Marital Status |
+|----------|-----|-----------------|------------|-----------------|----------------|
+|   Alice  |  28 |      64         |   50000    |   High School   |     Married    |
+|   Bob    |  35 |      70         |   75000    |   Bachelor's    |     Single     |
+|   Carol  |  42 |      62         |   60000    |   Master's      |     Married    |
+|   David  |  31 |      68         |   80000    |   Ph.D.         |     Single     |
+|   Eve    |  26 |      66         |   45000    |   Associate's   |     Married    |
+Variable Explanations:
+    Name: Categorical variable representing individuals' names.
+    Age: Numerical variable (Numerical - Discrete) representing individuals' ages.
+    Height (inches): Numerical variable (Numerical - Continuous) representing individuals' heights in inches.
+    Income ($): Numerical variable (Numerical - Continuous) representing individuals' income in dollars.
+    Education Level: Categorical variable representing the educational attainment of individuals.
+    Marital Status: Categorical variable representing the marital status of individuals.
+
 
