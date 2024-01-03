@@ -181,12 +181,13 @@ Response Variable (Dependent Variable):
 - **Example:** In the study of study duration and exam scores, exam scores are the response variable, as they are expected to vary with different study durations (Explanatory Variable).
 
 Practical Illustration:
-- **Explanatory Variable:** Study Duration
-  - Manipulated or observed to see its effect.
-- **Response Variable:** Exam Scores
-  - The outcome that changes in response to study duration.
-- **Research Context:** Researchers either control the study duration in an experimental setup or observe it in natural settings, aiming to assess its impact on the exam scores.
 
+In a study at Elmswood University, researchers explored the impact of study duration on exam scores.
+
+- Explanatory Variable: Study Duration (Researchers either manipulated or observed study times to see their effects).
+- Response Variable: Exam Scores (They measured how changes in study duration affected exam scores).
+- Research Context: In controlled experiments or natural settings, the focus was on the relationship between study duration and exam performance.
+    
 ## Observational Studies and Experiments
 
 ### Observational Studies
