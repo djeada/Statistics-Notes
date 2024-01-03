@@ -4,26 +4,6 @@ Statistics is the science of collecting, organizing, analyzing, interpreting, an
 
 ## Key Terms and Concepts
 
-* **Population:** The complete set of all elements or individuals in a study.
-
-
-* **Parameter:** A numerical characteristic of a population, such as its mean, median, or standard deviation.
-
-* **Statistic:** A numerical characteristic of a sample, used to estimate a population parameter.
-
-* **Descriptive Statistics:** Techniques for summarizing and describing the main features of a dataset or sample, including measures of central tendency, dispersion, and shape.
-
-* **Inferential Statistics:** Techniques for making generalizations about a population based on a sample. Inferential statistics include hypothesis testing, confidence intervals, and regression analysis.
-
-* **Random Variable:** A variable whose values depend on the outcomes of a random phenomenon.
-
-* **Probability Distribution:** A mathematical function that describes the likelihood of different outcomes for a random variable. Probability distributions can be discrete or continuous.
-
-* **Discrete Distribution:** A probability distribution for a discrete random variable, which can take on a finite or countable number of values.
-
-* **Continuous Distribution:** A probability distribution for a continuous random variable, which can take on an infinite number of values within a specified range.
-
-* **Covariance and Correlation:** Measures that describe the relationship between two variables. Covariance measures the degree to which two variables change together, while correlation measures the strength and direction of a linear relationship between variables.
 
 ## Importance of Statistics
 
@@ -54,6 +34,97 @@ Statistics has numerous applications across various domains, including:
 * **Machine Learning and Artificial Intelligence:** Machine learning algorithms use statistical techniques to recognize patterns, make predictions, and improve performance based on data.
 
 
+## Population vs Sample
+
+* **Population:** The complete set of all elements or individuals in a study.
+
+
+```
+# @ * ! % * # ! @
+* ! % # @ ! % @ *
+@ # ! % * @ # % #
+! % @ * # ! @ * !
+% * # @ ! % @ * #
+```
+
+* **Sample:** A subset of the population selected for analysis. Samples are used to make inferences about the population.
+  
+```
+@ !
+* % 
+```
+Scenario :
+A poll of 1,200 registered voters in a country found that 45% prefer candidate A over candidate B in the upcoming election.
+
+    Population: All registered voters in the country.
+    Sample: The 1,200 registered voters who were polled.
+
+Scenario :
+To understand the impact of remote learning, an educational researcher surveyed 100 teachers from across 20 different schools.
+
+    Population: All teachers who are conducting remote learning.
+    Sample: The 100 teachers from 20 different schools who were surveyed.
+
+Scenario :
+Researchers studying exercise patterns interviewed 250 gym members from a city to estimate how often residents use the gym facilities.
+
+    Population: All gym members in the city.
+    Sample: The 250 gym members who were interviewed for the study.
+
+A representative sample is a subset of a population that accurately reflects the members of the entire population. It is designed to be a miniature version of the population, capturing the same variations, groups, and proportions as would be found in the population itself. This ensures that any statistics derived from the sample are likely to closely match the true values from the entire population.
+
+For example, if a population consists of 50% females and 50% males, a representative sample would reflect these same proportions.
+
+Here's an ASCII representation of a representative sample:
+
+markdown
+
+Population: 50% Female, 50% Male
+-------------------------
+| F | F | M | M | F | M |
+-------------------------
+
+Representative Sample: 50% Female, 50% Male
+-------------
+| F | M | F |
+-------------
+
+In this ASCII diagram:
+
+    "Population" is shown as a larger group with an equal number of "F" (females) and "M" (males).
+    "Representative Sample" is a smaller group but maintains the same proportion of females to males as the entire population.
+
+
+
+Bias in statistics refers to systematic errors that can lead to incorrect conclusions about the population from which a sample is drawn. Bias can occur at any stage of the research process, including the design, data collection, analysis, and interpretation stages. Here are some common types of biases in statistics:
+
+    Selection Bias: This occurs when the sample is not representative of the population. It often happens due to non-random selection of participants. For example, if a survey is conducted online, it may exclude those without internet access.
+
+    Sampling Bias: A type of selection bias that occurs when some members of the intended population are less likely to be included in the sample than others.
+
+    Non-response Bias: This occurs when individuals selected for the sample do not respond. Their non-response may be related to the attribute being measured, which can bias the results. For example, busy people might be less likely to respond to a survey about work-life balance.
+
+    Measurement Bias: This occurs when data collection methods yield results that are systematically different from the true value, often due to faulty measuring instruments or procedures.
+
+    Observer Bias: This occurs when researchers' expectations, beliefs, or preferences influence the data they collect or the way they interpret it. This can also include the placebo effect in clinical trials.
+
+    Survivorship Bias: This is the logical error of focusing on aspects that support surviving a process and casually overlooking those that did not because of their lack of visibility. For instance, considering only successful companies for analysis while ignoring the ones that failed.
+
+    Confirmation Bias: This happens when researchers give more weight to evidence that supports their hypothesis and ignore evidence that contradicts it.
+
+    Recall Bias: This occurs in retrospective studies when participants do not remember previous events accurately or omit details, leading to errors in the data.
+
+    Publication Bias: This arises when the likelihood that research is published is influenced by the nature and direction of its results. Studies with positive findings are more likely to be published than those with negative or inconclusive results.
+
+To avoid bias in sampling, researchers can take several measures:
+
+    Random Sampling: One of the most effective methods to avoid bias is to use a random sampling method where every member of the population has an equal chance of being selected. This can be done through simple random sampling or more complex techniques like stratified random sampling, where the population is divided into strata, and samples are taken from each stratum proportionally.
+
+    Stratified Sampling: This involves dividing the population into subgroups (strata) that share similar characteristics and then randomly sampling from each stratum. This ensures that each subgroup is adequately represented in the sample.
+
+    Systematic Sampling: Here, researchers select samples by following a systematic approach, like choosing every 10th person on a list. It can be biased if there is a pattern in the population that corresponds to the selection interval, but it's more straightforward to implement than random sampling.
+
+    Cluster Sampling: When a population is spread across a wide area or is not easily accessible, cluster sampling can be useful. In this method, the population is divided into clusters, a random sample of clusters is selected, and then all members of the chosen clusters are sampled.
 ## Variables and Data
 
 * variables: when we collect data, we make, mesurments, observation. characteristics we choos to measure, observe are called variablse.
@@ -190,3 +261,25 @@ Experiments:
 
     Ethics:
         Experiments often require informed consent, and ethical considerations are crucial, especially when human or animal subjects are involved.
+
+
+## Anecdotal evidence
+
+    Subjectivity: Anecdotal evidence is subjective and based on personal opinions, perceptions, or recollections. It does not follow a standardized or rigorous methodology.
+
+    Small Sample Size: It typically involves a small number of individual cases or instances. These cases are not necessarily representative of a larger population or a broader trend.
+
+    Lack of Control: Anecdotal evidence lacks control over variables, making it susceptible to various biases, including selection bias, confirmation bias, and recall bias.
+
+    Limited Generalizability: Anecdotal evidence cannot be easily generalized to a wider population or used to make broad conclusions because it does not involve a systematic study of a representative sample.
+
+    Informal Nature: It is often shared informally through personal stories, social media posts, testimonials, or casual conversations.
+
+Example
+    A friend claims that taking a particular vitamin supplement cured their chronic headaches, but there is no scientific evidence supporting this claim.
+    Someone attributes their weight loss to a specific diet plan without considering other factors that may have contributed to the weight loss.
+
+    Product reviews on a website where individuals share their personal experiences with a product. While these reviews can be helpful, they may not represent the overall performance of the product for a wider range of users.
+
+
+    
