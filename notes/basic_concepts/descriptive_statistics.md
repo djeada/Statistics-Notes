@@ -2,11 +2,67 @@
 
 Descriptive statistics offer a summary of the main characteristics of a dataset or sample. They facilitate the understanding and interpretation of data by providing measures of central tendency, dispersion, and shape. In this section, we will discuss the essential concepts and measures in descriptive statistics.
 
+## Frequencies and Frequency Tables
+
+- **Frequency**: The number of times a specific value or category occurs in a dataset. For instance, if 3 people have 1 sibling, the frequency for "1 sibling" is 3.
+- **Relative Frequency**: The proportion of times a specific value occurs relative to the total number of observations. Calculated as $ \text{Relative Frequency} = \frac{\text{Frequency}}{\text{Total Observations}} $.
+- **Cumulative Relative Frequency**: The accumulation of previous relative frequencies up to a certain category. It shows the proportion of observations up to and including a certain category. Calculated as $ \text{Cumulative Relative Frequency} = \text{Sum of Relative Frequencies up to the current category} $.
+
+Be careful cumulative frequencies don't make sense when the data doesn't have natural order!
+
+Example: List of People and Their Sibling Count
+
+1. Alice - 2 siblings
+2. Bob - 0 siblings
+3. Charlie - 1 sibling
+4. Dana - 3 siblings
+5. Elliot - 1 sibling
+6. Fatima - 2 siblings
+7. George - 0 siblings
+8. Hina - 4 siblings
+9. Ivan - 1 sibling
+10. Julia - 2 siblings
+
+
+| Number of Siblings | Frequency | Relative Frequency | Cumulative Relative Frequency |
+|--------------------|-----------|--------------------|-------------------------------|
+| 0                  | 2         | 20%                | 20%                           |
+| 1                  | 3         | 30%                | 50%                           |
+| 2                  | 3         | 30%                | 80%                           |
+| 3                  | 1         | 10%                | 90%                           |
+| 4                  | 1         | 10%                | 100%                          |
+
+
+### Continuous data
+
+Continuous data can take any value within a range, making it impractical to calculate frequency for each exact number. For example, consider measuring the heights of a group of people. Heights can vary infinitely within a range (e.g., 170.1 cm, 170.2 cm, 170.25 cm), making it unfeasible to have a frequency for each distinct measurement.
+
+Instead, we group continuous data into intervals or ranges and then calculate frequencies for these intervals. This approach simplifies the data and makes it more interpretable.
+
+Example: Height Measurements (in cm) of a Group of People
+
+1. Raw Data (Continuous):
+  - 170.2, 165.5, 172.3, 168.7, 171.6, 167.4, 169.5, 174.2, 166.1, 173.5
+
+2. Grouped into Ranges
+  - 165-167,
+  - 168-170,
+  - 171-173,
+  - 174-176
+
+| Height Range (cm) | Frequency |
+|-------------------|-----------|
+| 165 - 167         | 2         |
+| 168 - 170         | 3         |
+| 171 - 173         | 3         |
+| 174 - 176         | 2         |
+
+
 ## Measures of Central Tendency
 
 Measures of central tendency provide an idea of the average or central value of the dataset.
 
-* **Arithmetic Mean:** Suitable for characterizing symmetric distributions without outliers.
+* **Arithmetic Mean:** Suitable for characterizing symmetric distributions without outliers. It's also the balancing point of a distribution.
 
   $$\mu_{X} = \frac{1}{n} \sum x$$
 
@@ -79,6 +135,23 @@ The mode is the most frequently occurring value. In our example, the mode is 17,
 Each measure of central tendency can provide different insights into the dataset. In this example, the mean is slightly affected by the larger sales number on Thursday, while the median and mode give a more typical representation of the central value.
 
 
+### When Choosing Mean or Median:
+- If you want to minimize the effect of outliers, then use **median** instead of mean.
+- If it’s important that you consider all values, including outliers, then use **mean** instead of median.
+- Typically we should be very cautious of using the mean for skewed data. The median is often a more honest measurement of average in such a setting.
+
+EXAMPLE 1
+
+Alice is looking into the salaries of graphic designers at a well-established tech company to gauge her potential earnings. Given that the company has a few top-level designers earning significantly higher than the rest, which would give her a more realistic expectation of salary, the mean or the median?
+
+Answer: The median would better represent her potential earnings because it would not be as affected by the high salaries of the few top-level designers, thus providing a more typical value of what graphic designers at the company earn.
+EXAMPLE 2
+
+Tom is the manager of a small bookstore and needs to report the average customer spending to the owner. Considering that most customers spend around $20, but there are occasional rare purchases of rare books costing over $500, should Tom use the mean or median to report this spending?
+
+Answer: Tom should use the median to report average customer spending. The rare expensive purchases are outliers and would skew the mean, making it seem like the average customer spends more than they typically do.
+
+
 ## Measures of Dispersion
 
 Dispersion measures indicate the spread or variability of the data in the dataset.
@@ -98,6 +171,23 @@ Dispersion measures indicate the spread or variability of the data in the datase
   $$\sigma = \sqrt{\frac{\sum (x_i - \overline{x})^2}{N-1}}$$ (for a sample)
 
   $$\sigma = \sqrt{\frac{\sum (x_i - \overline{x})^2}{N}}$$ (for a population)
+
+### Understanding Standard deviation
+
+Consider that Chloe swam the 100m freestyle in 53 seconds at a regional competition, and Liam completed a marathon in 2 hours and 55 minutes at a city event. Who performed more exceptionally compared to typical results?
+
+Given Information:
+- Average 100m freestyle time (μ) = 60 seconds
+- Standard Deviation for 100m freestyle (σ) = 4 seconds
+- Average marathon time (μ) = 4 hours
+- Standard Deviation for marathon (σ) = 30 minutes
+
+Analysis:
+- Chloe's swim time is (60 - 53) / 4 = 1.75 SDs below the mean time (faster is better in this context).
+- Liam's marathon time, converted to minutes is 175 minutes. The average is 240 minutes. So, his time is (240 - 175) / 30 = 2.17 SDs below the mean time.
+
+Conclusion:
+Liam's performance in the marathon is more exceptional as his time is 2.17 SDs better than the average, compared to Chloe's swim time, which is 1.75 SDs better than the average for the 100m freestyle.
 
 ### Understanding Variance
 
