@@ -297,11 +297,13 @@ Since i is not an integer, interpolate between the two nearest values in the sor
 
 $$value = (1 - r) \times value_i + r \times value_{i+1}$$
 
-Where r is the decimal part of i, and $value_i$ and $value_{i+1}$ are the neighboring data points.
+Where r is the decimal part of i (0.4 in this case), and $value_i$ and $value_{i+1}$ are the 2nd and 3rd values in the sorted dataset (20 and 22, respectively).
 
 $$value = (1 - 0.4) \times 20 + 0.4 \times 22 = 20.8$$
 
 So, the 30th percentile of the dataset is 20.8.
+
+![7a84ce04-d23b-4ca4-ab92-1be829f0f442](https://github.com/djeada/Statistics-Notes/assets/37275728/af30d474-140e-4098-91ad-99c8223169e3)
 
 #### Quartiles
 
@@ -313,27 +315,28 @@ For the 25th percentile (Q1):
 
 $$i = \frac{25 \times (7 + 1)}{100} = 2$$
 
-Since i is an integer, the value is the average of the 2nd and 3rd values in the sorted dataset:
+Since i is not an integer, the value is the 2nd value in the sorted dataset:
 
-$$Q1 = \frac{20 + 22}{2} = 21$$
+$$Q1 = 20$$
 
 For the 50th percentile (Q2):
 
 $$i = \frac{50 \times (7 + 1)}{100} = 4$$
 
-Since i is an integer, the value is the average of the 4th and 5th values in the sorted dataset:
+Since i is an integer, the value is the 4th value in the sorted dataset:
 
-$$Q2 = \frac{24 + 30}{2} = 27$$
+$$Q2 = 24$$
 
 For the 75th percentile (Q3):
 
 $$i = \frac{75 \times (7 + 1)}{100} = 6$$
 
-Since i is an integer, the value is the average of the 6th and 7th values in the sorted dataset:
+Since i is an integer, the value is the 6th value in the sorted dataset:
 
-$$Q3 = \frac{35 + 40}{2} = 37.5$$
+$$Q3 = 35$$
 
-So, the quartiles of the dataset are Q1 = 21, Q2 = 27, and Q3 = 37.5.
+So, the quartiles of the dataset are Q1 = 20, Q2 = 24, and Q3 = 35.
+
 
 ![b0f49b50-ef84-4a8c-908f-e57b69fcd874](https://github.com/djeada/Statistics-Notes/assets/37275728/5b77b42b-4b08-4e69-b33e-7bb36e4d2aae)
 
