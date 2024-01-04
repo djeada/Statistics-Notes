@@ -265,21 +265,9 @@ $$
 \frac{\text{Number of values less than the given value}}{\text{Total number of values}} \times 100
 $$
 
-### Quartiles
-
-Quartiles divide the data into four equal parts using percentiles. The first quartile contains the values from the minimum to the 25th percentile, the second from the 25th percentile to the 50th percentile (which is the median), the third from the 50th percentile to the 75th percentile, and the fourth from the 75th percentile to the maximum.
-
-To find the quartile thresholds, use the following quantiles:
-
-- First Quartile: $0.25$
-- Second Quartile (Median): $0.5$
-- Third Quartile: $0.75$
-
-### Example
+Example:
 
 Consider a dataset of exam scores: $[40, 30, 15, 24, 20, 22, 35]$.
-
-#### Percentiles
 
 Let's calculate the 30th percentile of this dataset.
 
@@ -303,9 +291,21 @@ $$value = (1 - 0.4) \times 20 + 0.4 \times 22 = 20.8$$
 
 So, the 30th percentile of the dataset is 20.8.
 
-![7a84ce04-d23b-4ca4-ab92-1be829f0f442](https://github.com/djeada/Statistics-Notes/assets/37275728/af30d474-140e-4098-91ad-99c8223169e3)
+![5ea8e097-b512-40b2-8959-b9d88f4657af](https://github.com/djeada/Statistics-Notes/assets/37275728/f940e95e-4e08-4696-ab10-618cdb49b6da)
 
-#### Quartiles
+### Quartiles
+
+Quartiles divide the data into four equal parts using percentiles. The first quartile contains the values from the minimum to the 25th percentile, the second from the 25th percentile to the 50th percentile (which is the median), the third from the 50th percentile to the 75th percentile, and the fourth from the 75th percentile to the maximum.
+
+To find the quartile thresholds, use the following quantiles:
+
+- First Quartile: $0.25$
+- Second Quartile (Median): $0.5$
+- Third Quartile: $0.75$
+
+Example:
+
+Consider a dataset of exam scores: $[40, 30, 15, 24, 20, 22, 35]$.
 
 To calculate quartiles, follow these steps:
 
@@ -337,6 +337,4 @@ $$Q3 = 35$$
 
 So, the quartiles of the dataset are Q1 = 20, Q2 = 24, and Q3 = 35.
 
-
 ![b0f49b50-ef84-4a8c-908f-e57b69fcd874](https://github.com/djeada/Statistics-Notes/assets/37275728/5b77b42b-4b08-4e69-b33e-7bb36e4d2aae)
-
