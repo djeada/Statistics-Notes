@@ -62,6 +62,8 @@ Example: Height Measurements (in cm) of a Group of People
 | 171 - 173         | 3         |
 | 174 - 176         | 2         |
 
+![image](https://github.com/djeada/Statistics-Notes/assets/37275728/5619116b-f65b-47fc-a1cf-a5bfa0640353)
+
 ## Measures of Central Tendency
 
 Measures of central tendency provide an idea of the average or central value of the dataset.
@@ -138,6 +140,7 @@ The mode is the most frequently occurring value. In our example, the mode is 17,
 
 Each measure of central tendency can provide different insights into the dataset. In this example, the mean is slightly affected by the larger sales number on Thursday, while the median and mode give a more typical representation of the central value.
 
+![image](https://github.com/djeada/Statistics-Notes/assets/37275728/8b59fddf-4218-4365-a345-24075da9326f)
 
 ### When Choosing Mean or Median:
 - If you want to minimize the effect of outliers, then use **median** instead of mean.
@@ -246,6 +249,8 @@ $$
 
 Each measure of dispersion provides different information about the spread of the dataset. The range gives us an overall view of the spread, but it can be influenced by extreme values. The variance and standard deviation give a more detailed representation of the dispersion and are less sensitive to outliers.
 
+![2a2f7449-2a21-4c44-8ce9-438d7b85135e](https://github.com/djeada/Statistics-Notes/assets/37275728/8a18e3bd-e1cd-44c4-ac04-61f027e10882)
+
 ## Percentiles and Quartiles
 
 Percentiles and quartiles provide a way to understand the distribution of values in a dataset, going beyond the range. The range is not always helpful, as it doesn't give much information about how values are distributed around the mean or about the comparative position of an individual value within the distribution.
@@ -329,4 +334,6 @@ Since i is an integer, the value is the average of the 6th and 7th values in the
 $$Q3 = \frac{35 + 40}{2} = 37.5$$
 
 So, the quartiles of the dataset are Q1 = 21, Q2 = 27, and Q3 = 37.5.
+
+![b0f49b50-ef84-4a8c-908f-e57b69fcd874](https://github.com/djeada/Statistics-Notes/assets/37275728/5b77b42b-4b08-4e69-b33e-7bb36e4d2aae)
 
