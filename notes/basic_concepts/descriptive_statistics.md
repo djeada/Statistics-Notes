@@ -272,13 +272,13 @@ To find the quartile thresholds, use the following quantiles:
 
 ### Example
 
-Consider a dataset of exam scores: $[15, 20, 22, 24, 30, 35, 40]$.
+Consider a dataset of exam scores: $[40, 30, 15, 24, 20, 22, 35]$.
 
 #### Percentiles
 
 Let's calculate the 30th percentile of this dataset.
 
-Sort the dataset in ascending order: [15, 20, 22, 24, 30, 35, 40].
+Sort the dataset in ascending order: $[15, 20, 22, 24, 30, 35, 40]$.
 
 Calculate the rank (i) using the formula:
 
