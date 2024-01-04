@@ -256,9 +256,9 @@ A percentile tells us where a given value is ranked in the overall distribution.
 
 To calculate the percentile for a given value, use the following equation:
 
-\begin{equation}
+$$
 \frac{\text{Number of values less than the given value}}{\text{Total number of values}} \times 100
-\end{equation}
+$$
 
 ### Quartiles
 
@@ -266,14 +266,13 @@ Quartiles divide the data into four equal parts using percentiles. The first qua
 
 To find the quartile thresholds, use the following quantiles:
 
-- First Quartile: 0.25
-- Second Quartile (Median): 0.5
-- Third Quartile: 0.75
-
+- First Quartile: $0.25$
+- Second Quartile (Median): $0.5$
+- Third Quartile: $0.75$
 
 ### Example
 
-Consider a dataset of exam scores: [15, 20, 22, 24, 30, 35, 40].
+Consider a dataset of exam scores: $[15, 20, 22, 24, 30, 35, 40]$.
 
 #### Percentiles
 
