@@ -99,9 +99,12 @@ Population Distribution (Gender Example):
 
 ## Variables and Data
 
-* Variables: In data collection, we choose certain characteristics to measure or observe, known as variables. These can be attributes like weight, height, and gender, among others.
-
-* Data: Represent the actual values that variables take on. For instance, the weight of a person is a variable, while "180 pounds" is the data point for that variable.
+* **Variable**: It's the specific characteristic we're examining—like how much something weighs or how old someone is.
+* **Data**: These are the actual values or observations that we've collected, which can be about almost anything measurable.
+* **Population**: This refers to the entire group we're interested in understanding. It could be all the people in a city, every tree in a forest, etc.
+* **Parameter**: This is a value that sums up something about the entire population, like the average height of everyone in a town. It's the key insight we're after.
+* **Sample**: Instead of looking at the whole population, which can be impractical, we take a smaller, manageable group from it to study.
+* **Statistic**: This is the equivalent of a parameter, but for our sample. It gives us an estimate that we hope comes close to the actual parameter of the whole population.
 
 Imagine a group of individuals, each with unique attributes to be measured:
 
