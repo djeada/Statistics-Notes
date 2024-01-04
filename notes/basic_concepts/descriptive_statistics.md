@@ -5,8 +5,13 @@ Descriptive statistics offer a summary of the main characteristics of a dataset 
 ## Frequencies and Frequency Tables
 
 - **Frequency**: The number of times a specific value or category occurs in a dataset. For instance, if 3 people have 1 sibling, the frequency for "1 sibling" is 3.
-- **Relative Frequency**: The proportion of times a specific value occurs relative to the total number of observations. Calculated as $ \text{Relative Frequency} = \frac{\text{Frequency}}{\text{Total Observations}} $.
-- **Cumulative Relative Frequency**: The accumulation of previous relative frequencies up to a certain category. It shows the proportion of observations up to and including a certain category. Calculated as $ \text{Cumulative Relative Frequency} = \text{Sum of Relative Frequencies up to the current category} $.
+- **Relative Frequency**: The proportion of times a specific value occurs relative to the total number of observations. Calculated as:
+
+  $$\text{Relative Frequency} = \frac{\text{Frequency}}{\text{Total Observations}}$$
+
+- **Cumulative Relative Frequency**: The accumulation of previous relative frequencies up to a certain category. It shows the proportion of observations up to and including a certain category. Calculated as:
+  
+  $$\text{Cumulative Relative Frequency} = \sum_{i=1}^{n} \text{Relative Frequency}_i$$
 
 Be careful cumulative frequencies don't make sense when the data doesn't have natural order!
 
@@ -56,7 +61,6 @@ Example: Height Measurements (in cm) of a Group of People
 | 168 - 170         | 3         |
 | 171 - 173         | 3         |
 | 174 - 176         | 2         |
-
 
 ## Measures of Central Tendency
 
