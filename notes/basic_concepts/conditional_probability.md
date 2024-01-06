@@ -1,3 +1,14 @@
+
+## The Multiplication Rule
+
+The multiplication rule is used to find the probability of two events A and B happening together:
+
+$$
+P(A \cap B) = P(A|B) \times P(B)
+$$
+
+
+
 ## Independent Events
 
 Two events are independent if the occurrence of one event does not affect the probability of the other event. In other words, events A and B are independent if:
@@ -107,15 +118,6 @@ Note: When solving problems, it is important to identify which event is the cond
 $$
 P(A \cap B) = P(A | B) P(B) \quad \text{or} \quad P(A \cap B) = P(B | A) P(A)
 $$
-
-## The Multiplication Rule
-
-The multiplication rule is used to find the probability of two events A and B happening together:
-
-$$
-P(A \cap B) = P(A|B) \times P(B)
-$$
-
 
 
 ## The Law of Total Probability
