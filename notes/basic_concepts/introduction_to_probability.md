@@ -10,7 +10,7 @@ Probability theory offers a structured approach to assessing the probability of 
 
 * **Event (E)**: Any collection of outcomes from the sample space (S), which forms a subset of S. An event can consist of one outcome or multiple outcomes. Examples of events include rolling an even number on a die (E = {2, 4, 6}), getting tails when flipping a coin (E = {"tails"}), or drawing a heart from a standard deck of cards (E = {2♥, 3♥, ..., A♥}).
 
-Example: Dice Rolling
+### Example: Dice Rolling
 
 When you roll a 6-sided (fair) die, the sample space is:
 
@@ -26,15 +26,19 @@ And the possible events include:
 
 Each event is a subset of the sample space and represents a particular outcome or set of outcomes that we are interested in observing. The probability of an event is a measure of how likely that event is to occur, calculated by dividing the number of favorable outcomes (the size of event set) by the total number of possible outcomes (the size of sample space).
 
-## More Examples
+### Additional Examples
 
-* Number of accidents at an intersection in a month: S = {1, 2, 3, ...} or S = {1, 2, 3, ..., 1000}.
-* Life span of a light bulb: elementary events are any positive numbers, t > 0, and the space is infinite; but in a specific problem, it may be better to choose S = {1, 2, 3, ...} hours/days/months.
-* Birth month: S = {Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec}.
-* A radioactive nucleus can decay (D) or not (N) in successive intervals of 1 second. The space of elementary events is infinite: D, ND, NND, NNND, ...
-* Rolling two dice: S = {x, y}, where x = 1,...,6 and y = 1,...,6.
-* Sum of points obtained by rolling two dice: S = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}.
-* Two people at a square table - we are interested in event A: "they sit in a corner". Examples of different choices of the space of elementary events (each cell represents a possible outcome):
+* **Traffic Observation**: Counting the number of accidents at an intersection in a month. The sample space might be S = {0, 1, 2, 3, ..., n}, where n is a reasonable upper limit based on historical data.
+
+* **Life Span of a Light Bulb**: If measuring in hours, the sample space could be any positive number (S = {t | t > 0}). In a practical scenario, it might be limited to a certain range like S = {1, 2, 3, ..., 10000} hours.
+
+* **Birth Month**: For an individual's birth month, the sample space is S = {January, February, ..., December}.
+
+* **Radioactive Decay**: For a radioactive nucleus decaying in intervals of 1 second, the sample space is all sequences of decay (D) and non-decay (N) over time, like S = {D, ND, NND, NNND, ...}.
+
+* **Rolling Two Dice**: The sample space for the sum of points is S = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}.
+
+* **Seating at a Square Table**: If two people can sit at any of the four corners of a square table, the sample space for their seating positions can be represented as pairs of positions (1 through 4). 
 
 |   | 1   | 2   | 3   | 4   | 5   | 6   |
 |---|-----|-----|-----|-----|-----|-----|
@@ -45,7 +49,7 @@ Each event is a subset of the sample space and represents a particular outcome o
 | 5 | (5,1)| (5,2)| (5,3)| (5,4)| (5,5)| (5,6)|
 | 6 | (6,1)| (6,2)| (6,3)| (6,4)| (6,5)| (6,6)|
 
-In this table, each pair of numbers represents the position of the two people at the table. For example, (1,1) means both are sitting in the first corner, (1,2) means the first person is in the first corner and the second person is in the second corner, and so on. The event "they sit in a corner" corresponds to the outcomes (1,1), (2,2), (3,3), and (4,4).
+For instance, (1,1) means both are in the first corner, and (1,2) means the first is in the first corner and the second in the second corner.
 
 ## Probability
 
@@ -56,8 +60,8 @@ P(A) = \frac{\text{Number of favorable outcomes}}{\text{Total number of possible
 $$
 
 * **Probability of an Outcome (P(s))**: The probability of a particular outcome s is a measure of the likelihood that this outcome will occur when the experiment is performed. It is a value between 0 (impossible event) and 1 (certain event), satisfying:
-  * \( 0 \leq P(s) \leq 1 \) for each outcome \( s \).
-  * The sum of the probabilities of all outcomes equals 1, or \( \sum_{s \in S} P(s) = 1 \), where \( S \) is the sample space.
+  * $0 \leq P(s) \leq 1$ for each outcome $s$.
+  * The sum of the probabilities of all outcomes equals 1, or $\sum_{s \in S} P(s) = 1$, where $S$ is the sample space.
 
 * **Probability of an Event (P(E))**: The probability of an event E is determined by adding up the probabilities of the outcomes that compose E. Mathematically, this is represented by the formula:
 
@@ -120,7 +124,7 @@ $$
 P(\text{Heart}) = \frac{\text{Number of hearts}}{\text{Total number of cards}} = \frac{13}{52} = \frac{1}{4}
 $$
 
-This is because there are 13 hearts and 52 cards in total, so the probability is \( \frac{13}{52} \), which simplifies to \( \frac{1}{4} \) or 25%.
+This is because there are 13 hearts and 52 cards in total, so the probability is $\frac{13}{52}$, which simplifies to $\frac{1}{4}$ or 25%.
 
 #### Probability of Drawing a Face Card
 
@@ -147,13 +151,13 @@ P(\text{Card} < 5) = \frac{\text{Number of cards lower than 5}}{\text{Total numb
 $$
 
 #### Expected Value of Card Numbers
-If we assign numerical values to each card (Jack = 11, Queen = 12, King = 13, Ace = 1), we can calculate the expected value for the number on a card drawn at random from the deck. We'll denote this random variable as \( X \).
+If we assign numerical values to each card (Jack = 11, Queen = 12, King = 13, Ace = 1), we can calculate the expected value for the number on a card drawn at random from the deck. We'll denote this random variable as $X$.
 
 $$
 E(X) = \sum_{i=1}^{13} P(i) \cdot i
 $$
 
-Where \( P(i) \) is the probability of drawing a card with number \( i \), which is \( \frac{1}{13} \) for each card number since there is an equal number of each card number in the deck.
+Where $P(i)$ is the probability of drawing a card with number $i$, which is $\frac{1}{13}$ for each card number since there is an equal number of each card number in the deck.
 
 These probabilities and expected values provide the fundamental basis for a wide range of card games and can be used to calculate more complex odds based on game rules and strategies.
 
@@ -282,7 +286,7 @@ The probability is the area of the segment of the circle that lies within the sq
 
 For r < 1 (when the circle is completely within the square):
 
-The area of the quarter circle is \( \frac{\pi r^2}{4} \), so the probability \( P(r) \) that a point lies within this circle is:
+The area of the quarter circle is $\frac{\pi r^2}{4}$, so the probability $P(r)$ that a point lies within this circle is:
 
 $$
 P(r) = \frac{\text{Area of quarter circle with radius r}}{\text{Area of square}} = \frac{\pi r^2}{4}
@@ -294,7 +298,7 @@ $$
 \int_{0}^{r} \sqrt{r^2 - x^2} dx
 $$
 
-represents the area under the curve \( y = \sqrt{r^2 - x^2} \), which is the top half of the quarter circle.
+represents the area under the curve $y = \sqrt{r^2 - x^2}$, which is the top half of the quarter circle.
 
 For r > 1 (when the circle extends outside the square):
 
@@ -304,9 +308,9 @@ $$
 P(r) = \frac{\pi r^2}{4} - \text{Area outside the square}
 $$
 
-To find the area outside the square, we calculate the area under the curve from x = 1 to r, which represents the part of the circle that extends beyond the square's boundary. This results in the subtraction of the area of two such segments from the total area of the quarter circle.
+To find the area outside the square, we calculate the area under the curve from $x = 1$ to $r$, which represents the part of the circle that extends beyond the square's boundary. This results in the subtraction of the area of two such segments from the total area of the quarter circle.
 
-For \( r = \sqrt{2} \), the quarter circle exactly covers the square, making the probability equal to 1.
+For $r = \sqrt{2}$, the quarter circle exactly covers the square, making the probability equal to 1.
 
 ## Axioms of Probability
 
@@ -316,21 +320,21 @@ Probability theory is based on a set of principles, or axioms, that define the p
 
 1. **Non-negativity**: This axiom states that the probability of any event A is a non-negative number. This reflects the idea that an event either happens or it doesn't, and thus, the probability cannot be negative.
 
-   $$
-   P(A) \geq 0
-   $$
+$$
+P(A) \geq 0
+$$
 
 2. **Unit Measure**: This axiom ensures that the probability of the sample space S, which includes all possible outcomes of an experiment, is always equal to 1. This is equivalent to saying that it's certain at least one of the possible outcomes will occur.
 
-   $$
-   P(S) = 1
-   $$
+$$
+ P(S) = 1
+$$
 
 3. **Additivity**: The axiom of additivity is about disjoint events, also known as mutually exclusive events. If events A and B cannot both occur at the same time, the probability of either event A or event B occurring is the sum of their individual probabilities.
 
-   $$
-   P(A \cup B) = P(A) + P(B) \quad \text{if} \quad A \cap B = \emptyset
-   $$
+$$
+P(A \cup B) = P(A) + P(B) \quad \text{if} \quad A \cap B = \emptyset
+$$
 
 ### Application to a Deck of Cards
 
@@ -351,4 +355,3 @@ Substituting these into our equation, we get:
 $$
 P(\text{Heart} \cup \text{Queen}) = \frac{13}{52} + \frac{4}{52} - \frac{1}{52} = \frac{16}{52} = \frac{4}{13}
 $$
-
