@@ -20,7 +20,7 @@ $$
 P(A \cap B) = P(A|B) \times P(B)
 $$
 
-Here, \( P(A|B) \) is the conditional probability of event A given that event B has occurred. It represents the probability of A under the condition that B is known to have occurred.
+Here, $P(A|B)$ is the conditional probability of event A given that event B has occurred. It represents the probability of A under the condition that B is known to have occurred.
 
 ### Example: Deck of Cards
 
@@ -31,19 +31,22 @@ When analyzing probabilities with a deck of 52 playing cards, consider the follo
 - Once a diamond is drawn, for the second draw, there are only 12 diamonds left and 51 cards remaining in the deck.
 
 So, the probability of drawing a diamond as the second card given that the first was a diamond is:
+
 $$ P(\text{second card Diamond | first card Diamond}) = \frac{12}{51} $$
 
 Using the multiplication rule, the joint probability of both events is:
+
 $$ P(\text{first card Diamond} \cap \text{second card Diamond}) = P(\text{first card Diamond}) \times P(\text{second card Diamond | first card Diamond}) = \frac{13}{52} \times \frac{12}{51} \approx 0.0588 $$
 
 #### Probability of Drawing an Ace Followed by a King
 - The probability of drawing an Ace first is 4 out of 52.
 - If an Ace has been drawn, there are 4 Kings left in the remaining 51 cards, so the probability of drawing a King next is:
+
 $$ P(\text{second card King | first card Ace}) = \frac{4}{51} $$
 
 Applying the multiplication rule here gives us:
-$$ P(\text{first card Ace} \cap \text{second card King}) = P(\text{first card Ace}) \times P(\text{second card King | first card Ace}) = \frac{4}{52} \times \frac{4}{51} \approx 0.0060 $$
 
+$$ P(\text{first card Ace} \cap \text{second card King}) = P(\text{first card Ace}) \times P(\text{second card King | first card Ace}) = \frac{4}{52} \times \frac{4}{51} \approx 0.0060 $$
 
 ## Independence of Events
 
@@ -55,18 +58,16 @@ $$
 
 This means that the probability of A occurring given that B has occurred is the same as the probability of A occurring without any knowledge of B, and vice versa.
 
-### Examples
-
-#### Card Drawing
+### Example: Card Drawing
 
 When dealing with a deck of 52 playing cards, consider these two events:
 
 - Drawing a king on the first draw.
 - Drawing a king on the second draw without replacement.
 
-The events are not independent because the outcome of the first draw affects the probability of the second. Specifically, if you draw a king on the first draw, the probability of drawing a king on the second draw is no longer \( \frac{4}{52} \), but \( \frac{3}{51} \) since one king has been removed from the deck and only 51 cards remain.
+The events are not independent because the outcome of the first draw affects the probability of the second. Specifically, if you draw a king on the first draw, the probability of drawing a king on the second draw is no longer $\frac{4}{52}$, but $\frac{3}{51}$ since one king has been removed from the deck and only 51 cards remain.
 
-#### Divisibility within a Set of Integers
+### Example: Divisibility within a Set of Integers
 
 Let's define two events based on the set of integers from 1 to 100:
 
@@ -75,22 +76,22 @@ Let's define two events based on the set of integers from 1 to 100:
 
 The probabilities are calculated as follows:
 
-- \( P(A) = \frac{33}{100} \) because there are 33 multiples of 3 between 1 and 100.
-- \( P(B) = \frac{14}{100} \) since there are 14 multiples of 7 in that range.
-- \( P(A \cap B) = \frac{4}{100} \), as there are 4 numbers that are multiples of both 3 and 7.
+- $P(A) = \frac{33}{100}$ because there are 33 multiples of 3 between 1 and 100.
+- $P(B) = \frac{14}{100}$ since there are 14 multiples of 7 in that range.
+- $P(A \cap B) = \frac{4}{100}$, as there are 4 numbers that are multiples of both 3 and 7.
 
-To check for independence, we compare \( P(A) \cdot P(B) \) with \( P(A \cap B) \):
+To check for independence, we compare $P(A) \cdot P(B)$ with $P(A \cap B)$:
 
-- \( P(A) \cdot P(B) = \frac{33}{100} \times \frac{14}{100} \)
-- \( P(A \cdot B) \neq P(A \cap B) \), thus A and B are not independent.
+- $P(A) \cdot P(B) = \frac{33}{100} \times \frac{14}{100}$
+- $P(A \cdot B) \neq P(A \cap B)$, thus A and B are not independent.
 
 However, if we extend our set to include numbers 101 to 105, the situation changes:
 
-- \( P(A) = \frac{35}{105} \) because 35 of the numbers from 1 to 105 are divisible by 3.
-- \( P(B) = \frac{15}{105} \) as there are 15 multiples of 7.
-- \( P(A \cap B) = \frac{5}{105} \), since 5 numbers are divisible by both 3 and 7 within the new set.
+- $P(A) = \frac{35}{105}$ because 35 of the numbers from 1 to 105 are divisible by 3.
+- $P(B) = \frac{15}{105}$ as there are 15 multiples of 7.
+- $P(A \cap B) = \frac{5}{105}$, since 5 numbers are divisible by both 3 and 7 within the new set.
 
-Here, \( P(A) \cdot P(B) = \frac{35}{105} \times \frac{15}{105} \) does equal \( P(A \cap B) \), making events A and B independent with the extended set.
+Here, $P(A) \cdot P(B) = \frac{35}{105} \times \frac{15}{105}$ does equal $P(A \cap B)$, making events A and B independent with the extended set.
 
 ### Example: Probability of At Least One of n Independent Events Occurring
 
@@ -112,20 +113,20 @@ $$
 
 #### For n Independent Events
 
-This extends naturally to any number n of independent events. If \( A_1, A_2, \ldots, A_n \) are independent events, the probability that at least one occurs is:
+This extends naturally to any number n of independent events. If $A_1, A_2, \ldots, A_n$ are independent events, the probability that at least one occurs is:
 
 $$
 P(A_1 \cup A_2 \cup \cdots \cup A_n) = 1 - P(A_1^c) \times P(A_2^c) \times \cdots \times P(A_n^c)
 $$
 
-Here, \( A_i^c \) represents the complement of event \( A_i \), which is the event that \( A_i \) does not occur.
+Here, $A_i^c$ represents the complement of event $A_i$, which is the event that $A_i$ does not occur.
 
 #### Example with Dice
 
 Consider the event of rolling a die three times and looking for at least one six. Let A, B, and C be the events where a six is rolled on the first, second, and third roll, respectively.
 
-- \( P(A) = P(B) = P(C) = \frac{1}{6} \)
-- \( P(A^c) = P(B^c) = P(C^c) = \frac{5}{6} \)
+- $P(A) = P(B) = P(C) = \frac{1}{6}$
+- $P(A^c) = P(B^c) = P(C^c) = \frac{5}{6}$
 
 The probability of not rolling a six in any of the three rolls is:
 
