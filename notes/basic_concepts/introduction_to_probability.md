@@ -1,24 +1,32 @@
 # Introduction to Probability
 
 Probability theory offers a structured approach to assessing the probability of events, allowing for logical and systematic reasoning about their likelihood.
-## Terminology
 
-* **Experiment**: A process that produces one of several possible outcomes, such as repeatedly tossing a die or coin, or observing the number of accidents at an intersection in a month.
-* **Sample Space (S)**: The complete set of possible outcomes for an experiment. For example, when tossing a die, S = {1, 2, 3, 4, 5, 6}. In a single coin flip, S = {"heads", "tails"}. When tossing two coins, S = {(H,H), (H,T), (T,H), (T,T)}.
-* **Event (E)**: A subset of the sample space, representing a specific occurrence. Examples include rolling a 5, obtaining a sum of 7 from two dice rolls, or two people sitting in a corner of a square table.
-* **Probability of an Outcome (P(s))**: A numerical value assigned to each outcome in the sample space, satisfying two properties:
-  * For each outcome s, 0 ≤ P(s) ≤ 1.
-  * The sum of probabilities for all outcomes in the sample space equals 1: $\sum p(s) = 1$.
-* **Probability of an Event (P(E))**: The sum of the probabilities of all outcomes within the event:
+## Introductory Terminology
 
-$$P(E) = \sum_{s\in E} P(s)$$
+* **Experiment**: This is any procedure that can be infinitely repeated and has a well-defined set of outcomes, known as the sample space. Common examples include rolling dice, flipping coins, or drawing cards from a deck.
 
-* **Random Variable (V)**: A numerical function that allocates a value to each outcome in a probability space. Examples include the number of points obtained by rolling two dice or the life span of a light bulb.
-* **Expected Value of a Random Variable (E(V))**: The weighted average of the values of the random variable, calculated as 
+* **Sample Space (S)**: The set of all possible outcomes of an experiment. This can be finite or infinite, discrete or continuous. For a 6-sided die, the sample space is S = {1, 2, 3, 4, 5, 6}. For the flip of a coin, S = {"heads", "tails"}. If flipping two coins simultaneously, the sample space expands to S = {(H, H), (H, T), (T, H), (T, T)}.
 
-$$E(V) = \sum_{s\in S} P(s) * V(s)$$
+* **Event (E)**: Any collection of outcomes from the sample space (S), which forms a subset of S. An event can consist of one outcome or multiple outcomes. Examples of events include rolling an even number on a die (E = {2, 4, 6}), getting tails when flipping a coin (E = {"tails"}), or drawing a heart from a standard deck of cards (E = {2♥, 3♥, ..., A♥}).
 
-## Examples
+Example: Dice Rolling
+
+When you roll a 6-sided (fair) die, the sample space is:
+
+$$S = {1, 2, 3, 4, 5, 6}$$
+
+And the possible events include:
+
+* Odd Numbers = ${1, 3, 5}$
+* Even Numbers = ${2, 4, 6}$
+* Rolling at Least a 5 = ${5, 6}$
+* Prime Numbers = ${2, 3, 5}$
+* Rolling a Number Less Than 4 = ${1, 2, 3}$
+
+Each event is a subset of the sample space and represents a particular outcome or set of outcomes that we are interested in observing. The probability of an event is a measure of how likely that event is to occur, calculated by dividing the number of favorable outcomes (the size of event set) by the total number of possible outcomes (the size of sample space).
+
+## More Examples
 
 * Number of accidents at an intersection in a month: S = {1, 2, 3, ...} or S = {1, 2, 3, ..., 1000}.
 * Life span of a light bulb: elementary events are any positive numbers, t > 0, and the space is infinite; but in a specific problem, it may be better to choose S = {1, 2, 3, ...} hours/days/months.
@@ -39,7 +47,7 @@ $$E(V) = \sum_{s\in S} P(s) * V(s)$$
 
 In this table, each pair of numbers represents the position of the two people at the table. For example, (1,1) means both are sitting in the first corner, (1,2) means the first person is in the first corner and the second person is in the second corner, and so on. The event "they sit in a corner" corresponds to the outcomes (1,1), (2,2), (3,3), and (4,4).
 
-## Definition of Probability
+## Probability
 
 Probability is a measure that quantifies the likelihood of a specific event occurring, given a set of possible outcomes. It is a value between 0 and 1, where 0 indicates that the event is impossible, and 1 indicates that the event is certain. Mathematically, the probability of an event A, denoted as P(A), can be expressed as:
 
@@ -47,19 +55,115 @@ $$
 P(A) = \frac{\text{Number of favorable outcomes}}{\text{Total number of possible outcomes}}
 $$
 
-### Example with Cards
+* **Probability of an Outcome (P(s))**: The probability of a particular outcome s is a measure of the likelihood that this outcome will occur when the experiment is performed. It is a value between 0 (impossible event) and 1 (certain event), satisfying:
+  * \( 0 \leq P(s) \leq 1 \) for each outcome \( s \).
+  * The sum of the probabilities of all outcomes equals 1, or \( \sum_{s \in S} P(s) = 1 \), where \( S \) is the sample space.
 
-In a standard deck of 52 playing cards, there are 4 suits (hearts, diamonds, clubs, and spades) with 13 cards in each suit. If we draw one card at random, we can calculate the probability of drawing a heart:
+* **Probability of an Event (P(E))**: The probability of an event E is determined by adding up the probabilities of the outcomes that compose E. Mathematically, this is represented by the formula:
+
+$$
+P(E) = \sum_{s \in E} P(s)
+$$
+
+* **Random Variable (X)**: A random variable X is a function that assigns a numerical value to each outcome in a sample space. For instance, X could represent the total number of points scored in a basketball game.
+
+* **Expected Value of a Random Variable (E(X))**: The expected value of a random variable X gives a measure of the central tendency of the distribution of the random variable. It is computed as the weighted average of all possible values that the random variable can take on, with the weights being the probabilities of the values. The formula for the expected value is:
+
+$$
+E(X) = \sum_{s \in S} P(s) \cdot X(s)
+$$
+
+### Example: Full Calculation for Two Six-Sided Dice
+
+Consider the random variable X which represents the sum of the numbers that come up when two fair six-sided dice are rolled. To calculate the expected value E(X), we must first enumerate the sample space and the associated probabilities.
+
+The sample space S for the sum of two dice is:
+
+$$S = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}$$
+
+The probability of each sum, given that there are 36 possible combinations when rolling two dice, is:
+
+$$P(2) = 1/36, P(3) = 2/36, P(4) = 3/36, ..., P(7) = 6/36, ..., P(12) = 1/36$$
+
+Now, we calculate the expected value E(X) by multiplying each sum by its probability and adding all the products together:
+
+$$E(X) = (1/36)*2 + (2/36)*3 + (3/36)*4 + ... + (6/36)*7 + ... + (1/36)*12$$
+
+When you perform this calculation, you'll find that E(X) equals 7, which is the average sum of rolling two six-sided dice.
+
+### Example: Cards
+
+A standard deck of playing cards contains 52 cards, divided evenly into four suits: hearts, diamonds, clubs, and spades. Each suit has 13 cards consisting of numbers 2 through 10, a Jack, Queen, King, and Ace. If we draw a single card at random from a well-shuffled deck, we can calculate the probability of various events.
+
+| Clubs     | Diamonds  | Hearts    | Spades    |
+|-----------|-----------|-----------|-----------|
+| 2♣        | 2♦        | 2♥        | 2♠        |
+| 3♣        | 3♦        | 3♥        | 3♠        |
+| 4♣        | 4♦        | 4♥        | 4♠        |
+| 5♣        | 5♦        | 5♥        | 5♠        |
+| 6♣        | 6♦        | 6♥        | 6♠        |
+| 7♣        | 7♦        | 7♥        | 7♠        |
+| 8♣        | 8♦        | 8♥        | 8♠        |
+| 9♣        | 9♦        | 9♥        | 9♠        |
+| 10♣       | 10♦       | 10♥       | 10♠       |
+| J♣        | J♦        | J♥        | J♠        |
+| Q♣        | Q♦        | Q♥        | Q♠        |
+| K♣        | K♦        | K♥        | K♠        |
+| A♣        | A♦        | A♥        | A♠        |
+
+
+#### Probability of Drawing a Heart
+
+The probability of drawing a card from any particular suit, like hearts, is given by the ratio of the number of cards in that suit to the total number of cards in the deck:
 
 $$
 P(\text{Heart}) = \frac{\text{Number of hearts}}{\text{Total number of cards}} = \frac{13}{52} = \frac{1}{4}
 $$
 
-### Distinguishable Balls
+This is because there are 13 hearts and 52 cards in total, so the probability is \( \frac{13}{52} \), which simplifies to \( \frac{1}{4} \) or 25%.
 
-Placing r = 3 distinguishable balls (a, b, c) in n = 3 cells:
+#### Probability of Drawing a Face Card
 
-Elementary events (each row represents a possible outcome):
+Face cards are the Jack, Queen, and King of each suit. There are 3 face cards per suit, and 4 suits, so there are 12 face cards in total.
+
+$$
+P(\text{Face Card}) = \frac{\text{Number of face cards}}{\text{Total number of cards}} = \frac{12}{52} = \frac{3}{13}
+$$
+
+#### Probability of Drawing an Ace
+
+Since there are four Aces in a deck, one for each suit, the probability of drawing an Ace is:
+
+$$
+P(\text{Ace}) = \frac{\text{Number of Aces}}{\text{Total number of cards}} = \frac{4}{52} = \frac{1}{13}
+$$
+
+#### Probability of Drawing a Card Lower than 5
+
+Cards lower than 5 will be the numbers 2, 3, and 4 from each suit. Since there are 4 suits, this gives us 12 cards.
+
+$$
+P(\text{Card} < 5) = \frac{\text{Number of cards lower than 5}}{\text{Total number of cards}} = \frac{12}{52} = \frac{3}{13}
+$$
+
+#### Expected Value of Card Numbers
+If we assign numerical values to each card (Jack = 11, Queen = 12, King = 13, Ace = 1), we can calculate the expected value for the number on a card drawn at random from the deck. We'll denote this random variable as \( X \).
+
+$$
+E(X) = \sum_{i=1}^{13} P(i) \cdot i
+$$
+
+Where \( P(i) \) is the probability of drawing a card with number \( i \), which is \( \frac{1}{13} \) for each card number since there is an equal number of each card number in the deck.
+
+These probabilities and expected values provide the fundamental basis for a wide range of card games and can be used to calculate more complex odds based on game rules and strategies.
+
+
+
+### Example: Distinguishable Balls in Cells
+
+Consider an experiment where r = 3 distinguishable balls, labeled a, b, and c, are to be placed in n = 3 cells. We'll enumerate the elementary events and then calculate the probabilities of several interesting events related to this setup.
+
+Elementary events are unique arrangements of the balls in the cells. Since the balls are distinguishable, each different arrangement counts as a separate event.
 
 | Index | Cell 1 | Cell 2 | Cell 3 |
 |-------|--------|--------|--------|
@@ -91,27 +195,44 @@ Elementary events (each row represents a possible outcome):
 | 26    | c      | a      | b      |
 | 27    | c      | b      | a      |
 
-* Event A: "at least two balls are in one cell" - elementary events 1-21
-* Event B: "the first cell is not empty" - elementary events 1, 4-12, 16-18, 22-27
-* Event C: "both A and B occur" - elementary events 1, 4-12, 16-18
-* Event D: "either A or B occurs" - elementary events 1-27
+We can define several events based on these arrangements:
 
-Let's calculate probabilities for these events (assuming each outcome is equally likely):
-There are $3^3 = 27$ possible outcomes in total.
+* **Event A**: "At least two balls are in one cell." This event includes any arrangement where one cell contains two or three balls.
+* **Event B**: "The first cell is not empty." This includes any arrangement where cell 1 contains at least one ball.
+* **Event C**: "Both A and B occur." This is the intersection of events A and B.
+* **Event D**: "Either A or B occurs." This is the union of events A and B.
 
-$$P(A) = \frac{\text{Number of outcomes in A}}{\text{Total outcomes}} = 21 / 27$$
+#### Probability Calculations
 
-$$P(B) = \frac{\text{Number of outcomes in B}}{\text{Total outcomes}} = 19 / 27$$
+With 27 possible outcomes, each equally likely, the probabilities of the events are:
 
-$$P(C) = \frac{\text{Number of outcomes in C}}{\text{Total outcomes}} = 12 / 27$$
+$$
+P(A) = \frac{\text{Number of favorable outcomes for A}}{\text{Total outcomes}} = \frac{21}{27}
+$$
 
-$$P(D) = \frac{\text{Number of outcomes in D}}{\text{Total outcomes}} = 27 / 27$$
+$$
+P(B) = \frac{\text{Number of favorable outcomes for B}}{\text{Total outcomes}} = \frac{19}{27}
+$$
 
-### Indistinguishable Balls
+$$
+P(C) = \frac{\text{Number of favorable outcomes for C}}{\text{Total outcomes}} = \frac{12}{27}
+$$
 
-Placing r = 3 indistinguishable balls in n = 3 cells:
+$$
+P(D) = \frac{\text{Number of favorable outcomes for D}}{\text{Total outcomes}} = \frac{27}{27} = 1
+$$
 
-Elementary events (each row represents a possible outcome):
+These probabilities can be simplified:
+
+$$
+P(A) = \frac{7}{9}, P(B) = \frac{19}{27}, P(C) = \frac{4}{9}, P(D) = 1
+$$
+
+### Example: Indistinguishable Balls
+
+In this scenario, we consider the placement of r = 3 indistinguishable balls into n = 3 cells. Since the balls are indistinguishable, the order in which they are placed does not matter, which reduces the number of elementary events compared to the case with distinguishable balls.
+
+The elementary events are represented by the arrangements of the balls across the cells as follows:
 
 | Index | Cell 1 | Cell 2 | Cell 3 |
 |-------|--------|--------|--------|
@@ -126,87 +247,108 @@ Elementary events (each row represents a possible outcome):
 | 9     |        | o      | oo     |
 | 10    | o      | o      | o      |
 
-* Event A: "at least two balls are in one cell" - elementary events 1-9
-* Event B: "the first cell is not empty" - elementary events 1, 4-6, 8, 10
+Events of Interest:
 
-Let's calculate probabilities for these events (assuming each outcome is equally likely):
-There are 10 unique outcomes in total.
+* **Event A**: "At least two balls are in one cell." This event includes arrangements where any cell has two or three balls.
+* **Event B**: "The first cell is not empty." This event includes arrangements where there is at least one ball in the first cell.
 
-$$P(A) = \frac{\text{Number of outcomes in A}}{\text{Total unique outcomes}} = 9 / 10$$
+#### Probability Calculations
 
-$$P(B) = \frac{\text{Number of outcomes in B}}{\text{Total unique outcomes}} = 6 / 10$$
+With 10 unique outcomes and each outcome equally likely, the probabilities are:
+
+$$
+P(A) = \frac{\text{Number of favorable outcomes for A}}{\text{Total unique outcomes}} = \frac{9}{10}
+$$
+
+$$
+P(B) = \frac{\text{Number of favorable outcomes for B}}{\text{Total unique outcomes}} = \frac{6}{10} = \frac{3}{5}
+$$
 
 ## Geometric Probability
 
-Example:
+Geometric probability involves finding the likelihood of an event by using geometric figures and measures such as area or volume. It often relates to continuous random variables and can be calculated using integral calculus.
 
-The elementary event space is defined by the set of points (x, y) in the plane and fills the interior of the square [0 ≤ x ≤ 1; 0 ≤ y ≤ 1]. Find the probability that any point inside the square is at a distance less than r from a chosen corner of the square.
+### Example: Distance from a Corner in a Square
 
-The sought probability is expressed as the ratio of the area of the common part of the circle with radius r and the square to the area of the square (equal to 1):
+Consider a square with side lengths of 1 unit, and we are interested in the probability that a randomly chosen point inside the square is at a distance less than r from a specific corner of the square, let's say the bottom left corner at the origin (0,0).
 
-For r < 1:
+#### Visual Setup
 
-$$
-P(r) = \int_{0}^{r} \sqrt{r^2 - x^2} dx =$$
+Visualize the square in the coordinate plane with corners at (0,0), (1,0), (0,1), and (1,1). The event space is the set of all points (x, y) that lie within this square. We're looking at the area within a quarter circle of radius r centered at the origin, which represents the points less than a distance r from that corner.
 
-$$
-\frac{1}{2} (x \sqrt{r^2-x^2}+r^2\arcsin\frac{x}{r}) |^r_0= \frac{\pi r^2}{4}
-$$
+#### Probability Calculation
 
-For r > 1:
+The probability is the area of the segment of the circle that lies within the square, divided by the total area of the square.
 
-$$
-P(r) = \int_{0}^{r} \sqrt{r^2 - x^2} dx - 2 \int_{1}^{r} \sqrt{r^2 - x^2} dx = $$
+For r < 1 (when the circle is completely within the square):
+
+The area of the quarter circle is \( \frac{\pi r^2}{4} \), so the probability \( P(r) \) that a point lies within this circle is:
 
 $$
-\frac{\pi r^2}{4} - 2(\frac{\pi r^2}{4} - \frac{1}{2}\sqrt{r^2-1}- \frac{1}{2}r^2\arcsin\frac{1}{r}) = $$
-
-$$\sqrt{r^2-1} + r^2\arcsin\frac{1}{r} - \frac{\pi r^2}{4}
+P(r) = \frac{\text{Area of quarter circle with radius r}}{\text{Area of square}} = \frac{\pi r^2}{4}
 $$
 
-As can be seen, for $r = \sqrt{2}$, the probability reaches a value equal to 1.
+This is because the integral
 
-## Applications and Importance
+$$
+\int_{0}^{r} \sqrt{r^2 - x^2} dx
+$$
 
-Probability has a wide range of applications in various fields, including but not limited to:
+represents the area under the curve \( y = \sqrt{r^2 - x^2} \), which is the top half of the quarter circle.
 
-1. **Statistics**: Estimating population parameters and making inferences about populations based on sample data.
-2. **Finance**: Assessing the risk and return of investments, portfolio optimization, and option pricing.
-3. **Gambling**: Determining the odds of winning and creating strategies for games of chance.
-4. **Machine Learning**: Making predictions and classification based on historical data.
-5. **Weather Forecasting**: Predicting the likelihood of certain weather conditions.
-6. **Medicine**: Estimating the effectiveness of treatments and conducting clinical trials.
+For r > 1 (when the circle extends outside the square):
 
-Understanding probability is essential for making informed decisions in uncertain situations and for modeling complex systems.
+We need to calculate the area of the quarter circle and subtract the area that lies outside the square. This results in:
+
+$$
+P(r) = \frac{\pi r^2}{4} - \text{Area outside the square}
+$$
+
+To find the area outside the square, we calculate the area under the curve from x = 1 to r, which represents the part of the circle that extends beyond the square's boundary. This results in the subtraction of the area of two such segments from the total area of the quarter circle.
+
+For \( r = \sqrt{2} \), the quarter circle exactly covers the square, making the probability equal to 1.
 
 ## Axioms of Probability
 
-The three fundamental axioms of probability are:
+Probability theory is based on a set of principles, or axioms, that define the properties of the probability measure. These axioms, first formalized by the Russian mathematician Andrey Kolmogorov, are the foundation upon which the entire framework of probability is built.
 
-1. **Non-negativity**: The probability of an event A is always non-negative.
+### The Three Axioms
+
+1. **Non-negativity**: This axiom states that the probability of any event A is a non-negative number. This reflects the idea that an event either happens or it doesn't, and thus, the probability cannot be negative.
+
+   $$
+   P(A) \geq 0
+   $$
+
+2. **Unit Measure**: This axiom ensures that the probability of the sample space S, which includes all possible outcomes of an experiment, is always equal to 1. This is equivalent to saying that it's certain at least one of the possible outcomes will occur.
+
+   $$
+   P(S) = 1
+   $$
+
+3. **Additivity**: The axiom of additivity is about disjoint events, also known as mutually exclusive events. If events A and B cannot both occur at the same time, the probability of either event A or event B occurring is the sum of their individual probabilities.
+
+   $$
+   P(A \cup B) = P(A) + P(B) \quad \text{if} \quad A \cap B = \emptyset
+   $$
+
+### Application to a Deck of Cards
+
+Consider a standard deck of 52 playing cards. We want to calculate the probability of drawing either a heart or a queen. As there are 13 hearts and 4 queens, but these categories overlap in one card (the queen of hearts), we must correct for this overlap in our calculation:
 
 $$
-P(A) \geq 0
+P(\text{Heart} \cup \text{Queen}) = P(\text{Heart}) + P(\text{Queen}) - P(\text{Heart} \cap \text{Queen})
 $$
 
-2. **Unit Measure**: The probability of the sample space S (the set of all possible outcomes) is 1.
+Calculating each term gives us:
 
 $$
-P(S) = 1
+P(\text{Heart}) = \frac{13}{52}, P(\text{Queen}) = \frac{4}{52}, P(\text{Heart} \cap \text{Queen}) = \frac{1}{52}
 $$
 
-3. **Additivity**: If events A and B are mutually exclusive (i.e., they cannot occur simultaneously), then the probability of either A or B occurring is the sum of their individual probabilities.
+Substituting these into our equation, we get:
 
 $$
-P(A \cup B) = P(A) + P(B) \quad \text{if} \quad A \cap B = \emptyset
+P(\text{Heart} \cup \text{Queen}) = \frac{13}{52} + \frac{4}{52} - \frac{1}{52} = \frac{16}{52} = \frac{4}{13}
 $$
 
-### Example with Cards
-
-Let's calculate the probability of drawing either a heart or a queen from a standard deck of 52 cards. There are 13 hearts and 4 queens in the deck, but one card is both a heart and a queen (the queen of hearts). Since the events are not mutually exclusive, we need to account for the overlap:
-
-$$
-P(\text{Heart} \cup \text{Queen}) = P(\text{Heart}) + P(\text{Queen}) - P(\text{Heart} \cap \text{Queen}) = \frac{13}{52} + \frac{4}{52} - \frac{1}{52} = \frac{16}{52}
-$$
-
-These axioms provide the foundation for the theory of probability and enable us to derive other rules and properties.
