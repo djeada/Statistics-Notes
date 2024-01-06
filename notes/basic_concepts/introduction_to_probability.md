@@ -291,6 +291,19 @@ Consider a square with side lengths of 1 unit, and we are interested in the prob
 
 Visualize the square in the coordinate plane with corners at (0,0), (1,0), (0,1), and (1,1). The event space is the set of all points (x, y) that lie within this square. We're looking at the area within a quarter circle of radius r centered at the origin, which represents the points less than a distance r from that corner.
 
+```
+Y
+^
+|
+|
+(0,1)-----------(1,1)
+|                 |
+|                 |
+|                 |
+|                 |
+(0,0)-----------(1,0)------> X
+```
+
 #### Probability Calculation
 
 The probability is the area of the segment of the circle that lies within the square, divided by the total area of the square.
