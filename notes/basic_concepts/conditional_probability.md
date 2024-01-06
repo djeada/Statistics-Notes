@@ -1,12 +1,26 @@
+## The Multiplication Rule in Probability
 
-## The Multiplication Rule
+The multiplication rule is a fundamental concept in probability theory. It is particularly useful when dealing with the probability of two or more events occurring in sequence or simultaneously. This rule has two forms, depending on whether the events are independent or dependent.
 
-The multiplication rule is used to find the probability of two events A and B happening together:
+### Independent Events
+
+Two events A and B are independent if the occurrence of one does not affect the probability of occurrence of the other. For independent events, the multiplication rule states:
+
+$$
+P(A \cap B) = P(A) \times P(B)
+$$
+
+This means the probability of both events A and B occurring is the product of their individual probabilities.
+
+### Dependent Events
+
+If the occurrence of event A in some way influences the occurrence of event B, these events are considered dependent. For dependent events, the probability of both events occurring is given by:
 
 $$
 P(A \cap B) = P(A|B) \times P(B)
 $$
 
+Here, \( P(A|B) \) is the conditional probability of event A given that event B has occurred. It represents the probability of A under the condition that B is known to have occurred.
 
 
 ## Independent Events
@@ -15,12 +29,6 @@ Two events are independent if the occurrence of one event does not affect the pr
 
 $$
 P(A|B) = P(A) \quad \text{and} \quad P(B|A) = P(B)
-$$
-
-This means that for independent events, the multiplication rule simplifies to:
-
-$$
-P(A \cap B) = P(A) \times P(B)
 $$
 
 ### Example
@@ -286,9 +294,7 @@ A probability tree is a directed tree diagram where each node represents a possi
 1. The probabilities along each path from the root to a leaf must sum to 1.
 2. The probability of an event is the sum of the probabilities of all paths that lead to that event.
 
-### Examples
-
-#### Example 1: Drawing Cards
+### Example: Drawing Cards
 
 ```plaintext
            __Heart (1/4)
@@ -302,7 +308,7 @@ In this example, we are drawing one card from a standard deck of 52 cards. There
 
 In this example, we are drawing one card from a standard deck of 52 cards. There are two possible outcomes: drawing a heart (with a probability of 1/4) and not drawing a heart (with a probability of 3/4).
 
-#### Example 2: Tossing a Coin and Rolling a Die
+### Example: Tossing a Coin and Rolling a Die
 
 ```plaintext
 
@@ -319,7 +325,7 @@ Initial ──┤               6 (1/6)
 
 In this example, we first toss a coin and then roll a die. The tree branches at the first level represent the outcomes of the coin toss (heads or tails), each with a probability of 1/2. The second level of branches represents the outcomes of rolling the die (1 to 6), each with a probability of 1/6.
 
-## Example 3: Rolling Two Dice
+### Example: Rolling Two Dice
 
 ```plaintext
            __1 (1/6)──1 (1/6)
