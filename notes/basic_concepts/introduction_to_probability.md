@@ -85,6 +85,17 @@ The sample space S for the sum of two dice is:
 
 $$S = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}$$
 
+Which is better represented using a table:
+
+| - | 1 | 2 | 3 | 4 | 5 | 6 |
+|---|---|---|---|---|---|---|
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+| 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+| 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+| 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+| 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+| 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+
 The probability of each sum, given that there are 36 possible combinations when rolling two dice, is:
 
 $$P(2) = 1/36, P(3) = 2/36, P(4) = 3/36, ..., P(7) = 6/36, ..., P(12) = 1/36$$
