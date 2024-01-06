@@ -1,62 +1,4 @@
-## Conditional Probability and Independence
-
-### Definition of Conditional Probability
-
-Conditional probability is the probability of an event occurring, given that another event has already occurred. The conditional probability of event A happening given that event B has occurred is denoted as P(A|B), and can be calculated using the formula:
-
-$$
-P(A|B) = \frac{P(A \cap B)}{P(B)}
-$$
-
-### Example
-
-In a deck of 52 playing cards, there are 4 suits (hearts, diamonds, clubs, and spades) with 13 cards in each suit. What is the probability of drawing a king, given that the drawn card is a heart?
-
-$$
-P(\text{King}|\text{Heart}) = \frac{P(\text{King} \cap \text{Heart})}{P(\text{Heart})} = \frac{1/52}{13/52} = \frac{1}{13}
-$$
-
-### Example 
-
-**Example**: What is the probability that the birthdays of two randomly selected people are different (B2)?
-
-$$
-P(B_2) = 1 - \frac{1}{365}
-$$
-
-What is the probability that the birthdays of three randomly selected people are different (B3)?
-
-Let A3 be the event "the birthday of the third person is different from the birthdays of the first two people":
-
-$$
-P(B_3) = P(A_3 \cap B_2) = P(A_3 | B_2) P(B_2)
-$$
-
-$$
-P(A_3 | B_2) = 1 - \frac{2}{365} \Rightarrow P(B_3) = P(A_3 | B_2) P(B_2) = \left(1 - \frac{2}{365}\right) \left(1 - \frac{1}{365}\right) = 0.9918
-$$
-
-For n people, we have:
-
-$$
-P(B_n) = P(A_n | B_{n-1}) \cdots P(A_3 | B_2) P(B_2)
-$$
-
-Note: When solving problems, it is important to identify which event is the condition:
-
-$$
-P(A \cap B) = P(A | B) P(B) \quad \text{or} \quad P(A \cap B) = P(B | A) P(A)
-$$
-
-### The Multiplication Rule
-
-The multiplication rule is used to find the probability of two events A and B happening together:
-
-$$
-P(A \cap B) = P(A|B) \times P(B)
-$$
-
-### Independent Events
+## Independent Events
 
 Two events are independent if the occurrence of one event does not affect the probability of the other event. In other words, events A and B are independent if:
 
@@ -118,7 +60,65 @@ $$
 
 where $A^c, B^c, \ldots, P_n^c$ are the complementary events of $A, B, \ldots, P_n$.
 
-### The Law of Total Probability
+## Conditional Probability 
+
+Conditional probability is the probability of an event occurring, given that another event has already occurred. The conditional probability of event A happening given that event B has occurred is denoted as P(A|B), and can be calculated using the formula:
+
+$$
+P(A|B) = \frac{P(A \cap B)}{P(B)}
+$$
+
+### Example
+
+In a deck of 52 playing cards, there are 4 suits (hearts, diamonds, clubs, and spades) with 13 cards in each suit. What is the probability of drawing a king, given that the drawn card is a heart?
+
+$$
+P(\text{King}|\text{Heart}) = \frac{P(\text{King} \cap \text{Heart})}{P(\text{Heart})} = \frac{1/52}{13/52} = \frac{1}{13}
+$$
+
+### Example 
+
+**Example**: What is the probability that the birthdays of two randomly selected people are different (B2)?
+
+$$
+P(B_2) = 1 - \frac{1}{365}
+$$
+
+What is the probability that the birthdays of three randomly selected people are different (B3)?
+
+Let A3 be the event "the birthday of the third person is different from the birthdays of the first two people":
+
+$$
+P(B_3) = P(A_3 \cap B_2) = P(A_3 | B_2) P(B_2)
+$$
+
+$$
+P(A_3 | B_2) = 1 - \frac{2}{365} \Rightarrow P(B_3) = P(A_3 | B_2) P(B_2) = \left(1 - \frac{2}{365}\right) \left(1 - \frac{1}{365}\right) = 0.9918
+$$
+
+For n people, we have:
+
+$$
+P(B_n) = P(A_n | B_{n-1}) \cdots P(A_3 | B_2) P(B_2)
+$$
+
+Note: When solving problems, it is important to identify which event is the condition:
+
+$$
+P(A \cap B) = P(A | B) P(B) \quad \text{or} \quad P(A \cap B) = P(B | A) P(A)
+$$
+
+## The Multiplication Rule
+
+The multiplication rule is used to find the probability of two events A and B happening together:
+
+$$
+P(A \cap B) = P(A|B) \times P(B)
+$$
+
+
+
+## The Law of Total Probability
 
 The law of total probability is used to calculate the probability of an event A occurring, given a partition of the sample space into events B1, B2, ..., Bn. The formula for the law of total probability is:
 
@@ -179,8 +179,7 @@ P(W) = \frac{1}{n(n+1)} \cdot \frac{n(n+1)}{2} = \frac{1}{2}
 $$
 
 
-
-### Bayes' Theorem
+## Bayes' Theorem
 
 Bayes' theorem is used to update the probability of an event based on new evidence. It relates the conditional probability of an event A given event B, to the conditional probability of event B given event A:
 
