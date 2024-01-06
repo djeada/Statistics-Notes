@@ -158,16 +158,20 @@ where:
 Consider the scenario of rolling a fair 6-sided die:
 
 1. **P(4)**: The probability of rolling a 4 on a 6-sided die is one out of the six possible outcomes.
-   $$ P(4) = \frac{1}{6} $$
+   
+$$P(4) = \frac{1}{6}$$
 
-2. **P(odd)**: An odd number can be rolled in three out of the six possible outcomes (1, 3, or 5).
-   $$ P(odd) = \frac{3}{6} = \frac{1}{2} $$
+3. **P(odd)**: An odd number can be rolled in three out of the six possible outcomes (1, 3, or 5).
+   
+$$P(odd) = \frac{3}{6} = \frac{1}{2}$$
 
-3. **P(4 | odd)**: The conditional probability of rolling a 4 given that the die shows an odd number. Since 4 is an even number, it cannot be rolled if we know an odd number is rolled.
-   $$ P(4 | odd) = 0 $$
+5. **P(4 | odd)**: The conditional probability of rolling a 4 given that the die shows an odd number. Since 4 is an even number, it cannot be rolled if we know an odd number is rolled.
 
-4. **P(odd | 4)**: The probability that the die shows an odd number given that a 4 is rolled. This is not possible as 4 is even, so this probability is zero.
-   $$ P(odd | 4) = 0 $$
+$$ P(4 | odd) = 0 $$
+
+7. **P(odd | 4)**: The probability that the die shows an odd number given that a 4 is rolled. This is not possible as 4 is even, so this probability is zero.
+
+$$ P(odd | 4) = 0 $$
 
 ### Example: Deck of Cards
 
@@ -244,156 +248,202 @@ This product will continue until we reach P(B_2), which is the base case for two
 
 ## The Law of Total Probability
 
-The law of total probability is used to calculate the probability of an event A occurring, given a partition of the sample space into events B1, B2, ..., Bn. The formula for the law of total probability is:
+The law of total probability allows for the computation of the probability of an event A based on a set of mutually exclusive and exhaustive events. It's particularly useful when the overall sample space is divided into several distinct scenarios, or partitions, that cover all possible outcomes. The formula for the law of total probability is given by:
 
 $$
 P(A) = \sum_{i=1}^{n} P(A|B_i) \times P(B_i)
 $$
 
-### Example
-In a bag, there are 3 red balls, 4 blue balls, and 5 green balls. We draw two balls without replacement. What is the probability that the second ball is red?
+where $B_1, B_2, ..., B_n$ are the partitions of the sample space and $P(A|B_i)$ is the conditional probability of A given $B_i$.
 
-Partition the sample space into events B1 (first ball is red), B2 (first ball is blue), and B3 (first ball is green). Then, use the law of total probability:
+### Example: Probability of Drawing a Red Ball Second
 
-1. If the first ball is red (B1), there are 2 red balls left out of 11 total balls. So, $P(\text{Red}|\text{B1}) = \frac{2}{11}$, and $P(\text{B1}) = \frac{3}{12}$.
-2. If the first ball is blue (B2), there are still 3 red balls left out of 11 total balls. So, $P(\text{Red}|\text{B2}) = \frac{3}{11}$, and $P(\text{B2}) = \frac{4}{12}$.
-3. If the first ball is green (B3), again there are 3 red balls left out of 11 total balls. So, $P(\text{Red}|\text{B3}) = \frac{3}{11}$, and $P(\text{B3}) = \frac{5}{12}$.
+Suppose we have a bag containing 3 red balls, 4 blue balls, and 5 green balls, and we want to find the probability of drawing a red ball on the second draw without replacement. We can partition the sample space into three mutually exclusive events based on the outcome of the first draw:
+
+- $B_1$: The first ball drawn is red.
+- $B_2$: The first ball drawn is blue.
+- $B_3$: The first ball drawn is green.
+
+Using the law of total probability:
+
+1. If the first ball is red ($B_1$), then there are 2 red balls left out of the remaining 11 balls. So:
+   - $P(\text{Red}|B_1) = \frac{2}{11}$
+   - $P(B_1) = \frac{3}{12}$
+
+2. If the first ball is blue ($B_2$), there are still 3 red balls left out of the remaining 11 balls. So:
+   - $P(\text{Red}|B_2) = \frac{3}{11}$
+   - $P(B_2) = \frac{4}{12}$
+
+3. If the first ball is green ($B_3$), there are still 3 red balls left out of the remaining 11 balls. So:
+   - $P(\text{Red}|B_3) = \frac{3}{11}$
+   - $P(B_3) = \frac{5}{12}$
+
+The total probability that the second ball is red is the sum of the probabilities of drawing a red ball given each initial event times the probability of each initial event:
 
 $$
-P(\text{Second ball is red}) = P(\text{Red}|\text{B1})P(\text{B1}) + P(\text{Red}|\text{B2})P(\text{B2}) + P(\text{Red}|\text{B3})P(\text{B3}) \\
-= \frac{2}{11} \times \frac{3}{12} + \frac{3}{11} \times \frac{4}{12} + \frac{3}{11} \times \frac{5}{12} = \frac{18}{44} = \frac{9}{22}
+P(\text{Second ball is red}) = P(\text{Red}|B_1)P(B_1) + P(\text{Red}|B_2)P(B_2) + P(\text{Red}|B_3)P(B_3)
 $$
 
-### Example 1: Probability of drawing a white ball
+Substituting in the values:
 
-Given n+1 urns with white and black balls, the ratio of the number of white balls to the total number of balls for the i-th urn is i/n (i=0, 1, 2, ..., n). We randomly draw one ball from a randomly chosen urn. What is the probability that the chosen ball is white?
+$$
+P(\text{Second ball is red}) = \frac{2}{11} \times \frac{3}{12} + \frac{3}{11} \times \frac{4}{12} + \frac{3}{11} \times \frac{5}{12} = \frac{6}{132} + \frac{12}{132} + \frac{15}{132} = \frac{33}{132} = 0.25
+$$
 
-The conditional probability of drawing a white ball from the i-th urn is:
+Therefore, the probability of drawing a red ball second, without replacement, is $0.25$ or $\frac{1}{4}$.
+
+### Example: Probability of Drawing a White Ball
+
+Consider a set of n+1 urns labeled from 0 to n. Each urn contains a mix of white and black balls, where the ratio of white balls to the total number of balls in the i-th urn is i/n. If we randomly select one urn and then draw one ball from it, we want to find the probability that this ball is white.
+
+#### Conditional Probability
+
+The conditional probability of drawing a white ball from the i-th urn, denoted as $U_i$, is given by the ratio of white balls in that urn:
 
 $$
 P(W | U_i) = \frac{i}{n}
 $$
 
 Where:
-- `W` represents the event of drawing a white ball.
-- `U_i` represents the event of choosing the i-th urn.
+- $W$ represents the event of drawing a white ball.
+- $U_i$ represents the event of selecting the i-th urn.
 
-The probability of choosing each urn is equal:
+#### Probability of Selecting Each Urn
+
+Assuming each urn has an equal probability of being chosen, the probability of selecting any particular urn is:
 
 $$
 P(U_i) = \frac{1}{n+1}
 $$
 
-The desired probability of drawing a white ball is determined using the total probability formula:
+#### Total Probability
+
+To find the overall probability of drawing a white ball, we use the law of total probability. This accounts for the probability of drawing a white ball from each urn weighted by the probability of selecting that urn:
 
 $$
-P(W) = \sum_{i=0}^{n} P(W | U_i) \cdot P(U_i) = \frac{1}{n+1} \sum_{i=0}^{n} \frac{i}{n} = \frac{1}{n(n+1)} \sum_{i=0}^{n} i
+P(W) = \sum_{i=0}^{n} P(W | U_i) \cdot P(U_i) = \frac{1}{n+1} \sum_{i=0}^{n} \frac{i}{n}
 $$
 
-Using the formula for the sum of the first n integers:
+#### Summation
+
+The sum of the first n integers is given by the formula:
 
 $$
-\sum_{i=0}^{n} i = \frac{n(n+1)}{2}
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
 $$
 
-Now substitute this into the previous equation:
+Note that the summation starts from i=1 since the 0-th urn contains no white balls and thus does not contribute to the probability of drawing a white ball.
+
+#### Final Probability Calculation
+
+Substituting the summation into the total probability formula, we get:
 
 $$
-P(W) = \frac{1}{n(n+1)} \cdot \frac{n(n+1)}{2} = \frac{1}{2}
+P(W) = \frac{1}{n+1} \cdot \frac{1}{n} \cdot \frac{n(n+1)}{2} = \frac{1}{2}
 $$
 
+Thus, the probability of drawing a white ball from a randomly chosen urn is $\frac{1}{2}$, regardless of the number of urns.
 
 ## Bayes' Theorem
 
-Bayes' theorem is used to update the probability of an event based on new evidence. It relates the conditional probability of an event A given event B, to the conditional probability of event B given event A:
+Bayes' theorem provides a way to update our probability estimates for an event based on new evidence. It connects the conditional and marginal probabilities of events, allowing us to revise our predictions or hypotheses in light of additional information. The theorem is stated mathematically as:
 
 $$
 P(A|B) = \frac{P(B|A) \times P(A)}{P(B)}
 $$
 
-### Example
+where:
+- $P(A|B)$ is the probability of event A given event B has occurred,
+- $P(B|A)$ is the probability of event B given event A has occurred,
+- $P(A)$ is the probability of event A, and
+- $P(B)$ is the probability of event B.
 
-In a medical test for a disease, the test has a 95% true positive rate (meaning that if someone has the disease, the test will be positive 95% of the time) and a 5% false positive rate (meaning that if someone does not have the disease, the test will be positive 5% of the time). The prevalence of the disease in the population is 2%. If a person tests positive, what is the probability that they actually have the disease?
+### Example: Medical Diagnosis
 
-Let A be the event "person has the disease" and B be the event "person tests positive". We want to find P(A|B):
+Consider a medical test that is designed to diagnose a certain disease. The characteristics of the test are:
+- True positive rate (sensitivity): 95% (if the person has the disease, the test is positive 95% of the time).
+- False positive rate: 5% (if the person does not have the disease, the test is positive 5% of the time).
+- Prevalence of the disease in the general population: 2%.
+
+Let A be the event "person has the disease" and B be the event "person tests positive". Applying Bayes' theorem:
 
 $$
 P(A|B) = \frac{P(B|A) \times P(A)}{P(B)}
 $$
 
-Using the law of total probability for P(B):
+First, we calculate the total probability of a positive test (P(B)), which includes both true and false positives:
 
 $$
 P(B) = P(B|A) \times P(A) + P(B|\text{not } A) \times P(\text{not } A)
 $$
 
-Plugging in the values:
+Plugging in the given rates:
+
+- True positive rate $P(B|A) = 0.95$
+- Prevalence $P(A) = 0.02$
+- False positive rate $P(B|\text{not } A) = 0.05$
+- Probability of not having the disease $P(\text{not } A) = 0.98$
+
+The total probability of a positive test result is then:
 
 $$
-P(A|B) = \frac{0.95 \times 0.02}{(0.95 \times 0.02) + (0.05 \times 0.98)} = \frac{0.019}{0.058} \approx 0.3276
+P(B) = (0.95 \times 0.02) + (0.05 \times 0.98)
 $$
 
-So, there is approximately a 32.76% chance that the person actually has the disease, given that they tested positive.
-
-
-### Example 2: BSE "mad cow" disease test
-
-Assuming the test result is positive, what is the probability that a cow has BSE?
-
-Given quantities:
+Applying these values to Bayes' theorem gives us:
 
 $$
-P(T | B) = 0.70, P(T | B^c) = 0.10, P(B) = 0.02
+P(A|B) = \frac{0.95 \times 0.02}{(0.95 \times 0.02) + (0.05 \times 0.98)} \approx 0.2794
 $$
 
-Where:
-- `B` represents the event that a cow has BSE.
-- `T` represents the event of a positive test result.
-- `B^c` represents the complement of the event B, i.e., the event that a cow does not have BSE.
+Therefore, if a person tests positive, there is approximately a 27.94% chance that they actually have the disease.
 
-We are looking for the conditional probability:
+### Example: BSE "Mad Cow" Disease Test
+
+We are given a scenario where we need to determine the probability that a cow actually has BSE (Bovine Spongiform Encephalopathy), given that it has tested positive for the disease.
+
+Given Quantities:
+
+- The probability that the test is positive given the cow has BSE (true positive rate): $P(T | B) = 0.70$
+- The probability that the test is positive given the cow does not have BSE (false positive rate): $P(T | B^c) = 0.10$
+- The prior probability that a cow has BSE (prevalence of the disease): $P(B) = 0.02$
+
+- $P(T | B) = 0.70$: The probability that the test is positive given the cow has BSE (true positive rate).
+- $P(T | B^c) = 0.10$: The probability that the test is positive given the cow does not have BSE (false positive rate).
+- $P(B) = 0.02$: The prevalence of the disease in the cow population (prior probability).
+
+Complementary Probability:
+
+- $P(B^c) = 1 - P(B)$: The probability that a cow does not have BSE.
+
+#### Bayes' Theorem Application:
+
+To find the conditional probability $P(B | T)$, we use Bayes' Theorem:
 
 $$
-P(B | T) = \frac{P(B \cap T)}{P(T)} = \frac{P(T | B) \cdot P(B)}{P(T | B) \cdot P(B) + P(T | B^c) \cdot P(B^c)}
+P(B | T) = \frac{P(T | B) \cdot P(B)}{P(T)}
 $$
 
-First, we need to find the probability of a cow not having BSE:
+The denominator, $P(T)$, is the total probability of a positive test result, which includes both true positives and false positives. This is obtained using the law of total probability:
 
 $$
-P(B^c) = 1 - P(B) = 1 - 0.02 = 0.98
+P(T) = P(T | B) \cdot P(B) + P(T | B^c) \cdot P(B^c)
 $$
 
-Now, we can calculate the conditional probability:
+#### Calculation:
+
+With the provided values:
+
+- $P(B^c) = 0.98$
+- $P(T) = 0.70 \cdot 0.02 + 0.10 \cdot 0.98$
+
+We calculate $P(B | T)$:
 
 $$
 P(B | T) = \frac{0.70 \cdot 0.02}{0.70 \cdot 0.02 + 0.10 \cdot 0.98} \approx 0.125
 $$
 
-The probability that a cow has BSE given a positive test result is approximately 0.125.
-
-
-## Inclusion-Exclusion Principle
-
-Example: What is the probability that during n dice rolls, at least one of the faces of the die does not appear even once?
-
-Let Ai denote the event that face i does not appear during n dice rolls, i = 1,..., 6
-
-Theorem: The Inclusion-Exclusion Principle allows us to find bounds on the sought probability. Introducing the following notation:
-
-$$p_n(S_1, \dots, S_n) \equiv P(A_1 \cup A_2 \cup \dots \cup A_n) = P(A_1) - P(A_1 \cap A_2) + P(A_1 \cap A_2 \cap A_3) - \dots$$
-
-We have:
-
-$$p_n(S_1) \leq p_n(S_1, S_2) \geq p_n(S_1, S_2, S_3) \leq \dots$$
-
-Calculate probabilities (i < j < k < ...):
-
-$$p_n = \left(1 - \frac{5}{6}\right)^n + \binom{6}{2}\left(1 - \frac{4}{6}\right)^n - \binom{6}{3}\left(1 - \frac{3}{6}\right)^n + \binom{6}{4}\left(1 - \frac{2}{6}\right)^n - \binom{6}{5}\left(1 - \frac{1}{6}\right)^n$$
-
-The sought probability is:
-
-* 1-pn is the probability that during n rolls each face will appear at least once.
-* $p_{10} ≈ 0.73$, $p_{12} ≈ 0.56$, $p_{13} ≈ 0.50$, $p_{15} ≈ 0.35$, $p_{20} ≈ 0.03$, $p_{25} ≈ 0.001$
+Thus, if a cow tests positive for BSE, there is a 12.5% chance that the cow actually has the disease.
 
 ## Probability Trees
 
