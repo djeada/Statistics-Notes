@@ -18,6 +18,8 @@ Consider a medical test that is designed to diagnose a certain disease. The char
 - True positive rate (sensitivity): 95% (if the person has the disease, the test is positive 95% of the time).
 - False positive rate: 5% (if the person does not have the disease, the test is positive 5% of the time).
 - Prevalence of the disease in the general population: 2%.
+  
+![9f1ea5e9-cad4-4fc2-a6aa-5fee4f309a2d](https://github.com/djeada/Statistics-Notes/assets/37275728/dbdb3a4d-4f73-4efe-bacb-87a7bab167c7)
 
 Let A be the event "person has the disease" and B be the event "person tests positive". Applying Bayes' theorem:
 
@@ -61,6 +63,8 @@ Given Quantities:
 - The probability that the test is positive given the cow has BSE (true positive rate): $P(T | B) = 0.70$
 - The probability that the test is positive given the cow does not have BSE (false positive rate): $P(T | B^c) = 0.10$
 - The prior probability that a cow has BSE (prevalence of the disease): $P(B) = 0.02$
+
+![bcde4473-8acf-4dd8-a60e-c4a7b551f02d](https://github.com/djeada/Statistics-Notes/assets/37275728/69f47572-5fa7-4365-90f3-983e90340b24)
 
 - $P(T | B) = 0.70$: The probability that the test is positive given the cow has BSE (true positive rate).
 - $P(T | B^c) = 0.10$: The probability that the test is positive given the cow does not have BSE (false positive rate).
