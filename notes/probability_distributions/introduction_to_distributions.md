@@ -94,6 +94,8 @@ Find the probability that the first 6 appears:
 5. After three rolls.
 6. In at least three rolls.
 
+Now let's do calculations:
+
 1. $P(3) = (5/6)^2 * (1/6) ≈ 0.1157$
 2. $P(3 or 4) = P(3) + P(4) ≈ 0.1157 + 0.0964 ≈ 0.2121$
 3. $P(X < 5) = P(1) + P(2) + P(3) + P(4) ≈ 0.1667 + 0.1389 + 0.1157 + 0.0964 ≈ 0.5177$
