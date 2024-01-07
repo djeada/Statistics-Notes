@@ -30,6 +30,32 @@ $$\text{Var}(X) = \begin{cases}
 \end{cases}
 $$
 
+
+### Example: Comparing Variances of Two Populations
+
+An agronomist wishes to compare the variability in yield from two different types of wheat. The agronomist collects the following data from random samples:
+
+- Wheat Type 1: n1 = 15, variance1 = 20
+- Wheat Type 2: n2 = 12, variance2 = 30
+
+The agronomist decides to use an F-test to determine if there is a significant difference in variances between the two types of wheat.
+
+a) What is the F-statistic for the test?
+b) What are the degrees of freedom for the test?
+
+Using the formula for the F-test:
+
+$$F = \frac{\text{variance1}}{\text{variance2}}$$
+
+a) Calculate the F-statistic:
+
+$$F = \frac{20}{30} = \frac{2}{3} \approx 0.67$$
+
+b) The degrees of freedom are:
+
+- df1 = n1 - 1 = 15 - 1 = 14
+- df2 = n2 - 1 = 12 - 1 = 11
+
 ### Applications
 
 F-distributions are primarily used in hypothesis testing, such as the F-test for testing the equality of the variances of two normally distributed populations, and in the analysis of variance (ANOVA) for comparing the means of multiple groups. They are also used in regression analysis to test the overall significance of a model and in constructing confidence intervals for the ratio of two population variances.
