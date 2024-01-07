@@ -4,11 +4,6 @@ import numpy as np
 def plot_data_boxplots(datasets, titles, figsize=(10, 8)):
     """
     Plots a series of boxplots for given datasets.
-
-    Args:
-    datasets (list): A list of datasets (numpy arrays) to be plotted.
-    titles (list): A list of titles corresponding to each dataset.
-    figsize (tuple): The figure size for the plot.
     """
     fig, axs = plt.subplots(len(datasets), 1, figsize=figsize)
 
