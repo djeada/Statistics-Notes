@@ -38,6 +38,8 @@ Using the multiplication rule, the joint probability of both events is:
 
 $$ P(\text{first card Diamond} \cap \text{second card Diamond}) = P(\text{first card Diamond}) \times P(\text{second card Diamond | first card Diamond}) = \frac{13}{52} \times \frac{12}{51} \approx 0.0588 $$
 
+![40ae7df7-57fc-413d-8054-d592e9256bc8](https://github.com/djeada/Statistics-Notes/assets/37275728/dc0b84d6-ff74-4681-b329-f67a53512282)
+
 #### Probability of Drawing an Ace Followed by a King
 - The probability of drawing an Ace first is 4 out of 52.
 - If an Ace has been drawn, there are 4 Kings left in the remaining 51 cards, so the probability of drawing a King next is:
@@ -47,6 +49,8 @@ $$ P(\text{second card King | first card Ace}) = \frac{4}{51} $$
 Applying the multiplication rule here gives us:
 
 $$ P(\text{first card Ace} \cap \text{second card King}) = P(\text{first card Ace}) \times P(\text{second card King | first card Ace}) = \frac{4}{52} \times \frac{4}{51} \approx 0.0060 $$
+
+![20c6bf41-f037-46fa-b741-94f20aa0966f](https://github.com/djeada/Statistics-Notes/assets/37275728/e01bbe6f-a2d3-4109-a290-e9c619b7aa3c)
 
 ## Independence of Events
 
@@ -140,6 +144,8 @@ $$
 P(A \cup B \cup C) = 1 - \left(\frac{5}{6}\right)^3
 $$
 
+![3d0579b3-0e10-41ce-b77d-5fc5528908ee](https://github.com/djeada/Statistics-Notes/assets/37275728/813b1539-531f-4a1f-8248-757aca88bf8c)
+
 ## Conditional Probability
 
 Conditional probability refers to the likelihood of an event occurring after another event has already happened. The notation P(A|B) denotes the probability of event A given that B has occurred. To calculate this, we use the formula:
@@ -192,6 +198,8 @@ $$
 P(\text{King}|\text{Heart}) = \frac{P(\text{King} \cap \text{Heart})}{P(\text{Heart})} = \frac{1/52}{13/52} = \frac{1}{13}
 $$
 
+![65566289-77a5-453b-8f85-ea2de49db0c5](https://github.com/djeada/Statistics-Notes/assets/37275728/b0cc8b8e-b795-4998-a2df-a5f5f131c23d)
+
 ### Example: Birthday Paradox
 
 The birthday paradox explores the counter-intuitive probability that in a group of randomly chosen people, some will have the same birthday. Here, we'll consider the complementary probability that all chosen people have different birthdays.
@@ -229,6 +237,8 @@ Substituting the probabilities we get:
 $$
 P(B_3) = \left(1 - \frac{2}{365}\right) \times \left(1 - \frac{1}{365}\right) \approx 0.9918
 $$
+
+![a22b209a-c8da-4825-a5cc-936dc62eb27c](https://github.com/djeada/Statistics-Notes/assets/37275728/4a2bfafd-c123-4dff-8219-342ab8fe185c)
 
 #### General Case for n People
 
