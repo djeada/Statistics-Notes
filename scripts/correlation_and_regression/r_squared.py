@@ -35,7 +35,7 @@ model_low_r2 = LinearRegression().fit(x.reshape(-1, 1), y_low_r2)
 r_squared_low = r2_score(y_low_r2, model_low_r2.predict(x.reshape(-1, 1)))
 
 ax1.scatter(x, y_low_r2, s=2)
-ax1.plot(x, model_low_r2.predict(x.reshape(-1, 1)), color='black')
+ax1.plot(x, model_low_r2.predict(x.reshape(-1, 1)), color="black")
 ax1.set_ylim((0, 4))
 ax1.set_title(f"Low R-squared ({r_squared_low:.2f})")
 
@@ -45,7 +45,7 @@ model_high_r2 = LinearRegression().fit(x.reshape(-1, 1), y_high_r2)
 r_squared_high = r2_score(y_high_r2, model_high_r2.predict(x.reshape(-1, 1)))
 
 ax2.scatter(x, y_high_r2, s=2)
-ax2.plot(x, model_high_r2.predict(x.reshape(-1, 1)), color='black')
+ax2.plot(x, model_high_r2.predict(x.reshape(-1, 1)), color="black")
 ax2.set_ylim((0, 4))
 ax2.set_title(f"High R-squared ({r_squared_high:.2f})")
 

@@ -24,21 +24,25 @@ coefficients, _, _, _ = np.linalg.lstsq(X_with_bias, Y, rcond=None)
 
 # Visualize the data and fitted plane
 fig = plt.figure(figsize=(10, 7))
-ax = fig.add_subplot(111, projection='3d')
+ax = fig.add_subplot(111, projection="3d")
 
 ax.scatter(X[:, 0], X[:, 1], Y, s=2)
-x_surf, y_surf = np.meshgrid(np.linspace(X_MIN, X_MAX, 10), np.linspace(X_MIN, X_MAX, 10))
+x_surf, y_surf = np.meshgrid(
+    np.linspace(X_MIN, X_MAX, 10), np.linspace(X_MIN, X_MAX, 10)
+)
 z_surf = coefficients[0] + coefficients[1] * x_surf + coefficients[2] * y_surf
 ax.plot_surface(x_surf, y_surf, z_surf, alpha=0.2)
 
 # Add formula to legend
-legend_text = f"y = {coefficients[0]:.2f} + {coefficients[1]:.2f}x1 + {coefficients[2]:.2f}x2"
-              
+legend_text = (
+    f"y = {coefficients[0]:.2f} + {coefficients[1]:.2f}x1 + {coefficients[2]:.2f}x2"
+)
+
 ax.legend([legend_text])
 
-ax.set_xlabel('X1')
-ax.set_ylabel('X2')
-ax.set_zlabel('Y')
-ax.set_title('Multiple Linear Regression Using Numpy')
+ax.set_xlabel("X1")
+ax.set_ylabel("X2")
+ax.set_zlabel("Y")
+ax.set_title("Multiple Linear Regression Using Numpy")
 
 plt.show()

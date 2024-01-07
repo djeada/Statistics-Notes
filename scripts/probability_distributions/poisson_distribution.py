@@ -2,17 +2,19 @@ import numpy as np
 import scipy.stats as stats
 import matplotlib.pyplot as plt
 
+
 class PoissonDistribution:
     def __init__(self, lambd):
         self.lambd = lambd
         self.mean = self.lambd
         self.variance = self.lambd
-        
+
     def pmf(self, k):
-        return (np.exp(-self.lambd) * self.lambd**k) / np.math.factorial(k)
-    
+        return (np.exp(-self.lambd) * self.lambd ** k) / np.math.factorial(k)
+
     def cdf(self, k):
         return stats.poisson.cdf(k, self.lambd)
+
 
 # Define lambda values to plot
 lambda_values = [1, 3, 5, 7, 9]
@@ -34,14 +36,14 @@ ax2.set_ylabel("CDF")
 for lambd in lambda_values:
     # Initialize PoissonDistribution object
     dist = PoissonDistribution(lambd)
-    
+
     # Calculate PDF and CDF values for range of x values
     pdf_values = [dist.pmf(k) for k in x_values]
     cdf_values = [dist.cdf(k) for k in x_values]
-    
+
     # Plot PDF
     ax1.plot(x_values, pdf_values, label=f"lambda = {lambd}")
-    
+
     # Plot CDF
     ax2.plot(x_values, cdf_values, label=f"lambda = {lambd}")
 

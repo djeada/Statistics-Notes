@@ -30,13 +30,13 @@ intercept = np.mean(y) - slope * np.mean(x)
 # Visualize the data and fitted line
 plt.figure(figsize=(10, 5))
 plt.scatter(x, y, s=2)
-plt.plot(x, slope * x + intercept, color='black')
+plt.plot(x, slope * x + intercept, color="black")
 
 # Add formula to legend
 legend_text = f"y = {slope:.2f}x + {intercept:.2f}"
-              
+
 plt.legend([legend_text])
 
 plt.ylim((0, 3.5))
-plt.title('Linear Regression Using Statistics Formulas')
+plt.title("Linear Regression Using Statistics Formulas")
 plt.show()

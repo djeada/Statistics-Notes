@@ -26,6 +26,10 @@ alpha = 0.05
 
 # Interpret the results
 if p_value < alpha:
-    print("We reject the null hypothesis. There is a significant difference in the average apple weights between the two farms.")
+    print(
+        "We reject the null hypothesis. There is a significant difference in the average apple weights between the two farms."
+    )
 else:
-    print("We fail to reject the null hypothesis. There is no significant difference in the average apple weights between the two farms.")
+    print(
+        "We fail to reject the null hypothesis. There is no significant difference in the average apple weights between the two farms."
+    )

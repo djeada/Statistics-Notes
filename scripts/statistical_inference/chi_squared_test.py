@@ -14,8 +14,12 @@ males[males == "Coffee"] = "Tee"
 females[females == "Tee"] = "Coffee"
 
 # Create a contingency table
-contingency_table = np.array([[sum(males == "Tee"), sum(males == "Coffee")],
-                              [sum(females == "Tee"), sum(females == "Coffee")]])
+contingency_table = np.array(
+    [
+        [sum(males == "Tee"), sum(males == "Coffee")],
+        [sum(females == "Tee"), sum(females == "Coffee")],
+    ]
+)
 
 
 # Perform chi-square test for independence
