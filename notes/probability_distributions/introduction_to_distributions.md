@@ -97,11 +97,38 @@ Find the probability that the first 6 appears:
 Now let's do calculations:
 
 1. $P(3) = (5/6)^2 * (1/6) ≈ 0.1157$
-2. $P(3 or 4) = P(3) + P(4) ≈ 0.1157 + 0.0964 ≈ 0.2121$
+2. $P(3 \text{ or } 4) = P(3) + P(4) ≈ 0.1157 + 0.0964 ≈ 0.2121$
 3. $P(X < 5) = P(1) + P(2) + P(3) + P(4) ≈ 0.1667 + 0.1389 + 0.1157 + 0.0964 ≈ 0.5177$
-4. $P(X ≤ 3) = P(1) + P(2) + P(3) ≈ 0.1667 + 0.1389 + 0.1157 ≈ 0.4213$
-5. $P(X > 3) = 1 - P(X ≤ 3) ≈ 1 - 0.4213 ≈ 0.5787$
-6. $P(X ≥ 3) = P(3) + P(4) + P(5) + P(6) + ... ≈ 0.1157 + 0.0964 + 0.0803 + 0.0669 + ...$
+4. $P(X \leq 3) = P(1) + P(2) + P(3) ≈ 0.1667 + 0.1389 + 0.1157 ≈ 0.4213$
+5. $P(X > 3) = 1 - P(X \leq 3) ≈ 1 - 0.4213 ≈ 0.5787$
+6. $P(X \geq 3) = P(3) + P(4) + P(5) + P(6) + ... ≈ 0.1157 + 0.0964 + 0.0803 + 0.0669 + ...$
+
+### Example: Number of Pets Owned by Individuals
+
+Consider the following probability distribution for the number of pets $P$ owned by individuals.
+
+| $P$ | $P(P)$ |
+|---------|------------|
+| 0       | 0.28       |
+| 1       | 0.35       |
+| 2       | 0.22       |
+| 3       | 0.10       |
+| 4       | 0.04       |
+| 5       | 0.01       |
+
+![3331851a-bd33-48fd-9f30-6e8ef54be22e](https://github.com/djeada/Statistics-Notes/assets/37275728/9c429670-c886-40fa-8017-97ce0b756494)
+
+Find the probability that an individual owns:
+1. Less than 2 pets.
+   $P(P < 2) = P(P = 0) + P(P = 1) = 0.28 + 0.35 = 0.63$
+2. More than 3 pets.
+   $P(P > 3) = P(P = 4) + P(P = 5) = 0.04 + 0.01 = 0.05$
+3. 1 or 4 pets.
+   $P(P = 1 \text{ or } P = 4) = P(P = 1) + P(P = 4) = 0.35 + 0.04 = 0.39$
+4. At most 3 pets.
+   $P(P \leq 3) = P(P = 0) + P(P = 1) + P(P = 2) + P(P = 3) = 0.28 + 0.35 + 0.22 + 0.10 = 0.95$
+5. 2 or fewer, or more than 4 pets.
+   $P(P \leq 2 \text{ or } P > 4) = P(P \leq 2) + P(P > 4) = (0.28 + 0.35 + 0.22) + 0.01 = 0.86$
 
 ## Moments and Moment Generating Functions
 
