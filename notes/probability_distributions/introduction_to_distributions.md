@@ -26,23 +26,15 @@ Random variables assign numerical values to outcomes of random processes in prob
 
 ## Probability Distributions
 
-- **Probability Density Function (PDF) - Continuous Variables**: 
-  - Definition: For continuous random variables, the PDF gives the probability density at a specific point $x$. 
-  - Notation: $f_X(x)$.
-  - Usage: Used to calculate the probability of the variable falling within a certain range.
-  - Key Point: The area under the curve between two points gives the probability of the variable falling within that range.
+- **Probability Distribution**: A mathematical description of the likelihood of different outcomes in an experiment or process.
+- **Types**:
+  - **Discrete Probability Distributions**: Used for discrete variables (e.g., counting outcomes like the number of heads in coin flips).
+  - **Continuous Probability Distributions**: Used for continuous variables (e.g., measurements like height or weight).
 
-- **Probability Mass Function (PMF) - Discrete Variables**: 
-  - Definition: For discrete random variables, the PMF gives the probability that the variable takes a specific value $x$.
-  - Notation: $p_X(x) = P(X = x)$.
-  - Usage: Used to directly find the probability of specific outcomes.
-  - Example: In a dice roll, the PMF gives the probability of rolling any specific number (1 through 6).
+### Calculating Probabilities
 
-- **Cumulative Distribution Function (CDF) - Both Continuous and Discrete Variables**: 
-  - Definition: The CDF gives the probability that a random variable is less than or equal to a specific value $x$.
-  - Notation: $F_X(x) = P(X \leq x)$.
-  - Usage: Used to calculate the probability of the variable falling within a range below a certain threshold.
-  - Key Point: The CDF is non-decreasing and approaches 1 as $x$ approaches infinity.
+- For a discrete variable (e.g., X), the probability of a specific outcome is found directly from the PMF.
+- For a continuous variable, probabilities of specific outcomes are zero; instead, probabilities of ranges are considered using the PDF.
 
 ### Example: Probability Distribution of a Discrete Random Variable
 
@@ -129,6 +121,90 @@ Find the probability that an individual owns:
    $P(P \leq 3) = P(P = 0) + P(P = 1) + P(P = 2) + P(P = 3) = 0.28 + 0.35 + 0.22 + 0.10 = 0.95$
 5. 2 or fewer, or more than 4 pets.
    $P(P \leq 2 \text{ or } P > 4) = P(P \leq 2) + P(P > 4) = (0.28 + 0.35 + 0.22) + 0.01 = 0.86$
+
+## Expected Value
+
+- **Definition of Expected Value**:
+  - The expected value (often denoted as $E(X)$ or $\mu$) is a fundamental concept in probability, representing the average or mean value of a random variable over a large number of trials or observations.
+  - It is calculated as a weighted average of all possible values, with weights being their respective probabilities.
+
+- **Calculating Expected Value**:
+  - For a discrete random variable: $E(X) = \sum [x_i \times P(x_i)]$, where $x_i$ are the possible values and $P(x_i)$ their probabilities.
+  - For a continuous random variable, it involves integrating the product of the variable's value and its probability density function.
+
+- **Interpretation**:
+  - The expected value provides a measure of the 'center' of a probability distribution.
+  - It does not necessarily correspond to the most probable value but is a long-run average if an experiment is repeated many times.
+
+- **Usage in Decision Making**:
+  - Expected value is often used in various fields such as finance, insurance, and economics for making informed decisions under uncertainty.
+
+- **Limitations**:
+  - The expected value alone might not be sufficient to understand a distribution fully, especially if the distribution is skewed or has heavy tails.
+
+### Example: Expected Value in a Dice Roll
+Consider a fair six-sided dice roll. Each side, numbered from 1 to 6, has an equal probability of appearing on a single roll. The probability for each outcome is $\frac{1}{6}$. 
+
+Step-by-Step Calculation of Expected Value:
+
+1. **List All Possible Outcomes and Their Probabilities**:
+
+   | Outcome (X) | Probability $P(X)$ |
+   |-------------|-------------------------|
+   | 1           | 1/6                     |
+   | 2           | 1/6                     |
+   | 3           | 1/6                     |
+   | 4           | 1/6                     |
+   | 5           | 1/6                     |
+   | 6           | 1/6                     |
+
+2. **Multiply Each Outcome by Its Probability**:
+
+   - For 1: $1 \times \frac{1}{6}$
+   - For 2: $2 \times \frac{1}{6}$
+   - For 3: $3 \times \frac{1}{6}$
+   - For 4: $4 \times \frac{1}{6}$
+   - For 5: $5 \times \frac{1}{6}$
+   - For 6: $6 \times \frac{1}{6}$
+
+3. **Sum Up the Products**:
+
+   - $E(X) = (1 \times \frac{1}{6}) + (2 \times \frac{1}{6}) + (3 \times \frac{1}{6}) + (4 \times \frac{1}{6}) + (5 \times \frac{1}{6}) + (6 \times \frac{1}{6})$
+
+4. **Simplify the Expression**:
+
+   - $E(X) = \frac{1 + 2 + 3 + 4 + 5 + 6}{6} = \frac{21}{6}$
+
+5. **Calculate the Expected Value**:
+
+   - $E(X) = 3.5$
+
+Interpretation:
+
+- The expected value of $E(X) = 3.5$ suggests that over a large number of dice rolls, the average value of the outcomes will converge to 3.5.
+- It's important to note that while 3.5 is not a possible outcome of a single roll, it represents the long-term average or the 'center' of the distribution of outcomes.
+- This concept is a cornerstone in probability theory, providing a predictive measure of the behavior of a random variable over many trials.
+
+
+## Key Concepts of  Probability Distributions
+
+- **Probability Density Function (PDF) - Continuous Variables**: 
+  - Definition: For continuous random variables, the PDF gives the probability density at a specific point $x$. 
+  - Notation: $f_X(x)$.
+  - Usage: Used to calculate the probability of the variable falling within a certain range.
+  - Key Point: The area under the curve between two points gives the probability of the variable falling within that range.
+
+- **Probability Mass Function (PMF) - Discrete Variables**: 
+  - Definition: For discrete random variables, the PMF gives the probability that the variable takes a specific value $x$.
+  - Notation: $p_X(x) = P(X = x)$.
+  - Usage: Used to directly find the probability of specific outcomes.
+  - Example: In a dice roll, the PMF gives the probability of rolling any specific number (1 through 6).
+
+- **Cumulative Distribution Function (CDF) - Both Continuous and Discrete Variables**: 
+  - Definition: The CDF gives the probability that a random variable is less than or equal to a specific value $x$.
+  - Notation: $F_X(x) = P(X \leq x)$.
+  - Usage: Used to calculate the probability of the variable falling within a range below a certain threshold.
+  - Key Point: The CDF is non-decreasing and approaches 1 as $x$ approaches infinity.
 
 ## Moments and Moment Generating Functions
 
