@@ -74,3 +74,25 @@ The empirical rule, also known as the 68-95-99.7 rule, describes the proportion 
 * 95% of the probability mass falls within $2\sigma$ of the mean ($\mu \pm 2\sigma$).
 * 99.7% of the probability mass falls within $3\sigma$ of the mean ($\mu \pm 3\sigma$).
 
+### Example: Standardizing Test Scores
+
+A teacher wants to standardize the scores of a class test to a normal distribution. The test scores are normally distributed with a mean of 70 and a standard deviation of 10. A student scored 85 in the test.
+
+a) What is the student's z-score?
+b) What percentile does the student's score represent?
+
+Using the formula for calculating z-scores:
+
+$$z = \frac{(X - \mu)}{\sigma}$$
+
+a) Calculate the student's z-score:
+
+$$z = \frac{(85 - 70)}{10} = 1.5$$
+
+b) To find the percentile, look up the z-score in a standard normal distribution table or use a calculator. A z-score of 1.5 corresponds to approximately the 93rd percentile.
+
+### Application
+
+The Normal distribution, also known as the Gaussian distribution, is a fundamental distribution in statistics. It's used in a wide range of applications, including hypothesis testing, creating confidence intervals, and in fields such as social sciences, natural sciences, and engineering to represent real-valued random variables whose distributions are not known.
+
+
