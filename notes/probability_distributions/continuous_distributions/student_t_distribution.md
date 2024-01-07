@@ -43,6 +43,32 @@ $$E[X] = 0, \text{ for } \nu > 1$$
 
 $$E[X^2] = \nu, \text{ for } \nu > 2$$
 
+
+### Example: Comparing Sample Means
+
+Suppose a researcher is interested in determining whether there is a significant difference between the mean systolic blood pressure of two different diets. The researcher collects the following data from a random sample:
+
+- Diet A: n1 = 20, mean1 = 120, standard deviation1 = 8
+- Diet B: n2 = 25, mean2 = 130, standard deviation2 = 10
+
+The researcher decides to use a two-sample t-test to determine if there is a significant difference in means.
+
+a) What is the t-statistic for the test?
+b) What is the degrees of freedom for the test?
+
+Using the formula for the two-sample t-test:
+
+$$t = \frac{(\text{mean1} - \text{mean2})}{\sqrt{(\text{s1}^2/\text{n1}) + (\text{s2}^2/\text{n2})}}$$
+
+a) Calculate the t-statistic:
+
+$$t = \frac{(120 - 130)}{\sqrt{(8^2/20) + (10^2/25)}} \approx -3.78$$
+
+b) Estimate the degrees of freedom using the Welch-Satterthwaite equation:
+
+$$df \approx \frac{(\text{s1}^2/\text{n1} + \text{s2}^2/\text{n2})^2}{(\text{s1}^4/(\text{n1}^2(\text{n1}-1)) + \text{s2}^4/(\text{n2}^2(\text{n2}-1)))} \approx 40.4$$
+
+
 ### Applications
 
 Student's t-distributions are widely used in hypothesis testing (such as the one-sample t-test, two-sample t-test, and paired t-test), confidence interval estimation for the population mean, and in regression analysis. They are particularly useful when the sample size is small and the population standard deviation is unknown.
