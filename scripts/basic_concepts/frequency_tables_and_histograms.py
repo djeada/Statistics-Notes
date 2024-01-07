@@ -5,12 +5,6 @@ import numpy as np
 def create_frequency_table(data):
     """
     This function takes a list of data points and returns a frequency table as a Pandas DataFrame.
-
-    Parameters:
-    data (list): A list of data points.
-
-    Returns:
-    DataFrame: A Pandas DataFrame representing the frequency table.
     """
     # Convert the list to a Pandas Series for convenience
     data_series = pd.Series(data)
@@ -27,9 +21,6 @@ def create_frequency_table(data):
 def plot_bar_chart(frequency_table):
     """
     This function takes a frequency table and plots a bar chart.
-
-    Parameters:
-    frequency_table (DataFrame): A Pandas DataFrame representing the frequency table.
     """
     # Plotting
     plt.bar(frequency_table['Value'], frequency_table['Frequency'])
@@ -41,10 +32,6 @@ def plot_bar_chart(frequency_table):
 def plot_histogram(data, bins):
     """
     This function plots a histogram for continuous data.
-
-    Parameters:
-    data (list): A list of data points.
-    bins (int): Number of bins for the histogram.
     """
     # Plotting
     plt.hist(data, bins=bins, edgecolor='black')
