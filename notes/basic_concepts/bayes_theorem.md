@@ -12,6 +12,10 @@ where:
 - $P(A)$ is the probability of event A, and
 - $P(B)$ is the probability of event B.
 
+Let's say $P(A)=0.3$ and $P(B)=0.4$ then:
+
+![a10438be-8900-4dab-92ce-9c9fcb89875b](https://github.com/djeada/Statistics-Notes/assets/37275728/34f9b564-ba7b-4d70-aa57-ad324c168b82)
+
 ### Example: Medical Diagnosis
 
 Consider a medical test that is designed to diagnose a certain disease. The characteristics of the test are:
@@ -39,6 +43,8 @@ Plugging in the given rates:
 - Prevalence $P(A) = 0.02$
 - False positive rate $P(B|\text{not } A) = 0.05$
 - Probability of not having the disease $P(\text{not } A) = 0.98$
+
+![3a2138ad-9dbb-4b0c-9b5e-8bbaab5d4e70](https://github.com/djeada/Statistics-Notes/assets/37275728/e6d36e01-6d39-4762-b29e-c24d4b8a19d2)
 
 The total probability of a positive test result is then:
 
@@ -87,6 +93,8 @@ The denominator, $P(T)$, is the total probability of a positive test result, whi
 $$
 P(T) = P(T | B) \cdot P(B) + P(T | B^c) \cdot P(B^c)
 $$
+
+![0663c27b-403f-4b28-8a3d-8999625f2bdd](https://github.com/djeada/Statistics-Notes/assets/37275728/51943b61-62d0-4bfb-b5dc-3198d764efdc)
 
 #### Calculation:
 
