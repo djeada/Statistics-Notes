@@ -10,18 +10,8 @@ Consider a square with side lengths of 1 unit, and we are interested in the prob
 
 Visualize the square in the coordinate plane with corners at (0,0), (1,0), (0,1), and (1,1). The event space is the set of all points (x, y) that lie within this square. We're looking at the area within a quarter circle of radius r centered at the origin, which represents the points less than a distance r from that corner.
 
-```
-Y
-^
-|
-|
-(0,1)-----------(1,1)
-|                 |
-|                 |
-|                 |
-|                 |
-(0,0)-----------(1,0)------> X
-```
+![5536c72b-ce5f-4e20-8683-3ede2d2a8a94](https://github.com/djeada/Statistics-Notes/assets/37275728/79a9a1dc-4716-46a1-8c6b-4d0a2da6f47c)
+
 
 #### Probability Calculation
 
@@ -35,13 +25,9 @@ $$
 P(r) = \frac{\text{Area of quarter circle with radius r}}{\text{Area of square}} = \frac{\pi r^2}{4}
 $$
 
-This is because the integral
+For example, when $r = 0.8$, the calculated probability is approximately 50.27%. This indicates that there is about a 50.27% chance that a randomly chosen point inside the square is within 0.8 units of the bottom left corner.
 
-$$
-\int_{0}^{r} \sqrt{r^2 - x^2} dx
-$$
-
-represents the area under the curve $y = \sqrt{r^2 - x^2}$, which is the top half of the quarter circle.
+This calculation is accurate for $r < 1$, where the entire quarter circle is within the boundaries of the square.
 
 For r > 1 (when the circle extends outside the square):
 
