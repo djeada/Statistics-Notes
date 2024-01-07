@@ -122,7 +122,7 @@ Point Processes | <a href="https://github.com/djeada/Statistics-Notes/blob/maste
 Spatial Autocorrelation | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/spatial_statistics/spatial_autocorrelation.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/spatial_statistics/spatial_statistics.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/spatial_statistics/spatial_statistics.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a>
 Geostatistics | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/spatial_statistics/geostatistics.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/spatial_statistics/spatial_statistics.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/spatial_statistics/spatial_statistics.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a>
 
-## Refrences
+## References
 
 * https://projects.iq.harvard.edu/stat110
 * https://www.edx.org/course/fundamentals-of-statistics
