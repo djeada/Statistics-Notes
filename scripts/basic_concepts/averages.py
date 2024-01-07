@@ -11,7 +11,7 @@ def calculate_averages(data, weights):
         'weighted_mean': np.average(data, weights=weights),
         'geometric_mean': stats.gmean(data),
         'median': np.median(data),
-        'mode': stats.mode(data)[0][0]
+        'mode': stats.mode(data)[0]
     }
     return averages
 
