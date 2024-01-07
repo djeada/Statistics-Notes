@@ -47,6 +47,27 @@ $$E[X] = \frac{1}{\lambda}$$
 
 $$E[X^2] = \frac{2}{\lambda^2}$$
 
+### Example: Equipment Failure Rate
+
+An engineer is studying the failure rate of a critical component in a machine. The time until failure of the component follows an exponential distribution with a mean time to failure of 5 years.
+
+a) What is the probability that a component fails within the first year?
+b) What is the probability that a component lasts more than 10 years?
+
+Using the PDF of an exponential distribution:
+
+$$f(x; \lambda) = \lambda e^{-\lambda x}$$
+
+where $\lambda = \frac{1}{\text{mean time to failure}} = \frac{1}{5}$ years.
+
+a) Probability of failing within the first year:
+
+$$P(X < 1) = 1 - e^{-\frac{1}{5}} \approx 0.1813$$
+
+b) Probability of lasting more than 10 years:
+
+$$P(X > 10) = e^{-\frac{10}{5}} = e^{-2} \approx 0.1353$$
+
 ### Applications
 
 Exponential distributions are used in various fields such as reliability theory, queuing theory, and survival analysis. They model waiting times, lifetimes of electronic components, and the time between consecutive events in a Poisson process.
