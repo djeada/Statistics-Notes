@@ -34,9 +34,17 @@ bayes_mean, bayes_ci = bayesian_mean_ci(data, prior_mean=5, prior_var=1, likelih
 # Visualization
 plt.figure(figsize=(12, 6))
 
-# Plotting Frequentist and Bayesian Results
-plt.errorbar(1, freq_mean, yerr=[freq_mean - freq_ci[0], freq_ci[1] - freq_mean], fmt='o', color='blue', label='Frequentist Mean and 95% CI')
-plt.errorbar(2, bayes_mean, yerr=[bayes_mean - bayes_ci[0], bayes_ci[1] - bayes_mean], fmt='o', color='green', label='Bayesian Mean and 95% CI')
+# Formatting the yerr for Frequentist results
+freq_yerr = np.array([[freq_mean - freq_ci[0]], [freq_ci[1] - freq_mean]])
+
+# Plotting Frequentist Results
+plt.errorbar(1, freq_mean, yerr=freq_yerr, fmt='o', color='blue', label='Frequentist Mean and 95% CI')
+
+# Formatting the yerr for Bayesian results
+bayes_yerr = np.array([[bayes_mean - bayes_ci[0]], [bayes_ci[1] - bayes_mean]])
+
+# Plotting Bayesian Results
+plt.errorbar(2, bayes_mean, yerr=bayes_yerr, fmt='o', color='green', label='Bayesian Mean and 95% CI')
 
 plt.xticks([1, 2], ['Frequentist', 'Bayesian'])
 plt.ylabel('Mean Estimate')
