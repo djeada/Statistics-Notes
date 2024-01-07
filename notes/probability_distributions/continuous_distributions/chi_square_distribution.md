@@ -51,6 +51,35 @@ $$E[X] = k$$
 
 $$E[X^2] = k^2 + 2k$$
 
+### Example: Goodness-of-Fit Test
+
+A researcher wants to test whether a die is fair. She rolls the die 60 times, and the observed frequencies for each face are as follows:
+
+- 1: 8 times
+- 2: 9 times
+- 3: 13 times
+- 4: 7 times
+- 5: 12 times
+- 6: 11 times
+
+The researcher uses a chi-square goodness-of-fit test to determine if the die is fair.
+
+a) What is the chi-square statistic for the test?
+b) What is the degrees of freedom for the test?
+
+The expected frequency for each face if the die is fair: E = Total rolls / Number of faces = 60 / 6 = 10
+
+Using the chi-square formula:
+
+$$\chi^2 = \sum \frac{(O_i - E)^2}{E}$$
+
+a) Calculate the chi-square statistic:
+
+$$\chi^2 = \frac{(8-10)^2}{10} + \frac{(9-10)^2}{10} + \frac{(13-10)^2}{10} + \frac{(7-10)^2}{10} + \frac{(12-10)^2}{10} + \frac{(11-10)^2}{10} \approx 3.6$$
+
+b) Degrees of freedom: Number of categories (6) - 1 = 5
+
+
 ### Applications
 
 Chi-square distributions are widely used in hypothesis testing (such as the chi-square test for independence), goodness-of-fit tests, and confidence interval estimation for the population variance in normally distributed data.
