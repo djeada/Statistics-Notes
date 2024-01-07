@@ -62,7 +62,7 @@ A histogram of the sample means will tend to form a bell-shaped curve as the num
 - The close alignment of the mean of the sample means with the population mean, and the calculated standard error, further confirm the theorem's predictions.
 - This example underscores the theorem's key insight: for a sufficiently large sample size, the sampling distribution of the sample mean will approximate a normal distribution, regardless of the population's original distribution.
 
-### Example: Applying the Central Limit Theorem (CLT) with Estimated and Calculated Solutions
+### Example: Applying the Central Limit Theorem (CLT)
 
 Consider a scenario where the heights of a certain plant species are normally distributed, with a mean of 15 cm and a standard deviation of 3 cm. We analyze random samples of different sizes.
 
