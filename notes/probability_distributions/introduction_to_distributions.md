@@ -87,19 +87,19 @@ Roll a fair six-sided die repeatedly until the die shows a 6.
 ![bcc766bb-54d8-4005-8a06-e4de2f8b571d](https://github.com/djeada/Statistics-Notes/assets/37275728/e2211233-f9ec-4ed0-b6d6-8696d465aa64)
 
 Find the probability that the first 6 appears:
-a) On the third roll.
-b) On the third or fourth roll.
-c) In less than five rolls.
-d) In no more than three rolls.
-e) After three rolls.
-f) In at least three rolls.
+1. On the third roll.
+2. On the third or fourth roll.
+3. In less than five rolls.
+4. In no more than three rolls.
+5. After three rolls.
+6. In at least three rolls.
 
-a) $P(3) = (5/6)^2 * (1/6) ≈ 0.1157$
-b) $P(3 or 4) = P(3) + P(4) ≈ 0.1157 + 0.0964 ≈ 0.2121$
-c) $P(X < 5) = P(1) + P(2) + P(3) + P(4) ≈ 0.1667 + 0.1389 + 0.1157 + 0.0964 ≈ 0.5177$
-d) $P(X ≤ 3) = P(1) + P(2) + P(3) ≈ 0.1667 + 0.1389 + 0.1157 ≈ 0.4213$
-e) $P(X > 3) = 1 - P(X ≤ 3) ≈ 1 - 0.4213 ≈ 0.5787$
-f) $P(X ≥ 3) = P(3) + P(4) + P(5) + P(6) + ... ≈ 0.1157 + 0.0964 + 0.0803 + 0.0669 + ...$
+1. $P(3) = (5/6)^2 * (1/6) ≈ 0.1157$
+2. $P(3 or 4) = P(3) + P(4) ≈ 0.1157 + 0.0964 ≈ 0.2121$
+3. $P(X < 5) = P(1) + P(2) + P(3) + P(4) ≈ 0.1667 + 0.1389 + 0.1157 + 0.0964 ≈ 0.5177$
+4. $P(X ≤ 3) = P(1) + P(2) + P(3) ≈ 0.1667 + 0.1389 + 0.1157 ≈ 0.4213$
+5. $P(X > 3) = 1 - P(X ≤ 3) ≈ 1 - 0.4213 ≈ 0.5787$
+6. $P(X ≥ 3) = P(3) + P(4) + P(5) + P(6) + ... ≈ 0.1157 + 0.0964 + 0.0803 + 0.0669 + ...$
 
 ## Moments and Moment Generating Functions
 
