@@ -10,6 +10,9 @@ When conducting hypothesis tests, we face two main types of errors: Type I and T
 | **$H_0$ is False**     | Correct Decision      | Type II Error                                   |
 
 #### Example: Court Trial Hypotheses
+
+In the realm of hypothesis testing, real-world scenarios can often provide vivid illustrations of abstract concepts. One such scenario is a court trial, where the decision-making process mirrors the principles of statistical hypothesis testing. In this context, the determination of a suspect's guilt or innocence is akin to testing a hypothesis with the potential for two types of errors: Type I and Type II errors. 
+
 - **Null Hypothesis ($H_0$):** The suspect is innocent.
 - **Alternative Hypothesis ($H_a$):** The suspect is guilty.
 
