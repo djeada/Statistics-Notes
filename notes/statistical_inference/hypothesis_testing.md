@@ -6,38 +6,40 @@ Hypothesis testing is a key tool in the field of statistics and forms the backbo
 
 ### Inputs and Outputs of Hypothesis Testing
 
-The primary inputs to a hypothesis test are the null and alternative hypotheses, the significance level, and the sample data. 
+Inputs:
 
-* Alternative Hypothesis (H1): the claim we are testing.
+1. **Null Hypothesis ($H_0$):** Represents the default position or the status quo. It is a statement that indicates no effect or no difference. The hypothesis testing aims to challenge this hypothesis.
+   
+2. **Alternative Hypothesis ($H_1$ or $H_a$):** It's the claim that the test seeks to support. It is a statement indicating the presence of an effect or a difference.
+   
+3. **Significance Level ($\alpha$):** A threshold probability set before the testing begins, usually set at 0.05. It defines the risk of rejecting the null hypothesis when it is actually true (Type I error).
 
-* Null Hypothesis (H0): The opposite of the claim we are testing. It is also status quo, something we would assume is the case without any additional evidences.
+4. **Sample Data:** The collected data from observations, experiments, or surveys. It provides the empirical basis for calculating the test statistic and ultimately the p-value.
 
-* Significance Level (α): This is the threshold below which we will reject the null hypothesis. Often set at 0.05, it denotes a 5% risk of concluding that an effect exists when it does not.
+Output:
 
-* Sample data: This is the data collected from your study or experiment. The data is used to calculate a test statistic, which in turn gives us a p-value.
+- **P-Value:** The probability of observing data as extreme as, or more extreme than, the sample data, assuming the null hypothesis is true. A small p-value (typically ≤ $\alpha$) indicates strong evidence against the null hypothesis.
 
-The primary output of a hypothesis test is the p-value. This is the probability that we would see the observed data, or something more extreme, assuming the null hypothesis is true.
+### Overview of Hypothesis Testing Steps
 
-### An Overview of Hypothesis Testing Steps
+Hypothesis testing is a structured process involving several steps:
 
-The goal is to determine wheter we have enough evidence to reject the Null hypothesis.
+1. **Formulating Hypotheses:** Define the null and alternative hypotheses, contextualizing them within the research question.
+   
+2. **Choosing a Significance Level:** Set $\alpha$, often at 0.05, though it can vary based on the study's requirements or norms in the field.
+   
+3. **Data Collection:** Gather data systematically to ensure it's representative and unbiased.
+   
+4. **Calculating the Test Statistic:** Use an appropriate formula to convert the sample data into a test statistic.
+   
+5. **Determining the P-Value:** Calculate the probability of the observed (or more extreme) test statistic under the null hypothesis.
+   
+6. **Decision Making:** Reject $H_0$ if the p-value is less than $\alpha$, otherwise fail to reject $H_0$.
+   
+7. **Interpreting Results:** Understand the decision in the context of the research question. Note that not rejecting $H_0$ doesn't prove it's true, just that there isn't strong evidence against it.
 
-1. Formulate the Null and Alternative Hypotheses: This involves defining the population parameters and stating the null and alternative hypotheses in context of the question being addressed.
-
-2. Choose a Significance Level: This is typically set to α = 0.05. However, it can be adjusted depending on the field of study or the specific experiment.
-
-3. Data Collection: This involves gathering data in a methodologically sound way to ensure the results are representative and unbiased.
-
-4. Calculate Test Statistic: This involves calculating a test statistic that is appropriate for the type of data and the specific hypothesis being tested. The test statistic is a function of the sample data.
-
-5. Determine the P-Value: This is the probability of obtaining a test statistic as extreme as, or more extreme than, the observed test statistic under the null hypothesis.
-
-6. Make a Decision: If the p-value is less than the chosen significance level (α), we reject the null hypothesis in favor of the alternative. If not, we fail to reject the null hypothesis.
-
-7. Interpret the Results: Finally, we interpret the result of the hypothesis test in the context of the question being studied. Remember, failing to reject the null hypothesis doesn't prove it's true. It simply means that the data does not provide strong enough evidence against it.
-
-## Example: Marbe Bags
-Consider two identical bags, each containing 10 marbles. Bag A contains 5 white and 5 black marbles. Bag B contains only black marbles.
+### Example: Marble Bags
+Imagine two bags: Bag A with a mix of 5 white and 5 black marbles, and Bag B with only black marbles.
 
 ```
   Bag A            Bag B
@@ -50,54 +52,101 @@ Consider two identical bags, each containing 10 marbles. Bag A contains 5 white 
  \_____/          \_____/
 ```
 
-You are handed one of these bags and suspect it is Bag B.
 
-- Null Hypothesis ($H_0$): Your bag is Bag A
-- Alternative Hypothesis ($H_a$): Your bag is Bag B
+Suspecting you have Bag B, you decide to test this hypothesis:
 
-To test this hypothesis, you draw n marbles from your bag. They are all black. How strong is this evidence that your bag is Bag B? Test this for n=2,3,5 marbles.
+- **Null Hypothesis ($H_0$):** The bag in question is Bag A.
+- **Alternative Hypothesis ($H_a$):** The bag in question is Bag B.
 
-To solve this, we can use the concept of the p-value, which is the probability of obtaining the observed results, or more extreme, given that the null hypothesis is true.
+Drawing `n` marbles and finding them all black leads to calculating p-values to test these hypotheses. For Bag A, the chance of drawing a black marble is 0.5. Hence, drawing `n` black marbles consecutively from Bag A has a probability of $ (0.5)^n $.
 
-For Bag A (the null hypothesis), the probability of drawing a black marble is 0.5. The probability of drawing `n` black marbles in a row from Bag A is (0.5)^n.
+- For n=2, p-value = $ (0.5)^2 = 0.25 $.
+- For n=3, p-value = $ (0.5)^3 = 0.125 $.
+- For n=5, p-value = $ (0.5)^5 = 0.03125 $.
 
-- For n=2, the probability (p-value) is (0.5)^2 = 0.25.
-- For n=3, the probability (p-value) is (0.5)^3 = 0.125.
-- For n=5, the probability (p-value) is (0.5)^5 = 0.03125.
+A smaller p-value indicates stronger evidence against $H_0$. As `n` increases, the likelihood that you have Bag B (only black marbles) increases.
 
-The smaller the p-value, the stronger the evidence against the null hypothesis. In this case, as `n` increases, the evidence that your bag is Bag B (containing only black marbles) becomes stronger.
+## Null and Alternative Hypotheses for a Mean
+
+When testing the population mean, hypothesis testing considers three possibilities, each with distinct null and alternative hypotheses:
+
+### Types of Tests
+
+1. **Left-Tailed Test**
+   - **Null Hypothesis ($H_0$):** The population mean $\mu$ equals a specific value $\mu_0$, denoted as $ \mu = \mu_0 $.
+   - **Alternative Hypothesis ($H_a$):** The population mean $\mu$ is less than the specified value $\mu_0$, denoted as $ \mu < \mu_0 $.
+
+2. **Right-Tailed Test**
+   - **Null Hypothesis ($H_0$):** Here, $\mu$ is again hypothesized to be equal to $\mu_0$, $ \mu = \mu_0 $.
+   - **Alternative Hypothesis ($H_a$):** The claim is that $\mu$ is greater than $\mu_0$, $ \mu > \mu_0 $.
+
+3. **Two-Tailed Test**
+   - **Null Hypothesis ($H_0$):** Similar to the other tests, it states that $\mu$ equals $\mu_0$, $ \mu = \mu_0 $.
+   - **Alternative Hypothesis ($H_a$):** In this case, $\mu$ is hypothesized to be not equal to $\mu_0$, $ \mu \neq \mu_0 $.
+
+The null hypothesis always assumes that the population mean $\mu$ equals a predetermined value $\mu_0$. The alternative hypothesis presents a contrary statement: the population mean $\mu$ is less than, greater than, or not equal to $\mu_0$.
+
+**Important Note:** Left-tailed and right-tailed tests are typically used when the effect is expected to occur in only one direction or when only one-directional effects are relevant. In most research scenarios, a two-tailed test is preferred unless there's strong justification for a one-tailed test.
+
+### Examples
+
+1. Testing the Effectiveness of a New Diet (Two-Tailed Test):
+   - **Null Hypothesis ($H_0$):** The average daily energy expenditure $\mu$ equals the standard diet average $\mu_0$.
+   - **Alternative Hypothesis ($H_a$):** The average daily energy expenditure $\mu$ differs from the standard diet average $\mu_0$ ($ \mu \neq \mu_0 $).
+
+2. Evaluating Customer Service Efficiency (Left-Tailed Test):
+   - **Null Hypothesis ($H_0$):** The average resolution time $\mu$ equals the industry standard of 10 minutes.
+   - **Alternative Hypothesis ($H_a$):** The average resolution time $\mu$ is less than 10 minutes ($ \mu < 10 $).
+
+3. Assessing the Impact of a New Teaching Method (Right-Tailed Test):
+   - **Null Hypothesis ($H_0$):** The average test score $\mu$ equals the district average of 75%.
+   - **Alternative Hypothesis ($H_a$):** The average test score $\mu$ exceeds the district average of 75% ($ \mu > 75 $).
 
 ## Choosing the Right Statistical Test
 
-Selecting an appropriate statistical test for your data is a crucial part of hypothesis testing. The choice depends on several factors:
+Selecting a suitable statistical test is critical in hypothesis testing, and several factors determine the appropriate choice:
 
-* **Type of Data**: The nature of your data (categorical, ordinal, interval, or ratio) can influence your choice of test. 
+### Factors to Consider
 
-* **Number of Variables**: The number of variables you are analyzing affects the choice of test. There are tests designed for one variable (univariate), two variables (bivariate), or more than two variables (multivariate).
+1. **Type of Data:** The nature of your data (categorical, ordinal, interval, or ratio) greatly influences the choice of test. Different types of data require different statistical methods.
 
-* **Distribution of the Data**: Some tests (parametric tests) assume that your data follows a certain distribution, typically a normal distribution. If your data doesn't meet this assumption, you may need to choose a non-parametric test.
+2. **Number of Variables:** The quantity of variables under analysis dictates the test type. There are specific tests for univariate (one variable), bivariate (two variables), and multivariate (more than two variables) analyses.
 
-* **Study Design**: The design of your study, such as whether you are comparing two groups or measuring one group at different times, can influence your test choice.
+3. **Distribution of the Data:** The assumption about data distribution is vital. Parametric tests assume a normal distribution. If your data does not fit this criterion, a non-parametric test is preferable.
 
-For instance, a t-test is a parametric test used when you want to compare the means of two groups and you have interval or ratio data. If your data is not normally distributed, or if you're working with ordinal data, you might choose a non-parametric equivalent, like the Mann-Whitney U test.
+4. **Study Design:** The structure of your study, like comparing groups or measuring changes over time within a group, also affects the test selection.
 
-In a different scenario, if you wanted to compare the means of more than two groups, an Analysis of Variance (ANOVA) test would be appropriate. For categorical data, a chi-square test would be a good choice to test for differences in proportions.
+### Examples of Statistical Tests
 
-This table covers some of the most common tests:
+- A **t-test** is ideal for comparing the means of two groups with interval or ratio data that is normally distributed. For non-normally distributed data or ordinal data, consider a non-parametric alternative like the **Mann-Whitney U test**.
 
-| Test                     | Data Type           | Number of Groups | Assumptions                                        |
-|--------------------------|---------------------|------------------|----------------------------------------------------|
-| T-Test                   | Interval/Ratio      | Two              | Normally distributed, independent samples          |
-| Paired T-Test            | Interval/Ratio      | Two              | Normally distributed, dependent samples            |
-| One-way ANOVA            | Interval/Ratio      | More than Two    | Normally distributed, independent samples          |
-| Two-way ANOVA            | Interval/Ratio      | More than Two    | Normally distributed, independent samples          |
-| Chi-Square Test          | Categorical         | Two or more      | Independence between variables                     |
-| Pearson Correlation      | Interval/Ratio      | Two              | Normally distributed, linear relationship          |
-| Spearman Correlation     | Ordinal             | Two              | Non-parametric, monotonic relationship             |
-| Mann-Whitney U Test      | Ordinal/Continuous  | Two              | Non-parametric, independent samples                |
-| Kruskal-Wallis H Test    | Ordinal/Continuous  | More than Two    | Non-parametric, independent samples                |
-| Wilcoxon Signed-Rank Test| Ordinal/Continuous  | Two              | Non-parametric, dependent samples                  |
-| Friedman Test            | Ordinal/Continuous  | More than Two    | Non-parametric, dependent samples                  |
+- To compare means across more than two groups, an **Analysis of Variance (ANOVA)** is appropriate. 
+
+- For categorical data, a **chi-square test** is often used to examine differences in proportions.
+
+The following table summarizes some common statistical tests and their applications:
+
+| Test                         | Data Type           | Number of Groups | Assumptions                                      |
+|------------------------------|---------------------|------------------|--------------------------------------------------|
+| **T-Test**                   | Interval/Ratio      | Two              | Normally distributed, independent samples        |
+| **Paired T-Test**            | Interval/Ratio      | Two              | Normally distributed, dependent samples          |
+| **One-way ANOVA**            | Interval/Ratio      | More than Two    | Normally distributed, independent samples        |
+| **Two-way ANOVA**            | Interval/Ratio      | More than Two    | Normally distributed, independent samples        |
+| **Chi-Square Test**          | Categorical         | Two or more      | Independence between variables                   |
+| **Pearson Correlation**      | Interval/Ratio      | Two              | Normally distributed, linear relationship        |
+| **Spearman Correlation**     | Ordinal             | Two              | Non-parametric, monotonic relationship           |
+| **Mann-Whitney U Test**      | Ordinal/Continuous  | Two              | Non-parametric, independent samples              |
+| **Kruskal-Wallis H Test**    | Ordinal/Continuous  | More than Two    | Non-parametric, independent samples              |
+| **Wilcoxon Signed-Rank Test**| Ordinal/Continuous  | Two              | Non-parametric, dependent samples                |
+| **Friedman Test**            | Ordinal/Continuous  | More than Two    | Non-parametric, dependent samples                |
+
+### Key Considerations
+
+- **Left-tailed and Right-tailed Tests:** These are specific to the direction of the hypothesis. A left-tailed test is used when the research hypothesis involves a decrease or a lower value, while a right-tailed test is for when an increase or higher value is hypothesized.
+
+- **Two-tailed Tests:** These are used when the research question does not specify a direction of effect. They are more conservative and widely applicable.
+
+- **Parametric vs. Non-parametric Tests:** Parametric tests assume underlying statistical distributions and usually require interval or ratio data. Non-parametric tests do not assume a specific distribution and are often used with ordinal data or when assumptions of parametric tests are not met.
 
 ### Example: One-Sample T-Test
 
