@@ -58,11 +58,11 @@ Suspecting you have Bag B, you decide to test this hypothesis:
 - **Null Hypothesis ($H_0$):** The bag in question is Bag A.
 - **Alternative Hypothesis ($H_a$):** The bag in question is Bag B.
 
-Drawing `n` marbles and finding them all black leads to calculating p-values to test these hypotheses. For Bag A, the chance of drawing a black marble is 0.5. Hence, drawing `n` black marbles consecutively from Bag A has a probability of $ (0.5)^n $.
+Drawing `n` marbles and finding them all black leads to calculating p-values to test these hypotheses. For Bag A, the chance of drawing a black marble is 0.5. Hence, drawing `n` black marbles consecutively from Bag A has a probability of $(0.5)^n$.
 
-- For n=2, p-value = $ (0.5)^2 = 0.25 $.
-- For n=3, p-value = $ (0.5)^3 = 0.125 $.
-- For n=5, p-value = $ (0.5)^5 = 0.03125 $.
+- For n=2, p-value = $(0.5)^2 = 0.25$.
+- For n=3, p-value = $(0.5)^3 = 0.125$.
+- For n=5, p-value = $(0.5)^5 = 0.03125$.
 
 A smaller p-value indicates stronger evidence against $H_0$. As `n` increases, the likelihood that you have Bag B (only black marbles) increases.
 
@@ -73,16 +73,16 @@ When testing the population mean, hypothesis testing considers three possibiliti
 ### Types of Tests
 
 1. **Left-Tailed Test**
-   - **Null Hypothesis ($H_0$):** The population mean $\mu$ equals a specific value $\mu_0$, denoted as $ \mu = \mu_0 $.
-   - **Alternative Hypothesis ($H_a$):** The population mean $\mu$ is less than the specified value $\mu_0$, denoted as $ \mu < \mu_0 $.
+   - **Null Hypothesis ($H_0$):** The population mean $\mu$ equals a specific value $\mu_0$, denoted as $\mu = \mu_0$.
+   - **Alternative Hypothesis ($H_a$):** The population mean $\mu$ is less than the specified value $\mu_0$, denoted as $\mu < \mu_0$.
 
 2. **Right-Tailed Test**
-   - **Null Hypothesis ($H_0$):** Here, $\mu$ is again hypothesized to be equal to $\mu_0$, $ \mu = \mu_0 $.
-   - **Alternative Hypothesis ($H_a$):** The claim is that $\mu$ is greater than $\mu_0$, $ \mu > \mu_0 $.
+   - **Null Hypothesis ($H_0$):** Here, $\mu$ is again hypothesized to be equal to $\mu_0$, $\mu = \mu_0$.
+   - **Alternative Hypothesis ($H_a$):** The claim is that $\mu$ is greater than $\mu_0$, $\mu > \mu_0$.
 
 3. **Two-Tailed Test**
-   - **Null Hypothesis ($H_0$):** Similar to the other tests, it states that $\mu$ equals $\mu_0$, $ \mu = \mu_0 $.
-   - **Alternative Hypothesis ($H_a$):** In this case, $\mu$ is hypothesized to be not equal to $\mu_0$, $ \mu \neq \mu_0 $.
+   - **Null Hypothesis ($H_0$):** Similar to the other tests, it states that $\mu$ equals $\mu_0$, $\mu = \mu_0$.
+   - **Alternative Hypothesis ($H_a$):** In this case, $\mu$ is hypothesized to be not equal to $\mu_0$, $\mu \neq \mu_0$.
 
 The null hypothesis always assumes that the population mean $\mu$ equals a predetermined value $\mu_0$. The alternative hypothesis presents a contrary statement: the population mean $\mu$ is less than, greater than, or not equal to $\mu_0$.
 
@@ -92,15 +92,15 @@ The null hypothesis always assumes that the population mean $\mu$ equals a prede
 
 1. Testing the Effectiveness of a New Diet (Two-Tailed Test):
    - **Null Hypothesis ($H_0$):** The average daily energy expenditure $\mu$ equals the standard diet average $\mu_0$.
-   - **Alternative Hypothesis ($H_a$):** The average daily energy expenditure $\mu$ differs from the standard diet average $\mu_0$ ($ \mu \neq \mu_0 $).
+   - **Alternative Hypothesis ($H_a$):** The average daily energy expenditure $\mu$ differs from the standard diet average $\mu_0$ ($\mu \neq \mu_0$).
 
 2. Evaluating Customer Service Efficiency (Left-Tailed Test):
    - **Null Hypothesis ($H_0$):** The average resolution time $\mu$ equals the industry standard of 10 minutes.
-   - **Alternative Hypothesis ($H_a$):** The average resolution time $\mu$ is less than 10 minutes ($ \mu < 10 $).
+   - **Alternative Hypothesis ($H_a$):** The average resolution time $\mu$ is less than 10 minutes ($\mu < 10$).
 
 3. Assessing the Impact of a New Teaching Method (Right-Tailed Test):
    - **Null Hypothesis ($H_0$):** The average test score $\mu$ equals the district average of 75%.
-   - **Alternative Hypothesis ($H_a$):** The average test score $\mu$ exceeds the district average of 75% ($ \mu > 75 $).
+   - **Alternative Hypothesis ($H_a$):** The average test score $\mu$ exceeds the district average of 75% ($\mu > 75$).
 
 ## Choosing the Right Statistical Test
 
