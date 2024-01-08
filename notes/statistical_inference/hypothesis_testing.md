@@ -1,14 +1,16 @@
 ## Hypothesis Testing
 
+A hypothesis is a statement that might be true.
+
 Hypothesis testing is a key tool in the field of statistics and forms the backbone of scientific research. It helps us make decisions about population parameters using sample data. Hypothesis testing is used across a wide variety of fields - from testing the effectiveness of a new drug in medical trials, to understanding customer behavior in business analytics.
 
 ### Inputs and Outputs of Hypothesis Testing
 
 The primary inputs to a hypothesis test are the null and alternative hypotheses, the significance level, and the sample data. 
 
-* Null Hypothesis (H0): This is the statement that the effect we are testing for is not present. It represents a skeptical perspective, presuming that any kind of effect or difference we see in the data is due to chance.
+* Alternative Hypothesis (H1): the claim we are testing.
 
-* Alternative Hypothesis (H1): This is the statement that the effect we are testing for is present. It is usually what the researcher aims to prove.
+* Null Hypothesis (H0): The opposite of the claim we are testing. It is also status quo, something we would assume is the case without any additional evidences.
 
 * Significance Level (α): This is the threshold below which we will reject the null hypothesis. Often set at 0.05, it denotes a 5% risk of concluding that an effect exists when it does not.
 
@@ -17,6 +19,8 @@ The primary inputs to a hypothesis test are the null and alternative hypotheses,
 The primary output of a hypothesis test is the p-value. This is the probability that we would see the observed data, or something more extreme, assuming the null hypothesis is true.
 
 ### An Overview of Hypothesis Testing Steps
+
+The goal is to determine wheter we have enough evidence to reject the Null hypothesis.
 
 1. Formulate the Null and Alternative Hypotheses: This involves defining the population parameters and stating the null and alternative hypotheses in context of the question being addressed.
 
@@ -31,6 +35,37 @@ The primary output of a hypothesis test is the p-value. This is the probability 
 6. Make a Decision: If the p-value is less than the chosen significance level (α), we reject the null hypothesis in favor of the alternative. If not, we fail to reject the null hypothesis.
 
 7. Interpret the Results: Finally, we interpret the result of the hypothesis test in the context of the question being studied. Remember, failing to reject the null hypothesis doesn't prove it's true. It simply means that the data does not provide strong enough evidence against it.
+
+## Example: Marbe Bags
+Consider two identical bags, each containing 10 marbles. Bag A contains 5 white and 5 black marbles. Bag B contains only black marbles.
+
+```
+  Bag A            Bag B
+  _____            _____
+ / • •  \         / O O  \
+|  • •  |        |  O O  |    O = White Marble
+|  O O  |        |  O O  |    • = Black Marble
+|  O O  |        |  O O  |    
+|  • O  |        |  O O  |
+ \_____/          \_____/
+```
+
+You are handed one of these bags and suspect it is Bag B.
+
+- Null Hypothesis ($H_0$): Your bag is Bag A
+- Alternative Hypothesis ($H_a$): Your bag is Bag B
+
+To test this hypothesis, you draw n marbles from your bag. They are all black. How strong is this evidence that your bag is Bag B? Test this for n=2,3,5 marbles.
+
+To solve this, we can use the concept of the p-value, which is the probability of obtaining the observed results, or more extreme, given that the null hypothesis is true.
+
+For Bag A (the null hypothesis), the probability of drawing a black marble is 0.5. The probability of drawing `n` black marbles in a row from Bag A is (0.5)^n.
+
+- For n=2, the probability (p-value) is (0.5)^2 = 0.25.
+- For n=3, the probability (p-value) is (0.5)^3 = 0.125.
+- For n=5, the probability (p-value) is (0.5)^5 = 0.03125.
+
+The smaller the p-value, the stronger the evidence against the null hypothesis. In this case, as `n` increases, the evidence that your bag is Bag B (containing only black marbles) becomes stronger.
 
 ## Choosing the Right Statistical Test
 
