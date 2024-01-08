@@ -102,6 +102,22 @@ The null hypothesis always assumes that the population mean $\mu$ equals a prede
    - **Null Hypothesis ($H_0$):** The average test score $\mu$ equals the district average of 75%.
    - **Alternative Hypothesis ($H_a$):** The average test score $\mu$ exceeds the district average of 75% ($\mu > 75$).
 
+## The P-value
+
+Once the data is collected and the sample statistic computed, the researcher computes the P-value.
+
+The P-value is the probability of obtaining a measurement at least as extreme as the one we measured, under the assumption that the null hypothesis is true.
+
+![79292b56-d3c7-4eec-b30d-0c64a11d58ac](https://github.com/djeada/Statistics-Notes/assets/37275728/67c8823a-e0b8-479c-84f2-7d2908c9a482)
+
+- **Left-Tailed Test**
+  - The shaded area represents the p-value, which is the area under the curve to the left of the sample statistic.
+
+- **Right-Tailed Test**
+  - The shaded area represents the p-value, which is the area under the curve to the right of the sample statistic.
+
+By at least as extreme, we mean a value at least as far to the left or right of the measured value.
+
 ## Choosing the Right Statistical Test
 
 Selecting a suitable statistical test is critical in hypothesis testing, and several factors determine the appropriate choice:
@@ -148,11 +164,35 @@ The following table summarizes some common statistical tests and their applicati
 
 - **Parametric vs. Non-parametric Tests:** Parametric tests assume underlying statistical distributions and usually require interval or ratio data. Non-parametric tests do not assume a specific distribution and are often used with ordinal data or when assumptions of parametric tests are not met.
 
-### Example: One-Sample T-Test
+### Example: Hypothesis Test for the Mean
 
-Suppose we want to test if the average height of adult males in a city is different from the known national average. 
+An agronomist suggests that a new fertilizer increases the average yield of a particular crop to more than 2 tons per hectare. To test this claim, a study is conducted where the new fertilizer is applied to randomly selected plots. The yield of 25 plots is measured, resulting in a mean yield of 2.1 tons per hectare and a standard deviation of 0.3 tons per hectare. Is the new fertilizer effective at increasing the average yield at a significance level of $\alpha = 0.05$?
 
-* Null Hypothesis (H0): The average height of adult males in the city is equal to the national average.
-* Alternative Hypothesis (H1): The average height of adult males in the city is different from the national average.
+Hypothesis Setup:
 
-After gathering a representative sample of adult males in the city, we calculate the sample mean and sample standard deviation. These, along with the sample size, are used to compute the test statistic. The p-value is then calculated from the test statistic using the t-distribution. If the p-value is less than our pre-defined significance level, we reject the null hypothesis, concluding that the average height of adult males in the city is different from the national average.
+- Null Hypothesis ($H_0$): $\mu = 2$ tons per hectare (The fertilizer does not increase yield)
+- Alternative Hypothesis ($H_a$): $\mu > 2$ tons per hectare (The fertilizer increases yield)
+
+Test Statistic:
+
+For the test statistic, we use the one-sample z-test since the sample size is greater than 30:
+
+$$z = \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}}$$
+
+where:
+- $\bar{x}$ is the sample mean,
+- $\mu_0$ is the hypothesized population mean,
+- $\sigma$ is the population standard deviation (approximated here by the sample standard deviation),
+- $n$ is the sample size.
+
+Plugging in the values:
+
+$$z = \frac{2.1 - 2}{0.3/\sqrt{25}}$$
+$$z = \frac{0.1}{0.06}$$
+$$z \approx 1.667$$
+
+Conclusion:
+
+We look up the critical z-value for a right-tailed test at $\alpha = 0.05$, which is approximately 1.645. Since our calculated z-value of 1.667 is greater than 1.645, we reject the null hypothesis.
+
+There is sufficient evidence at the $\alpha = 0.05$ significance level to support the claim that the new fertilizer increases the average yield of the crop to more than 2 tons per hectare.
