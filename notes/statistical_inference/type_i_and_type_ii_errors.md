@@ -1,31 +1,42 @@
 ## Errors in Hypothesis Testing
 
-When conducting hypothesis tests, we encounter two types of potential errors, namely Type I and Type II errors. Understanding these errors is crucial for interpreting the results of tests and making appropriate decisions.
+When conducting hypothesis tests, we face two main types of errors: Type I and Type II errors. These errors are critical to understand for accurate interpretation of test results and informed decision-making.
+
+### Type I and Type II Errors
+
+|                     | Reject $H_0$ (Accept $H_a$) | Fail to Reject $H_0$ (Insufficient Evidence for $H_a$) |
+|---------------------|:---------------------:|:-----------------------------------------------:|
+| **$H_0$ is True**      | Type I Error          | Correct Decision                                |
+| **$H_0$ is False**     | Correct Decision      | Type II Error                                   |
+
+#### Example: Court Trial Hypotheses
+- **Null Hypothesis ($H_0$):** The suspect is innocent.
+- **Alternative Hypothesis ($H_a$):** The suspect is guilty.
+
+**Type I Error:** Convicting an innocent person.
+**Type II Error:** Acquitting a guilty person.
 
 ### Type I Error (False Positive)
-
-A Type I error, often denoted as α (alpha), occurs when we reject the null hypothesis, even though it is actually true. In other words, we find evidence of an effect or relationship that does not truly exist. This is sometimes referred to as a "false positive".
-
-The probability of making a Type I error corresponds to the significance level of a test. For example, with a significance level of 0.05, we are willing to accept a 5% chance that we might commit a Type I error.
-
-**Example:**
-
-Let's consider a pharmaceutical company that is testing a new drug. The null hypothesis would be "the new drug has no effect on the disease". If the clinical trial results lead to the rejection of this null hypothesis despite it being true (i.e., the drug is not effective), we commit a Type I error. Such a situation could lead to unnecessary expenditures in further development and trials of an ineffective drug.
+- **Symbol:** $\alpha$ (alpha)
+- **Description:** Rejecting a true $H_0$, implying a false detection of an effect.
+- **Probability:** Corresponds to the test's significance level. For a 0.05 level, there's a 5% chance of a Type I error.
+- **Example:** In a drug trial, erroneously concluding a new drug is effective when it isn't.
 
 ### Type II Error (False Negative)
-
-A Type II error, often denoted as β (beta), takes place when we fail to reject the null hypothesis when it's actually false. This means we overlook an effect or relationship that truly exists, leading to a "false negative".
-
-Unlike α, β is not typically set in advance. Instead, we often consider the power of a test, which is (1 - β). Power indicates the ability of a test to correctly reject a false null hypothesis.
-
-**Example:**
-
-In the context of the pharmaceutical company, if the new drug is indeed effective but the results of the trial fail to reject the null hypothesis of "the new drug has no effect on the disease", we commit a Type II error. This error could potentially lead to dismissal of a useful drug.
+- **Symbol:** $\beta$ (beta)
+- **Description:** Failing to reject a false $H_0$, missing a real effect.
+- **Power of a Test:** (1 - $\beta$), representing the test's ability to correctly reject a false $H_0$.
+- **Example:** Missing the effectiveness of a new drug due to inadequate trial results.
 
 ### Balancing Type I and Type II Errors
+- **Trade-Off:** Decreasing $\alpha$ (Type I errors) typically increases $\beta$ (Type II errors), and vice versa.
+- **Power:** High power means less Type II errors, but can increase Type I errors.
+- **Context-Specific Balance:** The optimal balance varies depending on the scenario and the consequences of each error type.
 
-In the real world, neither error is desirable, but sometimes we have to make hard choices. Here are some key points to remember:
+In mathematical terms, these relationships can be represented as:
 
-- Reducing Type I errors (false positives) increases Type II errors (false negatives), and vice versa. It's a seesaw - you push down on one side, the other one goes up.
-- The 'power' of a test is its ability to avoid Type II errors - that is, the likelihood of catching a guilty person. Ideally, we want a high-powered test (more "guilty" verdicts for actual criminals), but we have to balance this against the risk of more Type I errors (more "innocents" getting wrongly convicted).
-- There's no 'one-size-fits-all' answer here. The best balance depends on the specific context and what's at stake in terms of these two types of errors.
+- Probability of Type I Error: $P(\text{Type I Error}) = \alpha$
+- Probability of Type II Error: $P(\text{Type II Error}) = \beta$
+- Power of the test: $\text{Power} = 1 - \beta$
+
+These relationships highlight the inverse nature of the two errors and the importance of considering both when designing and interpreting hypothesis tests.
