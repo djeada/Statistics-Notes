@@ -1,4 +1,4 @@
-![daee62ad-7315-4736-b786-bb7cafe700e1](https://github.com/djeada/Statistics-Notes/assets/37275728/ac2c8af8-84a7-4ffd-8f54-acaf0fc8164a)## Introduction to Distributions
+## Introduction to Distributions
 
 A distribution is a function that describes the probability of a random variable. It helps to understand the underlying patterns and characteristics of a dataset. Distributions are widely used in statistics, data analysis, and machine learning for tasks such as hypothesis testing, confidence intervals, and predictive modeling.
 
