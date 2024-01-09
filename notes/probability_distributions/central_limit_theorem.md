@@ -1,25 +1,26 @@
 ## Central Limit Theorem (CLT)
 
-The Central Limit Theorem is a fundamental statistical principle that explains why many distributions tend to approximate a normal distribution (bell curve) as their sample size increases, regardless of the shape of the population distribution.
+The Central Limit Theorem (CLT) is a fundamental concept in statistics, explaining why the distribution of sample means approximates a normal distribution, often known as the bell curve, as the sample size becomes larger, irrespective of the population's original distribution.
 
 ### Mathematical Background
 
-- **Statement**: If you have a population with mean $\mu$ and standard deviation $\sigma$, and take sufficiently large random samples from the population (with replacement), then the distribution of the sample means will be approximately normally distributed.
-- **Formula**: 
-  - The mean of the sample means will be approximately equal to the population mean ($\mu$).
-  - The standard deviation of the sample means (standard error) will be $\frac{\sigma}{\sqrt{n}}$, where $n$ is the sample size.
+- **Statement**: The CLT states that if you have a population with a mean $\mu$ and a standard deviation $\sigma$, and you take sufficiently large random samples from this population (with replacement), then the distribution of the sample means will approximate a normal distribution.
+- **Key Points**:
+  - The mean of the sample means ($\bar{X}$) will be approximately equal to the population mean ($\mu$).
+  - The standard deviation of the sample means, also known as the standard error, will be $\frac{\sigma}{\sqrt{n}}$, where $n$ is the sample size.
 
-Loosely put, the sum of a large number of independent random variables has a normal distribution.
+### Formal Description
 
-Let \( X_1, X_2, \ldots \) be a sequence of independent and identically distributed random variables each having mean \( \mu \) and variance \( \sigma^2 \).
+Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and identically distributed random variables, each with a mean $\mu$ and a variance $\sigma^2$.
 
-Then the distribution of
+As $n$ (the sample size) tends to infinity, the distribution of the standardized sum
 
-\[ \frac{X_1 + \ldots + X_n - n\mu}{\sigma\sqrt{n}} \]
+$$\frac{X_1 + X_2 + \ldots + X_n - n\mu}{\sigma\sqrt{n}}$$
 
-Tends to a standard normal as \( n \to \infty \), that is
+converges in distribution to a standard normal distribution. Mathematically, this is expressed as:
 
-\[ P\left(\frac{X_1 + \ldots + X_n - n\mu}{\sigma\sqrt{n}} \leq a\right) \to \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{a} e^{-x^2/2} \, dx \]
+$$P\left(\frac{X_1 + X_2 + \ldots + X_n - n\mu}{\sigma\sqrt{n}} \leq a\right) \to \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{a} e^{-x^2/2} \, dx$$
+
 
 ### Key Points
 
@@ -29,10 +30,16 @@ Tends to a standard normal as \( n \to \infty \), that is
 
 3. **Sample Means**: It's the distribution of the means of these samples that becomes normal, not the distribution of the individual data points.
 
-### Applications
+### Implications and Applications
 
-- **Estimation**: The CLT allows for the estimation of population parameters using sample statistics.
-- **Inferential Statistics**: Fundamental to hypothesis testing, confidence interval estimation, and many other inferential statistics techniques.
+- **Universal Applicability**: The CLT is applicable to almost any population distribution, given a sufficiently large sample size. This includes distributions that are not normally distributed.
+- **Predictive Power**: It allows statisticians to make inferences about population parameters using sample statistics, particularly when dealing with large datasets.
+- **Practicality in Sampling**: It underpins many statistical procedures and experiments, where it's often impractical or impossible to observe an entire population.
+
+### Limitations
+
+- **Sample Size**: The theorem applies only when the sample size is large enough. "Large enough" varies depending on the underlying distribution, but a common rule of thumb is a sample size greater than 30.
+- **Independence**: The sampled values must be independent of each other. This assumption can be violated in many real-world scenarios.
 
 ### Visualization
 
@@ -97,9 +104,3 @@ Consider a scenario where the heights of a certain plant species are normally di
    - **Problem**: Estimate the probability if the plant heights' distribution is not known to be normal.
    - **Estimated Solution Using CLT**: The CLT assures that with large sample sizes (typically $n \geq 30$), the sampling distribution of the sample mean approximates normality. The method remains applicable, assuming a sufficiently large sample size.
    - **Calculated Solution**: Not applicable in this case as the population distribution is unknown. The estimation relies solely on the CLT.
-
-### Limitations
-
-- The CLT does not apply to small samples.
-- The approximation to a normal distribution might not be good if the original population is extremely non-normal.
-
