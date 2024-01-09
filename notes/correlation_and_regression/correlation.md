@@ -2,6 +2,7 @@
 
 Correlation is a statistical technique that can show whether, and how strongly, pairs of variables are related. This statistical measure helps to comprehend the strength and direction of the relationship between two variables. The most common measure of correlation is the Pearson correlation coefficient, also known as Pearson's r, which provides a linear correlation coefficient. There's also the Spearman correlation coefficient which is used when the assumptions of Pearson's correlation are violated.
 
+
 ## Pearson Correlation Coefficient
 
 The Pearson correlation coefficient, denoted as $r$, quantifies the linear relationship between two variables. It ranges from -1 to 1, where:
@@ -81,4 +82,20 @@ $$
 This indicates a strong positive monotonic relationship between hours studied and test scores, according to Spearman's rho.
 
 These two results tell us that while there is no *linear* relationship (as indicated by Pearson's r), there is a *monotonic* relationship (as indicated by Spearman's rho). This difference can occur when the relationship between variables is not linear, but consistently increases or decreases.
+
+## Correlation of 2 Random Variables
+
+As long as \( \text{Var}(X) \) and \( \text{Var}(Y) \) are both positive, the correlation of X and Y is denoted as
+
+\[ \rho(X, Y) = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} \]
+
+It can be shown that \( -1 \leq \rho(X, Y) \leq 1 \)
+
+The correlation coefficient is a measure of the degree of linearity between X and Y
+
+\( \rho(X, Y) = 0 \) means very little linearity
+
+\( \rho(X, Y) \) near \( +1 \) means X and Y increase and decrease together
+
+\( \rho(X, Y) \) near \( -1 \) means X and Y increase and decrease inversely
 
