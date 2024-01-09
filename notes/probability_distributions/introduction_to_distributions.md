@@ -1,4 +1,4 @@
-## Introduction to Distributions
+![daee62ad-7315-4736-b786-bb7cafe700e1](https://github.com/djeada/Statistics-Notes/assets/37275728/ac2c8af8-84a7-4ffd-8f54-acaf0fc8164a)## Introduction to Distributions
 
 A distribution is a function that describes the probability of a random variable. It helps to understand the underlying patterns and characteristics of a dataset. Distributions are widely used in statistics, data analysis, and machine learning for tasks such as hypothesis testing, confidence intervals, and predictive modeling.
 
@@ -185,62 +185,49 @@ Interpretation:
 - It's important to note that while 3.5 is not a possible outcome of a single roll, it represents the long-term average or the 'center' of the distribution of outcomes.
 - This concept is a cornerstone in probability theory, providing a predictive measure of the behavior of a random variable over many trials.
 
+## Key Concepts of Probability Distributions
 
-## Key Concepts of  Probability Distributions
+### Probability Density Function (PDF) - Continuous Variables
+- **Definition**: For continuous random variables, the PDF provides the probability density at a specific point $x$.
+- **Notation**: $f_X(x)$.
+- **Usage**: Used to calculate the probability of the variable falling within a specific range.
+- **Key Point**: The area under the curve between two points on the PDF represents the probability of the variable falling within that range.
+- **Properties**:
+  1. Non-negative: $f_X(x) \geq 0$ for all $x$.
+  2. Normalization: The total area under the curve of the PDF is 1.
+- **Joint PDF for Multiple Variables**: For two continuous random variables $X$ and $Y$, the joint PDF $f_{X,Y}(x, y)$ gives the density at a particular point $(x, y)$.
 
-- **Probability Density Function (PDF) - Continuous Variables**: 
-  - Definition: For continuous random variables, the PDF gives the probability density at a specific point $x$. 
-  - Notation: $f_X(x)$.
-  - Usage: Used to calculate the probability of the variable falling within a certain range.
-  - Key Point: The area under the curve between two points gives the probability of the variable falling within that range.
+![daee62ad-7315-4736-b786-bb7cafe700e1](https://github.com/djeada/Statistics-Notes/assets/37275728/322cf1f9-e4cf-445d-9e3f-5cf106f41a84)
 
-- **Probability Mass Function (PMF) - Discrete Variables**: 
-  - Definition: For discrete random variables, the PMF gives the probability that the variable takes a specific value $x$.
-  - Notation: $p_X(x) = P(X = x)$.
-  - Usage: Used to directly find the probability of specific outcomes.
-  - Example: In a dice roll, the PMF gives the probability of rolling any specific number (1 through 6).
+![9ebbf08c-de34-44c8-b0f3-5632b0faa7e5](https://github.com/djeada/Statistics-Notes/assets/37275728/a6b7b175-2d5b-4bdb-b987-d427949de9da)
 
-- **Cumulative Distribution Function (CDF) - Both Continuous and Discrete Variables**: 
-  - Definition: The CDF gives the probability that a random variable is less than or equal to a specific value $x$.
-  - Notation: $F_X(x) = P(X \leq x)$.
-  - Usage: Used to calculate the probability of the variable falling within a range below a certain threshold.
-  - Key Point: The CDF is non-decreasing and approaches 1 as $x$ approaches infinity.
+### Probability Mass Function (PMF) - Discrete Variables
+- **Definition**: For discrete random variables, the PMF specifies the probability of the variable taking a particular value $x$.
+- **Notation**: $p_X(x) = P(X = x)$.
+- **Usage**: Directly find the probability of specific outcomes.
+- **Properties**:
+  1. Non-negative: $p_X(x) \geq 0$ for all $x$.
+  2. Sum to One: The sum of all probabilities for all possible values of $X$ is 1.
+- **Joint PMF for Multiple Variables**: For two discrete random variables $X$ and $Y$, the joint PMF $p_{X,Y}(x, y)$ gives the probability of $X$ and $Y$ simultaneously taking values $x$ and $y$, respectively.
 
-The cumulative distribution function (cdf) or more simply, the distribution function \( F \) of the random variable \( X \), is defined for all real numbers \( b \), \( -\infty < b < \infty \) by:
+![d20b90d0-5240-4f0a-88f5-dfc50cf8e39d](https://github.com/djeada/Statistics-Notes/assets/37275728/a13cbdaa-3cc8-4582-b1ae-ae135119bd5a)
 
-\[ F(b) = P(X \leq b) \]
+![31d2a302-cacc-472a-a5cc-83e0a640e4d3](https://github.com/djeada/Statistics-Notes/assets/37275728/370352a5-ffbd-467c-acd4-6610f18e109f)
 
-A distribution function has the following properties:
+### Cumulative Distribution Function (CDF) - Both Continuous and Discrete Variables
+- **Definition**: The CDF shows the probability that a random variable is less than or equal to a specific value $x$.
+- **Notation**: $F_X(x) = P(X \leq x)$.
+- **Usage**: Calculate the probability of the variable falling below a certain threshold.
+- **Properties**:
+  1. Non-decreasing function.
+  2. $\lim_{x \to \infty} F_X(x) = 1$.
+  3. $\lim_{x \to -\infty} F_X(x) = 0$.
+  4. Right-continuous: For any $x$ and decreasing sequence $x_n$ converging to $x$, $\lim_{x_n \to x^+} F_X(x_n) = F_X(x)$.
+- **Joint CDF**: For two variables $X$ and $Y$, $F(a, b) = P(X \leq a, Y \leq b)$. To derive the marginal distribution of $X$: $F_X(a) = \lim_{b \to \infty} F(a, b)$.
 
-1) \( F \) is a nondecreasing function
+![1de74524-d5fe-4c04-909f-0cbb6d9ebed7](https://github.com/djeada/Statistics-Notes/assets/37275728/2322fa3e-f2fd-41d1-ab60-3ff1b9c30a50)
 
-2) \( \lim_{b \to \infty} F(b) = 1 \)
-
-3) \( \lim_{b \to -\infty} F(b) = 0 \)
-
-4) \( F \) is right continuous. That is, for any \( b \) and any decreasing sequence \( b_n, n \geq 1 \), that converges to \( b \), 
-
-\[ \lim_{b_n \to b^+} F(b_n) = F(b) \]
-
-
-### Joint Cumulative Distributions
-
-$$ F(a,b) = P(X \leq a, Y \leq b)$$
-
-The distribution of X can be obtained from the joint distribution of X and Y as follows:
-
-$$F_X = P(X < a)$$
-
-$$= P(X < a | Y < \infty)$$
-
-$$= P(\lim_{b \to \infty} X < a | Y < b)$$
-
-$$= \lim_{b \to \infty} P(X < a | Y < b)$$
-
-$$= \lim_{b \to \infty} F(a, b)$$
-
-$$= F(a, \infty)$$
-
+![36f05abf-38ae-49c3-898a-18c34edef19d](https://github.com/djeada/Statistics-Notes/assets/37275728/d1c763a8-1ca8-4e7d-a27e-7bf2ca15cd6c)
 
 
 ## Moments and Moment Generating Functions
