@@ -206,6 +206,23 @@ Interpretation:
   - Usage: Used to calculate the probability of the variable falling within a range below a certain threshold.
   - Key Point: The CDF is non-decreasing and approaches 1 as $x$ approaches infinity.
 
+The cumulative distribution function (cdf) or more simply, the distribution function \( F \) of the random variable \( X \), is defined for all real numbers \( b \), \( -\infty < b < \infty \) by:
+
+\[ F(b) = P(X \leq b) \]
+
+A distribution function has the following properties:
+
+1) \( F \) is a nondecreasing function
+
+2) \( \lim_{b \to \infty} F(b) = 1 \)
+
+3) \( \lim_{b \to -\infty} F(b) = 0 \)
+
+4) \( F \) is right continuous. That is, for any \( b \) and any decreasing sequence \( b_n, n \geq 1 \), that converges to \( b \), 
+
+\[ \lim_{b_n \to b^+} F(b_n) = F(b) \]
+
+
 ### Joint Cumulative Distributions
 
 $$ F(a,b) = P(X \leq a, Y \leq b)$$
