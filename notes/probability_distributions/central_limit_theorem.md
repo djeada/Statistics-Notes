@@ -9,6 +9,18 @@ The Central Limit Theorem is a fundamental statistical principle that explains w
   - The mean of the sample means will be approximately equal to the population mean ($\mu$).
   - The standard deviation of the sample means (standard error) will be $\frac{\sigma}{\sqrt{n}}$, where $n$ is the sample size.
 
+Loosely put, the sum of a large number of independent random variables has a normal distribution.
+
+Let \( X_1, X_2, \ldots \) be a sequence of independent and identically distributed random variables each having mean \( \mu \) and variance \( \sigma^2 \).
+
+Then the distribution of
+
+\[ \frac{X_1 + \ldots + X_n - n\mu}{\sigma\sqrt{n}} \]
+
+Tends to a standard normal as \( n \to \infty \), that is
+
+\[ P\left(\frac{X_1 + \ldots + X_n - n\mu}{\sigma\sqrt{n}} \leq a\right) \to \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{a} e^{-x^2/2} \, dx \]
+
 ### Key Points
 
 1. **Sufficiently Large Samples**: "Large" is typically considered to be a sample size of 30 or more, though this can vary based on the distribution's initial shape.
