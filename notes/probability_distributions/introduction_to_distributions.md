@@ -206,6 +206,26 @@ Interpretation:
   - Usage: Used to calculate the probability of the variable falling within a range below a certain threshold.
   - Key Point: The CDF is non-decreasing and approaches 1 as $x$ approaches infinity.
 
+### Joint Cumulative Distributions
+
+$$ F(a,b) = P(X \leq a, Y \leq b)$$
+
+The distribution of X can be obtained from the joint distribution of X and Y as follows:
+
+$$F_X = P(X < a)$$
+
+$$= P(X < a | Y < \infty)$$
+
+$$= P(\lim_{b \to \infty} X < a | Y < b)$$
+
+$$= \lim_{b \to \infty} P(X < a | Y < b)$$
+
+$$= \lim_{b \to \infty} F(a, b)$$
+
+$$= F(a, \infty)$$
+
+
+
 ## Moments and Moment Generating Functions
 
 Moments are statistical measures that describe various aspects of a distribution, such as central tendency, dispersion, and shape. The $n$th moment of a random variable $X$ about a constant $c$ is defined as the expected value of $(X - c)^n$:
