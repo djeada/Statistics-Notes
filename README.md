@@ -134,6 +134,7 @@ Geostatistics | <a href="https://github.com/djeada/Statistics-Notes/blob/master/
 * https://saylordotorg.github.io/text_introductory-statistics/index.html
 * https://hastie.su.domains/CASI/
 * https://www.statisticshowto.datasciencecentral.com/probability-and-statistics/probability-main-index/
+* https://youtube.com/playlist?list=PL4d5ZtfQonW0B3qW24yAj1u1SuOvgKfP5&si=8nQpv13gbZEWuuqe
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
