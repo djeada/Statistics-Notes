@@ -122,24 +122,37 @@ Point Processes | <a href="https://github.com/djeada/Statistics-Notes/blob/maste
 Spatial Autocorrelation | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/spatial_statistics/spatial_autocorrelation.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/spatial_statistics/spatial_statistics.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/spatial_statistics/spatial_statistics.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a>
 Geostatistics | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/spatial_statistics/geostatistics.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/spatial_statistics/spatial_statistics.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/spatial_statistics/spatial_statistics.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a>
 
+## How to Contribute
+
+We encourage contributions that enhance the repository's value. To contribute:
+
+1. Fork the repository.
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
+
 ## References
 
-* https://projects.iq.harvard.edu/stat110
-* https://www.edx.org/course/fundamentals-of-statistics
-* https://allendowney.github.io/ThinkBayes2/
-* https://link.springer.com/book/10.1007/978-0-387-21736-9
-* https://link.springer.com/book/10.1007/978-1-4614-7138-7
-* https://github.com/wzchen/probability_cheatsheet
-* http://allendowney.blogspot.com/2016/06/there-is-still-only-one-test.html
-* https://saylordotorg.github.io/text_introductory-statistics/index.html
-* https://hastie.su.domains/CASI/
-* https://www.statisticshowto.datasciencecentral.com/probability-and-statistics/probability-main-index/
-* https://youtube.com/playlist?list=PL4d5ZtfQonW0B3qW24yAj1u1SuOvgKfP5&si=8nQpv13gbZEWuuqe
+### Online Courses and Educational Platforms
+- [Harvard University's Introduction to Probability](https://projects.iq.harvard.edu/stat110)
+- [edX: Fundamentals of Statistics](https://www.edx.org/course/fundamentals-of-statistics)
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+### Books and eBooks
+- [Think Bayes by Allen Downey](https://allendowney.github.io/ThinkBayes2/)
+- [SpringerLink: An Introduction to Statistical Learning](https://link.springer.com/book/10.1007/978-1-4614-7138-7)
+- [SpringerLink: The Elements of Statistical Learning](https://link.springer.com/book/10.1007/978-0-387-21736-9)
 
-Please make sure to update tests as appropriate.
+### Resources and Cheat Sheets
+- [Probability Cheatsheet on GitHub](https://github.com/wzchen/probability_cheatsheet)
+- [Allen Downey's Blog on Probability and Bayesian Stats](http://allendowney.blogspot.com/2016/06/there-is-still-only-one-test.html)
+- [Saylor Academy: Introductory Statistics](https://saylordotorg.github.io/text_introductory-statistics/index.html)
+- [Statistical Learning with Sparsity by Hastie, Tibshirani, and Wainwright](https://hastie.su.domains/CASI/)
+- [Statistics How To: Probability and Statistics Main Index](https://www.statisticshowto.datasciencecentral.com/probability-and-statistics/probability-main-index/)
+
+### Video Lectures and Playlists
+- [YouTube Playlist on Probability and Statistics](https://youtube.com/playlist?list=PL4d5ZtfQonW0B3qW24yAj1u1SuOvgKfP5&si=8nQpv13gbZEWuuqe)
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+
+This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
