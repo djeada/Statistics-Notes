@@ -60,8 +60,6 @@ A time series can be decomposed into four main components:
 
 ### Forecasting Methods
 
-### Forecasting Methods
-
 There are various methods for time series forecasting, each suited to specific scenarios and data characteristics. Here are some commonly used methods:
 
 1. **Naive Forecast**: This method assumes that the next value in the time series will be equal to the most recent value.
