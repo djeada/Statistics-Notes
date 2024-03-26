@@ -17,7 +17,7 @@ A probability tree starts with a root node that branches out into possible outco
 Consider a simplified example where we draw one card from a standard deck of 52 cards, and we're interested in the event of drawing a heart or not drawing a heart.
 
 ```plaintext
-
+Tree:
            __Heart (1/4)
           |
 Initial ──┤
@@ -37,7 +37,7 @@ Here's how to interpret this tree:
 In this example, we combine two independent events: first, we toss a coin, and then we roll a die. The probability tree for this scenario illustrates the outcomes and probabilities for each stage of the experiment.
 
 ```plaintext
-
+Tree:
            __Head (1/2)───1 (1/6)
           |               .
           |               .
@@ -73,7 +73,7 @@ Calculating Probabilities:
 In this example, we consider the scenario of rolling two dice simultaneously. A probability tree can be used to visualize all the possible outcomes and their associated probabilities.
 
 ```plaintext
-
+Tree:
            __1 (1/6)──1 (1/6)
           |          .
           |          .
