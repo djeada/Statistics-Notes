@@ -28,20 +28,22 @@ $$\text{Var}(X) = \frac{\alpha \beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}$$
 
 In a manufacturing process, the proportion of defective items produced is assumed to follow a beta distribution with $\alpha = 2$ and $\beta = 5$.
 
-a) What is the expected proportion of defective items?
-b) What is the variance of this proportion?
-
 Given:
+
 - $\alpha = 2$
 - $\beta = 5$
 
 Using the beta distribution formulas:
 
-a) Expected proportion of defective items:
+I. What is the expected proportion of defective items?
+
+Expected proportion of defective items:
 
 $$E[X] = \frac{2}{2 + 5} \approx 0.2857$$
 
-b) Variance of the proportion:
+II. What is the variance of this proportion?
+
+Variance of the proportion:
 
 $$\text{Var}(X) = \frac{2 \times 5}{(2 + 5)^2(2 + 5 + 1)} \approx 0.0408$$
 
