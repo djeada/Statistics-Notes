@@ -33,9 +33,40 @@ Some time series models explicitly account for seasonality and trends:
 
 ### Example: Monthly Airline Passenger Data
 
-Consider a time series of monthly airline passenger data. This time series exhibits both an upward trend and a seasonal pattern that repeats every 12 months. To model and forecast this time series, we can:
+Consider a time series consisting of monthly airline passenger data. This particular time series is characterized by two distinct features: an upward trend indicating an increase in the number of passengers over time, and a seasonal pattern that repeats every 12 months, typically linked to factors such as holiday travel or seasonal tourism.
 
-1. Decompose the time series into its trend, seasonal, and residual components.
-2. Detrend the time series using differencing or transformation.
-3. Fit an appropriate model, such as seasonal ARIMA or ETS, that accounts for both trend and seasonality.
-4. Forecast future values using the fitted model.
+### Steps to Model and Forecast the Time Series
+
+I. Decompose the Time Series into Trend, Seasonal, and Residual Components:
+
+- Use time series decomposition methods like `classical decomposition` or `STL decomposition`.
+- This process separates the original time series into three components:
+- **Trend Component:** Shows the long-term progression of the series (increasing or decreasing).
+- **Seasonal Component:** Reflects the regular pattern that occurs at fixed intervals (e.g., monthly, quarterly).
+- **Residual Component:** Captures the irregularities or 'noise' that cannot be attributed to the trend or seasonal components.
+
+II. Detrend the Time Series Using Differencing or Transformation:
+
+- Apply methods like `logarithmic transformation` or `differencing` to stabilize the mean of the time series.
+- **Differencing:** Subtract the current value from the previous value. This can be adjusted for seasonality (e.g., subtracting the value from the same month in the previous year).
+- **Transformation:** Use techniques like log, square root, or Box-Cox transformation to stabilize variance and make the series more stationary.
+
+III. Fit an Appropriate Model that Accounts for Both Trend and Seasonality:
+
+- Use models like `Seasonal ARIMA (SARIMA)` or `Exponential Smoothing State Space Model (ETS)`:
+- **SARIMA:** An extension of ARIMA that includes seasonal terms. It is defined by parameters (p, d, q) for the non-seasonal part and (P, D, Q)s for the seasonal part.
+- **ETS:** A model that combines error, trend, and seasonal components. It is particularly useful when the data exhibit a consistent seasonal pattern.
+
+IV. Forecast Future Values Using the Fitted Model:
+
+- Use the model to forecast future values.
+- This step involves generating predictions based on the model's understanding of the trend and seasonal patterns in the historical data.
+- Ensure to provide confidence intervals for these predictions to understand the potential variability in the forecasts.
+
+![seasonality_forecast](https://github.com/djeada/Statistics-Notes/assets/37275728/218ec3bc-81a7-492e-a69b-3bf3d97ba8de)
+
+#### Additional Considerations
+
+- **Diagnostic Checks:** Perform residual analysis to check the adequacy of the model.
+- **Model Selection:** Use criteria like AIC (Akaike Information Criterion) or BIC (Bayesian Information Criterion) to select the best model.
+- **Cross-Validation:** Apply techniques like time series cross-validation to assess the model's predictive performance.
