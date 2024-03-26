@@ -30,16 +30,15 @@ $$\text{Var}(X) = \left[ \exp(\sigma^2) - 1 \right] \exp(2\mu + \sigma^2)$$
 
 Suppose the logarithm of the daily closing prices of a stock is normally distributed with $\mu = 0$ and $\sigma = 0.1$. 
 
-a) What is the expected price of the stock?
-b) What is the variance of the stock price?
+I. What is the expected price of the stock?
 
-Using the log-normal distribution formulas:
-
-a) Expected price of the stock:
+Expected price of the stock:
 
 $$E[X] = \exp\left( 0 + \frac{0.1^2}{2} \right) \approx 1.005$$
 
-b) Variance of the stock price:
+II. What is the variance of the stock price?
+
+Variance of the stock price:
 
 $$\text{Var}(X) = \left[ \exp(0.1^2) - 1 \right] \exp(2 \times 0 + 0.1^2) \approx 0.0101$$
 
