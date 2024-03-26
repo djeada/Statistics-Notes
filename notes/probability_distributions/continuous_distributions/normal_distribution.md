@@ -26,7 +26,9 @@ $$E[X] = \mu$$
 
 To derive the expected value, we integrate the product of the PDF and the variable x over the entire range:
 
-$$E[X] = \int_{-\infty}^{\infty} x \cdot f(x) dx = \int_{-\infty}^{\infty} x \cdot \frac{1}{{\sigma \sqrt {2\pi } }}e^{{{ - \left( {x - \mu } \right)^2 } \mathord{\left/ {\vphantom {{ - \left( {x - \mu } \right)^2 } {2\sigma ^2 }}} \right. } {2\sigma ^2 }}} dx$$
+$$E[X] = \int_{-\infty}^{\infty} x \cdot f(x) dx$$
+
+$$E[x] = \int_{-\infty}^{\infty} x \cdot \frac{1}{{\sigma \sqrt {2\pi } }}e^{\frac{- (x - \mu)^2}{2\sigma^2}} dx$$
 
 Let $u = \frac{x - \mu}{\sqrt{2} \sigma}$, then $x = \mu + \sqrt{2} \sigma u$. The integral becomes:
 
