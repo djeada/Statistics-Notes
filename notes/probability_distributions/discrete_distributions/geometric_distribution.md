@@ -36,21 +36,21 @@ $$M_X(t) = \frac{pe^t}{1 - (1 - p)e^t}$$
 
 Consider flipping a fair coin (probability of heads `p = 0.5`) until the first head appears:
 
-a) What is the probability that the first head appears on the 3rd flip?
-b) What is the expected number of flips to get the first head?
-c) What is the variance in the number of flips?
+1. What is the probability that the first head appears on the 3rd flip?
 
-Using the geometric distribution formula:
-
-a) For the first head on the 3rd flip:
+For the first head on the 3rd flip:
 
 $$P(X = 3) = (1-0.5)^{3-1} \times 0.5 = 0.125$$
 
-b) Expected number of flips:
+2. What is the expected number of flips to get the first head?
+
+Expected number of flips:
 
 $$E[X] = \frac{1}{0.5} = 2$$
 
-c) Variance in the number of flips:
+3. What is the variance in the number of flips?
+
+Variance in the number of flips:
 
 $$\text{Var}(X) = \frac{1-0.5}{0.5^2} = 2$$
 
