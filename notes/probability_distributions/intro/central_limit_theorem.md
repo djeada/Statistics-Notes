@@ -79,27 +79,27 @@ Consider a scenario where the heights of a certain plant species are normally di
 #### Sample Size of 16 Plants
 Estimate the probability of the sample mean height being between 14 and 16 cm.
 
-The CLT suggests that the sample mean will be approximately normally distributed. The probability should be significant since the range includes the mean.
+CLT estimation: The CLT suggests that the sample mean will be approximately normally distributed. The probability should be significant since the range includes the mean.
 
-Calculate the Standard Error of the Mean (SEM) using $SEM = \frac{3}{\sqrt{16}}$. Calculate the Z-scores for 14 and 16 cm, finding the probability from the standard normal distribution as approximately 81.76%.
+Calculated Solution: Calculate the Standard Error of the Mean (SEM) using $SEM = \frac{3}{\sqrt{16}}$. Calculate the Z-scores for 14 and 16 cm, finding the probability from the standard normal distribution as approximately 81.76%.
 
 #### Sample Size of 64 Plants
 Estimate the probability for the same range with 64 plants.
 
-As the sample size increases, the sampling distribution becomes more normal and narrower. The probability of the sample mean falling within this range should increase.
+CLT estimation: As the sample size increases, the sampling distribution becomes more normal and narrower. The probability of the sample mean falling within this range should increase.
 
-Calculated Solution**: With $n = 64$, the SEM decreases. Recalculating the Z-scores shows the probability increases to about 99.23%.
+Calculated Solution: With $n = 64$, the SEM decreases. Recalculating the Z-scores shows the probability increases to about 99.23%.
 
 #### Sample Size of 144 Plants
 Estimate the probability for the same range with a sample size of 144.
 
-A larger sample size should result in a probability nearing certainty, as per the CLT, because the sample mean distribution becomes increasingly normal.
+CLT estimation: A larger sample size should result in a probability nearing certainty, as per the CLT, because the sample mean distribution becomes increasingly normal.
 
-Increasing the sample size to 144 further reduces the SEM. The probability approaches 99.99%.
+Calculated Solution: Increasing the sample size to 144 further reduces the SEM. The probability approaches 99.99%.
 
 #### Unknown Population Distribution
 Estimate the probability if the plant heights' distribution is not known to be normal.
 
-The CLT assures that with large sample sizes (typically $n \geq 30$), the sampling distribution of the sample mean approximates normality. The method remains applicable, assuming a sufficiently large sample size.
+CLT estimation: The CLT assures that with large sample sizes (typically $n \geq 30$), the sampling distribution of the sample mean approximates normality. The method remains applicable, assuming a sufficiently large sample size.
 
-Not applicable in this case as the population distribution is unknown. The estimation relies solely on the CLT.
+Calculated Solution: Not applicable in this case as the population distribution is unknown. The estimation relies solely on the CLT.
