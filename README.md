@@ -151,7 +151,7 @@ We encourage contributions that enhance the repository's value. To contribute:
 - [Statistics How To: Probability and Statistics Main Index](https://www.statisticshowto.datasciencecentral.com/probability-and-statistics/probability-main-index/)
 
 ### Video Lectures and Playlists
-- [YouTube Playlist on Probability and Statistics](https://youtube.com/playlist?list=PL4d5ZtfQonW0B3qW24yAj1u1SuOvgKfP5&si=8nQpv13gbZEWuuqe)
+- [Oxford Playlist on Probability and Statistics](https://youtube.com/playlist?list=PL4d5ZtfQonW0B3qW24yAj1u1SuOvgKfP5&si=8nQpv13gbZEWuuqe)
 
 ## License
 
