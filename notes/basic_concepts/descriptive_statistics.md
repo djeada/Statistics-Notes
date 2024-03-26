@@ -15,7 +15,7 @@ $$\text{Cumulative Relative Frequency} = \sum_{i=1}^{n} \text{Relative Frequency
 
 Be careful cumulative frequencies don't make sense when the data doesn't have natural order!
 
-Example: List of People and Their Sibling Count
+### Example: List of People and Their Sibling Count
 
 1. Alice - 2 siblings
 2. Bob - 0 siblings
@@ -44,7 +44,7 @@ Continuous data can take any value within a range, making it impractical to calc
 
 Instead, we group continuous data into intervals or ranges and then calculate frequencies for these intervals. This approach simplifies the data and makes it more interpretable.
 
-#### Example: Height Measurements (in cm) of a Group of People
+### Example: Height Measurements (in cm) of a Group of People
 
 I. Raw Data (Continuous):
 
