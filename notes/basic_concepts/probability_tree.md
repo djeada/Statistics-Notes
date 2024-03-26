@@ -17,6 +17,7 @@ A probability tree starts with a root node that branches out into possible outco
 Consider a simplified example where we draw one card from a standard deck of 52 cards, and we're interested in the event of drawing a heart or not drawing a heart.
 
 ```plaintext
+
            __Heart (1/4)
           |
 Initial ──┤
@@ -36,6 +37,7 @@ Here's how to interpret this tree:
 In this example, we combine two independent events: first, we toss a coin, and then we roll a die. The probability tree for this scenario illustrates the outcomes and probabilities for each stage of the experiment.
 
 ```plaintext
+
            __Head (1/2)───1 (1/6)
           |               .
           |               .
@@ -49,14 +51,17 @@ Initial ──┤               6 (1/6)
 
 Interpreting the Probability Tree:
 
-- **Initial Node**: The experiment starts with a coin toss. The initial node represents the state before this action.
-- **First Level Branches (Coin Toss)**:
-    - The first branching of the tree represents the two outcomes of tossing the coin: "Head" and "Tail."
-    - Each outcome of the coin toss has a probability of 1/2, as a fair coin has equal chances of landing on either side.
-- **Second Level Branches (Die Roll)**:
-    - After the coin toss, the next event is rolling a six-sided die.
-    - The second level of branches represents the outcomes of the die roll, which are the numbers 1 through 6.
-    - Each outcome of the die roll has a probability of 1/6, as each face of a fair die has an equal chance of appearing.
+I. **Initial Node**: The experiment starts with a coin toss. The initial node represents the state before this action.
+II. **First Level Branches (Coin Toss)**:
+
+- The first branching of the tree represents the two outcomes of tossing the coin: "Head" and "Tail."
+- Each outcome of the coin toss has a probability of 1/2, as a fair coin has equal chances of landing on either side.
+  
+III. **Second Level Branches (Die Roll)**:
+
+- After the coin toss, the next event is rolling a six-sided die.
+- The second level of branches represents the outcomes of the die roll, which are the numbers 1 through 6.
+- Each outcome of the die roll has a probability of 1/6, as each face of a fair die has an equal chance of appearing.
 
 Calculating Probabilities:
 
@@ -68,6 +73,7 @@ Calculating Probabilities:
 In this example, we consider the scenario of rolling two dice simultaneously. A probability tree can be used to visualize all the possible outcomes and their associated probabilities.
 
 ```plaintext
+
            __1 (1/6)──1 (1/6)
           |          .
           |          .
@@ -91,18 +97,20 @@ Initial ──┤          .
 
 Interpreting the Probability Tree:
 
-- **Initial Node**: Represents the state before any dice are rolled.
-- **First Level Branches (First Die Roll)**:
-    - Each branch from the initial node represents one of the six possible outcomes of rolling the first die (numbered 1 to 6).
-    - Each outcome has an equal probability of 1/6, reflecting the fairness of the die.
-- **Second Level Branches (Second Die Roll)**:
-    - For each outcome of the first die, there are branches representing the possible outcomes of rolling the second die.
-    - Like the first die, each possible outcome (numbered 1 to 6) of the second die has a probability of 1/6.
+I. **Initial Node**: Represents the state before any dice are rolled.
+II. **First Level Branches (First Die Roll)**:
+
+- Each branch from the initial node represents one of the six possible outcomes of rolling the first die (numbered 1 to 6).
+- Each outcome has an equal probability of 1/6, reflecting the fairness of the die.
+
+III. **Second Level Branches (Second Die Roll)**:
+
+- For each outcome of the first die, there are branches representing the possible outcomes of rolling the second die.
+- Like the first die, each possible outcome (numbered 1 to 6) of the second die has a probability of 1/6.
 
 Calculating Probabilities:
 
-- The probability of a specific combination (like rolling a 3 on the first die and a 5 on the second) is calculated by multiplying the probabilities along the path:
-    - For a "3" followed by a "5": $P(3 \text{ and } 5) = P(3) \times P(5) = \frac{1}{6} \times \frac{1}{6} = \frac{1}{36}$.
+- The probability of a specific combination (like rolling a 3 on the first die and a 5 on the second) is calculated by multiplying the probabilities along the path: For a "3" followed by a "5": $P(3 \text{ and } 5) = P(3) \times P(5) = \frac{1}{6} \times \frac{1}{6} = \frac{1}{36}$.
 - The tree illustrates all 36 possible outcomes (6 outcomes from the first die multiplied by 6 outcomes from the second die), each with an equal probability of 1/36.
 
 ### Example: Drawing Marbles from a Bag
@@ -127,20 +135,24 @@ Initial Node──┤
 
 Calculations:
 
-1. **P(R then G)**: 
-   - The probability of drawing a red marble first is $\frac{6}{10}$ because there are 6 red marbles out of a total of 10.
-   - Given the first marble drawn is red, the probability of then drawing a green marble is $\frac{4}{9}$ since there are now 4 green marbles out of the remaining 9 marbles.
-   - Therefore, the probability of drawing a red marble followed by a green marble is $\frac{6}{10} \times \frac{4}{9} \approx 0.267$.
+I. **P(R then G)**: 
 
-2. **P(G then R)**:
-   - The probability of drawing a green marble first is $\frac{4}{10}$.
-   - If the first marble is green, there are still 6 red marbles left out of 9.
-   - Thus, the probability of drawing a green marble followed by a red marble is $\frac{4}{10} \times \frac{6}{9} \approx 0.267$.
+- The probability of drawing a red marble first is $\frac{6}{10}$ because there are 6 red marbles out of a total of 10.
+- Given the first marble drawn is red, the probability of then drawing a green marble is $\frac{4}{9}$ since there are now 4 green marbles out of the remaining 9 marbles.
+- Therefore, the probability of drawing a red marble followed by a green marble is $\frac{6}{10} \times \frac{4}{9} \approx 0.267$.
 
-3. **P(both R)**:
-   - After drawing one red marble, there are 5 red marbles left out of 9.
-   - The probability of drawing two red marbles consecutively is $\frac{6}{10} \times \frac{5}{9} \approx 0.333$.
+II. **P(G then R)**:
 
-4. **P(both G)**:
-   - After drawing one green marble, there are 3 green marbles left out of 9.
-   - The probability of drawing two green marbles consecutively is $\frac{4}{10} \times \frac{3}{9} \approx 0.133$.
+- The probability of drawing a green marble first is $\frac{4}{10}$.
+- If the first marble is green, there are still 6 red marbles left out of 9.
+- Thus, the probability of drawing a green marble followed by a red marble is $\frac{4}{10} \times \frac{6}{9} \approx 0.267$.
+
+III. **P(both R)**:
+
+- After drawing one red marble, there are 5 red marbles left out of 9.
+- The probability of drawing two red marbles consecutively is $\frac{6}{10} \times \frac{5}{9} \approx 0.333$.
+
+IV. **P(both G)**:
+
+- After drawing one green marble, there are 3 green marbles left out of 9.
+- The probability of drawing two green marbles consecutively is $\frac{4}{10} \times \frac{3}{9} \approx 0.133$.
