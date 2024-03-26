@@ -7,11 +7,11 @@ Descriptive statistics offer a summary of the main characteristics of a dataset 
 - **Frequency**: The number of times a specific value or category occurs in a dataset. For instance, if 3 people have 1 sibling, the frequency for "1 sibling" is 3.
 - **Relative Frequency**: The proportion of times a specific value occurs relative to the total number of observations. Calculated as:
 
-  $$\text{Relative Frequency} = \frac{\text{Frequency}}{\text{Total Observations}}$$
+$$\text{Relative Frequency} = \frac{\text{Frequency}}{\text{Total Observations}}$$
 
 - **Cumulative Relative Frequency**: The accumulation of previous relative frequencies up to a certain category. It shows the proportion of observations up to and including a certain category. Calculated as:
   
-  $$\text{Cumulative Relative Frequency} = \sum_{i=1}^{n} \text{Relative Frequency}_i$$
+$$\text{Cumulative Relative Frequency} = \sum_{i=1}^{n} \text{Relative Frequency}_i$$
 
 Be careful cumulative frequencies don't make sense when the data doesn't have natural order!
 
@@ -44,16 +44,18 @@ Continuous data can take any value within a range, making it impractical to calc
 
 Instead, we group continuous data into intervals or ranges and then calculate frequencies for these intervals. This approach simplifies the data and makes it more interpretable.
 
-Example: Height Measurements (in cm) of a Group of People
+#### Example: Height Measurements (in cm) of a Group of People
 
-1. Raw Data (Continuous):
-  - 170.2, 165.5, 172.3, 168.7, 171.6, 167.4, 169.5, 174.2, 166.1, 173.5
+I. Raw Data (Continuous):
 
-2. Grouped into Ranges
-  - 165-167,
-  - 168-170,
-  - 171-173,
-  - 174-176
+- 170.2, 165.5, 172.3, 168.7, 171.6, 167.4, 169.5, 174.2, 166.1, 173.5
+
+II Grouped into Ranges:
+
+- 165-167,
+- 168-170,
+- 171-173,
+- 174-176
 
 | Height Range (cm) | Frequency |
 |-------------------|-----------|
@@ -70,15 +72,15 @@ Measures of central tendency provide an idea of the average or central value of 
 
 * **Arithmetic Mean:** Suitable for characterizing symmetric distributions without outliers. It's also the balancing point of a distribution.
 
-  $$\mu_{X} = \frac{1}{n} \sum x$$
+$$\mu_{X} = \frac{1}{n} \sum x$$
 
 * **Weighted Mean:** Takes into account the importance or weight of each value in the dataset.
 
-  $$\mu_{X} = \frac{\sum w_ix_i}{\sum w_i}$$
+$$\mu_{X} = \frac{\sum w_ix_i}{\sum w_i}$$
 
 * **Geometric Mean:** Ideal for averaging ratios or handling multiplicative data. Always smaller than the arithmetic mean.
 
-  $$\text{mean} =\sqrt[n]{a_{1}a_{2}...a_{n}}$$
+$$\text{mean} =\sqrt[n]{a_{1}a_{2}...a_{n}}$$
 
 * **Median:** The precise middle value among a dataset when sorted in ascending order. Suitable for skewed distributions or data with outliers.
 
@@ -142,22 +144,23 @@ Each measure of central tendency can provide different insights into the dataset
 
 ![image](https://github.com/djeada/Statistics-Notes/assets/37275728/8b59fddf-4218-4365-a345-24075da9326f)
 
-### When Choosing Mean or Median:
-- If you want to minimize the effect of outliers, then use **median** instead of mean.
-- If it’s important that you consider all values, including outliers, then use **mean** instead of median.
-- Typically we should be very cautious of using the mean for skewed data. The median is often a more honest measurement of average in such a setting.
+### Choosing Between Mean and Median
 
-EXAMPLE 1
+- **Use Median** when the goal is to reduce the impact of outliers. The median is less sensitive to extreme values, making it a reliable measure of central tendency in skewed distributions.
+- **Opt for Mean** when it's essential to include all values, outliers included. The mean takes into account every data point, which is useful in datasets where each value carries equal significance.
+- **Be Cautious with Mean in Skewed Data**: In skewed distributions, the mean can be misleading. In such cases, the median often gives a more representative measure of the 'average' value.
 
-Alice is looking into the salaries of graphic designers at a well-established tech company to gauge her potential earnings. Given that the company has a few top-level designers earning significantly higher than the rest, which would give her a more realistic expectation of salary, the mean or the median?
+#### Example 1: Evaluating Salaries in a Tech Company
 
-Answer: The median would better represent her potential earnings because it would not be as affected by the high salaries of the few top-level designers, thus providing a more typical value of what graphic designers at the company earn.
-EXAMPLE 2
+Alice is researching salaries of graphic designers at a well-known tech firm. The company has several top-level designers whose salaries are substantially higher than the rest. To get a realistic expectation of her potential earnings, should Alice consider the mean or the median salary?
 
-Tom is the manager of a small bookstore and needs to report the average customer spending to the owner. Considering that most customers spend around $20, but there are occasional rare purchases of rare books costing over $500, should Tom use the mean or median to report this spending?
+**Answer**: The median salary would be more indicative of what Alice might earn. It diminishes the impact of the exceptionally high salaries of a few top-level designers, presenting a more typical salary level for a graphic designer at that company.
 
-Answer: Tom should use the median to report average customer spending. The rare expensive purchases are outliers and would skew the mean, making it seem like the average customer spends more than they typically do.
+#### Example 2: Reporting Average Customer Spending in a Bookstore
 
+Tom, managing a small bookstore, needs to report the average spending per customer. While most customers spend about $20, occasionally there are significant purchases of over $500. For an accurate report of average spending, should Tom use the mean or the median?
+
+**Answer**: Tom should use the median for his report. The infrequent, high-value transactions are outliers that would disproportionately inflate the mean, creating a misleading impression of the typical customer spending. The median, less affected by these outliers, would provide a more accurate reflection of regular customer expenditures.
 
 ## Measures of Dispersion
 
@@ -169,32 +172,56 @@ Dispersion measures indicate the spread or variability of the data in the datase
 
 * **Variance:** The average of the squared differences from the mean.
 
-  $$V = \frac{\sum (x_i - \overline{x})^2}{N-1}$$ (for a sample)
+$$V = \frac{\sum (x_i - \overline{x})^2}{N-1}$$ (for a sample)
 
-  $$V = \frac{\sum (x_i - \overline{x})^2}{N}$$ (for a population)
+$$V = \frac{\sum (x_i - \overline{x})^2}{N}$$ (for a population)
 
 * **Standard Deviation:** The square root of the variance. Indicates the degree to which individual elements deviate from the mean.
 
-  $$\sigma = \sqrt{\frac{\sum (x_i - \overline{x})^2}{N-1}}$$ (for a sample)
+$$\sigma = \sqrt{\frac{\sum (x_i - \overline{x})^2}{N-1}}$$ (for a sample)
 
-  $$\sigma = \sqrt{\frac{\sum (x_i - \overline{x})^2}{N}}$$ (for a population)
+$$\sigma = \sqrt{\frac{\sum (x_i - \overline{x})^2}{N}}$$ (for a population)
 
-### Understanding Standard deviation
+### Example: Comparing Athletic Performances
 
 Consider that Chloe swam the 100m freestyle in 53 seconds at a regional competition, and Liam completed a marathon in 2 hours and 55 minutes at a city event. Who performed more exceptionally compared to typical results?
 
-Given Information:
-- Average 100m freestyle time (μ) = 60 seconds
-- Standard Deviation for 100m freestyle (σ) = 4 seconds
-- Average marathon time (μ) = 4 hours
-- Standard Deviation for marathon (σ) = 30 minutes
+Given Data:
+
+I. For the 100m freestyle:
+
+- Average time (μ) = 60 seconds
+- Standard Deviation (σ) = 4 seconds
+  
+II. For the marathon:
+
+- Average time (μ) = 4 hours
+- Standard Deviation (σ) = 30 minutes
 
 Analysis:
-- Chloe's swim time is (60 - 53) / 4 = 1.75 SDs below the mean time (faster is better in this context).
-- Liam's marathon time, converted to minutes is 175 minutes. The average is 240 minutes. So, his time is (240 - 175) / 30 = 2.17 SDs below the mean time.
 
-Conclusion:
-Liam's performance in the marathon is more exceptional as his time is 2.17 SDs better than the average, compared to Chloe's swim time, which is 1.75 SDs better than the average for the 100m freestyle.
+I. Chloe's Performance: 
+
+- Chloe's swim time is 53 seconds.
+- Calculation of standard deviations from the mean:
+
+$$
+\text{Number of SDs} = \frac{60 - 53}{4} = 1.75
+$$
+
+- Chloe's time is 1.75 standard deviations better (faster) than the average.
+
+II. Liam's Performance:
+
+- Liam's marathon time is 2 hours and 55 minutes (175 minutes).
+- Conversion of average time to minutes: 4 hours = 240 minutes.
+- Calculation of standard deviations from the mean:
+
+$$
+\text{Number of SDs} = \frac{240 - 175}{30} = 2.17
+$$
+
+- Liam's time is 2.17 standard deviations better (faster) than the average.
 
 ### Understanding Variance
 
@@ -265,7 +292,7 @@ $$
 \frac{\text{Number of values less than the given value}}{\text{Total number of values}} \times 100
 $$
 
-Example:
+#### Example
 
 Consider a dataset of exam scores: $[40, 30, 15, 24, 20, 22, 35]$.
 
@@ -303,7 +330,7 @@ To find the quartile thresholds, use the following quantiles:
 - Second Quartile (Median): $0.5$
 - Third Quartile: $0.75$
 
-Example:
+#### Example
 
 Consider a dataset of exam scores: $[40, 30, 15, 24, 20, 22, 35]$.
 
