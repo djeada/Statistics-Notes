@@ -86,15 +86,22 @@ Next, let's apply a moving average with a window size of 3 to smooth out short-t
 | ----- | ----- | ------------------------- |
 | 1     |  100  |         |
 | 2     |  120  |         |
-| 3     |  110  |     110 |
-| 4     |  130  |     120 |
+| 3     |  110  |     120 |
+| 4     |  130  |     110 |
 | 5     |  140  |     127 |
 | 6     |  150  |     140 |
 | 7     |  160  |     150 |
 | 8     |  180  |     163 |
-| 9     |  170  |     170 |
-| 10    |  190  |     180 |
+| 9     |  170  |     180 |
+| 10    |  190  |     170 |
 | 11    |  200  |     187 |
 | 12    |  210  |     200 |
 
 The moving average shows an increasing trend in sales, similar to the original time series plot.
+
+Here's the plot with the analysis using Simple Exponential Smoothing (SES) on the given sales data:
+
+![sales_prediction](https://github.com/djeada/Statistics-Notes/assets/37275728/85db196f-ac46-438a-8011-a6a3f952bdb8)
+
+- The blue line represents the actual sales data for each month.
+- The purple dashed line shows the predictions from the optimized SES model.
