@@ -43,31 +43,34 @@ $$E[X] = 0, \text{ for } \nu > 1$$
 
 $$E[X^2] = \nu, \text{ for } \nu > 2$$
 
+### Example: Analyzing the Effect of Diet on Blood Pressure
 
-### Example: Comparing Sample Means
+A researcher investigates whether two diets lead to different average systolic blood pressure. The following data is collected from a random sample:
 
-Suppose a researcher is interested in determining whether there is a significant difference between the mean systolic blood pressure of two different diets. The researcher collects the following data from a random sample:
+- Diet A: Sample size (n1) = 20, Mean (mean1) = 120, Standard Deviation (s1) = 8
+- Diet B: Sample size (n2) = 25, Mean (mean2) = 130, Standard Deviation (s2) = 10
 
-- Diet A: n1 = 20, mean1 = 120, standard deviation1 = 8
-- Diet B: n2 = 25, mean2 = 130, standard deviation2 = 10
+To compare the means, a two-sample t-test is employed.
 
-The researcher decides to use a two-sample t-test to determine if there is a significant difference in means.
+I. Calculation of the T-statistic:
 
-a) What is the t-statistic for the test?
-b) What is the degrees of freedom for the test?
+The t-statistic is calculated using the formula for the two-sample t-test:
 
-Using the formula for the two-sample t-test:
+$$ t = \frac{(\text{mean1} - \text{mean2})}{\sqrt{(\text{s1}^2/\text{n1}) + (\text{s2}^2/\text{n2})}} $$
 
-$$t = \frac{(\text{mean1} - \text{mean2})}{\sqrt{(\text{s1}^2/\text{n1}) + (\text{s2}^2/\text{n2})}}$$
+For the given data:
 
-a) Calculate the t-statistic:
+$$ t = \frac{(120 - 130)}{\sqrt{(8^2/20) + (10^2/25)}} \approx -3.78 $$
 
-$$t = \frac{(120 - 130)}{\sqrt{(8^2/20) + (10^2/25)}} \approx -3.78$$
+This value indicates the number of standard deviations the sample mean difference is from 0.
 
-b) Estimate the degrees of freedom using the Welch-Satterthwaite equation:
+II. Estimation of Degrees of Freedom:
 
-$$df \approx \frac{(\text{s1}^2/\text{n1} + \text{s2}^2/\text{n2})^2}{(\text{s1}^4/(\text{n1}^2(\text{n1}-1)) + \text{s2}^4/(\text{n2}^2(\text{n2}-1)))} \approx 40.4$$
+The degrees of freedom can be estimated using the Welch-Satterthwaite equation:
 
+$$ df \approx \frac{((\text{s1}^2/\text{n1}) + (\text{s2}^2/\text{n2}))^2}{(\text{s1}^4/(\text{n1}^2(\text{n1}-1)) + \text{s2}^4/(\text{n2}^2(\text{n2}-1)))} \approx 40.4 $$
+
+These degrees of freedom are used in determining the critical value of t from the t-distribution table for the hypothesis test.
 
 ### Applications
 
