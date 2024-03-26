@@ -1,8 +1,8 @@
-# Covariance
+## Covariance
 
 Covariance is a statistical measure used to determine the relationship between two random variables. It indicates the direction of the linear relationship between variables.
 
-## Definition
+### Definition
 
 The covariance between two random variables $X$ and $Y$ is given by:
 
@@ -32,16 +32,16 @@ Interpretation:
 2. **Scale**: If $a$ and $b$ are constants, $\text{Cov}(aX, bY) = ab \cdot \text{Cov}(X, Y)$
 3. **Variance Relation**: $\text{Cov}(X, X)$ is the variance of $X$, denoted as $\text{Var}(X)$.
 
-## Applications
+### Applications
 - Covariance is used in statistics to understand how two variables change together.
 - It's also a key concept in finance, particularly in the field of portfolio theory and risk management.
 
-## Limitations
+### Limitations
 - Covariance doesn't provide information about the strength of the relationship between variables.
 - It only gives the direction of the relationship.
 - The magnitude of covariance is not standardized, making it difficult to compare across different datasets.
 
-## Example
+### Example
 
 In this example, we'll calculate the covariance between two variables: `X` and `Y`. The data for these variables is presented in the table below:
 
@@ -75,8 +75,4 @@ Finally, we calculate the covariance using the formula:
 $$\text{Cov}(X, Y) = \frac{\sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})}{n}$$
 
 - $\text{Cov}(X, Y) = \frac{2 + 0 + 2}{3}$
-
-Conclusion
-
-- The covariance between X and Y is calculated as the sum of the product of deviations divided by the number of observations.
-- In this case, $\text{Cov}(X, Y) = \frac{4}{3}$.
+- $\text{Cov}(X, Y) = \frac{4}{3}$.
