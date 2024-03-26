@@ -30,31 +30,31 @@ $$\text{Var}(X) = \begin{cases}
 \end{cases}
 $$
 
+### Example: Variability in Agricultural Yields
 
-### Example: Comparing Variances of Two Populations
+An agronomist is assessing the variability in yield between two wheat varieties. Random samples yield the following data:
 
-An agronomist wishes to compare the variability in yield from two different types of wheat. The agronomist collects the following data from random samples:
+- Wheat Type 1: Sample size (n1) = 15, Variance (variance1) = 20
+- Wheat Type 2: Sample size (n2) = 12, Variance (variance2) = 30
 
-- Wheat Type 1: n1 = 15, variance1 = 20
-- Wheat Type 2: n2 = 12, variance2 = 30
+To compare the variances, the agronomist employs an F-test.
 
-The agronomist decides to use an F-test to determine if there is a significant difference in variances between the two types of wheat.
+Given:
 
-a) What is the F-statistic for the test?
-b) What are the degrees of freedom for the test?
+- F-test formula: $F = \frac{\text{variance1}}{\text{variance2}}$
 
-Using the formula for the F-test:
+I. Compute the F-statistic:
 
-$$F = \frac{\text{variance1}}{\text{variance2}}$$
+The F-statistic is calculated as the ratio of the two sample variances.
 
-a) Calculate the F-statistic:
+$$ F = \frac{20}{30} = \frac{2}{3} \approx 0.67 $$
 
-$$F = \frac{20}{30} = \frac{2}{3} \approx 0.67$$
+II. Determine the degrees of freedom (df) for the test:
 
-b) The degrees of freedom are:
+The degrees of freedom for each sample are calculated as the sample size minus one.
 
-- df1 = n1 - 1 = 15 - 1 = 14
-- df2 = n2 - 1 = 12 - 1 = 11
+- Degrees of freedom for Wheat Type 1 (df1): $n1 - 1 = 15 - 1 = 14$
+- Degrees of freedom for Wheat Type 2 (df2): $n2 - 1 = 12 - 1 = 11$
 
 ### Applications
 
