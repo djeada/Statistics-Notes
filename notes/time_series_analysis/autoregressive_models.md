@@ -11,6 +11,7 @@ X_t = c + \phi_1 X_{t-1} + \phi_2 X_{t-2} + \cdots + \phi_p X_{t-p} + \epsilon_t
 $$
 
 where:
+
 - $X_t$: The value of the time series at time t
 - $c$: A constant term
 - $\phi_i$: The autoregressive coefficient for the i-th lag
@@ -38,6 +39,7 @@ The parameters of an AR model (constant term and autoregressive coefficients) ca
 ### Model Selection
 
 The order p of the AR model is a critical choice. Common methods for selecting the order include:
+
 1. Akaike Information Criterion (AIC): A measure that takes into account both the goodness of fit and the complexity of the model. Lower AIC values indicate better models.
 2. Bayesian Information Criterion (BIC): Similar to AIC, but with a stronger penalty for model complexity. Lower BIC values indicate better models.
 3. Partial autocorrelation function (PACF): A plot of the partial autocorrelation coefficients for different lags. The lag at which the PACF drops to zero or below a significance threshold can be used as the order of the AR model.
