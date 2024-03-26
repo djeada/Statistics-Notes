@@ -80,8 +80,6 @@ Complementary Probability:
 
 - $P(B^c) = 1 - P(B)$: The probability that a cow does not have BSE.
 
-#### Bayes' Theorem Application:
-
 To find the conditional probability $P(B | T)$, we use Bayes' Theorem:
 
 $$
@@ -95,8 +93,6 @@ P(T) = P(T | B) \cdot P(B) + P(T | B^c) \cdot P(B^c)
 $$
 
 ![0663c27b-403f-4b28-8a3d-8999625f2bdd](https://github.com/djeada/Statistics-Notes/assets/37275728/51943b61-62d0-4bfb-b5dc-3198d764efdc)
-
-#### Calculation:
 
 With the provided values:
 
