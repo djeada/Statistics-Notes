@@ -40,6 +40,32 @@ $$E[X] = \lambda$$
 
 $$E[X^2] = \lambda^2 + \lambda$$
 
+### Example: Hospital Emergency Room Visits
+
+A hospital's emergency room experiences an average of 5 visits per hour due to accidents. We can model this using a Poisson distribution.
+
+Given:
+
+- Average rate of success (visits per hour) `\(\lambda = 5\)`
+
+I. What is the probability exactly 3 accidents occur in an hour?
+
+For exactly 3 accidents:
+
+$$ P(X = 3) = \frac{e^{-5} \cdot 5^3}{3!} = 0.1404 $$
+
+II. What is the probability of more than 7 accidents in an hour?
+
+For more than 7 accidents:
+
+$$ P(X > 7) = 1 - \sum_{k=0}^{7} \frac{e^{-5} \cdot 5^k}{k!} = 0.1339 $$
+
+III. What is the probability of at most 2 accidents in an hour?
+
+For at most 2 accidents:
+
+$$ P(X \leq 2) = \sum_{k=0}^{2} \frac{e^{-5} \cdot 5^k}{k!} = 0.1247 $$
+
 ### Poisson Approximation to the Binomial Distribution
 
 If the number of trials in a binomial distribution is large (n) and the probability of success (p) is small, then the binomial distribution can be approximated by a Poisson distribution with parameter $\lambda = np$:
