@@ -4,6 +4,8 @@ Evaluation metrics are used to assess the performance of machine learning models
 
 ## Classification Metrics
 
+![classification_metrics](https://github.com/djeada/Statistics-Notes/assets/37275728/20f596a2-71f9-4172-9a57-9eaaa1fb7a74)
+
 ### Confusion Matrix
 
 A confusion matrix is a table that is used to describe the performance of a classification model on a set of data for which the true values are known. The confusion matrix consists of four elements:
@@ -66,6 +68,14 @@ $$
 AUC-ROC is a performance measurement for classification problems at various thresholds settings. It represents the model's ability to discriminate between positive and negative classes. An AUC-ROC close to 1 indicates a good model, while an AUC-ROC close to 0.5 indicates a random classifier.
 
 ## Regression Metrics
+
+Here's a plot demonstrating linear regression on a sine wave with noise, including key regression metrics:
+
+![linear_regression_sine](https://github.com/djeada/Statistics-Notes/assets/37275728/aaf787b6-9b17-41cc-b1a6-54400b410e1b)
+
+- The blue points again represent the actual data points (sine wave with noise).
+- The red line is the prediction from the linear regression model.
+- The gray dotted lines show the error for each data point, connecting the actual value to the predicted value.
 
 ### Mean Absolute Error (MAE)
 
