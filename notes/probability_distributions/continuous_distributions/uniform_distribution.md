@@ -53,27 +53,38 @@ $$E[X] = \frac{a+b}{2}$$
 
 $$E[X^2] = \frac{a^2 + ab + b^2}{3}$$
 
-### Example: Random Number Generation
+### Example: Timing in Simulation Game
 
-A developer is creating a simulation game where an event should happen at a random time between 2 and 4 seconds after a specific action. The time until the event is modeled using a continuous uniform distribution.
+In a simulation game, a developer wants to introduce an event occurring randomly between 2 and 4 seconds after a certain action. This timing follows a continuous uniform distribution.
 
-a) What is the probability that the event happens within 2.5 seconds after the action?
-b) What is the expected value and variance of the time until the event happens?
+Given parameters:
 
-For a continuous uniform distribution $U(a, b)$:
+- Lower bound $a = 2$ seconds
+- Upper bound $b = 4$ seconds
 
-$$f(x; a, b) = \frac{1}{b - a} \text{ for } a \leq x \leq b$$
+I. Probability of Event Occurring Within 2.5 Seconds:
 
-Given: $a = 2$ seconds, $b = 4$ seconds
+For a continuous uniform distribution $U(a, b)$, the probability density function is $f(x; a, b) = \frac{1}{b - a}$ for $a \leq x \leq b$.
 
-a) Probability of happening within 2.5 seconds:
+To find the probability of the event happening before 2.5 seconds:
 
-$$P(X < 2.5) = \frac{2.5 - 2}{4 - 2} = 0.25$$
+$$ P(X < 2.5) = \frac{2.5 - 2}{4 - 2} = 0.25 $$
 
-b) Expected value and variance:
+This means there is a 25% chance the event will occur within 2.5 seconds.
 
-- Expected value: $E[X] = \frac{a + b}{2} = \frac{2 + 4}{2} = 3$ seconds
-- Variance: $\text{Var}(X) = \frac{(b - a)^2}{12} = \frac{(4 - 2)^2}{12} = \frac{1}{3} \text{ seconds}^2$
+II. Expected Value and Variance of the Event Timing:
+
+The expected value $E[X]$ and variance $\text{Var}(X)$ for a continuous uniform distribution are calculated as:
+
+- Expected value (mean time):
+  
+$$ E[X] = \frac{a + b}{2} = \frac{2 + 4}{2} = 3 \text{ seconds} $$
+
+- Variance:
+  
+$$ \text{Var}(X) = \frac{(b - a)^2}{12} = \frac{(4 - 2)^2}{12} = \frac{1}{3} \text{ seconds}^2 $$
+
+These calculations help the developer understand the timing dynamics of the event in the simulation game.
 
 ### Applications
 
