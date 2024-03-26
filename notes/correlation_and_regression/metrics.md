@@ -98,7 +98,7 @@ R-Squared (R²) is a metric for assessing the performance of regression machine 
 The R² score can be calculated using the following formula:
 
 $$
-R² = 1 - \frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{\sum_{i=1}^n (y_i - \bar{y})^2}
+R^2 = 1 - \frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{\sum_{i=1}^n (y_i - \bar{y})^2}
 $$
 
 Where:
@@ -112,6 +112,3 @@ The R² score ranges from 1 to negative values for under-performing models:
 - A score of 1 is the perfect score, indicating that all the variance in the dependent variable is explained by the independent variables.
 - A score of 0 indicates that the independent variables don't explain any of the variance in the dependent variable.
 - A negative score below 0 indicates that the independent variables aren't explaining the variance and are actually contributing negatively to the model's fit.
-
-It is important to remember that R² scores from different models cannot be directly compared, as the variance found in a dataset is not comparable across datasets.
-
