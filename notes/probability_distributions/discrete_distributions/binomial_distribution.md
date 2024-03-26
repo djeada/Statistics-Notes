@@ -53,20 +53,19 @@ Given:
 - Probability of success (following protocol) `p = 0.9`
 - Number of trials (employees chosen) `n = 10`
 
-
-1. What is the probability exactly 7 of them follow the security protocols?
+I. What is the probability exactly 7 of them follow the security protocols?
 
 For exactly 7 employees:
 
 $$P(X = 7) = \binom{10}{7} (0.9)^7 (0.1)^{10-7} = 0.0574$$
 
-2. What is the probability at least 8 of them follow the security protocols?
+II. What is the probability at least 8 of them follow the security protocols?
 
 For at least 8 employees:
 
 $$P(X \geq 8) = \sum_{k=8}^{10} \binom{10}{k} (0.9)^k (0.1)^{10-k} = 0.9298$$
 
-3. What is the probability fewer than 5 employees follow the protocols?
+III. What is the probability fewer than 5 employees follow the protocols?
 
 For fewer than 5 employees:
 
