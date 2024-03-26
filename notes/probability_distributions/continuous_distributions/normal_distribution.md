@@ -78,20 +78,23 @@ The empirical rule, also known as the 68-95-99.7 rule, describes the proportion 
 
 ### Example: Standardizing Test Scores
 
-A teacher wants to standardize the scores of a class test to a normal distribution. The test scores are normally distributed with a mean of 70 and a standard deviation of 10. A student scored 85 in the test.
+A teacher aims to standardize her class's test scores, which follow a normal distribution. The mean score is 70, with a standard deviation of 10. Consider a student who scored 85.
 
-a) What is the student's z-score?
-b) What percentile does the student's score represent?
+I. Determining the Student's Z-score:
 
-Using the formula for calculating z-scores:
+The z-score formula:
 
-$$z = \frac{(X - \mu)}{\sigma}$$
+$$ z = \frac{(X - \mu)}{\sigma} $$
 
-a) Calculate the student's z-score:
+where $X$ is the score, $\mu$ is the mean, and $\sigma$ is the standard deviation. 
 
-$$z = \frac{(85 - 70)}{10} = 1.5$$
+For the student's score:
 
-b) To find the percentile, look up the z-score in a standard normal distribution table or use a calculator. A z-score of 1.5 corresponds to approximately the 93rd percentile.
+$$ z = \frac{(85 - 70)}{10} = 1.5 $$
+
+II. Identifying the Corresponding Percentile:
+
+To convert a z-score to a percentile, use a standard normal distribution table or a calculator. A z-score of 1.5 typically aligns with the 93rd percentile, meaning this student's score is higher than approximately 93% of the class.
 
 ### Application
 
