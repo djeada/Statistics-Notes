@@ -74,5 +74,6 @@ Finally, we calculate the covariance using the formula:
 
 $$\text{Cov}(X, Y) = \frac{\sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})}{n}$$
 
-- $\text{Cov}(X, Y) = \frac{2 + 0 + 2}{3}$
-- $\text{Cov}(X, Y) = \frac{4}{3}$.
+$$\text{Cov}(X, Y) = \frac{2 + 0 + 2}{3}$$
+
+$$\text{Cov}(X, Y) = \frac{4}{3}$$
