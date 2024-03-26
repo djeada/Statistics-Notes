@@ -37,22 +37,23 @@ $$M_X(t) = \left(\frac{pe^t}{1 - (1 - p)e^t}\right)^r$$
 In quality control testing, an inspector examines products until finding a certain number of defective items. Suppose the probability of a product being defective is 0.1, and the inspector continues testing until 5 defective products are found.
 
 Given:
+
 - Probability of defective product `p = 0.1`
 - Number of defects required `r = 5`
 
-1. What is the probability that exactly 20 products need to be tested?
+I. What is the probability that exactly 20 products need to be tested?
 
 For exactly 20 products tested:
 
 $$P(X = 20) = \binom{19}{4} (0.1)^5 (0.9)^{15} ≈ 0.031$$
 
-2. What is the expected number of products to be tested?
+II. What is the expected number of products to be tested?
 
 Expected number of products tested:
 
 $$E[X] = \frac{5}{0.1} = 50$$
 
-3. What is the variance in the number of products tested?
+III. What is the variance in the number of products tested?
 
 Variance in the number of products tested:
 
