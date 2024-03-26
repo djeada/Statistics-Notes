@@ -45,16 +45,42 @@ $$
 
 MA models are best for modeling time series with short-term, abrupt changes.
 
-### Combining AR and MA Models
+### Example: Stock Price Analysis
 
-MA models can be combined with Autoregressive (AR) models, leading to ARMA (Autoregressive Moving Average) and ARIMA (Autoregressive Integrated Moving Average) models. These models can capture more complexities in time series data.
+When analyzing stock prices, technical indicators like the Simple Moving Average (SMA) and the Exponential Moving Average (EMA) are frequently employed. These methods help to smooth out price data over a specified period and can be crucial in identifying trends.
 
-### Practical Example: Stock Price Analysis
+#### SMA Analysis
+The Simple Moving Average (SMA) is a calculation that takes the arithmetic mean of a given set of prices over a specific number of days in the past; for instance, over the previous 20 days.
 
-For stock price data analysis, the SMA and EMA are commonly used:
+$SMA = (P1 + P2 + ... + P20) / 20$$
 
-1. **SMA Analysis**: Calculate a 20-day SMA to smooth out short-term fluctuations.
-2. **EMA Analysis**: Use an EMA with $\alpha = 0.1$ for a more recent trend focus.
-3. **Trend Identification**: Compare SMA and EMA to discern stock price trends.
+Here, $P1$, $P2$, ..., $P20$ represent the stock prices for each of the 20 days.
 
-By using these tools, investors can make more informed decisions based on the direction and strength of stock price trends.
+The 20-day SMA helps smooth out short-term fluctuations in stock prices, providing a clearer view of the overall price trend.
+
+#### EMA Analysis
+The Exponential Moving Average (EMA) gives more weight to more recent prices. This sensitivity to newer prices makes the EMA more responsive to price changes. Unlike the SMA, the EMA applies a weighting factor to each day's price depending on its recency.
+
+$$EMA = Price(T) * k + EMA(Y) * (1 - k)$$
+
+Where:
+
+- $T$ = Today
+- $Y$ = Yesterday
+- $k = 2 / (N + 1)$
+- $N$ = The number of days in the EMA (e.g., 20 days)
+  
+The EMA is valuable for capturing more recent trends and is often used for shorter time frames.
+
+#### Trend Identification
+
+- **Crossing**: When the EMA crosses the SMA, it may indicate a shift in trend. An upward crossing can signal a bullish trend, while a downward crossing might signal a bearish trend.
+- **Divergence**: If the EMA diverges significantly from the SMA, it suggests increased market momentum in the direction of the EMA.
+- Investors often use these indicators in conjunction to get a more nuanced understanding of the market sentiment.
+- It's important to remember that SMA and EMA are based on past prices and are not predictive of future prices but rather indicative of trends.
+
+![stock_price_analysis](https://github.com/djeada/Statistics-Notes/assets/37275728/69a7a991-b80c-406b-b0c9-129953f80e3f)
+
+- The blue line represents the mock stock prices, exhibiting a more dynamic and volatile behavior, similar to real-world stock market trends.
+- The orange line is the 20-day Simple Moving Average (SMA). It smooths out the fluctuations in the stock prices, providing a clearer view of the long-term trend.
+- The green line shows the 20-day Exponential Moving Average (EMA), which reacts more quickly to recent price changes, thus capturing short-term movements more effectively.
