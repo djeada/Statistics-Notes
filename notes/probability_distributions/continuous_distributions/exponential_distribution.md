@@ -54,21 +54,23 @@ An engineer examines the failure rate of a key machine component. This component
 Given:
 
 - Mean time to failure: 5 years
-- The exponential distribution PDF: \( f(x; \lambda) = \lambda e^{-\lambda x} \)
-- Rate parameter \( \lambda \): \( \frac{1}{\text{mean time to failure}} = \frac{1}{5} \) per year
+- The exponential distribution PDF: $f(x; \lambda) = \lambda e^{-\lambda x}$
+- Rate parameter $\lambda$: $\frac{1}{\text{mean time to failure}} = \frac{1}{5}$ per year
 
-a) Probability of a component failing within the first year:
+I. Probability of a component failing within the first year:
 
-The probability that a component fails before a given time \( x \) in an exponential distribution is \( P(X < x) = 1 - e^{-\lambda x} \).
+The probability that a component fails before a given time $x$ in an exponential distribution is $P(X < x) = 1 - e^{-\lambda x}$.
 
 For the first year:
+
 $$ P(X < 1) = 1 - e^{-\frac{1}{5}} \approx 0.1813 $$
 
-b) Probability of a component lasting more than 10 years:
+II. Probability of a component lasting more than 10 years:
 
-The probability that a component lasts longer than a given time \( x \) in an exponential distribution is \( P(X > x) = e^{-\lambda x} \).
+The probability that a component lasts longer than a given time $x$ in an exponential distribution is $P(X > x) = e^{-\lambda x}$.
 
 For more than 10 years:
+
 $$ P(X > 10) = e^{-\frac{10}{5}} = e^{-2} \approx 0.1353 $$
 
 ### Applications
