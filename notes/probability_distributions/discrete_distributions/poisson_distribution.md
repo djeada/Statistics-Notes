@@ -46,7 +46,7 @@ A hospital's emergency room experiences an average of 5 visits per hour due to a
 
 Given:
 
-- Average rate of success (visits per hour) `\(\lambda = 5\)`
+- Average rate of success (visits per hour) $\lambda = 5$
 
 I. What is the probability exactly 3 accidents occur in an hour?
 
