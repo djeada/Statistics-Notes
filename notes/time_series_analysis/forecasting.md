@@ -6,56 +6,53 @@ Time series forecasting is a technique used to predict future values based on hi
 
 A time series can be decomposed into four main components:
 
-1. **Trend**: The long-term movement in the data, usually upward or downward.
+1. **Trend**: This represents the long-term progression of the series, signifying a persistent, general direction of the data over a long period. It can be upward, downward, or even a stable trend.
 
 ```
 ^
 | Value 
-|         _________
+|         __________
 |       /
 |     /
 |   /
 | /
-|/____________ Time ->
+|/___________________ Time ->
 ```
 
-2. **Seasonality**: Regular fluctuations in the data that occur within fixed periods (e.g., daily, monthly, yearly).
-
-```
-^
-| Value 
-|   _   _   _   _   _
-|  / \ / \ / \ / \ / \
-| /   X   X   X   X   X
-|/_________________ Time ->
-
-```
-
-3. **Cycles**: Irregular fluctuations that occur over longer periods and are not seasonal.
+2. **Seasonality**: These are patterns that repeat at regular intervals, like daily, monthly, or quarterly. This component reflects the influence of seasonal factors on the time series.
 
 ```
 ^
-| Value 
-|     _     ___    _   ___
-|   /   \_/     \_/ \_/   \
-|  /_____________________ Time ->
-
+| Value
+|    /\  /\  /\  /\  /\  
+|   /  \/  \/  \/  \/  \ 
+|  /                    \
+|/_______________________\___ Time ->
 ```
 
-4. **Random (or Irregular)**: The unexplained variation in the data after accounting for the other components.
+3. **Cycles**:  Unlike seasonality, cyclical patterns occur at less regular intervals. These fluctuations are often linked to economic, political, or even environmental factors and can span multiple years.
 
 ```
 ^
-| Value 
-|
-|           . 
-|     .                 . 
-|                   .
-| .     .
-|               .
-|   .       .       .   
-|
-|______________________Time ->
+| Value
+|                               ___
+|                         ___--     --___
+|        ___         ___-                 -
+|   __--     --__-                          -__
+|_/                                              \_
+|__________________________________________________ Time ->
+```
+
+4. **Random (or Irregular)**: This component captures the 'noise' or random variation in the data. It represents the unpredictable, erratic factors affecting the time series after the trend, seasonality, and cyclical components have been accounted for.
+
+```
+^
+| Value
+|   .       .  .      .   .   . . 
+|  . .    .      .  .    .      . 
+|    .      . .   .  . .   .    .
+| .    .  .   .     .    .   .   
+|________________________________ Time ->
 ```
 
 ### Forecasting Methods
@@ -114,11 +111,11 @@ where `Δ^d y` denotes the `d`th difference of `y`.
 
 7. **Seasonal Decomposition of Time Series (STL) and Seasonal ARIMA (SARIMA)**: These methods account for seasonality in time series data. SARIMA is an extension of ARIMA that includes a seasonal component.
 
-    $$
-    Δ^D Y_{t+s} = c + φ_1Δ^D Y_{t+s-1} + ... + φ_PΔ^D Y_{t+s-P} + ε_{t+1} + θ_1ε_t + ... + θ_Qε_{t-Q+1}
-    $$
+$$
+Δ^D Y_{t+s} = c + φ_1Δ^D Y_{t+s-1} + ... + φ_PΔ^D Y_{t+s-P} + ε_{t+1} + θ_1ε_t + ... + θ_Qε_{t-Q+1}
+$$
 
-    where `Δ^D Y` denotes the seasonal difference (usually, `D=1` and `s` is the period of the seasonality).
+where `Δ^D Y` denotes the seasonal difference (usually, `D=1` and `s` is the period of the seasonality).
 
 ### Model Evaluation
 
@@ -128,5 +125,3 @@ To evaluate the accuracy of a time series forecasting model, common metrics incl
 2. **Mean Squared Error (MSE)**: The average of the squared differences between the predicted and actual values.
 3. **Root Mean Squared Error (RMSE)**: The square root of the MSE.
 4. **Mean Absolute Percentage Error (MAPE)**: The average of the absolute percentage differences between the predicted and actual values.
-
-It is crucial to select an appropriate model and evaluate its performance using historical data before making forecasts. This process, known as model validation, helps ensure that the chosen model is accurate and reliable.
