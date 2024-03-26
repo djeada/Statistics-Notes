@@ -5,9 +5,8 @@ The Central Limit Theorem (CLT) is a fundamental concept in statistics, explaini
 ### Mathematical Background
 
 - **Statement**: The CLT states that if you have a population with a mean $\mu$ and a standard deviation $\sigma$, and you take sufficiently large random samples from this population (with replacement), then the distribution of the sample means will approximate a normal distribution.
-- **Key Points**:
-  - The mean of the sample means ($\bar{X}$) will be approximately equal to the population mean ($\mu$).
-  - The standard deviation of the sample means, also known as the standard error, will be $\frac{\sigma}{\sqrt{n}}$, where $n$ is the sample size.
+- The mean of the sample means ($\bar{X}$) will be approximately equal to the population mean ($\mu$).
+- The standard deviation of the sample means, also known as the standard error, will be $\frac{\sigma}{\sqrt{n}}$, where $n$ is the sample size.
 
 ### Formal Description
 
@@ -50,9 +49,7 @@ A histogram of the sample means will tend to form a bell-shaped curve as the num
 - **Population Data**: Generated from a non-normal (exponential) distribution.
 - **Distribution Used**: Exponential distribution with a scale parameter of 1.0.
 - **Population Size**: 10,000 data points.
-- **Sample Details**:
-  - Number of Samples: 1000
-  - Sample Size: 50
+- **Sample Details**: Number of Samples = 1000, Sample Size = 50.
 
 #### Calculation of Sample Means
 
@@ -66,17 +63,11 @@ A histogram of the sample means will tend to form a bell-shaped curve as the num
 
 ![fbb216aa-d334-4871-bd7d-bbc581bcb657](https://github.com/djeada/Statistics-Notes/assets/37275728/fba99241-8f11-4cc2-98ac-5951bd02e6f7)
 
-#### Statistical Results
+#### Results
 
 - **Mean of Population Data**: Approximately 1.01.
-- **Mean of Sample Means**: Also approximately 1.01.
-  - This indicates that the average of the sample means is very close to the population mean, aligning with the CLT's prediction.
-
-- **Standard Error**: Calculated as $\frac{\sigma}{\sqrt{n}}$, where $\sigma$ is the population standard deviation and $n$ is the sample size.
-  - The calculated standard error was approximately 0.14.
-
-#### Conclusion
-
+- **Mean of Sample Means**: Also approximately 1.01. This indicates that the average of the sample means is very close to the population mean, aligning with the CLT's prediction.
+- **Standard Error**: Calculated as $\frac{\sigma}{\sqrt{n}}$, where $\sigma$ is the population standard deviation and $n$ is the sample size. The calculated standard error was approximately 0.14.
 - The histogram of the sample means formed a bell-shaped curve, indicating a normal distribution as predicted by the Central Limit Theorem.
 - The close alignment of the mean of the sample means with the population mean, and the calculated standard error, further confirm the theorem's predictions.
 - This example underscores the theorem's key insight: for a sufficiently large sample size, the sampling distribution of the sample mean will approximate a normal distribution, regardless of the population's original distribution.
@@ -85,22 +76,30 @@ A histogram of the sample means will tend to form a bell-shaped curve as the num
 
 Consider a scenario where the heights of a certain plant species are normally distributed, with a mean of 15 cm and a standard deviation of 3 cm. We analyze random samples of different sizes.
 
-1. **Sample Size of 16 Plants**:
-   - **Problem**: Estimate the probability of the sample mean height being between 14 and 16 cm.
-   - **Estimated Solution Using CLT**: The CLT suggests that the sample mean will be approximately normally distributed. The probability should be significant since the range includes the mean.
-   - **Calculated Solution**: Calculate the Standard Error of the Mean (SEM) using $SEM = \frac{3}{\sqrt{16}}$. Calculate the Z-scores for 14 and 16 cm, finding the probability from the standard normal distribution as approximately 81.76%.
+#### Sample Size of 16 Plants
+Estimate the probability of the sample mean height being between 14 and 16 cm.
 
-2. **Sample Size of 64 Plants**:
-   - **Problem**: Estimate the probability for the same range with 64 plants.
-   - **Estimated Solution Using CLT**: As the sample size increases, the sampling distribution becomes more normal and narrower. The probability of the sample mean falling within this range should increase.
-   - **Calculated Solution**: With $n = 64$, the SEM decreases. Recalculating the Z-scores shows the probability increases to about 99.23%.
+The CLT suggests that the sample mean will be approximately normally distributed. The probability should be significant since the range includes the mean.
 
-3. **Sample Size of 144 Plants**:
-   - **Problem**: Estimate the probability for the same range with a sample size of 144.
-   - **Estimated Solution Using CLT**: A larger sample size should result in a probability nearing certainty, as per the CLT, because the sample mean distribution becomes increasingly normal.
-   - **Calculated Solution**: Increasing the sample size to 144 further reduces the SEM. The probability approaches 99.99%.
+Calculate the Standard Error of the Mean (SEM) using $SEM = \frac{3}{\sqrt{16}}$. Calculate the Z-scores for 14 and 16 cm, finding the probability from the standard normal distribution as approximately 81.76%.
 
-4. **Unknown Population Distribution**:
-   - **Problem**: Estimate the probability if the plant heights' distribution is not known to be normal.
-   - **Estimated Solution Using CLT**: The CLT assures that with large sample sizes (typically $n \geq 30$), the sampling distribution of the sample mean approximates normality. The method remains applicable, assuming a sufficiently large sample size.
-   - **Calculated Solution**: Not applicable in this case as the population distribution is unknown. The estimation relies solely on the CLT.
+#### Sample Size of 64 Plants
+Estimate the probability for the same range with 64 plants.
+
+As the sample size increases, the sampling distribution becomes more normal and narrower. The probability of the sample mean falling within this range should increase.
+
+Calculated Solution**: With $n = 64$, the SEM decreases. Recalculating the Z-scores shows the probability increases to about 99.23%.
+
+#### Sample Size of 144 Plants
+Estimate the probability for the same range with a sample size of 144.
+
+A larger sample size should result in a probability nearing certainty, as per the CLT, because the sample mean distribution becomes increasingly normal.
+
+Increasing the sample size to 144 further reduces the SEM. The probability approaches 99.99%.
+
+#### Unknown Population Distribution
+Estimate the probability if the plant heights' distribution is not known to be normal.
+
+The CLT assures that with large sample sizes (typically $n \geq 30$), the sampling distribution of the sample mean approximates normality. The method remains applicable, assuming a sufficiently large sample size.
+
+Not applicable in this case as the population distribution is unknown. The estimation relies solely on the CLT.
