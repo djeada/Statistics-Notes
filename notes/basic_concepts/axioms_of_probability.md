@@ -27,20 +27,24 @@ $$
 Let's analyze the probabilities for certain outcomes when rolling a fair six-sided die:
 
 1. **P(5 or 6)**: These are mutually exclusive events.
+   
    - $P(5) = 1/6, P(6) = 1/6$, and there's no overlap.
    - $P(5 \ or \ 6) = P(5) + P(6) = 1/6 + 1/6 = 2/6 = 1/3$
 
 2. **P(even or odd)**: Every number is either even or odd, not both, and all numbers are either even or odd.
-   Since the sample space is fully covered by even and odd numbers, 
+   Since the sample space is fully covered by even and odd numbers,
+   
    - $P(even \ or \ odd) = P(S) = 1$
 
 3. **P(even or 3)**: The events "even" and "3" are mutually exclusive because 3 is not even.
    There are 3 even numbers in a die roll (2, 4, 6), so
+   
    - $P(even) = 3/6 = 1/2$.
    - $P(3) = 1/6$.
    - $P(even \ or \ 3) = P(even) + P(3) = 1/2 + 1/6 = 3/6 + 1/6 = 4/6 = 2/3$
 
-5. **P(even or 4)**: These events are not mutually exclusive since 4 is an even number.
+4. **P(even or 4)**: These events are not mutually exclusive since 4 is an even number.
+   
    - $P(even) = 3/6 = 1/2$ as before.
    - $P(4) = 1/6$, but we should not count it separately as it's included in the even count.
    - $P(4 \ and \ even) = P(4) = 1/6$ (since 4 is the only even number that is also specifically the number 4).
