@@ -30,26 +30,26 @@ The moment generating function (MGF) of a gamma distribution is:
 
 $$M_X(t) = (1 - \frac{t}{\beta})^{-\alpha}, \text{ for } t < \beta$$
 
-### Example: Flood Analysis
+### Example: Flood Frequency Study
 
-Suppose a hydrologist is studying the time between floods in a particular region. The time in years between floods can be modeled as a gamma distribution with a shape parameter $\alpha = 2$ and a rate parameter $\beta = 1/3$.
+A hydrologist is analyzing flood intervals in a specific area. The intervals, measured in years, follow a gamma distribution characterized by a shape parameter (α) and a rate parameter (β).
 
-a) What is the mean time between floods?
-b) What is the variance of the time between floods?
+- Shape parameter, $\alpha = 2$
+- Rate parameter, $\beta = \frac{1}{3}$ per year
 
-Given:
-- $\alpha = 2$
-- $\beta = 1/3$
+The study aims to determine:
 
-Using the gamma distribution formulas:
+I. The average time between floods.
 
-a) Mean time between floods:
+The mean of a gamma distribution is given by $E[X] = \frac{\alpha}{\beta}$.
 
-$$E[X] = \frac{2}{1/3} = 6 \text{ years}$$
+$$ E[X] = \frac{2}{\frac{1}{3}} = 6 \text{ years} $$
 
-b) Variance of the time between floods:
+II. The variability (variance) of this interval.
 
-$$\text{Var}(X) = \frac{2}{(1/3)^2} = 18 \text{ years}^2$$
+The variance of a gamma distribution is $\text{Var}(X) = \frac{\alpha}{\beta^2}$.
+
+$$ \text{Var}(X) = \frac{2}{\left(\frac{1}{3}\right)^2} = 18 \text{ years}^2 $$
 
 ### Applications
 
