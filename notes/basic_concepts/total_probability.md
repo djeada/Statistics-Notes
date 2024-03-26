@@ -18,17 +18,20 @@ Suppose we have a bag containing 3 red balls, 4 blue balls, and 5 green balls, a
 
 Using the law of total probability:
 
-1. If the first ball is red ($B_1$), then there are 2 red balls left out of the remaining 11 balls. So:
-   - $P(\text{Red}|B_1) = \frac{2}{11}$
-   - $P(B_1) = \frac{3}{12}$
+I. If the first ball is red ($B_1$), then there are 2 red balls left out of the remaining 11 balls. So:
 
-2. If the first ball is blue ($B_2$), there are still 3 red balls left out of the remaining 11 balls. So:
-   - $P(\text{Red}|B_2) = \frac{3}{11}$
-   - $P(B_2) = \frac{4}{12}$
+- $P(\text{Red}|B_1) = \frac{2}{11}$
+- $P(B_1) = \frac{3}{12}$
 
-3. If the first ball is green ($B_3$), there are still 3 red balls left out of the remaining 11 balls. So:
-   - $P(\text{Red}|B_3) = \frac{3}{11}$
-   - $P(B_3) = \frac{5}{12}$
+II. If the first ball is blue ($B_2$), there are still 3 red balls left out of the remaining 11 balls. So:
+
+- $P(\text{Red}|B_2) = \frac{3}{11}$
+- $P(B_2) = \frac{4}{12}$
+
+III. If the first ball is green ($B_3$), there are still 3 red balls left out of the remaining 11 balls. So:
+
+- $P(\text{Red}|B_3) = \frac{3}{11}$
+- $P(B_3) = \frac{5}{12}$
 
 The total probability that the second ball is red is the sum of the probabilities of drawing a red ball given each initial event times the probability of each initial event:
 
@@ -57,6 +60,7 @@ P(W | U_i) = \frac{i}{n}
 $$
 
 Where:
+
 - $W$ represents the event of drawing a white ball.
 - $U_i$ represents the event of selecting the i-th urn.
 
@@ -85,8 +89,6 @@ $$
 $$
 
 Note that the summation starts from i=1 since the 0-th urn contains no white balls and thus does not contribute to the probability of drawing a white ball.
-
-#### Final Probability Calculation
 
 Substituting the summation into the total probability formula, we get:
 
