@@ -47,26 +47,29 @@ $$E[X] = \frac{1}{\lambda}$$
 
 $$E[X^2] = \frac{2}{\lambda^2}$$
 
-### Example: Equipment Failure Rate
+### Example: Equipment Failure Rate Analysis
 
-An engineer is studying the failure rate of a critical component in a machine. The time until failure of the component follows an exponential distribution with a mean time to failure of 5 years.
+An engineer examines the failure rate of a key machine component. This component's time to failure is modeled by an exponential distribution, with an average failure time of 5 years.
 
-a) What is the probability that a component fails within the first year?
-b) What is the probability that a component lasts more than 10 years?
+Given:
 
-Using the PDF of an exponential distribution:
+- Mean time to failure: 5 years
+- The exponential distribution PDF: \( f(x; \lambda) = \lambda e^{-\lambda x} \)
+- Rate parameter \( \lambda \): \( \frac{1}{\text{mean time to failure}} = \frac{1}{5} \) per year
 
-$$f(x; \lambda) = \lambda e^{-\lambda x}$$
+a) Probability of a component failing within the first year:
 
-where $\lambda = \frac{1}{\text{mean time to failure}} = \frac{1}{5}$ years.
+The probability that a component fails before a given time \( x \) in an exponential distribution is \( P(X < x) = 1 - e^{-\lambda x} \).
 
-a) Probability of failing within the first year:
+For the first year:
+$$ P(X < 1) = 1 - e^{-\frac{1}{5}} \approx 0.1813 $$
 
-$$P(X < 1) = 1 - e^{-\frac{1}{5}} \approx 0.1813$$
+b) Probability of a component lasting more than 10 years:
 
-b) Probability of lasting more than 10 years:
+The probability that a component lasts longer than a given time \( x \) in an exponential distribution is \( P(X > x) = e^{-\lambda x} \).
 
-$$P(X > 10) = e^{-\frac{10}{5}} = e^{-2} \approx 0.1353$$
+For more than 10 years:
+$$ P(X > 10) = e^{-\frac{10}{5}} = e^{-2} \approx 0.1353 $$
 
 ### Applications
 
