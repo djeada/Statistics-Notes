@@ -51,9 +51,9 @@ $$E[X] = k$$
 
 $$E[X^2] = k^2 + 2k$$
 
-### Example: Goodness-of-Fit Test
+### Example: Goodness-of-Fit Test for a Fair Die
 
-A researcher wants to test whether a die is fair. She rolls the die 60 times, and the observed frequencies for each face are as follows:
+A researcher is testing the fairness of a six-sided die. The die is rolled 60 times, resulting in the following observed frequencies for each face:
 
 - 1: 8 times
 - 2: 9 times
@@ -62,23 +62,25 @@ A researcher wants to test whether a die is fair. She rolls the die 60 times, an
 - 5: 12 times
 - 6: 11 times
 
-The researcher uses a chi-square goodness-of-fit test to determine if the die is fair.
+To determine if the die is fair, the researcher employs a chi-square goodness-of-fit test.
 
-a) What is the chi-square statistic for the test?
-b) What is the degrees of freedom for the test?
+Given:
 
-The expected frequency for each face if the die is fair: E = Total rolls / Number of faces = 60 / 6 = 10
+- The expected frequency for each face (assuming the die is fair): `E = Total rolls / Number of faces = 60 / 6 = 10`
 
-Using the chi-square formula:
+The chi-square formula:
 
-$$\chi^2 = \sum \frac{(O_i - E)^2}{E}$$
+$$ \chi^2 = \sum \frac{(O_i - E)^2}{E} $$
 
-a) Calculate the chi-square statistic:
+where $O_i$ is the observed frequency and $E$ is the expected frequency.
 
-$$\chi^2 = \frac{(8-10)^2}{10} + \frac{(9-10)^2}{10} + \frac{(13-10)^2}{10} + \frac{(7-10)^2}{10} + \frac{(12-10)^2}{10} + \frac{(11-10)^2}{10} \approx 3.6$$
+I. Calculate the chi-square statistic:
 
-b) Degrees of freedom: Number of categories (6) - 1 = 5
+$$ \chi^2 = \frac{(8-10)^2}{10} + \frac{(9-10)^2}{10} + \frac{(13-10)^2}{10} + \frac{(7-10)^2}{10} + \frac{(12-10)^2}{10} + \frac{(11-10)^2}{10} = 3.6 $$
 
+II. Determine the degrees of freedom:
+
+Degrees of freedom for chi-square test: `Number of categories - 1 = 6 - 1 = 5`
 
 ### Applications
 
