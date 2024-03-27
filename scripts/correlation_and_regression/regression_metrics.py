@@ -3,36 +3,72 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
-# Step 1: Generate Mock Data for Linear Regression
-np.random.seed(42)
-X = 2 * np.pi * np.random.rand(100)  # 100 random data points between 0 and 2pi
-y = np.sin(X) + np.random.normal(0, 0.15, 100)  # Sine wave with noise
+def generate_sine_data(num_samples: int, noise_scale: float) -> tuple:
+    """
+    Generates noisy sine wave data.
 
-# Step 2: Fit a Linear Regression Model
-model = LinearRegression()
-model.fit(X.reshape(-1, 1), y)
+    Args:
+        num_samples (int): Number of data points.
+        noise_scale (float): Standard deviation of Gaussian noise added to sine wave.
 
-# Step 3: Make Predictions for Plotting and Error Calculation
-X_fit = np.linspace(0, 2 * np.pi, 100)
-y_pred = model.predict(X_fit.reshape(-1, 1))
-y_pred_actual = model.predict(X.reshape(-1, 1))
+    Returns:
+        tuple: x values (np.ndarray), y values (np.ndarray).
+    """
+    X = 2 * np.pi * np.random.rand(num_samples)
+    y = np.sin(X) + np.random.normal(0, noise_scale, num_samples)
+    return X, y
 
-# Step 4: Calculate Regression Metrics
-mse = mean_squared_error(y, y_pred_actual)
-rmse = np.sqrt(mse)
-r2 = r2_score(y, y_pred_actual)
+def fit_linear_model(X: np.ndarray, y: np.ndarray) -> LinearRegression:
+    """
+    Fits a linear regression model to the data.
 
-# Step 5: Plot the Results with Error Lines
-plt.figure(figsize=(10, 6))
-plt.scatter(X, y, label='Actual Data', color='blue')
-plt.plot(X_fit, y_pred, label='Regression Line', color='red')
+    Args:
+        X (np.ndarray): Feature matrix.
+        y (np.ndarray): Target vector.
 
-# Drawing error lines
-for xp, yp, y_hat in zip(X, y, y_pred_actual):
-    plt.plot([xp, xp], [yp, y_hat], color='gray', linestyle='dotted')
+    Returns:
+        LinearRegression: Fitted linear model.
+    """
+    model = LinearRegression()
+    model.fit(X.reshape(-1, 1), y)
+    return model
 
-plt.title(f'Linear Regression with Error Lines\nMSE: {mse:.2f}, RMSE: {rmse:.2f}, R²: {r2:.2f}')
-plt.xlabel('X')
-plt.ylabel('y')
-plt.legend()
-plt.show()
+def plot_results_with_error_lines(X: np.ndarray, y: np.ndarray, model: LinearRegression, num_points_fit: int) -> None:
+    """
+    Plots the original data, regression line, and error lines.
+
+    Args:
+        X (np.ndarray): Original x values.
+        y (np.ndarray): Original y values.
+        model (LinearRegression): Fitted linear model.
+        num_points_fit (int): Number of points for fitting line.
+    """
+    plt.figure(figsize=(10, 6))
+
+    # Scatter plot of actual data
+    plt.scatter(X, y, label='Actual Data', color='blue')
+
+    # Plot regression line
+    X_fit = np.linspace(0, 2 * np.pi, num_points_fit)
+    y_pred = model.predict(X_fit.reshape(-1, 1))
+    plt.plot(X_fit, y_pred, label='Regression Line', color='red')
+
+    # Draw error lines
+    y_pred_actual = model.predict(X.reshape(-1, 1))
+    for xp, yp, y_hat in zip(X, y, y_pred_actual):
+        plt.plot([xp, xp], [yp, y_hat], color='gray', linestyle='dotted')
+
+    # Calculate and display regression metrics
+    mse = mean_squared_error(y, y_pred_actual)
+    rmse = np.sqrt(mse)
+    r2 = r2_score(y, y_pred_actual)
+    plt.title(f'Linear Regression with Error Lines\nMSE: {mse:.2f}, RMSE: {rmse:.2f}, R²: {r2:.2f}')
+    plt.xlabel('X')
+    plt.ylabel('y')
+    plt.legend()
+    plt.show()
+
+# Generate data, fit model, and plot results
+X, y = generate_sine_data(100, 0.15)
+model = fit_linear_model(X, y)
+plot_results_with_error_lines(X, y, model, 100)
