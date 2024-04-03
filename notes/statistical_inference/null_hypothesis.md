@@ -2,6 +2,14 @@
 
 In hypothesis testing, two conflicting hypotheses are constructed: the null hypothesis (denoted by $H_0$) and the alternative hypothesis (denoted by $H_1$ or $H_a$). The null hypothesis represents a statement of no effect or no difference, or the status quo, while the alternative hypothesis represents a statement of an effect, difference, or change.
 
+![null_hypothesis](https://github.com/djeada/Statistics-Notes/assets/37275728/d45fdb61-9d6f-4adf-a54b-4106382d2087)
+
+The plot illustrates the distribution of a test statistic under the null hypothesis. The curve represents the probability density of the test statistic if the null hypothesis were true, typically assumed to be a normal distribution in many tests.
+
+- The vertical dashed red line represents an observed sample statistic of 2.0. This is a value that has been calculated from our sample data.
+- The orange shaded area to the right of the sample statistic represents the tail area under the curve. In a two-tailed test, this would represent half of the p-value (the other half would be on the left side for a negative value of the sample statistic).
+- The green curve represents the null distribution – the expected distribution of the test statistic if the null hypothesis holds. This curve is centered around the value that represents no effect or no difference, which is often zero in standardized test statistics.
+
 ### The Language of Hypothesis Testing
 
 The terminology in hypothesis testing is carefully chosen to reflect the inherent uncertainty. We either "reject the null hypothesis" or "fail to reject the null hypothesis". Rejecting $H_0$ is a strong statement implying that the evidence against $H_0$ is compelling. 
