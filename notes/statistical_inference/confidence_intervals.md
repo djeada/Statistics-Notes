@@ -14,6 +14,14 @@ Where:
 - **Point Estimate**: The best single estimate for a parameter based on the sample data (e.g., sample mean).
 - **Margin of Error**: An indication of the precision of the point estimate, incorporating the standard error and the critical value from a distribution appropriate for the confidence level.
 
+![confidence_interval](https://github.com/djeada/Statistics-Notes/assets/37275728/1c398ecf-066c-4211-be9c-9fce04c3fb8e)
+
+In the example above:
+
+- The sample data is generated with a true mean of 50 and a standard deviation of 5. From this data, we calculate the sample mean.
+- The dashed red line represents the sample mean. It is the point estimate of the true mean based on our sample.
+- The dashed green and blue lines represent the lower and upper bounds of the 95% confidence interval, respectively. This interval suggests that we can be 95% confident that the true mean of the population from which this sample is drawn lies within these bounds.
+
 ### Confidence Level and Interpretation
 
 The confidence level signifies the probability that the interval will capture the true population parameter across many samples. Common levels include 90%, 95%, and 99%. A 95% confidence level means that if we were to take 100 different samples and construct CIs for each, we expect about 95 of them to contain the true parameter.
