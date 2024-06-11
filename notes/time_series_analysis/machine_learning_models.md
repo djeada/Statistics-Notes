@@ -1,3 +1,9 @@
+# Machine Learning Models
+
+When it comes to forecasting time series data, selecting the right machine learning model can significantly impact the accuracy and reliability of predictions. These notes provide a comprehensive overview of some of the most commonly used algorithms in the field, each with its unique strengths and limitations.
+
+The table below compares several time series forecasting algorithms, highlighting their descriptions, advantages, disadvantages, and whether they can be applied locally or globally:
+
 | Algorithm Name | Description | Pros | Cons | Local vs Global |
 |----------------|-------------|------|------|-----------------|
 | **ARIMA (AutoRegressive Integrated Moving Average)** | A statistical model used for analyzing and forecasting time series data by using the dependencies between an observation and a number of lagged observations. | - Flexible and capable of handling a wide range of time series patterns. <br> - Suitable for univariate time series data. | - Complex to understand and implement. <br> - Requires the data to be stationary. <br> - Sensitive to the chosen parameters. <br> - AutoARIMA can alleviate some implementation challenges but still requires expertise. | Local only. Cannot be used globally. |
