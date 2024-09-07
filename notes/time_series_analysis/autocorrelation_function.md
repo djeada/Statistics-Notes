@@ -1,5 +1,47 @@
 ## ACF and PACF
 
+### **Autocorrelation Function (ACF) and Estimation**
+
+#### **1. Another Way to Write \( r_k \)**
+
+- The **autocorrelation coefficient** \( r_k \) is a normalized version of the autocovariance coefficient \( \gamma_k \). It measures the linear relationship between the values of a time series at different time lags \( k \). The formula for \( r_k \) is given by:
+  \[
+  r_k = \frac{\sum_{t=1}^{N-k} (x_t - \bar{x})(x_{t+k} - \bar{x})}{\sum_{t=1}^{N} (x_t - \bar{x})^2}
+  \]
+  Where:
+  - \( \bar{x} = \frac{1}{N} \sum_{t=1}^{N} x_t \) is the sample mean of the series.
+  - \( N \) is the total number of observations in the series.
+  
+  This expression for \( r_k \) is the **autocorrelation coefficient at lag \( k \)**. It normalizes the autocovariance \( c_k \) by the total variance, making it dimensionless and easier to interpret.
+
+#### **2. Autocovariance and Autocorrelation Functions**
+
+- **Autocovariance Coefficient** \( c_k \):
+  \[
+  c_k = \frac{1}{N} \sum_{t=1}^{N-k} (x_t - \bar{x})(x_{t+k} - \bar{x})
+  \]
+  is the measure of the covariance between the values of the series at times \( t \) and \( t+k \).
+
+- **Autocorrelation Coefficient** \( r_k \) normalizes \( c_k \) by dividing it by the variance of the series:
+  \[
+  r_k = \frac{c_k}{c_0}
+  \]
+  Where:
+  - \( c_0 \) is the autocovariance at lag \( 0 \), which is the **variance** of the series:
+    \[
+    c_0 = \frac{1}{N} \sum_{t=1}^{N} (x_t - \bar{x})^2
+    \]
+
+#### **3. ACF (Autocorrelation Function) Routine**
+
+- In practice, the **acf()** function in statistical software (such as R or Python) computes and plots the autocorrelation coefficients for different lags. This plot is called a **Correlogram** and helps visualize how the values of a time series relate to each other at various time intervals (lags).
+
+- The **Correlogram** typically shows \( r_k \) for different values of \( k \), starting at \( r_0 = 1 \), since the autocorrelation at lag 0 (comparing the series with itself at the same point) is always 1:
+  \[
+  r_0 = \frac{c_0}{c_0} = 1
+  \]
+  - The plot will typically start at 1, and as the lag increases, \( r_k \) usually decreases as the values become less correlated.
+
 ### Autocorrelation Function (ACF)
 
 The Autocorrelation Function (ACF) measures the correlation between a time series and its lagged versions. It is a crucial tool in time series analysis for identifying patterns, such as trends and seasonality.
