@@ -16,6 +16,24 @@ A time series is a series of data points indexed in chronological order, typical
 
 ### Time Series Analysis Techniques
 
+Timeseries analysis methods can be broadly classified into two main categories: time-domain methods and frequency-domain methods.
+
+#### Time-Domain Methods
+
+These methods analyze the temporal sequences of data points directly. The focus here is on identifying patterns such as trends, seasonality, noise, and fluctuations within the time series data. 
+
+Key Techniques Include:
+- **Autocorrelation Analysis**: This helps measure the correlation between time-lagged observations within the same time series. Autocorrelation functions can help identify patterns and potential predictability based on past observations.
+
+- **Cross-Correlation Analysis**: This technique measures the relationship between two time series at different lags, showing how one time series may influence another.
+  
+Some of the methods used for time-domain analysis include:
+- **Stochastic Processes**
+- **Random Vectors**
+- **Deterministic Signals**
+- **Time Delay Analysis**
+- **Nonlinear Systems**
+
 After decomposing the time series into its components, statistical techniques can be employed to model and forecast future points in the series. Some widely used techniques include:
 
 - **Moving averages (MA)**: A method that calculates the average of a certain number of terms before and after each data point to create a series of averages. It helps to smooth out noise and highlight underlying trends.
@@ -23,6 +41,32 @@ After decomposing the time series into its components, statistical techniques ca
 - **Exponential smoothing (ES)**: Similar to moving averages but assigns a decaying weight to past observations. It is more receptive to recent changes in trends or seasonal effects.
 
 - **Autoregressive integrated moving average (ARIMA)**: This method combines autoregression, differencing, and moving averages in one model. ARIMA models are efficient for non-stationary series and can represent series with a trend or seasonal components.
+
+#### Frequency-Domain Methods
+
+These methods focus on transforming the time series data into the frequency domain to detect and study cyclic behaviors and periodicities. This is typically done through mathematical transforms that help decompose the time series into constituent frequencies.
+
+Key Techniques Include:
+- **Spectral Analysis**: Utilizes Fourier Series for periodic signals, Fourier Transform for aperiodic signals, and Laplace Transform for signal decomposition.
+- **Wavelet Analysis**: Focuses on discrete and continuous wavelet transforms for studying time-frequency localized phenomena.
+
+These techniques enable you to study the frequency composition of the data, highlighting dominant cycles that might not be apparent in the time domain.
+
+#### Parametric vs. Non-Parametric Methods
+
+- **Parametric Methods**: These methods, such as autoregressive models and moving average models, rely on strong assumptions about the data (e.g., stationarity of the process) and estimate a finite number of parameters. They assume a specific model for the data-generating process.
+  
+- **Non-Parametric Methods**: These methods, including covariance or spectral analysis, make fewer assumptions and allow for more flexibility in modeling the data without a predetermined structure.
+
+#### Types of Timeseries
+
+The classification also distinguishes between:
+- **Linear Univariate**: Single variable, linear processes
+- **Linear Multivariate**: Multiple variables, linear processes
+- **Nonlinear Univariate**: Single variable, nonlinear processes
+- **Nonlinear Multivariate**: Multiple variables, nonlinear processes
+
+These methods apply to discrete and continuous data, covering both simple and complex time series analysis, offering a comprehensive toolkit for researchers and practitioners to analyze temporal data.
 
 ### Applications of Time Series Analysis
 
