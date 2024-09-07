@@ -93,3 +93,56 @@ A **random variable (r.v.)** is a mapping from a set of outcomes in a probabilit
   
   This implies that the autocovariance function remains constant for different time points, provided the lag \( k \) is the same.
 
+## Autocovariance coefficients
+
+#### **1. Covariance**
+- Covariance measures the linear dependence between two random variables, \( X \) and \( Y \).
+  
+- The covariance between two random variables is given by:
+  \[
+  \text{Cov}(X, Y) = E\left[(X - \mu_X)(Y - \mu_Y)\right]
+  \]
+  Where:
+  - \( \mu_X = E[X] \) is the mean of \( X \),
+  - \( \mu_Y = E[Y] \) is the mean of \( Y \),
+  - \( E[\cdot] \) is the expectation operator.
+
+#### **2. Estimation of Covariance**
+- To estimate the covariance from a paired dataset \( (x_1, y_1), (x_2, y_2), \dots, (x_N, y_N) \), we use the sample covariance formula:
+  \[
+  s_{xy} = \frac{1}{N - 1} \sum_{t=1}^{N} (x_t - \bar{x})(y_t - \bar{y})
+  \]
+  Where:
+  - \( \bar{x} = \frac{1}{N} \sum_{t=1}^{N} x_t \) is the sample mean of \( x \),
+  - \( \bar{y} = \frac{1}{N} \sum_{t=1}^{N} y_t \) is the sample mean of \( y \),
+  - \( N \) is the number of observations.
+
+#### **3. Autocovariance Coefficients**
+- **Autocovariance** measures the covariance of a time series with itself at different time lags. For a time series \( \{X_t\} \), the **autocovariance at lag \( k \)** is defined as:
+  \[
+  \gamma_k = \text{Cov}(X_t, X_{t+k}) = E\left[(X_t - \mu)(X_{t+k} - \mu)\right]
+  \]
+  Where:
+  - \( X_t \) is the value of the time series at time \( t \),
+  - \( X_{t+k} \) is the value of the time series at time \( t+k \),
+  - \( \mu \) is the mean of the series (assumed to be constant for weak stationarity).
+
+- **Sample Estimation** of the autocovariance coefficient \( \gamma_k \) is denoted by \( c_k \). For a time series with \( N \) observations, the estimator is:
+  \[
+  c_k = \frac{1}{N} \sum_{t=1}^{N-k} (x_t - \bar{x})(x_{t+k} - \bar{x})
+  \]
+  Where:
+  - \( \bar{x} = \frac{1}{N} \sum_{t=1}^{N} x_t \) is the sample mean of the series.
+
+#### **4. Assumption of Weak Stationarity**
+- For weakly stationary processes, the mean \( \mu \) is constant, and the autocovariance \( \gamma_k \) depends only on the lag \( k \), not on the actual time points \( t \) and \( t+k \). Therefore, the autocovariance function becomes:
+  \[
+  \gamma_k = E\left[(X_t - \mu)(X_{t+k} - \mu)\right] = \text{Cov}(X_t, X_{t+k})
+  \]
+  
+- **Estimation**: Under the assumption of weak stationarity, the sample autocovariance \( c_k \) is computed as:
+  \[
+  c_k = \frac{1}{N} \sum_{t=1}^{N-k} (x_t - \bar{x})(x_{t+k} - \bar{x})
+  \]
+  This allows us to estimate the strength of the relationship between \( X_t \) and \( X_{t+k} \) at different lags \( k \).
+
