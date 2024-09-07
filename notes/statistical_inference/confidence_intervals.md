@@ -143,8 +143,8 @@ $$
 $$
 
 Where:
-- \( z^* \) is the critical value corresponding to the selected confidence level (e.g., 1.645 for 90%, 1.96 for 95%, 2.576 for 99%).
-- \( z^* \times SE \) is the **margin of error**, which determines the width of the confidence interval.
+- $z^*$ is the critical value corresponding to the selected confidence level (e.g., 1.645 for 90%, 1.96 for 95%, 2.576 for 99%).
+- $z^* \times SE$ is the **margin of error**, which determines the width of the confidence interval.
 
 #### Example: Blood Pressure Readings
 
@@ -158,10 +158,10 @@ $$
 SE = \frac{\sigma}{\sqrt{n}} = \frac{12}{\sqrt{50}} \approx 1.697
 $$
 
-##### Step 2: Determine Critical Values (\( z^* \))
+##### Step 2: Determine Critical Values ($z^*$)
 
-- For a **90% confidence level**, \( z^* \) is approximately 1.645.
-- For a **99% confidence level**, \( z^* \) is approximately 2.576.
+- For a **90% confidence level**, $z^*$ is approximately 1.645.
+- For a **99% confidence level**, $z^*$ is approximately 2.576.
 
 ##### Step 3: Calculate the Confidence Intervals
 
