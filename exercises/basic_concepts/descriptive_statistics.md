@@ -9,8 +9,11 @@ The expected value $E(X)$ of a random variable $X$ is the probability-weighted a
 For our random variable:
 
 $$E(X) = P(X=0) \cdot 0 + P(X=100) \cdot 100$$
+
 $$E(X) = \left(\frac{1}{2}\right) \cdot 0 + \left(\frac{1}{2}\right) \cdot 100$$
+
 $$E(X) = 0 + 50$$
+
 $$E(X) = 50$$
 
 So, the expected value is 50.
@@ -24,9 +27,13 @@ $$\text{Var}(X) = E[(X - E(X))^2]$$
 Applying this to our random variable:
 
 $$\text{Var}(X) = \left(\frac{1}{2}\right)(0 - 50)^2 + \left(\frac{1}{2}\right)(100 - 50)^2$$
+
 $$\text{Var}(X) = \left(\frac{1}{2}\right)(-50)^2 + \left(\frac{1}{2}\right)(50)^2$$
+
 $$\text{Var}(X) = \left(\frac{1}{2}\right)(2500) + \left(\frac{1}{2}\right)(2500)$$
+
 $$\text{Var}(X) = 1250 + 1250$$
+
 $$\text{Var}(X) = 2500$$
 
 Thus, the variance is 2500.
@@ -40,6 +47,7 @@ $$\text{SD}(X) = \sqrt{\text{Var}(X)}$$
 For our random variable:
 
 $$\text{SD}(X) = \sqrt{2500}$$
+
 $$\text{SD}(X) = 50$$
 
 Therefore, the standard deviation is 50.
