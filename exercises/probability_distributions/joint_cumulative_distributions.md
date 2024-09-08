@@ -7,19 +7,19 @@ Let's denote the dispatch time of the first truck as $T_1$ and the second truck 
 This would be $P(T_1 + 20 < T_2) + P(T_2 + 20 < T_1) = 2 P(T_1 + 20 < T_2)$
 
 $$
-= 2 \int\limits_{-\infty}^{+\infty} \int\limits_{T_1+20}^{+\infty} f(t_1, t_2) \, \mathrm{d}t_1 \, \mathrm{d}t_2$$
+= 2 \int\limits_{-\infty}^{+\infty} \int\limits_{T_1+20}^{+\infty} f(t_1, t_2)  \mathrm{d}t_1  \mathrm{d}t_2$$
 
 
 $$
-= 2 \int\limits_{-\infty}^{+\infty} \int\limits_{T_1+20}^{+\infty} f_{T_1}(t_1)f_{T_2}(t_2) \, \mathrm{d}t_1 \, \mathrm{d}t_2
+= 2 \int\limits_{-\infty}^{+\infty} \int\limits_{T_1+20}^{+\infty} f_{T_1}(t_1)f_{T_2}(t_2)  \mathrm{d}t_1  \mathrm{d}t_2
 $$
 
 $$
-= 2 \int_{0}^{120} \int_{0}^{t_2-20} \left( \frac{1}{120} \right)^2 \,dt_1 \,dt_2
+= 2 \int_{0}^{120} \int_{0}^{t_2-20} \left( \frac{1}{120} \right)^2 dt_1 dt_2
 $$
 
 $$
-= \frac{2}{(120)^2} \int_{20}^{120} (t_2 - 20) \,dt_2
+= \frac{2}{(120)^2} \int_{20}^{120} (t_2 - 20) dt_2
 $$
 
 $$
