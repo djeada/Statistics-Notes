@@ -6,54 +6,21 @@ Time series forecasting is a technique used to predict future values based on hi
 
 A time series can be decomposed into four main components:
 
-1. **Trend**: This represents the long-term progression of the series, signifying a persistent, general direction of the data over a long period. It can be upward, downward, or even a stable trend.
+1. **Trend** represents the long-term progression of the series, signifying a persistent, general direction of the data over a long period. It can be upward, downward, or even a stable trend.
 
-```
-^
-| Value 
-|         __________
-|       /
-|     /
-|   /
-| /
-|/___________________ Time ->
-```
+![output(3)](https://github.com/user-attachments/assets/e13025a4-6bef-42ed-965e-4ddb3c2145b0)
 
-2. **Seasonality**: These are patterns that repeat at regular intervals, like daily, monthly, or quarterly. This component reflects the influence of seasonal factors on the time series.
+2. **Seasonality** are patterns that repeat at regular intervals, like daily, monthly, or quarterly. This component reflects the influence of seasonal factors on the time series.
 
-```
-^
-| Value
-|    /\  /\  /\  /\  /\  
-|   /  \/  \/  \/  \/  \ 
-|  /                    \
-|/_______________________\___ Time ->
-```
+![output(4)](https://github.com/user-attachments/assets/13340698-294d-41a9-ab0f-95e7e1b9bb82)
 
-3. **Cycles**:  Unlike seasonality, cyclical patterns occur at less regular intervals. These fluctuations are often linked to economic, political, or even environmental factors and can span multiple years.
+3. Unlike seasonality, **cyclical** patterns occur at less regular intervals. These fluctuations are often linked to economic, political, or even environmental factors and can span multiple years.
 
-```
-^
-| Value
-|                               ___
-|                         ___--     --___
-|        ___         ___-                 -
-|   __--     --__-                          -__
-|_/                                              \_
-|__________________________________________________ Time ->
-```
+![output(7)](https://github.com/user-attachments/assets/92f432e5-92af-42fa-bf1e-4bf8c39bd8fc)
 
 4. **Random (or Irregular)**: This component captures the 'noise' or random variation in the data. It represents the unpredictable, erratic factors affecting the time series after the trend, seasonality, and cyclical components have been accounted for.
 
-```
-^
-| Value
-|   .       .  .      .   .   . . 
-|  . .    .      .  .    .      . 
-|    .      . .   .  . .   .    .
-| .    .  .   .     .    .   .   
-|________________________________ Time ->
-```
+![output(6)](https://github.com/user-attachments/assets/a96bd328-82b5-4e39-9cba-f008dbaf57dc)
 
 ### Forecasting Methods
 
