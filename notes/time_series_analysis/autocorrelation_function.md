@@ -55,26 +55,19 @@ Where:
 
 Apologies for the confusion. Let's focus on improving the original explanation and adapting it directly into a Python context, similar to the random walk example.
 
----
-
-### Plotting the ACF (Autocorrelation Function) in Python
+#### Plotting the ACF
 
 The **Autocorrelation Function (ACF) plot**, or **Correlogram**, is a useful tool for understanding the structure of time series data. In Python, you can generate and interpret the ACF plot using libraries like `statsmodels` and `matplotlib`. The ACF plot helps identify significant correlations at different lags and reveals patterns in the data.
 
-### Key Points for Interpreting the ACF Plot
+Key Points for Interpreting the ACF Plot
 
-1. **Slow Decay**: 
-   - If the ACF values decrease slowly over many lags, this suggests the presence of a **trend** in the data.
-   
-2. **Seasonal Patterns**: 
-   - Repeated peaks or cyclic behavior in the ACF plot indicate **seasonal patterns** in the data, with regular intervals of high correlation.
+1. If the ACF values decrease slowly over many lags, this suggests the presence of a **trend** in the data.
+2. Repeated peaks or cyclic behavior in the ACF plot indicate **seasonal patterns** in the data, with regular intervals of high correlation.
+3. A rapid drop-off or sharp cutoff after a few lags suggests the data may follow a **Moving Average (MA)** process, where the current value is explained by a few prior error terms (shocks).
 
-3. **Sharp Cutoff**: 
-   - A rapid drop-off or sharp cutoff after a few lags suggests the data may follow a **Moving Average (MA)** process, where the current value is explained by a few prior error terms (shocks).
+#### Python Example
 
-### Python Example: Simulating and Plotting ACF for Different Processes
-
-Here’s a Python example where we generate and plot the ACF for three different types of time series: one with a trend, one with seasonal patterns, and one following a moving average process.
+Below is a Python example where we generate and plot the ACF for three different types of time series: one with a trend, one with seasonal patterns, and one following a moving average process.
 
 ```python
 import numpy as np
@@ -186,19 +179,19 @@ $$
 \phi_{kj} = \phi_{k-1,j} - \phi_{kk} \phi_{k-1,k-j}
 $$
 
-### Plotting the PACF
+#### Plotting the PACF
 
 The **Partial Autocorrelation Function (PACF) plot** is a valuable tool for understanding the relationship between a time series and its lagged values after accounting for the influence of intervening lags. Unlike the ACF, which shows the correlation between the series and its lagged values, the PACF removes the effect of any intermediate lags.
 
 The PACF is particularly useful for identifying the order of an **Autoregressive (AR) process**. If you suspect your time series follows an AR model, the PACF plot can help you determine the number of lag terms to include in your model.
 
-### Key Points for Interpreting the PACF Plot
+Key Points for Interpreting the PACF Plot:
 
 1. Significant spikes at early lags indicate that those specific lags are important for modeling the time series. For an **AR(p)** process, you will see significant spikes up to lag \( p \), and the PACF will then cut off.
 2. A sharp drop after lag \( p \) suggests that the time series follows an **AR(p)** process, meaning that only \( p \) past observations are needed to model the series.
 3. If the PACF plot exhibits a gradual decay, this indicates the presence of a **Moving Average (MA) process**, since partial correlations decrease slowly over many lags.
 
-### Python Example: Simulating and Plotting PACF for Different Processes
+#### Python Example
 
 In this example, we will simulate different time series data (AR, MA, and ARMA processes) and plot their PACF to see how they behave.
 
@@ -274,7 +267,7 @@ Time Series Data:
 
 Pacf plots:
 
-![Screenshot from 2024-09-09 20-32-55](https://github.com/user-attachments/assets/3e823403-dc7c-4e0f-a625-d1e226c33812)
+![Screenshot from 2024-09-09 20-35-34](https://github.com/user-attachments/assets/59a1ff40-5b4f-4351-bfaf-63b0e6950947)
 
 Interpreting the PACF Plot:
 
@@ -288,6 +281,7 @@ Interpreting the PACF Plot:
 - The **PACF** removes the influence of the intermediate lags, isolating the direct effect of each lag on the time series.
 
 In practice:
+
 - The **ACF** of an AR(p) process decays gradually, but the **PACF** cuts off after lag $p$.
 - The **ACF** of an MA(q) process cuts off after lag $q$, while the **PACF** decays gradually.
 
