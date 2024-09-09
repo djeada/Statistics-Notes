@@ -1,6 +1,4 @@
-Here is a 15-question quiz, similar to the one you requested, with four possible answers for each question and one correct answer:
 
----
 
 ### **Question 1**  
 You are asked to visualize the number of different car models in a parking lot. What type of graph would be most appropriate?  
@@ -150,6 +148,4 @@ Which of the following types of data would best be displayed with a pie chart?
 - D) Time series data  
 **Correct answer:** A) Categorical data  
 
----
 
-Feel free to use this quiz as needed, or let me know if you'd like any adjustments!
