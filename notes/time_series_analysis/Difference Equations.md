@@ -12,7 +12,7 @@ is a second-order difference equation because it relates $a_n$ to the two previo
 
 ---
 
-### 2. Solving Difference Equations
+### Solving Difference Equations
 
 To solve a difference equation, we often look for a solution of the form:
 
@@ -58,7 +58,7 @@ where $c_1$ and $c_2$ are constants determined by the initial conditions.
 
 ---
 
-### 3. Example: Solving with Initial Conditions
+### Example: Solving with Initial Conditions
 
 Given the initial conditions $a_0 = 4$ and $a_1 = 10$, we can solve for $c_1$ and $c_2$.
 
@@ -97,7 +97,7 @@ $$
 
 ---
 
-### 4. Higher-Order Difference Equations
+### Higher-Order Difference Equations
 
 A $k$-th order difference equation has the form:
 
@@ -121,7 +121,7 @@ The constants $c_1, c_2, \dots, c_k$ are determined by the initial conditions.
 
 ---
 
-### 5. Example: Fibonacci Sequence
+### Example: Fibonacci Sequence
 
 The Fibonacci sequence is a classic example of a difference equation:
 
@@ -173,7 +173,7 @@ $$
 
 ---
 
-### 6. Relation to Differential Equations
+### Relation to Differential Equations
 
 A $k$-th order linear ordinary differential equation has a similar form to the $k$-th order difference equation:
 
