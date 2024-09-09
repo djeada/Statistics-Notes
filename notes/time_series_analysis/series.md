@@ -29,9 +29,11 @@ $$
 $$
 
 As $n \to \infty$, the terms of the sequence approach 1:
+
 $$
 \lim_{n \to \infty} \frac{n}{n+2} = 1
 $$
+
 Therefore, this sequence converges to 1.
 
 2. **Divergent Sequence:**
@@ -63,9 +65,11 @@ $$
 $$
 
 As $n \to \infty$, the terms of this sequence get smaller and smaller, approaching 0:
+
 $$
 \lim_{n \to \infty} \frac{1}{n^3} = 0
 $$
+
 Hence, this sequence converges to 0.
 
 ### Partial Sums
@@ -113,7 +117,7 @@ This is useful in time series analysis when dealing with autoregressive models a
 
 ### Examples of Convergent Series
 
-1. **Geometric Series**:
+I. **Geometric Series**:
 
 A geometric series is a series where each term is a constant multiple (called the common ratio) of the previous term. A simple example is the following geometric series:
 
@@ -127,7 +131,7 @@ $$
 \sum_{k=0}^{\infty} \frac{1}{3^k} = \frac{1}{1 - \frac{1}{3}} = \frac{3}{2}
 $$
 
-2. **P-Series** (convergent for $p > 1$):
+II. **P-Series** (convergent for $p > 1$):
 
 A **p-series** is of the form:
 
@@ -141,7 +145,7 @@ $$
 \sum_{k=1}^{\infty} \frac{1}{k^2} = \frac{\pi^2}{6}
 $$
 
-3. **Alternating Series**:
+III. **Alternating Series**:
 
 An alternating series is a series where the signs of the terms alternate between positive and negative. A famous example is:
 
@@ -157,7 +161,7 @@ $$
 
 ### Examples of Divergent Series
 
-1. **Geometric Series with growth factor greater than 1**:
+I. **Geometric Series with growth factor greater than 1**:
 
 Consider the geometric series:
 
@@ -167,7 +171,7 @@ $$
 
 Since the ratio between successive terms is greater than 1, this series diverges as the partial sums grow without bound.
 
-2. **Arithmetic Series**:
+II. **Arithmetic Series**:
 
 In an arithmetic series, the difference between successive terms is constant. For example:
 
@@ -177,7 +181,7 @@ $$
 
 The terms grow linearly, and the series diverges as $n \to \infty$.
 
-3. **Harmonic Series**:
+III. **Harmonic Series**:
 
 The harmonic series is:
 
@@ -186,7 +190,6 @@ $$
 $$
 
 Although the terms $\frac{1}{k}$ approach 0 as $k \to \infty$, the sum of the terms grows without bound. Hence, the harmonic series diverges.
-
 
 ### Absolute Convergence
 
@@ -202,7 +205,8 @@ $$
 
 When dealing with infinite series, it’s important to determine whether the series converges (approaches a finite value) or diverges (grows without bound or oscillates without settling). To do this, mathematicians use various convergence tests, each suited for different types of series. Below are some of the most commonly used tests for determining whether an infinite series converges or diverges:
 
-1. **Integral Test**:
+I. **Integral Test**:
+
 The integral test compares a series to the integral of a continuous, positive, decreasing function. Suppose $\{a_n\}$ is a sequence and $f(x)$ is a continuous, positive, decreasing function such that $f(n) = a_n$ for all $n \geq 1$. If the integral of $f(x)$ from 1 to infinity converges, then the series converges. Otherwise, the series diverges.
 
 $$
@@ -211,7 +215,8 @@ $$
 
 **Example**: Consider the series $\sum_{n=1}^{\infty} \frac{1}{n^2}$. Compare this to the integral $\int_1^{\infty} \frac{1}{x^2} \, dx$, which converges to 1. Hence, the series converges.
 
-2. **Comparison Test**:
+II. **Comparison Test**:
+
 The comparison test compares the given series to a known convergent or divergent series. If the terms of the series $\{a_n\}$ are smaller than the terms of a known convergent series $\{b_n\}$, and all terms are positive, then the series $\sum a_n$ also converges. Similarly, if the terms are larger than those of a known divergent series, the series $\sum a_n$ diverges.
 
 $$
@@ -220,7 +225,8 @@ $$
 
 **Example**: To check if $\sum_{n=1}^{\infty} \frac{1}{n^3 + 2}$ converges, compare it to $\sum_{n=1}^{\infty} \frac{1}{n^3}$, which is a convergent p-series with $p > 1$. Since the terms of $\frac{1}{n^3 + 2}$ are smaller, the series converges by comparison.
 
-3. **Limit Comparison Test**:
+III. **Limit Comparison Test**:
+
 The limit comparison test is useful when the terms of the series are not directly comparable to a known series but have similar behavior as $n \to \infty$. If the limit of the ratio between the terms of two series is a finite, positive constant, both series either converge or diverge together.
 
 $$
@@ -235,12 +241,14 @@ $$
 
 Since the comparison series $\sum \frac{1}{n^2}$ converges, the original series also converges.
 
-4. **Alternating Series Test (Leibniz's Test)**:
+IV. **Alternating Series Test (Leibniz's Test)**:
+
 This test is used for series where the terms alternate in sign. For an alternating series $\sum (-1)^{n} a_n$, if the absolute value of the terms $a_n$ decreases monotonically (i.e., $a_{n+1} \leq a_n$) and $\lim_{n \to \infty} a_n = 0$, then the series converges.
 
 **Example**: Consider the alternating harmonic series $\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}$, which is of the form $(-1)^{n+1} \frac{1}{n}$. Since $\frac{1}{n}$ decreases and approaches 0 as $n \to \infty$, the series converges.
 
-5. **Ratio Test**:
+V. **Ratio Test**:
+
 The ratio test is particularly useful for series involving factorials or exponential terms. To apply the ratio test, compute the limit of the absolute value of the ratio of successive terms:
 
 $$
@@ -259,7 +267,8 @@ $$
 
 Since $L = 0$, the series converges.
 
-6. **Root Test**:
+VI. **Root Test**:
+
 The root test, or Cauchy's root test, involves taking the $n$-th root of the absolute value of the terms of the series. Let:
 
 $$
