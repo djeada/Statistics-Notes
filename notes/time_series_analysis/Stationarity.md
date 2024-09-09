@@ -3,6 +3,7 @@
 Stationarity is a fundamental concept in time series analysis. A time series is considered **stationary** if its statistical properties—such as mean, variance, and autocovariance—remain constant over time. Stationary processes are crucial in time series modeling because many methods, such as ARIMA and ARMA models, assume stationarity.
 
 Stationarity can be classified into two types:
+
 1. **Strict Stationarity**: This implies that the entire distribution of the process remains the same over time.
 2. **Weak Stationarity (Second-Order Stationarity)**: This relaxed condition only requires the mean, variance, and autocovariance of the process to be time-invariant.
 
@@ -20,6 +21,7 @@ This means that the statistical properties of one segment of the series are simi
 A process is said to be **strictly stationary** if the joint distribution of any subset of observations $X_{t_1}, X_{t_2}, \dots, X_{t_k}$ is the same as the distribution of $X_{t_1 + \tau}, X_{t_2 + \tau}, \dots, X_{t_k + \tau}$ for all $\tau$. 
 
 In simple terms, the process looks the same no matter how we shift it in time. Strict stationarity implies that:
+
 - The distribution of $X_t$ does not change over time.
 - All moments of the distribution (mean, variance, higher moments) are constant over time.
 
@@ -28,12 +30,14 @@ In simple terms, the process looks the same no matter how we shift it in time. S
 Weak stationarity, also known as **second-order stationarity**, requires only that the **first two moments** (mean and variance) and the **autocovariance** depend solely on the lag between observations, not on time itself.
 
 A time series $\{X_t\}$ is weakly stationary if:
+
 1. The **mean** of the series is constant: $E[X_t] = \mu$ for all $t$.
 2. The **variance** is constant: $\text{Var}(X_t) = \sigma^2$ for all $t$.
 3. The **autocovariance** between $X_t$ and $X_{t+k}$ depends only on the lag $k$, not on $t$:
-   $$
-   \text{Cov}(X_t, X_{t+k}) = \gamma(k)
-   $$
+
+$$
+\text{Cov}(X_t, X_{t+k}) = \gamma(k)
+$$
 
 Weak stationarity is often sufficient for most time series models, as it focuses on ensuring that the mean and variance remain stable over time, making the process easier to model and analyze.
 
@@ -54,6 +58,7 @@ To analyze a stationary process, we focus on three key functions:
 ### Autocorrelation and Bounds
 
 For a weakly stationary process, the **autocorrelation function** $\rho(k)$, which measures the correlation between two points in the series separated by lag $k$, is bounded by -1 and 1:
+
 $$
 -1 \leq \rho(k) \leq 1
 $$
@@ -65,29 +70,34 @@ This bound can be derived from basic linear algebra principles that apply to cor
 #### **White Noise**
 
 White noise is the simplest example of a stationary process. It is defined as a sequence of uncorrelated, identically distributed random variables:
+
 $$
 X_t \sim \mathcal{N}(0, \sigma^2)
 $$
 
 Properties of white noise:
+
 - The **mean** is constant: $E[X_t] = 0$.
 - The **variance** is constant: $\text{Var}(X_t) = \sigma^2$.
 - The **autocovariance** function is:
-  $$
-  \gamma(k) = 
-  \begin{cases}
-  \sigma^2 & \text{if } k = 0 \\
-  0 & \text{if } k \neq 0
-  \end{cases}
-  $$
+  
+$$
+\gamma(k) = 
+\begin{cases}
+\sigma^2 & \text{if } k = 0 \\
+0 & \text{if } k \neq 0
+\end{cases}
+$$
+
 - The **autocorrelation** function is:
-  $$
-  \rho(k) = 
-  \begin{cases}
-  1 & \text{if } k = 0 \\
-  0 & \text{if } k \neq 0
-  \end{cases}
-  $$
+
+$$
+\rho(k) = 
+\begin{cases}
+1 & \text{if } k = 0 \\
+0 & \text{if } k \neq 0
+\end{cases}
+$$
 
 Thus, white noise is a stationary process because its mean and variance are constant, and its autocovariance depends only on the lag.
 
@@ -100,21 +110,26 @@ $$
 where $Z_t \sim \mathcal{N}(0, \sigma_Z^2)$ are independent white noise terms.
 
 For an MA(q) process:
+
 - The **mean** is zero: $E[X_t] = 0$.
 - The **variance** is constant:
-  $$
-  \text{Var}(X_t) = \sigma_Z^2 \sum_{i=0}^{q} \beta_i^2
-  $$
+
+$$
+\text{Var}(X_t) = \sigma_Z^2 \sum_{i=0}^{q} \beta_i^2
+
+$$
 - The **autocovariance** function $\gamma(k)$ depends on the lag $k$:
-  $$
-  \gamma(k) = 
-  \begin{cases}
-  \sigma_Z^2 \sum_{i=0}^{q-k} \beta_i \beta_{i+k} & \text{if } k \leq q \\
-  0 & \text{if } k > q
-  \end{cases}
-  $$
+
+$$
+\gamma(k) = 
+\begin{cases}
+\sigma_Z^2 \sum_{i=0}^{q-k} \beta_i \beta_{i+k} & \text{if } k \leq q \\
+0 & \text{if } k > q
+\end{cases}
+$$
   
 The autocorrelation function $\rho(k)$ is obtained by normalizing the autocovariance by the variance:
+
 $$
 \rho(k) = \frac{\gamma(k)}{\gamma(0)}
 $$
@@ -128,20 +143,25 @@ The MA(q) process is weakly stationary because its mean and variance are constan
 ### Random Walk
 
 A **random walk** is an example of a non-stationary process. A random walk can be written as:
+
 $$
 X_t = X_{t-1} + Z_t
 $$
+
 where $Z_t$ is white noise.
 
 For a random walk:
 - The **mean** grows over time:
-  $$
-  E[X_t] = t \cdot \mu
-  $$
+
+$$
+E[X_t] = t \cdot \mu
+$$
+
 - The **variance** increases with time:
-  $$
-  \text{Var}(X_t) = t \cdot \sigma^2
-  $$
+
+$$
+\text{Var}(X_t) = t \cdot \sigma^2
+$$
 
 Since the variance and mean depend on time, the random walk is **not stationary**. However, applying a **difference operator** can transform a random walk into a stationary series.
 
@@ -150,6 +170,7 @@ Since the variance and mean depend on time, the random walk is **not stationary*
 To handle non-stationary processes like random walks, we can apply the **difference operator** $\Delta$, which removes trends and transforms the process into a stationary one.
 
 The difference operator is defined as:
+
 $$
 \Delta X_t = X_t - X_{t-1} = Z_t
 $$
@@ -161,6 +182,7 @@ By differencing the series, we convert a random walk into white noise, which is 
 ## Dealing with Non-Stationary Time Series
 
 In real-world applications, many time series are non-stationary. To apply statistical models that require stationarity, we often use **transformations** such as:
+
 - **Differencing**: Removes trends and makes the series stationary.
 - **Logarithmic transformations**: Stabilizes variance.
 - **Detrending**: Removes long-term trends to focus on short-term fluctuations.
