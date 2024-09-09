@@ -7,8 +7,6 @@ In time series analysis, understanding the relationships between observations at
 
 ### Autocorrelation Function (ACF)
 
-#### Definition of the ACF
-
 The **Autocorrelation Function (ACF)** measures the correlation between a time series and its lagged values. It helps detect patterns such as trends and seasonality. The autocorrelation at lag $k$, denoted $\rho_k$, is defined as:
 
 $$
@@ -55,21 +53,106 @@ Where:
 - $N$ is the number of observations.
 - $x_t$ is the observed value at time $t$.
 
-#### Plotting the ACF: Correlogram
-
-The **ACF plot** (or **Correlogram**) is a graphical tool used to visualize the autocorrelation coefficients for different lags. This helps to identify significant correlations at specific lags. The plot shows $r_k$ for different values of $k$, starting at $r_0 = 1$ because the autocorrelation at lag 0 is always 1 (since the series is perfectly correlated with itself).
-
-#### Interpreting the ACF Plot
-
-- **Slow decay** in the ACF indicates a trend in the data.
-- **Seasonal patterns** can be identified by repeated peaks at regular intervals in the ACF.
-- A **sharp cutoff** after a few lags suggests a **Moving Average (MA) process**.
+Apologies for the confusion. Let's focus on improving the original explanation and adapting it directly into a Python context, similar to the random walk example.
 
 ---
 
-### Partial Autocorrelation Function (PACF)
+### Plotting the ACF (Autocorrelation Function) in Python
 
-#### Definition of the PACF
+The **Autocorrelation Function (ACF) plot**, or **Correlogram**, is a useful tool for understanding the structure of time series data. In Python, you can generate and interpret the ACF plot using libraries like `statsmodels` and `matplotlib`. The ACF plot helps identify significant correlations at different lags and reveals patterns in the data.
+
+### Key Points for Interpreting the ACF Plot
+
+1. **Slow Decay**: 
+   - If the ACF values decrease slowly over many lags, this suggests the presence of a **trend** in the data.
+   
+2. **Seasonal Patterns**: 
+   - Repeated peaks or cyclic behavior in the ACF plot indicate **seasonal patterns** in the data, with regular intervals of high correlation.
+
+3. **Sharp Cutoff**: 
+   - A rapid drop-off or sharp cutoff after a few lags suggests the data may follow a **Moving Average (MA)** process, where the current value is explained by a few prior error terms (shocks).
+
+### Python Example: Simulating and Plotting ACF for Different Processes
+
+Here’s a Python example where we generate and plot the ACF for three different types of time series: one with a trend, one with seasonal patterns, and one following a moving average process.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.graphics.tsaplots import plot_acf
+
+# code for simulating time series with trend and seasonality
+np.random.seed(42)
+N = 1000
+
+# Example 1: Time Series with a stronger trend (Random Walk)
+trend_series = np.cumsum(np.random.normal(1, 1, N))  # Random walk simulating a trend with positive drift
+
+# Example 2: Time Series with clearer seasonality (less noise)
+seasonal_series = np.sin(np.linspace(0, 20 * np.pi, N))  # A sine wave to emphasize seasonality
+
+# Moving Average Process (MA(1)) remains the same
+ma_series = np.random.normal(0, 1, N)
+for i in range(1, N):
+    ma_series[i] += 0.5 * ma_series[i - 1]  # Moving average with lag 1
+
+# Plotting the time series
+plt.figure(figsize=(12, 8))
+plt.subplot(3, 1, 1)
+plt.plot(trend_series, label="Time Series with Trend")
+plt.title('Time Series with Trend')
+plt.grid(True)
+
+plt.subplot(3, 1, 2)
+plt.plot(seasonal_series, label="Time Series with Seasonality")
+plt.title('Time Series with Seasonality')
+plt.grid(True)
+
+plt.subplot(3, 1, 3)
+plt.plot(ma_series, label="Moving Average (MA(1)) Process")
+plt.title('Moving Average (MA(1)) Process')
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
+
+# Plotting ACF for each time series
+plt.figure(figsize=(12, 8))
+
+# ACF for the time series with trend
+plt.subplot(3, 1, 1)
+plot_acf(trend_series, lags=50, ax=plt.gca())
+plt.title('ACF of Time Series with Trend')
+
+# ACF for the time series with seasonality
+plt.subplot(3, 1, 2)
+plot_acf(seasonal_series, lags=50, ax=plt.gca())
+plt.title('ACF of Time Series with Seasonality')
+
+# ACF for the MA(1) process
+plt.subplot(3, 1, 3)
+plot_acf(ma_series, lags=50, ax=plt.gca())
+plt.title('ACF of Moving Average (MA(1)) Process')
+
+plt.tight_layout()
+plt.show()
+```
+
+Time Series Data:
+
+![output(1)](https://github.com/user-attachments/assets/9358ee1c-9b09-4df8-8434-1835868b38f3)
+
+Acf plots:
+
+![output(2)](https://github.com/user-attachments/assets/ce26bcd4-bbcc-4334-a8cc-b1c52d54b548)
+
+Interpreting the ACF Plot:
+
+- **Slow Decay** in the first plot indicates that the time series has a **trend** and is non-stationary.
+- **Regular Peaks** in the second plot highlight **seasonal patterns** in the data, repeating at consistent intervals.
+- **Sharp Cutoff** in the third plot suggests that the data is generated from an **MA(1)** process, where values depend only on recent observations.
+
+### Partial Autocorrelation Function (PACF)
 
 The **Partial Autocorrelation Function (PACF)** measures the correlation between the time series and its lagged values, after removing the linear effects of the intermediate lags. It helps isolate the direct impact of each lag.
 
@@ -103,17 +186,101 @@ $$
 \phi_{kj} = \phi_{k-1,j} - \phi_{kk} \phi_{k-1,k-j}
 $$
 
-#### Plotting the PACF
+### Plotting the PACF
 
-The PACF plot shows the partial autocorrelation at various lags. The interpretation of the PACF plot is particularly useful for identifying the **order of an AR process**.
+The **Partial Autocorrelation Function (PACF) plot** is a valuable tool for understanding the relationship between a time series and its lagged values after accounting for the influence of intervening lags. Unlike the ACF, which shows the correlation between the series and its lagged values, the PACF removes the effect of any intermediate lags.
 
-#### Interpreting the PACF Plot
+The PACF is particularly useful for identifying the order of an **Autoregressive (AR) process**. If you suspect your time series follows an AR model, the PACF plot can help you determine the number of lag terms to include in your model.
 
-- **Significant spikes** at early lags indicate that those lags contribute to the model. For example, in an **AR(p) process**, the PACF typically shows significant spikes up to lag $p$, and then cuts off.
-- **Sharp cutoff after lag $p$** suggests an autoregressive process of order $p$.
-- **Gradual decay** in the PACF suggests a **Moving Average (MA) process**.
+### Key Points for Interpreting the PACF Plot
 
----
+1. Significant spikes at early lags indicate that those specific lags are important for modeling the time series. For an **AR(p)** process, you will see significant spikes up to lag \( p \), and the PACF will then cut off.
+2. A sharp drop after lag \( p \) suggests that the time series follows an **AR(p)** process, meaning that only \( p \) past observations are needed to model the series.
+3. If the PACF plot exhibits a gradual decay, this indicates the presence of a **Moving Average (MA) process**, since partial correlations decrease slowly over many lags.
+
+### Python Example: Simulating and Plotting PACF for Different Processes
+
+In this example, we will simulate different time series data (AR, MA, and ARMA processes) and plot their PACF to see how they behave.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.arima_process import ArmaProcess
+from statsmodels.graphics.tsaplots import plot_pacf
+
+# Example 1: Simulating an AR(2) process
+np.random.seed(42)
+ar2 = np.array([1, -0.75, 0.25])  # AR(2) coefficients (X_t = 0.75*X_t-1 - 0.25*X_t-2 + noise)
+ma0 = np.array([1])  # No MA component
+AR_process = ArmaProcess(ar2, ma0)
+ar_series = AR_process.generate_sample(nsample=1000)
+
+# Example 2: Simulating a Moving Average (MA) process
+ma1 = np.array([1, 0.5])  # MA(1) coefficients
+MA_process = ArmaProcess([1], ma1)
+ma_series = MA_process.generate_sample(nsample=1000)
+
+# Example 3: Simulating an ARMA(1,1) process
+ar1 = np.array([1, 0.5])  # AR(1) coefficients
+ma1 = np.array([1, -0.5])  # MA(1) coefficients
+ARMA_process = ArmaProcess(ar1, ma1)
+arma_series = ARMA_process.generate_sample(nsample=1000)
+
+# Plotting the time series
+plt.figure(figsize=(12, 8))
+plt.subplot(3, 1, 1)
+plt.plot(ar_series, label="AR(2) Process")
+plt.title('AR(2) Process')
+plt.grid(True)
+
+plt.subplot(3, 1, 2)
+plt.plot(ma_series, label="MA(1) Process")
+plt.title('MA(1) Process')
+plt.grid(True)
+
+plt.subplot(3, 1, 3)
+plt.plot(arma_series, label="ARMA(1,1) Process")
+plt.title('ARMA(1,1) Process')
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
+
+# Plotting PACF for each time series
+plt.figure(figsize=(12, 8))
+
+# PACF for the AR(2) process
+plt.subplot(3, 1, 1)
+plot_pacf(ar_series, lags=30, ax=plt.gca())
+plt.title('PACF of AR(2) Process')
+
+# PACF for the MA(1) process
+plt.subplot(3, 1, 2)
+plot_pacf(ma_series, lags=30, ax=plt.gca())
+plt.title('PACF of MA(1) Process')
+
+# PACF for the ARMA(1,1) process
+plt.subplot(3, 1, 3)
+plot_pacf(arma_series, lags=30, ax=plt.gca())
+plt.title('PACF of ARMA(1,1) Process')
+
+plt.tight_layout()
+plt.show()
+```
+
+Time Series Data:
+
+![Screenshot from 2024-09-09 20-32-19](https://github.com/user-attachments/assets/50ddf1a6-fcae-49fa-92e0-ea0f133f0265)
+
+Pacf plots:
+
+![Screenshot from 2024-09-09 20-32-55](https://github.com/user-attachments/assets/3e823403-dc7c-4e0f-a625-d1e226c33812)
+
+Interpreting the PACF Plot:
+
+- In the AR(2) process, the PACF will show significant spikes at lags 1 and 2, followed by a sharp drop. This sharp cutoff indicates an autoregressive model of order 2.
+- In the MA(1) process, the PACF will display a gradual decay, characteristic of a moving average process, where the partial correlations decrease slowly over time.
+- For the ARMA(1,1) process, the PACF plot may show significant spikes at early lags, reflecting the autoregressive part, followed by a slower decay, reflecting the moving average component.
 
 ### Comparing ACF and PACF
 
@@ -123,8 +290,6 @@ The PACF plot shows the partial autocorrelation at various lags. The interpretat
 In practice:
 - The **ACF** of an AR(p) process decays gradually, but the **PACF** cuts off after lag $p$.
 - The **ACF** of an MA(q) process cuts off after lag $q$, while the **PACF** decays gradually.
-
----
 
 ### Example: ACF and PACF for AR(1) Process
 
@@ -152,7 +317,7 @@ The partial autocorrelation function for an AR(1) process shows a **significant 
 
 ### Visualization of ACF and PACF
 
-The following is using mock data for time series with **short-term dependencies**, specifically one that could be modeled as an **AR(1) process**.  Common data types that show this behavior include **financial data** (such as stock prices or returns), **economic indicators**, or **meteorological data** (like temperature series).
+The following is using mock data for time series with **short-term dependencies**, specifically one that could be modeled as an **AR(1) process**. Common data types that show this behavior include **financial data** (such as stock prices or returns), **economic indicators**, or **meteorological data** (like temperature series).
 
 ![c20f0056-8024-4e6d-a91b-3202c158da64](https://github.com/djeada/Statistics-Notes/assets/37275728/1154a4f5-6105-452a-a5fa-30399f43094b)
 
