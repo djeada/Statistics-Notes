@@ -63,6 +63,31 @@ Simulating a random walk in Python is straightforward. We initialize the process
 
 Below is an example of how to simulate and plot a random walk in Python using NumPy and Matplotlib:
 
+Sure! Below is the improved version of your notes with the images included as you requested.
+
+---
+
+### Simulation of a Random Walk in Python
+
+A **random walk** is a type of stochastic process where each value in the sequence is determined by the previous value plus a random shock. This concept can be useful in various fields such as finance (for modeling stock prices), physics (for modeling particle movements), or statistics (as a time series model). Simulating a random walk in Python is straightforward, as we iteratively add random shocks to calculate each successive value. 
+
+The basic model for a random walk is:
+
+$$
+X_t = X_{t-1} + Z_t
+$$
+
+where:
+- \( X_t \) is the value of the random walk at time step \( t \),
+- \( X_{t-1} \) is the value of the random walk at the previous time step,
+- \( Z_t \) represents a random shock at time \( t \), typically drawn from a normal distribution \( \mathcal{N}(0, 1) \).
+
+This means that each new value of the random walk is determined by adding a random shock \( Z_t \) to the current value. The random walk typically starts at some initial value (often \( X_0 = 0 \)).
+
+### Simulation Example
+
+The following Python code demonstrates how to simulate and plot a random walk using **NumPy** for generating the random shocks and **Matplotlib** for visualization.
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -85,32 +110,49 @@ plt.ylabel('Value')
 plt.legend()
 plt.grid(True)
 plt.show()
-
-# Plot the autocorrelation function (ACF)
-from statsmodels.graphics.tsaplots import plot_acf
-plot_acf(X, lags=50)
-plt.show()
 ```
 
 Explanation:
 
-- `Z` is generated as a sequence of white noise values $Z_t \sim \mathcal{N}(0, 1)$.
-- `X` is the cumulative sum of the white noise sequence, representing the random walk.
-- We plot the random walk and its autocorrelation function (ACF), which typically shows high autocorrelation due to the cumulative nature of the random walk.
+1. The array `Z` represents the sequence of random shocks \( Z_t \) drawn from a normal distribution \( \mathcal{N}(0, 1) \). This sequence of shocks has a mean of 0 and a standard deviation of 1, making it "white noise"—a series of uncorrelated random variables.
+2. The cumulative sum of `Z` is used to create the random walk. The `np.cumsum()` function calculates the cumulative sum of the array, giving the values \( X_t \) for each time step. The function `np.insert(Z, 0, 0)` adds the initial value \( X_0 = 0 \) at the start.
+3. We then plot the random walk, where the x-axis represents time and the y-axis represents the value of the walk at each step.
+
+Here is an example plot of the random walk:
+
+![Figure_1](https://github.com/user-attachments/assets/0328869d-6a94-4f9b-b623-09e9d3e42311)
+
+### Autocorrelation of the Random Walk
+
+Autocorrelation measures how a time series is correlated with its past values. A random walk typically exhibits **high autocorrelation** because each step is dependent on the previous step. We can visualize the autocorrelation function (ACF) of the random walk using `statsmodels`.
+
+```python
+from statsmodels.graphics.tsaplots import plot_acf
+
+# Plot the autocorrelation function (ACF)
+plot_acf(X, lags=50)
+plt.show()
+```
+
+The autocorrelation plot typically shows strong correlations for several lags, reflecting the memory of the process. An example of the ACF plot is shown below:
+
+![Figure_2](https://github.com/user-attachments/assets/82260af5-9278-4e44-b527-554a5ef12aa5)
 
 ### Removing the Trend with the Difference Operator
 
-A random walk exhibits a **trend** because its expected value $E[X_t]$ changes with time. Specifically, if $\mu \neq 0$, the random walk will exhibit a clear upward or downward trend over time. Even if $\mu = 0$, the random walk still exhibits **non-stationarity** because its variance increases over time.
+A random walk has a **trend** due to the cumulative nature of the process. Even if the random shocks have zero mean, the variance of the process increases over time, making it **non-stationary**. A stationary process has a constant mean and variance over time, and its autocorrelation function decays quickly. To transform the random walk into a stationary process, we can apply the **difference operator**.
 
-To make a random walk **stationary**, we can apply the **difference operator** $\Delta$, which removes the trend. The difference operator is defined as:
+The **difference operator** is defined as:
 
 $$
 \Delta X_t = X_t - X_{t-1} = Z_t
 $$
 
-Thus, differencing transforms the random walk into a purely random process (white noise) where the differenced series $\Delta X_t$ consists of independent and identically distributed (i.i.d.) random shocks $Z_t$.
+Applying this operation to a random walk removes the trend, as each differenced value corresponds to the original random shocks \( Z_t \). This transformation yields a series of white noise.
 
-In Python, differencing can be done using the `numpy.diff()` function:
+### Differencing in Python
+
+We can use `numpy.diff()` to difference the random walk:
 
 ```python
 # Difference the random walk to remove the trend
@@ -131,7 +173,19 @@ plot_acf(diff_X, lags=50)
 plt.show()
 ```
 
-After applying the difference operator, the resulting series is stationary, and the ACF shows no significant autocorrelation, indicating that the series is now white noise.
+Explanation:
+
+1. The `np.diff()` function calculates the differences between consecutive values in the `X` array, effectively applying the difference operator \( \Delta X_t \). The resulting series, `diff_X`, represents the original random shocks \( Z_t \), which are white noise.
+2. After differencing, we plot the new series to visualize the transformation. The plot shows random fluctuations around zero, which is characteristic of white noise.
+3. The autocorrelation function of the differenced series should show no significant correlations at any lag, as the differenced process is now white noise with no memory of previous values.
+
+Here is an example plot of the differenced random walk:
+
+![Figure_3](https://github.com/user-attachments/assets/91b7c7e2-9354-42ff-a6da-0312e4bb258b)
+
+And the ACF plot for the differenced series:
+
+![Figure_4](https://github.com/user-attachments/assets/d3b952e4-27aa-4edf-a6f9-955fcc54fee3)
 
 ### Correlogram of a Random Walk
 
