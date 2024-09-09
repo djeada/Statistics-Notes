@@ -1,247 +1,195 @@
-## Yule-Walker Equations for Autoregressive Processes
+## Yule-Walker Equations
 
-The Yule-Walker equations are a set of linear equations that relate the autocorrelations of an autoregressive (AR) process to its parameters. These equations are crucial for estimating the autocorrelation function (ACF) of AR processes and solving for model parameters.
+The **Yule-Walker equations** are a set of linear equations that relate the autocorrelations of an **autoregressive (AR) process** to its parameters. These equations are crucial for estimating the parameters of AR models and for understanding the autocorrelation structure of the process.
 
-### 2. **Assumptions and Procedure**
+### Yule-Walker Equations: Definition
 
-#### 2.1 **Assumptions**
+The Yule-Walker equations provide a way to estimate the **parameters of an AR(p) process** by relating them to the **autocorrelations** of the process. The key idea is to derive a system of equations that link the parameters $\phi_1, \phi_2, \dots, \phi_p$ with the autocorrelation function (ACF) at different lags $k$.
 
-1. **Stationarity**: The AR process is assumed to be stationary. This implies that the statistical properties, including mean and variance, are time-invariant.
+For an AR(p) process, the Yule-Walker equations are:
 
-2. **White Noise**: The error term \( Z_t \) is assumed to be white noise with mean zero and variance \( \sigma_Z^2 \). This means \( Z_t \) is uncorrelated with any past values.
+$$
+\rho(k) = \phi_1 \rho(k-1) + \phi_2 \rho(k-2) + \dots + \phi_p \rho(k-p) \quad \text{for } k = 1, 2, \dots, p
+$$
 
-#### 2.2 **Procedure**
+Where:
 
-1. **Multiply the AR Model by \( X_{t-k} \)**: To derive the Yule-Walker equations, multiply the AR model by \( X_{t-k} \), where \( k \) is the lag.
+- $\rho(k)$ is the autocorrelation at lag $k$.
+- $\rho(0) = 1$, since the autocorrelation at lag 0 is always 1.
 
-2. **Take Expectation**: Compute the expected value of both sides of the equation.
+These equations can be used to estimate the parameters $\phi_1, \phi_2, \dots, \phi_p$ of the AR process from the sample autocorrelations.
 
-3. **Use Covariance Definition**: Replace the expectations with autocovariances and normalize by the variance \( \gamma_0 = \sigma_X^2 \).
+---
 
-4. **Formulate Difference Equations**: The result will be a set of difference equations relating the autocorrelations \( \rho(k) \) at various lags.
+### Deriving the Yule-Walker Equations
 
-5. **Solve for ACF**: Solve the difference equations to determine the ACF of the process.
+#### Assumptions
 
-### 3. **Example: AR(2) Process**
+1. **Stationarity**: The AR process is assumed to be stationary, meaning the mean and variance of the process do not change over time, and the autocovariance function depends only on the lag, not the time.
+2. **White Noise**: The error term $Z_t$ is white noise with zero mean and constant variance $\sigma_Z^2$, meaning $Z_t$ is uncorrelated with past values of the process.
 
-Consider the AR(2) process defined by:
-\[ X_t = \frac{3}{1} X_{t-1} + \frac{2}{1} X_{t-2} + Z_t \]
-where \( Z_t \) is white noise with mean zero and variance \( \sigma_Z^2 \).
+#### Derivation Steps
 
-#### 3.1 **Characteristic Polynomial**
+1. **Multiply the AR(p) model by $X_{t-k}$** for a given lag $k$:
 
-The characteristic polynomial of the AR(2) process is:
-\[ \phi(B) = 1 - \frac{3}{1}B - \frac{2}{1}B^2 \]
+$$
+X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + \dots + \phi_p X_{t-p} + Z_t
+$$
 
-#### 3.2 **Roots of the Characteristic Polynomial**
+Multiply both sides by $X_{t-k}$ for $k = 1, 2, \dots, p$.
 
-To determine stationarity, solve for the roots of:
-\[ \phi(B) = 1 - 3B - 2B^2 \]
+2. **Take the expectation** of both sides: Use the definition of the **autocovariance function** $\gamma(k) = E[X_t X_{t-k}]$, and replace the expectations accordingly. Since the white noise $Z_t$ is uncorrelated with $X_{t-k}$, the expected value of $Z_t X_{t-k}$ is zero for all $k \geq 1$.
 
-The roots of the polynomial are:
-\[ \lambda = \frac{-2 \pm \sqrt{76}}{2} \]
+3. **Use covariance definitions**: Express the expectations as autocovariances $\gamma(k)$ and normalize by $\gamma(0)$, which is the variance of the process, to convert them into autocorrelations $\rho(k)$.
 
-Both roots have magnitudes greater than 1, indicating that the process is stationary.
+4. **Formulate the Yule-Walker equations**: You will end up with a system of linear equations that relate the autocorrelations at different lags $\rho(1), \rho(2), \dots, \rho(p)$ to the AR model parameters $\phi_1, \phi_2, \dots, \phi_p$.
 
-### 4. **Yule-Walker Equations for AR(2)**
+---
 
-To find the ACF \( \rho(k) \) for the AR(2) process:
+### Example: Yule-Walker Equations for an AR(2) Process
 
-#### 4.1 **Multiply by \( X_{t-k} \) and Take Expectation**
+Consider the AR(2) process:
+$$
+X_t = 3 X_{t-1} + 2 X_{t-2} + Z_t
+$$
+Where $Z_t$ is white noise with variance $\sigma_Z^2$.
 
-Multiply the AR(2) equation by \( X_{t-k} \) and take the expectation:
-\[ \mathbb{E}[X_{t-k} X_t] = \frac{3}{1} \mathbb{E}[X_{t-k} X_{t-1}] + \frac{2}{1} \mathbb{E}[X_{t-k} X_{t-2}] \]
+#### Deriving the Yule-Walker Equations
 
-Since \( Z_t \) is white noise and uncorrelated with \( X_{t-k} \), we have:
-\[ \mathbb{E}[X_{t-k} Z_t] = 0 \]
+1. **Multiply by $X_{t-1}$** and take the expectation:
 
-Using the definition of autocovariance \( \gamma(k) = \mathbb{E}[X_t X_{t-k}] \), we get:
-\[ \gamma(k) = \frac{3}{1} \gamma(k-1) + \frac{2}{1} \gamma(k-2) \]
+$$
+E[X_t X_{t-1}] = 3 E[X_{t-1}^2] + 2 E[X_{t-2} X_{t-1}]
+$$
 
-#### 4.2 **Express as ACF Equation**
+Using $\gamma(1) = E[X_t X_{t-1}]$ and $\gamma(0) = E[X_{t-1}^2]$, we get:
 
-Normalize by the variance \( \gamma_0 = \sigma_X^2 \):
-\[ \rho(k) = \frac{3}{1} \rho(k-1) + \frac{2}{1} \rho(k-2) \]
+$$
+\gamma(1) = 3 \gamma(0) + 2 \gamma(1)
+$$
 
-This gives the Yule-Walker equation for the AR(2) process:
-\[ \rho(k) = 3 \rho(k-1) + 2 \rho(k-2) \]
+2. **Multiply by $X_{t-2}$** and take the expectation:
 
-### 5. **Solving the Difference Equation**
+$$
+E[X_t X_{t-2}] = 3 E[X_{t-1} X_{t-2}] + 2 E[X_{t-2}^2]
+$$
 
-Assume a solution of the form \( \rho(k) = \lambda^k \). Substituting into the Yule-Walker equation:
-\[ \lambda^k = \frac{3}{1} \lambda^{k-1} + \frac{2}{1} \lambda^{k-2} \]
+Using $\gamma(2) = E[X_t X_{t-2}]$, we get:
 
-Dividing by \( \lambda^{k-2} \):
-\[ \lambda^2 = 3 \lambda + 2 \]
+$$
+\gamma(2) = 3 \gamma(1) + 2 \gamma(0)
+$$
 
-#### 5.1 **Solve the Characteristic Equation**
+3. **Express the autocovariances as autocorrelations**: Normalize by the variance $\gamma(0)$, to convert autocovariances into autocorrelations $\rho(k)$:
+
+$$
+\rho(1) = \frac{3}{1 + 2} = \frac{3}{3} = 1, \quad \rho(2) = \frac{3 \cdot 1 + 2}{\gamma(0)}
+$$
+
+---
+
+### Solving the Difference Equations for AR(2)
+
+To solve the Yule-Walker equations for the AR(2) process, we assume a solution of the form $\rho(k) = \lambda^k$. Substituting into the equation:
+
+$$
+\lambda^2 = 3 \lambda + 2
+$$
 
 The characteristic equation is:
-\[ \lambda^2 - 3 \lambda - 2 = 0 \]
 
-Solving this quadratic equation yields:
-\[ \lambda = \frac{3 \pm \sqrt{13}}{2} \]
+$$
+\lambda^2 - 3 \lambda - 2 = 0
+$$
 
-The roots are:
-\[ \lambda_1 = \frac{3 + \sqrt{13}}{2}, \quad \lambda_2 = \frac{3 - \sqrt{13}}{2} \]
+Solving the quadratic equation:
 
-#### 5.2 **General Solution for \( \rho(k) \)**
+$$
+\lambda = \frac{3 \pm \sqrt{9 + 8}}{2} = \frac{3 \pm \sqrt{17}}{2}
+$$
 
-The general solution for \( \rho(k) \) is:
-\[ \rho(k) = c_1 \lambda_1^k + c_2 \lambda_2^k \]
+Thus, the roots are:
 
-### 6. **Determine Coefficients \( c_1 \) and \( c_2 \)**
+$$
+\lambda_1 = \frac{3 + \sqrt{17}}{2}, \quad \lambda_2 = \frac{3 - \sqrt{17}}{2}
+$$
 
-#### 6.1 **Use \( \rho(0) = 1 \)**
+The general solution for the autocorrelation function $\rho(k)$ is:
 
-At \( k = 0 \):
-\[ \rho(0) = c_1 + c_2 = 1 \]
+$$
+\rho(k) = c_1 \lambda_1^k + c_2 \lambda_2^k
+$$
 
-#### 6.2 **Use \( \rho(1) \)**
+---
 
-At \( k = 1 \):
-\[ \rho(1) = 3 \rho(0) + 2 \rho(-1) \]
+### Finding Coefficients $c_1$ and $c_2$
 
-Since \( \rho(k) = \rho(-k) \):
-\[ \rho(1) = 3 \cdot 1 + 2 \cdot \rho(1) \]
-\[ \rho(1) = \frac{3}{2} \]
+#### Use $\rho(0) = 1$
 
-Substitute into the general solution:
-\[ \rho(1) = c_1 \lambda_1 + c_2 \lambda_2 = \frac{3}{2} \]
+At $k = 0$, we know $\rho(0) = 1$. This gives the equation:
 
-#### 6.3 **Solve the System of Equations**
+$$
+c_1 + c_2 = 1
+$$
 
-We solve:
-\[ c_1 + c_2 = 1 \]
-\[ c_1 \lambda_1 + c_2 \lambda_2 = \frac{3}{2} \]
+#### Use $\rho(1)$
 
-Substituting the values of \( \lambda_1 \) and \( \lambda_2 \):
-\[ c_1 = \frac{4 + \sqrt{13}}{8}, \quad c_2 = \frac{4 - \sqrt{13}}{8} \]
+At $k = 1$, we use the relationship $\rho(1) = 3 \rho(0) + 2 \rho(1)$ to find:
 
-### 7. **Autocorrelation Function (ACF) for AR(2) Process**
+$$
+\rho(1) = 3 \cdot 1 + 2 \cdot \rho(1)
+$$
 
-The ACF \( \rho(k) \) is given by:
-\[ \rho(k) = \frac{4 + \sqrt{13}}{8} \left(\frac{3 + \sqrt{13}}{2}\right)^k + \frac{4 - \sqrt{13}}{8} \left(\frac{3 - \sqrt{13}}{2}\right)^k \]
+Solving this, we get:
 
-This formula describes the autocorrelation function of the AR(2) process based on the derived coefficients and characteristic roots.
+$$
+\rho(1) = \frac{3}{2}
+$$
 
+Substituting into the general solution:
 
-## Yule-Walker Equations in Matrix Form for AR(p) Processes
+$$
+c_1 \lambda_1 + c_2 \lambda_2 = \frac{3}{2}
+$$
 
-### 1. **Autoregressive (AR) Process Definition**
+Solving the system of equations:
 
-An AR(p) process is defined by:
-\[ X_t = \phi_0 + \phi_1 X_{t-1} + \phi_2 X_{t-2} + \cdots + \phi_p X_{t-p} + Z_t \]
-where:
-- \( Z_t \sim \text{Normal}(0, \sigma_Z^2) \) represents white noise with zero mean and variance \( \sigma_Z^2 \).
+$$
+\begin{aligned}
+c_1 + c_2 &= 1 \\
+c_1 \lambda_1 + c_2 \lambda_2 &= \frac{3}{2}
+\end{aligned}
+$$
 
-For simplicity, assume the process is centered (i.e., \( \phi_0 = 0 \)):
-\[ X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + \cdots + \phi_p X_{t-p} + Z_t \]
+This gives the values for $c_1$ and $c_2$, which can then be substituted back into the general solution for $\rho(k)$.
 
-### 2. **Autocorrelation Function (ACF) and Yule-Walker Equations**
+### **7. Matrix Form of Yule-Walker Equations for AR(p)**
 
-The autocorrelation function \( \rho_k \) of an AR(p) process is given by:
-\[ \rho_k = \phi_1 \rho_{k-1} + \phi_2 \rho_{k-2} + \cdots + \phi_p \rho_{k-p} \]
-where:
-- \( \rho_0 = 1 \) (by definition of autocorrelation at lag 0).
-- For negative lags, \( \rho_{-k} = \rho_k \) due to the property of autocorrelation functions being symmetric.
+For an AR(p) process, the Yule-Walker equations can be written in **matrix form**. Define:
 
-#### 2.1 **Deriving Yule-Walker Equations**
+- $\mathbf{r} = \begin{bmatrix} \rho(1) \\ \rho(2) \\ \vdots \\ \rho(p) \end{bmatrix}$ as the vector of autocorrelations.
+- $\mathbf{\phi} = \begin{bmatrix} \phi_1 \\ \phi_2 \\ \vdots \\ \phi_p \end{bmatrix}$ as the vector of AR coefficients.
 
-For \( k = 1, 2, \ldots, p \), the Yule-Walker equations are:
-- For \( k = 1 \):
-\[ \rho_1 = \phi_1 \rho_0 + \phi_2 \rho_{-1} + \cdots + \phi_p \rho_{1-p} \]
-Since \( \rho_{-1} = \rho_1 \) and \( \rho_{1-p} = \rho_{p-1} \):
-\[ \rho_1 = \phi_1 \cdot 1 + \phi_2 \rho_1 + \cdots + \phi_p \rho_{p-1} \]
-- For \( k = 2 \):
-\[ \rho_2 = \phi_1 \rho_1 + \phi_2 \rho_0 + \cdots + \phi_p \rho_{2-p} \]
-- For \( k = 3 \):
-\[ \rho_3 = \phi_1 \rho_2 + \phi_2 \rho_1 + \cdots + \phi_p \rho_{3-p} \]
-- Continuing similarly up to \( k = p \):
-\[ \rho_p = \phi_1 \rho_{p-1} + \phi_2 \rho_{p-2} + \cdots + \phi_p \rho_0 \]
+The **autocorrelation matrix** $R$ is a Toeplitz matrix:
 
-### 3. **Matrix Form of Yule-Walker Equations**
-
-To express the Yule-Walker equations in matrix form, define:
-- \( \mathbf{r} = \begin{bmatrix} \rho_1 \\ \rho_2 \\ \vdots \\ \rho_p \end{bmatrix} \) as the vector of autocorrelations.
-- \( \mathbf{\phi} = \begin{bmatrix} \phi_1 \\ \phi_2 \\ \vdots \\ \phi_p \end{bmatrix} \) as the vector of AR coefficients.
-
-Construct the autocorrelation matrix \( R \) (also known as the Toeplitz matrix) as:
-\[ R = \begin{bmatrix}
-1 & \rho_1 & \rho_2 & \cdots & \rho_{p-1} \\
-\rho_1 & 1 & \rho_1 & \cdots & \rho_{p-2} \\
-\rho_2 & \rho_1 & 1 & \cdots & \rho_{p-3} \\
+$$
+R = \begin{bmatrix}
+1 & \rho(1) & \rho(2) & \dots & \rho(p-1) \\
+\rho(1) & 1 & \rho(1) & \dots & \rho(p-2) \\
+\rho(2) & \rho(1) & 1 & \dots & \rho(p-3) \\
 \vdots & \vdots & \vdots & \ddots & \vdots \\
-\rho_{p-1} & \rho_{p-2} & \rho_{p-3} & \cdots & 1
-\end{bmatrix} \]
-
-Then, the Yule-Walker equations can be written in matrix form:
-\[ \mathbf{r} = R \mathbf{\phi} \]
-
-To solve for \( \mathbf{\phi} \):
-\[ \mathbf{\phi} = R^{-1} \mathbf{r} \]
-
-### 4. **Properties of the Matrix \( R \)**
-
-- **Symmetry**: The matrix \( R \) is symmetric, i.e., \( R_{ij} = R_{ji} \).
-- **Positive Semidefiniteness**: \( R \) is positive semidefinite, which ensures that all its eigenvalues are nonnegative.
-- **Invertibility**: Since \( R \) is positive semidefinite, it is invertible if it is positive definite (i.e., all eigenvalues are strictly positive).
-
-### 5. **Applications and Examples**
-
-#### 5.1 **Example – AR(2) Process**
-
-For an AR(2) process:
-\[ X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + Z_t \]
-
-The autocorrelation matrix \( R \) is:
-\[ R = \begin{bmatrix}
-1 & \rho_1 \\
-\rho_1 & 1
-\end{bmatrix} \]
-
-To find the coefficients \( \phi_1 \) and \( \phi_2 \):
-\[ \begin{bmatrix}
-\rho_1 \\
-\rho_2
+\rho(p-1) & \rho(p-2) & \rho(p-3) & \dots & 1
 \end{bmatrix}
-=
-\begin{bmatrix}
-1 & \rho_1 \\
-\rho_1 & 1
-\end{bmatrix}
-\begin{bmatrix}
-\phi_1 \\
-\phi_2
-\end{bmatrix} \]
+$$
 
-#### 5.2 **Example – AR(3) Process**
+The Yule-Walker equations are then written as:
 
-For an AR(3) process:
-\[ X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + \phi_3 X_{t-3} + Z_t \]
+$$
+R \mathbf{\phi} = \mathbf{r}
+$$
 
-The autocorrelation matrix \( R \) is:
-\[ R = \begin{bmatrix}
-1 & \rho_1 & \rho_2 \\
-\rho_1 & 1 & \rho_1 \\
-\rho_2 & \rho_1 & 1
-\end{bmatrix} \]
+To solve for the AR coefficients $\mathbf{\phi}$:
 
-To find the coefficients \( \phi_1 \), \( \phi_2 \), and \( \phi_3 \):
-\[ \begin{bmatrix}
-\rho_1 \\
-\rho_2 \\
-\rho_3
-\end{bmatrix}
-=
-\begin{bmatrix}
-1 & \rho_1 & \rho_2 \\
-\rho_1 & 1 & \rho_1 \\
-\rho_2 & \rho_1 & 1
-\end{bmatrix}
-\begin{bmatrix}
-\phi_1 \\
-\phi_2 \\
-\phi_3
-\end{bmatrix} \]
-
+$$
+\mathbf{\phi} = R^{-1} \mathbf{r}
+$$
