@@ -169,8 +169,13 @@ This gives the values for $c_1$ and $c_2$, which can then be substituted back in
 
 For an AR(p) process, the Yule-Walker equations can be written in **matrix form**. Define:
 
-- $\mathbf{r} = \begin{bmatrix} \rho(1) \\ \rho(2) \\ \vdots \\ \rho(p) \end{bmatrix}$ as the vector of autocorrelations.
-- $\mathbf{\phi} = \begin{bmatrix} \phi_1 \\ \phi_2 \\ \vdots \\ \phi_p \end{bmatrix}$ as the vector of AR coefficients.
+Vector of autocorrelations:
+
+$$\mathbf{r} = \begin{bmatrix} \rho(1) \\ \rho(2) \\ \vdots \\ \rho(p) \end{bmatrix}$$ 
+
+Vector of AR coefficients:
+
+$$\mathbf{\phi} = \begin{bmatrix} \phi_1 \\ \phi_2 \\ \vdots \\ \phi_p \end{bmatrix}$$
 
 The **autocorrelation matrix** $R$ is a Toeplitz matrix:
 
