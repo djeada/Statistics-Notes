@@ -1,182 +1,376 @@
-Series
+## Sequences and Series
 
+### Sequences
 
-2. Sequences and Series
+A **sequence** is an ordered list of numbers that can be viewed as a function mapping each natural number $n$ to a specific value $a_n$. More formally, a sequence $\{a_n\}$ is a function whose domain is the set of natural numbers, and the values are called the terms of the sequence:
 
-A sequence is an ordered list of numbers. A sequence {an}{an​} is denoted as:
-a1,a2,a3,…,an,…
-a1​,a2​,a3​,…,an​,…
+$$
+a_1, a_2, a_3, \dots, a_n, \dots
+$$
 
-If the limit of the sequence exists, i.e.,
-lim⁡n→∞an=a,
-n→∞lim​an​=a,
+A sequence can either approach a particular value, in which case it is said to **converge**, or it can increase or oscillate indefinitely, in which case it **diverges**.
 
-then the sequence is said to be convergent.
-Examples of Sequences:
+A sequence $\{a_n\}$ **converges** to a limit $a$ if, as $n$ becomes very large, the values of $a_n$ get arbitrarily close to $a$. Mathematically, this is expressed as:
 
-    an=nn+1an​=n+1n​:
-    12,23,34,…,nn+1→1asn→∞
-    21​,32​,43​,…,n+1n​→1asn→∞
-    an=3nan​=3n:
-    3,9,27,…,3n
-    3,9,27,…,3n This sequence diverges (grows without bound).
-    an=nan​=n:
-    1,2,3,…,n
-    1,2,3,…,n This sequence diverges as well.
-    an=1n2an​=n21​:
-    1,14,19,…,1n2→0asn→∞
-    1,41​,91​,…,n21​→0asn→∞
+$$
+\lim_{n \to \infty} a_n = a
+$$
 
-3. Partial Sums
+This means for any small number $\epsilon > 0$, there exists a large number $N$ such that for all $n > N$, the distance between $a_n$ and $a$ is smaller than $\epsilon$. If no such limit exists, the sequence **diverges**.
 
-The partial sum snsn​ of a sequence {an}{an​} is the sum of the first nn terms:
-sn=a1+a2+⋯+an
-sn​=a1​+a2​+⋯+an​
+#### Examples of Sequences
 
-For example:
+1. **Convergent Sequence:**
 
-    s1=a1s1​=a1​
-    s2=a1+a2s2​=a1​+a2​
-    s3=a1+a2+a3s3​=a1​+a2​+a3​
-    ……
+Consider the sequence $a_n = \frac{n}{n+2}$. This gives the sequence:
 
-4. Series
+$$
+\frac{1}{3}, \frac{2}{4}, \frac{3}{5}, \dots
+$$
 
-A series is the sum of the terms of a sequence. If the sequence of partial sums snsn​ converges to a limit ss, then we say the infinite series is convergent and equal to ss:
-∑k=1∞ak=lim⁡n→∞sn=lim⁡n→∞(a1+a2+⋯+an)=s
-k=1∑∞​ak​=n→∞lim​sn​=n→∞lim​(a1​+a2​+⋯+an​)=s
+As $n \to \infty$, the terms of the sequence approach 1:
+$$
+\lim_{n \to \infty} \frac{n}{n+2} = 1
+$$
+Therefore, this sequence converges to 1.
 
-Otherwise, the series is said to be divergent.
-5. Examples of Convergent Series
+2. **Divergent Sequence:**
 
-    Geometric series:
-    ∑k=1∞12k=1
-    k=1∑∞​2k1​=1
-    P-series (convergent for p>1p>1):
-    ∑k=1∞1k2=π26
-    k=1∑∞​k21​=6π2​
-    Alternating series:
-    ∑k=1∞(−1)k+1k=ln⁡(2)
-    k=1∑∞​k(−1)k+1​=ln(2)
+Now consider the sequence $a_n = 4^n$. This gives the sequence:
 
-6. Examples of Divergent Series
+$$
+4, 16, 64, \dots
+$$
 
-    Geometric series with growth factor greater than 1:
-    ∑k=1∞3k
-    k=1∑∞​3k
-    Arithmetic series:
-    ∑k=1∞(2k+1)
-    k=1∑∞​(2k+1)
-    Harmonic series:
-    ∑k=1∞1k
-    k=1∑∞​k1​ Although the terms 1kk1​ approach 0, the harmonic series diverges.
+As $n \to \infty$, the terms of the sequence grow without bound, meaning this sequence diverges.
 
-7. Absolute Convergence
+3. **Another Divergent Sequence:**
 
-A series is absolutely convergent if the series of the absolute values of its terms is convergent:
-∑k=1∞∣ak∣
-k=1∑∞​∣ak​∣
+Another example of a divergent sequence is $a_n = n + 1$, which gives:
 
-Absolute convergence implies convergence. This is stronger than regular convergence, as a series can be convergent without being absolutely convergent (e.g., alternating series).
-8. Convergence Tests
+$$
+2, 3, 4, \dots
+$$
 
-There are various tests to determine if a series converges:
+As $n \to \infty$, the sequence grows indefinitely, and hence it diverges.
 
-    Integral Test: Compares a series to the integral of a continuous function.
-    Comparison Test: Compares the given series with a known convergent or divergent series.
-    Limit Comparison Test: Uses the limit of the ratio between the terms of two series.
-    Alternating Series Test: Used for series whose terms alternate in sign.
-    Ratio Test: Uses the ratio between successive terms to test convergence.
-    Root Test: Uses the nn-th root of the terms to test convergence.
+4. **Convergent Sequence:**
 
-Geometric Series and Rational Functions
+Consider the sequence $a_n = \frac{1}{n^3}$, which gives:
 
-A geometric series is a series of the form:
-∑k=0∞rk=11−r,for ∣r∣<1
-k=0∑∞​rk=1−r1​,for ∣r∣<1
+$$
+1, \frac{1}{8}, \frac{1}{27}, \dots
+$$
+
+As $n \to \infty$, the terms of this sequence get smaller and smaller, approaching 0:
+$$
+\lim_{n \to \infty} \frac{1}{n^3} = 0
+$$
+Hence, this sequence converges to 0.
+
+### Partial Sums
+
+The **partial sum** $s_n$ of a sequence $\{a_n\}$ is the sum of the first $n$ terms of the sequence:
+
+$$
+s_n = a_1 + a_2 + \dots + a_n
+$$
+
+Partial sums are used to analyze the behavior of series, where the idea is to observe whether the sum of the terms converges to a specific value as more terms are added. For example, consider the following partial sums:
+
+- $s_1 = a_1$
+- $s_2 = a_1 + a_2$
+- $s_3 = a_1 + a_2 + a_3$
+- $\dots$
+
+A series formed by a sequence is said to converge if the sequence of partial sums converges as $n \to \infty$.
+
+---
+
+### Series
+
+A **series** is the sum of the terms of a sequence. If the sequence of partial sums $\{s_n\}$ converges to a limit $s$, the series is said to **converge** to that limit $s$. Mathematically, the infinite series is written as:
+
+$$
+\sum_{k=1}^{\infty} a_k = \lim_{n \to \infty} s_n = \lim_{n \to \infty} (a_1 + a_2 + \dots + a_n) = s
+$$
+
+If the partial sums do not approach a finite limit as $n$ increases, then the series is said to be **divergent**.
+
+### Geometric Series and Rational Functions
+
+A **geometric series** is a series of the form:
+
+$$
+\sum_{k=0}^{\infty} r^k = \frac{1}{1 - r}, \quad \text{for } |r| < 1
+$$
 
 This result can be used to represent certain rational functions as infinite series. For example:
-11−x=∑k=0∞xk,for ∣x∣<1
-1−x1​=k=0∑∞​xk,for ∣x∣<1
+
+$$
+\frac{1}{1 - x} = \sum_{k=0}^{\infty} x^k, \quad \text{for } |x| < 1
+$$
 
 This is useful in time series analysis when dealing with autoregressive models and other representations involving rational functions.
 
+### Examples of Convergent Series
+
+1. **Geometric Series**:
+
+A geometric series is a series where each term is a constant multiple (called the common ratio) of the previous term. A simple example is the following geometric series:
+
+$$
+\sum_{k=0}^{\infty} \frac{1}{3^k}
+$$
+This series converges to:
+$$
+\sum_{k=0}^{\infty} \frac{1}{3^k} = \frac{1}{1 - \frac{1}{3}} = \frac{3}{2}
+$$
+
+2. **P-Series** (convergent for $p > 1$):
+
+A **p-series** is of the form:
+$$
+\sum_{k=1}^{\infty} \frac{1}{k^p}
+$$
+For $p = 2$, the series converges to:
+$$
+\sum_{k=1}^{\infty} \frac{1}{k^2} = \frac{\pi^2}{6}
+$$
+
+3. **Alternating Series**:
+
+An alternating series is a series where the signs of the terms alternate between positive and negative. A famous example is:
+
+$$
+\sum_{k=1}^{\infty} \frac{(-1)^{k+1}}{k}
+$$
+This series converges to:
+$$
+\sum_{k=1}^{\infty} \frac{(-1)^{k+1}}{k} = \ln(2)
+$$
+
+### Examples of Divergent Series
+
+1. **Geometric Series with growth factor greater than 1**:
+
+Consider the geometric series:
+
+$$
+\sum_{k=1}^{\infty} 4^k = 4 + 16 + 64 + \dots
+$$
+
+Since the ratio between successive terms is greater than 1, this series diverges as the partial sums grow without bound.
+
+2. **Arithmetic Series**:
+
+In an arithmetic series, the difference between successive terms is constant. For example:
+
+$$
+\sum_{k=1}^{\infty} (2k + 3) = 5 + 7 + 9 + \dots
+$$
+
+The terms grow linearly, and the series diverges as $n \to \infty$.
+
+3. **Harmonic Series**:
+
+The harmonic series is:
+
+$$
+\sum_{k=1}^{\infty} \frac{1}{k} = 1 + \frac{1}{2} + \frac{1}{3} + \dots
+$$
+
+Although the terms $\frac{1}{k}$ approach 0 as $k \to \infty$, the sum of the terms grows without bound. Hence, the harmonic series diverges.
 
 
-Mean-Square Convergence
-1. Definition of Mean-Square Convergence
+### Absolute Convergence
 
-Let X1,X2,X3,…X1​,X2​,X3​,… be a sequence of random variables, representing a stochastic process. We say that XnXn​ converges to a random variable XX in the mean-square sense if:
-E[(Xn−X)2]→0asn→∞
-E[(Xn​−X)2]→0asn→∞
+A series is **absolutely convergent** if the series of the absolute values of its terms is convergent:
 
-This means that the expected value of the squared difference between XnXn​ and XX becomes arbitrarily small as nn increases.
-2. Inverting the MA(1) Model
+$$
+\sum_{k=1}^{\infty} |a_k|
+$$
 
-We previously inverted the MA(1) model:
-Xt=Zt+βZt−1
-Xt​=Zt​+βZt−1​
+**Absolute convergence** implies **convergence**. This is a stronger condition than regular convergence, as a series can converge without being absolutely convergent (for example, alternating series).
 
-and expressed the white noise ZtZt​ as an infinite sum:
-Zt=∑k=0∞(−β)kXt−k
-Zt​=k=0∑∞​(−β)kXt−k​
+### Convergence Tests
 
-The infinite sum is said to converge in the mean-square sense under certain conditions on ββ. To ensure this convergence, we need to verify that the sum of these terms remains bounded.
-3. Autocovariance Function of the MA(1) Process
+When dealing with infinite series, it’s important to determine whether the series converges (approaches a finite value) or diverges (grows without bound or oscillates without settling). To do this, mathematicians use various convergence tests, each suited for different types of series. Below are some of the most commonly used tests for determining whether an infinite series converges or diverges:
 
-The autocovariance function γ(k)γ(k) for the MA(1) process is defined as follows:
-γ(k)={(1+β2)σZ2if k=0βσZ2if k=10if k>1
-γ(k)=⎩
-⎨
-⎧​(1+β2)σZ2​βσZ2​0​if k=0if k=1if k>1​
+1. **Integral Test**:
+The integral test compares a series to the integral of a continuous, positive, decreasing function. Suppose $\{a_n\}$ is a sequence and $f(x)$ is a continuous, positive, decreasing function such that $f(n) = a_n$ for all $n \geq 1$. If the integral of $f(x)$ from 1 to infinity converges, then the series converges. Otherwise, the series diverges.
 
-For negative values of kk, the autocovariance is symmetric, i.e., γ(−k)=γ(k)γ(−k)=γ(k).
-4. Series Convergence
+$$
+\sum_{n=1}^{\infty} a_n \quad \text{converges if and only if} \quad \int_1^{\infty} f(x) \, dx \quad \text{converges}.
+$$
 
-To investigate the convergence of the infinite series for ZtZt​, consider the partial sum:
-∑k=0n(−β)kXt−k
-k=0∑n​(−β)kXt−k​
+**Example**: Consider the series $\sum_{n=1}^{\infty} \frac{1}{n^2}$. Compare this to the integral $\int_1^{\infty} \frac{1}{x^2} \, dx$, which converges to 1. Hence, the series converges.
 
-We want to ensure that this sum converges to ZtZt​ in the mean-square sense, meaning:
-E[(∑k=0n(−β)kXt−k−Zt)2]→0asn→∞
-E
-​(k=0∑n​(−β)kXt−k​−Zt​)2
-​→0asn→∞
+2. **Comparison Test**:
+The comparison test compares the given series to a known convergent or divergent series. If the terms of the series $\{a_n\}$ are smaller than the terms of a known convergent series $\{b_n\}$, and all terms are positive, then the series $\sum a_n$ also converges. Similarly, if the terms are larger than those of a known divergent series, the series $\sum a_n$ diverges.
 
-This expands as:
-E[(∑k=0n(−β)kXt−k)2−2E(∑k=0n(−β)kXt−kZt)+E[Zt2]]
-E
-​(k=0∑n​(−β)kXt−k​)2−2E(k=0∑n​(−β)kXt−k​Zt​)+E[Zt2​]
-​
+$$
+0 \leq a_n \leq b_n \quad \text{and} \quad \sum b_n \quad \text{converges} \quad \Rightarrow \quad \sum a_n \quad \text{converges}.
+$$
 
-Breaking this down, the terms become:
+**Example**: To check if $\sum_{n=1}^{\infty} \frac{1}{n^3 + 2}$ converges, compare it to $\sum_{n=1}^{\infty} \frac{1}{n^3}$, which is a convergent p-series with $p > 1$. Since the terms of $\frac{1}{n^3 + 2}$ are smaller, the series converges by comparison.
 
-    E[∑k=0nβ2kXt−k2]E[∑k=0n​β2kXt−k2​]
-    Cross terms between Xt−kXt−k​ and ZtZt​
-    σZ2σZ2​, the variance of ZtZt​
+3. **Limit Comparison Test**:
+The limit comparison test is useful when the terms of the series are not directly comparable to a known series but have similar behavior as $n \to \infty$. If the limit of the ratio between the terms of two series is a finite, positive constant, both series either converge or diverge together.
 
-We need the expression:
-E[(∑k=0n(−β)kXt−k−Zt)2]→0
-E
-​(k=0∑n​(−β)kXt−k​−Zt​)2
-​→0
+$$
+\lim_{n \to \infty} \frac{a_n}{b_n} = c \quad \text{where} \quad 0 < c < \infty.
+$$
 
-to hold as n→∞n→∞.
-5. Condition for Convergence
+**Example**: Consider the series $\sum_{n=1}^{\infty} \frac{n^2 + 1}{2n^2 + 3}$. Compare it to $\sum_{n=1}^{\infty} \frac{1}{n^2}$. The limit of the ratio of terms is:
 
-For the series to converge in the mean-square sense, we require the following condition:
-σZ2β2(n+2)→0asn→∞
-σZ2​β2(n+2)→0asn→∞
+$$
+\lim_{n \to \infty} \frac{\frac{n^2 + 1}{2n^2 + 3}}{\frac{1}{n^2}} = \frac{1}{2}.
+$$
 
-This happens when:
-∣β∣<1
-∣β∣<1
+Since the comparison series $\sum \frac{1}{n^2}$ converges, the original series also converges.
 
-This condition ensures that the powers of ββ decay as nn increases, leading to the convergence of the infinite sum.
-6. Invertibility Condition
+4. **Alternating Series Test (Leibniz's Test)**:
+This test is used for series where the terms alternate in sign. For an alternating series $\sum (-1)^{n} a_n$, if the absolute value of the terms $a_n$ decreases monotonically (i.e., $a_{n+1} \leq a_n$) and $\lim_{n \to \infty} a_n = 0$, then the series converges.
 
-The requirement that ∣β∣<1∣β∣<1 corresponds to the invertibility condition for the MA(1) process. This condition is often described in terms of the roots of the polynomial β(B)=1+βBβ(B)=1+βB. For invertibility, the zero of the polynomial must lie outside the unit circle in the complex plane, meaning:
-∣β∣>−1or equivalently∣β∣<1
-∣β∣>−1or equivalently∣β∣<1
+**Example**: Consider the alternating harmonic series $\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}$, which is of the form $(-1)^{n+1} \frac{1}{n}$. Since $\frac{1}{n}$ decreases and approaches 0 as $n \to \infty$, the series converges.
 
-Thus, the invertibility condition ensures that the MA process can be uniquely represented as an AR(∞) process.
+5. **Ratio Test**:
+The ratio test is particularly useful for series involving factorials or exponential terms. To apply the ratio test, compute the limit of the absolute value of the ratio of successive terms:
+
+$$
+L = \lim_{n \to \infty} \left| \frac{a_{n+1}}{a_n} \right|.
+$$
+
+- If $L < 1$, the series converges.
+- If $L > 1$, the series diverges.
+- If $L = 1$, the test is inconclusive.
+
+**Example**: For the series $\sum_{n=1}^{\infty} \frac{n!}{n^n}$, applying the ratio test gives:
+
+$$
+L = \lim_{n \to \infty} \left| \frac{(n+1)!/(n+1)^{n+1}}{n!/n^n} \right| = \lim_{n \to \infty} \frac{(n+1)}{n+1} \cdot \left(\frac{n}{n+1}\right)^n = 0.
+$$
+
+Since $L = 0$, the series converges.
+
+6. **Root Test**:
+The root test, or Cauchy's root test, involves taking the $n$-th root of the absolute value of the terms of the series. Let:
+
+$$
+L = \lim_{n \to \infty} \sqrt[n]{|a_n|}.
+$$
+
+- If $L < 1$, the series converges.
+- If $L > 1$, the series diverges.
+- If $L = 1$, the test is inconclusive.
+
+**Example**: For the series $\sum_{n=1}^{\infty} \left(\frac{3}{4}\right)^n$, applying the root test gives:
+
+$$
+L = \lim_{n \to \infty} \sqrt[n]{\left|\frac{3}{4}\right|^n} = \frac{3}{4}.
+$$
+
+Since $L = \frac{3}{4} < 1$, the series converges.
+
+### Mean-Square Convergence
+
+In the context of stochastic processes, mean-square convergence is an important concept for analyzing the behavior of sequences of random variables. Suppose $X_1, X_2, X_3, \dots$ is a sequence of random variables representing a stochastic process. We say that $X_n$ converges to a random variable $X$ in the **mean-square sense** if the expected value of the squared difference between $X_n$ and $X$ approaches zero as $n$ becomes large. Formally, this is expressed as:
+
+$$
+\mathbb{E}[(X_n - X)^2] \to 0 \quad \text{as} \quad n \to \infty
+$$
+
+This definition means that as $n \to \infty$, the random variables $X_n$ become increasingly close to $X$ in the sense of the expected value of their squared differences, providing a measure of convergence in a probabilistic sense.
+
+#### Inverting the MA(1) Model
+
+Consider the **MA(1)** (Moving Average of order 1) model, which is commonly used in time series analysis. In this model, the process $X_t$ at time $t$ is defined as:
+
+$$
+X_t = Z_t + \beta Z_{t-1}
+$$
+
+where $Z_t$ represents white noise, which is a sequence of independent, identically distributed random variables with zero mean and constant variance $\sigma_Z^2$. The parameter $\beta$ is a constant that defines the relationship between the current observation and the previous white noise term.
+
+We are interested in expressing $Z_t$ as an infinite sum involving the past values of $X_t$. Through algebraic manipulation, we can express $Z_t$ as:
+
+$$
+Z_t = \sum_{k=0}^{\infty} (-\beta)^k X_{t-k}
+$$
+
+This infinite sum can be shown to **converge in the mean-square sense**, provided certain conditions on $\beta$ are satisfied. Specifically, we need to ensure that the sum of these terms remains bounded as $n \to \infty$, which ensures that the approximation $\sum_{k=0}^{n} (-\beta)^k X_{t-k}$ becomes increasingly close to $Z_t$.
+
+#### Autocovariance Function of the MA(1) Process
+
+The **autocovariance function** $\gamma(k)$ of a stochastic process measures the covariance between $X_t$ and $X_{t+k}$ for different time lags $k$. For the MA(1) process, the autocovariance function is relatively simple due to the limited memory of the process, which only depends on the current and previous white noise terms.
+
+The autocovariance function for the MA(1) process is given by:
+
+$$
+\gamma(k) = 
+\begin{cases}
+(1 + \beta^2) \sigma_Z^2, & \text{if } k = 0 \\
+\beta \sigma_Z^2, & \text{if } k = 1 \\
+0, & \text{if } k > 1
+\end{cases}
+$$
+
+For negative values of $k$, the autocovariance function is symmetric, meaning that $\gamma(-k) = \gamma(k)$.
+
+This shows that the MA(1) process has non-zero autocovariances only for the first lag (i.e., between $X_t$ and $X_{t-1}$), and beyond that, the covariance is zero due to the white noise properties of $Z_t$.
+
+#### Series Convergence in Mean-Square Sense
+
+To investigate the convergence of the infinite series expression for $Z_t$, consider the partial sum of the first $n$ terms:
+
+$$
+\sum_{k=0}^{n} (-\beta)^k X_{t-k}
+$$
+
+We want to ensure that this sum converges to $Z_t$ in the mean-square sense. In other words, we need:
+
+$$
+\mathbb{E}\left[\left(\sum_{k=0}^{n} (-\beta)^k X_{t-k} - Z_t \right)^2\right] \to 0 \quad \text{as} \quad n \to \infty
+$$
+
+This expression represents the expected value of the squared difference between the partial sum and the true value of $Z_t$, and we aim to show that this difference diminishes as more terms are added to the sum.
+
+Expanding this expression:
+
+$$
+\mathbb{E}\left[\left(\sum_{k=0}^{n} (-\beta)^k X_{t-k}\right)^2 - 2\mathbb{E}\left(\sum_{k=0}^{n} (-\beta)^k X_{t-k} Z_t \right) + \mathbb{E}[Z_t^2]\right]
+$$
+
+Breaking this down into individual terms:
+- The first term involves the expected value of the squared partial sum: $\mathbb{E}\left[\sum_{k=0}^{n} \beta^{2k} X_{t-k}^2\right]$.
+- The second term represents the cross terms between the partial sum and $Z_t$.
+- The third term is the variance of $Z_t$, which is $\sigma_Z^2$.
+
+To achieve mean-square convergence, the total expression must approach 0 as $n \to \infty$.
+
+#### Condition for Convergence
+
+For the series to converge in the mean-square sense, we require that the individual terms involving powers of $\beta$ decay sufficiently fast. Specifically, we need:
+
+$$
+\sigma_Z^2 \beta^{2(n+2)} \to 0 \quad \text{as} \quad n \to \infty
+$$
+
+This will only occur if:
+
+$$
+|\beta| < 1
+$$
+
+When $|\beta| < 1$, the powers of $\beta$ diminish as $n$ increases, ensuring that the sum remains bounded and that the partial sums converge to $Z_t$.
+
+#### Invertibility Condition
+
+The condition $|\beta| < 1$ is also known as the **invertibility condition** for the MA(1) process. This condition guarantees that the moving average process can be expressed as an infinite autoregressive (AR) process. In terms of the polynomial $\beta(B) = 1 + \beta B$ (where $B$ is the backshift operator), the invertibility condition states that the root of the polynomial must lie **outside the unit circle** in the complex plane, meaning:
+
+$$
+|\beta| < 1
+$$
+
+Thus, the invertibility condition ensures that the MA(1) process can be uniquely represented as an **AR(∞)** process, which is crucial for the identification and estimation of time series models.
