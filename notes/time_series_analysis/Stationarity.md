@@ -1,357 +1,111 @@
-## Stationarity
+## Stationarity in Time Series
 
-1. **Intuition for (Weak) Stationary Time Series:**
-   - A stationary time series is a data sequence where the statistical properties remain consistent over time. Specifically:
-     - **No systematic change in mean** (i.e., no trend over time).
-     - **No systematic change in variance** (i.e., constant variation across time).
-     - **No periodic fluctuations** (i.e., no repeating cycles or seasonality).
-   - The properties (such as mean, variance, and autocorrelation) of one section of the data are similar to those of other sections of the data.
-     - This implies that the data behaves similarly at any point in time.
+Stationarity is a fundamental concept in time series analysis. A time series is considered **stationary** if its statistical properties—such as mean, variance, and autocovariance—remain constant over time. Stationary processes are crucial in time series modeling because many methods, such as ARIMA and ARMA models, assume stationarity.
 
-2. **Dealing with Non-Stationary Time Series:**
-   - In practice, many time series data sets are non-stationary, meaning they may exhibit trends, changing variance, or seasonality.
-   - To analyze non-stationary time series, we often apply **transformations** to make the series stationary, which is essential for many statistical modeling techniques (e.g., ARIMA models).
-     - Common transformations include **differencing**, **logarithmic transformations**, or **detrending** to remove trends or stabilize variance.
+Stationarity can be classified into two types:
+1. **Strict Stationarity**: This implies that the entire distribution of the process remains the same over time.
+2. **Weak Stationarity (Second-Order Stationarity)**: This relaxed condition only requires the mean, variance, and autocovariance of the process to be time-invariant.
 
-### Weak Stationarity
-- A **weakly stationary** (or second-order stationary) time series is a more relaxed definition of stationarity, focusing primarily on the first two moments of the distribution (mean and variance):
-  - The **mean** of the series is constant over time.
-  - The **variance** is constant over time (no systematic change in variance).
-  - The **covariance** between values at different times depends only on the time difference (lag) between them and not the actual time itself.
+### Intuition for Stationary Time Series
 
+A **stationary time series** behaves similarly over time, meaning:
+- **No trend**: The mean of the series does not systematically change over time.
+- **Constant variance**: The variability (variance) around the mean remains stable.
+- **No periodic fluctuations**: There is no seasonality or cyclic behavior unless explicitly modeled.
 
+This means that the statistical properties of one segment of the series are similar to those of any other segment, allowing us to predict future behavior based on past data.
 
-### **Stationarity: Properties and Examples**
+### Strict Stationarity
 
-#### **1. Weak Stationarity**
-A process is said to be **weakly stationary** if:
-1. The mean $\mu(t)$ is constant over time.
-2. The variance $\text{Var}(X_t)$ is constant over time.
-3. The autocovariance $\gamma(t_1, t_2)$ depends only on the time difference $|t_1 - t_2|$.
+A process is said to be **strictly stationary** if the joint distribution of any subset of observations $X_{t_1}, X_{t_2}, \dots, X_{t_k}$ is the same as the distribution of $X_{t_1 + \tau}, X_{t_2 + \tau}, \dots, X_{t_k + \tau}$ for all $\tau$. 
 
-For a weakly stationary process, the **autocorrelation** function $\rho(t)$ satisfies the property:
-$$
--1 \leq \rho(t) \leq 1
-$$
-This is analogous to the elementary statistics result that the correlation coefficient between two random variables lies between -1 and 1.
+In simple terms, the process looks the same no matter how we shift it in time. Strict stationarity implies that:
+- The distribution of $X_t$ does not change over time.
+- All moments of the distribution (mean, variance, higher moments) are constant over time.
 
-In linear algebra terms, if you have two vectors $x$ and $y$, the inequality $|x^T y| \leq \|x\|_2 \|y\|_2$ applies, which is a similar concept to the bound on autocorrelations.
+### Weak (Second-Order) Stationarity
 
----
+Weak stationarity, also known as **second-order stationarity**, requires only that the **first two moments** (mean and variance) and the **autocovariance** depend solely on the lag between observations, not on time itself.
 
-#### **2. Variance of a Linear Combination of Random Variables**
+A time series $\{X_t\}$ is weakly stationary if:
+1. The **mean** of the series is constant: $E[X_t] = \mu$ for all $t$.
+2. The **variance** is constant: $\text{Var}(X_t) = \sigma^2$ for all $t$.
+3. The **autocovariance** between $X_t$ and $X_{t+k}$ depends only on the lag $k$, not on $t$:
+   $$
+   \text{Cov}(X_t, X_{t+k}) = \gamma(k)
+   $$
 
-To explore this mathematically, consider a linear combination of two random variables $X_1$ and $X_2$, with the requirement that the variance of this combination is non-negative:
-$$
-V[aX_1 + bX_2] \geq 0
-$$
-Expanding this variance expression, we use the properties of variances and covariances:
-$$
-V[aX_1 + bX_2] = a^2 V[X_1] + b^2 V[X_2] + 2ab \, \text{Cov}(X_1, X_2)
-$$
-For a time series, with a lag of $\tau$, we substitute $X_1 = X(t)$ and $X_2 = X(t + \tau)$:
-$$
-V[aX(t) + bX(t + \tau)] = a^2 V[X(t)] + b^2 V[X(t + \tau)] + 2ab \, \text{Cov}(X(t), X(t + \tau)) \geq 0
-$$
-Assuming weak stationarity, where the variance is constant across time, we get:
-$$
-a^2 \sigma^2 + b^2 \sigma^2 + 2ab \, \gamma(\tau) \geq 0
-$$
-This gives two special cases:
-
-- **Case 1: $a = b = 1$**:
-$$
-2 \sigma^2 + 2 \, \gamma(\tau) \geq 0
-$$
-Simplifying:
-$$
-\sigma^2 \geq - \gamma(\tau)
-$$
-So:
-$$
-1 \geq - \rho(\tau)
-$$
-Thus, $\rho(\tau) \geq -1$.
-
-- **Case 2: $a = 1, b = -1$**:
-This case can be used to show that $\rho(\tau) \leq 1$, completing the proof that:
-$$
--1 \leq \rho(\tau) \leq 1
-$$
+Weak stationarity is often sufficient for most time series models, as it focuses on ensuring that the mean and variance remain stable over time, making the process easier to model and analyze.
 
 ---
 
-#### **3. Stationary Models**
+## Properties of Stationary Processes
 
-##### **White Noise**
-White noise is a simple example of a weakly stationary process. Suppose $X_t$ are i.i.d. random variables drawn from a normal distribution:
-$$
-X_t \sim \mathcal{N}(\mu, \sigma^2)
-$$
-The mean function $\mu(t)$ is constant:
-$$
-\mu(t) = \mu
-$$
-The autocovariance function $\gamma(t_1, t_2)$ is:
-$$
-\gamma(t_1, t_2) = 
-\begin{cases} 
-0 & t_1 \neq t_2 \\
-\sigma^2 & t_1 = t_2
-\end{cases}
-$$
-The autocorrelation function $\rho(t_1, t_2)$ is:
-$$
-\rho(t_1, t_2) = 
-\begin{cases} 
-0 & t_1 \neq t_2 \\
-1 & t_1 = t_2
-\end{cases}
-$$
-Thus, white noise is weakly stationary and can even be shown to be strictly stationary.
+### Mean, Variance, and Autocovariance Functions
 
----
+To analyze a stationary process, we focus on three key functions:
 
-##### **Random Walk**
-A **random walk** is not weakly stationary. Consider a random walk with i.i.d. steps $Z_t$ such that $E[Z_t] = \mu$ and $\text{Var}(Z_t) = \sigma^2$. The random walk is given by:
-$$
-X_t = X_{t-1} + Z_t = \sum_{i=1}^{t} Z_i
-$$
-- The **mean** of the random walk is:
-$$
-E[X_t] = \sum_{i=1}^{t} E[Z_i] = t \cdot \mu
-$$
-- The **variance** of the random walk is:
-$$
-\text{Var}(X_t) = \sum_{i=1}^{t} \text{Var}(Z_i) = t \cdot \sigma^2
-$$
-Thus, the variance increases with time, indicating that the random walk is not stationary.
+- **Mean function** $\mu(t) = E[X_t]$: The expected value of the process at time $t$, which should be constant for a stationary process.
+  
+- **Variance function** $\sigma^2(t) = \text{Var}(X_t)$: The variance at time $t$, which must also be constant for stationarity.
 
----
+- **Autocovariance function** $\gamma(k) = \text{Cov}(X_t, X_{t+k})$: Measures how the process correlates with itself at different time lags $k$. For a stationary process, the autocovariance depends only on the lag $k$, not on the time $t$.
 
-##### **Moving Average Processes (MA(q))**
-In a **moving average process** of order $q$, $X_t$ is a linear combination of white noise terms from the present and past $q$ periods:
+### Autocorrelation and Bounds
+
+For a weakly stationary process, the **autocorrelation function** $\rho(k)$, which measures the correlation between two points in the series separated by lag $k$, is bounded by -1 and 1:
+$$
+-1 \leq \rho(k) \leq 1
+$$
+
+This bound can be derived from basic linear algebra principles that apply to correlations between random variables.
+
+### Examples of Stationary Processes
+
+#### **White Noise**
+
+White noise is the simplest example of a stationary process. It is defined as a sequence of uncorrelated, identically distributed random variables:
+$$
+X_t \sim \mathcal{N}(0, \sigma^2)
+$$
+
+Properties of white noise:
+- The **mean** is constant: $E[X_t] = 0$.
+- The **variance** is constant: $\text{Var}(X_t) = \sigma^2$.
+- The **autocovariance** function is:
+  $$
+  \gamma(k) = 
+  \begin{cases}
+  \sigma^2 & \text{if } k = 0 \\
+  0 & \text{if } k \neq 0
+  \end{cases}
+  $$
+- The **autocorrelation** function is:
+  $$
+  \rho(k) = 
+  \begin{cases}
+  1 & \text{if } k = 0 \\
+  0 & \text{if } k \neq 0
+  \end{cases}
+  $$
+
+Thus, white noise is a stationary process because its mean and variance are constant, and its autocovariance depends only on the lag.
+
+#### Moving Average (MA) Process
+
+A **moving average (MA) process** of order $q$, denoted as MA(q), is another example of a weakly stationary process. It is defined as:
 $$
 X_t = \beta_0 Z_t + \beta_1 Z_{t-1} + \dots + \beta_q Z_{t-q}
 $$
-Where $Z_t \sim \mathcal{N}(0, \sigma^2_Z)$ and are i.i.d. random variables.
+where $Z_t \sim \mathcal{N}(0, \sigma_Z^2)$ are independent white noise terms.
 
-- The **mean** of $X_t$ is:
-$$
-E[X_t] = \beta_0 E[Z_t] + \beta_1 E[Z_{t-1}] + \dots + \beta_q E[Z_{t-q}] = 0
-$$
-- The **variance** of $X_t$ is:
-$$
-\text{Var}(X_t) = \beta_0^2 \text{Var}(Z_t) + \beta_1^2 \text{Var}(Z_{t-1}) + \dots + \beta_q^2 \text{Var}(Z_{t-q}) = \sigma_Z^2 \sum_{i=0}^{q} \beta_i^2
-$$
-- The **autocovariance** of $X_t$ and $X_{t+k}$ is:
-$$
-\text{Cov}(X_t, X_{t+k}) = 
-\begin{cases} 
-0 & k > q \\
-\sigma_Z^2 \sum_{i=0}^{q-k} \beta_i \beta_{i+k} & k \leq q
-\end{cases}
-$$
-Since the autocovariance function depends only on the lag $k$, the moving average process is weakly stationary.
-
-- The **autocorrelation function** $\rho(k)$ is:
-$$
-\rho(k) = \frac{\gamma(k)}{\gamma(0)} = \frac{\sum_{i=0}^{q-k} \beta_i \beta_{i+k}}{\sum_{i=0}^{q} \beta_i^2}
-$$
-
-
-### **Stationarity: Intuition and Definition**
-
----
-
-#### **1. Stochastic Processes**
-A **stochastic process** is essentially a random process that generates a sequence of random variables over time. Stochastic processes can be either **discrete** or **continuous**:
-
-- A **discrete stochastic process** is a family of random variables $\{X_t \}$ indexed by discrete time steps $t$. An example could be the daily high temperatures in Melbourne.
-  
-- A **continuous stochastic process**, such as the **Wiener process** (Brownian motion), is indexed by a continuous variable $t$, where $X(t)$ describes the position of a particle as it floats on a liquid surface.
-
----
-
-#### **2. Ensembles and Realizations**
-In the context of stochastic processes:
-- A **realization** is a single observed trajectory of a stochastic process. For example, one observed time series of stock prices over time is a realization of a stochastic process.
-  
-- The **ensemble** is the set of all possible realizations (trajectories) of the process.
-
-In practice, we usually observe only one realization, and we have to infer the properties of the underlying stochastic process from this single observation.
-
----
-
-#### **3. Mean, Variance, and Autocovariance Functions**
-When analyzing stochastic processes, we summarize the behavior using:
-- **Mean function** $\mu(t) = E[X(t)]$: the expected value of the random variables at time $t$.
-  
-- **Variance function** $\sigma^2(t) = V[X(t)]$: the variance of the random variable at time $t$.
-
-- **Autocovariance function** $\gamma(t_1, t_2)$:
+For an MA(q) process:
+- The **mean** is zero: $E[X_t] = 0$.
+- The **variance** is constant:
   $$
-  \gamma(t_1, t_2) = E[(X(t_1) - \mu(t_1))(X(t_2) - \mu(t_2))]
+  \text{Var}(X_t) = \sigma_Z^2 \sum_{i=0}^{q} \beta_i^2
   $$
-  This function measures how the values of the process at times $t_1$ and $t_2$ are related.
-
----
-
-#### **4. Strict Stationarity**
-A process is **strictly stationary** if the joint distribution of $X(t_1), X(t_2), \dots, X(t_k)$ is the same as the joint distribution of $X(t_1 + \tau), X(t_2 + \tau), \dots, X(t_k + \tau)$ for any time shift $\tau$.
-
-- This implies that all random variables $X(t)$ have the same distribution (i.e., identically distributed).
-- In a strictly stationary process, the **mean** and **variance** functions are constant:
-  $$
-  \mu(t) = \mu, \quad \sigma^2(t) = \sigma^2
-  $$
-- The **autocovariance** function depends only on the lag $\tau = t_2 - t_1$, so we can write:
-  $$
-  \gamma(t_1, t_2) = \gamma(\tau)
-  $$
-  The process is invariant to shifts in time, and the behavior of the process depends only on the distance between time points.
-
-#### **Example of Strict Stationarity**
-Consider a time series $Y_i = \beta_0 + \beta_1 x_i + \epsilon_i$, where $\epsilon_i$ are i.i.d. random errors. A time series with a trend (where $\beta_1 \neq 0$) is not stationary, because the mean function changes over time, and the process does not remain identical when shifted in time.
-
----
-
-#### **5. Weak (Second-Order) Stationarity**
-A weaker form of stationarity, called **weak stationarity** or **second-order stationarity**, imposes less restrictive conditions. A process is weakly stationary if:
-- The **mean function** is constant: $\mu(t) = \mu$.
-- The **autocovariance function** depends only on the time difference (lag) $\tau$:
-  $$
-  \gamma(t_1, t_2) = \gamma(\tau)
-  $$
-  - For $\tau = 0$, the autocovariance becomes the variance:
-    $$
-    \gamma(0) = E[(X(t) - \mu)^2] = \sigma^2
-    $$
-  
-Weak stationarity focuses on the first two moments (mean and variance) and the autocovariance, ignoring higher-order moments, which is why it is a weaker condition than strict stationarity.
-
----
-
-#### **6. Intuition of Stationarity in Practice**
-Stationarity allows us to "pool" our data and make inferences about the overall process from a single realization. In practice, we often work with weakly stationary processes, which simplify the analysis by ensuring that the statistical properties of the process do not change over time.
-
-Stationary processes are particularly useful for prediction and modeling, as their future behavior is easier to estimate when the past and present exhibit the same statistical characteristics.
-
-
-
-#### **1. Weak Stationarity and Autocorrelation Bounds**
-
-For a **weakly stationary process**, the autocorrelation function $\rho(\tau)$ (the correlation between two points in the process separated by lag $\tau$) must satisfy the condition:
-$$
--1 \leq \rho(\tau) \leq 1
-$$
-This is similar to the result from elementary statistics, where the correlation between two random variables is bounded by -1 and 1. This is also analogous to the linear algebra result $|x^T y| \leq \|x\|_2 \|y\|_2$.
-
-To understand this better, we can use the following reasoning. We know that variances are non-negative, so consider a linear combination of two random variables $X_1$ and $X_2$. The variance of this combination must satisfy:
-$$
-V[a X_1 + b X_2] \geq 0
-$$
-Now, for time series data, let’s generalize this to a lag $\tau$ between two time points:
-$$
-V[a X(t) + b X(t + \tau)] \geq 0
-$$
-Using the well-known properties of variance and covariance:
-$$
-V[X + Y] = V[X] + V[Y] + 2 \, \text{Cov}(X, Y)
-$$
-and
-$$
-V[a X] = a^2 V[X]
-$$
-we can expand the variance of the linear combination as:
-$$
-V[a X(t) + b X(t + \tau)] = a^2 V[X(t)] + b^2 V[X(t + \tau)] + 2 a b \, \text{Cov}(X(t), X(t + \tau))
-$$
-For a weakly stationary process, the variances are constant over time, so we replace $V[X(t)]$ and $V[X(t + \tau)]$ with $\sigma^2$:
-$$
-a^2 \sigma^2 + b^2 \sigma^2 + 2 a b \, \text{Cov}(X(t), X(t + \tau)) \geq 0
-$$
-This inequality holds for any values of $a$ and $b$. Let’s consider two specific cases:
-
-- **Case 1: $a = b = 1$**:
-  $$
-  2 \sigma^2 + 2 \, \text{Cov}(X(t), X(t + \tau)) \geq 0
-  $$
-  Simplifying, we get:
-  $$
-  \sigma^2 \geq - \text{Cov}(X(t), X(t + \tau))
-  $$
-  Dividing both sides by $\sigma^2$, we obtain:
-  $$
-  1 \geq - \rho(\tau)
-  $$
-  Hence, $\rho(\tau) \geq -1$.
-
-- **Case 2: $a = 1, b = -1$**:
-  Using this case, one can similarly show that $\rho(\tau) \leq 1$, completing the bound:
-  $$
-  -1 \leq \rho(\tau) \leq 1
-  $$
-
----
-
-#### **2. Stationary Models**
-
-##### **White Noise**
-White noise is a classic example of a weakly stationary process. Consider a sequence of independent, identically distributed (i.i.d.) random variables $X_t \sim \mathcal{N}(\mu, \sigma^2)$. For white noise:
-- The **mean function** $\mu(t)$ is constant:
-  $$
-  \mu(t) = \mu
-  $$
-- The **autocovariance function** $\gamma(t_1, t_2)$ is:
-  $$
-  \gamma(t_1, t_2) = 
-  \begin{cases}
-  0 & \text{if } t_1 \neq t_2 \\
-  \sigma^2 & \text{if } t_1 = t_2
-  \end{cases}
-  $$
-- The **autocorrelation function** $\rho(t_1, t_2)$ is:
-  $$
-  \rho(t_1, t_2) = 
-  \begin{cases}
-  0 & \text{if } t_1 \neq t_2 \\
-  1 & \text{if } t_1 = t_2
-  \end{cases}
-  $$
-White noise is weakly stationary because its mean and variance are constant, and its autocovariance depends only on the lag between time points.
-
----
-
-##### **Random Walk**
-A **random walk** is not stationary. Consider a random walk $X_t$ where $X_t = X_{t-1} + Z_t$, with i.i.d. increments $Z_t \sim \mathcal{N}(\mu, \sigma^2)$. 
-- The **mean** of the random walk grows linearly with time:
-  $$
-  E[X_t] = t \cdot \mu
-  $$
-- The **variance** of the random walk increases linearly with time:
-  $$
-  V[X_t] = t \cdot \sigma^2
-  $$
-Thus, the random walk is not stationary because its mean and variance are time-dependent.
-
----
-
-##### **Moving Average Process (MA(q))**
-A **Moving Average process** of order $q$, denoted $\text{MA}(q)$, is given by:
-$$
-X_t = \beta_0 Z_t + \beta_1 Z_{t-1} + \dots + \beta_q Z_{t-q}
-$$
-where $Z_t \sim \mathcal{N}(0, \sigma_Z^2)$ are i.i.d. white noise terms. For the MA(q) process:
-- The **mean** of $X_t$ is zero:
-  $$
-  E[X_t] = 0
-  $$
-- The **variance** of $X_t$ is constant:
-  $$
-  V[X_t] = \sigma_Z^2 \sum_{i=0}^{q} \beta_i^2
-  $$
-- The **autocovariance** at lag $k$ is:
+- The **autocovariance** function $\gamma(k)$ depends on the lag $k$:
   $$
   \gamma(k) = 
   \begin{cases}
@@ -359,19 +113,89 @@ where $Z_t \sim \mathcal{N}(0, \sigma_Z^2)$ are i.i.d. white noise terms. For th
   0 & \text{if } k > q
   \end{cases}
   $$
+  
+The autocorrelation function $\rho(k)$ is obtained by normalizing the autocovariance by the variance:
+$$
+\rho(k) = \frac{\gamma(k)}{\gamma(0)}
+$$
+
 The MA(q) process is weakly stationary because its mean and variance are constant, and the autocovariance depends only on the lag.
 
 ---
 
-#### **3. Autocorrelation Function of the MA(q) Process**
+## Non-Stationary Processes
 
-The **autocorrelation function** $\rho(k)$ for the MA(q) process is obtained by normalizing the autocovariance function by the variance:
-$$
-\rho(k) = \frac{\gamma(k)}{\gamma(0)}
-$$
-Since $\gamma(0) = \sigma_Z^2 \sum_{i=0}^{q} \beta_i^2$, the autocorrelation function is:
-$$
-\rho(k) = \frac{\sum_{i=0}^{q-k} \beta_i \beta_{i+k}}{\sum_{i=0}^{q} \beta_i^2}
-$$
-For $k > q$, the autocorrelation $\rho(k) = 0$, as the process has no memory beyond $q$ time steps.
+### Random Walk
 
+A **random walk** is an example of a non-stationary process. A random walk can be written as:
+$$
+X_t = X_{t-1} + Z_t
+$$
+where $Z_t$ is white noise.
+
+For a random walk:
+- The **mean** grows over time:
+  $$
+  E[X_t] = t \cdot \mu
+  $$
+- The **variance** increases with time:
+  $$
+  \text{Var}(X_t) = t \cdot \sigma^2
+  $$
+
+Since the variance and mean depend on time, the random walk is **not stationary**. However, applying a **difference operator** can transform a random walk into a stationary series.
+
+### Differencing to Remove Non-Stationarity
+
+To handle non-stationary processes like random walks, we can apply the **difference operator** $\Delta$, which removes trends and transforms the process into a stationary one.
+
+The difference operator is defined as:
+$$
+\Delta X_t = X_t - X_{t-1} = Z_t
+$$
+
+By differencing the series, we convert a random walk into white noise, which is stationary. This technique is essential for models like ARIMA that require the data to be stationary before modeling.
+
+---
+
+## Dealing with Non-Stationary Time Series
+
+In real-world applications, many time series are non-stationary. To apply statistical models that require stationarity, we often use **transformations** such as:
+- **Differencing**: Removes trends and makes the series stationary.
+- **Logarithmic transformations**: Stabilizes variance.
+- **Detrending**: Removes long-term trends to focus on short-term fluctuations.
+
+### Example of Differencing in Python
+
+We can use Python to difference a non-stationary series like a random walk:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Simulate a random walk
+np.random.seed(42)
+N = 1000
+Z = np.random.normal(0, 1, N)
+X = np.cumsum(Z)  #
+
+ Random walk as cumulative sum of white noise
+
+# Apply differencing to make it stationary
+diff_X = np.diff(X)
+
+# Plot the original random walk and the differenced series
+plt.figure(figsize=(10, 6))
+plt.subplot(2, 1, 1)
+plt.plot(X, label='Random Walk')
+plt.title('Random Walk (Non-Stationary)')
+plt.grid(True)
+
+plt.subplot(2, 1, 2)
+plt.plot(diff_X, label='Differenced Series')
+plt.title('Differenced Series (Stationary)')
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
+```
