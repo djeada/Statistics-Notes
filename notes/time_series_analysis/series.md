@@ -85,8 +85,6 @@ Partial sums are used to analyze the behavior of series, where the idea is to ob
 
 A series formed by a sequence is said to converge if the sequence of partial sums converges as $n \to \infty$.
 
----
-
 ### Series
 
 A **series** is the sum of the terms of a sequence. If the sequence of partial sums $\{s_n\}$ converges to a limit $s$, the series is said to **converge** to that limit $s$. Mathematically, the infinite series is written as:
@@ -122,7 +120,9 @@ A geometric series is a series where each term is a constant multiple (called th
 $$
 \sum_{k=0}^{\infty} \frac{1}{3^k}
 $$
+
 This series converges to:
+
 $$
 \sum_{k=0}^{\infty} \frac{1}{3^k} = \frac{1}{1 - \frac{1}{3}} = \frac{3}{2}
 $$
@@ -130,10 +130,13 @@ $$
 2. **P-Series** (convergent for $p > 1$):
 
 A **p-series** is of the form:
+
 $$
 \sum_{k=1}^{\infty} \frac{1}{k^p}
 $$
+
 For $p = 2$, the series converges to:
+
 $$
 \sum_{k=1}^{\infty} \frac{1}{k^2} = \frac{\pi^2}{6}
 $$
@@ -145,7 +148,9 @@ An alternating series is a series where the signs of the terms alternate between
 $$
 \sum_{k=1}^{\infty} \frac{(-1)^{k+1}}{k}
 $$
+
 This series converges to:
+
 $$
 \sum_{k=1}^{\infty} \frac{(-1)^{k+1}}{k} = \ln(2)
 $$
