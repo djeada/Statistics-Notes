@@ -49,9 +49,11 @@ Multiply both sides by $X_{t-k}$ for $k = 1, 2, \dots, p$.
 ### Example: Yule-Walker Equations for an AR(2) Process
 
 Consider the AR(2) process:
+
 $$
 X_t = 3 X_{t-1} + 2 X_{t-2} + Z_t
 $$
+
 Where $Z_t$ is white noise with variance $\sigma_Z^2$.
 
 #### Deriving the Yule-Walker Equations
