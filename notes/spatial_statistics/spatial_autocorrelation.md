@@ -38,6 +38,8 @@ Let's say we are studying the distribution of a certain species of tree across a
 
 We might find that the trees' heights are positively spatially autocorrelated, meaning that tall trees tend to be near other tall trees and short trees tend to be near other short trees. This might occur if soil quality (which affects tree height) is also spatially autocorrelated, with areas of high-quality soil leading to taller trees.
 
+![42567d3e-8427-4717-bcb0-0b9fa37c173b](https://github.com/user-attachments/assets/3ef9948c-f28f-4b31-aeb9-c5f26788a9ed)
+
 To quantify this, we could calculate Moran's I or Geary's C. If Moran's I is close to +1, this provides evidence for positive spatial autocorrelation. If Geary's C is close to 0, this also suggests positive spatial autocorrelation.
 
 Local Indicators of Spatial Association (LISA) could be used to identify specific areas where tall trees are concentrated, also known as "hot spots," or areas where short trees are concentrated, known as "cold spots."
