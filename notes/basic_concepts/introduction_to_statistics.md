@@ -126,6 +126,17 @@ Tabular Representation of Collected Data:
 |  David  |   Male   |   175    |   5'11"  |
 |   Eve   |  Female  |   150    |   5'7"   |
 
+### Parameter vs. Statistic
+
+    Parameter: A quantity of interest that describes the entire population. Examples include:
+        Population mean (μ)
+        Population standard deviation (σ)
+        Example: The average height of adult men in the US is a parameter, but it is difficult to measure because it requires data from all 120 million adult men.
+    Statistic: A quantity calculated from a sample of the population, used to estimate the population parameter. Examples include:
+        Sample mean (x̄)
+        Sample standard deviation (s)
+        Example: A sample of adult men's heights provides an estimate for the population mean and standard deviation.
+
 ## Classification of Variables
 
 Variables are broadly categorized into two types: Numerical and Categorical.
