@@ -72,34 +72,127 @@ A histogram of the sample means will tend to form a bell-shaped curve as the num
 - The close alignment of the mean of the sample means with the population mean, and the calculated standard error, further confirm the theorem's predictions.
 - This example underscores the theorem's key insight: for a sufficiently large sample size, the sampling distribution of the sample mean will approximate a normal distribution, regardless of the population's original distribution.
 
+Let's improve these notes by introducing proper mathematical rigor, clearly defining the steps, and ensuring each calculation is explained thoroughly. The Central Limit Theorem (CLT) is a powerful tool for approximating the distribution of the sample mean, particularly when dealing with larger sample sizes, even if the population distribution is not normal. Below is a revised version of your example:
+
 ### Example: Applying the Central Limit Theorem (CLT)
 
-Consider a scenario where the heights of a certain plant species are normally distributed, with a mean of 15 cm and a standard deviation of 3 cm. We analyze random samples of different sizes.
+Consider a scenario where the heights of a certain plant species are normally distributed with a population mean $\mu = 15$ cm and a population standard deviation $\sigma = 3$ cm. We will analyze random samples of different sizes and calculate the probability that the sample mean falls between 14 cm and 16 cm.
 
-#### Sample Size of 16 Plants
-Estimate the probability of the sample mean height being between 14 and 16 cm.
+#### Definitions:
 
-CLT estimation: The CLT suggests that the sample mean will be approximately normally distributed. The probability should be significant since the range includes the mean.
+- $\mu = 15$: Population mean height.
+- $\sigma = 3$: Population standard deviation of heights.
+- $n$: Sample size.
+- Standard Error of the Mean (SEM): $\text{SEM} = \frac{\sigma}{\sqrt{n}}$.
+- Z-score formula: $Z = \frac{X - \mu_{\text{sample mean}}}{\text{SEM}}$.
 
-Calculated Solution: Calculate the Standard Error of the Mean (SEM) using $SEM = \frac{3}{\sqrt{16}}$. Calculate the Z-scores for 14 and 16 cm, finding the probability from the standard normal distribution as approximately 81.76%.
+We will calculate the probability that the sample mean is between 14 cm and 16 cm for various sample sizes.
 
-#### Sample Size of 64 Plants
-Estimate the probability for the same range with 64 plants.
+#### Step 1: Sample Size of 16 Plants
 
-CLT estimation: As the sample size increases, the sampling distribution becomes more normal and narrower. The probability of the sample mean falling within this range should increase.
+**Goal**: Estimate the probability that the sample mean height of 16 plants lies between 14 cm and 16 cm.
 
-Calculated Solution: With $n = 64$, the SEM decreases. Recalculating the Z-scores shows the probability increases to about 99.23%.
+1. **Calculate the Standard Error of the Mean (SEM)**:
+   $$
+   \text{SEM} = \frac{\sigma}{\sqrt{n}} = \frac{3}{\sqrt{16}} = \frac{3}{4} = 0.75
+   $$
+   
+2. **Calculate the Z-scores for 14 cm and 16 cm**:
+   - For $X = 14$:
+     $$
+     Z_{14} = \frac{14 - 15}{0.75} = \frac{-1}{0.75} = -1.33
+     $$
+   - For $X = 16$:
+     $$
+     Z_{16} = \frac{16 - 15}{0.75} = \frac{1}{0.75} = 1.33
+     $$
 
-#### Sample Size of 144 Plants
-Estimate the probability for the same range with a sample size of 144.
+3. **Find the probabilities associated with the Z-scores**:
+   Using standard normal distribution tables (or a calculator):
+   - $P(Z \leq -1.33) \approx 0.0918$
+   - $P(Z \leq 1.33) \approx 0.9082$
+   
+4. **Calculate the probability that the sample mean lies between 14 and 16 cm**:
+   $$
+   P(14 \leq \bar{X} \leq 16) = P(Z \leq 1.33) - P(Z \leq -1.33)
+   $$
+   $$
+   P(14 \leq \bar{X} \leq 16) = 0.9082 - 0.0918 = 0.8164
+   $$
+   Thus, the probability is approximately **81.64%**.
 
-CLT estimation: A larger sample size should result in a probability nearing certainty, as per the CLT, because the sample mean distribution becomes increasingly normal.
+#### Step 2: Sample Size of 64 Plants
 
-Calculated Solution: Increasing the sample size to 144 further reduces the SEM. The probability approaches 99.99%.
+**Goal**: Estimate the probability that the sample mean height of 64 plants lies between 14 cm and 16 cm.
 
-#### Unknown Population Distribution
-Estimate the probability if the plant heights' distribution is not known to be normal.
+1. **Calculate the Standard Error of the Mean (SEM)**:
+   $$
+   \text{SEM} = \frac{\sigma}{\sqrt{n}} = \frac{3}{\sqrt{64}} = \frac{3}{8} = 0.375
+   $$
 
-CLT estimation: The CLT assures that with large sample sizes (typically $n \geq 30$), the sampling distribution of the sample mean approximates normality. The method remains applicable, assuming a sufficiently large sample size.
+2. **Calculate the Z-scores for 14 cm and 16 cm**:
+   - For $X = 14$:
+     $$
+     Z_{14} = \frac{14 - 15}{0.375} = \frac{-1}{0.375} = -2.67
+     $$
+   - For $X = 16$:
+     $$
+     Z_{16} = \frac{16 - 15}{0.375} = \frac{1}{0.375} = 2.67
+     $$
 
-Calculated Solution: Not applicable in this case as the population distribution is unknown. The estimation relies solely on the CLT.
+3. **Find the probabilities associated with the Z-scores**:
+   Using standard normal distribution tables (or a calculator):
+   - $P(Z \leq -2.67) \approx 0.0038$
+   - $P(Z \leq 2.67) \approx 0.9962$
+
+4. **Calculate the probability that the sample mean lies between 14 and 16 cm**:
+   $$
+   P(14 \leq \bar{X} \leq 16) = P(Z \leq 2.67) - P(Z \leq -2.67)
+   $$
+   $$
+   P(14 \leq \bar{X} \leq 16) = 0.9962 - 0.0038 = 0.9924
+   $$
+   Thus, the probability is approximately **99.24%**.
+
+#### Step 3: Sample Size of 144 Plants
+
+**Goal**: Estimate the probability that the sample mean height of 144 plants lies between 14 cm and 16 cm.
+
+1. **Calculate the Standard Error of the Mean (SEM)**:
+   $$
+   \text{SEM} = \frac{\sigma}{\sqrt{n}} = \frac{3}{\sqrt{144}} = \frac{3}{12} = 0.25
+   $$
+
+2. **Calculate the Z-scores for 14 cm and 16 cm**:
+   - For $X = 14$:
+     $$
+     Z_{14} = \frac{14 - 15}{0.25} = \frac{-1}{0.25} = -4
+     $$
+   - For $X = 16$:
+     $$
+     Z_{16} = \frac{16 - 15}{0.25} = \frac{1}{0.25} = 4
+     $$
+
+3. **Find the probabilities associated with the Z-scores**:
+   Using standard normal distribution tables (or a calculator):
+   - $P(Z \leq -4) \approx 0.00003$
+   - $P(Z \leq 4) \approx 0.99997$
+
+4. **Calculate the probability that the sample mean lies between 14 and 16 cm**:
+   $$
+   P(14 \leq \bar{X} \leq 16) = P(Z \leq 4) - P(Z \leq -4)
+   $$
+   $$
+   P(14 \leq \bar{X} \leq 16) = 0.99997 - 0.00003 = 0.99994
+   $$
+   Thus, the probability is approximately **99.99%**.
+
+#### Step 4: Unknown Population Distribution
+
+**Goal**: Estimate the probability for the same range if the population distribution is unknown.
+
+If the distribution of plant heights is unknown, the Central Limit Theorem assures us that the sampling distribution of the sample mean will still approximate normality as long as the sample size is sufficiently large (usually $n \geq 30$).
+
+#### CLT Estimation:
+- For a sample size $n = 64$ (as in Step 2), the sampling distribution of the sample mean will still be approximately normal, even if the population distribution is not normal.
+- Therefore, the same calculations as in Step 2 can be applied, and the probability remains approximately **99.24%**.
