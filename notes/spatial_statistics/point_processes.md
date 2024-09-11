@@ -42,4 +42,8 @@ Imagine we are studying the locations of trees in a forest. Each tree can be rep
 
 The point process would describe the probability distribution over all such possible configurations of tree locations. For instance, if trees tend to grow apart from each other due to competition for resources, this might be modeled as a hard-core process where there's a minimum distance between each pair of trees.
 
+![8fb55a3b-3b66-4e48-910a-80b8ffc7a059](https://github.com/user-attachments/assets/a49de8a2-6648-4636-aa6f-ad63588168af)
+
+![65da916c-4b8f-4216-86c4-0c60c10e2660](https://github.com/user-attachments/assets/9afc8235-70e1-4453-aa9c-9663b28394cd)
+
 A Poisson process might be a reasonable first model, but if we find that the trees are not independently located (perhaps due to underlying soil quality variations or the spreading of seeds from existing trees), we might instead use a cluster process or a Cox process.
