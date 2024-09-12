@@ -43,7 +43,7 @@ X O O X
 
 A frequentist would calculate the probability of the attribute in the population based on this sample, which is 50% (2 out of 4), and would apply this probability to any future samples.
 
-## Bayesian Statistics
+### Bayesian Statistics
 
 Key Concepts:
 
@@ -52,26 +52,26 @@ Key Concepts:
 - The likelihood function expresses the probability of observing the data given different parameter values. This function plays a key role in updating beliefs as new data becomes available.
 - The posterior distribution is the updated probability distribution after combining the prior distribution and the likelihood. It forms the core of Bayesian inference, offering a new perspective on the parameter based on the data.
 
-### Mathematical Framework
+#### Mathematical Framework
 - Bayes' Theorem serves as the foundation of Bayesian analysis. It mathematically updates the prior belief in light of new evidence by using the formula: Posterior ∝ Likelihood × Prior, reflecting how new data influences prior knowledge.
 - In Bayesian statistics, probability is interpreted as a degree of belief or certainty about an event or parameter, rather than as a long-run frequency of occurrence as in frequentist statistics.
 
-### Incorporating Prior Knowledge
+#### Incorporating Prior Knowledge
 - Bayesian methods allow for the use of general knowledge priors, even without specific domain expertise. For example, in a study on snake lifespans, a prior could favor a lifespan around 10 years, rather than something implausible like 1000 years, based on biological understanding.
 - As new data is collected, Bayesian inference updates the prior to form the posterior, which reflects the combined influence of prior knowledge and new observations. For instance, if new research suggests that certain snakes live longer than expected, the posterior distribution would adjust to reflect this new evidence alongside previous beliefs.
 
-### Advantages
+#### Advantages
 - One of the key strengths of Bayesian statistics is its ability to incorporate prior knowledge or expertise into the analysis, making it particularly valuable in situations where data is limited or difficult to obtain.
 - Bayesian methods often lead to more intuitive and direct interpretations, especially in scenarios where the data is complex or the sample size is small, as the results are framed in terms of probabilities and uncertainties.
 - Bayesian analysis provides a probabilistic understanding of estimates, allowing for a more nuanced and detailed interpretation of uncertainty around the parameter estimates.
 - These methods offer great flexibility in handling complex models and uncertainty, making them well-suited for sophisticated models and smaller datasets.
 
-### Limitations
+#### Limitations
 - Bayesian analysis is computationally intensive, requiring significant resources to calculate posterior distributions, particularly when dealing with complex models or large datasets.
 - The choice of prior can heavily influence the results, potentially introducing bias if the prior is not carefully selected or justified based on solid reasoning.
 - Implementing Bayesian methods requires a more advanced understanding of statistical principles, making them harder to apply and interpret without specialized knowledge.
 
-### Example
+#### Example
 
 Assume we have a prior belief about the probability of a coin landing on heads (H) or tails (T).
 
