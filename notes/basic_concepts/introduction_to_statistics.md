@@ -133,11 +133,11 @@ In this table, the variables being measured are **Name** (categorical), **Gender
 #### Parameter vs. Statistic
 
 - A **parameter** refers to a value that describes an entire population, such as the average height of all people in a city. 
-- The **population mean** (\(\mu\)) is an example of a parameter, representing the average of a numerical variable across the whole population.
-- Another example of a parameter is the **population standard deviation** (\(\sigma\)), which measures the spread or variability of a numerical variable in the population.
+- The **population mean** ($\mu$) is an example of a parameter, representing the average of a numerical variable across the whole population.
+- Another example of a parameter is the **population standard deviation** ($\sigma$), which measures the spread or variability of a numerical variable in the population.
 - A **statistic** is a value calculated from a sample of the population, such as the average height of a subset of individuals. It is used to estimate the corresponding population parameter.
-- The **sample mean** (\(\bar{x}\)) is an example of a statistic, representing the average of a numerical variable within a sample.
-- Similarly, the **sample standard deviation** (\(s\)) is a statistic that measures the spread of a numerical variable in the sample.
+- The **sample mean** ($\bar{x}$) is an example of a statistic, representing the average of a numerical variable within a sample.
+- Similarly, the **sample standard deviation** ($s$) is a statistic that measures the spread of a numerical variable in the sample.
 
 #### Example: Application of Parameters and Statistics
 
