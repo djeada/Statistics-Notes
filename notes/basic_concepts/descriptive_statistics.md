@@ -4,12 +4,13 @@ Descriptive statistics offer a summary of the main characteristics of a dataset 
 
 ## Frequencies and Frequency Tables
 
-- **Frequency**: The number of times a specific value or category occurs in a dataset. For instance, if 3 people have 1 sibling, the frequency for "1 sibling" is 3.
-- **Relative Frequency**: The proportion of times a specific value occurs relative to the total number of observations. Calculated as:
+- The **frequency** refers to the number of times a specific value or category appears in a dataset. For example, if 3 individuals report having 1 sibling, the frequency for "1 sibling" is 3.
+  
+- The **relative frequency** represents the proportion of times a particular value occurs relative to the total number of observations. It is calculated as:
 
 $$\text{Relative Frequency} = \frac{\text{Frequency}}{\text{Total Observations}}$$
 
-- **Cumulative Relative Frequency**: The accumulation of previous relative frequencies up to a certain category. It shows the proportion of observations up to and including a certain category. Calculated as:
+- The **cumulative relative frequency** is the sum of the relative frequencies up to a specific category, showing the proportion of observations up to and including that category. It is calculated as:
   
 $$\text{Cumulative Relative Frequency} = \sum_{i=1}^{n} \text{Relative Frequency}_i$$
 
@@ -70,21 +71,20 @@ II Grouped into Ranges:
 
 Measures of central tendency provide an idea of the average or central value of the dataset.
 
-* **Arithmetic Mean:** Suitable for characterizing symmetric distributions without outliers. It's also the balancing point of a distribution.
+- The **arithmetic mean** is useful for characterizing symmetric distributions without outliers and represents the balancing point of a distribution. It is calculated as:
 
 $$\mu_{X} = \frac{1}{n} \sum x$$
 
-* **Weighted Mean:** Takes into account the importance or weight of each value in the dataset.
+- The **weighted mean** accounts for the importance or weight of each value in the dataset, giving more influence to values with higher weights. It is calculated as:
 
 $$\mu_{X} = \frac{\sum w_ix_i}{\sum w_i}$$
 
-* **Geometric Mean:** Ideal for averaging ratios or handling multiplicative data. Always smaller than the arithmetic mean.
+- The **geometric mean** is ideal for averaging ratios or handling multiplicative data. It is always smaller than the arithmetic mean and is calculated as:
 
 $$\text{mean} =\sqrt[n]{a_{1}a_{2}...a_{n}}$$
 
-* **Median:** The precise middle value among a dataset when sorted in ascending order. Suitable for skewed distributions or data with outliers.
-
-* **Mode:** The most frequently occurring element in a dataset.
+- The **median** is the middle value of a dataset when sorted in ascending order and is particularly suitable for skewed distributions or datasets with outliers.
+- The **mode** refers to the most frequently occurring value in a dataset, making it a measure of the most common observation.
 
 ### Example
 
@@ -146,10 +146,10 @@ Each measure of central tendency can provide different insights into the dataset
 
 ### Choosing Between Mean and Median
 
-- **Use Median** when the goal is to reduce the impact of outliers. The median is less sensitive to extreme values, making it a reliable measure of central tendency in skewed distributions.
-- **Opt for Mean** when it's essential to include all values, outliers included. The mean takes into account every data point, which is useful in datasets where each value carries equal significance.
-- **Be Cautious with Mean in Skewed Data**: In skewed distributions, the mean can be misleading. In such cases, the median often gives a more representative measure of the 'average' value.
-
+- You should **use the median** when minimizing the impact of outliers is important. Since the median is less sensitive to extreme values, it serves as a reliable measure of central tendency, particularly in skewed distributions.
+- **Opt for the mean** when it is important to include every value, including outliers, in the calculation. The mean considers all data points, making it useful in situations where each value is equally significant.
+- **Be cautious with the mean in skewed data**, as it can provide a misleading sense of central tendency. In skewed distributions, the median often offers a more accurate representation of the typical value in the dataset.
+  
 #### Example 1: Evaluating Salaries in a Tech Company
 
 Alice is researching salaries of graphic designers at a well-known tech firm. The company has several top-level designers whose salaries are substantially higher than the rest. To get a realistic expectation of her potential earnings, should Alice consider the mean or the median salary?
@@ -165,23 +165,21 @@ Tom, managing a small bookstore, needs to report the average spending per custom
 ## Measures of Dispersion
 
 Dispersion measures indicate the spread or variability of the data in the dataset.
+- The **range** is the difference between the maximum and minimum values in a dataset, providing a basic measure of spread.
+  
+- The **interquartile range (IQR)** is the difference between the first quartile (Q1) and the third quartile (Q3), capturing the range of the central 50% of the data and reducing the influence of outliers.
 
-* **Range:** The difference between the maximum and minimum values in the dataset.
-
-* **Interquartile Range (IQR):** The difference between the first quartile (Q1) and the third quartile (Q3). Represents the range encompassing the central 50% of the data.
-
-* **Variance:** The average of the squared differences from the mean.
+- **Variance** measures the average of the squared differences from the mean, indicating the spread of data points around the mean. It is calculated as:
 
 $$V = \frac{\sum (x_i - \overline{x})^2}{N-1}$$ (for a sample)
 
 $$V = \frac{\sum (x_i - \overline{x})^2}{N}$$ (for a population)
 
-* **Standard Deviation:** The square root of the variance. Indicates the degree to which individual elements deviate from the mean.
+- The **standard deviation** is the square root of the variance, giving a direct interpretation of how much the values in a dataset deviate from the mean. It is calculated as:
 
 $$\sigma = \sqrt{\frac{\sum (x_i - \overline{x})^2}{N-1}}$$ (for a sample)
 
 $$\sigma = \sqrt{\frac{\sum (x_i - \overline{x})^2}{N}}$$ (for a population)
-
 ### Example: Comparing Athletic Performances
 
 Consider that Chloe swam the 100m freestyle in 53 seconds at a regional competition, and Liam completed a marathon in 2 hours and 55 minutes at a city event. Who performed more exceptionally compared to typical results?
