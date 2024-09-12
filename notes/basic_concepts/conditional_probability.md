@@ -353,8 +353,6 @@ This example demonstrates the use of the **Multiplication Rule** for independent
 
 ![3d0579b3-0e10-41ce-b77d-5fc5528908ee](https://github.com/djeada/Statistics-Notes/assets/37275728/813b1539-531f-4a1f-8248-757aca88bf8c)
 
-To enhance the mathematical rigor of the explanation on conditional probability, let's break it down step-by-step and ensure all aspects of the probability theory are covered with clarity and precision.
-
 ### Conditional Probability
 
 Conditional probability refers to the probability of an event $A$ occurring given that another event $B$ has already occurred. It quantifies how the occurrence of one event affects the likelihood of another event. The formal definition of conditional probability is given by:
@@ -607,4 +605,4 @@ Let's calculate the probabilities for small group sizes:
 
 Below is the visualization of the probability that at least two people share the same birthday as the group size increases. The red dashed line indicates the 50% probability mark, which occurs at around 23 people:
 
-![a22b209a-c8da-4825-a5cc-936dc62eb27c](https://github.com/djeada/Statistics-Notes/assets/37275728/4a2bfafd-c123-4dff-8219-342ab8fe185c)
+![output(10)](https://github.com/user-attachments/assets/c0b74baa-a2d8-4695-ac32-ab0fdeb49543)
