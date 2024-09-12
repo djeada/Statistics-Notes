@@ -1,6 +1,4 @@
-# Detailed Notes on Chi-Square Tests and Categorical Data Analysis
-
-## Categorical Data and Contingency Tables
+# Chi-Square Tests and Categorical Data Analysis
 
 ### Categorical Data
 
