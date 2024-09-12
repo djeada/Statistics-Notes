@@ -1,6 +1,6 @@
 ## Conditional Probability and Multiplication Rule
 
-**Conditional Probability** is the likelihood of an event occurring given that another event has already occurred. It is denoted as \( P(A|B) \), representing the probability of event \( A \) happening, assuming event \( B \) has already taken place. This concept is crucial in understanding dependent events in probability theory. The **Multiplication Rule** uses conditional probability to calculate the probability of the intersection of two events. For dependent events, it is written as \( P(A \cap B) = P(A|B) \times P(B) \). If the events are independent, it simplifies to \( P(A \cap B) = P(A) \times P(B) \), as \( P(A|B) = P(A) \) in this case. This rule helps in determining joint probabilities of multiple events.
+**Conditional Probability** is the likelihood of an event occurring given that another event has already occurred. It is denoted as $P(A|B)$, representing the probability of event $A$ happening, assuming event $B$ has already taken place. This concept is crucial in understanding dependent events in probability theory. The **Multiplication Rule** uses conditional probability to calculate the probability of the intersection of two events. For dependent events, it is written as $P(A \cap B) = P(A|B) \times P(B)$. If the events are independent, it simplifies to $P(A \cap B) = P(A) \times P(B)$, as $P(A|B) = P(A)$ in this case. This rule helps in determining joint probabilities of multiple events.
 
 ### Conditional Probability
 
