@@ -5,8 +5,8 @@ Probability theory offers a structured approach to assessing the probability of 
 ## Introductory Terminology
 
 - An **experiment** refers to any procedure that can be repeated indefinitely and has a clearly defined set of possible outcomes, known as the sample space. Examples include rolling dice, flipping coins, or drawing cards from a deck.
-- The **sample space (S)** represents the complete set of possible outcomes of an experiment. It can be finite or infinite, and either discrete or continuous. For example, for a 6-sided die, the sample space is \( S = \{1, 2, 3, 4, 5, 6\} \). For a coin flip, the sample space is \( S = \{\text{heads}, \text{tails}\} \). If two coins are flipped simultaneously, the sample space expands to \( S = \{(\text{H}, \text{H}), (\text{H}, \text{T}), (\text{T}, \text{H}), (\text{T}, \text{T})\} \).
-- An **event (E)** is any collection of outcomes drawn from the sample space \( S \), forming a subset of \( S \). An event can consist of a single outcome or multiple outcomes. For example, rolling an even number on a die corresponds to the event \( E = \{2, 4, 6\} \), getting tails when flipping a coin is \( E = \{\text{tails}\} \), and drawing a heart from a standard deck of cards is \( E = \{2\heartsuit, 3\heartsuit, \dots, A\heartsuit\} \).
+- The **sample space (S)** represents the complete set of possible outcomes of an experiment. It can be finite or infinite, and either discrete or continuous. For example, for a 6-sided die, the sample space is $S = \{1, 2, 3, 4, 5, 6\}$. For a coin flip, the sample space is $S = \{\text{heads}, \text{tails}\}$. If two coins are flipped simultaneously, the sample space expands to $S = \{(\text{H}, \text{H}), (\text{H}, \text{T}), (\text{T}, \text{H}), (\text{T}, \text{T})\}$.
+- An **event (E)** is any collection of outcomes drawn from the sample space $S$, forming a subset of $S$. An event can consist of a single outcome or multiple outcomes. For example, rolling an even number on a die corresponds to the event $E = \{2, 4, 6\}$, getting tails when flipping a coin is $E = \{\text{tails}\}$, and drawing a heart from a standard deck of cards is $E = \{2\heartsuit, 3\heartsuit, \dots, A\heartsuit\}$.
 
 ### Example: Dice Rolling
 
@@ -26,11 +26,11 @@ Each event is a subset of the sample space and represents a particular outcome o
 
 ### Additional Examples
 
-- In **traffic observation**, counting the number of accidents at an intersection over a month defines the sample space as \( S = \{0, 1, 2, 3, \dots, n\} \), where \( n \) represents a reasonable upper limit based on historical data.
-- The **life span of a light bulb** measured in hours has a sample space of any positive number, formally \( S = \{t \mid t > 0\} \). In practice, this could be limited to a range such as \( S = \{1, 2, 3, \dots, 10000\} \) hours.
-- For an individual's **birth month**, the sample space is \( S = \{\text{January}, \text{February}, \dots, \text{December}\} \).
-- In the case of **radioactive decay**, where decay occurs in intervals of 1 second, the sample space consists of sequences of decay (D) and non-decay (N), such as \( S = \{\text{D}, \text{ND}, \text{NND}, \text{NNND}, \dots\} \).
-- When **rolling two dice**, the sample space for the sum of the points on the two dice is \( S = \{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\} \).
+- In **traffic observation**, counting the number of accidents at an intersection over a month defines the sample space as $S = \{0, 1, 2, 3, \dots, n\}$, where $n$ represents a reasonable upper limit based on historical data.
+- The **life span of a light bulb** measured in hours has a sample space of any positive number, formally $S = \{t \mid t > 0\}$. In practice, this could be limited to a range such as $S = \{1, 2, 3, \dots, 10000\}$ hours.
+- For an individual's **birth month**, the sample space is $S = \{\text{January}, \text{February}, \dots, \text{December}\}$.
+- In the case of **radioactive decay**, where decay occurs in intervals of 1 second, the sample space consists of sequences of decay (D) and non-decay (N), such as $S = \{\text{D}, \text{ND}, \text{NND}, \text{NNND}, \dots\}$.
+- When **rolling two dice**, the sample space for the sum of the points on the two dice is $S = \{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}$.
 - In the **seating at a square table** scenario, if two people can sit at any of the four corners, the sample space for their seating positions can be represented as pairs of positions.
 
 |   | 1   | 2   | 3   | 4   | 5   | 6   |
