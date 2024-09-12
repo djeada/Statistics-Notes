@@ -500,8 +500,6 @@ Assumptions:
 - We ignore leap years for simplicity.
 - Birthdays are uniformly distributed, meaning each day is equally likely to be a birthday.
 
-### Complementary Approach
-
 To find the probability that at least two people share a birthday, we use the complement of the event where all $n$ people have different birthdays. That is:
 
 $$
@@ -562,7 +560,7 @@ $$
 
 This gives a probability of approximately 1.64%.
 
-#### 4. **General Case for $n$ People**
+#### General Case for $n$ People
 
 For $n$ people, we generalize this approach. The probability that all $n$ people have different birthdays is calculated by successively multiplying the probabilities that each additional person has a different birthday, given that the previous people have already chosen different birthdays.
 
