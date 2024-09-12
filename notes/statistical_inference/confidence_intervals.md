@@ -12,8 +12,8 @@ $$
 
 Where:
 
-- **Point Estimate**: The best single estimate for a population parameter based on the sample data (e.g., the sample mean).
-- **Margin of Error**: Represents the extent of uncertainty around the point estimate. It depends on the standard error and a critical value from a distribution (typically a normal or t-distribution) appropriate for the selected confidence level.
+- **Point Estimate** is the best single estimate for a population parameter based on the sample data (e.g., the sample mean).
+- **Margin of Error** represents the extent of uncertainty around the point estimate. It depends on the standard error and a critical value from a distribution (typically a normal or t-distribution) appropriate for the selected confidence level.
 
 The formula for the margin of error is:
 
@@ -157,11 +157,11 @@ $$
 Using the **95% confidence level** ($z = 1.96$), the confidence interval is calculated as:
 
 $$
-\text{Confidence Interval} = [60\% \pm 1.96 \times 1.55\%]
+\text{Confidence Interval} = 60% \pm 1.96 \times 1.55%
 $$
 
 $$
-\text{Confidence Interval} = [60\% \pm 3.04\%] = [56.96\%, 63.04\%]
+\text{Confidence Interval} = 60% \pm 3.04% = 56.96% 63.04%
 $$
 
 This means we are 95% confident that the true approval rating lies between 56.96% and 63.04%.
