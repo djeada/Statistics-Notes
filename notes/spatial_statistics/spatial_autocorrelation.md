@@ -1,6 +1,4 @@
-# Detailed Notes on Spatial Autocorrelation
-
-## Introduction
+# Spatial Autocorrelation
 
 **Spatial autocorrelation** refers to the correlation of a variable with itself through space. It measures the degree to which similar or dissimilar values of a variable are clustered or dispersed in a geographical area. This concept is rooted in **Tobler's First Law of Geography**:
 
