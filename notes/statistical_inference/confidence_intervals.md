@@ -48,11 +48,141 @@ The plot above shows confidence intervals for simulated stock returns at various
 
 The horizontal line at zero helps indicate whether the confidence intervals capture positive or negative stock returns.
 
-**Key Insights:**
+Key Insights:
+
 - At **90% confidence**, the interval is narrow, offering more precision but less certainty.
 - At **99% confidence**, the interval is wider, reflecting greater certainty that the true mean is within the range but with reduced precision.
 
-This demonstrates the key trade-off in confidence intervals: as you increase the confidence level, the interval becomes wider, sacrificing precision to gain certainty.
+This demonstrates the key trade-off in confidence intervals, namely as you increase the confidence level, the interval becomes wider, sacrificing precision to gain certainty.
+
+### Confidence Interval Construction
+
+Suppose 62% of 150 million likely voters approve of the President. A Gallup poll surveys 1,200 voters to estimate this percentage, but the result includes some sampling error. The standard error (SE) quantifies this error.
+
+#### Step 1: Use the Central Limit Theorem (CLT)
+
+According to the CLT, the sample proportion (or mean) follows a normal distribution. For example, in this case, where 62% of likely voters approve of the President's performance, we can calculate the standard error (SE) for the sample proportion as follows:
+
+$$
+SE = \sqrt{\frac{p(1 - p)}{n}}
+$$
+
+Where:
+
+- $p = 0.62$ is the population proportion.
+- $n = 1,200$ is the sample size.
+
+Substitute the values into the formula:
+
+$$
+SE = \sqrt{\frac{0.62 \times 0.38}{1,200}} = \sqrt{\frac{0.2356}{1,200}} = \sqrt{0.0001963} = 0.014 \text{ or } 1.4\%
+$$
+
+This means the standard error is approximately 1.4%.
+
+#### Step 2: Construct the 95% Confidence Interval
+
+According to the empirical rule (or 68-95-99.7 rule), there is a 95% chance that the sample proportion is within 2 standard errors (SEs) of the true population proportion.
+
+For example, if the sample result from the Gallup poll is 60%, we can calculate the 95% confidence interval as:
+
+$$
+\text{Confidence Interval} = [\hat{p} \pm 2 \times SE]
+$$
+
+Where:
+
+- $\hat{p} = 60\%$ is the sample proportion.
+- $SE = 1.4\%$ is the standard error.
+
+Thus, the confidence interval is:
+
+$$
+[60\% \pm 2 \times 1.4\%] = [60\% \pm 2.8\%] = [57.2\%, 62.8\%]
+$$
+
+This means we are 95% confident that the true population approval percentage falls between 57.2% and 62.8%.
+
+#### Step 3: Understanding "Confidence" vs. "Probability"
+
+The term "95% confidence" refers to the long-run success of this sampling method. Specifically:
+
+- The population parameter (e.g., the true approval percentage) is a fixed value, denoted by $\mu$, which either falls within the interval or does not.
+- The "95% confidence" means that if we repeated this polling procedure many times, 95% of the resulting confidence intervals would contain the true population parameter.
+- However, for any single interval, we cannot say the population proportion is within the interval with 95% probability, since the parameter itself is fixed. Instead, we are confident that the method of constructing the interval is accurate in 95% of cases.
+
+### Confidence Level and Z-Scores
+
+The **confidence level** represents how confident we are that a calculated interval contains the true population parameter (e.g., mean or proportion). Common confidence levels and their corresponding Z-scores are:
+
+- **95% confidence level** → $z = 1.96$
+- **90% confidence level** → $z = 1.65$
+- **99% confidence level** → $z = 2.58$
+
+The formula for constructing a confidence interval is:
+
+$$
+\text{Confidence Interval} = \text{estimate} \pm z \times SE
+$$
+
+Where:
+
+- "Estimate" refers to the sample statistic (e.g., mean or proportion).
+- $z$ is the Z-score corresponding to the desired confidence level.
+- $SE$ is the standard error.
+
+### Bootstrap Principle for Estimating Standard Error (SE)
+
+When the population standard deviation ($\sigma$) is unknown, we can use the **bootstrap principle** to estimate it. The bootstrap principle uses the sample standard deviation ($s$) as an approximation for the unknown population standard deviation ($\sigma$).
+
+Example: In a survey where 60% of the sample approves of the President’s job, the standard error (SE) can be estimated as follows:
+
+$$
+SE = \sqrt{\frac{p(1 - p)}{n}}
+$$
+
+Where:
+
+- $p = 0.60$ is the sample proportion.
+- $n = 1,000$ is the sample size.
+
+Substitute the values:
+
+$$
+SE = \sqrt{\frac{0.60 \times 0.40}{1,000}} = \sqrt{\frac{0.24}{1,000}} = \sqrt{0.00024} = 0.0155 \text{ or } 1.55\%
+$$
+
+#### Constructing the Confidence Interval
+
+Using the **95% confidence level** ($z = 1.96$), the confidence interval is calculated as:
+
+$$
+\text{Confidence Interval} = [60\% \pm 1.96 \times 1.55\%]
+$$
+
+$$
+\text{Confidence Interval} = [60\% \pm 3.04\%] = [56.96\%, 63.04\%]
+$$
+
+This means we are 95% confident that the true approval rating lies between 56.96% and 63.04%.
+
+### Width of Confidence Intervals and Margin of Error
+
+The **width** of a confidence interval is determined by the **margin of error**, which is calculated as:
+
+$$
+\text{Margin of Error} = z \times SE
+$$
+
+Where:
+
+- $z$ is the Z-score corresponding to the desired confidence level.
+- $SE$ is the standard error of the sample statistic.
+
+Impact:
+
+- A larger **sample size** reduces the standard error, which in turn decreases the margin of error and narrows the confidence interval. However, to **halve the width** of a confidence interval, the sample size must be increased by a factor of four. This is because the standard error is inversely proportional to the square root of the sample size.
+- Reducing the **confidence level** (e.g., from 95% to 90%) decreases the Z-score, which reduces the width of the confidence interval. However, this comes at the cost of reduced certainty that the interval contains the true population parameter.
 
 ### Confidence Level and Interpretation
 
