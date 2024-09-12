@@ -1,79 +1,328 @@
-## Covariance
+# Covariance
 
-Covariance is a statistical measure used to determine the relationship between two random variables. It indicates the direction of the linear relationship between variables.
+Covariance is a fundamental statistical measure that quantifies the degree to which two random variables change together. It indicates the direction of the linear relationship between variables:
 
-### Definition
+- A **positive covariance** implies that as one variable increases, the other tends to increase as well.
+- A **negative covariance** suggests that as one variable increases, the other tends to decrease.
+- A **zero covariance** indicates no linear relationship between the variables.
 
-The covariance between two random variables $X$ and $Y$ is given by:
+## Definition
 
-$$\text{Cov}(X, Y) = E\left[ (X - E[X]) \cdot (Y - E[Y]) \right]$$
+The **covariance** between two random variables $X $ and $Y $ is defined as the expected value (mean) of the product of their deviations from their respective means:
 
-We can expand this formula as follows:
+$$
+\operatorname{Cov}(X, Y) = \mathbb{E}\left[ (X - \mu_X)(Y - \mu_Y) \right]
+$$
 
-$$\begin{align*} 
-\text{Cov}(X, Y) &= E\left[ (X - E[X]) \cdot (Y - E[Y]) \right] \\
-&= E[XY] - E[X]E[Y] \\
-\end{align*}$$
+Where:
 
-The expansion is derived by applying the linearity of expectation and distributing the terms:
+- $\operatorname{Cov}(X, Y) $ is the covariance between $X $ and $Y $.
+- $\mathbb{E} $ denotes the expected value operator.
+- $\mu_X = \mathbb{E}[X] $ is the mean of $X $.
+- $\mu_Y = \mathbb{E}[Y] $ is the mean of $Y $.
 
-1. $E\left[ (X - E[X]) \cdot (Y - E[Y]) \right]$ is expanded to $E[XY] - E[X]E[Y] - E[X]E[Y] + E[X]E[Y]$.
-2. Notice that the last three terms simplify as they are constants, leaving us with $E[XY] - E[X]E[Y]$.
+### Alternative Expression
 
-Interpretation:
-- If $\text{Cov}(X, Y) > 0$, then $X$ and $Y$ tend to move in the same direction.
-- If $\text{Cov}(X, Y) < 0$, they tend to move in opposite directions.
-- If $\text{Cov}(X, Y) = 0$, there is no linear relationship between $X$ and $Y$.
+By expanding the definition and applying the linearity properties of expectation, covariance can also be expressed as:
 
-- **Important Note**: If $X$ and $Y$ are independent, then $\text{Cov}(X, Y) = 0$. However, the converse is not necessarily true; a covariance of 0 does not imply independence.
+$$
+\operatorname{Cov}(X, Y) = \mathbb{E}[XY] - \mathbb{E}[X] \mathbb{E}[Y]
+$$
 
-## Properties
-1. **Symmetry**: $\text{Cov}(X, Y) = \text{Cov}(Y, X)$
-2. **Scale**: If $a$ and $b$ are constants, $\text{Cov}(aX, bY) = ab \cdot \text{Cov}(X, Y)$
-3. **Variance Relation**: $\text{Cov}(X, X)$ is the variance of $X$, denoted as $\text{Var}(X)$.
+**Derivation**:
 
-### Applications
-- Covariance is used in statistics to understand how two variables change together.
-- It's also a key concept in finance, particularly in the field of portfolio theory and risk management.
+1. Start with the definition:
 
-### Limitations
-- Covariance doesn't provide information about the strength of the relationship between variables.
-- It only gives the direction of the relationship.
-- The magnitude of covariance is not standardized, making it difficult to compare across different datasets.
+$$
+\operatorname{Cov}(X, Y) = \mathbb{E}\left[ (X - \mu_X)(Y - \mu_Y) \right]
+$$
 
-### Example
+2. Expand the product inside the expectation:
 
-In this example, we'll calculate the covariance between two variables: `X` and `Y`. The data for these variables is presented in the table below:
+$$
+\operatorname{Cov}(X, Y) = \mathbb{E}\left[ XY - X \mu_Y - \mu_X Y + \mu_X \mu_Y \right]
+$$
 
-| Observation | X | Y |
-|-------------|---|---|
-| 1           | 1 | 2 |
-| 2           | 2 | 4 |
-| 3           | 3 | 6 |
+3. Use the linearity of expectation:
 
-1. Calculate the Means of X and Y
+$$
+\operatorname{Cov}(X, Y) = \mathbb{E}[XY] - \mu_Y \mathbb{E}[X] - \mu_X \mathbb{E}[Y] + \mu_X \mu_Y
+$$
 
-First, we calculate the mean (average) of each variable.
+4. Recognize that $\mu_X = \mathbb{E}[X] $ and $\mu_Y = \mathbb{E}[Y] $:
 
-- Mean of X, $\bar{X}$ = $\frac{1 + 2 + 3}{3}$
-- Mean of Y, $\bar{Y}$ = $\frac{2 + 4 + 6}{3}$
+$$
+\operatorname{Cov}(X, Y) = \mathbb{E}[XY] - \mu_Y \mu_X - \mu_X \mu_Y + \mu_X \mu_Y = \mathbb{E}[XY] - \mu_X \mu_Y
+$$
 
-2. Calculate the Products of Deviations
+Thus, we arrive at:
 
-Next, we calculate the product of deviations from the mean for each observation.
+$$
+\operatorname{Cov}(X, Y) = \mathbb{E}[XY] - \mathbb{E}[X] \mathbb{E}[Y]
+$$
 
-| Observation | X | Y | $X - \bar{X}$ | $Y - \bar{Y}$ | $(X - \bar{X}) \cdot (Y - \bar{Y})$ |
-|-------------|---|---|------------------|------------------|---------------------------------------|
-| 1           | 1 | 2 | -1               | -2               | 2                                     |
-| 2           | 2 | 4 | 0                | 0                | 0                                     |
-| 3           | 3 | 6 | 1                | 2                | 2                                     |
+### Interpretation
 
-3. Calculate Covariance
+- **Positive Covariance ($\operatorname{Cov}(X, Y) > 0 $)**: Indicates that $X $ and $Y $ tend to increase or decrease together.
+- **Negative Covariance ($\operatorname{Cov}(X, Y) < 0 $)**: Indicates that when $X $ increases, $Y $ tends to decrease, and vice versa.
+- **Zero Covariance ($\operatorname{Cov}(X, Y) = 0 $)**: Suggests no linear relationship between $X $ and $Y $.
 
-Finally, we calculate the covariance using the formula:
+**Important Note**:
 
-$$\text{Cov}(X, Y) = \frac{\sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})}{n}$$
+- If $X $ and $Y $ are **independent**, then $\operatorname{Cov}(X, Y) = 0 $.
+- However, a covariance of zero does **not** necessarily imply independence. Variables can be uncorrelated (zero covariance) but still dependent in a non-linear way.
 
-$$\text{Cov}(X, Y) = \frac{2 + 0 + 2}{3}$$
+## Properties of Covariance
 
-$$\text{Cov}(X, Y) = \frac{4}{3}$$
+1. **Symmetry**:
+
+$$
+\operatorname{Cov}(X, Y) = \operatorname{Cov}(Y, X)
+$$
+
+2. **Linearity in Each Argument**:
+
+- For constants $a $ and $b $, and random variables $X $, $Y $, and $Z $:
+
+$$
+\operatorname{Cov}(aX + bY, Z) = a \operatorname{Cov}(X, Z) + b \operatorname{Cov}(Y, Z)
+$$
+
+3. **Covariance with Itself (Variance Relation)**:
+
+- The covariance of a variable with itself is the variance of that variable:
+
+$$
+\operatorname{Cov}(X, X) = \operatorname{Var}(X)
+$$
+
+4. **Scaling**:
+
+- If $a $ and $b $ are constants:
+
+$$
+\operatorname{Cov}(aX, bY) = ab \operatorname{Cov}(X, Y)
+$$
+
+5. **Addition of Constants**:
+
+- Adding a constant to a variable does not affect the covariance:
+
+$$
+\operatorname{Cov}(X + c, Y) = \operatorname{Cov}(X, Y)
+$$
+
+6. **Relationship with Correlation**:
+
+- Covariance is related to the correlation coefficient $\rho_{XY} $:
+
+$$
+\rho_{XY} = \frac{\operatorname{Cov}(X, Y)}{\sigma_X \sigma_Y}
+$$
+
+Where $\sigma_X $ and $\sigma_Y $ are the standard deviations of $X $ and $Y $, respectively.
+
+## Sample Covariance
+
+When working with sample data, the sample covariance between two variables $X $ and $Y $ is calculated as:
+
+$$
+s_{XY} = \operatorname{Cov}(X, Y) = \frac{1}{n - 1} \sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})
+$$
+
+Where:
+
+- $n $ is the number of observations.
+- $X_i $ and $Y_i $ are the $i $-th observations of variables $X $ and $Y $.
+- $\bar{X} $ and $\bar{Y} $ are the sample means of $X $ and $Y $.
+
+**Note**: The denominator $n - 1 $ provides an unbiased estimate of the covariance for a sample drawn from a population.
+
+## Applications of Covariance
+
+1. **Statistics**:
+
+- Understanding the relationship between variables.
+- Constructing the covariance matrix for multivariate data.
+
+2. **Finance**:
+
+- Portfolio theory: Covariance is used to determine how two assets move together.
+- Risk management: Assessing the diversification benefits when combining assets.
+
+3. **Data Analysis**:
+
+- Feature selection: Identifying variables that may have linear relationships.
+
+## Limitations of Covariance
+
+- **Scale Dependence**:
+
+- Covariance is not standardized and depends on the units of the variables.
+- Difficult to compare covariances across different datasets or variables with different scales.
+
+- **Lack of Strength Measure**:
+
+- Covariance indicates the direction but not the **strength** of the linear relationship.
+- The magnitude is influenced by the variables' variances.
+
+- **Not Indicative of Causation**:
+
+- A non-zero covariance does not imply that one variable causes changes in another.
+
+## Example: Calculating Covariance Step by Step
+
+Let's calculate the covariance between two variables $X $ and $Y $ using the following dataset:
+
+| Observation ($i $) | $X_i $ | $Y_i $ |
+|-----------------------|-----------|-----------|
+| 1                     | 1         | 2         |
+| 2                     | 2         | 4         |
+| 3                     | 3         | 6         |
+
+### Step 1: Calculate the Sample Means
+
+Compute the mean of $X $ and $Y $:
+
+$$
+\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i = \frac{1 + 2 + 3}{3} = \frac{6}{3} = 2
+$$
+
+$$
+\bar{Y} = \frac{1}{n} \sum_{i=1}^{n} Y_i = \frac{2 + 4 + 6}{3} = \frac{12}{3} = 4
+$$
+
+### Step 2: Compute the Deviations from the Mean
+
+Calculate $(X_i - \bar{X}) $ and $(Y_i - \bar{Y}) $:
+
+| $i $ | $X_i $ | $Y_i $ | $X_i - \bar{X} $ | $Y_i - \bar{Y} $ |
+|---------|-----------|-----------|----------------------|----------------------|
+| 1       | 1         | 2         | $1 - 2 = -1 $     | $2 - 4 = -2 $     |
+| 2       | 2         | 4         | $2 - 2 = 0 $      | $4 - 4 = 0 $      |
+| 3       | 3         | 6         | $3 - 2 = 1 $      | $6 - 4 = 2 $      |
+
+### Step 3: Calculate the Product of Deviations
+
+Compute $(X_i - \bar{X})(Y_i - \bar{Y}) $:
+
+| $i $ | $X_i - \bar{X} $ | $Y_i - \bar{Y} $ | $(X_i - \bar{X})(Y_i - \bar{Y}) $ |
+|---------|----------------------|----------------------|---------------------------------------|
+| 1       | -1                   | -2                   | $(-1)(-2) = 2 $                    |
+| 2       | 0                    | 0                    | $(0)(0) = 0 $                      |
+| 3       | 1                    | 2                    | $(1)(2) = 2 $                      |
+
+### Step 4: Sum the Products of Deviations
+
+Compute the sum:
+
+$$
+\sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y}) = 2 + 0 + 2 = 4
+$$
+
+### Step 5: Calculate the Sample Covariance
+
+Use the sample covariance formula:
+
+$$
+s_{XY} = \operatorname{Cov}(X, Y) = \frac{1}{n - 1} \sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})
+$$
+
+Since $n = 3 $:
+
+$$
+s_{XY} = \frac{1}{3 - 1} \times 4 = \frac{1}{2} \times 4 = 2
+$$
+
+**Interpretation**:
+
+- The positive covariance of $2 $ indicates that $X $ and $Y $ tend to increase together.
+- Since the data points lie perfectly on a straight line ($Y = 2X $), the covariance reflects a perfect positive linear relationship.
+
+### Step 6: Calculate the Variances (Optional)
+
+For completeness, calculate the variances of $X $ and $Y $:
+
+#### Variance of $X $:
+
+$$
+s_{XX} = \operatorname{Var}(X) = \frac{1}{n - 1} \sum_{i=1}^{n} (X_i - \bar{X})^2
+$$
+
+Compute $(X_i - \bar{X})^2 $:
+
+| $i $ | $X_i - \bar{X} $ | $(X_i - \bar{X})^2 $ |
+|---------|----------------------|-------------------------|
+| 1       | -1                   | $(-1)^2 = 1 $        |
+| 2       | 0                    | $(0)^2 = 0 $         |
+| 3       | 1                    | $(1)^2 = 1 $         |
+
+Sum:
+
+$$
+\sum_{i=1}^{n} (X_i - \bar{X})^2 = 1 + 0 + 1 = 2
+$$
+
+Compute variance:
+
+$$
+s_{XX} = \frac{1}{2} \times 2 = 1
+$$
+
+#### Variance of $Y $:
+
+Similarly, compute $(Y_i - \bar{Y})^2 $:
+
+| $i $ | $Y_i - \bar{Y} $ | $(Y_i - \bar{Y})^2 $ |
+|---------|----------------------|-------------------------|
+| 1       | -2                   | $(-2)^2 = 4 $        |
+| 2       | 0                    | $(0)^2 = 0 $         |
+| 3       | 2                    | $(2)^2 = 4 $         |
+
+Sum:
+
+$$
+\sum_{i=1}^{n} (Y_i - \bar{Y})^2 = 4 + 0 + 4 = 8
+$$
+
+Compute variance:
+
+$$
+s_{YY} = \operatorname{Var}(Y) = \frac{1}{2} \times 8 = 4
+$$
+
+### Step 7: Calculate the Correlation Coefficient (Optional)
+
+The correlation coefficient $r_{XY} $ standardizes the covariance, providing a dimensionless measure of the strength and direction of the linear relationship:
+
+$$
+r_{XY} = \frac{s_{XY}}{\sqrt{s_{XX} \times s_{YY}}} = \frac{2}{\sqrt{1 \times 4}} = \frac{2}{2} = 1
+$$
+
+**Interpretation**:
+
+- A correlation coefficient of $1 $ indicates a perfect positive linear relationship between $X $ and $Y $.
+- This makes sense since $Y = 2X $ in the dataset.
+
+## Limitations of Covariance (Expanded)
+
+1. **Scale Dependence**:
+
+- Covariance values are affected by the units of measurement of the variables.
+- For example, measuring height in meters vs. centimeters will change the covariance.
+
+2. **Comparison Difficulties**:
+
+- Because covariance is not standardized, comparing covariances across different datasets or variables with different scales is challenging.
+- This is why the **correlation coefficient**, which standardizes covariance, is often used.
+
+3. **Not a Measure of Strength**:
+
+- The magnitude of covariance does not directly indicate the strength of the relationship.
+- A large covariance could be due to large variances rather than a strong relationship.
+
+4. **Linear Relationships Only**:
+
+- Covariance measures only linear relationships.
+- It does not capture non-linear dependencies between variables.
+
