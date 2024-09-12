@@ -4,11 +4,9 @@ Probability theory offers a structured approach to assessing the probability of 
 
 ## Introductory Terminology
 
-* **Experiment**: This is any procedure that can be infinitely repeated and has a well-defined set of outcomes, known as the sample space. Common examples include rolling dice, flipping coins, or drawing cards from a deck.
-
-* **Sample Space (S)**: The set of all possible outcomes of an experiment. This can be finite or infinite, discrete or continuous. For a 6-sided die, the sample space is S = {1, 2, 3, 4, 5, 6}. For the flip of a coin, S = {"heads", "tails"}. If flipping two coins simultaneously, the sample space expands to S = {(H, H), (H, T), (T, H), (T, T)}.
-
-* **Event (E)**: Any collection of outcomes from the sample space (S), which forms a subset of S. An event can consist of one outcome or multiple outcomes. Examples of events include rolling an even number on a die (E = {2, 4, 6}), getting tails when flipping a coin (E = {"tails"}), or drawing a heart from a standard deck of cards (E = {2♥, 3♥, ..., A♥}).
+- An **experiment** refers to any procedure that can be repeated indefinitely and has a clearly defined set of possible outcomes, known as the sample space. Examples include rolling dice, flipping coins, or drawing cards from a deck.
+- The **sample space (S)** represents the complete set of possible outcomes of an experiment. It can be finite or infinite, and either discrete or continuous. For example, for a 6-sided die, the sample space is \( S = \{1, 2, 3, 4, 5, 6\} \). For a coin flip, the sample space is \( S = \{\text{heads}, \text{tails}\} \). If two coins are flipped simultaneously, the sample space expands to \( S = \{(\text{H}, \text{H}), (\text{H}, \text{T}), (\text{T}, \text{H}), (\text{T}, \text{T})\} \).
+- An **event (E)** is any collection of outcomes drawn from the sample space \( S \), forming a subset of \( S \). An event can consist of a single outcome or multiple outcomes. For example, rolling an even number on a die corresponds to the event \( E = \{2, 4, 6\} \), getting tails when flipping a coin is \( E = \{\text{tails}\} \), and drawing a heart from a standard deck of cards is \( E = \{2\heartsuit, 3\heartsuit, \dots, A\heartsuit\} \).
 
 ### Example: Dice Rolling
 
@@ -28,17 +26,12 @@ Each event is a subset of the sample space and represents a particular outcome o
 
 ### Additional Examples
 
-* **Traffic Observation**: Counting the number of accidents at an intersection in a month. The sample space might be S = {0, 1, 2, 3, ..., n}, where n is a reasonable upper limit based on historical data.
-
-* **Life Span of a Light Bulb**: If measuring in hours, the sample space could be any positive number (S = {t | t > 0}). In a practical scenario, it might be limited to a certain range like S = {1, 2, 3, ..., 10000} hours.
-
-* **Birth Month**: For an individual's birth month, the sample space is S = {January, February, ..., December}.
-
-* **Radioactive Decay**: For a radioactive nucleus decaying in intervals of 1 second, the sample space is all sequences of decay (D) and non-decay (N) over time, like S = {D, ND, NND, NNND, ...}.
-
-* **Rolling Two Dice**: The sample space for the sum of points is S = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}.
-
-* **Seating at a Square Table**: If two people can sit at any of the four corners of a square table, the sample space for their seating positions can be represented as pairs of positions (1 through 4). 
+- In **traffic observation**, counting the number of accidents at an intersection over a month defines the sample space as \( S = \{0, 1, 2, 3, \dots, n\} \), where \( n \) represents a reasonable upper limit based on historical data.
+- The **life span of a light bulb** measured in hours has a sample space of any positive number, formally \( S = \{t \mid t > 0\} \). In practice, this could be limited to a range such as \( S = \{1, 2, 3, \dots, 10000\} \) hours.
+- For an individual's **birth month**, the sample space is \( S = \{\text{January}, \text{February}, \dots, \text{December}\} \).
+- In the case of **radioactive decay**, where decay occurs in intervals of 1 second, the sample space consists of sequences of decay (D) and non-decay (N), such as \( S = \{\text{D}, \text{ND}, \text{NND}, \text{NNND}, \dots\} \).
+- When **rolling two dice**, the sample space for the sum of the points on the two dice is \( S = \{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\} \).
+- In the **seating at a square table** scenario, if two people can sit at any of the four corners, the sample space for their seating positions can be represented as pairs of positions.
 
 |   | 1   | 2   | 3   | 4   | 5   | 6   |
 |---|-----|-----|-----|-----|-----|-----|
@@ -69,9 +62,8 @@ $$
 P(E) = \sum_{s \in E} P(s)
 $$
 
-* **Random Variable (X)**: A random variable X is a function that assigns a numerical value to each outcome in a sample space. For instance, X could represent the total number of points scored in a basketball game.
-
-* **Expected Value of a Random Variable (E(X))**: The expected value of a random variable X gives a measure of the central tendency of the distribution of the random variable. It is computed as the weighted average of all possible values that the random variable can take on, with the weights being the probabilities of the values. The formula for the expected value is:
+* A **random variable** X is a function that assigns a numerical value to each outcome in a sample space. For instance, X could represent the total number of points scored in a basketball game.
+* The **expected value** of a random variable X gives a measure of the central tendency of the distribution of the random variable. It is computed as the weighted average of all possible values that the random variable can take on, with the weights being the probabilities of the values. The formula for the expected value is:
 
 $$
 E(X) = \sum_{s \in S} P(s) \cdot X(s)
@@ -210,10 +202,10 @@ Elementary events are unique arrangements of the balls in the cells. Since the b
 
 We can define several events based on these arrangements:
 
-* **Event A**: "At least two balls are in one cell." This event includes any arrangement where one cell contains two or three balls.
-* **Event B**: "The first cell is not empty." This includes any arrangement where cell 1 contains at least one ball.
-* **Event C**: "Both A and B occur." This is the intersection of events A and B.
-* **Event D**: "Either A or B occurs." This is the union of events A and B.
+- The **event A**, "At least two balls are in one cell," includes any arrangement where a single cell contains two or three balls.
+- For **event B**, "The first cell is not empty," this event includes any arrangement where the first cell contains at least one ball.
+- The **event C**, "Both A and B occur," refers to the intersection of events A and B, meaning that both the first cell is not empty and at least one cell contains two or more balls.
+- In the **event D**, "Either A or B occurs," this event represents the union of events A and B, meaning that either the first cell is not empty, or at least two balls are in one cell, or both.
 
 #### Probability Calculations
 
@@ -262,8 +254,8 @@ The elementary events are represented by the arrangements of the balls across th
 
 Events of Interest:
 
-* **Event A**: "At least two balls are in one cell." This event includes arrangements where any cell has two or three balls.
-* **Event B**: "The first cell is not empty." This event includes arrangements where there is at least one ball in the first cell.
+- The **event A**, "At least two balls are in one cell," includes all arrangements where any cell contains two or more balls. This covers situations where a single cell has either two or three balls.
+- For **event B**, "The first cell is not empty," the event consists of all arrangements where the first cell contains at least one ball. This means the first cell cannot be empty in any valid outcome.
 
 #### Probability Calculations
 
