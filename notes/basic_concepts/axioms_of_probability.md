@@ -38,7 +38,7 @@ $$
 P(\text{any specific number}) = \frac{1}{6}
 $$
 
-#### 1. **Probability of Rolling a 5 or 6: $P(5 \text{ or } 6)$**
+#### 1. Probability of Rolling a 5 or 6
 
 - The events "rolling a 5" and "rolling a 6" are **mutually exclusive**, meaning they cannot happen at the same time (you can't roll both 5 and 6 on a single die roll).
 - To find the probability of either event occurring, we use the addition rule for mutually exclusive events:
@@ -61,7 +61,7 @@ $$
 
 So, the probability of rolling either a 5 or a 6 is $\frac{1}{3}$.
 
-#### 2. **Probability of Rolling an Even or Odd Number: $P(\text{even} \text{ or } \text{odd})$**
+#### 2. Probability of Rolling an Even or Odd Number
 
 - Every number on a die is either even or odd, and no number can be both. These events are **mutually exclusive**, but together they cover the entire sample space $S$.
 - The possible even numbers are $\{2, 4, 6\}$, and the possible odd numbers are $\{1, 3, 5\}$. Since the entire sample space is covered by these two groups, the probability of rolling either an even or an odd number is:
@@ -72,7 +72,7 @@ $$
 
 This makes sense intuitively because the outcome will always be either even or odd on a six-sided die.
 
-#### 3. **Probability of Rolling an Even Number or a 3: $P(\text{even} \text{ or } 3)$**
+#### 3. Probability of Rolling an Even Number or a 3
 
 - The events "rolling an even number" and "rolling a 3" are **mutually exclusive** because 3 is not an even number. 
 - The possible even numbers are $\{2, 4, 6\}$, so:
@@ -107,7 +107,7 @@ $$
 
 So, the probability of rolling either an even number or a 3 is $\frac{2}{3}$.
 
-#### 4. **Probability of Rolling an Even Number or a 4: $P(\text{even} \text{ or } 4)$**
+#### 4. Probability of Rolling an Even Number or a 4
 
 In this case, the events "rolling an even number" and "rolling a 4" are **not mutually exclusive** because 4 is an even number. Therefore, if we simply added the probabilities of both events, we would count the outcome of rolling a 4 twice.
 
@@ -152,7 +152,7 @@ Therefore, the probability of rolling either an even number or a 4 is $\frac{1}{
 ### Example: Deck of Cards
 Let’s break down this card deck probability example with more mathematical rigor and explicit steps to clarify how to calculate these probabilities in detail.
 
-### Example: Probability of Drawing a Heart or a Queen from a Deck of Cards
+#### 1. Probability of Drawing a Heart or a Queen
 
 Consider a standard deck of 52 playing cards, which includes:
 
@@ -161,8 +161,6 @@ Consider a standard deck of 52 playing cards, which includes:
 - The **queen of hearts** belongs to both the hearts group and the queens group, creating an overlap.
 
 We are tasked with calculating the probability of drawing a card that is either a heart or a queen. This is an example where the events are **not mutually exclusive**, as one card (the queen of hearts) belongs to both categories.
-
-#### The Formula to Use:
 
 To find the probability of the union of two events (i.e., a card that is either a heart or a queen), we use the **addition rule** for probabilities:
 
@@ -227,11 +225,9 @@ $$
 
 Thus, the probability of drawing a card that is either a heart or a queen from a deck of 52 cards is $\frac{4}{13}$.
 
-### Example: Drawing an Ace or a Red Card from a Deck of Cards
+#### 2. Drawing an Ace or a Red Card
 
 Consider a standard deck of 52 cards. In this example, we will calculate the probability of drawing a card that is either an **Ace** or a **Red card** (either a heart or a diamond) and demonstrate how the three axioms of probability apply.
-
-#### Problem Setup:
 
 - There are 4 Aces in a deck (one from each suit: hearts, diamonds, clubs, and spades).
 - There are 26 Red cards (13 hearts and 13 diamonds).
@@ -255,7 +251,9 @@ where:
 - $P(B)$ is the probability of drawing a Red card,
 - $P(A \cap B)$ is the probability of drawing a card that is both an Ace and a Red card.
 
-#### Step 1: Calculate $P(\text{Ace})$
+#### Step-by-Step Breakdown:
+
+I. **Calculate $P(\text{Ace})**
 
 There are 4 Aces in the deck, so the probability of drawing an Ace is:
 
@@ -269,7 +267,7 @@ $$
 P(\text{Ace}) \geq 0
 $$
 
-#### Step 2: Calculate $P(\text{Red})$
+II. **Calculate $P(\text{Red})$**
 
 There are 26 Red cards (13 hearts and 13 diamonds) in the deck, so the probability of drawing a Red card is:
 
@@ -279,7 +277,7 @@ $$
 
 Again, this is a non-negative value, confirming **Axiom 1 (Non-Negativity)**.
 
-#### Step 3: Calculate $P(\text{Ace} \cap \text{Red})$
+III. **Calculate $P(\text{Ace} \cap \text{Red})$**
 
 The Ace of hearts and the Ace of diamonds are both Aces and Red cards, so there are 2 cards in the overlap (Ace of hearts and Ace of diamonds). The probability of drawing one of these two cards is:
 
@@ -289,7 +287,7 @@ $$
 
 This probability satisfies **Axiom 1 (Non-Negativity)** as well because it is non-negative.
 
-#### Step 4: Apply the Addition Rule
+IV. **Apply the Addition Rule**
 
 Now we apply the addition rule for probabilities of non-mutually exclusive events:
 
