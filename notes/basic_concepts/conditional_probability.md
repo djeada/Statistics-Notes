@@ -41,7 +41,7 @@ $$
 P(\text{odd}) = \frac{3}{6} = \frac{1}{2}
 $$
 
-##### Conditional probability: $P(4 | \text{odd})$
+##### Probability of rolling a 4 given an odd outcome
 
 The conditional probability $P(4 | \text{odd})$ represents the probability of rolling a 4 given that the outcome is known to be an odd number. Since 4 is an even number, it is impossible to roll a 4 if the die shows an odd number. Therefore, the conditional probability is:
 
@@ -49,7 +49,7 @@ $$
 P(4 | \text{odd}) = 0
 $$
 
-##### Conditional probability: $P(\text{odd} | 4)$
+##### Probability of rolling an odd number given a 4
 
 The conditional probability $P(\text{odd} | 4)$ represents the probability that the die shows an odd number, given that a 4 has been rolled. Again, since 4 is even, this event is impossible, so:
 
@@ -57,7 +57,7 @@ $$
 P(\text{odd} | 4) = 0
 $$
 
-##### Conditional Probability: $P(4 | \text{even})$
+##### Probability of rolling a 4 given an even outcome
 
 $P(4 | \text{even})$ represents the probability of rolling a 4, given that we know the die shows an even number.
 
@@ -82,7 +82,7 @@ $$
 
 Thus, the probability of rolling a 4 given that an even number has been rolled is $\frac{1}{3}$.
 
-##### Conditional Probability: $P(\text{even} | 4)$
+##### Probability of rolling an even number given a 4
 
 $P(\text{even} | 4)$ represents the probability that the number rolled is even, given that the die shows a 4. This is an easy case because 4 is already an even number. So, we expect $P(\text{even} | 4) = 1$, but let's confirm it using the conditional probability formula:
 
@@ -151,11 +151,11 @@ $$
 
 Here, $P(A|B)$ is the conditional probability of event A given that event B has occurred. It represents the probability of A under the condition that B is known to have occurred.
 
-### Example: Probabilities of Drawing Two Cards Consecutively from a Deck
+#### Example: Drawing Two Cards Consecutively from a Deck
 
 We will compute the probability of two different card-drawing scenarios from a standard deck of 52 playing cards. Throughout the process, we will refer to the **three axioms of probability** where applicable.
 
-#### Scenario 1: Probability of Drawing Two Diamonds Consecutively
+##### Scenario 1: Probability of Drawing Two Diamonds Consecutively
 
 I. **First Draw (Probability of Drawing a Diamond)**:  
 
@@ -195,7 +195,7 @@ This probability satisfies **Axiom 3 (Additivity)**, since we are correctly comb
 
 ![40ae7df7-57fc-413d-8054-d592e9256bc8](https://github.com/djeada/Statistics-Notes/assets/37275728/dc0b84d6-ff74-4681-b329-f67a53512282)
 
-#### Scenario 2: Probability of Drawing an Ace Followed by a King
+##### Scenario 2: Probability of Drawing an Ace Followed by a King
 
 I. **First Draw (Probability of Drawing an Ace)**:  
 
