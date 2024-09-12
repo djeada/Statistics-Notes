@@ -4,7 +4,7 @@ The Central Limit Theorem (CLT) is a fundamental concept in statistics, explaini
 
 ### Mathematical Background
 
-- **Statement**: The CLT states that if you have a population with a mean $\mu$ and a standard deviation $\sigma$, and you take sufficiently large random samples from this population (with replacement), then the distribution of the sample means will approximate a normal distribution.
+- The CLT states that if you have a population with a mean $\mu$ and a standard deviation $\sigma$, and you take sufficiently large random samples from this population (with replacement), then the distribution of the sample means will approximate a normal distribution.
 - The mean of the sample means ($\bar{X}$) will be approximately equal to the population mean ($\mu$).
 - The standard deviation of the sample means, also known as the standard error, will be $\frac{\sigma}{\sqrt{n}}$, where $n$ is the sample size.
 
@@ -20,20 +20,21 @@ converges in distribution to a standard normal distribution. Mathematically, thi
 
 $$P\left(\frac{X_1 + X_2 + \ldots + X_n - n\mu}{\sigma\sqrt{n}} \leq a\right) \to \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{a} e^{-x^2/2} \, dx$$
 
+Key Points:
 
-### Key Points
-
-1. **Sufficiently Large Samples**: "Large" is typically considered to be a sample size of 30 or more, though this can vary based on the distribution's initial shape.
-
-2. **Independence**: Samples should be independent of each other.
-
-3. **Sample Means**: It's the distribution of the means of these samples that becomes normal, not the distribution of the individual data points.
+1. "Large" is typically considered to be a sample size of 30 or more, though this can vary based on the distribution's initial shape.
+2. Samples should be independent of each other.
+3. It's the distribution of the means (and other statistics like sum and percentage) of these samples that becomes normal, not the distribution of the individual data points (it can still be skewed).
 
 ### Implications and Applications
 
-- **Universal Applicability**: The CLT is applicable to almost any population distribution, given a sufficiently large sample size. This includes distributions that are not normally distributed.
-- **Predictive Power**: It allows statisticians to make inferences about population parameters using sample statistics, particularly when dealing with large datasets.
-- **Practicality in Sampling**: It underpins many statistical procedures and experiments, where it's often impractical or impossible to observe an entire population.
+The CLT allows us to use the normal distribution to approximate probabilities and percentages in large samples. For instance:
+
+In an online game where you have a 20% chance of winning a small prize, the number of small prizes won in nn plays follows a binomial distribution, which can be approximated by a normal distribution when nn is large.
+
+- The CLT is applicable to almost any population distribution, given a sufficiently large sample size. This includes distributions that are not normally distributed.
+- It allows statisticians to make inferences about population parameters using sample statistics, particularly when dealing with large datasets.
+- It underpins many statistical procedures and experiments, where it's often impractical or impossible to observe an entire population.
 
 ### Limitations
 
@@ -51,30 +52,38 @@ A histogram of the sample means will tend to form a bell-shaped curve as the num
 - **Population Size**: 10,000 data points.
 - **Sample Details**: Number of Samples = 1000, Sample Size = 50.
 
-#### Calculation of Sample Means
+The plot below shows the non-normal exponential distribution, which is right-skewed:
+
+![output(8)](https://github.com/user-attachments/assets/66b67dc3-a589-41a3-b812-0b9fb347f78b)
+
+#### Distribution of Sample Means 
 
 - **Method**: For each of the 1000 samples, a sample mean is calculated.
 - **Formula**: $\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$, where $\bar{x}$ is the sample mean, $n$ is the sample size, and $x_i$ are the data points in the sample.
 
-#### Visualization
+The second plot demonstrates the distribution of sample means, where the sample means form a bell-shaped (approximately normal) distribution, even though the original population is non-normal. This illustrates the Central Limit Theorem in action.
 
-- A histogram is created to show the distribution of these 1000 sample means.
-- According to the Central Limit Theorem, this distribution should approximate a normal distribution.
+![output(9)](https://github.com/user-attachments/assets/207b027a-b3f9-4d92-beca-c7a1517de754)
 
-![fbb216aa-d334-4871-bd7d-bbc581bcb657](https://github.com/djeada/Statistics-Notes/assets/37275728/fba99241-8f11-4cc2-98ac-5951bd02e6f7)
-
-#### Results
-
-- **Mean of Population Data**: Approximately 1.01.
-- **Mean of Sample Means**: Also approximately 1.01. This indicates that the average of the sample means is very close to the population mean, aligning with the CLT's prediction.
-- **Standard Error**: Calculated as $\frac{\sigma}{\sqrt{n}}$, where $\sigma$ is the population standard deviation and $n$ is the sample size. The calculated standard error was approximately 0.14.
+- **Mean of Population Data**: Approximately 0.9775.
+- **Mean of Sample Means**: Also approximately 0.9843. This indicates that the average of the sample means is very close to the population mean, aligning with the CLT's prediction.
+- **Standard Error**: Calculated as $\frac{\sigma}{\sqrt{n}}$, where $\sigma$ is the population standard deviation and $n$ is the sample size. The calculated standard error was approximately 0.1378.
 - The histogram of the sample means formed a bell-shaped curve, indicating a normal distribution as predicted by the Central Limit Theorem.
 - The close alignment of the mean of the sample means with the population mean, and the calculated standard error, further confirm the theorem's predictions.
 - This example underscores the theorem's key insight: for a sufficiently large sample size, the sampling distribution of the sample mean will approximate a normal distribution, regardless of the population's original distribution.
 
-Let's improve these notes by introducing proper mathematical rigor, clearly defining the steps, and ensuring each calculation is explained thoroughly. The Central Limit Theorem (CLT) is a powerful tool for approximating the distribution of the sample mean, particularly when dealing with larger sample sizes, even if the population distribution is not normal. Below is a revised version of your example:
+### Standardizing Using CLT
 
-### Example: Applying the Central Limit Theorem (CLT)
+    To standardize a sample statistic:
+    z=statistic−expected valueSE of the statistic
+    z=SE of the statisticstatistic−expected value​
+    For example, if we sample nn incomes with population mean μ=67,000μ=67,000 and standard deviation σ=38,000σ=38,000, the standard error for the sample mean is:
+    SE(xˉn)=38,000n
+    SE(xˉn​)=n
+
+​38,000​
+
+### Example: Applying CLT
 
 Consider a scenario where the heights of a certain plant species are normally distributed with a population mean $\mu = 15$ cm and a population standard deviation $\sigma = 3$ cm. We will analyze random samples of different sizes and calculate the probability that the sample mean falls between 14 cm and 16 cm.
 
