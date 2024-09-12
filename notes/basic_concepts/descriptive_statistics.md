@@ -18,17 +18,20 @@ Be careful cumulative frequencies don't make sense when the data doesn't have na
 
 ### Example: List of People and Their Sibling Count
 
-1. Alice - 2 siblings
-2. Bob - 0 siblings
-3. Charlie - 1 sibling
-4. Dana - 3 siblings
-5. Elliot - 1 sibling
-6. Fatima - 2 siblings
-7. George - 0 siblings
-8. Hina - 4 siblings
-9. Ivan - 1 sibling
-10. Julia - 2 siblings
+Consider a dataset of people and their corresponding number of siblings:
 
+1. Alice - 2 siblings  
+2. Bob - 0 siblings  
+3. Charlie - 1 sibling  
+4. Dana - 3 siblings  
+5. Elliot - 1 sibling  
+6. Fatima - 2 siblings  
+7. George - 0 siblings  
+8. Hina - 4 siblings  
+9. Ivan - 1 sibling  
+10. Julia - 2 siblings  
+
+This dataset can be organized into a frequency distribution table based on the number of siblings:
 
 | Number of Siblings | Frequency | Relative Frequency | Cumulative Relative Frequency |
 |--------------------|-----------|--------------------|-------------------------------|
@@ -38,6 +41,19 @@ Be careful cumulative frequencies don't make sense when the data doesn't have na
 | 3                  | 1         | 10%                | 90%                           |
 | 4                  | 1         | 10%                | 100%                          |
 
+Explanation:
+
+- **Number of Siblings** represents the possible values for the number of siblings a person has.
+- The **frequency** column shows how many people have a given number of siblings. For example, 2 people have 0 siblings, 3 people have 1 sibling, and so on.
+- The **relative frequency** is the proportion of people in each category, expressed as a percentage. It is calculated as:
+
+$$
+\text{Relative Frequency} = \frac{\text{Frequency}}{\text{Total Number of People}} \times 100
+$$
+  
+In this case, the total number of people is 10. So, for 0 siblings, the relative frequency is $\frac{2}{10} \times 100 = 20\% $.
+
+- **Cumulative Relative Frequency** represents the cumulative sum of the relative frequencies as we move down the table. It shows the percentage of people with a number of siblings less than or equal to the current value. For example, 50% of the people have 1 or fewer siblings.
 
 ### Continuous data
 
@@ -290,31 +306,61 @@ $$
 \frac{\text{Number of values less than the given value}}{\text{Total number of values}} \times 100
 $$
 
-#### Example
+#### Example: Exam Scores
 
-Consider a dataset of exam scores: $[40, 30, 15, 24, 20, 22, 35]$.
+Consider a dataset of exam scores $S = [40, 30, 15, 24, 20, 22, 35]$. We aim to calculate the 30th percentile of this dataset.
 
-Let's calculate the 30th percentile of this dataset.
+**Step 1: Sort the Dataset**
 
-Sort the dataset in ascending order: $[15, 20, 22, 24, 30, 35, 40]$.
+First, sort the dataset $S$ in ascending order:
 
-Calculate the rank (i) using the formula:
+$$
+S_{sorted} = [15, 20, 22, 24, 30, 35, 40]
+$$
 
-$$i = \frac{P \times (n + 1)}{100}$$
+The dataset contains $n = 7$ elements.
 
-Where P is the percentile (in our case, 30) and n is the total number of values (7).
+**Step 2: Calculate the Rank Index for the 30th Percentile**
 
-$$i = \frac{30 \times (7 + 1)}{100} = 2.4$$
+To find the position $i_P$ corresponding to the $P$-th percentile, we use the formula:
 
-Since i is not an integer, interpolate between the two nearest values in the sorted dataset:
+$$
+i_P = \frac{P \times (n + 1)}{100}
+$$
 
-$$value = (1 - r) \times value_i + r \times value_{i+1}$$
+where $P = 30$ (the desired percentile) and $n = 7$ (the number of data points).
 
-Where r is the decimal part of i (0.4 in this case), and $value_i$ and $value_{i+1}$ are the 2nd and 3rd values in the sorted dataset (20 and 22, respectively).
+Substituting in the values:
 
-$$value = (1 - 0.4) \times 20 + 0.4 \times 22 = 20.8$$
+$$
+i_{30} = \frac{30 \times (7 + 1)}{100} = \frac{240}{100} = 2.4
+$$
 
-So, the 30th percentile of the dataset is 20.8.
+Since $i_{30} = 2.4$, the position is not an integer. This means the 30th percentile lies between the 2nd and 3rd values in the sorted dataset, requiring interpolation.
+
+**Step 3: Interpolation**
+
+To perform interpolation, let:
+
+- $\lfloor i_P \rfloor = 2$ (the integer part, corresponding to the 2nd value in the sorted dataset, $S_{sorted}[2] = 20$),
+- $\lceil i_P \rceil = 3$ (the next integer, corresponding to the 3rd value, $S_{sorted}[3] = 22$),
+- $r = i_P - \lfloor i_P \rfloor = 0.4$ (the fractional part).
+
+Now apply linear interpolation using the formula:
+
+$$
+\text{Interpolated value} = (1 - r) \times S_{sorted}[\lfloor i_P \rfloor] + r \times S_{sorted}[\lceil i_P \rceil]
+$$
+
+Substitute the values:
+
+$$
+\text{Interpolated value} = (1 - 0.4) \times 20 + 0.4 \times 22
+$$
+
+$$
+= 0.6 \times 20 + 0.4 \times 22 = 12 + 8.8 = 20.8
+$$
 
 ![5ea8e097-b512-40b2-8959-b9d88f4657af](https://github.com/djeada/Statistics-Notes/assets/37275728/f940e95e-4e08-4696-ab10-618cdb49b6da)
 
@@ -405,6 +451,6 @@ The boxplot below provides a visual summary of the distribution of the dataset:
 - The **third quartile (Q3)** is 32.5, showing that 75% of the data points are less than or equal to this value.
 - The **minimum value** in the dataset is approximately 15, as indicated by the left whisker.
 - The **maximum value** is around 40, as indicated by the right whisker.
-- The **interquartile range (IQR)** is 11.5, calculated as \(32.5 - 21.0\), representing the spread of the middle 50% of the data.
+- The **interquartile range (IQR)** is 11.5, calculated as \(32.5 - 21.0$, representing the spread of the middle 50% of the data.
 - The **distribution** appears slightly skewed to the right, as the range from the median to the maximum is larger than the range from the median to the minimum.
 - There are **no visible outliers**, as no points fall outside the whiskers on either side of the box.
