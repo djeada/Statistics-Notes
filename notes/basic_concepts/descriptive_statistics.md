@@ -328,38 +328,83 @@ To find the quartile thresholds, use the following quantiles:
 - Second Quartile (Median): $0.5$
 - Third Quartile: $0.75$
 
-#### Example
+#### Example: Exam Scores
 
-Consider a dataset of exam scores: $[40, 30, 15, 24, 20, 22, 35]$.
+Consider a dataset of exam scores $S = [40, 30, 15, 24, 20, 22, 35]$. To calculate the quartiles, we need to compute the 25th percentile ($Q_1$), the 50th percentile (median, $Q_2$), and the 75th percentile ($Q_3$).
 
-To calculate quartiles, follow these steps:
+**Step 1: Sort the Dataset**
 
-Calculate the 25th, 50th (median), and 75th percentiles using the same method as above.
+First, sort the dataset $S$ in ascending order:
 
-For the 25th percentile (Q1):
+$$
+S_{sorted} = [15, 20, 22, 24, 30, 35, 40]
+$$
 
-$$i = \frac{25 \times (7 + 1)}{100} = 2$$
+The dataset contains $n = 7$ elements.
 
-Since i is not an integer, the value is the 2nd value in the sorted dataset:
+**Step 2: Calculate the Position Index for Each Quartile**
 
-$$Q1 = 20$$
+For a dataset of size $n$, the position index $i_q$ for the $q$-th percentile is calculated using the formula:
 
-For the 50th percentile (Q2):
+$$
+i_q = \frac{q \times (n + 1)}{100}
+$$
 
-$$i = \frac{50 \times (7 + 1)}{100} = 4$$
+where $q$ is the desired percentile, and $n$ is the number of data points.
 
-Since i is an integer, the value is the 4th value in the sorted dataset:
+**First Quartile (Q1)**
 
-$$Q2 = 24$$
+For $q = 25$ (first quartile, $Q_1$):
 
-For the 75th percentile (Q3):
+$$
+i_1 = \frac{25 \times (7 + 1)}{100} = \frac{200}{100} = 2
+$$
 
-$$i = \frac{75 \times (7 + 1)}{100} = 6$$
+Since $i_1 = 2$, which is an integer, the first quartile corresponds exactly to the 2nd value in the sorted dataset:
 
-Since i is an integer, the value is the 6th value in the sorted dataset:
+$$
+Q_1 = S_{sorted}[2] = 20
+$$
 
-$$Q3 = 35$$
+**Second Quartile (Q2)**
 
-So, the quartiles of the dataset are Q1 = 20, Q2 = 24, and Q3 = 35.
+For $q = 50$ (second quartile, or median, $Q_2$):
+
+$$
+i_2 = \frac{50 \times (7 + 1)}{100} = \frac{400}{100} = 4
+$$
+
+Since $i_2 = 4$ is an integer, the second quartile corresponds to the 4th value in the sorted dataset:
+
+$$
+Q_2 = S_{sorted}[4] = 24
+$$
+
+**Third Quartile (Q3)**
+
+For $q = 75$ (third quartile, $Q_3$):
+
+$$
+i_3 = \frac{75 \times (7 + 1)}{100} = \frac{600}{100} = 6
+$$
+
+Since $i_3 = 6$ is an integer, the third quartile corresponds to the 6th value in the sorted dataset:
+
+$$
+Q_3 = S_{sorted}[6] = 35
+$$
+
+**Visualization**
+
+The boxplot below provides a visual summary of the distribution of the dataset:
 
 ![b0f49b50-ef84-4a8c-908f-e57b69fcd874](https://github.com/djeada/Statistics-Notes/assets/37275728/5b77b42b-4b08-4e69-b33e-7bb36e4d2aae)
+
+- The **first quartile (Q1)** is 21.0, indicating that 25% of the data points are less than or equal to this value.
+- The **median** is 24.0, meaning that 50% of the data points are less than or equal to this value, and 50% are greater.
+- The **third quartile (Q3)** is 32.5, showing that 75% of the data points are less than or equal to this value.
+- The **minimum value** in the dataset is approximately 15, as indicated by the left whisker.
+- The **maximum value** is around 40, as indicated by the right whisker.
+- The **interquartile range (IQR)** is 11.5, calculated as \(32.5 - 21.0\), representing the spread of the middle 50% of the data.
+- The **distribution** appears slightly skewed to the right, as the range from the median to the maximum is larger than the range from the median to the minimum.
+- There are **no visible outliers**, as no points fall outside the whiskers on either side of the box.
