@@ -22,8 +22,6 @@ $$
 
 Here, $P(A|B)$ is the conditional probability of event A given that event B has occurred. It represents the probability of A under the condition that B is known to have occurred.
 
-Let’s approach the problem of calculating probabilities in the context of drawing cards, and explicitly refer to the **Axioms of Probability** throughout the solution.
-
 ### Example: Probabilities of Drawing Two Cards Consecutively from a Deck
 
 We will compute the probability of two different card-drawing scenarios from a standard deck of 52 playing cards. Throughout the process, we will refer to the **three axioms of probability** where applicable.
