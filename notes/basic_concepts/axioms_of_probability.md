@@ -174,7 +174,7 @@ where:
 - $P(\text{Queen})$ is the probability of drawing a queen,
 - $P(\text{Heart} \cap \text{Queen})$ is the probability of drawing a card that is both a heart and a queen (i.e., the queen of hearts).
 
-#### Step-by-Step Breakdown:
+Step-by-Step Breakdown:
 
 I. **Calculate $P(\text{Heart})$**:
 
@@ -251,7 +251,7 @@ where:
 - $P(B)$ is the probability of drawing a Red card,
 - $P(A \cap B)$ is the probability of drawing a card that is both an Ace and a Red card.
 
-#### Step-by-Step Breakdown:
+Step-by-Step Breakdown:
 
 I. **Calculate $P(\text{Ace})**
 
