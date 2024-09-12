@@ -98,7 +98,7 @@ Where:
 Thus, the confidence interval is:
 
 $$
-[60\% \pm 2 \times 1.4\%] = [60\% \pm 2.8\%] = [57.2\%, 62.8\%]
+60\\% \pm 2 \times 1.4\\% = 60\\% \pm 2.8\\% = 57.2\\% \text{ to } 62.8\\%
 $$
 
 This means we are 95% confident that the true population approval percentage falls between 57.2% and 62.8%.
@@ -157,11 +157,11 @@ $$
 Using the **95% confidence level** ($z = 1.96$), the confidence interval is calculated as:
 
 $$
-\text{Confidence Interval} = 60% \pm 1.96 \times 1.55%
+\text{Confidence Interval} = 60\\% \pm 1.96 \times 1.55\\%
 $$
 
 $$
-\text{Confidence Interval} = 60% \pm 3.04% = 56.96% 63.04%
+\text{Confidence Interval} = 60\\% \pm 3.04\% = 56.96\\% \text{ to } 63.04\\%
 $$
 
 This means we are 95% confident that the true approval rating lies between 56.96% and 63.04%.
