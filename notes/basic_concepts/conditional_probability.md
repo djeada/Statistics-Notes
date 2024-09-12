@@ -1,4 +1,147 @@
-## The Multiplication Rule in Probability
+## Conditional Probability and Multiplication Rule
+
+**Conditional Probability** is the likelihood of an event occurring given that another event has already occurred. It is denoted as \( P(A|B) \), representing the probability of event \( A \) happening, assuming event \( B \) has already taken place. This concept is crucial in understanding dependent events in probability theory. The **Multiplication Rule** uses conditional probability to calculate the probability of the intersection of two events. For dependent events, it is written as \( P(A \cap B) = P(A|B) \times P(B) \). If the events are independent, it simplifies to \( P(A \cap B) = P(A) \times P(B) \), as \( P(A|B) = P(A) \) in this case. This rule helps in determining joint probabilities of multiple events.
+
+### Conditional Probability
+
+Conditional probability refers to the probability of an event $A$ occurring given that another event $B$ has already occurred. It quantifies how the occurrence of one event affects the likelihood of another event. The formal definition of conditional probability is given by:
+
+$$
+P(A|B) = \frac{P(A \cap B)}{P(B)}
+$$
+
+Where:
+
+- $P(A|B)$ is the conditional probability of event $A$ given that $B$ has occurred.
+- $P(A \cap B)$ is the joint probability of both $A$ and $B$ occurring (the probability that both events happen together).
+- $P(B)$ is the probability that event $B$ has occurred, and it must be non-zero (i.e., $P(B) > 0$) for the conditional probability to be well-defined.
+
+Important Notes:
+
+- Conditional probability is only defined when $P(B) \neq 0$.
+- $P(A|B)$ describes how knowledge of $B$ influences our belief about the likelihood of $A$.
+
+#### Example: Rolling a Die
+
+Consider a fair six-sided die, where each face shows a number from 1 to 6, and all outcomes are equally likely. 
+
+I. Probability of rolling a 4:
+
+The probability of rolling a 4 on a six-sided die, $P(4)$, is simply:
+
+$$
+P(4) = \frac{1}{6}
+$$
+
+II. Probability of rolling an odd number:
+
+There are three odd numbers (1, 3, 5) on a six-sided die. The probability of rolling any odd number, $P(\text{odd})$, is:
+
+$$
+P(\text{odd}) = \frac{3}{6} = \frac{1}{2}
+$$
+
+##### Conditional probability: $P(4 | \text{odd})$
+
+The conditional probability $P(4 | \text{odd})$ represents the probability of rolling a 4 given that the outcome is known to be an odd number. Since 4 is an even number, it is impossible to roll a 4 if the die shows an odd number. Therefore, the conditional probability is:
+
+$$
+P(4 | \text{odd}) = 0
+$$
+
+##### Conditional probability: $P(\text{odd} | 4)$
+
+The conditional probability $P(\text{odd} | 4)$ represents the probability that the die shows an odd number, given that a 4 has been rolled. Again, since 4 is even, this event is impossible, so:
+
+$$
+P(\text{odd} | 4) = 0
+$$
+
+##### Conditional Probability: $P(4 | \text{even})$
+
+$P(4 | \text{even})$ represents the probability of rolling a 4, given that we know the die shows an even number.
+
+To compute this, we apply the formula for conditional probability:
+
+$$
+P(4 | \text{even}) = \frac{P(4 \cap \text{even})}{P(\text{even})}
+$$
+
+- $P(4 \cap \text{even})$: This is the probability of rolling a number that is both 4 and even. Since 4 is an even number, $P(4 \cap \text{even}) = P(4) = \frac{1}{6}$.
+- $P(\text{even})$: The probability of rolling any even number (2, 4, or 6), which is:
+
+$$
+P(\text{even}) = \frac{3}{6} = \frac{1}{2}
+$$
+
+Now, calculate $P(4 | \text{even})$:
+
+$$
+P(4 | \text{even}) = \frac{P(4 \cap \text{even})}{P(\text{even})} = \frac{1/6}{1/2} = \frac{1}{3}
+$$
+
+Thus, the probability of rolling a 4 given that an even number has been rolled is $\frac{1}{3}$.
+
+##### Conditional Probability: $P(\text{even} | 4)$
+
+$P(\text{even} | 4)$ represents the probability that the number rolled is even, given that the die shows a 4. This is an easy case because 4 is already an even number. So, we expect $P(\text{even} | 4) = 1$, but let's confirm it using the conditional probability formula:
+
+$$
+P(\text{even} | 4) = \frac{P(\text{even} \cap 4)}{P(4)}
+$$
+
+- $P(\text{even} \cap 4)$: This is the probability that the number rolled is both 4 and even. Since 4 is an even number, this is just $P(4)$, so $P(\text{even} \cap 4) = P(4) = \frac{1}{6}$.
+- $P(4)$: The probability of rolling a 4 is $\frac{1}{6}$.
+
+Now, calculate $P(\text{even} | 4)$:
+
+$$
+P(\text{even} | 4) = \frac{P(\text{even} \cap 4)}{P(4)} = \frac{1/6}{1/6} = 1
+$$
+
+Thus, the probability that the number is even given that a 4 was rolled is $1$, as expected.
+
+#### Example: Deck of Cards
+
+Now let’s apply conditional probability to a standard deck of 52 playing cards. Suppose we want to calculate the conditional probability of drawing a king given that the card drawn is a heart.
+
+#### Probability of drawing a king:
+
+The probability of drawing any specific card (such as a king) is:
+
+$$
+P(\text{King}) = \frac{4}{52} = \frac{1}{13}
+$$
+
+#### Probability of drawing a heart:
+
+The probability of drawing any heart from the deck is:
+
+$$
+P(\text{Heart}) = \frac{13}{52} = \frac{1}{4}
+$$
+
+##### Joint probability of drawing a king and a heart:
+
+There is exactly one king in the suit of hearts. Therefore, the probability of drawing the king of hearts is:
+
+$$
+P(\text{King} \cap \text{Heart}) = \frac{1}{52}
+$$
+
+##### Conditional probability $P(\text{King}|\text{Heart})$:
+
+Now, applying the formula for conditional probability:
+
+$$
+P(\text{King}|\text{Heart}) = \frac{P(\text{King} \cap \text{Heart})}{P(\text{Heart})} = \frac{1/52}{13/52} = \frac{1}{13}
+$$
+
+Thus, the probability of drawing a king given that the card drawn is a heart is $\frac{1}{13}$.
+
+![65566289-77a5-453b-8f85-ea2de49db0c5](https://github.com/djeada/Statistics-Notes/assets/37275728/b0cc8b8e-b795-4998-a2df-a5f5f131c23d)
+
+### The Multiplication Rule in Probability
 
 The multiplication rule is a fundamental concept in probability theory. It is particularly useful when dealing with the probability of two or more events occurring in sequence or simultaneously. This rule has two forms, depending on whether the events are independent or dependent.
 
@@ -350,145 +493,6 @@ Thus, the probability of rolling at least one six in three rolls is approximatel
 This example demonstrates the use of the **Multiplication Rule** for independent events, **Axiom 2 (Normalization)** to ensure the total probability is 1, and **Axiom 1 (Non-Negativity)** to ensure all probabilities are non-negative.
 
 ![3d0579b3-0e10-41ce-b77d-5fc5528908ee](https://github.com/djeada/Statistics-Notes/assets/37275728/813b1539-531f-4a1f-8248-757aca88bf8c)
-
-### Conditional Probability
-
-Conditional probability refers to the probability of an event $A$ occurring given that another event $B$ has already occurred. It quantifies how the occurrence of one event affects the likelihood of another event. The formal definition of conditional probability is given by:
-
-$$
-P(A|B) = \frac{P(A \cap B)}{P(B)}
-$$
-
-Where:
-
-- $P(A|B)$ is the conditional probability of event $A$ given that $B$ has occurred.
-- $P(A \cap B)$ is the joint probability of both $A$ and $B$ occurring (the probability that both events happen together).
-- $P(B)$ is the probability that event $B$ has occurred, and it must be non-zero (i.e., $P(B) > 0$) for the conditional probability to be well-defined.
-
-Important Notes:
-
-- Conditional probability is only defined when $P(B) \neq 0$.
-- $P(A|B)$ describes how knowledge of $B$ influences our belief about the likelihood of $A$.
-
-#### Example: Rolling a Die
-
-Consider a fair six-sided die, where each face shows a number from 1 to 6, and all outcomes are equally likely. 
-
-I. Probability of rolling a 4:
-
-The probability of rolling a 4 on a six-sided die, $P(4)$, is simply:
-
-$$
-P(4) = \frac{1}{6}
-$$
-
-II. Probability of rolling an odd number:
-
-There are three odd numbers (1, 3, 5) on a six-sided die. The probability of rolling any odd number, $P(\text{odd})$, is:
-
-$$
-P(\text{odd}) = \frac{3}{6} = \frac{1}{2}
-$$
-
-##### Conditional probability: $P(4 | \text{odd})$
-
-The conditional probability $P(4 | \text{odd})$ represents the probability of rolling a 4 given that the outcome is known to be an odd number. Since 4 is an even number, it is impossible to roll a 4 if the die shows an odd number. Therefore, the conditional probability is:
-
-$$
-P(4 | \text{odd}) = 0
-$$
-
-##### Conditional probability: $P(\text{odd} | 4)$
-
-The conditional probability $P(\text{odd} | 4)$ represents the probability that the die shows an odd number, given that a 4 has been rolled. Again, since 4 is even, this event is impossible, so:
-
-$$
-P(\text{odd} | 4) = 0
-$$
-
-##### Conditional Probability: $P(4 | \text{even})$
-
-$P(4 | \text{even})$ represents the probability of rolling a 4, given that we know the die shows an even number.
-
-To compute this, we apply the formula for conditional probability:
-
-$$
-P(4 | \text{even}) = \frac{P(4 \cap \text{even})}{P(\text{even})}
-$$
-
-- $P(4 \cap \text{even})$: This is the probability of rolling a number that is both 4 and even. Since 4 is an even number, $P(4 \cap \text{even}) = P(4) = \frac{1}{6}$.
-- $P(\text{even})$: The probability of rolling any even number (2, 4, or 6), which is:
-
-$$
-P(\text{even}) = \frac{3}{6} = \frac{1}{2}
-$$
-
-Now, calculate $P(4 | \text{even})$:
-
-$$
-P(4 | \text{even}) = \frac{P(4 \cap \text{even})}{P(\text{even})} = \frac{1/6}{1/2} = \frac{1}{3}
-$$
-
-Thus, the probability of rolling a 4 given that an even number has been rolled is $\frac{1}{3}$.
-
-##### Conditional Probability: $P(\text{even} | 4)$
-
-$P(\text{even} | 4)$ represents the probability that the number rolled is even, given that the die shows a 4. This is an easy case because 4 is already an even number. So, we expect $P(\text{even} | 4) = 1$, but let's confirm it using the conditional probability formula:
-
-$$
-P(\text{even} | 4) = \frac{P(\text{even} \cap 4)}{P(4)}
-$$
-
-- $P(\text{even} \cap 4)$: This is the probability that the number rolled is both 4 and even. Since 4 is an even number, this is just $P(4)$, so $P(\text{even} \cap 4) = P(4) = \frac{1}{6}$.
-- $P(4)$: The probability of rolling a 4 is $\frac{1}{6}$.
-
-Now, calculate $P(\text{even} | 4)$:
-
-$$
-P(\text{even} | 4) = \frac{P(\text{even} \cap 4)}{P(4)} = \frac{1/6}{1/6} = 1
-$$
-
-Thus, the probability that the number is even given that a 4 was rolled is $1$, as expected.
-
-### 3. **Example: Deck of Cards**
-
-Now let’s apply conditional probability to a standard deck of 52 playing cards. Suppose we want to calculate the conditional probability of drawing a king given that the card drawn is a heart.
-
-#### Probability of drawing a king:
-
-The probability of drawing any specific card (such as a king) is:
-
-$$
-P(\text{King}) = \frac{4}{52} = \frac{1}{13}
-$$
-
-#### Probability of drawing a heart:
-
-The probability of drawing any heart from the deck is:
-
-$$
-P(\text{Heart}) = \frac{13}{52} = \frac{1}{4}
-$$
-
-#### Joint probability of drawing a king and a heart:
-
-There is exactly one king in the suit of hearts. Therefore, the probability of drawing the king of hearts is:
-
-$$
-P(\text{King} \cap \text{Heart}) = \frac{1}{52}
-$$
-
-#### Conditional probability $P(\text{King}|\text{Heart})$:
-
-Now, applying the formula for conditional probability:
-
-$$
-P(\text{King}|\text{Heart}) = \frac{P(\text{King} \cap \text{Heart})}{P(\text{Heart})} = \frac{1/52}{13/52} = \frac{1}{13}
-$$
-
-Thus, the probability of drawing a king given that the card drawn is a heart is $\frac{1}{13}$.
-
-![65566289-77a5-453b-8f85-ea2de49db0c5](https://github.com/djeada/Statistics-Notes/assets/37275728/b0cc8b8e-b795-4998-a2df-a5f5f131c23d)
 
 ### The Birthday Paradox
 
