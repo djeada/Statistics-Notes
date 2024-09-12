@@ -61,18 +61,28 @@ Continuous data can take any value within a range, making it impractical to calc
 
 Instead, we group continuous data into intervals or ranges and then calculate frequencies for these intervals. This approach simplifies the data and makes it more interpretable.
 
-### Example: Height Measurements (in cm) of a Group of People
+#### Example: Height Measurements of a Group of People
 
-I. Raw Data (Continuous):
+**I. Raw Data (Continuous):**
 
-- 170.2, 165.5, 172.3, 168.7, 171.6, 167.4, 169.5, 174.2, 166.1, 173.5
+Consider the following raw height measurements (in centimeters) of a group of people:
 
-II Grouped into Ranges:
+$$
+[170.2, 165.5, 172.3, 168.7, 171.6, 167.4, 169.5, 174.2, 166.1, 173.5]
+$$
 
-- 165-167,
-- 168-170,
-- 171-173,
+**II. Grouping the Data into Intervals:**
+
+Since the data consists of continuous measurements, it is often useful to group the data into intervals (or "bins") to analyze it more easily. Here, the height data has been grouped into the following intervals (ranges in cm):
+
+- 165-167
+- 168-170
+- 171-173
 - 174-176
+
+**III. Frequency Distribution Table:**
+
+Based on the grouped data, the frequency distribution table is constructed as follows:
 
 | Height Range (cm) | Frequency |
 |-------------------|-----------|
@@ -81,7 +91,16 @@ II Grouped into Ranges:
 | 171 - 173         | 3         |
 | 174 - 176         | 2         |
 
+- **Height Range (cm)** represents the grouped intervals of height. The choice of these intervals provides a clear way to categorize the continuous data.
+- **Frequency** shows the number of people whose heights fall within each respective range. For instance, 2 people have heights between 165 cm and 167 cm, while 3 people have heights between 171 cm and 173 cm.
+
+### Visualization
+
+The histogram below visually represents the frequency distribution of the grouped height data. The horizontal axis represents the height ranges (in cm), while the vertical axis represents the frequency, i.e., the number of people whose heights fall within each range.
+
 ![image](https://github.com/djeada/Statistics-Notes/assets/37275728/5619116b-f65b-47fc-a1cf-a5bfa0640353)
+
+This histogram shows a roughly uniform distribution across the ranges, with slightly more people having heights in the middle ranges (168-173 cm). The plot helps to quickly identify how the data is distributed among different height groups and highlights that the majority of people fall within the middle two ranges (168-173 cm).
 
 ## Measures of Central Tendency
 
