@@ -105,7 +105,7 @@ Thus, the probability that the number is even given that a 4 was rolled is $1$, 
 
 Now let’s apply conditional probability to a standard deck of 52 playing cards. Suppose we want to calculate the conditional probability of drawing a king given that the card drawn is a heart.
 
-#### Probability of drawing a king:
+**I. Probability of drawing a king**:
 
 The probability of drawing any specific card (such as a king) is:
 
@@ -113,7 +113,7 @@ $$
 P(\text{King}) = \frac{4}{52} = \frac{1}{13}
 $$
 
-#### Probability of drawing a heart:
+**II. Probability of drawing a heart**:
 
 The probability of drawing any heart from the deck is:
 
@@ -121,7 +121,7 @@ $$
 P(\text{Heart}) = \frac{13}{52} = \frac{1}{4}
 $$
 
-##### Joint probability of drawing a king and a heart:
+**III. Joint probability of drawing a king and a heart**:
 
 There is exactly one king in the suit of hearts. Therefore, the probability of drawing the king of hearts is:
 
@@ -129,7 +129,7 @@ $$
 P(\text{King} \cap \text{Heart}) = \frac{1}{52}
 $$
 
-##### Conditional probability $P(\text{King}|\text{Heart})$:
+**IV. Conditional probability $P(\text{King}|\text{Heart})$**:
 
 Now, applying the formula for conditional probability:
 
@@ -141,21 +141,7 @@ Thus, the probability of drawing a king given that the card drawn is a heart is 
 
 ![65566289-77a5-453b-8f85-ea2de49db0c5](https://github.com/djeada/Statistics-Notes/assets/37275728/b0cc8b8e-b795-4998-a2df-a5f5f131c23d)
 
-### The Multiplication Rule in Probability
-
-The multiplication rule is a fundamental concept in probability theory. It is particularly useful when dealing with the probability of two or more events occurring in sequence or simultaneously. This rule has two forms, depending on whether the events are independent or dependent.
-
-### Independent Events
-
-Two events A and B are independent if the occurrence of one does not affect the probability of occurrence of the other. For independent events, the multiplication rule states:
-
-$$
-P(A \cap B) = P(A) \times P(B)
-$$
-
-This means the probability of both events A and B occurring is the product of their individual probabilities.
-
-### Dependent Events
+### Multiplication Rule for Dependent Events
 
 If the occurrence of event A in some way influences the occurrence of event B, these events are considered dependent. For dependent events, the probability of both events occurring is given by:
 
@@ -249,7 +235,7 @@ Again, this satisfies **Axiom 3 (Additivity)**, since we are combining the proba
 
 ![20c6bf41-f037-46fa-b741-94f20aa0966f](https://github.com/djeada/Statistics-Notes/assets/37275728/e01bbe6f-a2d3-4109-a290-e9c619b7aa3c)
 
-### Independence of Events
+### Multiplication Rule for Independent Events
 
 In probability theory, **independence** between two events means that the occurrence of one event does not affect the probability of the other. Formally, two events $A$ and $B$ are independent if:
 
@@ -265,40 +251,7 @@ $$
 
 This means that the joint probability of both events occurring is the product of their individual probabilities.
 
-#### Example 1: **Dependent Events in Card Drawing**
-
-Let’s consider two events when drawing cards from a deck without replacement:
-
-- **Event A**: Drawing a king on the first draw.
-- **Event B**: Drawing a king on the second draw.
-
-**Step 1: Calculate $P(A)$** (Probability of drawing a king on the first draw):
-
-There are 4 kings in a deck of 52 cards.
-
-$$
-P(\text{first card King}) = \frac{4}{52} = \frac{1}{13}
-$$
-
-This satisfies **Axiom 1 (Non-Negativity)** because probabilities must be non-negative, and $\frac{1}{13} \geq 0$.
-
-**Step 2: Calculate $P(B|A)$** (Probability of drawing a king on the second draw, given that a king was drawn first):
-
-If a king has already been drawn, there are only 3 kings left and 51 cards remaining. Therefore, the conditional probability is:
-
-$$
-P(\text{second card King | first card King}) = \frac{3}{51}
-$$
-
-This again satisfies **Axiom 1 (Non-Negativity)**.
-
-**Step 3: Compare with $P(B)$** (Probability of drawing a king on the second draw if the first card wasn’t specified):
-
-If the first draw did not occur or was not specified, the probability of drawing a king on the second draw would still be $\frac{4}{52} = \frac{1}{13}$. However, because the first draw affects the deck, $P(B|A) \neq P(B)$.
-
-Since $P(B|A) \neq P(B)$, the events are **not independent**.
-
-#### Example 2: **Independence of Events in Divisibility**
+#### Example: Independence of Events in Divisibility
 
 Now let’s examine an example where two events might be independent, based on the set of integers from 1 to 100. The two events are:
 
@@ -394,17 +347,17 @@ $$
 
 Since $P(A) \cdot P(B) = P(A \cap B)$, the events are now **independent** with this extended set of numbers.
 
-### Example: Probability of At Least One of n Independent Events Occurring
+#### Example: Probability of At Least One of n Independent Events Occurring
 
 In probability theory, when calculating the probability that at least one of several independent events occurs, the easiest method is often using the **complementary rule**. This approach is particularly useful when dealing with independent events, where directly applying the **inclusion-exclusion principle** (from the addition rule) can become cumbersome as the number of events increases.
 
-### Case 1: Three Independent Events
+##### Case 1: Three Independent Events
 
 Consider three independent events $A$, $B$, and $C$. We want to find the probability that **at least one of these events occurs**. 
 
 The complementary approach is easier because it first calculates the probability that **none** of the events occur and then subtracts that from 1 (the total probability of the sample space, by Axiom 2).
 
-#### Step 1: Calculate $P(A^c \cap B^c \cap C^c)$ (Probability that none of the events occur)
+**Step 1: Probability that none of the events occur**
 
 The events $A$, $B$, and $C$ are independent, so the probability that none occur is the product of the individual probabilities that each does not occur:
 
@@ -414,7 +367,7 @@ $$
 
 This step is based on the **Multiplication Rule** for independent events and satisfies **Axiom 1 (Non-Negativity)**, ensuring that each term in the product is non-negative.
 
-#### Step 2: Complement Rule
+**Step 2: Complement Rule**
 
 The probability that **at least one** event occurs is the complement of the probability that none of them occur:
 
@@ -424,7 +377,7 @@ $$
 
 This satisfies **Axiom 2 (Normalization)**, which ensures that the total probability across all possible outcomes sums to 1.
 
-#### Example Calculation:
+**Example Calculation:**
 
 Suppose each of the events $A$, $B$, and $C$ has a probability of occurring equal to $P(A) = P(B) = P(C) = \frac{1}{6}$.
 
@@ -443,11 +396,11 @@ $$
 
 Thus, the probability that at least one of the three events occurs is approximately $0.4213$.
 
-### Case 2: n Independent Events
+##### Case 2: n Independent Events
 
 For $n$ independent events $A_1, A_2, \dots, A_n$, the same complementary approach can be extended.
 
-#### Step 1: Generalize the Complement Rule
+**Step 1: Generalize the Complement Rule**
 
 The probability that **none** of the events occur is:
 
@@ -457,7 +410,8 @@ $$
 
 Again, this is based on the **Multiplication Rule** for independent events.
 
-#### Step 2: Calculate the Complementary Probability
+**Step 2: Calculate the Complementary Probability**
+
 The probability that at least one of the $n$ independent events occurs is:
 
 $$
@@ -466,11 +420,11 @@ $$
 
 This applies **Axiom 2 (Normalization)**, ensuring that the probability of the entire sample space (i.e., at least one event occurring) equals 1.
 
-### Dice Example: At Least One Six in Three Rolls
+#### Dice Example: At Least One Six in Three Rolls
 
 Consider rolling a fair six-sided die three times, and let $A$, $B$, and $C$ represent the events of rolling a six on the first, second, and third rolls, respectively.
 
-#### Step 1: Calculate the Complementary Probability
+**Step 1: Calculate the Complementary Probability**
 
 - The probability of rolling a six on any roll is $P(A) = P(B) = P(C) = \frac{1}{6}$.
 - The probability of **not** rolling a six on any roll is $P(A^c) = P(B^c) = P(C^c) = \frac{5}{6}$.
@@ -480,7 +434,7 @@ $$
 P(A^c \cap B^c \cap C^c) = \left(\frac{5}{6}\right)^3 = \frac{125}{216}
 $$
 
-#### Step 2: Calculate the Probability of Rolling at Least One Six
+**Step 2: Calculate the Probability of Rolling at Least One Six**
 
 The probability of rolling at least one six in the three rolls is:
 
