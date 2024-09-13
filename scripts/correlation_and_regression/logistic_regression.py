@@ -1,103 +1,58 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
-from typing import Tuple
+from scipy.special import expit  # Sigmoid function
 
-def generate_data(seed: int, num_samples: int, w_true: np.ndarray, b_true: float) -> Tuple[np.ndarray, np.ndarray]:
-    """Generates synthetic data for logistic regression.
+# Step 1: Input data for hours studied (x1), practice exams (x2), and pass/fail outcomes (y)
+data = {'Hours Studied (x1)': [2, 4, 5, 6, 8],
+        'Practice Exams (x2)': [1, 2, 2, 3, 4],
+        'Pass (y)': [0, 0, 1, 1, 1]}
+df_logistic = pd.DataFrame(data)
 
-    Args:
-        seed (int): Random seed for reproducibility.
-        num_samples (int): Number of samples to generate.
-        w_true (np.ndarray): True weights.
-        b_true (float): True bias.
+# Step 2: Design matrix X and response vector y
+X = np.column_stack((np.ones(df_logistic.shape[0]), df_logistic['Hours Studied (x1)'], df_logistic['Practice Exams (x2)']))
+y = df_logistic['Pass (y)'].values
 
-    Returns:
-        Tuple[np.ndarray, np.ndarray]: Feature matrix and labels.
-    """
-    np.random.seed(seed)
-    x = np.random.normal(0, 1, (num_samples, 2))
-    z = np.dot(x, w_true) + b_true
-    y_true = (z > 0).astype(int)
-    y = y_true + np.random.normal(0, 0.1, num_samples)
-    return x, y
+# Step 3: Initialize coefficients (beta_0, beta_1, beta_2)
+beta_hat = np.array([-9.28, 1.23, 0.98])  # Pre-computed coefficients from your example
 
-def sigmoid(z: np.ndarray) -> np.ndarray:
-    """Sigmoid activation function.
+# Logistic function for predicted probabilities
+def logistic_function(X, beta):
+    return expit(np.dot(X, beta))
 
-    Args:
-        z (np.ndarray): Input array.
+# Step 4: Generate the decision boundary
+# Create a mesh grid for plotting the decision boundary
+x1_range = np.linspace(df_logistic['Hours Studied (x1)'].min() - 1, df_logistic['Hours Studied (x1)'].max() + 1, 200)
+x2_range = np.linspace(df_logistic['Practice Exams (x2)'].min() - 1, df_logistic['Practice Exams (x2)'].max() + 1, 200)
+X1, X2 = np.meshgrid(x1_range, x2_range)
 
-    Returns:
-        np.ndarray: Sigmoid of input array.
-    """
-    return 1 / (1 + np.exp(-z))
+# Compute the logistic regression predictions on the mesh grid
+Z = logistic_function(np.column_stack((np.ones(X1.ravel().shape[0]), X1.ravel(), X2.ravel())), beta_hat)
+Z = Z.reshape(X1.shape)
 
-def gradient(x: np.ndarray, y: np.ndarray, w: np.ndarray) -> np.ndarray:
-    """Computes the gradient for logistic regression.
+# Plotting the decision boundary
+plt.figure(figsize=(10, 6))
+# Contour plot for the decision boundary (probability = 0.5 line)
+plt.contourf(X1, X2, Z, levels=[0, 0.5, 1], alpha=0.2, colors=['red', 'green'])
 
-    Args:
-        x (np.ndarray): Feature matrix.
-        y (np.ndarray): Labels.
-        w (np.ndarray): Weights.
+# Step 5: Plotting the dataset
+# Students who failed
+plt.scatter(df_logistic[df_logistic['Pass (y)'] == 0]['Hours Studied (x1)'],
+            df_logistic[df_logistic['Pass (y)'] == 0]['Practice Exams (x2)'], 
+            color='red', label='Fail (y=0)', s=100)
 
-    Returns:
-        np.ndarray: Gradient vector.
-    """
-    z = np.dot(x, w)
-    return np.dot(x.T, y - sigmoid(z))
+# Students who passed
+plt.scatter(df_logistic[df_logistic['Pass (y)'] == 1]['Hours Studied (x1)'],
+            df_logistic[df_logistic['Pass (y)'] == 1]['Practice Exams (x2)'], 
+            color='green', label='Pass (y=1)', s=100)
 
-def fit_logistic_regression(x: np.ndarray, y: np.ndarray, lr: float, num_iterations: int) -> np.ndarray:
-    """Fits a logistic regression model using gradient descent.
+# Step 6: Add labels, title, and decision boundary
+plt.title("Logistic Regression: Hours Studied vs Practice Exams\nwith Decision Boundary", fontsize=14)
+plt.xlabel("Hours Studied (x1)", fontsize=12)
+plt.ylabel("Practice Exams (x2)", fontsize=12)
 
-    Args:
-        x (np.ndarray): Feature matrix.
-        y (np.ndarray): Labels.
-        lr (float): Learning rate.
-        num_iterations (int): Number of iterations for gradient descent.
+# Display legend
+plt.legend()
 
-    Returns:
-        np.ndarray: Optimized weights.
-    """
-    w = np.zeros(x.shape[1], dtype=np.float64)
-    for i in range(num_iterations):
-        w += lr * gradient(x, y, w)
-    return w
-
-def visualize_decision_boundary(x: np.ndarray, y: np.ndarray, w: np.ndarray) -> None:
-    """Visualizes the decision boundary of the logistic regression.
-
-    Args:
-        x (np.ndarray): Feature matrix.
-        y (np.ndarray): Labels.
-        w (np.ndarray): Weights.
-    """
-    plt.figure(figsize=(8, 6))
-    plt.scatter(x[:, 0], x[:, 1], c=y, cmap="bwr", alpha=0.6)
-
-    # Create a mesh to plot the decision boundary
-    x_min, x_max = x[:, 0].min() - 1, x[:, 0].max() + 1
-    y_min, y_max = x[:, 1].min() - 1, x[:, 1].max() + 1
-    xx, yy = np.meshgrid(np.linspace(x_min, x_max, 100), np.linspace(y_min, y_max, 100))
-    Z = sigmoid(np.dot(np.c_[xx.ravel(), yy.ravel()], w)).reshape(xx.shape)
-
-    plt.contourf(xx, yy, Z, alpha=0.4, cmap="bwr")
-    plt.xlabel("x1")
-    plt.ylabel("x2")
-    plt.title("Logistic Regression with Gradient Descent")
-    plt.show()
-
-# Constants
-NUM_SAMPLES = 100
-W_TRUE = np.array([1, -1])
-B_TRUE = 0.5
-LEARNING_RATE = 0.1
-NUM_ITERATIONS = 1000
-
-# Generate synthetic data
-x, y = generate_data(42, NUM_SAMPLES, W_TRUE, B_TRUE)
-
-# Perform gradient descent
-w = fit_logistic_regression(x, y, LEARNING_RATE, NUM_ITERATIONS)
-
-# Visualize the results
-visualize_decision_boundary(x, y, w)
+# Show the plot
+plt.show()
