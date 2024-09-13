@@ -24,8 +24,8 @@ $$
 
 Where:
 
-- $\text{Cov}(X, Y) $ is the covariance between variables $X $ and $Y $.
-- $\sigma_X $ and $\sigma_Y $ are the standard deviations of $X $ and $Y $, respectively.
+- $\text{Cov}(X, Y) $ is the covariance between variables $X$ and $Y$.
+- $\sigma_X$ and $\sigma_Y$ are the standard deviations of $X$ and $Y$, respectively.
 
 **Alternative Formula**:
 
@@ -36,8 +36,8 @@ $$
 Where:
 
 - $n $ is the number of observations.
-- $X_i $ and $Y_i $ are the $i $-th observations of $X $ and $Y $.
-- $\bar{X} $ and $\bar{Y} $ are the sample means of $X $ and $Y $.
+- $X_i $ and $Y_i $ are the $i $-th observations of $X$ and $Y$.
+- $\bar{X} $ and $\bar{Y} $ are the sample means of $X$ and $Y$.
 
 ### Interpretation
 
@@ -59,7 +59,7 @@ Where:
 
 #### Dataset
 
-Consider the following data on the number of hours studied ($X $) and test scores ($Y $):
+Consider the following data on the number of hours studied ($X$) and test scores ($Y$):
 
 | Observation ($i $) | Hours Studied ($X_i $) | Test Score ($Y_i $) |
 |-----------------------|---------------------------|-------------------------|
@@ -138,7 +138,7 @@ Where:
 
 ### Calculation Steps
 
-1. **Assign Ranks** to the data points in $X $ and $Y $ separately.
+1. **Assign Ranks** to the data points in $X$ and $Y$ separately.
 2. **Compute the Differences of Ranks** $d_i $.
 3. **Square the Differences** $d_i^2 $.
 4. **Compute $\rho $** using the formula.
@@ -206,7 +206,7 @@ $$
 
 ## Correlation of Two Random Variables
 
-For two random variables $X $ and $Y $ with positive variances, the **population correlation coefficient** $\rho_{XY} $ is defined as:
+For two random variables $X$ and $Y$ with positive variances, the **population correlation coefficient** $\rho_{XY} $ is defined as:
 
 $$
 \rho_{XY} = \frac{\operatorname{Cov}(X, Y)}{\sigma_X \sigma_Y}
@@ -214,16 +214,16 @@ $$
 
 Where:
 
-- $\operatorname{Cov}(X, Y) $ is the covariance between $X $ and $Y $.
-- $\sigma_X $ and $\sigma_Y $ are the standard deviations of $X $ and $Y $.
+- $\operatorname{Cov}(X, Y) $ is the covariance between $X$ and $Y$.
+- $\sigma_X$ and $\sigma_Y$ are the standard deviations of $X$ and $Y$.
 
 ### Properties
 
 1. **Range**: $-1 \leq \rho_{XY} \leq 1 $.
 2. **Symmetry**: $\rho_{XY} = \rho_{YX} $.
 3. **Dimensionless**: The correlation coefficient is unitless.
-4. **Linearity**: If $\rho_{XY} = \pm 1 $, $Y $ is a perfect linear function of $X $.
-5. **Independence**: If $X $ and $Y $ are independent, $\rho_{XY} = 0 $. However, $\rho_{XY} = 0 $ does not imply independence unless the variables are jointly normally distributed.
+4. **Linearity**: If $\rho_{XY} = \pm 1 $, $Y$ is a perfect linear function of $X$.
+5. **Independence**: If $X$ and $Y$ are independent, $\rho_{XY} = 0 $. However, $\rho_{XY} = 0 $ does not imply independence unless the variables are jointly normally distributed.
 
 ### Interpretation
 
@@ -233,7 +233,7 @@ Where:
 
 ### Example with Random Variables
 
-Suppose $X $ and $Y $ are random variables with the following properties:
+Suppose $X$ and $Y$ are random variables with the following properties:
 
 - $\mu_X = \mathbb{E}[X] = 5 $
 - $\mu_Y = \mathbb{E}[Y] = 10 $
@@ -249,7 +249,7 @@ $$
 
 **Interpretation**:
 
-- A correlation coefficient of $0.75 $ indicates a strong positive linear relationship between $X $ and $Y $.
+- A correlation coefficient of $0.75 $ indicates a strong positive linear relationship between $X$ and $Y$.
 
 ## Important Considerations
 
@@ -269,8 +269,8 @@ $$
 
 ### Assumptions of Pearson's $r $
 
-1. **Linearity**: The relationship between $X $ and $Y $ is linear.
-2. **Normality**: Both $X $ and $Y $ are normally distributed.
-3. **Homoscedasticity**: The variance of $Y $ is the same for all values of $X $.
+1. **Linearity**: The relationship between $X$ and $Y$ is linear.
+2. **Normality**: Both $X$ and $Y$ are normally distributed.
+3. **Homoscedasticity**: The variance of $Y$ is the same for all values of $X$.
 
 If these assumptions are violated, Pearson's $r $ may not be an appropriate measure of correlation.
