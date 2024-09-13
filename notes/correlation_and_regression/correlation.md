@@ -63,7 +63,7 @@ General Guidelines:
 
 Consider the following data on the number of hours studied ($X$) and test scores ($Y$):
 
-| Observation ($i $) | Hours Studied ($X_i $) | Test Score ($Y_i $) |
+| Observation ($i $) | Hours Studied ($X_i$) | Test Score ($Y_i$) |
 |-----------------------|---------------------------|-------------------------|
 | 1                     | 1                         | 50                      |
 | 2                     | 2                         | 60                      |
@@ -85,7 +85,7 @@ $$
 
 Compute $(X_i - \bar{X})$, $(Y_i - \bar{Y})$, and their products:
 
-| $i $ | $X_i $ | $Y_i $ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ | $(X_i - \bar{X})(Y_i - \bar{Y})$ | $(X_i - \bar{X})^2 $ | $(Y_i - \bar{Y})^2 $ |
+| $i $ | $X_i$ | $Y_i$ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ | $(X_i - \bar{X})(Y_i - \bar{Y})$ | $(X_i - \bar{X})^2 $ | $(Y_i - \bar{Y})^2 $ |
 |---------|-----------|-----------|----------------------|----------------------|---------------------------------------|-------------------------|-------------------------|
 | 1       | 1         | 50        | -2                   | -20                  | 40                                    | 4                       | 400                     |
 | 2       | 2         | 60        | -1                   | -10                  | 10                                    | 1                       | 100                     |
@@ -136,14 +136,14 @@ $$
 
 Where:
 
-- $d_i = R(X_i) - R(Y_i)$ is the difference between the ranks of $X_i $ and $Y_i $.
-- $R(X_i)$ and $R(Y_i)$ are the ranks of $X_i $ and $Y_i $, respectively.
+- $d_i = R(X_i) - R(Y_i)$ is the difference between the ranks of $X_i$ and $Y_i$.
+- $R(X_i)$ and $R(Y_i)$ are the ranks of $X_i$ and $Y_i$, respectively.
 - $n $ is the number of observations.
 
 ### Calculation Steps
 
 1. **Assign Ranks** to the data points in $X$ and $Y$ separately.
-2. **Compute the Differences of Ranks** $d_i $.
+2. **Compute the Differences of Ranks** $d_i$.
 3. **Square the Differences** $d_i^2 $.
 4. **Compute $\rho$** using the formula.
 
@@ -151,7 +151,7 @@ Where:
 
 Using the same dataset:
 
-| Observation ($i $) | Hours Studied ($X_i $) | Test Score ($Y_i $) |
+| Observation ($i $) | Hours Studied ($X_i$) | Test Score ($Y_i$) |
 |-----------------------|---------------------------|-------------------------|
 | 1                     | 1                         | 50                      |
 | 2                     | 2                         | 60                      |
@@ -163,7 +163,7 @@ Using the same dataset:
 
 Since the data is already ordered, the ranks correspond to the order of observations.
 
-| $i $ | $X_i $ | Rank $R(X_i)$ | $Y_i $ | Rank $R(Y_i)$ |
+| $i $ | $X_i$ | Rank $R(X_i)$ | $Y_i$ | Rank $R(Y_i)$ |
 |---------|-----------|--------------------|-----------|--------------------|
 | 1       | 1         | 1                  | 50        | 1                  |
 | 2       | 2         | 2                  | 60        | 2                  |
@@ -175,7 +175,7 @@ Since the data is already ordered, the ranks correspond to the order of observat
 
 Calculate $d_i = R(X_i) - R(Y_i)$:
 
-| $i $ | Rank $R(X_i)$ | Rank $R(Y_i)$ | $d_i $ | $d_i^2 $ |
+| $i $ | Rank $R(X_i)$ | Rank $R(Y_i)$ | $d_i$ | $d_i^2 $ |
 |---------|--------------------|--------------------|-----------|-------------|
 | 1       | 1                  | 1                  | 0         | 0           |
 | 2       | 2                  | 2                  | 0         | 0           |
