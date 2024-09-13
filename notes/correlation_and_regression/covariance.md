@@ -82,7 +82,7 @@ $$
 
 II. **Linearity in Each Argument**:
 
-For constants $a $ and $b $, and random variables $X$, $Y$, and $Z $:
+For constants $a$ and $b$, and random variables $X$, $Y$, and $Z$:
 
 $$
 \text{Cov}(aX + bY, Z) = a \text{Cov}(X, Z) + b \text{Cov}(Y, Z)
@@ -98,7 +98,7 @@ $$
 
 IV. **Scaling**:
 
-If $a $ and $b $ are constants:
+If $a$ and $b$ are constants:
 
 $$
 \text{Cov}(aX, bY) = ab \text{Cov}(X, Y)
