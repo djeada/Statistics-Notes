@@ -16,7 +16,7 @@ $$
 
 Where:
 
-- $\text{Cov}(X, Y) $ is the covariance between $X$ and $Y$.
+- $\text{Cov}(X, Y) $ is the covariance between$X$ and $Y$.
 - $\mathbb{E}$ denotes the expected value operator.
 - $\mu_X = \mathbb{E}[X] $ is the mean of $X$.
 - $\mu_Y = \mathbb{E}[Y] $ is the mean of $Y$.
@@ -64,12 +64,12 @@ $$
 ### Interpretation
 
 - **Positive Covariance ($\text{Cov}(X, Y) > 0 $)**: Indicates that $X$ and $Y$ tend to increase or decrease together.
-- **Negative Covariance ($\text{Cov}(X, Y) < 0 $)**: Indicates that when $X$ increases, $Y$ tends to decrease, and vice versa.
-- **Zero Covariance ($\text{Cov}(X, Y) = 0 $)**: Suggests no linear relationship between $X$ and $Y$.
+- **Negative Covariance ($\text{Cov}(X, Y) < 0 $)**: Indicates that when$X$ increases, $Y$ tends to decrease, and vice versa.
+- **Zero Covariance ($\text{Cov}(X, Y) = 0 $)**: Suggests no linear relationship between$X$ and $Y$.
 
 **Important Note**:
 
-- If $X$ and $Y$ are **independent**, then $\text{Cov}(X, Y) = 0 $.
+- If $X$ and $Y$ are **independent**, then$\text{Cov}(X, Y) = 0 $.
 - However, a covariance of zero does **not** necessarily imply independence. Variables can be uncorrelated (zero covariance) but still dependent in a non-linear way.
 
 ## Properties of Covariance
@@ -132,8 +132,8 @@ $$
 
 Where:
 
-- $n $ is the number of observations.
-- $X_i $ and $Y_i $ are the $i $-th observations of variables $X$ and $Y$.
+- $n$ is the number of observations.
+- $X_i$ and $Y_i$ are the $i$-th observations of variables $X$ and $Y$.
 - $\bar{X}$ and $\bar{Y}$ are the sample means of $X$ and $Y$.
 
 **Note**: The denominator $n - 1 $ provides an unbiased estimate of the covariance for a sample drawn from a population.
@@ -142,7 +142,7 @@ Where:
 
 Let's calculate the covariance between two variables $X$ and $Y$ using the following dataset:
 
-| Observation ($i $) | $X_i $ | $Y_i $ |
+| Observation ($i$) | $X_i$ | $Y_i$ |
 |-----------------------|-----------|-----------|
 | 1                     | 1         | 2         |
 | 2                     | 2         | 4         |
@@ -164,7 +164,7 @@ $$
 
 Calculate $(X_i - \bar{X}) $ and $(Y_i - \bar{Y}) $:
 
-| $i $ | $X_i $ | $Y_i $ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ |
+| $i$ | $X_i$ | $Y_i$ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ |
 |---------|-----------|-----------|----------------------|----------------------|
 | 1       | 1         | 2         | $1 - 2 = -1 $     | $2 - 4 = -2 $     |
 | 2       | 2         | 4         | $2 - 2 = 0 $      | $4 - 4 = 0 $      |
@@ -174,7 +174,7 @@ Calculate $(X_i - \bar{X}) $ and $(Y_i - \bar{Y}) $:
 
 Compute $(X_i - \bar{X})(Y_i - \bar{Y}) $:
 
-| $i $ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ | $(X_i - \bar{X})(Y_i - \bar{Y}) $ |
+| $i$ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ | $(X_i - \bar{X})(Y_i - \bar{Y}) $ |
 |---------|----------------------|----------------------|---------------------------------------|
 | 1       | -1                   | -2                   | $(-1)(-2) = 2 $                    |
 | 2       | 0                    | 0                    | $(0)(0) = 0 $                      |
@@ -219,7 +219,7 @@ $$
 
 Compute $(X_i - \bar{X})^2 $:
 
-| $i $ | $X_i - \bar{X}$ | $(X_i - \bar{X})^2 $ |
+| $i$ | $X_i - \bar{X}$ | $(X_i - \bar{X})^2 $ |
 |---------|----------------------|-------------------------|
 | 1       | -1                   | $(-1)^2 = 1 $        |
 | 2       | 0                    | $(0)^2 = 0 $         |
@@ -241,7 +241,7 @@ $$
 
 Similarly, compute $(Y_i - \bar{Y})^2 $:
 
-| $i $ | $Y_i - \bar{Y}$ | $(Y_i - \bar{Y})^2 $ |
+| $i$ | $Y_i - \bar{Y}$ | $(Y_i - \bar{Y})^2 $ |
 |---------|----------------------|-------------------------|
 | 1       | -2                   | $(-2)^2 = 4 $        |
 | 2       | 0                    | $(0)^2 = 0 $         |
@@ -269,8 +269,12 @@ $$
 
 Interpretation:
 
-- A correlation coefficient of $1 $ indicates a perfect positive linear relationship between $X$ and $Y$.
+- A correlation coefficient of $1 $ indicates a perfect positive linear relationship between$X$ and $Y$.
 - This makes sense since $Y = 2X$ in the dataset.
+
+Plot:
+
+![output(13)](https://github.com/user-attachments/assets/85baa5bd-7459-4d06-ad4c-6c514eac3899)
 
 ## Limitations of Covariance
 
