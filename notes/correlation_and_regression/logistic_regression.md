@@ -17,7 +17,7 @@ $$
 
 ### Logistic Function (Sigmoid Function)
 
-The logistic function models the probability that $y = 1 $ given the predictor variables $x_1, x_2, \dots, x_p $:
+The logistic function models the probability that $y = 1$ given the predictor variables $x_1, x_2, \dots, x_p $:
 
 $$
 p(x) = P(y = 1 \mid x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_p x_p)}}
@@ -60,7 +60,7 @@ Unlike linear regression, logistic regression does not have a closed-form soluti
 
 ### Likelihood Function
 
-Given $n $ independent observations, the likelihood function $L(\boldsymbol{\beta}) $ is the product of the probabilities of observing the data:
+Given $n $ independent observations, the likelihood function $L(\boldsymbol{\beta})$ is the product of the probabilities of observing the data:
 
 $$
 L(\boldsymbol{\beta}) = \prod_{i=1}^{n} [p(x_i)]^{y_i} [1 - p(x_i)]^{1 - y_i}
@@ -76,7 +76,7 @@ $$
 
 ### Maximizing the Log-Likelihood
 
-The goal is to find the coefficients $\boldsymbol{\beta} $ that maximize $\ell(\boldsymbol{\beta}) $. This is typically done using iterative numerical methods such as:
+The goal is to find the coefficients $\boldsymbol{\beta}$ that maximize $\ell(\boldsymbol{\beta})$. This is typically done using iterative numerical methods such as:
 
 - Newton-Raphson method
 - Fisher Scoring
@@ -92,8 +92,8 @@ $$
 
 Where:
 
-- $\mathbf{g}(\boldsymbol{\beta}) $ is the gradient (first derivative) of the log-likelihood function.
-- $\mathbf{H}(\boldsymbol{\beta}) $ is the Hessian matrix (second derivative) of the log-likelihood function.
+- $\mathbf{g}(\boldsymbol{\beta})$ is the gradient (first derivative) of the log-likelihood function.
+- $\mathbf{H}(\boldsymbol{\beta})$ is the Hessian matrix (second derivative) of the log-likelihood function.
 
 ## Assumptions of Logistic Regression
 
@@ -107,14 +107,14 @@ Where:
 
 ### Problem Statement
 
-We aim to predict whether a student will pass a test ($y = 1 $) or fail ($y = 0 $) based on:
+We aim to predict whether a student will pass a test ($y = 1$) or fail ($y = 0 $) based on:
 
-- $x_1 $: Number of hours studied
-- $x_2 $: Number of practice exams taken
+- $x_1$: Number of hours studied
+- $x_2$: Number of practice exams taken
 
 ### Data
 
-| Student ($i $) | Hours Studied ($x_{1i} $) | Practice Exams ($x_{2i} $) | Pass ($y_i $) |
+| Student ($i $) | Hours Studied ($x_{1i}$) | Practice Exams ($x_{2i}$) | Pass ($y_i $) |
 |-------------------|-------------------------------|-------------------------------|------------------|
 | 1                 | 2                             | 1                             | 0                |
 | 2                 | 4                             | 2                             | 0                |
@@ -126,7 +126,7 @@ We aim to predict whether a student will pass a test ($y = 1 $) or fail ($y = 0 
 
 #### 1. Initial Setup
 
-We need to estimate $\beta_0 $, $\beta_1 $, and $\beta_2 $ in the logistic regression model:
+We need to estimate $\beta_0 $, $\beta_1$, and $\beta_2$ in the logistic regression model:
 
 $$
 p(x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2)}}
@@ -134,7 +134,7 @@ $$
 
 #### 2. Construct the Design Matrix and Response Vector
 
-Let $\mathbf{X} $ be the design matrix including the intercept term:
+Let $\mathbf{X}$ be the design matrix including the intercept term:
 
 $$
 \mathbf{X} = \begin{bmatrix}
@@ -152,7 +152,7 @@ $$
 \end{bmatrix}
 $$
 
-Response vector $\mathbf{y} $:
+Response vector $\mathbf{y}$:
 
 $$
 \mathbf{y} = \begin{bmatrix}
@@ -166,7 +166,7 @@ $$
 
 #### 3. Initialize Coefficients
 
-Start with initial guesses for $\boldsymbol{\beta} $, say:
+Start with initial guesses for $\boldsymbol{\beta}$, say:
 
 $$
 \boldsymbol{\beta}^{(0)} = \begin{bmatrix}
@@ -186,13 +186,13 @@ Due to the complexity of MLE calculations, we will provide a simplified explanat
 
 **Iteration Steps**:
 
-- Compute predicted probabilities $p_i^{(k)} $ using current coefficients.
+- Compute predicted probabilities $p_i^{(k)}$ using current coefficients.
   
 $$
 p_i^{(k)} = \frac{1}{1 + e^{-(\beta_0^{(k)} + \beta_1^{(k)} x_{1i} + \beta_2^{(k)} x_{2i})}}
 $$
 
-- Compute the gradient $\mathbf{g}(\boldsymbol{\beta}^{(k)}) $ and Hessian $\mathbf{H}(\boldsymbol{\beta}^{(k)}) $.
+- Compute the gradient $\mathbf{g}(\boldsymbol{\beta}^{(k)})$ and Hessian $\mathbf{H}(\boldsymbol{\beta}^{(k)})$.
 - Update coefficients using the Newton-Raphson formula.
 - The process continues until the change in the log-likelihood or coefficients is below a predefined threshold.
 
@@ -212,9 +212,9 @@ $$
 
 ### Interpretation of Coefficients
 
-**Intercept ($\hat{\beta}_0 = -9.28 $)**: The log-odds of passing when $x_1 = 0 $ and $x_2 = 0 $.
+**Intercept ($\beta_0 = -9.28$)**: The log-odds of passing when $x_1 = 0 $ and $x_2 = 0 $.
 
-**Coefficient for Hours Studied ($\hat{\beta}_1 = 1.23 $)**: For each additional hour studied, the log-odds of passing increase by 1.23 units, holding $x_2 $ constant.
+**Coefficient for Hours Studied ($\beta_1 = 1.23$)**: For each additional hour studied, the log-odds of passing increase by 1.23 units, holding $x_2$ constant.
 
 **Odds Ratio**:
 
@@ -224,7 +224,7 @@ $$
 
 The odds of passing are approximately 3.42 times higher for each additional hour studied.
 
-**Coefficient for Practice Exams ($\hat{\beta}_2 = 0.98 $)**: For each additional practice exam taken, the log-odds of passing increase by 0.98 units, holding $x_1 $ constant.
+**Coefficient for Practice Exams ($\beta_2 = 0.98$)**: For each additional practice exam taken, the log-odds of passing increase by 0.98 units, holding $x_1$ constant.
 
 **Odds Ratio**:
 
@@ -269,7 +269,7 @@ Using a threshold of 0.5 to classify predictions:
 | 1                 | 0         | $p_1 \approx 0.005 $   | 0                                  |
 | 2                 | 0         | $p_2 \approx 0.046 $   | 0                                  |
 | 3                 | 1         | $p_3 \approx 0.24 $    | 0                                  |
-| 4                 | 1         | $p_4 \approx 0.82 $    | 1                                  |
+| 4                 | 1         | $p_4 \approx 0.82$    | 1                                  |
 | 5                 | 1         | $p_5 \approx 0.99 $    | 1                                  |
 
 - **True Positives (TP)**: 2 (Students 4 and 5)
