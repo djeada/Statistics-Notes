@@ -16,10 +16,10 @@ $$
 
 Where:
 
-- $\text{Cov}(X, Y) $ is the covariance between$X$ and $Y$.
+- $\text{Cov}(X, Y)$ is the covariance between $X$ and $Y$.
 - $\mathbb{E}$ denotes the expected value operator.
-- $\mu_X = \mathbb{E}[X] $ is the mean of $X$.
-- $\mu_Y = \mathbb{E}[Y] $ is the mean of $Y$.
+- $\mu_X = \mathbb{E}[X]$ is the mean of $X$.
+- $\mu_Y = \mathbb{E}[Y]$ is the mean of $Y$.
 
 ### Alternative Expression
 
@@ -49,7 +49,7 @@ $$
 \text{Cov}(X, Y) = \mathbb{E}[XY] - \mu_Y \mathbb{E}[X] - \mu_X \mathbb{E}[Y] + \mu_X \mu_Y
 $$
 
-4. Recognize that $\mu_X = \mathbb{E}[X] $ and $\mu_Y = \mathbb{E}[Y] $:
+4. Recognize that $\mu_X = \mathbb{E}[X]$ and $\mu_Y = \mathbb{E}[Y]$:
 
 $$
 \text{Cov}(X, Y) = \mathbb{E}[XY] - \mu_Y \mu_X - \mu_X \mu_Y + \mu_X \mu_Y = \mathbb{E}[XY] - \mu_X \mu_Y
@@ -64,12 +64,12 @@ $$
 ### Interpretation
 
 - **Positive Covariance ($\text{Cov}(X, Y) > 0 $)**: Indicates that $X$ and $Y$ tend to increase or decrease together.
-- **Negative Covariance ($\text{Cov}(X, Y) < 0 $)**: Indicates that when$X$ increases, $Y$ tends to decrease, and vice versa.
-- **Zero Covariance ($\text{Cov}(X, Y) = 0 $)**: Suggests no linear relationship between$X$ and $Y$.
+- **Negative Covariance ($\text{Cov}(X, Y) < 0 $)**: Indicates that when $X$ increases, $Y$ tends to decrease, and vice versa.
+- **Zero Covariance ($\text{Cov}(X, Y) = 0 $)**: Suggests no linear relationship between $X$ and $Y$.
 
 **Important Note**:
 
-- If $X$ and $Y$ are **independent**, then$\text{Cov}(X, Y) = 0 $.
+- If $X$ and $Y$ are **independent**, then $\text{Cov}(X, Y) = 0 $.
 - However, a covariance of zero does **not** necessarily imply independence. Variables can be uncorrelated (zero covariance) but still dependent in a non-linear way.
 
 ## Properties of Covariance
@@ -136,7 +136,7 @@ Where:
 - $X_i$ and $Y_i$ are the $i$-th observations of variables $X$ and $Y$.
 - $\bar{X}$ and $\bar{Y}$ are the sample means of $X$ and $Y$.
 
-**Note**: The denominator $n - 1 $ provides an unbiased estimate of the covariance for a sample drawn from a population.
+**Note**: The denominator $n - 1$ provides an unbiased estimate of the covariance for a sample drawn from a population.
 
 ## Example: Calculating Covariance Step by Step
 
@@ -162,19 +162,19 @@ $$
 
 ### Step 2: Compute the Deviations from the Mean
 
-Calculate $(X_i - \bar{X}) $ and $(Y_i - \bar{Y}) $:
+Calculate $(X_i - \bar{X})$ and $(Y_i - \bar{Y})$:
 
 | $i$ | $X_i$ | $Y_i$ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ |
 |---------|-----------|-----------|----------------------|----------------------|
-| 1       | 1         | 2         | $1 - 2 = -1 $     | $2 - 4 = -2 $     |
+| 1       | 1         | 2         | $1 - 2 = -1$     | $2 - 4 = -2 $     |
 | 2       | 2         | 4         | $2 - 2 = 0 $      | $4 - 4 = 0 $      |
-| 3       | 3         | 6         | $3 - 2 = 1 $      | $6 - 4 = 2 $      |
+| 3       | 3         | 6         | $3 - 2 = 1$      | $6 - 4 = 2 $      |
 
 ### Step 3: Calculate the Product of Deviations
 
-Compute $(X_i - \bar{X})(Y_i - \bar{Y}) $:
+Compute $(X_i - \bar{X})(Y_i - \bar{Y})$:
 
-| $i$ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ | $(X_i - \bar{X})(Y_i - \bar{Y}) $ |
+| $i$ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ | $(X_i - \bar{X})(Y_i - \bar{Y})$ |
 |---------|----------------------|----------------------|---------------------------------------|
 | 1       | -1                   | -2                   | $(-1)(-2) = 2 $                    |
 | 2       | 0                    | 0                    | $(0)(0) = 0 $                      |
@@ -221,9 +221,9 @@ Compute $(X_i - \bar{X})^2 $:
 
 | $i$ | $X_i - \bar{X}$ | $(X_i - \bar{X})^2 $ |
 |---------|----------------------|-------------------------|
-| 1       | -1                   | $(-1)^2 = 1 $        |
+| 1       | -1                   | $(-1)^2 = 1$        |
 | 2       | 0                    | $(0)^2 = 0 $         |
-| 3       | 1                    | $(1)^2 = 1 $         |
+| 3       | 1                    | $(1)^2 = 1$         |
 
 Sum:
 
@@ -269,7 +269,7 @@ $$
 
 Interpretation:
 
-- A correlation coefficient of $1 $ indicates a perfect positive linear relationship between$X$ and $Y$.
+- A correlation coefficient of $1$ indicates a perfect positive linear relationship between $X$ and $Y$.
 - This makes sense since $Y = 2X$ in the dataset.
 
 Plot:
