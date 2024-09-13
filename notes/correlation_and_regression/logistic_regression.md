@@ -27,17 +27,17 @@ This function maps any real-valued number into a value between 0 and 1, making i
 
 ### Odds and Logit Function
 
-- **Odds**: The odds of an event occurring is the ratio of the probability that the event occurs to the probability that it does not occur.
+The **odds** of an event occurring is the ratio of the probability that the event occurs to the probability that it does not occur.
 
-  $$
-  \text{Odds}(x) = \frac{p(x)}{1 - p(x)}
-  $$
+$$
+\text{Odds}(x) = \frac{p(x)}{1 - p(x)}
+$$
 
-- **Logit Function**: The natural logarithm of the odds is called the logit function.
+The natural logarithm of the odds is called the **logit function**.
 
-  $$
-  \text{logit}(p(x)) = \ln \left( \frac{p(x)}{1 - p(x)} \right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_p x_p
-  $$
+$$
+\text{logit}(p(x)) = \ln \left( \frac{p(x)}{1 - p(x)} \right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_p x_p
+$$
 
 The logit function establishes a linear relationship between the predictor variables and the log-odds of the outcome.
 
@@ -184,19 +184,17 @@ $$
 
 Due to the complexity of MLE calculations, we will provide a simplified explanation. In practice, statistical software performs these calculations.
 
-- **Iteration Steps**:
-  - Compute predicted probabilities $p_i^{(k)} $ using current coefficients.
-    
-    $$
-    p_i^{(k)} = \frac{1}{1 + e^{-(\beta_0^{(k)} + \beta_1^{(k)} x_{1i} + \beta_2^{(k)} x_{2i})}}
-    $$
-  
-  - Compute the gradient $\mathbf{g}(\boldsymbol{\beta}^{(k)}) $ and Hessian $\mathbf{H}(\boldsymbol{\beta}^{(k)}) $.
-  
-  - Update coefficients using the Newton-Raphson formula.
+**Iteration Steps**:
 
-- **Convergence**:
-  - The process continues until the change in the log-likelihood or coefficients is below a predefined threshold.
+- Compute predicted probabilities $p_i^{(k)} $ using current coefficients.
+  
+$$
+p_i^{(k)} = \frac{1}{1 + e^{-(\beta_0^{(k)} + \beta_1^{(k)} x_{1i} + \beta_2^{(k)} x_{2i})}}
+$$
+
+- Compute the gradient $\mathbf{g}(\boldsymbol{\beta}^{(k)}) $ and Hessian $\mathbf{H}(\boldsymbol{\beta}^{(k)}) $.
+- Update coefficients using the Newton-Raphson formula.
+- The process continues until the change in the log-likelihood or coefficients is below a predefined threshold.
 
 #### 5. Estimated Coefficients
 
@@ -214,28 +212,27 @@ $$
 
 ### Interpretation of Coefficients
 
-- **Intercept ($\hat{\beta}_0 = -9.28 $)**:
-  - The log-odds of passing when $x_1 = 0 $ and $x_2 = 0 $.
-  
-- **Coefficient for Hours Studied ($\hat{\beta}_1 = 1.23 $)**:
-  - For each additional hour studied, the log-odds of passing increase by 1.23 units, holding $x_2 $ constant.
-  - **Odds Ratio**:
-    
-    $$
-    e^{1.23} \approx 3.42
-    $$
-    
-    The odds of passing are approximately 3.42 times higher for each additional hour studied.
+**Intercept ($\hat{\beta}_0 = -9.28 $)**: The log-odds of passing when $x_1 = 0 $ and $x_2 = 0 $.
 
-- **Coefficient for Practice Exams ($\hat{\beta}_2 = 0.98 $)**:
-  - For each additional practice exam taken, the log-odds of passing increase by 0.98 units, holding $x_1 $ constant.
-  - **Odds Ratio**:
-    
-    $$
-    e^{0.98} \approx 2.66
-    $$
-    
-    The odds of passing are approximately 2.66 times higher for each additional practice exam taken.
+**Coefficient for Hours Studied ($\hat{\beta}_1 = 1.23 $)**: For each additional hour studied, the log-odds of passing increase by 1.23 units, holding $x_2 $ constant.
+
+**Odds Ratio**:
+
+$$
+e^{1.23} \approx 3.42
+$$
+
+The odds of passing are approximately 3.42 times higher for each additional hour studied.
+
+**Coefficient for Practice Exams ($\hat{\beta}_2 = 0.98 $)**: For each additional practice exam taken, the log-odds of passing increase by 0.98 units, holding $x_1 $ constant.
+
+**Odds Ratio**:
+
+$$
+e^{0.98} \approx 2.66
+$$
+
+The odds of passing are approximately 2.66 times higher for each additional practice exam taken.
 
 ### Predicting Probabilities
 
@@ -256,6 +253,10 @@ p = \frac{1}{1 + e^{-(-9.28 + 1.23 \times 7 + 0.98 \times 3)}} = \frac{1}{1 + e^
 $$
 
 The probability of passing is approximately 90.6%.
+
+Plot:
+
+![output(14)](https://github.com/user-attachments/assets/5b72e473-e273-408a-a1db-d71e2a8f924b)
 
 ### Model Evaluation
 
