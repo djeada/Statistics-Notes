@@ -72,9 +72,7 @@ Initial ──┤               6 (1/6)
 
 #### Interpreting the Probability Tree
 
-I. **Initial Node (Coin Toss)**:  
-
-The experiment begins with a coin toss. The initial node represents the state before any action is taken.
+I. **Initial Node (Coin Toss)**: The experiment begins with a coin toss. The initial node represents the state before any action is taken.
 
 II. **First Level Branches (Coin Toss)**:  
 
@@ -132,7 +130,6 @@ The probability tree can be used to calculate all possible combinations of outco
 $$
 \sum P(\text{Outcome}) = 1
 $$
-
 
 ### Example: Rolling Two Dice
 
