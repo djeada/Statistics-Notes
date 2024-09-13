@@ -14,7 +14,7 @@ A probability tree starts with a root node that branches out into possible outco
 
 ### Example: Drawing Cards
 
-Consider a simplified example where we draw one card from a standard deck of 52 cards, and we're interested in the event of drawing a heart or not drawing a heart.
+Consider a simplified example where we draw one card from a standard deck of 52 cards, and we're interested in the event of drawing a heart or not drawing a heart. The event space for this problem can be represented using a probability tree, which helps visualize the possible outcomes and their associated probabilities.
 
 ```plaintext
 Tree:
@@ -25,16 +25,37 @@ Initial ──┤
           |__Not Heart (3/4)
 ```
 
-Here's how to interpret this tree:
+Here is a step-by-step explanation of the tree:
 
 - The initial node represents the state before any card is drawn.
 - From the initial node, there are two possible outcomes: drawing a heart or not drawing a heart.
-- The probability of drawing a heart is calculated by the number of hearts in a deck (13) divided by the total number of cards (52), giving us $P(\text{Heart}) = \frac{13}{52} = \frac{1}{4}$.
-- Conversely, the probability of not drawing a heart is $P(\text{Not Heart}) = \frac{39}{52} = \frac{3}{4}$.
+- The probability of drawing a heart is determined by the number of hearts in the deck (13) divided by the total number of cards (52). Thus, the probability of drawing a heart is:
+
+$$
+P(\text{Heart}) = \frac{13}{52} = \frac{1}{4}
+$$
+
+- The probability of not drawing a heart is simply the complement of the probability of drawing a heart. Since there are 39 cards that are not hearts in a standard deck of 52 cards, the probability of not drawing a heart is:
+
+$$
+P(\text{Not Heart}) = \frac{39}{52} = \frac{3}{4}
+$$
+
+This structure is consistent with the principle that the total probability of all possible outcomes must sum to 1, i.e.:
+
+$$
+P(\text{Heart}) + P(\text{Not Heart}) = 1
+$$
+
+$$
+\frac{1}{4} + \frac{3}{4} = 1
+$$
+
+Thus, the probability tree correctly reflects the outcomes and their associated probabilities.
 
 ### Example: Tossing a Coin and Rolling a Die
 
-In this example, we combine two independent events: first, we toss a coin, and then we roll a die. The probability tree for this scenario illustrates the outcomes and probabilities for each stage of the experiment.
+In this example, we examine two independent events: first, tossing a coin, and then rolling a die. The probability tree for this scenario helps to visualize the sequential outcomes and probabilities at each stage of the experiment.
 
 ```plaintext
 Tree:
@@ -49,110 +70,253 @@ Initial ──┤               6 (1/6)
                           6 (1/6)
 ```
 
-Interpreting the Probability Tree:
+#### Interpreting the Probability Tree
 
-I. **Initial Node**: The experiment starts with a coin toss. The initial node represents the state before this action.
-II. **First Level Branches (Coin Toss)**:
+I. **Initial Node (Coin Toss)**:  
 
-- The first branching of the tree represents the two outcomes of tossing the coin: "Head" and "Tail."
-- Each outcome of the coin toss has a probability of 1/2, as a fair coin has equal chances of landing on either side.
-  
-III. **Second Level Branches (Die Roll)**:
+The experiment begins with a coin toss. The initial node represents the state before any action is taken.
 
-- After the coin toss, the next event is rolling a six-sided die.
-- The second level of branches represents the outcomes of the die roll, which are the numbers 1 through 6.
-- Each outcome of the die roll has a probability of 1/6, as each face of a fair die has an equal chance of appearing.
+II. **First Level Branches (Coin Toss)**:  
 
-Calculating Probabilities:
+- The first branching represents the two possible outcomes of tossing a fair coin: "Head" and "Tail."  
+- The probability of getting a "Head" is:
 
-- To calculate the probability of a combined event (like getting a "Head" followed by rolling a "4"), we multiply the probabilities along the path: $P(\text{Head}) \times P(4) = \frac{1}{2} \times \frac{1}{6}$.
-- The tree can be used to compute the probabilities of all possible combinations of outcomes from the two events.
+$$
+P(\text{Head}) = \frac{1}{2}
+$$
+
+Similarly, the probability of getting a "Tail" is:
+
+$$
+P(\text{Tail}) = \frac{1}{2}
+$$
+
+These probabilities reflect the equal likelihood of both outcomes for a fair coin.
+
+III. **Second Level Branches (Die Roll)**:  
+
+- After the coin toss, we roll a fair six-sided die.  
+- Each outcome of the die roll (the numbers 1 through 6) is represented by the second level of branches.  
+- The probability of rolling any specific number on the die (e.g., rolling a 1, 2, or 6) is:
+
+$$
+P(\text{Die Roll}) = \frac{1}{6}
+$$
+
+since each face of the die is equally likely to appear.
+
+#### Calculating Probabilities of Combined Events:
+
+The probability of any combined outcome (e.g., tossing a "Head" followed by rolling a "4") is calculated by multiplying the probabilities of the individual events along the relevant path in the tree. For example:
+
+$$
+P(\text{Head and 4}) = P(\text{Head}) \times P(4) = \frac{1}{2} \times \frac{1}{6} = \frac{1}{12}
+$$
+
+Similarly, the probability of getting a "Tail" followed by rolling a "2" would be:
+
+$$
+P(\text{Tail and 2}) = P(\text{Tail}) \times P(2) = \frac{1}{2} \times \frac{1}{6} = \frac{1}{12}
+$$
+
+#### General Form:
+
+The total probability for any combined event is always the product of the individual probabilities along its branch. Since the events are independent, the combined probability of any outcome from the coin toss followed by a die roll is given by:
+
+$$
+P(\text{Combined Event}) = P(\text{Coin Outcome}) \times P(\text{Die Outcome})
+$$
+
+The probability tree can be used to calculate all possible combinations of outcomes, and since there are 12 possible combinations (2 coin outcomes × 6 die outcomes), the total probabilities sum to 1. This ensures that the model accounts for all potential outcomes:
+
+$$
+\sum P(\text{Outcome}) = 1
+$$
+
 
 ### Example: Rolling Two Dice
 
-In this example, we consider the scenario of rolling two dice simultaneously. A probability tree can be used to visualize all the possible outcomes and their associated probabilities.
+In this example, we explore the scenario of rolling two six-sided dice simultaneously. A probability tree provides a clear visualization of all possible outcomes and their associated probabilities.
 
 ```plaintext
 Tree:
-           __1 (1/6)──1 (1/6)
-          |          .
-          |          .
-          |          6 (1/6)
+           _____1 (1/6)──1 (1/6)
+          |              .
+          |              .
+          |              6 (1/6)
           |
-          |__2 (1/6)──1 (1/6)
-Initial ──┤          .
-          |          .
-          |          6 (1/6)
+          |_____2 (1/6)──1 (1/6)
+Initial ──┤              .
+          |              .
+          |              6 (1/6)
           |
           |__ ... (1/6)──1 (1/6)
-          |          .
-          |          .
-          |          6 (1/6)
+          |              .
+          |              .
+          |              6 (1/6)
           |
-          |__6 (1/6)──1 (1/6)
-                   .
-                   .
-                   6 (1/6)
+          |_____6 (1/6)──1 (1/6)
+                         .
+                         .
+                         6 (1/6)
 ```
 
-Interpreting the Probability Tree:
+#### Interpreting the Probability Tree:
 
-I. **Initial Node**: Represents the state before any dice are rolled.
-II. **First Level Branches (First Die Roll)**:
+I. **Initial Node (Before Rolling Dice)**: The initial node represents the state before any dice are rolled.
 
-- Each branch from the initial node represents one of the six possible outcomes of rolling the first die (numbered 1 to 6).
-- Each outcome has an equal probability of 1/6, reflecting the fairness of the die.
+II. **First Level Branches (First Die Roll)**:  
 
-III. **Second Level Branches (Second Die Roll)**:
+- Each branch from the initial node corresponds to one of the six possible outcomes from rolling the first die, which are the numbers 1 through 6.
+- Since the die is fair, the probability of any outcome on the first die is:
 
-- For each outcome of the first die, there are branches representing the possible outcomes of rolling the second die.
-- Like the first die, each possible outcome (numbered 1 to 6) of the second die has a probability of 1/6.
+$$
+P(\text{First Die Outcome}) = \frac{1}{6}
+$$
 
-Calculating Probabilities:
+III. **Second Level Branches (Second Die Roll)**:  
 
-- The probability of a specific combination (like rolling a 3 on the first die and a 5 on the second) is calculated by multiplying the probabilities along the path: For a "3" followed by a "5": $P(3 \text{ and } 5) = P(3) \times P(5) = \frac{1}{6} \times \frac{1}{6} = \frac{1}{36}$.
-- The tree illustrates all 36 possible outcomes (6 outcomes from the first die multiplied by 6 outcomes from the second die), each with an equal probability of 1/36.
+- After rolling the first die, for each outcome, there are six branches representing the possible outcomes of rolling the second die.
+- Each outcome on the second die (also numbered 1 through 6) has an equal probability of occurring, independent of the first die's outcome:
+
+$$
+P(\text{Second Die Outcome}) = \frac{1}{6}
+$$
+
+#### Calculating Probabilities of Combined Events:
+
+To compute the probability of rolling a specific combination (e.g., rolling a "3" on the first die and a "5" on the second), we multiply the probabilities along the path that represents the combined event. For example:
+
+$$
+P(3 \text{ on first die and } 5 \text{ on second die}) = P(3) \times P(5) = \frac{1}{6} \times \frac{1}{6} = \frac{1}{36}
+$$
+
+Since the outcomes of the two dice are independent, the probability of any specific combination is always the product of the probabilities of the individual outcomes.
+
+#### Total Number of Outcomes:
+
+There are 36 possible combinations of outcomes (6 outcomes from the first die × 6 outcomes from the second die). Each combination has an equal probability of occurring:
+
+$$
+P(\text{Any Specific Combination}) = \frac{1}{36}
+$$
+
+#### General Form:
+
+The probability of rolling any specific pair of numbers (e.g., a "2" on the first die and a "6" on the second) is calculated using the formula:
+
+$$
+P(\text{First Die Outcome and Second Die Outcome}) = P(\text{First Die Outcome}) \times P(\text{Second Die Outcome}) = \frac{1}{6} \times \frac{1}{6} = \frac{1}{36}
+$$
+
+Thus, the total probability of all possible outcomes from rolling two dice must sum to 1:
+
+$$
+\sum P(\text{Outcome}) = 1
+$$
+
+This ensures that the probability model is complete and accounts for every possible pair of outcomes from rolling two dice.
 
 ### Example: Drawing Marbles from a Bag
 
-Consider a bag that contains 6 red marbles (R) and 4 green marbles (G). We draw two marbles from the bag one after the other without replacement. We are interested in calculating the probabilities of the following outcomes:
+Consider a scenario where a bag contains 6 red marbles (R) and 4 green marbles (G). Two marbles are drawn one after the other without replacement. We aim to calculate the probabilities of the following outcomes:
 
 1. **P(R then G)**: Drawing a red marble followed by a green marble.
 2. **P(G then R)**: Drawing a green marble followed by a red marble.
 3. **P(both R)**: Drawing two red marbles.
 4. **P(both G)**: Drawing two green marbles.
 
-```plaintext
-                      ┌── R (5/9)
-               ┌── R (6/10)
-               │      └── G (4/9)
-Initial Node──┤
-               │      ┌── R (6/9)
-               └── G (4/10)
-                      └── G (3/9)
+The following probability tree illustrates the outcomes and the conditional probabilities:
 
+```plaintext
+Tree:
+           ┌── R (5/9)
+    ┌── R (6/10)
+    │      └── G (4/9)
+Initial Node
+    │      ┌── R (6/9)
+    └── G (4/10)
+           └── G (3/9)
 ```
 
-Calculations:
+#### Calculations:
 
-I. **P(R then G)**: 
+I. **P(R then G)** (Red marble followed by a Green marble):  
 
-- The probability of drawing a red marble first is $\frac{6}{10}$ because there are 6 red marbles out of a total of 10.
-- Given the first marble drawn is red, the probability of then drawing a green marble is $\frac{4}{9}$ since there are now 4 green marbles out of the remaining 9 marbles.
-- Therefore, the probability of drawing a red marble followed by a green marble is $\frac{6}{10} \times \frac{4}{9} \approx 0.267$.
+The probability of drawing a red marble first is:
 
-II. **P(G then R)**:
+$$
+P(\text{R first}) = \frac{6}{10}
+$$
 
-- The probability of drawing a green marble first is $\frac{4}{10}$.
-- If the first marble is green, there are still 6 red marbles left out of 9.
-- Thus, the probability of drawing a green marble followed by a red marble is $\frac{4}{10} \times \frac{6}{9} \approx 0.267$.
+Given that a red marble is drawn first, the probability of drawing a green marble second is:
 
-III. **P(both R)**:
+$$
+P(\text{G second | R first}) = \frac{4}{9}
+$$
 
-- After drawing one red marble, there are 5 red marbles left out of 9.
-- The probability of drawing two red marbles consecutively is $\frac{6}{10} \times \frac{5}{9} \approx 0.333$.
+Therefore, the probability of drawing a red marble followed by a green marble is:
 
-IV. **P(both G)**:
+$$
+P(\text{R then G}) = P(\text{R first}) \times P(\text{G second | R first}) = \frac{6}{10} \times \frac{4}{9} = \frac{24}{90} \approx 0.267
+$$
 
-- After drawing one green marble, there are 3 green marbles left out of 9.
-- The probability of drawing two green marbles consecutively is $\frac{4}{10} \times \frac{3}{9} \approx 0.133$.
+II. **P(G then R)** (Green marble followed by a Red marble):  
+
+The probability of drawing a green marble first is:
+
+$$
+P(\text{G first}) = \frac{4}{10}
+$$
+
+Given that a green marble is drawn first, the probability of drawing a red marble second is:
+
+$$
+P(\text{R second | G first}) = \frac{6}{9}
+$$
+
+Therefore, the probability of drawing a green marble followed by a red marble is:
+
+$$
+P(\text{G then R}) = P(\text{G first}) \times P(\text{R second | G first}) = \frac{4}{10} \times \frac{6}{9} = \frac{24}{90} \approx 0.267
+$$
+
+III. **P(both R)** (Both marbles are red):  
+
+The probability of drawing a red marble first is:
+
+$$
+P(\text{R first}) = \frac{6}{10}
+$$
+
+After drawing one red marble, there are 5 red marbles left out of 9, so the probability of drawing a second red marble is:
+
+$$
+P(\text{R second | R first}) = \frac{5}{9}
+$$
+
+Therefore, the probability of drawing two red marbles is:
+
+$$
+P(\text{both R}) = P(\text{R first}) \times P(\text{R second | R first}) = \frac{6}{10} \times \frac{5}{9} = \frac{30}{90} = 0.333
+$$
+
+IV. **P(both G)** (Both marbles are green):  
+
+The probability of drawing a green marble first is:
+
+$$
+P(\text{G first}) = \frac{4}{10}
+$$
+
+After drawing one green marble, there are 3 green marbles left out of 9, so the probability of drawing a second green marble is:
+
+$$
+P(\text{G second | G first}) = \frac{3}{9}
+$$
+
+Therefore, the probability of drawing two green marbles is:
+
+$$
+P(\text{both G}) = P(\text{G first}) \times P(\text{G second | G first}) = \frac{4}{10} \times \frac{3}{9} = \frac{12}{90} \approx 0.133
+$$
