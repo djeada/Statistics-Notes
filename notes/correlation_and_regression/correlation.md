@@ -4,9 +4,9 @@
 
 ## Understanding Correlation
 
-- **Positive Correlation**: As one variable increases, the other variable tends to increase.
-- **Negative Correlation**: As one variable increases, the other variable tends to decrease.
-- **Zero Correlation**: No linear relationship exists between the variables.
+- A **positive correlation** occurs when, as one variable increases, the other tends to rise as well.
+- In contrast, a **negative correlation** happens when an increase in one variable results in the other decreasing.
+- Lastly, a **zero correlation** indicates that there is no linear relationship between the variables.
 
 **Important Note**: Correlation does not imply causation. A high correlation between two variables does not mean that one variable causes changes in the other.
 
@@ -35,8 +35,8 @@ $$
 
 Where:
 
-- $n $ is the number of observations.
-- $X_i $ and $Y_i $ are the $i $-th observations of $X$ and $Y$.
+- $n$ is the number of observations.
+- $X_i$ and $Y_i$ are the $i $-th observations of $X$ and $Y$.
 - $\bar{X}$ and $\bar{Y}$ are the sample means of $X$ and $Y$.
 
 ### Interpretation
@@ -45,15 +45,17 @@ Where:
 - $r = -1 $: Perfect negative linear correlation.
 - $r = 0 $: No linear correlation.
 
-**General Guidelines**:
+General Guidelines:
 
-- **Strong Positive Correlation**: $0.7 \leq r \leq 1.0 $
-- **Moderate Positive Correlation**: $0.3 \leq r < 0.7 $
-- **Weak Positive Correlation**: $0 < r < 0.3 $
-- **No Correlation**: $r = 0 $
-- **Weak Negative Correlation**: $-0.3 < r < 0 $
-- **Moderate Negative Correlation**: $-0.7 < r \leq -0.3 $
-- **Strong Negative Correlation**: $-1.0 \leq r \leq -0.7 $
+| **Correlation Strength**            | **Range (r)**    |
+|-------------------------------------|------------------|
+| Strong Positive Correlation         | 0.7 ≤ r ≤ 1.0    |
+| Moderate Positive Correlation       | 0.3 ≤ r < 0.7    |
+| Weak Positive Correlation           | 0 < r < 0.3      |
+| No Correlation                      | r = 0            |
+| Weak Negative Correlation           | -0.3 < r < 0     |
+| Moderate Negative Correlation       | -0.7 < r ≤ -0.3  |
+| Strong Negative Correlation         | -1.0 ≤ r ≤ -0.7  |
 
 ### Example: Calculating Pearson's $r$
 
@@ -190,7 +192,7 @@ $$
 
 #### Interpretation
 
-- **Spearman's $\rho = 1 $** indicates a perfect positive monotonic relationship between hours studied and test scores.
+**Spearman's $\rho = 1 $** indicates a perfect positive monotonic relationship between hours studied and test scores.
 
 ### When to Use Spearman's $\rho$
 
@@ -221,11 +223,13 @@ Where:
 
 ### Properties
 
-1. **Range**: $-1 \leq \rho_{XY} \leq 1$.
-2. **Symmetry**: $\rho_{XY} = \rho_{YX}$.
-3. **Dimensionless**: The correlation coefficient is unitless.
-4. **Linearity**: If $\rho_{XY} = \pm 1 $, $Y$ is a perfect linear function of $X$.
-5. **Independence**: If $X$ and $Y$ are independent, $\rho_{XY} = 0 $. However, $\rho_{XY} = 0$ does not imply independence unless the variables are jointly normally distributed.
+| **Property**       | **Description**                                                                 |
+|--------------------|---------------------------------------------------------------------------------|
+| **Range**          | $-1 \leq \rho_{XY} \leq 1$                                                      |
+| **Symmetry**       | $\rho_{XY} = \rho_{YX}$                                                         |
+| **Dimensionless**  | The correlation coefficient is unitless.                                        |
+| **Linearity**      | If $\rho_{XY} = \pm 1 $, $Y$ is a perfect linear function of $X$.               |
+| **Independence**   | If $X$ and $Y$ are independent, $\rho_{XY} = 0$. However, $\rho_{XY} = 0$ does not imply independence unless the variables are jointly normally distributed. |
 
 ### Interpretation
 
@@ -249,7 +253,7 @@ $$
 \rho_{XY} = \frac{\text{Cov}(X, Y)}{\sigma_X \sigma_Y} = \frac{6}{2 \times 4} = \frac{6}{8} = 0.75
 $$
 
-**Interpretation**:
+Interpretation:
 
 - A correlation coefficient of $0.75$ indicates a strong positive linear relationship between $X$ and $Y$.
 
@@ -271,8 +275,8 @@ $$
 
 ### Assumptions of Pearson's $r$
 
-1. **Linearity**: The relationship between $X$ and $Y$ is linear.
-2. **Normality**: Both $X$ and $Y$ are normally distributed.
-3. **Homoscedasticity**: The variance of $Y$ is the same for all values of $X$.
+1. **Linearity** means that the relationship between $X$ and $Y$ is straight and follows a linear pattern.
+2. **Normality** refers to the condition where both $X$ and $Y$ are normally distributed.
+3. Lastly, **homoscedasticity** implies that the variance of $Y$ remains consistent across all values of $X$.
 
 If these assumptions are violated, Pearson's $r$ may not be an appropriate measure of correlation.
