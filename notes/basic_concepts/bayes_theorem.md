@@ -7,6 +7,7 @@ P(A|B) = \frac{P(B|A) \times P(A)}{P(B)}
 $$
 
 where:
+
 - $P(A|B)$ is the probability of event A given event B has occurred,
 - $P(B|A)$ is the probability of event B given event A has occurred,
 - $P(A)$ is the probability of event A, and
@@ -19,6 +20,7 @@ Let's say $P(A)=0.3$ and $P(B)=0.4$ then:
 ### Example: Medical Diagnosis
 
 Consider a medical test that is designed to diagnose a certain disease. The characteristics of the test are:
+
 - True positive rate (sensitivity): 95% (if the person has the disease, the test is positive 95% of the time).
 - False positive rate: 5% (if the person does not have the disease, the test is positive 5% of the time).
 - Prevalence of the disease in the general population: 2%.
