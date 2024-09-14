@@ -1,4 +1,4 @@
-### Backward Shift Operator
+## Backward Shift Operator
 
 The **backward shift operator** (denoted by $B$) is a powerful tool in time series analysis, used to simplify the notation and manipulation of time series models. The operator shifts the time index of a time series back by one period, making it useful in autoregressive, moving average, and mixed models.
 
