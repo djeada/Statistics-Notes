@@ -168,7 +168,7 @@ Evaluation metrics are crucial in assessing the performance of regression models
 
 ## Evaluating Regression Models
 
-In regression analysis, the goal is to build a model that accurately predicts the dependent variable $y $ from one or more independent variables $x $. After fitting a regression model, it is essential to assess its performance using appropriate evaluation metrics. The most commonly used regression metrics include:
+In regression analysis, the goal is to build a model that accurately predicts the dependent variable $y$ from one or more independent variables $x $. After fitting a regression model, it is essential to assess its performance using appropriate evaluation metrics. The most commonly used regression metrics include:
 
 - **Mean Absolute Error (MAE)**
 - **Mean Squared Error (MSE)**
@@ -179,7 +179,7 @@ These metrics provide different perspectives on the model's predictive capabilit
 
 ## Visualizing Regression Performance
 
-Consider a dataset where we have generated data points from a sine wave with added noise. We fit a linear regression model to this data to predict $y $ based on $x $. The following plot illustrates the data and the fitted regression line:
+Consider a dataset where we have generated data points from a sine wave with added noise. We fit a linear regression model to this data to predict $y$ based on $x $. The following plot illustrates the data and the fitted regression line:
 
 ![Linear Regression on Sine Wave with Noise](https://github.com/djeada/Statistics-Notes/assets/37275728/aaf787b6-9b17-41cc-b1a6-54400b410e1b)
 
