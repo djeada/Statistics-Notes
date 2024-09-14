@@ -13,13 +13,12 @@ This shifts the time series back by one time unit. Higher powers of the backward
 $$
 B^2 X_t = B(BX_t) = B X_{t-1} = X_{t-2}
 $$
+
 $$
 B^k X_t = X_{t-k}
 $$
 
 This property is central to compactly expressing time series models such as autoregressive (AR), moving average (MA), and ARMA models.
-
----
 
 ### Example 1: Random Walk
 
@@ -55,8 +54,6 @@ $$
 
 Where $Z_t$ is white noise. This operator form is useful in expressing and analyzing the structure of the random walk process.
 
----
-
 ### Example 2: Moving Average (MA) Process
 
 Consider a **moving average of order 2 (MA(2))** process:
@@ -90,8 +87,6 @@ X_t = \beta(B) Z_t
 $$
 
 This operator form simplifies the analysis of MA models by capturing the entire structure of the model in the polynomial $\beta(B)$.
-
----
 
 ### Example 3: Autoregressive (AR) Process
 
@@ -127,8 +122,6 @@ $$
 
 This is the standard form of an autoregressive model, where the polynomial $\phi(B)$ captures the lagged dependencies of $X_t$ on its past values.
 
----
-
 ### Example 4: Moving Average (MA) Process with Drift
 
 An **MA(q)** process with drift is given by:
@@ -162,8 +155,6 @@ X_t - \mu = \beta(B) Z_t
 $$
 
 This form is useful for analyzing MA processes with drift, where $\beta(B)$ captures the lagged effects of the noise terms.
-
----
 
 ### Example 5: Autoregressive (AR) Process of Order $p$
 
