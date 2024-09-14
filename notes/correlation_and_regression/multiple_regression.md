@@ -29,7 +29,7 @@ $$
 Where:
 
 - $\mathbf{y}$ is an $n \times 1$ vector of observations of the dependent variable.
-- $\mathbf{X}$ is an $n \times (p+1) $ matrix of independent variables, including a column of ones for the intercept.
+- $\mathbf{X}$ is an $n \times (p+1)$ matrix of independent variables, including a column of ones for the intercept.
 - $\boldsymbol{\beta}$ is a $(p+1) \times 1$ vector of coefficients.
 - $\boldsymbol{\varepsilon}$ is an $n \times 1$ vector of error terms.
 
@@ -52,7 +52,7 @@ The coefficients $\boldsymbol{\beta}$ are estimated using the Ordinary Least Squ
 The objective is to find $\hat{\boldsymbol{\beta}}$ such that:
 
 $$
-\hat{\boldsymbol{\beta}} = \underset{\boldsymbol{\beta}}{\operatorname{argmin}} \, (\mathbf{y} - \mathbf{X} \boldsymbol{\beta})^\top (\mathbf{y} - \mathbf{X} \boldsymbol{\beta})
+\hat{\boldsymbol{\beta}} = \underset{\boldsymbol{\beta}}{\text{argmin}} \, (\mathbf{y} - \mathbf{X} \boldsymbol{\beta})^\top (\mathbf{y} - \mathbf{X} \boldsymbol{\beta})
 $$
 
 ### Solution Using Matrix Algebra
