@@ -59,16 +59,6 @@ This means that the variance of a random walk increases linearly with time, impl
 
 ### Simulation of a Random Walk in Python
 
-Simulating a random walk in Python is straightforward. We initialize the process at some starting value (typically $X_0 = 0$) and then iteratively generate random shocks $Z_t$ to calculate each successive value $X_t$.
-
-Below is an example of how to simulate and plot a random walk in Python using NumPy and Matplotlib:
-
-Sure! Below is the improved version of your notes with the images included as you requested.
-
----
-
-### Simulation of a Random Walk in Python
-
 A **random walk** is a type of stochastic process where each value in the sequence is determined by the previous value plus a random shock. This concept can be useful in various fields such as finance (for modeling stock prices), physics (for modeling particle movements), or statistics (as a time series model). Simulating a random walk in Python is straightforward, as we iteratively add random shocks to calculate each successive value. 
 
 The basic model for a random walk is:
