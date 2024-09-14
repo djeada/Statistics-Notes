@@ -42,9 +42,9 @@ $$
 
 Weak stationarity is often sufficient for most time series models, as it focuses on ensuring that the mean and variance remain stable over time, making the process easier to model and analyze.
 
-## Properties of Stationary Processes
+### Properties of Stationary Processes
 
-### Mean, Variance, and Autocovariance Functions
+#### Mean, Variance, and Autocovariance Functions
 
 To analyze a stationary process, we focus on three key functions:
 
@@ -52,7 +52,7 @@ To analyze a stationary process, we focus on three key functions:
 - The **variance function** $\sigma^2(t) = \text{Var}(X_t)$ gives the variance at time $t$, which must also be constant for stationarity.
 - The **autocovariance function** $\gamma(k) = \text{Cov}(X_t, X_{t+k})$ measures how the process correlates with itself at different time lags $k$, and for a stationary process, it depends only on the lag $k$, not on time $t$.
 
-### Autocorrelation and Bounds
+#### Autocorrelation and Bounds
 
 For a weakly stationary process, the **autocorrelation function** $\rho(k)$, which measures the correlation between two points in the series separated by lag $k$, is bounded by -1 and 1:
 
@@ -135,9 +135,9 @@ $$
 
 The MA(q) process is weakly stationary because its mean and variance are constant, and the autocovariance depends only on the lag.
 
-## Non-Stationary Processes
+### Non-Stationary Processes
 
-### Random Walk
+#### Random Walk
 
 A **random walk** is an example of a non-stationary process. A random walk can be written as:
 
@@ -163,7 +163,7 @@ $$
 
 Since the variance and mean depend on time, the random walk is **not stationary**. However, applying a **difference operator** can transform a random walk into a stationary series.
 
-### Differencing to Remove Non-Stationarity
+#### Differencing to Remove Non-Stationarity
 
 To handle non-stationary processes like random walks, we can apply the **difference operator** $\Delta$, which removes trends and transforms the process into a stationary one.
 
@@ -175,7 +175,7 @@ $$
 
 By differencing the series, we convert a random walk into white noise, which is stationary. This technique is essential for models like ARIMA that require the data to be stationary before modeling.
 
-## Dealing with Non-Stationary Time Series
+### Dealing with Non-Stationary Time Series
 
 In real-world applications, many time series are non-stationary. To apply statistical models that require stationarity, we often use **transformations** such as:
 
@@ -183,7 +183,7 @@ In real-world applications, many time series are non-stationary. To apply statis
 - Using **logarithmic transformations** can stabilize the variance in the series.  
 - The process of **detrending** removes long-term trends, allowing a focus on short-term fluctuations.
 
-### Example of Differencing in Python
+#### Example of Differencing in Python
 
 We can use Python to difference a non-stationary series like a random walk:
 
