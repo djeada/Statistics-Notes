@@ -4,15 +4,16 @@ Stationarity is a fundamental concept in time series analysis. A time series is 
 
 Stationarity can be classified into two types:
 
-1. **Strict Stationarity**: This implies that the entire distribution of the process remains the same over time.
-2. **Weak Stationarity (Second-Order Stationarity)**: This relaxed condition only requires the mean, variance, and autocovariance of the process to be time-invariant.
+1. Strict stationarity implies that the **entire distribution of the process remains the same over time**.  
+2. Weak stationarity, also known as second-order stationarity, requires only that the **mean, variance, and autocovariance remain time-invariant** over time.  
 
 ### Intuition for Stationary Time Series
 
 A **stationary time series** behaves similarly over time, meaning:
-- **No trend**: The mean of the series does not systematically change over time.
-- **Constant variance**: The variability (variance) around the mean remains stable.
-- **No periodic fluctuations**: There is no seasonality or cyclic behavior unless explicitly modeled.
+
+- The mean of the series shows **no trend** and does not systematically change over time.
+- The variability around the mean has a **constant variance**, remaining stable throughout.
+- There are **no periodic fluctuations** such as seasonality or cyclic behavior, unless explicitly modeled.
 
 This means that the statistical properties of one segment of the series are similar to those of any other segment, allowing us to predict future behavior based on past data.
 
@@ -41,19 +42,15 @@ $$
 
 Weak stationarity is often sufficient for most time series models, as it focuses on ensuring that the mean and variance remain stable over time, making the process easier to model and analyze.
 
----
-
 ## Properties of Stationary Processes
 
 ### Mean, Variance, and Autocovariance Functions
 
 To analyze a stationary process, we focus on three key functions:
 
-- **Mean function** $\mu(t) = E[X_t]$: The expected value of the process at time $t$, which should be constant for a stationary process.
-  
-- **Variance function** $\sigma^2(t) = \text{Var}(X_t)$: The variance at time $t$, which must also be constant for stationarity.
-
-- **Autocovariance function** $\gamma(k) = \text{Cov}(X_t, X_{t+k})$: Measures how the process correlates with itself at different time lags $k$. For a stationary process, the autocovariance depends only on the lag $k$, not on the time $t$.
+- The **mean function** $\mu(t) = E[X_t]$ represents the expected value of the process at time $t$, and for a stationary process, this should remain constant.
+- The **variance function** $\sigma^2(t) = \text{Var}(X_t)$ gives the variance at time $t$, which must also be constant for stationarity.
+- The **autocovariance function** $\gamma(k) = \text{Cov}(X_t, X_{t+k})$ measures how the process correlates with itself at different time lags $k$, and for a stationary process, it depends only on the lag $k$, not on time $t$.
 
 ### Autocorrelation and Bounds
 
@@ -104,9 +101,11 @@ Thus, white noise is a stationary process because its mean and variance are cons
 #### Moving Average (MA) Process
 
 A **moving average (MA) process** of order $q$, denoted as MA(q), is another example of a weakly stationary process. It is defined as:
+
 $$
 X_t = \beta_0 Z_t + \beta_1 Z_{t-1} + \dots + \beta_q Z_{t-q}
 $$
+
 where $Z_t \sim \mathcal{N}(0, \sigma_Z^2)$ are independent white noise terms.
 
 For an MA(q) process:
@@ -116,8 +115,8 @@ For an MA(q) process:
 
 $$
 \text{Var}(X_t) = \sigma_Z^2 \sum_{i=0}^{q} \beta_i^2
-
 $$
+
 - The **autocovariance** function $\gamma(k)$ depends on the lag $k$:
 
 $$
@@ -136,8 +135,6 @@ $$
 
 The MA(q) process is weakly stationary because its mean and variance are constant, and the autocovariance depends only on the lag.
 
----
-
 ## Non-Stationary Processes
 
 ### Random Walk
@@ -151,13 +148,14 @@ $$
 where $Z_t$ is white noise.
 
 For a random walk:
-- The **mean** grows over time:
+
+The **mean** grows over time:
 
 $$
 E[X_t] = t \cdot \mu
 $$
 
-- The **variance** increases with time:
+The **variance** increases with time:
 
 $$
 \text{Var}(X_t) = t \cdot \sigma^2
@@ -177,15 +175,13 @@ $$
 
 By differencing the series, we convert a random walk into white noise, which is stationary. This technique is essential for models like ARIMA that require the data to be stationary before modeling.
 
----
-
 ## Dealing with Non-Stationary Time Series
 
 In real-world applications, many time series are non-stationary. To apply statistical models that require stationarity, we often use **transformations** such as:
 
-- **Differencing**: Removes trends and makes the series stationary.
-- **Logarithmic transformations**: Stabilizes variance.
-- **Detrending**: Removes long-term trends to focus on short-term fluctuations.
+- Applying **differencing** helps remove trends and makes the series stationary.  
+- Using **logarithmic transformations** can stabilize the variance in the series.  
+- The process of **detrending** removes long-term trends, allowing a focus on short-term fluctuations.
 
 ### Example of Differencing in Python
 
@@ -221,3 +217,19 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()
 ```
+
+I. Simulating a Random Walk:
+
+- A random walk is generated by taking the cumulative sum of normally distributed random numbers. This produces a series where each value depends on the previous one plus some random noise.
+- The random walk is non-stationary because it lacks a constant mean and variance over time—it drifts unpredictably.
+
+II. Differencing:
+
+- Differencing transforms the non-stationary series into a stationary one by subtracting the previous observation from the current one. This removes any trend or long-term structure in the data.
+- In Python, this is done using `np.diff()`, which takes the difference between consecutive elements of the series.
+
+The result plot would look like the following:
+
+![output(19)](https://github.com/user-attachments/assets/2cebba56-7d3b-470c-9511-56d617be7159)
+
+In this plot, the upper section shows the random walk (non-stationary), while the lower section shows the differenced series (stationary). Differencing removes the trend from the original series, making it easier to model and predict future values.
