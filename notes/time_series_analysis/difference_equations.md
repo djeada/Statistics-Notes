@@ -10,8 +10,6 @@ $$
 
 is a second-order difference equation because it relates $a_n$ to the two previous terms $a_{n-1}$ and $a_{n-2}$.
 
----
-
 ### Solving Difference Equations
 
 To solve a difference equation, we often look for a solution of the form:
@@ -56,8 +54,6 @@ $$
 
 where $c_1$ and $c_2$ are constants determined by the initial conditions.
 
----
-
 ### Example: Solving with Initial Conditions
 
 Given the initial conditions $a_0 = 4$ and $a_1 = 10$, we can solve for $c_1$ and $c_2$.
@@ -95,8 +91,6 @@ $$
 a_n = 2 \cdot 2^n + 2 \cdot 3^n
 $$
 
----
-
 ### Higher-Order Difference Equations
 
 A $k$-th order difference equation has the form:
@@ -118,8 +112,6 @@ a_n = c_1 \lambda_1^n + c_2 \lambda_2^n + \dots + c_k \lambda_k^n
 $$
 
 The constants $c_1, c_2, \dots, c_k$ are determined by the initial conditions.
-
----
 
 ### Example: Fibonacci Sequence
 
@@ -171,8 +163,6 @@ $$
 a_n = \frac{1}{\sqrt{5}} \left( \left( \frac{1 + \sqrt{5}}{2} \right)^n - \left( \frac{1 - \sqrt{5}}{2} \right)^n \right)
 $$
 
----
-
 ### Relation to Differential Equations
 
 A $k$-th order linear ordinary differential equation has a similar form to the $k$-th order difference equation:
@@ -188,4 +178,3 @@ $$
 $$
 
 Once the roots are found, the general solution is expressed as a sum of exponentials, analogous to the powers of $\lambda$ in the difference equation solution.
-
