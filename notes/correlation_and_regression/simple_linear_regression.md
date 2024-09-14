@@ -12,41 +12,41 @@ $$
 
 Where:
 
-- $y_i $ is the $i $-th observation of the dependent variable.
-- $x_i $ is the $i $-th observation of the independent variable.
-- $\beta_0 $ is the intercept (the expected value of $y $ when $x = 0 $).
-- $\beta_1 $ is the slope (the average change in $y $ for a one-unit change in $x $).
-- $\varepsilon_i $ is the error term, assumed to be independently and identically distributed with mean zero and constant variance $\sigma^2 $.
+- $y_i$ is the $i $-th observation of the dependent variable.
+- $x_i$ is the $i $-th observation of the independent variable.
+- $\beta_0$ is the intercept (the expected value of $y$ when $x = 0$).
+- $\beta_1$ is the slope (the average change in $y$ for a one-unit change in $x$).
+- $\varepsilon_i$ is the error term, assumed to be independently and identically distributed with mean zero and constant variance $\sigma^2 $.
 
 ### Assumptions of the Model
 
 For the simple linear regression model to be valid, several key assumptions must be met:
 
-1. **Linearity**: The relationship between $x $ and $y $ is linear.
-2. **Independence**: The residuals (errors) $\varepsilon_i $ are independent.
-3. **Homoscedasticity**: The residuals have constant variance ($\sigma^2 $) for all values of $x $.
+1. **Linearity**: The relationship between $x$ and $y$ is linear.
+2. **Independence**: The residuals (errors)$\varepsilon_i$ are independent.
+3. **Homoscedasticity**: The residuals have constant variance ($\sigma^2 $) for all values of $x$.
 4. **Normality**: The residuals are normally distributed.
-5. **No Measurement Error in $x $**: The independent variable $x $ is measured without error.
+5. **No Measurement Error in $x$**: The independent variable $x$ is measured without error.
 
 ## Estimation of Coefficients Using the Least Squares Method
 
-The goal is to find estimates $\hat{\beta}_0 $ and $\hat{\beta}_1 $ that minimize the sum of squared residuals (differences between observed and predicted values):
+The goal is to find estimates $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimize the sum of squared residuals (differences between observed and predicted values):
 
 $$
 \text{SSE} = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 = \sum_{i=1}^{n} (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)^2
 $$
 
-### Calculating the Slope ($\hat{\beta}_1 $) and Intercept ($\hat{\beta}_0 $)
+### Calculating the Slope ($\hat{\beta}_1$) and Intercept ($\hat{\beta}_0$)
 
 The least squares estimates are calculated using the following formulas:
 
-#### Slope ($\hat{\beta}_1 $):
+#### Slope ($\hat{\beta}_1$):
 
 $$
 \hat{\beta}_1 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i - \bar{x})^2} = \frac{\text{Cov}(x, y)}{\text{Var}(x)}
 $$
 
-#### Intercept ($\hat{\beta}_0 $):
+#### Intercept ($\hat{\beta}_0$):
 
 $$
 \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}
@@ -54,13 +54,13 @@ $$
 
 Where:
 
-- $\bar{x} = \dfrac{1}{n} \sum_{i=1}^{n} x_i $ is the mean of the independent variable.
-- $\bar{y} = \dfrac{1}{n} \sum_{i=1}^{n} y_i $ is the mean of the dependent variable.
+- $\bar{x} = \dfrac{1}{n} \sum_{i=1}^{n} x_i$ is the mean of the independent variable.
+- $\bar{y} = \dfrac{1}{n} \sum_{i=1}^{n} y_i$ is the mean of the dependent variable.
 
 ## Interpretation of the Coefficients
 
-- **Intercept ($\hat{\beta}_0 $)**: Represents the expected value of $y $ when $x = 0 $. It is the point where the regression line crosses the $y $-axis.
-- **Slope ($\hat{\beta}_1 $)**: Indicates the average change in $y $ for each one-unit increase in $x $.
+- **Intercept ($\hat{\beta}_0$)**: Represents the expected value of $y$ when $x = 0$. It is the point where the regression line crosses the $y$-axis.
+- **Slope ($\hat{\beta}_1$)**: Indicates the average change in $y$ for each one-unit increase in $x$.
 
 ## Assessing the Fit of the Model
 
@@ -90,7 +90,7 @@ $$
 
 ### Coefficient of Determination ($R^2 $)
 
-Indicates the proportion of variance in $y $ explained by $x $:
+Indicates the proportion of variance in $y$ explained by$x$:
 
 $$
 R^2 = \frac{\text{SSR}}{\text{SST}} = 1 - \frac{\text{SSE}}{\text{SST}}
@@ -102,8 +102,8 @@ An $R^2 $ value close to 1 suggests a strong linear relationship.
 
 ### Testing the Significance of the Slope
 
-- **Null Hypothesis ($H_0 $)**: $\beta_1 = 0 $ (no linear relationship)
-- **Alternative Hypothesis ($H_a $)**: $\beta_1 \neq 0 $
+- **Null Hypothesis ($H_0$)**: $\beta_1 = 0$ (no linear relationship)
+- **Alternative Hypothesis ($H_a $)**: $\beta_1 \neq 0$
 
 **Test Statistic**:
 
@@ -127,9 +127,9 @@ The test statistic follows a $t $-distribution with $n - 2 $ degrees of freedom.
 
 ## Example
 
-Suppose we have the following data on the number of hours studied ($x $) and the test scores ($y $):
+Suppose we have the following data on the number of hours studied ($x$) and the test scores ($y$):
 
-| Hours Studied ($x $) | Test Score ($y $) |
+| Hours Studied ($x$) | Test Score ($y$) |
 |-------------------------|-----------------------|
 | 2                       | 50                    |
 | 4                       | 60                    |
@@ -143,6 +143,7 @@ Suppose we have the following data on the number of hours studied ($x $) and the
 $$
 \bar{x} = \frac{2 + 4 + 6 + 8}{4} = 5
 $$
+
 $$
 \bar{y} = \frac{50 + 60 + 70 + 80}{4} = 65
 $$
@@ -151,7 +152,7 @@ $$
 
 Create a table to organize calculations:
 
-| $x_i $ | $y_i $ | $x_i - \bar{x} $ | $y_i - \bar{y} $ | $(x_i - \bar{x})(y_i - \bar{y}) $ | $(x_i - \bar{x})^2 $ |
+| $x_i$ | $y_i$ | $x_i - \bar{x} $ | $y_i - \bar{y} $ | $(x_i - \bar{x})(y_i - \bar{y})$ | $(x_i - \bar{x})^2 $ |
 |-----------|-----------|---------------------|---------------------|--------------------------------------|-------------------------|
 | 2         | 50        | -3                  | -15                 | 45                                   | 9                       |
 | 4         | 60        | -1                  | -5                  | 5                                    | 1                       |
@@ -159,25 +160,25 @@ Create a table to organize calculations:
 | 8         | 80        | 3                   | 15                  | 45                                   | 9                       |
 | **Total** |           |                     |                     | **100**                               | **20**                  |
 
-- **Sum of Cross-Products**:
+**Sum of Cross-Products**:
 
 $$
 \sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y}) = 100
 $$
 
-- **Sum of Squares of $x $**:
+**Sum of Squares of $x$**:
 
 $$
 \sum_{i=1}^{n} (x_i - \bar{x})^2 = 20
 $$
 
-#### 3. Calculate the Slope ($\hat{\beta}_1 $)
+#### 3. Calculate the Slope ($\hat{\beta}_1$)
 
 $$
 \hat{\beta}_1 = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sum (x_i - \bar{x})^2} = \frac{100}{20} = 5
 $$
 
-#### 4. Calculate the Intercept ($\hat{\beta}_0 $)
+#### 4. Calculate the Intercept ($\hat{\beta}_0$)
 
 $$
 \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x} = 65 - (5)(5) = 40
@@ -191,7 +192,7 @@ $$
 
 #### 6. Predict the Test Scores and Calculate Residuals
 
-| $x_i $ | $y_i $ | $\hat{y}_i = 40 + 5x_i $ | Residuals ($y_i - \hat{y}_i $) |
+| $x_i$ | $y_i$ | $\hat{y}_i = 40 + 5x_i$ | Residuals ($y_i - \hat{y}_i$) |
 |-----------|-----------|------------------------------|-----------------------------------|
 | 2         | 50        | 50                           | 0                                 |
 | 4         | 60        | 60                           | 0                                 |
@@ -200,19 +201,19 @@ $$
 
 #### 7. Calculate the Sum of Squares
 
-- **Total Sum of Squares (SST)**:
+**Total Sum of Squares (SST)**:
 
 $$
 \text{SST} = \sum (y_i - \bar{y})^2 = (-15)^2 + (-5)^2 + 5^2 + 15^2 = 500
 $$
 
-- **Sum of Squared Errors (SSE)**:
+**Sum of Squared Errors (SSE)**:
 
 $$
 \text{SSE} = \sum (y_i - \hat{y}_i)^2 = 0
 $$
 
-- **Regression Sum of Squares (SSR)**:
+**Regression Sum of Squares (SSR)**:
 
 $$
 \text{SSR} = \text{SST} - \text{SSE} = 500 - 0 = 500
@@ -226,14 +227,16 @@ $$
 
 An $R^2 $ value of 1 indicates that the model perfectly explains the variability in the test scores.
 
+![output(18)](https://github.com/user-attachments/assets/033767fc-d920-4f36-9827-5e8af81e4760)
+
 #### 9. Calculate the Standard Error of the Estimate ($s $)
 
 $$
 s = \sqrt{\frac{\text{SSE}}{n - 2}} = \sqrt{\frac{0}{2}} = 0
 $$
 
-Since $s = 0 $, the standard errors of the coefficients are zero, which is a result of the perfect fit.
+Since $s = 0$, the standard errors of the coefficients are zero, which is a result of the perfect fit.
 
 #### 10. Hypothesis Testing (Optional)
 
-In this case, the test statistic for $\hat{\beta}_1 $ is undefined due to division by zero in the standard error. However, in practice, with more realistic data where $s > 0 $, you would perform a $t $-test to assess the significance of the slope.
+In this case, the test statistic for $\hat{\beta}_1$ is undefined due to division by zero in the standard error. However, in practice, with more realistic data where $s > 0$, you would perform a $t $-test to assess the significance of the slope.
