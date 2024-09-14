@@ -76,13 +76,15 @@ The F1 Score is particularly useful when dealing with imbalanced classes.
 
 Imagine you are a librarian tasked with retrieving science fiction books from a large library that contains various genres.
 
-- **Precision**: Of all the books you retrieved, how many are actually science fiction?
+**Precision**: 
+
+- Of all the books you retrieved, how many are actually science fiction?
+- If you retrieved 50 books and 40 of them are science fiction, your precision is $\frac{40}{50} = 0.8$ or 80%.
   
-  - If you retrieved 50 books and 40 of them are science fiction, your precision is $\frac{40}{50} = 0.8 $ or 80%.
-  
-- **Recall**: Of all the science fiction books in the library, how many did you successfully retrieve?
-  
-  - If there are 100 science fiction books in total and you retrieved 40, your recall is $\frac{40}{100} = 0.4 $ or 40%.
+**Recall**: 
+
+- Of all the science fiction books in the library, how many did you successfully retrieve?
+- If there are 100 science fiction books in total and you retrieved 40, your recall is $\frac{40}{100} = 0.4$ or 40%.
 
 High precision means that most of the books you picked are relevant (few false positives), while high recall means you found most of the relevant books (few false negatives).
 
@@ -96,51 +98,51 @@ Suppose we have a binary classification problem with the following confusion mat
 | **Actual Negative**  | FP = 20                | TN = 80                | 100       |
 | **Total**            | 90                     | 110                    | 200       |
 
-- **Accuracy**:
+**Accuracy**:
 
-  $$
-  \text{Accuracy} = \frac{70 + 80}{200} = \frac{150}{200} = 0.75 \text{ or } 75\%
-  $$
+$$
+\text{Accuracy} = \frac{70 + 80}{200} = \frac{150}{200} = 0.75 \text{ or } 75\%
+$$
 
-- **Precision**:
+**Precision**:
 
-  $$
-  \text{Precision} = \frac{70}{70 + 20} = \frac{70}{90} \approx 0.778 \text{ or } 77.8\%
-  $$
+$$
+\text{Precision} = \frac{70}{70 + 20} = \frac{70}{90} \approx 0.778 \text{ or } 77.8\%
+$$
 
-- **Recall**:
+**Recall**:
+ 
+$$
+\text{Recall} = \frac{70}{70 + 30} = \frac{70}{100} = 0.7 \text{ or } 70\%
+$$
 
-  $$
-  \text{Recall} = \frac{70}{70 + 30} = \frac{70}{100} = 0.7 \text{ or } 70\%
-  $$
+**Specificity**:
 
-- **Specificity**:
+$$
+\text{Specificity} = \frac{80}{80 + 20} = \frac{80}{100} = 0.8 \text{ or } 80\%
+$$
 
-  $$
-  \text{Specificity} = \frac{80}{80 + 20} = \frac{80}{100} = 0.8 \text{ or } 80\%
-  $$
+**F1 Score**:
 
-- **F1 Score**:
-
-  $$
-  \text{F1 Score} = 2 \times \frac{0.778 \times 0.7}{0.778 + 0.7} \approx 2 \times \frac{0.5446}{1.478} \approx 0.736 \text{ or } 73.6\%
-  $$
+$$
+\text{F1 Score} = 2 \times \frac{0.778 \times 0.7}{0.778 + 0.7} \approx 2 \times \frac{0.5446}{1.478} \approx 0.736 \text{ or } 73.6\%
+$$
 
 ### Receiver Operating Characteristic (ROC) Curve and AUC
 
 The **Receiver Operating Characteristic (ROC) curve** plots the True Positive Rate (Recall) against the False Positive Rate (1 - Specificity) at various threshold settings. It provides a comprehensive view of the model's performance across all classification thresholds.
 
-- **True Positive Rate (TPR)**:
+**True Positive Rate (TPR)**:
 
-  $$
-  \text{TPR} = \text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}
-  $$
+$$
+\text{TPR} = \text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}
+$$
 
-- **False Positive Rate (FPR)**:
+**False Positive Rate (FPR)**:
 
-  $$
-  \text{FPR} = \frac{\text{FP}}{\text{FP} + \text{TN}}
-  $$
+$$
+\text{FPR} = \frac{\text{FP}}{\text{FP} + \text{TN}}
+$$
 
 The **Area Under the ROC Curve (AUC-ROC)** is a single scalar value summarizing the model's ability to discriminate between positive and negative classes. An AUC of:
 
@@ -171,7 +173,7 @@ In regression analysis, the goal is to build a model that accurately predicts th
 - **Mean Absolute Error (MAE)**
 - **Mean Squared Error (MSE)**
 - **Root Mean Squared Error (RMSE)**
-- **Coefficient of Determination ($R^2 $)**
+- **Coefficient of Determination ($R^2$)**
 
 These metrics provide different perspectives on the model's predictive capabilities and can be used to compare different models or to tune model parameters.
 
@@ -203,9 +205,9 @@ $$
 
 Where:
 
-- $n $ is the number of observations
-- $y_i $ is the actual value of the dependent variable for the $i $-th observation
-- $\hat{y}_i $ is the predicted value for the $i $-th observation
+- $n$ is the number of observations
+- $y_i$ is the actual value of the dependent variable for the $i $-th observation
+- $\hat{y}_i$ is the predicted value for the $i $-th observation
 
 **Interpretation**:
 
@@ -261,46 +263,50 @@ $$
 - Like MSE, RMSE is sensitive to outliers due to the squaring of errors.
 - RMSE is in the same units as the dependent variable.
 
-### Coefficient of Determination ($R^2 $)
+### Coefficient of Determination ($R^2$)
 
 **Definition**:
 
-The **Coefficient of Determination**, denoted as $R^2 $, is a statistical measure that represents the proportion of the variance in the dependent variable that is predictable from the independent variables.
+The **Coefficient of Determination**, denoted as $R^2$, is a statistical measure that represents the proportion of the variance in the dependent variable that is predictable from the independent variables.
 
 **Formula**:
 
 $$
-R^2 = 1 - \frac{ \text{SS}_{\text{res}} }{ \text{SS}_{\text{tot}} } = 1 - \frac{ \sum_{i=1}^{n} ( y_i - \hat{y}_i )^2 }{ \sum_{i=1}^{n} ( y_i - \bar{y} )^2 }
+R^2 = 1 - \frac{ \text{SS}_{\text{res}} }{ \text{SS}_{\text{tot}} }
+$$
+
+$$
+= 1 - \frac{ \sum_{i=1}^{n} ( y_i - \hat{y}_i )^2 }{ \sum_{i=1}^{n} ( y_i - \bar{y} )^2 }
 $$
 
 Where:
 
-- $\text{SS}_{\text{res}} $ is the residual sum of squares (sum of squared residuals)
-- $\text{SS}_{\text{tot}} $ is the total sum of squares (sum of squared deviations from the mean)
-- $\bar{y} $ is the mean of the observed data
+- $\text{SS}_{\text{res}}$ is the residual sum of squares (sum of squared residuals)
+- $\text{SS}_{\text{tot}}$ is the total sum of squares (sum of squared deviations from the mean)
+- $\bar{y}$ is the mean of the observed data
 
 **Interpretation**:
 
-- $R^2 $ values range from 0 to 1.
-- An $R^2 $ of 1 indicates that the regression predictions perfectly fit the data.
-- An $R^2 $ of 0 indicates that the model does not explain any of the variability of the response data around its mean.
+- $R^2$ values range from 0 to 1.
+- An $R^2$ of 1 indicates that the regression predictions perfectly fit the data.
+- An $R^2$ of 0 indicates that the model does not explain any of the variability of the response data around its mean.
 
 **Properties**:
 
-- $R^2 $ can also be negative in cases where the model fits the data worse than a horizontal line (mean of the data).
-- Higher $R^2 $ values indicate a better fit to the data.
+- $R^2$ can also be negative in cases where the model fits the data worse than a horizontal line (mean of the data).
+- Higher $R^2$ values indicate a better fit to the data.
 
 **Note**:
 
-- $R^2 $ alone does not indicate whether a regression model is adequate. It is possible to have a high $R^2 $ value for a model that is inappropriate.
+- $R^2$ alone does not indicate whether a regression model is adequate. It is possible to have a high $R^2$ value for a model that is inappropriate.
 - It does not indicate whether independent variables are a cause of the dependent variable.
-- $R^2 $ does not account for the number of predictors in the model. **Adjusted $R^2 $** is used when comparing models with different numbers of predictors.
+- $R^2$ does not account for the number of predictors in the model. **Adjusted $R^2$** is used when comparing models with different numbers of predictors.
 
-### Adjusted $R^2 $
+### Adjusted $R^2$
 
 **Definition**:
 
-**Adjusted $R^2 $** adjusts the $R^2 $ value based on the number of predictors in the model relative to the number of data points. It penalizes the addition of unnecessary predictors to the model.
+**Adjusted $R^2$** adjusts the $R^2$ value based on the number of predictors in the model relative to the number of data points. It penalizes the addition of unnecessary predictors to the model.
 
 **Formula**:
 
@@ -310,12 +316,12 @@ $$
 
 Where:
 
-- $n $ is the number of observations
-- $p $ is the number of predictors (independent variables)
+- $n$ is the number of observations
+- $p$ is the number of predictors (independent variables)
 
 **Interpretation**:
 
-- Adjusted $R^2 $ increases only if the new predictor improves the model more than would be expected by chance.
+- Adjusted $R^2$ increases only if the new predictor improves the model more than would be expected by chance.
 - It can be used for model selection, especially when comparing models with different numbers of predictors.
 
 ## Comparing Regression Metrics
@@ -334,13 +340,13 @@ Where:
 
 - **MAE**: Useful when all errors are equally important and when outliers are not a major concern.
 - **MSE/RMSE**: Preferred when large errors are particularly undesirable, and when penalizing larger errors more severely is important.
-- **$R^2 $**: Provides a measure of how well the observed outcomes are replicated by the model, relative to the mean of the dependent variable.
+- **$R^2$**: Provides a measure of how well the observed outcomes are replicated by the model, relative to the mean of the dependent variable.
 
 ## Example Calculation
 
 Let's consider a small dataset:
 
-| $i $ | $x_i $ | $y_i $ | $\hat{y}_i $ |
+| $i $ | $x_i$ | $y_i$ | $\hat{y}_i$ |
 |---------|-----------|-----------|----------------|
 | 1       | 1.0       | 2.0       | 2.5            |
 | 2       | 2.0       | 4.0       | 3.8            |
@@ -372,7 +378,7 @@ $$
 \text{RMSE} = \sqrt{ \text{MSE} } = \sqrt{0.07} \approx 0.265
 $$
 
-Compute $R^2 $:
+Compute $R^2$:
 
 First, compute the total sum of squares:
 
@@ -390,7 +396,7 @@ $$
 \text{SS}_{\text{res}} = \sum_{i=1}^{5} ( y_i - \hat{y}_i )^2 = 0.25 + 0.04 + 0.01 + 0.04 + 0.01 = 0.35
 $$
 
-Compute $R^2 $:
+Compute $R^2$:
 
 $$
 R^2 = 1 - \frac{ \text{SS}_{\text{res}} }{ \text{SS}_{\text{tot}} } = 1 - \frac{0.35}{40} = 1 - 0.00875 = 0.99125
@@ -399,20 +405,20 @@ $$
 **Interpretation**:
 
 - The model explains approximately 99.125% of the variance in the dependent variable.
-- The high $R^2 $ value indicates a strong fit to the data.
+- The high $R^2$ value indicates a strong fit to the data.
 
-## Negative $R^2 $ Values
+## Negative $R^2$ Values
 
-Although $R^2 $ typically ranges from 0 to 1, it can be negative when the model is worse than simply predicting the mean of the observed data. This can happen if the residual sum of squares is greater than the total sum of squares.
+Although $R^2$ typically ranges from 0 to 1, it can be negative when the model is worse than simply predicting the mean of the observed data. This can happen if the residual sum of squares is greater than the total sum of squares.
 
 **Example**:
 
 Suppose we have a model that makes poor predictions resulting in a high residual sum of squares:
 
-- $\text{SS}_{\text{res}} = 50 $
-- $\text{SS}_{\text{tot}} = 40 $
+- $\text{SS}_{\text{res}} = 50$
+- $\text{SS}_{\text{tot}} = 40$
 
-Compute $R^2 $:
+Compute $R^2$:
 
 $$
 R^2 = 1 - \frac{50}{40} = 1 - 1.25 = -0.25
@@ -420,13 +426,13 @@ $$
 
 **Interpretation**:
 
-- A negative $R^2 $ indicates that the model performs worse than a horizontal line at $\bar{y} $.
+- A negative $R^2$ indicates that the model performs worse than a horizontal line at $\bar{y}$.
 - It suggests that the model fails to capture the underlying patterns in the data.
 
 ## Practical Considerations
 
 - **Model Selection**: Use multiple metrics to evaluate and compare models. No single metric provides a complete picture.
 - **Outliers**: Consider the impact of outliers on MSE and RMSE. Outliers can disproportionately affect these metrics.
-- **Overfitting**: A very high $R^2 $ does not guarantee that the model generalizes well to new data. Always validate the model on unseen data.
+- **Overfitting**: A very high $R^2$ does not guarantee that the model generalizes well to new data. Always validate the model on unseen data.
 - **Residual Analysis**: Examine residual plots to check assumptions of linearity, homoscedasticity (constant variance), and normality of errors.
-- **Adjusted $R^2 $**: Use adjusted $R^2 $ when comparing models with different numbers of predictors to account for model complexity.
+- **Adjusted $R^2$**: Use adjusted $R^2$ when comparing models with different numbers of predictors to account for model complexity.
