@@ -194,7 +194,7 @@ $$
 \text{Minimize } \sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^p |\beta_j|
 $$
 
-## Example: multicollinearity between variables
+## Example: Multicollinearity Between Variables
 
 Suppose we have the following data on the number of hours studied ($x_1$), the number of practice exams taken ($x_2$), and the test scores ($y$):
 
@@ -319,6 +319,10 @@ $$
 
 The predicted values match the actual test scores perfectly.
 
+Plot:
+
+![output(16)](https://github.com/user-attachments/assets/ee0c3bb1-ce28-4418-9bb9-def7d90f273e)
+
 ## Example: No Perfect Multicollinearity
 
 Suppose we have the following data on the number of hours studied ($x_1$), attendance rate ($x_2$) as a percentage, and test scores ($y$):
@@ -377,31 +381,31 @@ $$
 
 #### 3. Compute Sum of Squares and Cross Products
 
-- **Sum of Squares for $x_1$:**
+**Sum of Squares for $x_1$:**
 
 $$
 SS_{x_1 x_1} = \sum x_{1i}^2 - n \bar{x}_1^2 = 168 - 5 (5.2)^2 = 168 - 135.2 = 32.8
 $$
 
-- **Sum of Squares for $x_2$:**
+**Sum of Squares for $x_2$:**
 
 $$
 SS_{x_2 x_2} = \sum x_{2i}^2 - n \bar{x}_2^2 = 32{,}025 - 5 (79)^2 = 32{,}025 - 31{,}205 = 820
 $$
 
-- **Sum of Cross Products between $x_1$ and $x_2$:**
+**Sum of Cross Products between $x_1$ and $x_2$:**
 
 $$
 SS_{x_1 x_2} = \sum x_{1i} x_{2i} - n \bar{x}_1 \bar{x}_2 = 2{,}165 - 5 (5.2)(79) = 2{,}165 - 2{,}054 = 111
 $$
 
-- **Sum of Cross Products between $x_1$ and $y$:**
+**Sum of Cross Products between $x_1$ and $y$:**
 
 $$
 SS_{x_1 y} = \sum x_{1i} y_i - n \bar{x}_1 \bar{y} = 2{,}165 - 5 (5.2)(78) = 2{,}165 - 2{,}028 = 137
 $$
 
-- **Sum of Cross Products between $x_2$ and $y$:**
+**Sum of Cross Products between $x_2$ and $y$:**
 
 $$
 SS_{x_2 y} = \sum x_{2i} y_i - n \bar{x}_2 \bar{y} = 31{,}325 - 5 (79)(78) = 31{,}325 - 30{,}810 = 515
@@ -411,13 +415,13 @@ $$
 
 We use the formulas for multiple linear regression coefficients:
 
-- **Denominator (Determinant):**
+**Denominator (Determinant):**
 
 $$
 D = SS_{x_1 x_1} SS_{x_2 x_2} - (SS_{x_1 x_2})^2 = (32.8)(820) - (111)^2 = 26{,}896 - 12{,}321 = 14{,}575
 $$
 
-- **Coefficient $\hat{\beta}_1$:**
+**Coefficient $\hat{\beta}_1$:**
 
 $$
 \hat{\beta}_1 = \frac{SS_{x_1 y} SS_{x_2 x_2} - SS_{x_1 x_2} SS_{x_2 y}}{D}
@@ -427,7 +431,7 @@ $$
 \hat{\beta}_1 = \frac{(137)(820) - (111)(515)}{14{,}575} = \frac{112{,}340 - 57{,}165}{14{,}575} = \frac{55{,}175}{14{,}575} \approx 3.785
 $$
 
-- **Coefficient $\hat{\beta}_2$:**
+**Coefficient $\hat{\beta}_2$:**
 
 $$
 \hat{\beta}_2 = \frac{SS_{x_2 y} SS_{x_1 x_1} - SS_{x_1 x_2} SS_{x_1 y}}{D}
@@ -437,11 +441,12 @@ $$
 \hat{\beta}_2 = \frac{(515)(32.8) - (111)(137)}{14{,}575} = \frac{16{,}892 - 15{,}207}{14{,}575} = \frac{1{,}685}{14{,}575} \approx 0.116
 $$
 
-- **Intercept $\hat{\beta}_0 $:**
+**Intercept $\hat{\beta}_0 $:**
 
 $$
 \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}_1 - \hat{\beta}_2 \bar{x}_2
 $$
+
 $$
 \hat{\beta}_0 = 78 - (3.785)(5.2) - (0.116)(79) = 78 - 19.642 - 9.164 \approx 49.194
 $$
@@ -456,17 +461,15 @@ $$
 
 #### 6. Interpret the Coefficients
 
-- **Intercept ($\hat{\beta}_0 = 49.194 $)**: Represents the estimated test score when both hours studied and attendance rate are zero. While not practically meaningful, it is necessary for the mathematical model.
-
-- **Coefficient of $x_1$ ($\hat{\beta}_1 = 3.785 $)**: Indicates that for each additional hour studied, the test score increases by approximately 3.785 points, holding attendance rate constant.
-
-- **Coefficient of $x_2$ ($\hat{\beta}_2 = 0.116 $)**: Suggests that for each 1% increase in attendance rate, the test score increases by approximately 0.116 points, holding hours studied constant.
+- **Intercept ($\beta_0 = 49.194 $)**: Represents the estimated test score when both hours studied and attendance rate are zero. While not practically meaningful, it is necessary for the mathematical model.
+- **Coefficient of $x_1$ ($\beta_1 = 3.785 $)**: Indicates that for each additional hour studied, the test score increases by approximately 3.785 points, holding attendance rate constant.
+- **Coefficient of $x_2$ ($\beta_2 = 0.116 $)**: Suggests that for each 1% increase in attendance rate, the test score increases by approximately 0.116 points, holding hours studied constant.
 
 #### 7. Verify the Model with the Data
 
 Compute the predicted test scores ($\hat{y}_i$) and residuals ($e_i = y_i - \hat{y}_i$).
 
-- **For Student 1:**
+**For Student 1:**
 
 $$
 \hat{y}_1 = 49.194 + 3.785 (2) + 0.116 (70) = 49.194 + 7.570 + 8.120 = 64.884
@@ -476,7 +479,7 @@ $$
 e_1 = y_1 - \hat{y}_1 = 65 - 64.884 = 0.116
 $$
 
-- **For Student 2:**
+**For Student 2:**
 
 $$
 \hat{y}_2 = 49.194 + 3.785 (3) + 0.116 (80) = 49.194 + 11.355 + 9.280 = 69.829
@@ -486,7 +489,7 @@ $$
 e_2 = 70 - 69.829 = 0.171
 $$
 
-- **For Student 3:**
+**For Student 3:**
 
 $$
 \hat{y}_3 = 49.194 + 3.785 (5) + 0.116 (60) = 49.194 + 18.925 + 6.960 = 75.079
@@ -496,7 +499,7 @@ $$
 e_3 = 75 - 75.079 = -0.079
 $$
 
-- **For Student 4:**
+**For Student 4:**
 
 $$
 \hat{y}_4 = 49.194 + 3.785 (7) + 0.116 (90) = 49.194 + 26.495 + 10.440 = 86.129
@@ -506,7 +509,7 @@ $$
 e_4 = 85 - 86.129 = -1.129
 $$
 
-- **For Student 5:**
+**For Student 5:**
 
 $$
 \hat{y}_5 = 49.194 + 3.785 (9) + 0.116 (95) = 49.194 + 34.065 + 11.020 = 94.279
@@ -517,6 +520,11 @@ e_5 = 95 - 94.279 = 0.721
 $$
 
 The residuals are small, indicating a good fit of the model to the data.
+
+Plot:
+
+![output(17)](https://github.com/user-attachments/assets/4cd38537-ee4a-4c6c-b788-fa614394967c)
+
 
 ### Checking for Multicollinearity
 
