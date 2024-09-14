@@ -278,20 +278,13 @@ By performing STL decomposition, we can separately analyze the trend, seasonal, 
 ![output(4)](https://github.com/djeada/Statistics-Notes/assets/37275728/6cd784df-8e35-411c-92bd-f94b9529e191)
 
 **Seasonal Component**:
-- **Plot Description**: This plot shows the seasonal fluctuations in the data, which repeat annually.
-- **Interpretation**: The seasonal component captures the repeating yearly pattern, demonstrating the synthetic seasonal effect added to the data. It shows how the data values fluctuate within each year.
+- The **plot description** shows the seasonal fluctuations in the data, which repeat annually.
+- The **interpretation** of this seasonal component highlights the repeating yearly pattern, demonstrating the synthetic seasonal effect added to the data, and shows how the values fluctuate within each year.
 
 **Trend Component**:
-- **Plot Description**: This plot represents the long-term progression of the data over the entire period.
-- **Interpretation**: The trend component shows a clear upward trajectory, indicating a consistent increase in the data over time. This is consistent with the linear trend added to the synthetic data.
+- The **plot description** represents the long-term progression of the data over the entire period.
+- The **interpretation** of the trend component reveals a clear upward trajectory, indicating a consistent increase in the data over time, which aligns with the linear trend added to the synthetic data.
 
 **Residual Component**:
-- **Plot Description**: This plot displays the residuals, which are the remaining variations in the data after removing the trend and seasonal components.
-- **Interpretation**: The residual component reflects random noise. It should ideally display no discernible pattern, indicating that the trend and seasonality have been effectively removed from the data. The residuals appear to be randomly distributed around zero, confirming that the decomposition has captured the main patterns in the data.
-
-
-#### Additional Considerations
-
-- **Diagnostic Checks:** Perform residual analysis to check the adequacy of the model.
-- **Model Selection:** Use criteria like AIC (Akaike Information Criterion) or BIC (Bayesian Information Criterion) to select the best model.
-- **Cross-Validation:** Apply techniques like time series cross-validation to assess the model's predictive performance.
+- The **plot description** displays the residuals, showing the remaining variations in the data after removing the trend and seasonal components.
+- The **interpretation** of the residual component reflects random noise. Ideally, it shows no discernible pattern, suggesting that the trend and seasonality have been effectively removed, with residuals randomly distributed around zero, confirming that the decomposition has captured the main patterns in the data.
