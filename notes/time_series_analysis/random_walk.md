@@ -21,12 +21,15 @@ To better understand how a random walk evolves, we can expand the model over tim
 $$
 X_1 = Z_1
 $$
+
 $$
 X_2 = Z_1 + Z_2
 $$
+
 $$
 X_3 = Z_1 + Z_2 + Z_3
 $$
+
 $$
 X_t = \sum_{i=1}^{t} Z_i
 $$
