@@ -43,8 +43,8 @@ The logit function establishes a linear relationship between the predictor varia
 
 ### Interpretation of Coefficients
 
-- **Intercept ($\beta_0 $)**: The log-odds of the outcome when all predictor variables are zero.
-- **Coefficients ($\beta_j $)**: The change in the log-odds of the outcome for a one-unit increase in $x_j $, holding all other variables constant.
+- The **intercept ($\beta_0$)** represents the log-odds of the outcome when all predictor variables are zero.
+- The **coefficients ($\beta_j$)** indicate the change in the log-odds of the outcome for a one-unit increase in $x_j$, while keeping all other variables constant.
 
 Exponentiating the coefficients provides the **odds ratios**:
 
@@ -97,11 +97,11 @@ Where:
 
 ## Assumptions of Logistic Regression
 
-1. **Binary Outcome**: The dependent variable is binary.
-2. **Independent Observations**: Each observation is independent of the others.
-3. **Linearity in Log-Odds**: The logit of the outcome is a linear combination of the predictor variables.
-4. **No Multicollinearity**: Predictor variables are not highly correlated.
-5. **Large Sample Size**: MLE performs better with larger samples.
+1. The **binary outcome** indicates that the dependent variable has two possible values.
+2. **Independent observations** ensure that each data point is independent of the others.
+3. **Linearity in log-odds** means that the logit of the outcome is a linear function of the predictor variables.
+4. **No multicollinearity** ensures that the predictor variables are not highly correlated with each other.
+5. A **large sample size** is preferred, as maximum likelihood estimation (MLE) performs better with more data.
 
 ## Example
 
