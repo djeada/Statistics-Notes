@@ -71,11 +71,11 @@ X_t = X_{t-1} + Z_t
 $$
 
 where:
-- \( X_t \) is the value of the random walk at time step \( t \),
-- \( X_{t-1} \) is the value of the random walk at the previous time step,
-- \( Z_t \) represents a random shock at time \( t \), typically drawn from a normal distribution \( \mathcal{N}(0, 1) \).
+- $X_t$ is the value of the random walk at time step $t$,
+- $X_{t-1}$ is the value of the random walk at the previous time step,
+- $Z_t$ represents a random shock at time $t$, typically drawn from a normal distribution $\mathcal{N}(0, 1)$.
 
-This means that each new value of the random walk is determined by adding a random shock \( Z_t \) to the current value. The random walk typically starts at some initial value (often \( X_0 = 0 \)).
+This means that each new value of the random walk is determined by adding a random shock $Z_t$ to the current value. The random walk typically starts at some initial value (often $X_0 = 0$).
 
 ### Simulation Example
 
@@ -107,8 +107,8 @@ plt.show()
 
 Explanation:
 
-1. The array `Z` represents the sequence of random shocks \( Z_t \) drawn from a normal distribution \( \mathcal{N}(0, 1) \). This sequence of shocks has a mean of 0 and a standard deviation of 1, making it "white noise"—a series of uncorrelated random variables.
-2. The cumulative sum of `Z` is used to create the random walk. The `np.cumsum()` function calculates the cumulative sum of the array, giving the values \( X_t \) for each time step. The function `np.insert(Z, 0, 0)` adds the initial value \( X_0 = 0 \) at the start.
+1. The array `Z` represents the sequence of random shocks $Z_t$ drawn from a normal distribution $\mathcal{N}(0, 1)$. This sequence of shocks has a mean of 0 and a standard deviation of 1, making it "white noise"—a series of uncorrelated random variables.
+2. The cumulative sum of `Z` is used to create the random walk. The `np.cumsum()` function calculates the cumulative sum of the array, giving the values $X_t$ for each time step. The function `np.insert(Z, 0, 0)` adds the initial value $X_0 = 0$ at the start.
 3. We then plot the random walk, where the x-axis represents time and the y-axis represents the value of the walk at each step.
 
 Here is an example plot of the random walk:
@@ -141,7 +141,7 @@ $$
 \Delta X_t = X_t - X_{t-1} = Z_t
 $$
 
-Applying this operation to a random walk removes the trend, as each differenced value corresponds to the original random shocks \( Z_t \). This transformation yields a series of white noise.
+Applying this operation to a random walk removes the trend, as each differenced value corresponds to the original random shocks $Z_t$. This transformation yields a series of white noise.
 
 ### Differencing in Python
 
@@ -168,7 +168,7 @@ plt.show()
 
 Explanation:
 
-1. The `np.diff()` function calculates the differences between consecutive values in the `X` array, effectively applying the difference operator \( \Delta X_t \). The resulting series, `diff_X`, represents the original random shocks \( Z_t \), which are white noise.
+1. The `np.diff()` function calculates the differences between consecutive values in the `X` array, effectively applying the difference operator $\Delta X_t$. The resulting series, `diff_X`, represents the original random shocks $Z_t$, which are white noise.
 2. After differencing, we plot the new series to visualize the transformation. The plot shows random fluctuations around zero, which is characteristic of white noise.
 3. The autocorrelation function of the differenced series should show no significant correlations at any lag, as the differenced process is now white noise with no memory of previous values.
 
