@@ -37,11 +37,11 @@ Where:
 
 For the multiple linear regression model to provide valid results, several key assumptions must be met:
 
-1. **Linearity**: The relationship between the dependent variable and each independent variable is linear.
-2. **Independence**: The observations are independent of each other.
-3. **Homoscedasticity**: The variance of the error terms is constant across all levels of the independent variables.
-4. **Normality**: The error terms are normally distributed with a mean of zero.
-5. **No Multicollinearity**: The independent variables are not perfectly correlated.
+1. **Linearity** means that the relationship between the dependent variable and each independent variable is linear.
+2. **Independence** assumes that the observations are independent of one another.
+3. **Homoscedasticity** ensures that the variance of the error terms remains constant across all levels of the independent variables.
+4. **Normality** requires that the error terms are normally distributed with a mean of zero.
+5. Finally, **no multicollinearity** ensures that the independent variables are not perfectly correlated with each other.
 
 ## Estimation of Coefficients
 
@@ -76,8 +76,8 @@ $$
 
 ## Interpretation of Coefficients
 
-- **Intercept ($\hat{\beta}_0 $)**: The expected value of $y$ when all independent variables are zero.
-- **Slope Coefficients ($\hat{\beta}_j $)**: The expected change in $y$ for a one-unit increase in $x_j $, holding all other variables constant.
+- The **intercept ($\hat{\beta}_0$)** represents the expected value of $y$ when all independent variables are zero.
+- The **slope coefficients ($\hat{\beta}_j$)** indicate the expected change in $y$ for a one-unit increase in $x_j$, while holding all other variables constant.
 
 ## Assessing Model Fit
 
@@ -87,8 +87,8 @@ $$
 R^2 = 1 - \frac{\text{SSR}}{\text{SST}}
 $$
 
-- **SSR (Sum of Squared Residuals)**: Measures the unexplained variation.
-- **SST (Total Sum of Squares)**: Measures the total variation in $y$.
+- **SSR (Sum of Squared Residuals)** measures the unexplained variation in the model, representing the error.
+- **SST (Total Sum of Squares)** captures the total variation in $y$, showing the overall variability in the dependent variable.
 
 An $R^2$ value close to 1 indicates a good fit.
 
@@ -141,17 +141,17 @@ $$
 
 ### Remedies
 
-- **Remove Variables**: Exclude one of the correlated variables.
-- **Combine Variables**: Create composite variables.
-- **Regularization**: Use methods like ridge regression.
+- **Remove variables** by excluding one of the correlated variables from the model.
+- **Combine variables** to create composite or aggregated variables that reduce redundancy.
+- **Regularization** techniques, such as ridge regression, can be applied to handle multicollinearity effectively.
 
 ## Assumption Diagnostics
 
 ### Residual Analysis
 
-- **Plot Residuals vs. Fitted Values**: Check for patterns indicating non-linearity or heteroscedasticity.
-- **Normal Q-Q Plot**: Assess normality of residuals.
-
+- **Plot residuals vs. fitted values** to check for any patterns that may indicate non-linearity or heteroscedasticity.
+- **Normal Q-Q plot** to assess whether the residuals follow a normal distribution.
+  
 ### Durbin-Watson Test
 
 Checks for autocorrelation in residuals:
@@ -461,9 +461,9 @@ $$
 
 #### 6. Interpret the Coefficients
 
-- **Intercept ($\beta_0 = 49.194 $)**: Represents the estimated test score when both hours studied and attendance rate are zero. While not practically meaningful, it is necessary for the mathematical model.
-- **Coefficient of $x_1$ ($\beta_1 = 3.785 $)**: Indicates that for each additional hour studied, the test score increases by approximately 3.785 points, holding attendance rate constant.
-- **Coefficient of $x_2$ ($\beta_2 = 0.116 $)**: Suggests that for each 1% increase in attendance rate, the test score increases by approximately 0.116 points, holding hours studied constant.
+- The **intercept ($\beta_0 = 49.194$)** represents the estimated test score when both hours studied and attendance rate are zero. While this value may not have practical significance, it is necessary for constructing the mathematical model.
+- The **coefficient of $x_1$ ($\beta_1 = 3.785$)** suggests that for each additional hour studied, the test score increases by approximately 3.785 points, assuming the attendance rate remains constant.
+- The **coefficient of $x_2$ ($\beta_2 = 0.116$)** indicates that for each 1% increase in attendance rate, the test score rises by approximately 0.116 points, holding hours studied constant.
 
 #### 7. Verify the Model with the Data
 
