@@ -2,7 +2,7 @@
 
 The **Yule-Walker equations** are a set of linear equations that relate the autocorrelations of an **autoregressive (AR) process** to its parameters. These equations are crucial for estimating the parameters of AR models and for understanding the autocorrelation structure of the process.
 
-### Yule-Walker Equations: Definition
+### Definition
 
 The Yule-Walker equations provide a way to estimate the **parameters of an AR(p) process** by relating them to the **autocorrelations** of the process. The key idea is to derive a system of equations that link the parameters $\phi_1, \phi_2, \dots, \phi_p$ with the autocorrelation function (ACF) at different lags $k$.
 
@@ -23,8 +23,8 @@ These equations can be used to estimate the parameters $\phi_1, \phi_2, \dots, \
 
 #### Assumptions
 
-1. **Stationarity**: The AR process is assumed to be stationary, meaning the mean and variance of the process do not change over time, and the autocovariance function depends only on the lag, not the time.
-2. **White Noise**: The error term $Z_t$ is white noise with zero mean and constant variance $\sigma_Z^2$, meaning $Z_t$ is uncorrelated with past values of the process.
+1. The **stationarity** assumption for an AR process means that the mean and variance of the process remain constant over time, and the autocovariance function depends only on the lag, not on the time.
+2. In the AR process, the **white noise** error term $Z_t$ has zero mean and constant variance $\sigma_Z^2$, meaning $Z_t$ is uncorrelated with past values of the process.
 
 #### Derivation Steps
 
