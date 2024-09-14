@@ -15,10 +15,10 @@ A **confusion matrix** is a tabular representation of the performance of a class
 | **Actual Positive**  | True Positive (TP)     | False Negative (FN)    |
 | **Actual Negative**  | False Positive (FP)    | True Negative (TN)     |
 
-- **True Positive (TP)**: The model correctly predicts a positive class.
-- **True Negative (TN)**: The model correctly predicts a negative class.
-- **False Positive (FP)**: The model incorrectly predicts a positive class (Type I error).
-- **False Negative (FN)**: The model incorrectly predicts a negative class (Type II error).
+- A **true positive (TP)** occurs when the model correctly predicts a positive class.
+- A **true negative (TN)** happens when the model correctly predicts a negative class.
+- A **false positive (FP)** means the model incorrectly predicts a positive class, which is also known as a Type I error.
+- A **false negative (FN)** refers to the model incorrectly predicting a negative class, known as a Type II error.
 
 ### Key Metrics Derived from the Confusion Matrix
 
@@ -328,19 +328,19 @@ Where:
 
 ### Sensitivity to Outliers
 
-- **MAE**: Less sensitive to outliers compared to MSE and RMSE because it does not square the errors.
-- **MSE/RMSE**: More sensitive to outliers due to the squaring of errors, which amplifies the effect of larger errors.
+- The **MAE** is less sensitive to outliers than MSE and RMSE because it does not involve squaring the errors.
+- The **MSE/RMSE** are more sensitive to outliers as squaring the errors amplifies the impact of larger errors.
 
 ### Units and Interpretability
 
-- **MAE and RMSE**: Both are in the same units as the dependent variable, making interpretation more intuitive.
-- **MSE**: In squared units of the dependent variable, which can be less interpretable.
+- Both **MAE** and **RMSE** are expressed in the same units as the dependent variable, making their interpretation straightforward.
+- The **MSE**, however, is in squared units of the dependent variable, which can make interpretation more difficult.
 
 ### Usage in Model Evaluation
 
-- **MAE**: Useful when all errors are equally important and when outliers are not a major concern.
-- **MSE/RMSE**: Preferred when large errors are particularly undesirable, and when penalizing larger errors more severely is important.
-- **$R^2$**: Provides a measure of how well the observed outcomes are replicated by the model, relative to the mean of the dependent variable.
+- The **MAE** is ideal when all errors are considered equally important, and outliers are not a significant concern.
+- The **MSE/RMSE** are preferable when large errors are highly undesirable, as they penalize these more severely.
+- The **$R^2$** value provides insight into how well the model replicates the observed outcomes compared to the mean of the dependent variable.
 
 ## Example Calculation
 
@@ -431,8 +431,8 @@ $$
 
 ## Practical Considerations
 
-- **Model Selection**: Use multiple metrics to evaluate and compare models. No single metric provides a complete picture.
-- **Outliers**: Consider the impact of outliers on MSE and RMSE. Outliers can disproportionately affect these metrics.
-- **Overfitting**: A very high $R^2$ does not guarantee that the model generalizes well to new data. Always validate the model on unseen data.
-- **Residual Analysis**: Examine residual plots to check assumptions of linearity, homoscedasticity (constant variance), and normality of errors.
-- **Adjusted $R^2$**: Use adjusted $R^2$ when comparing models with different numbers of predictors to account for model complexity.
+- For **model selection**, it is important to use multiple metrics to evaluate and compare models, as no single metric provides a complete assessment.
+- Be mindful of **outliers**, as they can disproportionately affect metrics like MSE and RMSE, potentially skewing the evaluation.
+- A very high **$R^2$** does not necessarily indicate that the model generalizes well to new data, so always check for **overfitting** by validating the model on unseen data.
+- Perform **residual analysis** by examining residual plots to ensure assumptions of linearity, homoscedasticity (constant variance), and normality of errors are met.
+- Use **adjusted $R^2$** when comparing models with different numbers of predictors, as it accounts for model complexity.
