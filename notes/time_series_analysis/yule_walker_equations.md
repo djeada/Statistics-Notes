@@ -19,8 +19,6 @@ Where:
 
 These equations can be used to estimate the parameters $\phi_1, \phi_2, \dots, \phi_p$ of the AR process from the sample autocorrelations.
 
----
-
 ### Deriving the Yule-Walker Equations
 
 #### Assumptions
@@ -44,8 +42,6 @@ Multiply both sides by $X_{t-k}$ for $k = 1, 2, \dots, p$.
 
 4. **Formulate the Yule-Walker equations**: You will end up with a system of linear equations that relate the autocorrelations at different lags $\rho(1), \rho(2), \dots, \rho(p)$ to the AR model parameters $\phi_1, \phi_2, \dots, \phi_p$.
 
----
-
 ### Example: Yule-Walker Equations for an AR(2) Process
 
 Consider the AR(2) process:
@@ -58,7 +54,7 @@ Where $Z_t$ is white noise with variance $\sigma_Z^2$.
 
 #### Deriving the Yule-Walker Equations
 
-1. **Multiply by $X_{t-1}$** and take the expectation:
+I. **Multiply by $X_{t-1}$** and take the expectation:
 
 $$
 E[X_t X_{t-1}] = 3 E[X_{t-1}^2] + 2 E[X_{t-2} X_{t-1}]
@@ -70,7 +66,7 @@ $$
 \gamma(1) = 3 \gamma(0) + 2 \gamma(1)
 $$
 
-2. **Multiply by $X_{t-2}$** and take the expectation:
+II. **Multiply by $X_{t-2}$** and take the expectation:
 
 $$
 E[X_t X_{t-2}] = 3 E[X_{t-1} X_{t-2}] + 2 E[X_{t-2}^2]
@@ -82,13 +78,11 @@ $$
 \gamma(2) = 3 \gamma(1) + 2 \gamma(0)
 $$
 
-3. **Express the autocovariances as autocorrelations**: Normalize by the variance $\gamma(0)$, to convert autocovariances into autocorrelations $\rho(k)$:
+III. **Express the autocovariances as autocorrelations**: Normalize by the variance $\gamma(0)$, to convert autocovariances into autocorrelations $\rho(k)$:
 
 $$
 \rho(1) = \frac{3}{1 + 2} = \frac{3}{3} = 1, \quad \rho(2) = \frac{3 \cdot 1 + 2}{\gamma(0)}
 $$
-
----
 
 ### Solving the Difference Equations for AR(2)
 
@@ -122,9 +116,7 @@ $$
 \rho(k) = c_1 \lambda_1^k + c_2 \lambda_2^k
 $$
 
----
-
-### Finding Coefficients $c_1$ and $c_2$
+### Finding Coefficients c_1 and c_2
 
 #### Use $\rho(0) = 1$
 
@@ -165,7 +157,7 @@ $$
 
 This gives the values for $c_1$ and $c_2$, which can then be substituted back into the general solution for $\rho(k)$.
 
-### **7. Matrix Form of Yule-Walker Equations for AR(p)**
+### Matrix Form of Yule-Walker Equations for AR(p)
 
 For an AR(p) process, the Yule-Walker equations can be written in **matrix form**. Define:
 
