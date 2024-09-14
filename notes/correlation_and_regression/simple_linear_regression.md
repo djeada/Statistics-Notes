@@ -22,11 +22,11 @@ Where:
 
 For the simple linear regression model to be valid, several key assumptions must be met:
 
-1. **Linearity**: The relationship between $x$ and $y$ is linear.
-2. **Independence**: The residuals (errors)$\varepsilon_i$ are independent.
-3. **Homoscedasticity**: The residuals have constant variance ($\sigma^2 $) for all values of $x$.
-4. **Normality**: The residuals are normally distributed.
-5. **No Measurement Error in $x$**: The independent variable $x$ is measured without error.
+1. **Linearity** indicates that the relationship between $x$ and $y$ is linear.
+2. **Independence** means the residuals (errors) $\varepsilon_i$ are independent of one another.
+3. **Homoscedasticity** suggests that the residuals have a constant variance ($\sigma^2$) across all values of $x$.
+4. **Normality** assumes that the residuals follow a normal distribution.
+5. Finally, **no measurement error in $x** ensures that the independent variable $x$ is measured without error.
 
 ## Estimation of Coefficients Using the Least Squares Method
 
@@ -59,8 +59,8 @@ Where:
 
 ## Interpretation of the Coefficients
 
-- **Intercept ($\hat{\beta}_0$)**: Represents the expected value of $y$ when $x = 0$. It is the point where the regression line crosses the $y$-axis.
-- **Slope ($\hat{\beta}_1$)**: Indicates the average change in $y$ for each one-unit increase in $x$.
+- The **intercept ($\hat{\beta}_0$)** represents the expected value of $y$ when $x = 0$, marking the point where the regression line intersects the $y$-axis.
+- The **slope ($\hat{\beta}_1$)** indicates the average change in $y$ for each one-unit increase in $x$.
 
 ## Assessing the Fit of the Model
 
@@ -90,7 +90,7 @@ $$
 
 ### Coefficient of Determination ($R^2 $)
 
-Indicates the proportion of variance in $y$ explained by$x$:
+Indicates the proportion of variance in $y$ explained by $x$:
 
 $$
 R^2 = \frac{\text{SSR}}{\text{SST}} = 1 - \frac{\text{SSE}}{\text{SST}}
