@@ -144,10 +144,6 @@ $$
 
 Since the discriminant is negative, the roots are complex numbers. The modulus of these complex roots must be greater than 1 for the process to be invertible. If the modulus of the roots is less than 1, the process is not invertible.
 
-Certainly! Let's rewrite and expand the part about **Convergence of the Series** with a more detailed explanation and step-by-step intuition so that it's easier to understand.
-
----
-
 ### Convergence of the Series in MA Models
 
 When working with **Moving Average (MA)** models, it's important to ensure that the infinite series we obtain when trying to express the noise term $Z_t$ as a function of past observations $X_t$ converges. This is crucial because we want to guarantee that the process remains stable and well-defined over time.
