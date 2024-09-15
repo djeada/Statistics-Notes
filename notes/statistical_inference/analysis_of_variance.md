@@ -330,7 +330,7 @@ $$
 II. **Compute the t-Statistic for Each Pair**:
 
 $$
-t = \frac{\bar{y}_i - \bar{y}_j}{SE_{\bar{y}_i - \bar{y}_j}}
+t = \frac{y_i - y_j}{SE_{y_i - y_j}}
 $$
 
 III. **Determine the Adjusted p-Values**:
