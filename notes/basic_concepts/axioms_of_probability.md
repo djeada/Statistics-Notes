@@ -253,7 +253,7 @@ where:
 
 Step-by-Step Breakdown:
 
-I. **Calculate $P(\text{Ace})**
+I. **Calculate $P(\text{Ace})$**
 
 There are 4 Aces in the deck, so the probability of drawing an Ace is:
 
