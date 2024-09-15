@@ -38,7 +38,7 @@ I. **t-Test Formula**
 The t-statistic is calculated as:
 
 $$
-t = \frac{\bar{y}_1 - \bar{y}_2}{SE_{\bar{y}_1 - \bar{y}_2}}
+t = \frac{y_1 - y_2}{SE_{y_1 - y_2}}
 $$
 
 where:
