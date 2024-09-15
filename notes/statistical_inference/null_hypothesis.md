@@ -133,22 +133,6 @@ We use the **binomial test** to calculate the p-value for the observed outcome.
 
 - **Not Accepting $H_0$**: The result does not prove the coin is fair; it merely indicates that the observed data are consistent with a fair coin.
 
----
-
-## Key Takeaways
-
-1. **Null and Alternative Hypotheses**: Formulate clear hypotheses before testing.
-
-2. **P-value**: Understand that it measures the probability of observing the data under $H_0$.
-
-3. **Decision Making**: Use the p-value to decide whether to reject $H_0$, based on the predetermined significance level.
-
-4. **Interpreting Results**: Failing to reject $H_0$ does not confirm it is true.
-
-5. **Sample Size Matters**: Small samples may lack the power to detect significant effects.
-
----
-
 ## Additional Considerations
 
 ### Statistical Power
