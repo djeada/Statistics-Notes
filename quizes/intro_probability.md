@@ -1,268 +1,5 @@
-
-
-**Question 11:**  
-In a binomial distribution, if we increase the number of trials, what happens to the shape of the distribution?  
-1 point  
-
-- Becomes more skewed  
-- Approaches a normal distribution  
-- Becomes more discrete  
-- Becomes less symmetrical  
-
----
-
-**Question 12:**  
-What does a p-value in hypothesis testing represent?  
-1 point  
-
-- The probability that the null hypothesis is true  
-- The probability of observing the data if the null hypothesis is true  
-- The confidence level of the test  
-- The significance level of the test  
-
----
-
-**Question 13:**  
-In a normally distributed dataset, what percentage of data falls within one standard deviation of the mean?  
-1 point  
-
-- 50%  
-- 68%  
-- 95%  
-- 99%  
-
----
-
-**Question 14:**  
-What is the relationship between the mean and the median in a left-skewed distribution?  
-1 point  
-
-- The mean is greater than the median  
-- The mean is less than the median  
-- The mean is equal to the median  
-- The mean is unaffected by the skewness  
-
----
-
-**Question 15:**  
-What does the Central Limit Theorem (CLT) state?  
-1 point  
-
-- Any sample will have a normal distribution  
-- The sample mean will approximate a normal distribution as the sample size increases  
-- The population mean is always normally distributed  
-- Larger samples have more skewed distributions  
-
----
-
-**Question 16:**  
-Which of the following is an example of a continuous random variable?  
-1 point  
-
-- The number of heads in 10 coin flips  
-- The outcome of rolling a die  
-- The height of students in a class  
-- The number of students in a class  
-
-
-**Question 11:**  
-What is the variance of a standard normal distribution?  
-1 point  
-
-- 0  
-- 1  
-- 2  
-- 0.5  
-
----
-
-**Question 12:**  
-Which of the following is true about a p-value in a two-tailed test?  
-1 point  
-
-- It measures the probability of the alternative hypothesis being true  
-- It is the sum of the probabilities of both tails of the distribution  
-- It equals the area under the curve for one tail only  
-- It is the probability of observing the sample data given the null hypothesis is false  
-
----
-
-**Question 13:**  
-If the correlation coefficient between two stocks is 1, what does this imply?  
-1 point  
-
-- The stocks move in opposite directions  
-- The stocks move independently  
-- The stocks move perfectly in the same direction  
-- The stocks have no relationship  
-
----
-
-**Question 14:**  
-Which type of hypothesis test assumes a specific direction in the test (e.g., μ > 0)?  
-1 point  
-
-- One-tailed test  
-- Two-tailed test  
-- Chi-square test  
-- F-test  
-
----
-
-**Question 15:**  
-What happens to the standard error of the mean as the sample size increases?  
-1 point  
-
-- Increases  
-- Decreases  
-- Remains constant  
-- Increases and then decreases  
-
----
-
-**Question 16:**  
-What is the shape of the distribution of residuals in a properly fitted linear regression model?  
-1 point  
-
-- Uniform distribution  
-- Exponential distribution  
-- Normal distribution  
-- Skewed distribution  
-
----
-
-**Question 17:**  
-Which of the following is a condition for the use of a t-test?  
-1 point  
-
-- The sample size must be larger than 100  
-- The population variance must be known  
-- The sample data should be normally distributed  
-- The data must be categorical  
-
----
-
-**Question 18:**  
-What does the "alpha" (α) represent in hypothesis testing?  
-1 point  
-
-- The confidence interval  
-- The probability of rejecting the null hypothesis when it is true  
-- The p-value of the test  
-- The likelihood that the alternative hypothesis is true  
-
----
-
-**Question 19:**  
-If a stock return series has a leptokurtic distribution, what does this mean?  
-1 point  
-
-- The distribution has heavy tails and sharp peak  
-- The distribution is skewed to the right  
-- The distribution is symmetric with no outliers  
-- The distribution has flat tails and a low peak  
-
----
-
-**Question 20:**  
-What is the median in a dataset?  
-1 point  
-
-- The most frequent value in the dataset  
-- The value that occurs exactly in the middle of the sorted dataset  
-- The average of all the values in the dataset  
-- The range of the dataset  
-
----
-
-**Question 21:**  
-Which of the following distributions is appropriate for modeling the number of events in a fixed interval of time or space?  
-1 point  
-
-- Normal distribution  
-- Poisson distribution  
-- Exponential distribution  
-- Binomial distribution  
-
----
-
-**Question 22:**  
-What is the primary difference between a sample mean and a population mean?  
-1 point  
-
-- The sample mean is always larger than the population mean  
-- The sample mean is calculated from a subset of the population  
-- The population mean is used for hypothesis testing  
-- The population mean is always smaller than the sample mean  
-
----
-
-**Question 23:**  
-Which of the following is a property of the exponential distribution?  
-1 point  
-
-- It models continuous random variables with constant failure rates  
-- It models categorical variables  
-- It is symmetric  
-- It has two peaks  
-
----
-
-**Question 24:**  
-What is the relationship between the variance and standard deviation?  
-1 point  
-
-- Variance is the square root of the standard deviation  
-- Variance is the square of the standard deviation  
-- Variance and standard deviation are the same  
-- There is no relationship between variance and standard deviation  
-
----
-
-**Question 25:**  
-Which statistical test would you use to compare the means of two independent groups?  
-1 point  
-
-- Paired t-test  
-- Independent t-test  
-- Chi-square test  
-- ANOVA  
-
----
-
-**Question 26:**  
-What does a wide confidence interval suggest about the data?  
-1 point  
-
-- The data has low variability  
-- The data has high variability  
-- The sample size is large  
-- The p-value is small  
-
-**Question 17:**  
-What is the z-score in a standard normal distribution for a value that is exactly equal to the mean?  
-1 point  
-
-- 0  
-- 1  
-- -1  
-- 2  
-
----
-
-**Question 18:**  
-Which of the following would increase the power of a statistical test?  
-1 point  
-
-- Decreasing the sample size  
-- Increasing the significance level  
-- Decreasing the effect size  
-- Decreasing the number of trials  
-
----
-
-**Question 19:**  
-What is the probability of getting exactly two heads when flipping three fair coins?  
+### **Question 1:**  
+What is the probability of getting exactly **two heads** when flipping three fair coins?  
 1 point  
 
 - 1/8  
@@ -272,78 +9,210 @@ What is the probability of getting exactly two heads when flipping three fair co
 
 ---
 
-**Question 20:**  
-Which of the following is true for a Poisson distribution?  
+### **Question 2:**  
+Which of the following is **not** an axiom of probability?  
 1 point  
 
-- The mean is always equal to the variance  
-- It only applies to continuous random variables  
-- It assumes that the trials are dependent  
-- The events occur in non-overlapping intervals of time  
+- The probability of any event is between 0 and 1  
+- The sum of probabilities of all possible outcomes in a sample space equals 1  
+- The probability of the union of two mutually exclusive events equals the sum of their probabilities  
+- The probability of the complement of an event is always greater than 1  
 
 ---
 
-**Question 21:**  
-Which measure is most appropriate for comparing the spread of different datasets that have different units?  
+### **Question 3:**  
+The probability of an event **A** given that event **B** has occurred is known as:  
 1 point  
 
-- Standard deviation  
-- Variance  
-- Range  
-- Coefficient of variation  
+- Joint probability  
+- Marginal probability  
+- Conditional probability  
+- Complementary probability  
 
 ---
 
-**Question 22:**  
-If a stock has a high beta (β > 1), what does this indicate?  
+### **Question 4:**  
+Which of the following is true about **independent events**?  
 1 point  
 
-- The stock is less volatile than the market  
-- The stock is as volatile as the market  
-- The stock is more volatile than the market  
-- The stock has no correlation with the market  
+- The probability of their intersection is zero  
+- The occurrence of one event affects the probability of the other  
+- The probability of their intersection is the product of their probabilities  
+- Their union is always greater than 1  
 
 ---
 
-**Question 23:**  
-What does a correlation coefficient of -1 imply?  
+### **Question 5:**  
+If a fair die is rolled, what is the probability of getting a number **greater than 4**?  
 1 point  
 
-- Perfect positive correlation  
-- No correlation  
-- Perfect negative correlation  
-- A weak negative correlation  
+- 1/6  
+- 2/6  
+- 1/2  
+- 4/6  
 
 ---
 
-**Question 24:**  
-If the price of a stock is following a log-normal distribution, what can we infer?  
+### **Question 6:**  
+What does **Bayes' theorem** help us calculate?  
 1 point  
 
-- Stock prices cannot go below zero  
-- Stock prices are normally distributed  
-- Stock prices are symmetric around the mean  
-- Stock returns follow a uniform distribution  
+- The probability of an event based on prior knowledge of related events  
+- The probability of independent events  
+- The joint probability of two events  
+- The probability of mutually exclusive events  
 
 ---
 
-**Question 25:**  
-What is the purpose of conducting a chi-square test?  
+### **Question 7:**  
+If the probability of event **A** is 0.4, and the probability of event **B** is 0.5, what is the probability of both **A and B** occurring, assuming they are independent?  
 1 point  
 
-- To test the difference between two sample means  
-- To test the variance of a population  
-- To test for the independence of categorical variables  
-- To test for correlation between two continuous variables  
+- 0.2  
+- 0.9  
+- 0.1  
+- 0.7  
 
 ---
 
-**Question 26:**  
-Which of the following is true for a uniform distribution?  
+### **Question 8:**  
+Two events **A** and **B** are **mutually exclusive**. If **P(A) = 0.3** and **P(B) = 0.4**, what is **P(A ∪ B)**?  
 1 point  
 
-- Every outcome has an equal probability  
-- Some outcomes are more likely than others  
-- It can only be applied to discrete variables  
-- It is skewed to the right  
+- 0.7  
+- 0.12  
+- 0.1  
+- 1.0  
+
+---
+
+### **Question 9:**  
+If **P(A | B) = 0.8** and **P(B) = 0.5**, what is **P(A ∩ B)**?  
+1 point  
+
+- 0.3  
+- 0.4  
+- 0.6  
+- 0.8  
+
+---
+
+### **Question 10:**  
+Which of the following is a valid **probability distribution**?  
+1 point  
+
+- P(A) = 0.6, P(B) = 0.5  
+- P(A) = 0.5, P(B) = 0.4, P(A ∩ B) = 0.2  
+- P(A) = 0.25, P(B) = 0.25, P(C) = 0.5  
+- P(A) = -0.1, P(B) = 1.1  
+
+---
+
+### **Question 11:**  
+What is the **complement** of an event **A**?  
+1 point  
+
+- The event where A and B occur simultaneously  
+- The event where neither A nor B occurs  
+- The event where A does not occur  
+- The event where A occurs at least once  
+
+---
+
+### **Question 12:**  
+In a deck of cards, what is the probability of drawing an **Ace or a King**?  
+1 point  
+
+- 2/52  
+- 4/52  
+- 8/52  
+- 16/52  
+
+---
+
+### **Question 13:**  
+If the probability of event **A** is 0.6 and the probability of **not A** is 0.4, what is the sum of these probabilities?  
+1 point  
+
+- 0.4  
+- 0.6  
+- 1  
+- 1.6  
+
+---
+
+### **Question 14:**  
+In the context of **Bayes' theorem**, what is the term for the **probability of the evidence** given the hypothesis?  
+1 point  
+
+- Prior probability  
+- Marginal probability  
+- Posterior probability  
+- Likelihood  
+
+---
+
+### **Question 15:**  
+What is the probability of getting a **6 or a 3** when rolling a fair six-sided die?  
+1 point  
+
+- 1/6  
+- 2/6  
+- 3/6  
+- 5/6  
+
+---
+
+### **Question 16:**  
+The probability of drawing a red card from a standard deck of cards is:  
+1 point  
+
+- 1/2  
+- 1/4  
+- 1/13  
+- 3/4  
+
+---
+
+### **Question 17:**  
+What is the **joint probability** of two independent events **A** and **B**?  
+1 point  
+
+- P(A) + P(B)  
+- P(A) * P(B)  
+- P(A | B)  
+- 1 - P(A) - P(B)  
+
+---
+
+### **Question 18:**  
+If the probability of drawing a blue marble from a bag is 0.3, what is the probability of **not** drawing a blue marble?  
+1 point  
+
+- 0.3  
+- 0.7  
+- 1.0  
+- 0.1  
+
+---
+
+### **Question 19:**  
+What is the probability of the **union** of two **independent** events **A** and **B**?  
+1 point  
+
+- P(A) * P(B)  
+- P(A) + P(B) - P(A ∩ B)  
+- P(A | B) + P(B)  
+- P(A) + P(B)  
+
+---
+
+### **Question 20:**  
+Which of the following is **not** an example of **conditional probability**?  
+1 point  
+
+- The probability of drawing a red card given the first card drawn was black  
+- The probability of rolling a 6 on a die  
+- The probability of being late to work given it is raining  
+- The probability of passing a test given that you studied  
 
