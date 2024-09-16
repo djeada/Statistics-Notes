@@ -78,7 +78,9 @@ $$
 SE_{\text{boot}}(\hat{\theta}) = \sqrt{\frac{1}{B - 1} \sum_{b=1}^{B} (\hat{\theta}^*_b - \bar{\hat{\theta}}^*)^2}
 $$
 
-where $\bar{\hat{\theta}}^* = \frac{1}{B} \sum_{b=1}^{B} \hat{\theta}^*_b$.
+where:
+
+$$\bar{\hat{\theta}}^* = \frac{1}{B} \sum_{b=1}^{B} \hat{\theta}^*_b$$
 
 ### Bootstrap Confidence Intervals
 
