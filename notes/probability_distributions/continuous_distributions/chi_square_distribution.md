@@ -55,18 +55,20 @@ $$E[X^2] = k^2 + 2k$$
 
 A researcher is testing the fairness of a six-sided die. The die is rolled 60 times, resulting in the following observed frequencies for each face:
 
-- 1: 8 times
-- 2: 9 times
-- 3: 13 times
-- 4: 7 times
-- 5: 12 times
-- 6: 11 times
+| Face of the Die | Observed Frequency |
+|-----------------|--------------------|
+| 1               | 8                  |
+| 2               | 9                  |
+| 3               | 13                 |
+| 4               | 7                  |
+| 5               | 12                 |
+| 6               | 11                 |
 
 To determine if the die is fair, the researcher employs a chi-square goodness-of-fit test.
 
 Given:
 
-- The expected frequency for each face (assuming the die is fair): `E = Total rolls / Number of faces = 60 / 6 = 10`
+The expected frequency for each face (assuming the die is fair): `E = Total rolls / Number of faces = 60 / 6 = 10`
 
 The chi-square formula:
 
