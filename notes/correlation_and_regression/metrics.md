@@ -1,6 +1,6 @@
-# Evaluation Metrics in Machine Learning
+# Evaluation Metrics
 
-Evaluation metrics are essential tools for assessing the performance of machine learning models. They provide quantitative measures that help us understand how well a model is performing and where improvements can be made. In both classification and regression tasks, selecting appropriate evaluation metrics is crucial for model selection, tuning, and validation.
+Evaluation metrics are essential tools for assessing the performance of statistical and machine learning models. They provide quantitative measures that help us understand how well a model is performing and where improvements can be made. In both classification and regression tasks, selecting appropriate evaluation metrics is crucial for model selection, tuning, and validation.
 
 ## Classification Metrics
 
