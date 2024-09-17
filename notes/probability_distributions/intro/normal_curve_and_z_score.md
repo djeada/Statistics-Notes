@@ -19,12 +19,14 @@ where:
 
 This formula describes the shape of the curve mathematically. The mean $\mu$ determines the center of the distribution, and the standard deviation $\sigma$ determines the width of the bell curve.
 
+![output](https://github.com/user-attachments/assets/32acef3f-7617-464c-9527-31ea78679bda)
+
 #### Examples:
 
-- **Heights of adults**: Typically follow a normal distribution, with most people having heights close to the average, and fewer people being significantly shorter or taller.
-- **IQ scores**: Are designed to follow a normal distribution with a mean of 100 and a standard deviation of 15.
-
-However, it is important to note that not all data are normally distributed. For example, **incomes** and **house prices** tend to be skewed due to the presence of very high values.
+- The distribution of adult **heights** usually follows a normal pattern, where most individuals cluster around the average height, with fewer people being much shorter or taller.
+- When it comes to **IQ scores**, they are designed to follow a normal distribution, with the average score set at 100 and a standard deviation of 15, meaning most people score close to this mean.
+- Not all data sets are normally distributed; for example, **incomes** tend to be skewed because a small proportion of people earn extremely high salaries, which significantly raises the overall average.
+- Similarly, **house prices** are often skewed, as a small number of very expensive properties can disproportionately affect the overall data, making the mean house price higher than what most people actually pay.
 
 ### The Empirical Rule (68-95-99.7 Rule)
 
@@ -36,13 +38,15 @@ The **Empirical Rule** provides a rough estimate for the spread of data in a nor
 
 #### Example:
 Suppose we have a dataset where the heights of fathers are normally distributed with:
+
 - Mean height $\mu = 68.3$ inches,
 - Standard deviation $\sigma = 1.8$ inches.
 
-- According to the Empirical Rule:
-  - About **68%** of the heights will lie between $68.3 - 1.8 = 66.5$ inches and $68.3 + 1.8 = 70.1$ inches.
-  - About **95%** of the heights will lie between $68.3 - 2(1.8) = 64.7$ inches and $68.3 + 2(1.8) = 71.9$ inches.
-  - About **99.7%** of the heights will lie between $68.3 - 3(1.8) = 62.9$ inches and $68.3 + 3(1.8) = 73.7$ inches.
+According to the Empirical Rule:
+
+- About **68%** of the heights will lie between $68.3 - 1.8 = 66.5$ inches and $68.3 + 1.8 = 70.1$ inches.
+- About **95%** of the heights will lie between $68.3 - 2(1.8) = 64.7$ inches and $68.3 + 2(1.8) = 71.9$ inches.
+- About **99.7%** of the heights will lie between $68.3 - 3(1.8) = 62.9$ inches and $68.3 + 3(1.8) = 73.7$ inches.
 
 These intervals can be visualized as follows:
 
@@ -61,6 +65,8 @@ $$
 $$
 \mu \pm 3\sigma \quad (62.9 \text{ to } 73.7) \quad \approx 99.7\%
 $$
+
+![output(1)](https://github.com/user-attachments/assets/b157d1a4-191d-46f4-b341-7822d4257733)
 
 ### Standardizing Data and Z-Scores
 
@@ -139,6 +145,8 @@ Thus, the proportion of fathers with heights between 67.4 and 71.9 inches is:
 $$
 P(67.4 \leq \text{height} \leq 71.9) = 0.9772 - 0.3085 = 0.6687 \approx 66.87\%
 $$
+
+![output(2)](https://github.com/user-attachments/assets/58bfcf9b-5769-4e49-af1c-7cced5a44195)
 
 ### Computing Percentiles
 
