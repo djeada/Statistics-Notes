@@ -162,11 +162,11 @@ In cases of imbalanced datasets, the **Precision-Recall (PR) curve** is more inf
 - The **Area Under the PR Curve (AUC-PR)** provides a summary metric that is sensitive to class imbalance.
 - A higher area under the PR curve indicates better performance in identifying the positive class.
 
-# Regression Metrics
+## Regression Metrics
 
 Evaluation metrics are crucial in assessing the performance of regression models, which predict a continuous outcome variable based on one or more predictor variables. These metrics quantify the discrepancy between the predicted values and the actual observed values, providing insights into the accuracy and reliability of the model.
 
-## Evaluating Regression Models
+### Evaluating Regression Models
 
 In regression analysis, the goal is to build a model that accurately predicts the dependent variable $y$ from one or more independent variables $x $. After fitting a regression model, it is essential to assess its performance using appropriate evaluation metrics. The most commonly used regression metrics include:
 
@@ -177,7 +177,7 @@ In regression analysis, the goal is to build a model that accurately predicts th
 
 These metrics provide different perspectives on the model's predictive capabilities and can be used to compare different models or to tune model parameters.
 
-## Visualizing Regression Performance
+### Visualizing Regression Performance
 
 Consider a dataset where we have generated data points from a sine wave with added noise. We fit a linear regression model to this data to predict $y$ based on $x $. The following plot illustrates the data and the fitted regression line:
 
@@ -189,9 +189,9 @@ Consider a dataset where we have generated data points from a sine wave with add
 
 This visualization helps to understand how well the linear model captures the underlying pattern in the data and highlights the discrepancies between the predictions and actual values.
 
-## Regression Evaluation Metrics
+### Regression Evaluation Metrics
 
-### Mean Absolute Error (MAE)
+#### Mean Absolute Error (MAE)
 
 **Definition**:
 
@@ -219,7 +219,7 @@ Where:
 - MAE is robust to outliers compared to MSE because it does not square the errors.
 - It gives a straightforward measure of average error magnitude.
 
-### Mean Squared Error (MSE)
+#### Mean Squared Error (MSE)
 
 **Definition**:
 
@@ -241,7 +241,7 @@ $$
 - MSE is always non-negative; values closer to zero indicate a better fit.
 - It is in squared units of the dependent variable, which can make interpretation less intuitive.
 
-### Root Mean Squared Error (RMSE)
+#### Root Mean Squared Error (RMSE)
 
 **Definition**:
 
@@ -263,7 +263,7 @@ $$
 - Like MSE, RMSE is sensitive to outliers due to the squaring of errors.
 - RMSE is in the same units as the dependent variable.
 
-### Coefficient of Determination ($R^2$)
+#### Coefficient of Determination ($R^2$)
 
 **Definition**:
 
@@ -302,7 +302,7 @@ Where:
 - It does not indicate whether independent variables are a cause of the dependent variable.
 - $R^2$ does not account for the number of predictors in the model. **Adjusted $R^2$** is used when comparing models with different numbers of predictors.
 
-### Adjusted $R^2$
+#### Adjusted $R^2$
 
 **Definition**:
 
@@ -324,25 +324,25 @@ Where:
 - Adjusted $R^2$ increases only if the new predictor improves the model more than would be expected by chance.
 - It can be used for model selection, especially when comparing models with different numbers of predictors.
 
-## Comparing Regression Metrics
+### Comparing Regression Metrics
 
-### Sensitivity to Outliers
+#### Sensitivity to Outliers
 
 - The **MAE** is less sensitive to outliers than MSE and RMSE because it does not involve squaring the errors.
 - The **MSE/RMSE** are more sensitive to outliers as squaring the errors amplifies the impact of larger errors.
 
-### Units and Interpretability
+#### Units and Interpretability
 
 - Both **MAE** and **RMSE** are expressed in the same units as the dependent variable, making their interpretation straightforward.
 - The **MSE**, however, is in squared units of the dependent variable, which can make interpretation more difficult.
 
-### Usage in Model Evaluation
+#### Usage in Model Evaluation
 
 - The **MAE** is ideal when all errors are considered equally important, and outliers are not a significant concern.
 - The **MSE/RMSE** are preferable when large errors are highly undesirable, as they penalize these more severely.
 - The **$R^2$** value provides insight into how well the model replicates the observed outcomes compared to the mean of the dependent variable.
 
-## Example Calculation
+### Example Calculation
 
 Let's consider a small dataset:
 
@@ -407,7 +407,7 @@ $$
 - The model explains approximately 99.125% of the variance in the dependent variable.
 - The high $R^2$ value indicates a strong fit to the data.
 
-## Negative $R^2$ Values
+### Negative $R^2$ Values
 
 Although $R^2$ typically ranges from 0 to 1, it can be negative when the model is worse than simply predicting the mean of the observed data. This can happen if the residual sum of squares is greater than the total sum of squares.
 
@@ -429,7 +429,7 @@ $$
 - A negative $R^2$ indicates that the model performs worse than a horizontal line at $\bar{y}$.
 - It suggests that the model fails to capture the underlying patterns in the data.
 
-## Practical Considerations
+### Practical Considerations
 
 - For **model selection**, it is important to use multiple metrics to evaluate and compare models, as no single metric provides a complete assessment.
 - Be mindful of **outliers**, as they can disproportionately affect metrics like MSE and RMSE, potentially skewing the evaluation.
