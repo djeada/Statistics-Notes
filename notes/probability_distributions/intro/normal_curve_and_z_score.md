@@ -1,44 +1,161 @@
 ## The Normal Curve and Z-Scores
 
-#### The Normal Curve
-- **Definition**: Many datasets exhibit a bell-shaped distribution, often referred to as the *normal distribution* or *normal curve*.
-    - Examples: Heights, weights, IQ scores typically follow a normal distribution.
-    - However, some data such as incomes and house prices may not follow the normal curve.
+### The Normal Curve
 
-#### The Empirical Rule (68-95-99.7 Rule)
-- **Description**: For data that follows the normal distribution:
-    - About 68% of data falls within one standard deviation (σ) of the mean (μ).
-    - About 95% of data falls within two standard deviations of the mean.
-    - About 99.7% of data falls within three standard deviations of the mean.
-- Example: If the mean height (μ) is 68.3 inches and the standard deviation (σ) is 1.8 inches, approximately 95% of the data falls between 64.7 inches and 71.9 inches (μ ± 2σ).
+A **normal distribution** (often referred to as the *normal curve* or *Gaussian distribution*) is a continuous probability distribution that is symmetric about the mean, where most of the observations cluster around the central peak and taper off symmetrically towards both ends. Many real-world datasets such as human heights, IQ scores, and measurement errors exhibit this kind of distribution.
 
-#### Standardizing Data and Z-Scores
-- **Definition**: The process of standardizing data transforms raw values into z-scores, making it possible to compare values across different datasets.
-    - Formula: 
-      \[
-      z = \frac{{\text{{height}} - \mu}}{\sigma}
-      \]
-      where:
-        - μ is the mean,
-        - σ is the standard deviation.
-    - A z-score indicates how many standard deviations a value is from the mean. For example:
-        - \( z = 2 \) means the value is 2 standard deviations above the mean.
-        - \( z = -1.5 \) means the value is 1.5 standard deviations below the mean.
+The probability density function (PDF) of the normal distribution is given by:
 
-- **Standard Normal Distribution**: After standardizing, the data follows a standard normal curve with mean 0 and standard deviation 1.
+$$
+f(x | \mu, \sigma^2) = \frac{1}{\sigma \sqrt{2 \pi}} e^{ -\frac{(x - \mu)^2}{2\sigma^2} }
+$$
 
-#### Normal Approximation
-- **Finding Areas Under the Normal Curve**: To determine the proportion of data within a specific range, standardize the data points and look up the corresponding areas (probabilities) in a z-table or use statistical software.
-    - Example: To find the proportion of fathers with heights between 67.4 inches and 71.9 inches:
-        - \( z_{67.4} = \frac{{67.4 - 68.3}}{1.8} = -0.5 \)
-        - \( z_{71.9} = \frac{{71.9 - 68.3}}{1.8} = 2 \)
-        - Using a z-table or software: \( P(71.9 \geq height \geq 67.4) = 97.7\% - 30.9\% = 66.8\% \).
+where:
 
-#### Computing Percentiles
-- **Percentiles**: To compute the percentile of a normal distribution, use the z-score corresponding to the desired percentile.
-    - Example: The 30th percentile of fathers' heights corresponds to a z-score of \( z = -0.52 \), which translates to a height of:
-      \[
-      height = \mu + z\sigma = 68.3 - (0.52)(1.8) = 67.4 \text{ inches}.
-      \]
+- $\mu$ is the mean,
+- $\sigma^2$ is the variance (with $\sigma$ being the standard deviation),
+- $e$ is Euler's number,
+- $\pi$ is the constant Pi.
 
+This formula describes the shape of the curve mathematically. The mean $\mu$ determines the center of the distribution, and the standard deviation $\sigma$ determines the width of the bell curve.
 
+#### Examples:
+
+- **Heights of adults**: Typically follow a normal distribution, with most people having heights close to the average, and fewer people being significantly shorter or taller.
+- **IQ scores**: Are designed to follow a normal distribution with a mean of 100 and a standard deviation of 15.
+
+However, it is important to note that not all data are normally distributed. For example, **incomes** and **house prices** tend to be skewed due to the presence of very high values.
+
+### The Empirical Rule (68-95-99.7 Rule)
+
+The **Empirical Rule** provides a rough estimate for the spread of data in a normal distribution. It applies to any dataset that approximately follows the normal distribution.
+
+- **68% of the data** falls within **1 standard deviation** of the mean, i.e., between $\mu - \sigma$ and $\mu + \sigma$.
+- **95% of the data** falls within **2 standard deviations** of the mean, i.e., between $\mu - 2\sigma$ and $\mu + 2\sigma$.
+- **99.7% of the data** falls within **3 standard deviations** of the mean, i.e., between $\mu - 3\sigma$ and $\mu + 3\sigma$.
+
+#### Example:
+Suppose we have a dataset where the heights of fathers are normally distributed with:
+- Mean height $\mu = 68.3$ inches,
+- Standard deviation $\sigma = 1.8$ inches.
+
+- According to the Empirical Rule:
+  - About **68%** of the heights will lie between $68.3 - 1.8 = 66.5$ inches and $68.3 + 1.8 = 70.1$ inches.
+  - About **95%** of the heights will lie between $68.3 - 2(1.8) = 64.7$ inches and $68.3 + 2(1.8) = 71.9$ inches.
+  - About **99.7%** of the heights will lie between $68.3 - 3(1.8) = 62.9$ inches and $68.3 + 3(1.8) = 73.7$ inches.
+
+These intervals can be visualized as follows:
+
+$$
+\text{Interval} \quad \mu \pm n\sigma \quad \text{Proportion of Data Contained}
+$$
+
+$$
+\mu \pm \sigma \quad (66.5 \text{ to } 70.1) \quad \approx 68\%
+$$
+
+$$
+\mu \pm 2\sigma \quad (64.7 \text{ to } 71.9) \quad \approx 95\%
+$$
+
+$$
+\mu \pm 3\sigma \quad (62.9 \text{ to } 73.7) \quad \approx 99.7\%
+$$
+
+### Standardizing Data and Z-Scores
+
+To compare values from different normal distributions or to work with a standardized form of a dataset, we can convert raw data values to **z-scores**.
+
+#### Definition of Z-Score:
+The **z-score** is a way of describing a value in terms of how many standard deviations it is away from the mean. The formula for the z-score is:
+
+$$
+z = \frac{x - \mu}{\sigma}
+$$
+
+Where:
+
+- $x$ is the raw score (the value you are standardizing),
+- $\mu$ is the mean of the dataset,
+- $\sigma$ is the standard deviation.
+
+A z-score tells us:
+
+- $z = 0$: The value is exactly at the mean.
+- $z > 0$: The value is above the mean.
+- $z < 0$: The value is below the mean.
+
+#### Example:
+Suppose a father is 71.9 inches tall. We want to find his z-score given that the mean height is 68.3 inches and the standard deviation is 1.8 inches.
+
+$$
+z = \frac{71.9 - 68.3}{1.8} = \frac{3.6}{1.8} = 2
+$$
+
+This means that a height of 71.9 inches is 2 standard deviations above the mean.
+
+Conversely, if a father is 67.4 inches tall:
+
+$$
+z = \frac{67.4 - 68.3}{1.8} = \frac{-0.9}{1.8} = -0.5
+$$
+
+This means that a height of 67.4 inches is 0.5 standard deviations below the mean.
+
+#### Standard Normal Distribution:
+After converting all values in a normal distribution to z-scores, we obtain the **standard normal distribution**, which has:
+
+- A mean $\mu = 0$,
+- A standard deviation $\sigma = 1$.
+
+The standard normal distribution is often used in statistics because it allows for easy computation of probabilities and comparison across different datasets.
+
+### Finding Areas Under the Normal Curve
+
+To find the proportion of data within a certain range, we can use **z-scores** to convert the raw data points and then look up the corresponding probabilities using a **z-table** or statistical software. The area under the normal curve between two z-scores represents the proportion of data that lies between those values.
+
+#### Example:
+To find the proportion of fathers with heights between 67.4 inches and 71.9 inches, we first compute the z-scores for these heights:
+
+For 67.4 inches:
+
+$$
+z_{67.4} = \frac{67.4 - 68.3}{1.8} = -0.5
+$$
+
+For 71.9 inches:
+
+$$
+z_{71.9} = \frac{71.9 - 68.3}{1.8} = 2
+$$
+
+Next, using a z-table (or software), we find the area to the left of these z-scores:
+
+- The area to the left of $z = -0.5$ is approximately **0.3085** (30.85%).
+- The area to the left of $z = 2$ is approximately **0.9772** (97.72%).
+
+Thus, the proportion of fathers with heights between 67.4 and 71.9 inches is:
+
+$$
+P(67.4 \leq \text{height} \leq 71.9) = 0.9772 - 0.3085 = 0.6687 \approx 66.87\%
+$$
+
+### Computing Percentiles
+
+The **percentile** of a value in a normal distribution tells us the percentage of the data that is less than or equal to that value. To compute percentiles, we:
+
+1. Find the z-score corresponding to the desired percentile using a z-table or statistical software.
+2. Convert the z-score back into the raw data value.
+
+#### Example:
+Suppose we want to compute the **30th percentile** of fathers' heights. Using a z-table, we find that the z-score corresponding to the 30th percentile is approximately $z = -0.52$.
+
+To find the corresponding height, we use the z-score formula in reverse:
+
+$$
+\text{height} = \mu + z\sigma = 68.3 + (-0.52)(1.8) = 68.3 - 0.936 = 67.364 \text{ inches}.
+$$
+
+Thus, the 30th percentile corresponds to a height of approximately **67.36 inches**.
+
+This process can be applied to any percentile by finding the appropriate z-score and converting it back to the original scale using the mean and standard deviation of the dataset.
