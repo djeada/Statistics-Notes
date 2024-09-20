@@ -21,7 +21,7 @@ This formula describes the shape of the curve mathematically. The mean $\mu$ det
 
 ![output](https://github.com/user-attachments/assets/32acef3f-7617-464c-9527-31ea78679bda)
 
-#### Examples:
+#### Examples
 
 - The distribution of adult **heights** usually follows a normal pattern, where most individuals cluster around the average height, with fewer people being much shorter or taller.
 - When it comes to **IQ scores**, they are designed to follow a normal distribution, with the average score set at 100 and a standard deviation of 15, meaning most people score close to this mean.
@@ -36,7 +36,7 @@ The **Empirical Rule** provides a rough estimate for the spread of data in a nor
 - **95% of the data** falls within **2 standard deviations** of the mean, i.e., between $\mu - 2\sigma$ and $\mu + 2\sigma$.
 - **99.7% of the data** falls within **3 standard deviations** of the mean, i.e., between $\mu - 3\sigma$ and $\mu + 3\sigma$.
 
-#### Example:
+#### Example
 Suppose we have a dataset where the heights of fathers are normally distributed with:
 
 - Mean height $\mu = 68.3$ inches,
@@ -72,7 +72,7 @@ $$
 
 To compare values from different normal distributions or to work with a standardized form of a dataset, we can convert raw data values to **z-scores**.
 
-#### Definition of Z-Score:
+#### Definition of Z-Score
 The **z-score** is a way of describing a value in terms of how many standard deviations it is away from the mean. The formula for the z-score is:
 
 $$
@@ -91,7 +91,7 @@ A z-score tells us:
 - $z > 0$: The value is above the mean.
 - $z < 0$: The value is below the mean.
 
-#### Example:
+#### Example
 Suppose a father is 71.9 inches tall. We want to find his z-score given that the mean height is 68.3 inches and the standard deviation is 1.8 inches.
 
 $$
@@ -108,7 +108,7 @@ $$
 
 This means that a height of 67.4 inches is 0.5 standard deviations below the mean.
 
-#### Standard Normal Distribution:
+#### Standard Normal Distribution
 After converting all values in a normal distribution to z-scores, we obtain the **standard normal distribution**, which has:
 
 - A mean $\mu = 0$,
@@ -120,7 +120,7 @@ The standard normal distribution is often used in statistics because it allows f
 
 To find the proportion of data within a certain range, we can use **z-scores** to convert the raw data points and then look up the corresponding probabilities using a **z-table** or statistical software. The area under the normal curve between two z-scores represents the proportion of data that lies between those values.
 
-#### Example:
+#### Example
 To find the proportion of fathers with heights between 67.4 inches and 71.9 inches, we first compute the z-scores for these heights:
 
 For 67.4 inches:
@@ -155,7 +155,7 @@ The **percentile** of a value in a normal distribution tells us the percentage o
 1. Find the z-score corresponding to the desired percentile using a z-table or statistical software.
 2. Convert the z-score back into the raw data value.
 
-#### Example:
+#### Example
 Suppose we want to compute the **30th percentile** of fathers' heights. Using a z-table, we find that the z-score corresponding to the 30th percentile is approximately $z = -0.52$.
 
 To find the corresponding height, we use the z-score formula in reverse:
