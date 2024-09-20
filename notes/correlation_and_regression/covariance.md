@@ -211,7 +211,7 @@ Interpretation:
 
 For completeness, calculate the variances of $X$ and $Y$:
 
-#### Variance of $X$:
+#### Variance of $X$
 
 $$
 s_{XX} = \text{Var}(X) = \frac{1}{n - 1} \sum_{i=1}^{n} (X_i - \bar{X})^2
@@ -237,7 +237,7 @@ $$
 s_{XX} = \frac{1}{2} \times 2 = 1
 $$
 
-#### Variance of $Y$:
+#### Variance of $Y$
 
 Similarly, compute $(Y_i - \bar{Y})^2 $:
 

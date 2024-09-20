@@ -80,7 +80,7 @@ $$
 z = \frac{{\text{statistic} - \text{expected value}}}{{\text{Standard Error (SE) of the statistic}}}
 $$
 
-#### Step-by-Step Example:
+#### Step-by-Step Example
 
 Let’s assume we are sampling incomes with the following population parameters:
 

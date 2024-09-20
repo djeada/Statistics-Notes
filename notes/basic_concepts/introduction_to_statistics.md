@@ -48,7 +48,7 @@ Statistics is an empirical science, focusing on data-driven insights for real-wo
 * % 
 ```
 
-#### Illustrative Scenarios:
+#### Illustrative Scenarios
 
 1. In a poll of 1,200 registered voters, 45% preferred candidate A over candidate B.
    - The **population** in this case is all registered voters in the country.
@@ -64,7 +64,7 @@ Statistics is an empirical science, focusing on data-driven insights for real-wo
 
 - A **representative sample** accurately reflects the characteristics of the population, ensuring proportionality in terms of gender, age, or socio-economic status.
 
-#### Population Distribution (Gender Example):
+#### Population Distribution (Gender Example)
 
 - If the population includes equal numbers of **females (F)** and **males (M)**:
 

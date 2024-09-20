@@ -40,13 +40,13 @@ $$
 
 The least squares estimates are calculated using the following formulas:
 
-#### Slope ($\hat{\beta}_1$):
+#### Slope ($\hat{\beta}_1$)
 
 $$
 \hat{\beta}_1 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i - \bar{x})^2} = \frac{\text{Cov}(x, y)}{\text{Var}(x)}
 $$
 
-#### Intercept ($\hat{\beta}_0$):
+#### Intercept ($\hat{\beta}_0$)
 
 $$
 \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}

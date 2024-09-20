@@ -179,7 +179,7 @@ $$
 - An **additive model** is used when the seasonal variation in the time series remains roughly constant over time.
 - A **multiplicative model** is appropriate when the seasonal variation increases or decreases proportionally with the level of the series.
 
-##### **Additive Model**:
+##### **Additive Model**
 
 **Level equation**:
 
@@ -220,7 +220,7 @@ where:
 
 - $h$ is the forecast horizon, $L$ is the seasonal period.
 
-##### **Multiplicative Model**:
+##### **Multiplicative Model**
 
 **Level equation**:
 

@@ -103,7 +103,7 @@ $$
 
 since each face of the die is equally likely to appear.
 
-#### Calculating Probabilities of Combined Events:
+#### Calculating Probabilities of Combined Events
 
 The probability of any combined outcome (e.g., tossing a "Head" followed by rolling a "4") is calculated by multiplying the probabilities of the individual events along the relevant path in the tree. For example:
 
@@ -117,7 +117,7 @@ $$
 P(\text{Tail and 2}) = P(\text{Tail}) \times P(2) = \frac{1}{2} \times \frac{1}{6} = \frac{1}{12}
 $$
 
-#### General Form:
+#### General Form
 
 The total probability for any combined event is always the product of the individual probabilities along its branch. Since the events are independent, the combined probability of any outcome from the coin toss followed by a die roll is given by:
 
@@ -158,7 +158,7 @@ Initial ──┤              .
                          6 (1/6)
 ```
 
-#### Interpreting the Probability Tree:
+#### Interpreting the Probability Tree
 
 I. **Initial Node (Before Rolling Dice)**: The initial node represents the state before any dice are rolled.
 
@@ -180,7 +180,7 @@ $$
 P(\text{Second Die Outcome}) = \frac{1}{6}
 $$
 
-#### Calculating Probabilities of Combined Events:
+#### Calculating Probabilities of Combined Events
 
 To compute the probability of rolling a specific combination (e.g., rolling a "3" on the first die and a "5" on the second), we multiply the probabilities along the path that represents the combined event. For example:
 
@@ -190,7 +190,7 @@ $$
 
 Since the outcomes of the two dice are independent, the probability of any specific combination is always the product of the probabilities of the individual outcomes.
 
-#### Total Number of Outcomes:
+#### Total Number of Outcomes
 
 There are 36 possible combinations of outcomes (6 outcomes from the first die × 6 outcomes from the second die). Each combination has an equal probability of occurring:
 
@@ -198,7 +198,7 @@ $$
 P(\text{Any Specific Combination}) = \frac{1}{36}
 $$
 
-#### General Form:
+#### General Form
 
 The probability of rolling any specific pair of numbers (e.g., a "2" on the first die and a "6" on the second) is calculated using the formula:
 
@@ -236,7 +236,7 @@ Initial Node
            └── G (3/9)
 ```
 
-#### Calculations:
+#### Calculations
 
 I. **P(R then G)** (Red marble followed by a Green marble):  
 

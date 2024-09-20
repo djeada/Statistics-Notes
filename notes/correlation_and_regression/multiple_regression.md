@@ -205,7 +205,7 @@ Suppose we have the following data on the number of hours studied ($x_1$), the n
 | 6                         | 3                          | 70                    |
 | 8                         | 4                          | 80                    |
 
-### Observations:
+### Observations
 
 Before proceeding, it's important to notice that $x_2$ is directly proportional to $x_1$:
 
@@ -215,7 +215,7 @@ $$
 
 This means that there is perfect multicollinearity between $x_1$ and $x_2$. In multiple linear regression, perfect multicollinearity causes the design matrix to be singular, making it impossible to uniquely estimate the regression coefficients for $x_1$ and $x_2$.
 
-### Implications of Multicollinearity:
+### Implications of Multicollinearity
 
 When independent variables are perfectly correlated, the matrix $X^\top X $ (where $X $ is the design matrix) becomes singular (non-invertible). This prevents us from calculating the coefficients using the normal equation:
 
@@ -223,11 +223,11 @@ $$
 \hat{\boldsymbol{\beta}} = (X^\top X)^{-1} X^\top \boldsymbol{y}
 $$
 
-### Adjusted Approach:
+### Adjusted Approach
 
 Given the perfect linear relationship between $x_1$ and $x_2$, we can simplify the model by combining $x_1$ and $x_2$ into a single variable or by using only one of them in the regression.
 
-#### Simplifying the Model:
+#### Simplifying the Model
 
 Since $x_2 = \frac{1}{2} x_1$, we can express $y$ solely in terms of $x_1$:
 
@@ -243,9 +243,9 @@ $$
 
 Now, we can proceed with a simple linear regression of $y$ on $x_1$.
 
-### Step-by-Step Calculation:
+### Step-by-Step Calculation
 
-#### 1. Calculate the Means:
+#### 1. Calculate the Means
 
 Compute the mean of $x_1$ and $y$:
 
@@ -257,7 +257,7 @@ $$
 \bar{y} = \frac{50 + 60 + 70 + 80}{4} = \frac{260}{4} = 65
 $$
 
-#### 2. Calculate the Sum of Squares:
+#### 2. Calculate the Sum of Squares
 
 Compute the sum of squares for $x_1$ and the cross-product of $x_1$ and $y$:
 
@@ -269,7 +269,7 @@ $$
 SS_{x_1 y} = \sum_{i=1}^{n} (x_{1i} - \bar{x}_1)(y_i - \bar{y}) = (2 - 5)(50 - 65) + (4 - 5)(60 - 65) + (6 - 5)(70 - 65) + (8 - 5)(80 - 65) = 100
 $$
 
-#### 3. Calculate the Regression Coefficients:
+#### 3. Calculate the Regression Coefficients
 
 Compute the slope ($\hat{\gamma}$) and intercept ($\hat{\beta}_0 $):
 
@@ -281,7 +281,7 @@ $$
 \hat{\beta}_0 = \bar{y} - \hat{\gamma} \bar{x}_1 = 65 - (5)(5) = 40
 $$
 
-#### 4. Write the Regression Equation:
+#### 4. Write the Regression Equation
 
 The best-fitting line is:
 
@@ -289,7 +289,7 @@ $$
 \hat{y} = 40 + 5 x_1
 $$
 
-#### 5. Verify the Model with the Data:
+#### 5. Verify the Model with the Data
 
 Compute the predicted $y$ values using the regression equation:
 
@@ -335,7 +335,7 @@ Suppose we have the following data on the number of hours studied ($x_1$), atten
 | 4                 | 7                             | 90                              | 85                      |
 | 5                 | 9                             | 95                              | 95                      |
 
-### Objective:
+### Objective
 
 We aim to fit a multiple linear regression model of the form:
 
@@ -350,7 +350,7 @@ where:
 - $x_2$ is the attendance rate,
 - $\varepsilon $ is the error term.
 
-### Step-by-Step Calculation:
+### Step-by-Step Calculation
 
 #### 1. Organize the Data
 

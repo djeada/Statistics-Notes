@@ -214,7 +214,7 @@ $$
 - **Null Hypothesis ($H_0$)**: No spatial autocorrelation exists (random spatial pattern).
 - **Alternative Hypothesis ($H_1$)**: Spatial autocorrelation exists.
 
-#### Steps:
+#### Steps
 
 1. **Compute Expected Value of Moran's I ($E[I]$)**:
 
