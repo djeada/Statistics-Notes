@@ -10,9 +10,13 @@ $$f(x; \alpha, \beta) = \frac{x^{\alpha - 1}(1 - x)^{\beta - 1}}{B(\alpha, \beta
 
 for $0 \le x \le 1$ and $\alpha, \beta > 0$, where $B(\alpha, \beta)$ is the beta function.
 
+![output(3)](https://github.com/user-attachments/assets/55124c97-5633-4356-a807-13f1c0369034)
+
 ### Cumulative Distribution Function (CDF)
 
 The CDF of a beta distribution, $F(x; \alpha, \beta)$, does not have a simple closed-form expression but is the integral of the PDF over its domain.
+
+![output(4)](https://github.com/user-attachments/assets/8fec2c6f-a124-4254-8f2b-0b0d9e7a9555)
 
 ### Expected Value and Variance
 
