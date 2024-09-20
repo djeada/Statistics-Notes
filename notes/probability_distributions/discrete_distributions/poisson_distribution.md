@@ -10,11 +10,15 @@ $$P(X=k) = \frac{e^{-\lambda} \lambda^k}{k!}$$
 
 where $k \in \{0, 1, 2, \dots\}$.
 
+![output(25)](https://github.com/user-attachments/assets/d4b69074-c230-4642-8420-ce020e581a44)
+
 ### Cumulative Distribution Function (CDF)
 
 The CDF of a Poisson distribution is given by:
 
 $$F(k) = P(X \le k) = \sum_{i=0}^{k} \frac{e^{-\lambda} \lambda^i}{i!}$$
+
+![output(26)](https://github.com/user-attachments/assets/3fdbcff6-d49f-4850-b9d9-e7fb08532b25)
 
 ### Expected Value and Variance
 
