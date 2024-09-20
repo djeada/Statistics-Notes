@@ -15,6 +15,8 @@ $$
 
 where $\Gamma(\cdot)$ is the gamma function.
 
+![output(5)](https://github.com/user-attachments/assets/0a071a01-8604-458d-884f-97a9e0505b04)
+
 ### Cumulative Distribution Function (CDF)
 
 The CDF of a chi-square distribution is given by:
@@ -22,6 +24,8 @@ The CDF of a chi-square distribution is given by:
 $$F(x) = \frac{\gamma \left(\frac{k}{2}, \frac{x}{2}\right)}{\Gamma\left(\frac{k}{2}\right)}$$
 
 where $\gamma(\cdot)$ is the lower incomplete gamma function and $\Gamma(\cdot)$ is the gamma function.
+
+![output(6)](https://github.com/user-attachments/assets/6b5404fb-62b8-4a56-ab21-5fc6dcc9db5f)
 
 ### Expected Value and Variance
 
