@@ -10,11 +10,15 @@ $$f(x) = \frac{\sqrt{\frac{(d_1x)^{d_1} \cdot d_2^{d_2}}{(d_1x + d_2)^{d_1 + d_2
 
 where $B(\cdot)$ is the beta function.
 
+![output(9)](https://github.com/user-attachments/assets/6ff16820-c60b-4693-97c4-1061f45a3405)
+
 ### Cumulative Distribution Function (CDF)
 
 The CDF of an F-distribution can be expressed in terms of the regularized incomplete beta function, $I_x(a, b)$:
 
 $$F(x) = I_{\frac{d_1x}{d_1x + d_2}}\left(\frac{d_1}{2}, \frac{d_2}{2}\right)$$
+
+![output(10)](https://github.com/user-attachments/assets/88dc09c2-c964-4d41-9b4c-362914982f5a)
 
 ### Expected Value and Variance
 
