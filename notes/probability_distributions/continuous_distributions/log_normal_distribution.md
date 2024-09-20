@@ -10,11 +10,15 @@ $$f(x; \mu, \sigma) = \frac{1}{x \sigma \sqrt{2 \pi}} \exp\left( -\frac{(\ln x -
 
 for $x > 0$, $\mu \in \mathbb{R}$, and $\sigma > 0$.
 
+![output(13)](https://github.com/user-attachments/assets/49eff855-655b-4c5c-8593-354f1b1cabe0)
+
 ### Cumulative Distribution Function (CDF)
 
 The CDF of a log-normal distribution, $F(x; \mu, \sigma)$, is the normal cumulative distribution function of $\ln(x)$:
 
 $$F(x; \mu, \sigma) = \frac{1}{2} + \frac{1}{2} \text{erf}\left( \frac{\ln(x) - \mu}{\sigma \sqrt{2}} \right)$$
+
+![output(14)](https://github.com/user-attachments/assets/7ffd1673-cc6c-44dc-a7b3-724abe673ff5)
 
 ### Expected Value and Variance
 
