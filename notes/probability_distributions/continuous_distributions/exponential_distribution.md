@@ -13,11 +13,15 @@ $$f(x) =
 \end{cases}
 $$
 
+![output(7)](https://github.com/user-attachments/assets/a9044ed9-d428-43db-ad2c-bda7e7b05757)
+
 ### Cumulative Distribution Function (CDF)
 
 The CDF of an exponential distribution is given by:
 
 $$F(x) = 1 - e^{-\lambda x}$$
+
+![output(8)](https://github.com/user-attachments/assets/7eca535d-14d9-4da8-8c4e-268f45d0c16b)
 
 ### Expected Value and Variance
 
