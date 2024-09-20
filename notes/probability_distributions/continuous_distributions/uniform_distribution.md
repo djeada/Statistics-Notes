@@ -13,6 +13,8 @@ $$f(x) =
 \end{cases}
 $$
 
+![output(20)](https://github.com/user-attachments/assets/dfcecdf5-3c5f-4c0e-b851-f2730c02add8)
+
 ### Cumulative Distribution Function (CDF)
 
 The CDF of a uniform distribution is given by:
@@ -24,6 +26,8 @@ $$F(x) =
   1, & \text{if}\ x > b
 \end{cases}
 $$
+
+![output(19)](https://github.com/user-attachments/assets/dd56f91d-5643-4d45-b32c-281912120878)
 
 ### Expected Value and Variance
 
