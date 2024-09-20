@@ -10,6 +10,8 @@ $$
 f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
 $$
 
+![output(15)](https://github.com/user-attachments/assets/92c0b044-9b2d-4755-b14d-8e7d9068691c)
+
 ### Cumulative Distribution Function (CDF)
 
 The CDF of a normal distribution is given by:
@@ -17,6 +19,8 @@ The CDF of a normal distribution is given by:
 $$F(x) = \frac{1}{2} \left[ 1 + \text{erf} \left( \frac{x - \mu}{\sigma \sqrt{2}} \right) \right]$$
 
 where erf is the error function.
+
+![output(16)](https://github.com/user-attachments/assets/7963d182-5904-4849-9c17-698b2d5982ee)
 
 ### Expected Value
 
