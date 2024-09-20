@@ -10,11 +10,15 @@ $$f(x) = \frac{\Gamma\left(\frac{\nu + 1}{2}\right)}{\sqrt{\nu \pi} \, \Gamma\le
 
 where $\Gamma(\cdot)$ is the gamma function.
 
+![output(17)](https://github.com/user-attachments/assets/80382e02-30b2-4477-af09-e87d360a02e6)
+
 ### Cumulative Distribution Function (CDF)
 
 The CDF of a t-distribution can be expressed in terms of the regularized incomplete beta function, $I_x(a, b)$:
 
 $$F(x) = 1 - \frac{1}{2} I_{\frac{x^2}{x^2 + \nu}}\left(\frac{1}{2}, \frac{\nu}{2}\right)$$
+
+![output(18)](https://github.com/user-attachments/assets/f4cca998-c7fe-43e2-874b-854264a76725)
 
 ### Expected Value and Variance
 
