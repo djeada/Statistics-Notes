@@ -10,11 +10,15 @@ $$P(X=k) = \binom{n}{k} p^k (1-p)^{n-k}$$
 
 where $k \in \{0, 1, 2, \dots, n\}$ and $\binom{n}{k} = \frac{n!}{k!(n-k)!}$ is the binomial coefficient.
 
+![output(21)](https://github.com/user-attachments/assets/ca592500-5fe5-4a6c-b27f-5082eac709b0)
+
 ### Cumulative Distribution Function (CDF)
 
 The CDF of a binomial distribution is given by:
 
 $$F(k) = P(X \le k) = \sum_{i=0}^{k} \binom{n}{i} p^i (1-p)^{n-i}$$
+
+![output(22)](https://github.com/user-attachments/assets/8034eb7b-fe3a-4275-8d27-4816b57e63e8)
 
 ### Expected Value and Variance
 
