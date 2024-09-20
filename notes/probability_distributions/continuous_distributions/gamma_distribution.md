@@ -10,9 +10,13 @@ $$f(x; \alpha, \beta) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha - 1} e^{-\
 
 for $x > 0$, $\alpha > 0$, $\beta > 0$, and where $\Gamma(\alpha)$ is the gamma function.
 
+![output(12)](https://github.com/user-attachments/assets/a438d0a3-850e-4727-a1bb-ba3e7e3b8179)
+
 ### Cumulative Distribution Function (CDF)
 
 The CDF of a gamma distribution, denoted as $F(x; \alpha, \beta)$, does not have a simple closed-form expression but is defined as the integral of the PDF.
+
+![output(11)](https://github.com/user-attachments/assets/d624e0d1-1080-4619-8917-e975254c7b03)
 
 ### Expected Value and Variance
 
