@@ -10,11 +10,15 @@ $$P(X=k) = (1-p)^{k-1} p$$
 
 where $k \in \{1, 2, 3, \dots\}$, representing the number of trials until the first success.
 
+![output(24)](https://github.com/user-attachments/assets/278ed520-efd9-4969-a387-03e32d8f43ca)
+
 ### Cumulative Distribution Function (CDF)
 
 The CDF of a geometric distribution is given by:
 
 $$F(k) = P(X \le k) = 1 - (1-p)^k$$
+
+![output(23)](https://github.com/user-attachments/assets/be3ebad8-cce7-4d9a-8930-1fa15bf383d3)
 
 ### Expected Value and Variance
 
