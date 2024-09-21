@@ -1,50 +1,39 @@
-import numpy as np
-import matplotlib.pyplot as plt
+from scipy.stats import expon
 
+# Parameters for two exponential distributions (rate parameters)
+lambda1 = 0.5  # rate parameter for the first distribution
+lambda2 = 1.5  # rate parameter for the second distribution
 
-class Exponential:
-    def __init__(self, rate):
-        self.rate = rate
+# Generate x values
+x_exp = np.linspace(0, 10, 1000)
 
-    def pdf(self, x):
-        return self.rate * np.exp(-self.rate * x)
+# Calculate the PDF and CDF for the exponential distributions
+pdf_exp_1 = expon.pdf(x_exp, scale=1/lambda1)
+pdf_exp_2 = expon.pdf(x_exp, scale=1/lambda2)
 
-    def cdf(self, x):
-        return 1 - np.exp(-self.rate * x)
+cdf_exp_1 = expon.cdf(x_exp, scale=1/lambda1)
+cdf_exp_2 = expon.cdf(x_exp, scale=1/lambda2)
 
+# Create two separate plots for the PDF and CDF
 
-# Set up exponential distributions with different rates
-exponential_1 = Exponential(0.5)
-exponential_2 = Exponential(1)
-exponential_3 = Exponential(2)
-
-# Generate data for x-axis
-x = np.linspace(0, 5, 1000)
-
-# Plot PDFs
-plt.plot(x, exponential_1.pdf(x), label="rate=0.5")
-plt.plot(x, exponential_2.pdf(x), label="rate=1")
-plt.plot(x, exponential_3.pdf(x), label="rate=2")
-
-# Add legend and labels
+# Plot 1: PDF of Exponential Distributions
+plt.figure(figsize=(10, 6))
+plt.plot(x_exp, pdf_exp_1, label=f'Exponential(λ={lambda1}) PDF', color='blue')
+plt.plot(x_exp, pdf_exp_2, label=f'Exponential(λ={lambda2}) PDF', color='red')
+plt.title('Probability Density Function (PDF) of Exponential Distributions')
+plt.xlabel('x')
+plt.ylabel('PDF')
 plt.legend()
-plt.title("Exponential Probability Density Function")
-plt.xlabel("x")
-plt.ylabel("PDF(x)")
-
-# Show plot
+plt.grid(True)
 plt.show()
 
-# Plot CDFs
-plt.plot(x, exponential_1.cdf(x), label="rate=0.5")
-plt.plot(x, exponential_2.cdf(x), label="rate=1")
-plt.plot(x, exponential_3.cdf(x), label="rate=2")
-
-# Add legend and labels
+# Plot 2: CDF of Exponential Distributions
+plt.figure(figsize=(10, 6))
+plt.plot(x_exp, cdf_exp_1, label=f'Exponential(λ={lambda1}) CDF', color='blue')
+plt.plot(x_exp, cdf_exp_2, label=f'Exponential(λ={lambda2}) CDF', color='red')
+plt.title('Cumulative Distribution Function (CDF) of Exponential Distributions')
+plt.xlabel('x')
+plt.ylabel('CDF')
 plt.legend()
-plt.title("Exponential Cumulative Density Function")
-plt.xlabel("x")
-plt.ylabel("CDF(x)")
-
-# Show plot
+plt.grid(True)
 plt.show()
