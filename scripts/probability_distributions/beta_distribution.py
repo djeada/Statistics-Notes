@@ -1,58 +1,41 @@
+import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import beta
 
+# Parameters for two beta distributions
+alpha1, beta1 = 2, 5
+alpha2, beta2 = 5, 2
 
-class Beta_Distribution:
-    def __init__(self, alpha, beta, panels=10000):
-        self.alpha = alpha
-        self.beta = beta
-        self.panels = panels
-        self.__Beta_Function__()
+# Generate x values (in the range [0, 1])
+x_beta = np.linspace(0, 1, 1000)
 
-    def __Beta_Function__(self):
-        width = 1 / self.panels
-        X = [x / self.panels for x in range(self.panels)]
-        # makes total integral of beta_PDF sum to 1
-        self.B = sum(
-            [(x ** (self.alpha - 1) * (1 - x) ** (self.beta - 1)) * width for x in X]
-        )
+# Calculate the PDF and CDF for the beta distributions
+pdf1 = beta.pdf(x_beta, alpha1, beta1)
+pdf2 = beta.pdf(x_beta, alpha2, beta2)
 
-    def beta_PDF(self, x):
-        return x ** (self.alpha - 1) * (1 - x) ** (self.beta - 1) / self.B
+cdf1 = beta.cdf(x_beta, alpha1, beta1)
+cdf2 = beta.cdf(x_beta, alpha2, beta2)
 
-    def beta_CDF(self, x):
-        cdf = 0
-        width = 1 / self.panels
-        X = [x / self.panels for x in range(self.panels)]
-        for xi in X:
-            if xi <= x:
-                cdf += (xi ** (self.alpha - 1) * (1 - xi) ** (self.beta - 1)) * width
-        return cdf / self.B
+# Create two separate plots for the PDF and CDF
 
+# Plot 1: PDF of Beta Distributions
+plt.figure(figsize=(10, 6))
+plt.plot(x_beta, pdf1, label=f'Beta(α={alpha1}, β={beta1}) PDF', color='blue')
+plt.plot(x_beta, pdf2, label=f'Beta(α={alpha2}, β={beta2}) PDF', color='red')
+plt.title('Probability Density Function (PDF) of Beta Distributions')
+plt.xlabel('x')
+plt.ylabel('PDF')
+plt.legend()
+plt.grid(True)
+plt.show()
 
-X = [x / 1000 for x in range(1000 + 1)]
-beta_values = [1, 2, 5, 10, 20]
-
-fig, axs = plt.subplots(2, 1, figsize=(8, 10))
-
-# Plot PDFs for different beta values
-for beta in beta_values:
-    bd = Beta_Distribution(5, beta)
-    Y_pdf = [bd.beta_PDF(x) for x in X]
-    axs[0].plot(X, Y_pdf, label=f"Beta = {beta}")
-axs[0].set_title(label="Probability Density Function (PDF)")
-axs[0].set_xlabel(xlabel="Values")
-axs[0].set_ylabel(ylabel="Probabilities")
-axs[0].legend()
-
-# Plot CDFs for different beta values
-for beta in beta_values:
-    bd = Beta_Distribution(5, beta)
-    Y_cdf = [bd.beta_CDF(x) for x in X]
-    axs[1].plot(X, Y_cdf, label=f"Beta = {beta}")
-axs[1].set_title(label="Cumulative Density Function (CDF)")
-axs[1].set_xlabel(xlabel="Values")
-axs[1].set_ylabel(ylabel="Probabilities")
-axs[1].legend()
-
-plt.tight_layout()
+# Plot 2: CDF of Beta Distributions
+plt.figure(figsize=(10, 6))
+plt.plot(x_beta, cdf1, label=f'Beta(α={alpha1}, β={beta1}) CDF', color='blue')
+plt.plot(x_beta, cdf2, label=f'Beta(α={alpha2}, β={beta2}) CDF', color='red')
+plt.title('Cumulative Distribution Function (CDF) of Beta Distributions')
+plt.xlabel('x')
+plt.ylabel('CDF')
+plt.legend()
+plt.grid(True)
 plt.show()
