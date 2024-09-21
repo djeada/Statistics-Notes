@@ -1,4 +1,4 @@
-f# Quizzes on Probability
+# Quizzes on Probability
 
 This series of quizzes covers essential topics in probability theory, including:
 
