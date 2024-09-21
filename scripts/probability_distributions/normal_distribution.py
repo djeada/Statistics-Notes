@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
+from scipy.special import erf
 
 class NormalDistribution:
     def __init__(self, mu, sigma):
@@ -11,7 +12,7 @@ class NormalDistribution:
         return (1 / (self.sigma * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((x - self.mu) / self.sigma) ** 2)
 
     def cdf(self, x):
-        return 0.5 * (1 + np.erf((x - self.mu) / (self.sigma * np.sqrt(2))))
+        return 0.5 * (1 + erf((x - self.mu) / (self.sigma * np.sqrt(2))))
 
 def plot_pdf(x_values, pdf1, pdf2, label1, label2, title):
     plt.figure(figsize=(10, 6))
@@ -67,8 +68,8 @@ norm_dist_2 = NormalDistribution(mu2, sigma2)
 pdf_norm_1_custom = np.array([norm_dist_1.pdf(x) for x in x_norm])
 pdf_norm_2_custom = np.array([norm_dist_2.pdf(x) for x in x_norm])
 
-cdf_norm_1_custom = norm_dist_1.cdf(x_norm)
-cdf_norm_2_custom = norm_dist_2.cdf(x_norm)
+cdf_norm_1_custom = np.array([norm_dist_1.cdf(x) for x in x_norm])
+cdf_norm_2_custom = np.array([norm_dist_2.cdf(x) for x in x_norm])
 
 # Plot 1: PDF of Normal Distributions (Original)
 plot_pdf(x_norm, pdf_norm_1_scipy, pdf_norm_2_scipy,
