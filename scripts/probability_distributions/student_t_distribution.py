@@ -1,67 +1,39 @@
-class T_Distribution:
-    def __init__(self, dof=9):
-        self.beta = self.beta_function(0.5, dof / 2)
+from scipy.stats import t
 
-        self.front = 1 / (dof ** 0.5 * self.beta)
-        self.dof = dof
-        self.power = -(dof + 1) / 2
+# Parameters for two t-distributions (degrees of freedom ν)
+df1 = 5  # degrees of freedom for the first distribution
+df2 = 10  # degrees of freedom for the second distribution
 
-    def beta_function(self, x, y):
-        pw = 1 / 1000000
-        beta = 0
-        t = pw / 2
-        while t < 1.0:
-            beta += t ** (x - 1) * (1 - t) ** (y - 1) * pw
-            t += pw
+# Generate x values
+x_t = np.linspace(-5, 5, 1000)
 
-        return beta
+# Calculate the PDF and CDF for the t-distributions
+pdf_t_1 = t.pdf(x_t, df1)
+pdf_t_2 = t.pdf(x_t, df2)
 
-    def PDFt(self, t):
-        # The t probability distribution method
-        f_of_t = self.front * (1 + t ** 2 / self.dof) ** self.power
+cdf_t_1 = t.cdf(x_t, df1)
+cdf_t_2 = t.cdf(x_t, df2)
 
-        return f_of_t
+# Create two separate plots for the PDF and CDF
 
-    def CDFt(self, t_left, t_right):
-        # The t cummulative distribution method
-        # We simply numerically integrate under the PDFt curve
-        panels = self.dof * 100
-        width = (t_right - t_left) / panels
-        cdf = 0
-        t = t_left
-        prob = self.PDFt(t)
-        # print(panels, width, prob)
-        for i in range(panels):
-            t += i * width
-            prob = self.PDFt(t)
-            cdf += prob * width
+# Plot 1: PDF of t-Distributions
+plt.figure(figsize=(10, 6))
+plt.plot(x_t, pdf_t_1, label=f"t-distribution(ν={df1}) PDF", color="blue")
+plt.plot(x_t, pdf_t_2, label=f"t-distribution(ν={df2}) PDF", color="red")
+plt.title("Probability Density Function (PDF) of t-Distributions")
+plt.xlabel("x")
+plt.ylabel("PDF")
+plt.legend()
+plt.grid(True)
+plt.show()
 
-        return cdf
-
-
-import matplotlib.pyplot as plt
-
-
-def PDF(x, mean=0, std_dev=1):
-    # define e and pi explicitly
-    e = 2.718281828
-    pi = 3.1415927
-    # calculate in two steps
-    p = 1.0 / (std_dev * ((2 * pi) ** 0.5))
-    p *= e ** (-0.5 * ((x - mean) / std_dev) ** 2)
-
-    return p
-
-
-X = [(x - 1000) / 250 for x in list(range(2001))]
-P = [PDF(x) for x in X]
-plt.plot(X, P)
-for dof in [1, 2, 3, 5, 10, 30]:
-    t_dist = T_Distribution(dof=dof)
-    TP = [t_dist.PDFt(x) for x in X]
-    plt.plot(X, TP)
-
-plt.title(label="Test Distribution")
-plt.xlabel(xlabel="value")
-plt.ylabel(ylabel="propability of value occurance")
+# Plot 2: CDF of t-Distributions
+plt.figure(figsize=(10, 6))
+plt.plot(x_t, cdf_t_1, label=f"t-distribution(ν={df1}) CDF", color="blue")
+plt.plot(x_t, cdf_t_2, label=f"t-distribution(ν={df2}) CDF", color="red")
+plt.title("Cumulative Distribution Function (CDF) of t-Distributions")
+plt.xlabel("x")
+plt.ylabel("CDF")
+plt.legend()
+plt.grid(True)
 plt.show()
