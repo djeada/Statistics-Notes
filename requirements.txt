@@ -12,7 +12,7 @@ ipykernel==6.26.0
 
 # Additional Libraries for Statistics
 seaborn==0.12.2     # Optional for statistical data visualization
-scikit-learn==1.3.1  # Optional for statistical machine learning tasks
+scikit-learn==1.5.0  # Optional for statistical machine learning tasks
 
 # Miscellaneous
 sympy==1.13          # For symbolic mathematics
