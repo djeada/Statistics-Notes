@@ -1,34 +1,40 @@
-import numpy as np
-import matplotlib.pyplot as plt
+from scipy.stats import binom
 
+# Parameters for two binomial distributions
+n1, p1 = 10, 0.5  # number of trials and probability of success for the first distribution
+n2, p2 = 15, 0.7  # number of trials and probability of success for the second distribution
 
-class Binomial_Distribution:
-    def __init__(self, n, p):
-        self.n = n
-        self.p = p
-        self.__binomial_coefficient__()
+# Generate x values (possible number of successes)
+x_binom_1 = np.arange(0, n1 + 1)
+x_binom_2 = np.arange(0, n2 + 1)
 
-    def __binomial_coefficient__(self):
-        self.coefficients = [np.math.comb(self.n, k) for k in range(self.n + 1)]
+# Calculate the PMF and CDF for the binomial distributions
+pmf_binom_1 = binom.pmf(x_binom_1, n1, p1)
+pmf_binom_2 = binom.pmf(x_binom_2, n2, p2)
 
-    def binomial_PMF(self, k):
-        return self.coefficients[k] * (self.p ** k) * ((1 - self.p) ** (self.n - k))
+cdf_binom_1 = binom.cdf(x_binom_1, n1, p1)
+cdf_binom_2 = binom.cdf(x_binom_2, n2, p2)
 
+# Create two separate plots for the PMF and CDF
 
-# Set parameters for the distribution
-n = 10
-p = 0.4
+# Plot 1: PMF of Binomial Distributions
+plt.figure(figsize=(10, 6))
+plt.stem(x_binom_1, pmf_binom_1, basefmt=" ", linefmt="blue", markerfmt="bo", label=f'Binomial(n={n1}, p={p1}) PMF')
+plt.stem(x_binom_2, pmf_binom_2, basefmt=" ", linefmt="red", markerfmt="ro", label=f'Binomial(n={n2}, p={p2}) PMF')
+plt.title('Probability Mass Function (PMF) of Binomial Distributions')
+plt.xlabel('Number of Successes (k)')
+plt.ylabel('PMF')
+plt.legend()
+plt.grid(True)
+plt.show()
 
-# Create the binomial distribution object
-bd = Binomial_Distribution(n, p)
-
-# Calculate the probability mass function for all possible values of k
-k_values = np.arange(0, n + 1)
-PMF_values = [bd.binomial_PMF(k) for k in k_values]
-
-# Plot the probability mass function
-plt.bar(k_values, PMF_values)
-plt.title(f"Binomial Distribution (n={n}, p={p})")
-plt.xlabel("k")
-plt.ylabel("Probability")
+# Plot 2: CDF of Binomial Distributions
+plt.figure(figsize=(10, 6))
+plt.step(x_binom_1, cdf_binom_1, where="mid", label=f'Binomial(n={n1}, p={p1}) CDF', color='blue')
+plt.step(x_binom_2, cdf_binom_2, where="mid", label=f'Binomial(n={n2}, p={p2}) CDF', color='red')
+plt.title('Cumulative Distribution Function (CDF) of Binomial Distributions')
+plt.xlabel('Number of Successes (k)')
+plt.ylabel('CDF')
+plt.legend()
+plt.grid(True)
 plt.show()
