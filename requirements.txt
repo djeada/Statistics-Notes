@@ -7,7 +7,7 @@ statsmodels==0.14.0
 
 # Jupyter for Notebook Environment
 jupyter==1.0.0
-notebook==7.1.0
+notebook==7.2.2
 ipykernel==6.26.0
 
 # Additional Libraries for Statistics
