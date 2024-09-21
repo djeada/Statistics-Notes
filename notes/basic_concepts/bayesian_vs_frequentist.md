@@ -4,8 +4,6 @@ Bayesian and frequentist statistics are two distinct approaches to statistical i
 
 ### Frequentist Statistics
 
-Key Concepts:
-
 - Frequentist statistics operates under the assumption that parameters in a population are fixed but unknown, such as the true mean, which remains constant even though its value is not directly observed.
 - Confidence intervals are constructed to estimate the range within which a parameter likely falls. For example, a 95% confidence interval means that if an experiment were repeated many times, 95% of the intervals generated would capture the true parameter value.
 - Null hypothesis testing is a core component of frequentist analysis. It tests observed data against a null hypothesis, which typically asserts no effect or no difference, such as the hypothesis that two groups do not differ significantly.
@@ -44,8 +42,6 @@ X O O X
 A frequentist would calculate the probability of the attribute in the population based on this sample, which is 50% (2 out of 4), and would apply this probability to any future samples.
 
 ### Bayesian Statistics
-
-Key Concepts:
 
 - Bayesian statistics treats parameters as random variables with associated probability distributions, reflecting the uncertainty about their true values rather than considering them fixed.
 - A prior distribution represents pre-existing knowledge or beliefs about a parameter, formulated as a probability distribution that captures this initial understanding before observing new data.
