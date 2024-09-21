@@ -10,11 +10,15 @@ $$P(X=k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}$$
 
 where $k \in \{r, r+1, r+2, \dots\}$ and $\binom{k-1}{r-1}$ is the binomial coefficient.
 
+![output(27)](https://github.com/user-attachments/assets/0052ac1b-3aec-4021-a299-2d417968f611)
+
 ### Cumulative Distribution Function (CDF)
 
 The CDF of a negative binomial distribution is not as straightforward to express in a closed form but is the sum of its PMF values:
 
 $$F(k) = P(X \le k) = \sum_{i=r}^{k} \binom{i-1}{r-1} p^r (1-p)^{i-r}$$
+
+![output(28)](https://github.com/user-attachments/assets/9f38fec7-3be9-469a-9744-f88145a75d3d)
 
 ### Expected Value and Variance
 
