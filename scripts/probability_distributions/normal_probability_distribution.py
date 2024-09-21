@@ -1,48 +1,39 @@
-import numpy as np
-import matplotlib.pyplot as plt
 from scipy.stats import norm
 
+# Parameters for two normal distributions (mean μ and standard deviation σ)
+mu1, sigma1 = 0, 1  # parameters for the first distribution
+mu2, sigma2 = 2, 1.5  # parameters for the second distribution
 
-class NormalDistribution:
-    def __init__(self, mean, std_dev):
-        self.mean = mean
-        self.std_dev = std_dev
+# Generate x values
+x_norm = np.linspace(-5, 7, 1000)
 
-    def pdf(self, x):
-        return norm.pdf(x, loc=self.mean, scale=self.std_dev)
+# Calculate the PDF and CDF for the normal distributions
+pdf_norm_1 = norm.pdf(x_norm, mu1, sigma1)
+pdf_norm_2 = norm.pdf(x_norm, mu2, sigma2)
 
-    def cdf(self, x):
-        return norm.cdf(x, loc=self.mean, scale=self.std_dev)
+cdf_norm_1 = norm.cdf(x_norm, mu1, sigma1)
+cdf_norm_2 = norm.cdf(x_norm, mu2, sigma2)
 
+# Create two separate plots for the PDF and CDF
 
-def plot_normal_distribution(means, std_devs):
-    X = np.arange(-10, 10, 0.01)
+# Plot 1: PDF of Normal Distributions
+plt.figure(figsize=(10, 6))
+plt.plot(x_norm, pdf_norm_1, label=f'Normal(μ={mu1}, σ={sigma1}) PDF', color='blue')
+plt.plot(x_norm, pdf_norm_2, label=f'Normal(μ={mu2}, σ={sigma2}) PDF', color='red')
+plt.title('Probability Density Function (PDF) of Normal Distributions')
+plt.xlabel('x')
+plt.ylabel('PDF')
+plt.legend()
+plt.grid(True)
+plt.show()
 
-    fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(12, 6))
-
-    for i, (mean, std_dev) in enumerate(zip(means, std_devs)):
-        nd = NormalDistribution(mean, std_dev)
-        Y_pdf = [nd.pdf(x) for x in X]
-        Y_cdf = [nd.cdf(x) for x in X]
-
-        # plot PDF
-        axs[0].plot(X, Y_pdf, label=f"mean={mean}, std_dev={std_dev}")
-        axs[0].set_title("Normal Distribution PDF")
-        axs[0].set_xlabel("Values")
-        axs[0].set_ylabel("Probabilities")
-        axs[0].legend()
-
-        # plot CDF
-        axs[1].plot(X, Y_cdf, label=f"mean={mean}, std_dev={std_dev}")
-        axs[1].set_title("Normal Distribution CDF")
-        axs[1].set_xlabel("Values")
-        axs[1].set_ylabel("Probabilities")
-        axs[1].legend()
-
-    plt.show()
-
-
-# Example usage
-means = [-2, 0, 2, 4, 6]
-std_devs = [0.5, 1, 1.5, 2, 2.5]
-plot_normal_distribution(means, std_devs)
+# Plot 2: CDF of Normal Distributions
+plt.figure(figsize=(10, 6))
+plt.plot(x_norm, cdf_norm_1, label=f'Normal(μ={mu1}, σ={sigma1}) CDF', color='blue')
+plt.plot(x_norm, cdf_norm_2, label=f'Normal(μ={mu2}, σ={sigma2}) CDF', color='red')
+plt.title('Cumulative Distribution Function (CDF) of Normal Distributions')
+plt.xlabel('x')
+plt.ylabel('CDF')
+plt.legend()
+plt.grid(True)
+plt.show()
