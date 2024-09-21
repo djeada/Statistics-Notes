@@ -28,10 +28,10 @@ def plot_pmf(x_values1, pmf1, x_values2, pmf2, label1, label2, title):
     plt.grid(True)
     plt.show()
 
-def plot_cdf(x_values, cdf1, cdf2, label1, label2, title):
+def plot_cdf(x_values1, cdf1, x_values2, cdf2, label1, label2, title):
     plt.figure(figsize=(10, 6))
-    plt.step(x_values, cdf1, where="mid", label=label1, color='blue')
-    plt.step(x_values, cdf2, where="mid", label=label2, color='red')
+    plt.step(x_values1, cdf1, where="mid", label=label1, color='blue')
+    plt.step(x_values2, cdf2, where="mid", label=label2, color='red')
     plt.title(title)
     plt.xlabel('Number of Successes (k)')
     plt.ylabel('CDF')
@@ -82,7 +82,7 @@ plot_pmf(x_binom_1, pmf_binom_1_scipy, x_binom_2, pmf_binom_2_scipy,
          title='Probability Mass Function (PMF) of Binomial Distributions')
 
 # Plot 2: CDF of Binomial Distributions (Original)
-plot_cdf(x_binom_1, cdf_binom_1_scipy, cdf_binom_2_scipy, 
+plot_cdf(x_binom_1, cdf_binom_1_scipy, x_binom_2, cdf_binom_2_scipy, 
          label1=f'Binomial(n={n1}, p={p1}) CDF', 
          label2=f'Binomial(n={n2}, p={p2}) CDF', 
          title='Cumulative Distribution Function (CDF) of Binomial Distributions')
