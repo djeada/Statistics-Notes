@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
 # Parameters for the normal distribution representing the heights of fathers
 mu_height = 68.3  # mean height in inches
 sigma_height = 1.8  # standard deviation in inches
