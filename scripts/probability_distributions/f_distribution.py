@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import f
+from scipy.special import gamma, beta
 
 class FDistribution:
     def __init__(self, d1, d2):
@@ -8,16 +9,20 @@ class FDistribution:
         self.d2 = d2
 
     def pdf(self, x):
-        num = (self.d1 * x) ** self.d1 * self.d2 ** self.d2
-        denom = (self.d1 * x + self.d2) ** (self.d1 + self.d2)
-        coef = np.math.gamma(self.d1 / 2) * np.math.gamma(self.d2 / 2) / np.math.gamma((self.d1 + self.d2) / 2)
-        return coef * (num / (x * denom))
+        if x <= 0:
+            return 0  # The F-distribution is defined only for x > 0
+        coef = (self.d1 / self.d2) ** (self.d1 / 2) * (x ** (self.d1 / 2 - 1))
+        beta_func = beta(self.d1 / 2, self.d2 / 2)
+        denom = beta_func * ((1 + (self.d1 / self.d2) * x) ** ((self.d1 + self.d2) / 2))
+        return coef / denom
 
     def cdf(self, x):
         return np.array([self._cdf_single(val) for val in x])
 
     def _cdf_single(self, x):
-        return sum(self.pdf(t) for t in np.linspace(0, x, 1000)) * (x / 1000)
+        # Numerical integration for the CDF using the trapezoidal rule
+        pdf_vals = np.array([self.pdf(t) for t in np.linspace(0, x, 1000)])
+        return np.trapz(pdf_vals, np.linspace(0, x, 1000))
 
 def plot_pdf(x_values, pdf1, pdf2, label1, label2, title):
     plt.figure(figsize=(10, 6))
