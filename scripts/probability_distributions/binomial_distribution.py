@@ -17,10 +17,10 @@ class BinomialDistribution:
     def _cdf_single(self, k):
         return sum(self.pmf(i) for i in range(k + 1))
 
-def plot_pmf(x_values, pmf1, pmf2, label1, label2, title):
+def plot_pmf(x_values1, pmf1, x_values2, pmf2, label1, label2, title):
     plt.figure(figsize=(10, 6))
-    plt.stem(x_values, pmf1, basefmt=" ", linefmt="blue", markerfmt="bo", label=label1)
-    plt.stem(x_values, pmf2, basefmt=" ", linefmt="red", markerfmt="ro", label=label2)
+    plt.stem(x_values1, pmf1, basefmt=" ", linefmt="blue", markerfmt="bo", label=label1)
+    plt.stem(x_values2, pmf2, basefmt=" ", linefmt="red", markerfmt="ro", label=label2)
     plt.title(title)
     plt.xlabel('Number of Successes (k)')
     plt.ylabel('PMF')
@@ -76,7 +76,7 @@ cdf_binom_1_custom = binom_dist_1.cdf(x_binom_1)
 cdf_binom_2_custom = binom_dist_2.cdf(x_binom_2)
 
 # Plot 1: PMF of Binomial Distributions (Original)
-plot_pmf(x_binom_1, pmf_binom_1_scipy, pmf_binom_2_scipy,
+plot_pmf(x_binom_1, pmf_binom_1_scipy, x_binom_2, pmf_binom_2_scipy,
          label1=f'Binomial(n={n1}, p={p1}) PMF', 
          label2=f'Binomial(n={n2}, p={p2}) PMF',
          title='Probability Mass Function (PMF) of Binomial Distributions')
