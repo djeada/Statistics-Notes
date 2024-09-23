@@ -85,7 +85,8 @@ def main():
     pearson_r, df_pearson = calculate_pearson_r(df_pearson)
 
     # Display dataframe for reference (optional)
-    import ace_tools as tools; tools.display_dataframe_to_user(name="Pearson Correlation Calculation", dataframe=df_pearson)
+    print("Pearson Correlation Calculation")
+    print(df_pearson)
 
     # Step 3: Plot the data and results
     plot_data(df_pearson, pearson_r)
