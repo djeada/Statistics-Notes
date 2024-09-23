@@ -2,15 +2,28 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 
-# Define the plot for the null hypothesis illustration
-def plot_null_hypothesis(ax, sample_statistic, alpha=0.05):
+# Step 1: Calculation of critical values and rejection regions
+def calculate_critical_values(alpha=0.05):
     """
-    Plot the null hypothesis distribution with rejection regions and the sample statistic.
+    Calculate the critical values for a two-tailed hypothesis test.
+    
+    Parameters:
+        alpha (float): The significance level for the hypothesis test.
+        
+    Returns:
+        float: The critical value for a two-tailed test.
+    """
+    return norm.ppf(1 - alpha / 2)
+
+# Step 2: Plotting the null hypothesis distribution and the test result
+def plot_null_hypothesis(ax, sample_statistic, critical_value):
+    """
+    Plot the null hypothesis distribution, critical values, rejection regions, and the sample statistic.
     
     Parameters:
         ax (matplotlib.axes._axes.Axes): Axes object to plot on.
         sample_statistic (float): The observed test statistic.
-        alpha (float): The significance level for the hypothesis test.
+        critical_value (float): The critical value for the two-tailed test.
     """
     # X values for the standard normal distribution
     x = np.linspace(-4, 4, 1000)
@@ -20,9 +33,6 @@ def plot_null_hypothesis(ax, sample_statistic, alpha=0.05):
 
     # Plot the null hypothesis normal distribution
     ax.plot(x, y, color='green', label='Null Hypothesis')
-
-    # Calculate the critical values for a two-tailed test
-    critical_value = norm.ppf(1 - alpha/2)
 
     # Plot the critical values (boundaries for the rejection region)
     ax.axvline(-critical_value, color='blue', linestyle='dashed', linewidth=2, label=f'Critical Value\n{-critical_value:.2f}')
@@ -46,15 +56,25 @@ def plot_null_hypothesis(ax, sample_statistic, alpha=0.05):
     # Add a legend
     ax.legend()
 
-# Create figure and axes
-fig, ax = plt.subplots(1, figsize=(10, 5))
+# Main execution
+def main():
+    # Parameters
+    alpha = 0.05
+    sample_statistic = 2.0  # Example sample statistic
 
-# Example sample statistic for illustration
-sample_statistic = 2.0  # The observed test statistic (change to match your test)
+    # Step 1: Calculate the critical value for a two-tailed test
+    critical_value = calculate_critical_values(alpha)
 
-# Plot the null hypothesis illustration with a significance level (e.g., alpha=0.05 for 95% confidence)
-plot_null_hypothesis(ax, sample_statistic, alpha=0.05)
+    # Step 2: Create figure and axes
+    fig, ax = plt.subplots(1, figsize=(10, 5))
 
-# Show plot
-plt.tight_layout()
-plt.show()
+    # Step 3: Plot the null hypothesis illustration with the calculated critical value
+    plot_null_hypothesis(ax, sample_statistic, critical_value)
+
+    # Show the plot
+    plt.tight_layout()
+    plt.show()
+
+# Execute the main function
+if __name__ == "__main__":
+    main()
