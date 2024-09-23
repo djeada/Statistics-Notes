@@ -83,9 +83,6 @@ $$
 
 We reject the null hypothesis for all tests where the p-value is less than or equal to the adjusted significance level. 
 
-Here is an improved and clearer version of your example with better formatting and clearer explanation:
-
-
 #### Example: Multiple Hypothesis Testing
 
 Suppose we are conducting six hypothesis tests, and the p-values obtained from these tests are:
@@ -133,6 +130,10 @@ $$
 $$
 
 Since we fail to reject $H_0$ at this step, there is no need to test further hypotheses, as the procedure stops here.
+
+**Visualization**
+
+![output(29)](https://github.com/user-attachments/assets/e1dfbabc-e720-448d-a8b3-228f91d665eb)
 
 **Conclusion:**
 
