@@ -57,6 +57,43 @@ where $\bar{\hat{\theta}} = \frac{1}{B} \sum_{b=1}^{B} \hat{\theta}_b$.
 - The **flexibility** of this method allows it to be applied to complex estimators where analytical solutions are not feasible.
 - **Accuracy** improves as the number of simulations $B$ increases.
 
+Here’s the improved version with the plot reference included and a better name for it:
+
+### Example: Estimating Standard Error Using Monte Carlo Simulation
+
+In this example, we estimate the standard error of the sample mean $\hat{\theta}$ using a Monte Carlo approach. This method involves generating multiple independent samples from a population, calculating the mean $\hat{\theta_b}$ for each sample, and using these means to estimate the standard error.
+
+Steps:
+- Draw $B$ independent samples of size $n$ from a normal population.
+- Calculate the sample mean $\hat{\theta_b}$ for each sample.
+- Estimate the standard error $SE(\hat{\theta})$ using the formula:
+
+$$
+SE(\hat{\theta}) \approx \sqrt{\frac{1}{B - 1} \sum_{b = 1}^{B} (\hat{\theta_b} - \bar{\theta})^2}
+$$
+
+where $\bar{\theta} = \frac{1}{B} \sum_{b = 1}^{B} \hat{\theta_b}$ is the average of all sample means.
+
+Parameters:
+
+- Population distribution: Normal with mean 100 and standard deviation 15.
+- Sample size $n = 30$.
+- Number of independent samples $B = 1000$.
+
+Monte Carlo Simulation:
+
+- Generate $B = 1000$ samples from a normal population with mean $100$ and standard deviation $15$.
+- Each sample contains $n = 30$ values.
+- For each sample, calculate the mean $\hat{\theta_b}$, and store these means in an array.
+
+Estimate of Standard Error:
+- Calculate the overall mean of the sample means $\bar{\theta}$.
+- Use the formula for standard error estimation from the sample means.
+
+![Sample Means Distribution with Monte Carlo Estimated Standard Error](https://github.com/user-attachments/assets/53d883d3-1a70-4530-9d09-6d7eab654d33)
+
+**Estimated Standard Error (Monte Carlo)**: 2.7208
+
 ### The Bootstrap Principle
 
 - The **challenge** arises when the population distribution is unknown, and only a single sample is available.
@@ -159,6 +196,33 @@ $$
 - The **purpose** of the wild bootstrap is to handle heteroscedasticity, where the variance of errors is not constant.
 - The **method** involves multiplying residuals by random variables $\eta_i$ that have a mean of zero and variance of one.
 - New responses are then generated as $Y_i^* = \hat{a} + \hat{b} X_i + \hat{e}_i \eta_i$ to account for this variability.
+
+### Example: Estimating Variability of Regression Slope Using Residual Resampling
+
+In this example, we demonstrate the Residual Resampling method to estimate the variability of the regression slope $b$.
+
+Steps:
+
+- Generate synthetic data with a known true intercept $a = 3$ and slope $b = 2$, along with random noise.
+- Fit the original linear regression model and obtain estimates for $\hat{a}$ and $\hat{b}$.
+- Compute the residuals $\hat{e_i} = Y_i - \hat{a} - \hat{b}X_i$.
+- Perform bootstrapping by resampling residuals, generating new responses, and refitting the model to obtain new estimates $\hat{a}^*$ and $\hat{b}^*$.
+- Repeat the process for $B$ bootstrap samples to estimate the standard error of $\hat{b}$.
+
+![Distribution of Slope Estimates from Residual Resampling](https://github.com/user-attachments/assets/57bc7cef-80a1-4fea-bab0-7ae3fc0bb765)
+
+Original Model Fit:
+
+- The initial linear regression model provided an estimate for the slope of approximately $\hat{b} = 1.954$.
+
+Bootstrap Resampling:
+
+- We performed $B = 1000$ bootstrap iterations by resampling the residuals from the original model and refitting the model to compute new slope estimates each time.
+- This process generates a distribution of slope estimates under different bootstrap samples, reflecting the variability in the slope.
+
+Estimated Standard Error:
+
+- The standard error of the slope was estimated to be 0.0311, indicating the variability of the slope estimates.
 
 ### Practical Considerations
 
