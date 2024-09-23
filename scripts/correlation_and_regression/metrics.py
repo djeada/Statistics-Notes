@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
+# Step 1: Generate noisy sine wave data
 def generate_sine_data(num_samples: int, noise_scale: float) -> tuple:
     """
     Generates noisy sine wave data.
@@ -18,6 +19,7 @@ def generate_sine_data(num_samples: int, noise_scale: float) -> tuple:
     y = np.sin(X) + np.random.normal(0, noise_scale, num_samples)
     return X, y
 
+# Step 2: Fit a linear regression model
 def fit_linear_model(X: np.ndarray, y: np.ndarray) -> LinearRegression:
     """
     Fits a linear regression model to the data.
@@ -33,6 +35,7 @@ def fit_linear_model(X: np.ndarray, y: np.ndarray) -> LinearRegression:
     model.fit(X.reshape(-1, 1), y)
     return model
 
+# Step 3: Plot the data, regression line, and error lines
 def plot_results_with_error_lines(X: np.ndarray, y: np.ndarray, model: LinearRegression, num_points_fit: int) -> None:
     """
     Plots the original data, regression line, and error lines.
@@ -68,7 +71,17 @@ def plot_results_with_error_lines(X: np.ndarray, y: np.ndarray, model: LinearReg
     plt.legend()
     plt.show()
 
-# Generate data, fit model, and plot results
-X, y = generate_sine_data(100, 0.15)
-model = fit_linear_model(X, y)
-plot_results_with_error_lines(X, y, model, 100)
+# Main execution function to bring everything together
+def main():
+    # Step 1: Generate data
+    X, y = generate_sine_data(100, 0.15)
+
+    # Step 2: Fit the linear regression model
+    model = fit_linear_model(X, y)
+
+    # Step 3: Plot the data and results
+    plot_results_with_error_lines(X, y, model, 100)
+
+# Execute the main function
+if __name__ == "__main__":
+    main()
