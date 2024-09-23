@@ -96,8 +96,8 @@ def main():
     covariance, correlation_coefficient, df = calculate_covariance_and_correlation(df)
 
     # Display dataframe for reference (optional)
-    print("Pearson Correlation Calculation")
-    print(df_pearson)
+    print("Covariance Calculation")
+    print(df)
     
     # Step 3: Plot the data and results
     plot_data(df, covariance, correlation_coefficient)
