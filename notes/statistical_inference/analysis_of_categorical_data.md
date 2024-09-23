@@ -54,6 +54,15 @@ Suppose we want to test if the color distribution of M&Ms has changed since 2008
 
 **Observed Counts**: From a sample of 410 M&Ms, we record the number of each color.
 
+| Color   | Count |
+|---------|-------|
+| Blue    | 105   |
+| Orange  | 91    |
+| Green   | 70    |
+| Yellow  | 50    |
+| Red     | 45    |
+| Brown   | 49    |
+
 #### Calculating Expected Counts
 
 For each color, calculate the expected count ($E_i$):
