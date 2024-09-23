@@ -108,6 +108,19 @@ $$
 - **Rejecting $H_0$** suggests that the color distribution has changed since 2008.
 - **Failing to Reject $H_0$** indicates no significant change in the color distribution.
 
+#### Visualization
+
+![output(30)](https://github.com/user-attachments/assets/fc347693-1fbb-468a-bfac-0ac9e0ce5095)
+
+Analysis Results:
+
+- **Chi-square statistic**: 4.32
+- **p-value**: 0.5045
+- **Critical value**: 11.07
+- **Decision**: Fail to reject the null hypothesis. There is no significant change in the color distribution of M&Ms since 2008.
+
+This suggests that based on the sample of 410 M&Ms, the observed color distribution does not significantly differ from the expected 2008 distribution.
+
 ### 2. Testing Homogeneity
 
 #### Hypotheses
@@ -177,6 +190,19 @@ $$
 - **Rejecting $H_0$** indicates that survival rates differ across ticket classes.
 - **Failing to Reject $H_0$** suggests no significant difference in survival rates among classes.
 
+#### Visualization
+
+![output(31)](https://github.com/user-attachments/assets/443f3e86-d52a-46b0-b427-5d12a7561a0a)
+
+Analysis Results:
+
+- **Chi-square statistic**: 190.40
+- **p-value**: 4.9999e-41
+- **Critical value**: 7.81
+- **Decision**: Reject the null hypothesis. Survival rates differ across ticket classes.
+
+This suggests that there is a significant difference in survival rates among the different ticket classes (First Class, Second Class, Third Class, and Crew) on the Titanic. The plot compares observed and expected counts for survival and death in each class, highlighting the differences between them.
+
 ### 3. Testing Independence
 
 #### Hypotheses
@@ -240,6 +266,19 @@ $$
 
 - **Rejecting $H_0$** suggests a significant association between gender and voting preference.
 - **Failing to Reject $H_0$** indicates no significant association.
+
+#### Visualization
+
+![output(32)](https://github.com/user-attachments/assets/3465e92f-5782-4e2f-a73b-08c1077054f5)
+
+Analysis Results:
+
+- **Chi-square statistic**: 16.99
+- **p-value**: 3.76e-05
+- **Critical value**: 3.84
+- **Decision**: Reject the null hypothesis. There is a significant association between gender and voting preference.
+
+This result suggests that gender is indeed significantly associated with voting preference based on the observed data. The plot provides a clear comparison between observed and expected counts for "Liberal" and "Conservative" preferences across genders, using a minimalistic and professional color scheme for clarity and readability.
 
 ### Comparing Homogeneity and Independence Tests
 
