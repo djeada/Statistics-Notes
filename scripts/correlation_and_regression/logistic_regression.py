@@ -1,58 +1,129 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from scipy.special import expit  # Sigmoid function
+from sklearn.linear_model import LinearRegression
 
-# Step 1: Input data for hours studied (x1), practice exams (x2), and pass/fail outcomes (y)
-data = {'Hours Studied (x1)': [2, 4, 5, 6, 8],
-        'Practice Exams (x2)': [1, 2, 2, 3, 4],
-        'Pass (y)': [0, 0, 1, 1, 1]}
-df_logistic = pd.DataFrame(data)
+# Step 1: Input data
+def create_data():
+    """
+    Create a DataFrame with hours studied and test scores.
+    
+    Returns:
+        pd.DataFrame: A DataFrame containing 'Hours_Studied (x)' and 'Test_Score (y)'.
+    """
+    data = {'Hours_Studied (x)': [2, 4, 6, 8],
+            'Test_Score (y)': [50, 60, 70, 80]}
+    return pd.DataFrame(data)
 
-# Step 2: Design matrix X and response vector y
-X = np.column_stack((np.ones(df_logistic.shape[0]), df_logistic['Hours Studied (x1)'], df_logistic['Practice Exams (x2)']))
-y = df_logistic['Pass (y)'].values
+# Step 2: Fit a linear regression model
+def fit_regression_model(df):
+    """
+    Fit a simple linear regression model and return the model, predictions, and coefficients.
+    
+    Parameters:
+        df (pd.DataFrame): DataFrame containing input data for hours studied and test scores.
+    
+    Returns:
+        LinearRegression: The fitted linear regression model.
+        np.ndarray: The predicted values for test scores.
+        float: The slope of the regression line.
+        float: The intercept of the regression line.
+    """
+    X = df[['Hours_Studied (x)']].values  # Predictor (hours studied)
+    y = df['Test_Score (y)'].values  # Dependent variable (test scores)
+    
+    model = LinearRegression()
+    model.fit(X, y)
+    
+    y_pred = model.predict(X)  # Predictions
+    slope = model.coef_[0]
+    intercept = model.intercept_
+    
+    return model, y_pred, slope, intercept
 
-# Step 3: Initialize coefficients (beta_0, beta_1, beta_2)
-beta_hat = np.array([-9.28, 1.23, 0.98])  # Pre-computed coefficients from your example
+# Step 3: Calculate residuals and sums of squares
+def calculate_sums_of_squares(y, y_pred):
+    """
+    Calculate residuals, SST, SSE, SSR, and R-squared.
+    
+    Parameters:
+        y (np.ndarray): Actual values of test scores.
+        y_pred (np.ndarray): Predicted values from the regression model.
+    
+    Returns:
+        dict: A dictionary containing residuals, SST, SSE, SSR, and R-squared.
+    """
+    residuals = y - y_pred
+    SST = np.sum((y - np.mean(y)) ** 2)  # Total sum of squares
+    SSE = np.sum((residuals) ** 2)  # Sum of squared errors
+    SSR = SST - SSE  # Regression sum of squares
+    R_squared = SSR / SST  # R-squared
 
-# Logistic function for predicted probabilities
-def logistic_function(X, beta):
-    return expit(np.dot(X, beta))
+    return {
+        'residuals': residuals,
+        'SST': SST,
+        'SSE': SSE,
+        'SSR': SSR,
+        'R_squared': R_squared
+    }
 
-# Step 4: Generate the decision boundary
-# Create a mesh grid for plotting the decision boundary
-x1_range = np.linspace(df_logistic['Hours Studied (x1)'].min() - 1, df_logistic['Hours Studied (x1)'].max() + 1, 200)
-x2_range = np.linspace(df_logistic['Practice Exams (x2)'].min() - 1, df_logistic['Practice Exams (x2)'].max() + 1, 200)
-X1, X2 = np.meshgrid(x1_range, x2_range)
+# Step 4: Plot the regression results
+def plot_regression(df, y_pred, slope, intercept, stats):
+    """
+    Plot the actual data, regression line, and key statistics.
+    
+    Parameters:
+        df (pd.DataFrame): DataFrame containing input data for hours studied and test scores.
+        y_pred (np.ndarray): Predicted test scores.
+        slope (float): The slope of the regression line.
+        intercept (float): The intercept of the regression line.
+        stats (dict): A dictionary containing SST, SSE, SSR, and R-squared.
+    """
+    plt.figure(figsize=(8, 6))
+    
+    # Scatter plot of actual data
+    plt.scatter(df['Hours_Studied (x)'], df['Test_Score (y)'], color='blue', label='Actual Data')
+    
+    # Plot regression line
+    plt.plot(df['Hours_Studied (x)'], y_pred, color='red', label=f'Regression Line: y = {intercept:.2f} + {slope:.2f}x')
+    
+    # Add legend with key results
+    plt.legend(title=f'Regression Results\n'
+                     f'y = {intercept:.2f} + {slope:.2f}x\n'
+                     f'R² = {stats["R_squared"]:.2f}\n'
+                     f'SST = {stats["SST"]:.2f}\n'
+                     f'SSR = {stats["SSR"]:.2f}\n'
+                     f'SSE = {stats["SSE"]:.2f}',
+               loc='upper left')
+    
+    # Labels and title
+    plt.title('Simple Linear Regression: Hours Studied vs Test Score')
+    plt.xlabel('Hours Studied ($x$)')
+    plt.ylabel('Test Score ($y$)')
+    
+    # Show plot
+    plt.tight_layout()
+    plt.show()
 
-# Compute the logistic regression predictions on the mesh grid
-Z = logistic_function(np.column_stack((np.ones(X1.ravel().shape[0]), X1.ravel(), X2.ravel())), beta_hat)
-Z = Z.reshape(X1.shape)
+# Main function to execute the steps
+def main():
+    # Step 1: Create data
+    df = create_data()
 
-# Plotting the decision boundary
-plt.figure(figsize=(10, 6))
-# Contour plot for the decision boundary (probability = 0.5 line)
-plt.contourf(X1, X2, Z, levels=[0, 0.5, 1], alpha=0.2, colors=['red', 'green'])
+    # Step 2: Fit the regression model
+    model, y_pred, slope, intercept = fit_regression_model(df)
 
-# Step 5: Plotting the dataset
-# Students who failed
-plt.scatter(df_logistic[df_logistic['Pass (y)'] == 0]['Hours Studied (x1)'],
-            df_logistic[df_logistic['Pass (y)'] == 0]['Practice Exams (x2)'], 
-            color='red', label='Fail (y=0)', s=100)
+    # Step 3: Calculate sums of squares and residuals
+    stats = calculate_sums_of_squares(df['Test_Score (y)'].values, y_pred)
 
-# Students who passed
-plt.scatter(df_logistic[df_logistic['Pass (y)'] == 1]['Hours Studied (x1)'],
-            df_logistic[df_logistic['Pass (y)'] == 1]['Practice Exams (x2)'], 
-            color='green', label='Pass (y=1)', s=100)
+    # Step 4: Plot the results
+    plot_regression(df, y_pred, slope, intercept, stats)
 
-# Step 6: Add labels, title, and decision boundary
-plt.title("Logistic Regression: Hours Studied vs Practice Exams\nwith Decision Boundary", fontsize=14)
-plt.xlabel("Hours Studied (x1)", fontsize=12)
-plt.ylabel("Practice Exams (x2)", fontsize=12)
+    # Return key results for reference
+    return slope, intercept, stats['R_squared'], stats['SST'], stats['SSR'], stats['SSE']
 
-# Display legend
-plt.legend()
-
-# Show the plot
-plt.show()
+# Execute the main function
+if __name__ == "__main__":
+    slope, intercept, R_squared, SST, SSR, SSE = main()
+    print(f"Slope: {slope:.2f}, Intercept: {intercept:.2f}, R²: {R_squared:.2f}, "
+          f"SST: {SST:.2f}, SSR: {SSR:.2f}, SSE: {SSE:.2f}")
