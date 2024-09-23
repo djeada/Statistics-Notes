@@ -44,20 +44,21 @@ def plot_data_with_mse(x: np.ndarray, y: np.ndarray, true_slope: float, true_int
         ax (plt.Axes): The axes to plot on.
         title (str): Title for the subplot.
     """
-    ax.scatter(x, y, label=f"MSE = {calculate_mse(y, true_slope * x + true_intercept):.2f}")
+    mse = calculate_mse(y, true_slope * x + true_intercept)
+    ax.scatter(x, y, label=f"MSE = {mse:.2f}")
     ax.plot(x, true_slope * x + true_intercept, color="r", label="True Line")
     ax.legend()
     ax.set_title(title)
 
 # Generating two sets of data
-x = np.linspace(0, 10, 100)
-y1, y2 = generate_data(3, 1, 1, 100, (0, 10)), generate_data(3, 1, 5, 100, (0, 10))
+x1, y1 = generate_data(3, 1, 1, 100, (0, 10))  # Data with small noise
+x2, y2 = generate_data(3, 1, 5, 100, (0, 10))  # Data with larger noise
 
 # Creating two subplots
 fig, ax = plt.subplots(1, 2, figsize=(12, 6))
 
 # Plotting the data sets
-plot_data_with_mse(x, y1, 3, 1, ax[0], "Data with Small MSE")
-plot_data_with_mse(x, y2, 3, 1, ax[1], "Data with Large MSE")
+plot_data_with_mse(x1, y1, 3, 1, ax[0], "Data with Small MSE")
+plot_data_with_mse(x2, y2, 3, 1, ax[1], "Data with Large MSE")
 
 plt.show()
