@@ -96,8 +96,9 @@ def main():
     covariance, correlation_coefficient, df = calculate_covariance_and_correlation(df)
 
     # Display dataframe for reference (optional)
-    import ace_tools as tools; tools.display_dataframe_to_user(name="Covariance Calculation", dataframe=df)
-
+    print("Pearson Correlation Calculation")
+    print(df_pearson)
+    
     # Step 3: Plot the data and results
     plot_data(df, covariance, correlation_coefficient)
 
