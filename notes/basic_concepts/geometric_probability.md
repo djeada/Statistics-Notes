@@ -17,10 +17,10 @@ Calculate the probability that a randomly chosen point inside a unit square is a
 
 ![5536c72b-ce5f-4e20-8683-3ede2d2a8a94](https://github.com/djeada/Statistics-Notes/assets/37275728/79a9a1dc-4716-46a1-8c6b-4d0a2da6f47c)
 
-### Sample Space and Event
-
-- **Sample Space (\( S \))**: All points \( (X, Y) \) such that \( 0 \leq X \leq 1 \) and \( 0 \leq Y \leq 1 \).
-- **Event (\( E \))**: All points \( (X, Y) \) such that \( D = \sqrt{X^2 + Y^2} < r \).
+| Term                           | Description                                                                                          |
+|---------------------------------|------------------------------------------------------------------------------------------------------|
+| **Sample Space (\( S \))**      | All points \( (X, Y) \) such that \( 0 \leq X \leq 1 \) and \( 0 \leq Y \leq 1 \).                    |
+| **Event (\( E \))**             | All points \( (X, Y) \) such that \( D = \sqrt{X^2 + Y^2} < r \).                                    |
 
 Since the points are uniformly distributed over the square, the probability density function (PDF) of \( (X, Y) \) is constant over \( S \):
 
@@ -45,9 +45,11 @@ Since \( A_S = 1 \) (unit square), \( P(D < r) = A_E \).
 
 The calculation of \( A_E \) depends on the value of \( r \):
 
-- **Case 1**: \( 0 \leq r \leq 1 \)
-- **Case 2**: \( 1 < r \leq \sqrt{2} \)
-- **Case 3**: \( r > \sqrt{2} \)
+| Case           | Range                                 |
+|----------------|---------------------------------------|
+| **Case 1**     | \( 0 \leq r \leq 1 \)                |
+| **Case 2**     | \( 1 < r \leq \sqrt{2} \)            |
+| **Case 3**     | \( r > \sqrt{2} \)                   |
 
 ### Case 1: \( 0 \leq r \leq 1 \)
 
@@ -83,60 +85,65 @@ The overlapping area is the quarter circle minus the segments that lie outside t
 
 #### Calculation
 
-1. **Compute the area of the quarter circle**:
+I. **Compute the area of the quarter circle**:
 
-   \[
-   A_{\text{quarter}} = \frac{\pi r^2}{4}.
-   \]
+$$A_{\text{quarter}} = \frac{\pi r^2}{4}.$$
 
-2. **Compute the area outside the square but inside the quarter circle**:
+II. **Compute the area outside the square but inside the quarter circle**:
 
-   Due to symmetry, calculate the area in one of the regions (e.g., where \( x > 1 \)) and double it.
+Due to symmetry, calculate the area in one of the regions (e.g., where $x > 1$) and double it.
 
-   \[
-   A_{\text{outside}} = 2 \int_{x=1}^{r} \sqrt{r^2 - x^2} \, dx.
-   \]
+$$A_{\text{outside}} = 2 \int_{x=1}^{r} \sqrt{r^2 - x^2} \, dx.$$
 
-3. **Compute the integral**:
+III. **Compute the integral**:
 
-   Perform a substitution \( x = r \sin \theta \):
+Perform a substitution $x = r \sin \theta$:
 
-   - \( dx = r \cos \theta \, d\theta \).
-   - When \( x = 1 \), \( \theta = \arcsin \left( \frac{1}{r} \right) \).
-   - When \( x = r \), \( \theta = \frac{\pi}{2} \).
+- $dx = r \cos \theta \, d\theta$.
+- When $x = 1$, $\theta = \arcsin \left( \frac{1}{r} \right)$.
+- When $x = r$, $\theta = \frac{\pi}{2}$.
 
-   The integral becomes:
+The integral becomes:
 
-   \[
-   \begin{aligned}
-   A_{\text{outside}} &= 2 \int_{\theta_1}^{\frac{\pi}{2}} \sqrt{r^2 - r^2 \sin^2 \theta} \cdot r \cos \theta \, d\theta \\
-   &= 2 r^2 \int_{\theta_1}^{\frac{\pi}{2}} \cos^2 \theta \, d\theta \\
-   &= 2 r^2 \left[ \frac{\theta}{2} + \frac{\sin 2\theta}{4} \right]_{\theta_1}^{\frac{\pi}{2}} \\
-   &= 2 r^2 \left( \frac{\pi}{4} - \frac{\theta_1}{2} - \frac{\sin 2\theta_1}{4} \right).
-   \end{aligned}
-   \]
+$$\begin{aligned}
 
-4. **Compute \( A_E \)**:
+A_{\text{outside}} &= 2 \int_{\theta_1}^{\frac{\pi}{2}} \sqrt{r^2 - r^2 \sin^2 \theta} \cdot r \cos \theta \, d\theta \\
 
-   \[
-   \begin{aligned}
-   A_E &= A_{\text{quarter}} - A_{\text{outside}} \\
-   &= \frac{\pi r^2}{4} - 2 r^2 \left( \frac{\pi}{4} - \frac{\theta_1}{2} - \frac{\sin 2\theta_1}{4} \right) \\
-   &= \frac{\pi r^2}{4} - r^2 \left( \frac{\pi}{2} - \theta_1 - \frac{\sin 2\theta_1}{2} \right) \\
-   &= r^2 \left( \theta_1 + \frac{\sin 2\theta_1}{2} - \frac{\pi}{4} \right).
-   \end{aligned}
-   \]
+&= 2 r^2 \int_{\theta_1}^{\frac{\pi}{2}} \cos^2 \theta \, d\theta \\
 
-5. **Simplify using trigonometric identities**:
+&= 2 r^2 \left[ \frac{\theta}{2} + \frac{\sin 2\theta}{4} \right]_{\theta_1}^{\frac{\pi}{2}} \\
 
-   - \( \theta_1 = \arcsin \left( \frac{1}{r} \right) \).
-   - \( \sin 2\theta_1 = 2 \sin \theta_1 \cos \theta_1 = 2 \cdot \frac{1}{r} \cdot \sqrt{1 - \left( \frac{1}{r} \right)^2} = \frac{2 \sqrt{r^2 - 1}}{r^2} \).
+&= 2 r^2 \left( \frac{\pi}{4} - \frac{\theta_1}{2} - \frac{\sin 2\theta_1}{4} \right).
 
-6. **Final Expression for \( A_E \)**:
+\end{aligned}$$
 
-   \[
-   A_E = r^2 \left( \arcsin \left( \frac{1}{r} \right) + \frac{\sqrt{r^2 - 1}}{r^2} - \frac{\pi}{4} \right).
-   \]
+IV. **Compute $A_E$**:
+
+$$\begin{aligned}
+
+A_E &= A_{\text{quarter}} - A_{\text{outside}} \\
+
+&= \frac{\pi r^2}{4} - 2 r^2 \left( \frac{\pi}{4} - \frac{\theta_1}{2} - \frac{\sin 2\theta_1}{4} \right) \\
+
+&= \frac{\pi r^2}{4} - r^2 \left( \frac{\pi}{2} - \theta_1 - \frac{\sin 2\theta_1}{2} \right) \\
+
+&= r^2 \left( \theta_1 + \frac{\sin 2\theta_1}{2} - \frac{\pi}{4} \right).
+
+\end{aligned}$$
+
+V. **Simplify using trigonometric identities**:
+
+$$
+\theta_1 = \arcsin \left( \frac{1}{r} \right)
+$$
+
+$$
+\sin 2\theta_1 = 2 \sin \theta_1 \cos \theta_1 = 2 \cdot \frac{1}{r} \cdot \sqrt{1 - \left( \frac{1}{r} \right)^2} = \frac{2 \sqrt{r^2 - 1}}{r^2}
+$$
+
+VI. **Final Expression for $A_E$**:
+
+$$A_E = r^2 \left( \arcsin \left( \frac{1}{r} \right) + \frac{\sqrt{r^2 - 1}}{r^2} - \frac{\pi}{4} \right).$$
 
 #### Probability
 
@@ -146,28 +153,27 @@ P(D < r) = A_E = r^2 \left( \arcsin \left( \frac{1}{r} \right) + \frac{\sqrt{r^2
 
 **Example**: For \( r = 1.2 \),
 
-1. Compute \( \arcsin \left( \frac{1}{1.2} \right) \):
+I. Compute $\arcsin \left( \frac{1}{1.2} \right)$:
 
-   \[
-   \arcsin \left( \frac{1}{1.2} \right) \approx \arcsin(0.8333) \approx 0.9865.
-   \]
+$$\arcsin \left( \frac{1}{1.2} \right) \approx \arcsin(0.8333) \approx 0.9865.$$
 
-2. Compute \( \sqrt{(1.2)^2 - 1} \):
+II. Compute $\sqrt{(1.2)^2 - 1}$:
 
-   \[
-   \sqrt{1.44 - 1} = \sqrt{0.44} \approx 0.6633.
-   \]
+$$\sqrt{1.44 - 1} = \sqrt{0.44} \approx 0.6633.$$
 
-3. Compute \( A_E \):
+III. Compute $A_E$:
 
-   \[
-   \begin{aligned}
-   A_E &\approx (1.2)^2 \left( 0.9865 + \frac{0.6633}{(1.2)^2} - \frac{\pi}{4} \right) \\
-   &= 1.44 \left( 0.9865 + \frac{0.6633}{1.44} - 0.7854 \right) \\
-   &= 1.44 \left( 0.9865 + 0.4607 - 0.7854 \right) \\
-   &= 1.44 \times 0.6618 \approx 0.9521.
-   \end{aligned}
-   \]
+$$\begin{aligned}
+
+A_E &\approx (1.2)^2 \left( 0.9865 + \frac{0.6633}{(1.2)^2} - \frac{\pi}{4} \right) \\
+
+&= 1.44 \left( 0.9865 + \frac{0.6633}{1.44} - 0.7854 \right) \\
+
+&= 1.44 \left( 0.9865 + 0.4607 - 0.7854 \right) \\
+
+&= 1.44 \times 0.6618 \approx 0.9521.
+
+\end{aligned}$$
 
 So, \( P(D < 1.2) \approx 95.21\% \).
 
@@ -181,35 +187,11 @@ For \( r \geq \sqrt{2} \), the entire square lies within the circle of radius \(
 P(D < r) = 1.
 \]
 
-## Summary of Results
-
-The probability \( P(D < r) \) is given by:
-
-1. **For \( 0 \leq r \leq 1 \)**:
-
-   \[
-   P(D < r) = \frac{\pi r^2}{4}.
-   \]
-
-2. **For \( 1 < r \leq \sqrt{2} \)**:
-
-   \[
-   P(D < r) = r^2 \left( \arcsin \left( \frac{1}{r} \right) + \frac{\sqrt{r^2 - 1}}{r^2} - \frac{\pi}{4} \right).
-   \]
-
-3. **For \( r > \sqrt{2} \)**:
-
-   \[
-   P(D < r) = 1.
-   \]
-
 ## Example 2: Probability of a Random Chord in a Circle Being Longer Than the Radius
 
-### Problem Statement
+Calculate the probability that a randomly drawn chord in a circle is longer than the radius of the circle.
 
-**Objective**: Calculate the probability that a randomly drawn chord in a circle is longer than the radius of the circle.
-
-### Setup
+**Setup**:
 
 - Consider a circle with radius \( R \) centered at the origin \( (0, 0) \).
 - A chord is drawn at random within the circle.
@@ -219,16 +201,18 @@ The probability \( P(D < r) \) is given by:
 
 The problem is known as Bertrand's Paradox, which arises because the probability depends on how "at random" is defined when selecting chords in a circle. There are multiple methods to select a chord at random:
 
-1. **Random Endpoints Method**: Choose two random points on the circumference and draw the chord between them.
-2. **Random Radial Point Method**: Fix one endpoint and select the chord's direction uniformly at random.
-3. **Random Midpoint Method**: Choose a random point inside the circle as the midpoint of the chord.
+| Method                      | Description                                                                             |
+|-----------------------------|-----------------------------------------------------------------------------------------|
+| **Random Endpoints Method**  | Choose two random points on the circumference and draw the chord between them.          |
+| **Random Radial Point Method** | Fix one endpoint and select the chord's direction uniformly at random.                 |
+| **Random Midpoint Method**   | Choose a random point inside the circle as the midpoint of the chord.                   |
 
 Each method yields a different probability. We'll use the **Random Midpoint Method** for this example, which provides a well-defined and uniform probability distribution over all possible chords.
 
-#### Sample Space and Event
-
-- **Sample Space (\( S \))**: All points \( (X, Y) \) inside the circle \( x^2 + y^2 \leq R^2 \), representing possible midpoints of chords.
-- **Event (\( E \))**: All midpoints \( (X, Y) \) such that the corresponding chord has length \( L > R \).
+| Term                           | Description                                                                                                  |
+|---------------------------------|--------------------------------------------------------------------------------------------------------------|
+| **Sample Space (\( S \))**      | All points \( (X, Y) \) inside the circle \( x^2 + y^2 \leq R^2 \), representing possible midpoints of chords. |
+| **Event (\( E \))**             | All midpoints \( (X, Y) \) such that the corresponding chord has length \( L > R \).                         |
 
 #### Relation Between Midpoint and Chord Length
 
@@ -248,33 +232,25 @@ Thus, the event \( E \) corresponds to all midpoints within a circle of radius \
 
 ### Probability Calculation
 
-1. **Area of the Inner Circle (\( A_E \))**:
+I. **Area of the Inner Circle ($A_E$)**:
 
-   \[
-   A_E = \pi \left( \frac{R\sqrt{3}}{2} \right)^2 = \pi \left( \frac{R^2 \times 3}{4} \right) = \frac{3\pi R^2}{4}.
-   \]
+$$A_E = \pi \left( \frac{R\sqrt{3}}{2} \right)^2 = \pi \left( \frac{R^2 \times 3}{4} \right) = \frac{3\pi R^2}{4}.$$
 
-2. **Area of the Entire Circle (\( A_S \))**:
+II. **Area of the Entire Circle ($A_S$)**:
 
-   \[
-   A_S = \pi R^2.
-   \]
+$$A_S = \pi R^2.$$
 
-3. **Probability**:
+III. **Probability**:
 
-   \[
-   P(L > R) = \frac{A_E}{A_S} = \frac{\frac{3\pi R^2}{4}}{\pi R^2} = \frac{3}{4}.
-   \]
+$$P(L > R) = \frac{A_E}{A_S} = \frac{\frac{3\pi R^2}{4}}{\pi R^2} = \frac{3}{4}.$$
 
 Therefore, the probability that a randomly drawn chord (using the Random Midpoint Method) is longer than the radius of the circle is \( \frac{3}{4} \) or 75%.
 
 ## Example 3: Probability That the Sum of Two Random Numbers Is Less Than 1
 
-### Problem Statement
+Calculate the probability that the sum of two independent random numbers \( X \) and \( Y \), each uniformly distributed between 0 and 1, is less than 1.
 
-**Objective**: Calculate the probability that the sum of two independent random numbers \( X \) and \( Y \), each uniformly distributed between 0 and 1, is less than 1.
-
-### Setup
+**Setup**:
 
 - Random variables \( X \) and \( Y \) are independent and uniformly distributed on the interval [0, 1].
 - We aim to find \( P(X + Y < 1) \).
@@ -292,10 +268,10 @@ f_{X,Y}(x, y) = \begin{cases}
 \end{cases}
 \]
 
-#### Sample Space and Event
-
-- **Sample Space (\( S \))**: The unit square in the \( xy \)-plane where \( 0 \leq x \leq 1 \) and \( 0 \leq y \leq 1 \).
-- **Event (\( E \))**: The set of points where \( x + y < 1 \).
+| Term                           | Description                                                                                      |
+|---------------------------------|--------------------------------------------------------------------------------------------------|
+| **Sample Space (\( S \))**      | The unit square in the \( xy \)-plane where \( 0 \leq x \leq 1 \) and \( 0 \leq y \leq 1 \).     |
+| **Event (\( E \))**             | The set of points where \( x + y < 1 \).                                                        |
 
 ### Probability Calculation
 
@@ -311,32 +287,28 @@ The region \( E \) is a right triangle within the unit square bounded by \( x = 
 
 #### Calculating the Area
 
-1. **Set Up the Integral**:
+I. **Set Up the Integral**:
 
-   \[
-   P(X + Y < 1) = \int_{x=0}^{1} \int_{y=0}^{1 - x} dy \, dx.
-   \]
+$$P(X + Y < 1) = \int_{x=0}^{1} \int_{y=0}^{1 - x} dy \, dx.$$
 
-2. **Evaluate the Inner Integral**:
+II. **Evaluate the Inner Integral**:
 
-   \[
-   \int_{y=0}^{1 - x} dy = (1 - x) - 0 = 1 - x.
-   \]
+$$\int_{y=0}^{1 - x} dy = (1 - x) - 0 = 1 - x.$$
 
-3. **Evaluate the Outer Integral**:
+III. **Evaluate the Outer Integral**:
 
-   \[
-   P(X + Y < 1) = \int_{x=0}^{1} (1 - x) \, dx.
-   \]
+$$P(X + Y < 1) = \int_{x=0}^{1} (1 - x) \, dx.$$
 
-4. **Compute the Integral**:
+IV. **Compute the Integral**:
 
-   \[
-   \begin{aligned}
-   P(X + Y < 1) &= \int_{x=0}^{1} (1 - x) \, dx \\
-   &= \left[ x - \frac{x^2}{2} \right]_{0}^{1} \\
-   &= \left( 1 - \frac{1}{2} \right) - \left( 0 - 0 \right) = \frac{1}{2}.
-   \end{aligned}
-   \]
+$$\begin{aligned}
+
+P(X + Y < 1) &= \int_{x=0}^{1} (1 - x) \, dx \\
+
+&= \left[ x - \frac{x^2}{2} \right]_{0}^{1} \\
+
+&= \left( 1 - \frac{1}{2} \right) - \left( 0 - 0 \right) = \frac{1}{2}.
+
+\end{aligned}$$
 
 Therefore, the probability that the sum of two independent uniform random variables on [0, 1] is less than 1 is \( \frac{1}{2} \) or 50%.
