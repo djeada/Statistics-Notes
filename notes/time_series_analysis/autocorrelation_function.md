@@ -53,8 +53,6 @@ Where:
 - $N$ is the number of observations.
 - $x_t$ is the observed value at time $t$.
 
-Apologies for the confusion. Let's focus on improving the original explanation and adapting it directly into a Python context, similar to the random walk example.
-
 #### Plotting the ACF
 
 The **Autocorrelation Function (ACF) plot**, or **Correlogram**, is a useful tool for understanding the structure of time series data. In Python, you can generate and interpret the ACF plot using libraries like `statsmodels` and `matplotlib`. The ACF plot helps identify significant correlations at different lags and reveals patterns in the data.
