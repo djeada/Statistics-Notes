@@ -1,6 +1,6 @@
 ## Stationarity in Time Series
 
-Stationarity is a fundamental concept in time series analysis. A time series is considered **stationary** if its statistical properties—such as mean, variance, and autocovariance—remain constant over time. Stationary processes are crucial in time series modeling because many methods, such as ARIMA and ARMA models, assume stationarity.
+Stationarity is a fundamental concept in time series analysis. A time series is considered **stationary** if its statistical properties—such as mean, variance, and autocovariance—remain constant over time. Stationary processes are crucial in time series modeling because many methods, such as ARIMA and ARMA models, assume stationarity (we need to check if data is stationar before applying those models).
 
 Stationarity can be classified into two types:
 
