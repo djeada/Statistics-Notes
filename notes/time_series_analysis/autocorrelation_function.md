@@ -57,6 +57,12 @@ Where:
 
 The **Autocorrelation Function (ACF) plot**, or **Correlogram**, is a useful tool for understanding the structure of time series data. In Python, you can generate and interpret the ACF plot using libraries like `statsmodels` and `matplotlib`. The ACF plot helps identify significant correlations at different lags and reveals patterns in the data.
 
+e ACF plot can provide answers to the following questions:
+
+    Is the observed time series white noise / random?
+    Is an observation related to an adjacent observation, an observation twice-removed, and so on?
+    Can the observed time series be modeled with an MA model? If yes, what is the order?
+
 Key Points for Interpreting the ACF Plot
 
 1. If the ACF values decrease slowly over many lags, this suggests the presence of a **trend** in the data.
@@ -182,6 +188,10 @@ $$
 The **Partial Autocorrelation Function (PACF) plot** is a valuable tool for understanding the relationship between a time series and its lagged values after accounting for the influence of intervening lags. Unlike the ACF, which shows the correlation between the series and its lagged values, the PACF removes the effect of any intermediate lags.
 
 The PACF is particularly useful for identifying the order of an **Autoregressive (AR) process**. If you suspect your time series follows an AR model, the PACF plot can help you determine the number of lag terms to include in your model.
+
+he PACF plot can provide answers to the following questions:
+
+    Can the observed time series be modeled with an AR model? If yes, what is the order?
 
 Key Points for Interpreting the PACF Plot:
 
@@ -323,3 +333,33 @@ The following is using mock data for time series with **short-term dependencies*
 
 - The PACF plot shows a **sharp cutoff** after lag 1. This is characteristic of an **AR(1) process**, where only the first lag has a significant direct effect on the current value, and the influence of higher-order lags is negligible once the first lag's effect is accounted for.
 - The significant spike at lag 1 suggests that this time series can be modeled as an **autoregressive process of order 1 (AR(1))**.
+
+### Auto-Regressive (AR) and Moving Average (MA) Models with ACF and PACF
+
+In time series analysis, **Auto-Regressive (AR)** and **Moving Average (MA)** models are widely used for modeling and forecasting. Identifying the correct order of these models relies on interpreting the **Autocorrelation Function (ACF)** and the **Partial Autocorrelation Function (PACF)**.
+
+#### **Auto-Regressive (AR) Model**
+The AR model assumes that the current value of a time series (\(y_t\)) is a linear combination of its past values:
+
+\[
+\hat{y_t} = \alpha_1 y_{t-1} + \alpha_2 y_{t-2} + \dots + \alpha_p y_{t-p}
+\]
+
+- **Key Assumption:** The present value depends on its own prior values (\(y_{t-1}, y_{t-2}, \dots, y_{t-p}\)).
+- **ACF and PACF Interpretation:**
+  - **PACF:** Helps determine the order (\(p\)) of the AR model. The PACF will show significant spikes up to lag \(p\), after which it drops off.
+  - **ACF:** May decay gradually, showing a tail-off pattern, which is less helpful for directly identifying \(p\).
+
+
+#### **Moving Average (MA) Model**
+The MA model assumes that the current value (\(y_t\)) is influenced by past error terms (\(\epsilon_t\)):
+
+\[
+\hat{y_t} = \epsilon_t + \beta_1 \epsilon_{t-1} + \beta_2 \epsilon_{t-2} + \dots + \beta_q \epsilon_{t-q}
+\]
+
+- **Key Assumption:** The present value is driven by current and past random shocks (\(\epsilon_t, \epsilon_{t-1}, \dots, \epsilon_{t-q}\)).
+- **ACF and PACF Interpretation:**
+  - **ACF:** Helps determine the order (\(q\)) of the MA model. The ACF will show significant spikes up to lag \(q\), after which it drops off.
+  - **PACF:** Typically decreases gradually and does not provide a clear cutoff for \(q\).
+
