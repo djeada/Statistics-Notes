@@ -363,3 +363,18 @@ The MA model assumes that the current value (\(y_t\)) is influenced by past erro
   - **ACF:** Helps determine the order (\(q\)) of the MA model. The ACF will show significant spikes up to lag \(q\), after which it drops off.
   - **PACF:** Typically decreases gradually and does not provide a clear cutoff for \(q\).
 
+
+### Comparison
+
+acf and pacf plots for
+    AR(1): Autoregressive process of order 1.
+    AR(2): Autoregressive process of order 2.
+    MA(1): Moving average process of order 1.
+    MA(2): Moving average process of order 2.
+    Linear Growing: A simple deterministic increasing trend.
+    Constant: A flat series with a constant value.
+    Sine with Noise: A sinusoidal series with added noise.
+    White Noise: A purely random series.
+
+![acf_pacf_cheat_sheet](https://github.com/user-attachments/assets/8271d59f-a3a1-42bf-8472-3565f2a04c99)
+
