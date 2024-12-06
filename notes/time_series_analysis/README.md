@@ -1,60 +1,29 @@
----
-prerequiste
+### Prerequisite
 
-series.md
-(prerequiste concept)
+- The **series.md** file covers essential concepts that serve as a foundation for understanding time series.
+- The **difference_equations.md** document explains the necessary difference equations required for analyzing time series data.
 
-difference_equations.md
-(prerequiste concept)
+### Intro
 
----
-intro 
+- The **time_series.md** introduces the concept of time series as the foundation for further analysis.
+- The **seasonality_and_trends.md** discusses patterns like seasonality and trends that affect the stationarity of a time series.
+- The **autocorrelation_function.md** explains the relationship between observations at different times in a series.
+- The **autocovariance_function.md** delves deeper into the covariances over time, complementing the autocorrelation function.
 
-time_series.md
-(Introduce the concept of time series as the foundation.)
+### Core with Focus on Practice
 
-seasonality_and_trends.md
-(Discuss patterns like seasonality and trends, affecting stationarity.)
+- The **modeling_time_series.md** provides an introduction to various models used in time series analysis.
+- The **autoregressive_models.md** introduces AR models, which are a foundational approach in time series modeling.
+- The **moving_average_models.md** discusses MA models, which complement AR models in time series analysis.
 
-autocorrelation_function.md
-(Explain the relationship between observations at different times.)
+### More Mathematical Background
 
-autocovariance_function.md
-(Delve deeper into the covariances over time, complementing autocorrelation.)
+- The **stationarity.md** discusses stationarity, a key concept that ensures the properties of a time series remain constant over time.
+- The **random_walk.md** introduces random walks as an example of non-stationary processes in time series.
+- The **backward_shift_operator.md** explores tools like the backward shift operator, which are useful for modeling time series data.
+- The **invertibility.md** explains conditions like invertibility that are necessary for ensuring the consistency of time series models.
+- The **yule_walker_equations.md** dives into the equations used for estimating the parameters of AR models.
 
----
-core with focus on prictce
+### Ultimate
 
-modeling time series.md
-(intro to models)
-
-autoregressive_models.md
-(Introduce AR models, a foundational approach in time series modeling.)
-
-moving_average_models.md
-(Discuss MA models, complementing AR in time series analysis.)
-
----
-
-more matheamtical
-
-stationarity.md
-(Discuss stationarity, a key concept in time series analysis.)
-
-random_walk.md
-(Introduce random walks as an example of non-stationary processes.)
-
-backward_shift_operator.md
-(Explore tools like the backward shift operator, crucial for modeling.)
-
-invertibility.md
-(Explain conditions like invertibility for ensuring model consistency.)
-
-yule_walker_equations.md
-(Dive into the equations used for estimating AR model parameters.)
-
----
-ultimate
-
-forecasting.md
-(Apply all concepts to the goal of forecasting.)
+- The **forecasting.md** applies all the discussed concepts to the goal of forecasting future values in a time series.
