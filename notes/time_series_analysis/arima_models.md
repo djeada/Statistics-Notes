@@ -1,3 +1,74 @@
+
+## Autoregressive Integrated Moving Average (ARIMA) Models
+
+ARIMA models generalize ARMA models to include differencing, allowing them to model non-stationary time series data.
+
+### Mathematical Definition of ARIMA Models
+
+An **ARIMA(\( p, d, q \))** model is defined by:
+
+\[
+\phi(B) (1 - B)^d X_t = c + \theta(B) \epsilon_t
+\]
+
+where:
+
+- \( \phi(B) \): Autoregressive polynomial.
+- \( \theta(B) \): Moving average polynomial.
+- \( d \): Order of differencing required to achieve stationarity.
+
+### Determining Differencing Order
+
+- **Unit Root Tests**: Tests like the Augmented Dickey-Fuller (ADF) test assess whether differencing is needed.
+- **Visual Inspection**: Time series plots reveal trends or changing variance.
+- **ACF Analysis**: A slow decay in the ACF suggests non-stationarity.
+
+### Fitting ARIMA Models: Numerical Example
+
+Suppose we have a time series \( X_t \) exhibiting an upward trend.
+
+#### Step 1: Differencing
+
+First-order differencing is applied to achieve stationarity:
+
+\[
+Y_t = (1 - B) X_t = X_t - X_{t-1}
+\]
+
+#### Step 2: Model Identification
+
+Analyzing the differenced series \( Y_t \):
+
+- **ACF**: Significant spikes at lag \( q \) suggest an MA(\( q \)) component.
+- **PACF**: Significant spikes at lag \( p \) suggest an AR(\( p \)) component.
+
+Assume ACF suggests MA(1) and PACF suggests AR(1).
+
+#### Step 3: Parameter Estimation
+
+Fit an ARIMA(1,1,1) model:
+
+\[
+(1 - \phi B)(1 - B) X_t = c + (1 + \theta B) \epsilon_t
+\]
+
+Estimate \( \phi \), \( \theta \), and \( c \) using MLE.
+
+#### Step 4: Model Diagnostics
+
+- **Residual Analysis**: Plot residuals to check for randomness.
+- **Ljung-Box Test**: Confirm absence of autocorrelation in residuals.
+- **Information Criteria**: Compare AIC and BIC values for different models.
+
+#### Step 5: Forecasting
+
+Use the fitted model to forecast future values:
+
+\[
+\hat{X}_{t+h} = c + \phi \hat{X}_{t+h-1} + \theta \hat{\epsilon}_{t+h-1}
+\]
+
+
 ### Seasonal ARIMA Processes (SARIMA)
 
 Seasonal ARIMA (SARIMA) models are widely used for time series data exhibiting both trend and seasonal behaviors.
