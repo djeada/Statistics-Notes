@@ -2,6 +2,37 @@
 
 Time series data consists of sequential observations collected over a period of time. This kind of data is prevalent in a range of fields such as finance, economics, climatology, and more. Time series analysis involves the exploration of this data to identify inherent structures such as patterns or trends, forecasting future points in the series, and providing insights for strategic decision-making.
 
+### The need for Time Series Models
+
+You are probably aware of regression models, where models predict one quantity based on the relationship with another quantity. They typically involve using independent variables to predict dependent variables. For example, when predicting electricity consumption for a particular month, we would take into consideration temperature, number of residents, and so on. These factors might seem sufficient for all cases of prediction, making the creation of an entirely new domain of models just for time series seem unnecessary, doesn’t it? However, the issue arises when past values influence the current value. This is where time series models come into play. For instance, predicting this month's electricity consumption based on last month's consumption can be achieved using an AR(1) model.
+
+**Non-Time Series Approach:**
+
+- Often involves **interpolation**, predicting within the range of existing data points based on relationships between independent and dependent variables.
+- Predict electricity consumption based on **external factors** like temperature.
+- Lower temperatures generally lead to increased consumption up to a certain plateau.
+- **Prediction errors** remain relatively consistent across different prediction points.
+- **Confidence intervals** (prediction intervals) are similar across various predictions.
+
+**Time Series Approach:** 
+
+- Primarily involves **extrapolation**, forecasting future values beyond the range of available data, which inherently carries more uncertainty.
+- Time series data have inherent **temporal structures** where current values are dependent on past values. Capturing these dependencies requires models that can account for autocorrelation and temporal dynamics, which traditional regression models are not designed to handle.
+- In time series forecasting, **prediction errors** can accumulate over time, leading to increasing uncertainty the further into the future the forecast extends. Specialized time series models incorporate mechanisms to manage and quantify this growing uncertainty, unlike standard regression models where errors are typically more stable.
+- Time series often have trends, seasonality, and other **dynamic patterns** that need to be explicitly modeled. Specialized approaches like **ARIMA**, **Exponential Smoothing**, and **state-space models** are tailored to identify and forecast these patterns effectively.
+- Time series models provide **prediction intervals** that expand over time, reflecting the increasing uncertainty of forecasts. Standard regression models usually offer fixed confidence intervals that do not account for the temporal horizon of predictions.
+- Time series analysis uses unique methodologies and models (e.g., **ARIMA**, **GARCH**, **LSTM networks**) that are specifically designed to handle the sequential and dependent nature of the data, which are not accommodated by conventional regression techniques.
+
+Below is a plot that visualizes the historical data and predictions of electricity consumption over time. 
+
+![electricity consumption over time](https://github.com/user-attachments/assets/89a67e4f-1c56-4ca8-8ff2-66ce2fb663ee)
+
+The plot includes three components:
+
+1. **Historical Data** shown as a solid line, this represents the actual electricity consumption data collected over a two-year period from January 2021 to December 2022.
+2. **Regression Prediction** represented by a dashed blue line, this forecast is based on a linear regression model. It captures a simple trend over the historical data and projects it forward for the first three months of 2023.
+3. **Time Series Prediction** shown as another dashed line, this prediction uses an Exponential Smoothing model with a seasonal component. It considers both trend and seasonality in the data to provide a more dynamic projection for the same three-month period.
+
 ### Components of a Time Series
 
 A time series is a series of data points indexed in chronological order, typically at regular time intervals. It can be decomposed into four primary components:
