@@ -2,6 +2,8 @@
 
 Moving Average (MA) models are part of time series analysis in statistics, used for forecasting and understanding past data. They are crucial for analyzing data points by creating a series of averages of different subsets of the full data set.
 
+- We can imagine like low pass filter
+
 ### Moving Average Model (MA)
 
 A Moving Average model, MA($q$), uses past forecast errors in a regression-like model. It involves a linear combination of error terms of the lagged forecast. The model is:
