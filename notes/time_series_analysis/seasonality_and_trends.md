@@ -87,37 +87,60 @@ $$X_t = T_t \times S_t \times R_t$$
 
 #### Detrending Methods
 
-I. **Differencing**:
+Detrending involves removing trends from time series data to better analyze underlying patterns, such as seasonality or noise. Here are the key methods:
 
-Remove trends by analyzing changes between consecutive observations.
+##### Differencing
 
-**First-order Differencing**:
+Differencing removes trends by calculating the changes between consecutive data points. This highlights deviations from one observation to the next, helping to stabilize the mean of a time series.
+
+I. **First-order Differencing**:
+
+Measures the difference between consecutive observations:
 
 $$Y_t = X_t - X_{t-1}$$
 
-**Second-order Differencing**:
+Removes linear trends. If the original data increases or decreases consistently over time, first-order differencing helps create a stationary series.
+
+II. **Second-order Differencing**:
+
+Calculates the difference of differences (applies differencing twice):
 
 $$Y_t = (X_t - X_{t-1}) - (X_{t-1} - X_{t-2}) = X_t - 2X_{t-1} + X_{t-2}$$
 
-II. **Transformation**:
+Useful for removing more complex trends (e.g., quadratic trends). It is applied when first-order differencing isn’t sufficient to achieve stationarity.
 
-Stabilize variance and linearize exponential trends.
+##### Transformation
 
-**Logarithmic Transformation**:
+Transformations stabilize variance and make data more linear, especially when the data exhibits exponential growth or multiplicative trends.
+
+I. **Logarithmic Transformation**:
+
+Replaces each data point with its logarithm:
 
 $$Y_t = \log(X_t)$$
 
-III. **Regression Modeling**:
+- Reduces the impact of large values, making trends more linear and addressing heteroscedasticity (variance changing over time).
+- Effective for datasets with exponential trends or data that grows multiplicatively.
 
-Fit a trend line to the data and analyze residuals.
+##### Regression Modeling
 
-**Linear Trend Model**:
+Regression modeling involves fitting a mathematical function to the data to represent trends explicitly. The residuals (differences between observed values and the fitted trend) represent the detrended series.
+
+I. **Linear Trend Model**:
+
+Fits a straight line to the data:
 
 $$X_t = \beta_0 + \beta_1 t + \epsilon_t$$
 
-**Nonlinear Trend Model**:
+Models data with a simple linear trend. The coefficients ($\beta_0$, $\beta_1$) represent the intercept and slope of the trend, while $\epsilon_t$ captures the deviations (residuals).
+
+II. **Nonlinear Trend Model**:
+
+Fits a curve (e.g., quadratic or higher-order polynomial) to the data:
 
 $$X_t = \beta_0 + \beta_1 t + \beta_2 t^2 + \epsilon_t$$
+
+Captures more complex trends, such as accelerating or decelerating growth. Nonlinear models are used when trends cannot be approximated well by a straight line.
 
 #### Visualization of Trends
 
