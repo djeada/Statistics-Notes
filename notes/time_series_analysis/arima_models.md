@@ -64,11 +64,11 @@ data <- arima.sim(n = 1e6, list(ar = 0.7, ma = 0.2))
 
 **AR(∞) Representation**:
 
-$$\begin{align*}
-(1 - \phi B) X_t &= (1 + \theta B) \epsilon_t \\
-X_t &= (1 - \phi B)^{-1} (1 + \theta B) \epsilon_t \\
-X_t &= [1 + \phi B + \phi^2 B^2 + \dots] (1 + \theta B) \epsilon_t \\
-\end{align*}$$
+$$(1 - \phi B) X_t = (1 + \theta B) \epsilon_t$$
+
+$$X_t = (1 - \phi B)^{-1} (1 + \theta B) \epsilon_t$$
+
+$$X_t = [1 + \phi B + \phi^2 B^2 + \dots] (1 + \theta B) \epsilon_t$$
 
 Multiplying the series:
 
@@ -90,11 +90,11 @@ $$\rho_k = \phi^k \left( \frac{1 + \phi \theta}{1 + 2 \phi \theta + \theta^2} \r
 
 Calculations:
 
-$$\begin{align*}
-\rho_1 &= 0.7 \left( \frac{1 + 0.7 \times 0.2}{1 + 2 \times 0.7 \times 0.2 + 0.2^2} \right) \approx 0.777 \\
-\rho_2 &= 0.7 \times \rho_1 \approx 0.544 \\
-\rho_3 &= 0.7 \times \rho_2 \approx 0.381 \\
-\end{align*}$$
+$$\rho_1 = 0.7 \left( \frac{1 + 0.7 \times 0.2}{1 + 2 \times 0.7 \times 0.2 + 0.2^2} \right) \approx 0.777$$
+
+$$\rho_2 = 0.7 \times \rho_1 \approx 0.544$$
+
+$$\rho_3 = 0.7 \times \rho_2 \approx 0.381$$
 
 ##### Results and Interpretation
 
