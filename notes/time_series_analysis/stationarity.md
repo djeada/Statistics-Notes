@@ -167,55 +167,131 @@ Below is a plot of the Moving Average (MA) process of order $q=2$:
 
 The MA(q) process is weakly stationary because its mean and variance are constant, and the autocovariance depends only on the lag.
 
-### Non-Stationary Processes
+### Non-Stationary Processes 
 
-#### Random Walk
+A **non-stationary process** is a time series whose statistical properties—such as mean, variance, and autocorrelation—change over time. Unlike stationary processes, which have consistent statistical characteristics, non-stationary series can exhibit trends, seasonal effects, or other forms of structural changes that complicate analysis.
 
-A **random walk** is an example of a non-stationary process. A random walk can be written as:
+Non-stationary processes can generally be categorized into two types:
+
+1. **Trend-Stationary Processes**
+2. **Difference-Stationary Processes**
+
+#### Trend-Stationary Processes
+
+A **trend-stationary** series has a stable long-term trend around which the data fluctuates. If a time series follows a trend-stationary process, it tends to revert to its trend line after experiencing a disturbance.
+
+**De-trending:** 
+
+To achieve stationarity in such series, one can remove the trend component. This is typically done by fitting a trend line (e.g., linear or polynomial) to the data and subtracting it from the original series. The resulting series, with the trend removed, should exhibit stationary behavior.
+
+#### Difference-Stationary Processes
+
+When de-trending is insufficient to stabilize the mean and variance of a series, the process might be **difference-stationary**. In these cases, even after removing the trend, the series still exhibits non-constant statistical properties.
+
+**Differencing:** 
+
+To achieve stationarity, we transform the series by taking differences between consecutive observations (period-to-period) or between observations separated by a season (season-to-season). This transformation often stabilizes the mean and variance, resulting in a stationary series of changes rather than levels.
+
+#### Transformations to Achieve Stationarity
+
+To prepare a non-stationary time series for modeling with techniques that require stationarity (like ARIMA), various **transformations** can be applied:
+
+**Differencing**
+
+- Differencing removes trends from time series data and stabilizes the mean.  
+- It involves computing the difference between consecutive observations in the series.  
+- The first difference of a series $Y_t$ is defined as $\Delta Y_t = Y_t - Y_{t-1}$.  
+- Higher-order differencing can be applied if trends persist, such as the second difference $\Delta^2 Y_t = \Delta Y_t - \Delta Y_{t-1}$.  
+- Differencing is especially useful for converting non-stationary data into a stationary form.  
+
+**Logarithmic Transformations**
+
+- Logarithmic transformations stabilize variance when variability increases with the magnitude of the data.  
+- The natural logarithm (or another logarithm base) is applied to each data point in the series.  
+- For a series $Y_t$, the transformed series becomes $\log(Y_t)$.  
+- This method is particularly effective for data exhibiting exponential growth or multiplicative seasonality.  
+- It also compresses the scale of large values, making trends easier to identify visually.  
+
+**Detrending**
+
+- Detrending removes long-term trends from data to highlight short-term fluctuations.  
+- A trend line is fitted to the data and then subtracted from the original series.  
+- For a linear trend $Y_t = \alpha + \beta t + \epsilon_t$, the detrended series is computed as $Y_t - (\alpha + \beta t)$.  
+- Non-linear trends can be removed by fitting polynomial or exponential functions.  
+- Detrending helps in isolating cyclical or seasonal patterns from broader trends.  
+
+#### The Random Walk Model
+
+A **random walk** is a classic example of a non-stationary process. It is characterized by each value being a random step away from the previous value, making its statistical properties dependent on time.
+
+#### Definition
+
+A random walk can be mathematically expressed as:
 
 $$
 X_t = X_{t-1} + Z_t
 $$
 
-where $Z_t$ is white noise.
+where:
 
-For a random walk:
+- $X_t$ is the value of the series at time $t$.
+- $Z_t$ is a white noise term (a sequence of uncorrelated random variables with mean zero and constant variance).
 
-The **mean** grows over time:
+#### Properties of a Random Walk
+
+I. **Mean**
+
+The expected value (mean) of $X_t$ grows over time:
 
 $$
 E[X_t] = t \cdot \mu
 $$
 
-The **variance** increases with time:
+where $\mu$ is the mean of $Z_t$.
+
+II. **Variance**
+
+The variance of $X_t$ increases linearly with time:
 
 $$
 \text{Var}(X_t) = t \cdot \sigma^2
 $$
 
-Since the variance and mean depend on time, the random walk is **not stationary**. However, applying a **difference operator** can transform a random walk into a stationary series.
+where $\sigma^2$ is the variance of $Z_t$.
 
-#### Differencing to Remove Non-Stationarity
+Because both the mean and variance depend on time, a random walk is inherently **non-stationary**.
 
-To handle non-stationary processes like random walks, we can apply the **difference operator** $\Delta$, which removes trends and transforms the process into a stationary one.
+#### Transforming a Random Walk into a Stationary Series
 
-The difference operator is defined as:
+To utilize statistical models that require stationarity, it's necessary to transform a random walk into a stationary series. This is achieved through **differencing**.
+
+##### Differencing Operator
+
+The **difference operator** \( \Delta \) is used to remove trends and stabilize the mean of a time series. It is defined as:
 
 $$
 \Delta X_t = X_t - X_{t-1} = Z_t
 $$
 
-By differencing the series, we convert a random walk into white noise, which is stationary. This technique is essential for models like ARIMA that require the data to be stationary before modeling.
+Applying the difference operator to a random walk:
 
-### Dealing with Non-Stationary Time Series
+I. **First Difference:**
 
-In real-world applications, many time series are non-stationary. To apply statistical models that require stationarity, we often use **transformations** such as:
+$$
+\Delta X_t = X_t - X_{t-1} = Z_t
+$$
 
-- Applying **differencing** helps remove trends and makes the series stationary.  
-- Using **logarithmic transformations** can stabilize the variance in the series.  
-- The process of **detrending** removes long-term trends, allowing a focus on short-term fluctuations.
+Since $Z_t$ is white noise, the differenced series $\Delta X_t$ is **stationary**.
 
-#### Example of Differencing in Python
+II. **Resulting Series:**
+
+- The differenced series has a constant mean (assuming $Z_t$ has mean zero).
+- The variance is constant over time.
+- There is no autocorrelation in the differenced series if $Z_t$ is truly white noise.
+
+Thus, differencing a random walk transforms it into a **stationary white noise** series, which is suitable for modeling with techniques that assume stationarity.
+
+##### Example of Differencing in Python
 
 We can use Python to difference a non-stationary series like a random walk:
 
