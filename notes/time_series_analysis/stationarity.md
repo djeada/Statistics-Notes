@@ -1,11 +1,35 @@
 ## Stationarity in Time Series
 
-Stationarity is a fundamental concept in time series analysis. A time series is considered **stationary** if its statistical properties—such as mean, variance, and autocovariance—remain constant over time. Stationary processes are crucial in time series modeling because many methods, such as ARIMA and ARMA models, assume stationarity (we need to check if data is stationar before applying those models).
+Stationarity is an important idea in time series analysis. A time series is considered stationary if its statistical properties—like the mean, variance, and autocovariance—stay constant over time. This matters because methods like ARIMA and ARMA are designed to work with stationary data, so it’s a good idea to check for stationarity before using these models.
 
 Stationarity can be classified into two types:
 
 1. Strict stationarity implies that the **entire distribution of the process remains the same over time**.  
 2. Weak stationarity, also known as second-order stationarity, requires only that the **mean, variance, and autocovariance remain time-invariant** over time.  
+
+### Why Do We Care About Stationarity?
+
+Imagine we are analyzing synthetic stock prices that exhibit both an upward trend and random fluctuations over time. Suppose our goal is to study the seasonal variations in these stock prices throughout the year. However, the data we have spans several years, during which the stock prices have been steadily increasing. This steady increase introduces non-stationarity, complicating our analysis of seasonal patterns.
+
+**Addressing Non-Stationarity: Detrending the Data**
+
+To effectively analyze the seasonal component, we first need to remove the non-stationary trend. This can be accomplished by fitting a linear model to the data using least squares regression:
+
+$$\text{Stock Price} = b \times \text{Time} + z$$
+
+Where:
+
+- $b$ is the slope representing the trend over time.
+- $z$ is the intercept.
+
+By subtracting this linear trend from the original stock price data, we obtain "detrended" stock prices. This process isolates the seasonal fluctuations by eliminating the underlying upward trend.
+
+**Visualization**
+
+![Synthetic Stock Prices Analysis](https://github.com/user-attachments/assets/db1f2c1c-f1ce-4aa8-b3e0-34d821a4a001)
+
+- Top panel displays the synthetic stock prices over time with a fitted linear trend (red dashed line) using least squares regression. This trend captures the overall upward movement in stock prices.
+- Bottom panel shows the detrended stock prices (residuals), highlighting the seasonal variations after removing the linear trend. These residuals are more suitable for analyzing periodic patterns without the confounding effect of the trend.
 
 ### Intuition for Stationary Time Series
 
@@ -96,6 +120,10 @@ $$
 \end{cases}
 $$
 
+Below is a plot of synthetically generated white noise:
+
+![white_noise](https://github.com/user-attachments/assets/a24cc561-f34a-431e-bac0-2f9cd5e62a49)
+
 Thus, white noise is a stationary process because its mean and variance are constant, and its autocovariance depends only on the lag.
 
 #### Moving Average (MA) Process
@@ -132,6 +160,10 @@ The autocorrelation function $\rho(k)$ is obtained by normalizing the autocovari
 $$
 \rho(k) = \frac{\gamma(k)}{\gamma(0)}
 $$
+
+Below is a plot of the Moving Average (MA) process of order $q=2$:
+
+![moving_average](https://github.com/user-attachments/assets/28e1d7fa-243b-4841-afba-afd2188ac400)
 
 The MA(q) process is weakly stationary because its mean and variance are constant, and the autocovariance depends only on the lag.
 
@@ -230,6 +262,6 @@ II. Differencing:
 
 The result plot would look like the following:
 
-![output(19)](https://github.com/user-attachments/assets/2cebba56-7d3b-470c-9511-56d617be7159)
+![differenced_random_walk](https://github.com/user-attachments/assets/2cebba56-7d3b-470c-9511-56d617be7159)
 
 In this plot, the upper section shows the random walk (non-stationary), while the lower section shows the differenced series (stationary). Differencing removes the trend from the original series, making it easier to model and predict future values.
