@@ -1,6 +1,6 @@
 ## Statistical Moments and Time Series
 
-Understanding the behavior of time series data is crucial in various fields such as finance, economics, and engineering. Statistical moments, particularly the mean and standard deviation, play a pivotal role in characterizing these processes. This section delves into how these moments describe time series data, explores examples, and distinguishes time series from simple groups of random observations.
+Understanding the behavior of time series data is helpful in various fields such as finance, economics, and engineering. Statistical moments, particularly the mean and standard deviation, play an important role in characterizing these processes. This section delves into how these moments describe time series data, explores examples, and distinguishes time series from simple groups of random observations.
 
 ### Introduction to Statistical Moments in Time Series
 
