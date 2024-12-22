@@ -243,11 +243,11 @@ $$\nabla_s X_t = X_t - X_{t-s}$$
  
 $$\nabla_s^2 X_t = X_t - 2 X_{t-s} + X_{t-2s}$$
 
-### Autocorrelation Function (ACF) of SARIMA Processes
+#### Autocorrelation Function (ACF) of SARIMA Processes
 
 The ACF of a SARIMA model displays patterns reflecting both seasonal and non-seasonal behavior.
 
-#### Example: SARIMA(0, 0, 1)(0, 0, 1)$_{12}$
+##### Example: SARIMA(0, 0, 1)(0, 0, 1)$_{12}$
 
 **Model Specification**:
 
@@ -262,7 +262,7 @@ $$X_t = \epsilon_t + \theta_1 \epsilon_{t-1} + \Theta_1 \epsilon_{t-12} + \theta
 
 $\epsilon_t$: White noise with mean zero and variance $\sigma^2$
 
-#### Calculating Autocovariances
+##### Calculating Autocovariances
 
 I. **Variance ($\gamma_0$)**:
 
@@ -280,7 +280,7 @@ IV. **Covariance at Lag 13 ($\gamma_{13}$)**:
 
 $$\gamma_{13} = \sigma^2 \theta_1 \Theta_1 \left(1 + \theta_1 \Theta_1\right)$$
 
-#### Calculating Autocorrelations
+##### Calculating Autocorrelations
 
 **ACF at Lag $k$**:
 
@@ -289,11 +289,11 @@ $$\rho_k = \frac{\gamma_k}{\gamma_0}$$
 - Significant spikes at lags that are multiples of the seasonal period ($s$) indicate seasonal correlations.
 - Non-seasonal correlations are observed at lower lags.
 
-### Example: Monthly Airline Passenger Data
+#### Example: Monthly Airline Passenger Data
 
 Consider a time series consisting of monthly airline passenger data. This particular time series is characterized by two distinct features: an upward trend indicating an increase in the number of passengers over time, and a seasonal pattern that repeats every 12 months, typically linked to factors such as holiday travel or seasonal tourism.
 
-### Steps to Model and Forecast the Time Series
+Steps to Model and Forecast the Time Series:
 
 I. Decompose the Time Series into Trend, Seasonal, and Residual Components:
 
