@@ -149,7 +149,7 @@ Where:
 Substitute the values:
 
 $$
-SE = \sqrt{\frac{0.60 \times 0.40}{1,000}} = \sqrt{\frac{0.24}{1,000}} = \sqrt{0.00024} = 0.0155 \text{ or } 1.55\%
+SE = \sqrt{\frac{0.60 \times 0.40}{1,000}} = \sqrt{\frac{0.24}{1,000}} = \sqrt{0.00024} = 0.0155 \text{ or } 1.55%
 $$
 
 #### Constructing the Confidence Interval
