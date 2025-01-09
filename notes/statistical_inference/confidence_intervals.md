@@ -75,7 +75,7 @@ Where:
 Substitute the values into the formula:
 
 $$
-SE = \sqrt{\frac{0.62 \times 0.38}{1,200}} = \sqrt{\frac{0.2356}{1,200}} = \sqrt{0.0001963} = 0.014 \text{ or } 1.4\%
+SE = \sqrt{\frac{0.62 \times 0.38}{1,200}} = \sqrt{\frac{0.2356}{1,200}} = \sqrt{0.0001963} = 0.014 \text{ or } 1.4\\%
 $$
 
 This means the standard error is approximately 1.4%.
@@ -149,7 +149,7 @@ Where:
 Substitute the values:
 
 $$
-SE = \sqrt{\frac{0.60 \times 0.40}{1,000}} = \sqrt{\frac{0.24}{1,000}} = \sqrt{0.00024} = 0.0155 \text{ or } 1.55%
+SE = \sqrt{\frac{0.60 \times 0.40}{1,000}} = \sqrt{\frac{0.24}{1,000}} = \sqrt{0.00024} = 0.0155 \text{ or } 1.55\\%
 $$
 
 #### Constructing the Confidence Interval
