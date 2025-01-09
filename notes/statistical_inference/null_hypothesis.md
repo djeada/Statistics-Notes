@@ -13,12 +13,13 @@ After reading this material you should be able to tell:
 In statistical hypothesis testing, we construct two opposing hypotheses to make inferences about a population parameter based on sample data:
 
 1. The **null hypothesis ($H_0$)** represents the assumption that there is no effect, no difference, or no change in the population. It serves as the default assumption in hypothesis testing. For example, if we are testing a new drug, the null hypothesis might state that the drug has no effect on patients compared to a placebo.
-
 2. The **alternative hypothesis ($H_1$ or $H_a$)** challenges the null hypothesis by suggesting that there is an effect, a difference, or a change in the population. Continuing with the previous example, the alternative hypothesis would assert that the drug does have an effect on patients.
 
-The relationship between the null and alternative hypotheses is foundational to the scientific method, as it allows researchers to test assumptions and determine the likelihood that an observed effect is genuine or occurred by random chance.
+Confused now? That's understandable. Choosing a null hypothesis is often guided by heuristics, and there is no strictly defined method for selecting it. By examining numerous examples, you will begin to develop an intuition for what researchers typically mean by the null hypothesis and how they choose it. This practical exposure is important for truly mastering the concept.
 
-The goal is to use statistical evidence from sample data to decide whether to reject the null hypothesis in favor of the alternative hypothesis. This decision is based on the p-value, which quantifies the probability of obtaining results at least as extreme as those observed, assuming that the null hypothesis is true.
+The relationship between the null and alternative hypotheses is foundational to the scientific method, as it allows researchers to test assumptions and determine whether an observed effect is genuine or simply due to random chance. Null hypothesis significance testing (NHST) is used across various academic disciplines, including medicine, psychology, neuroscience, genetics, economics, linguistics, and more.
+
+Now, pay close attention! If that wasn't confusing enough, there's more to the story. Another concept is closely related, and together they form the foundation of NHST. As we already learned the primary goal of NHST is to use statistical evidence from sample data to decide whether to reject the null hypothesis in favor of the alternative hypothesis. This decision is based on the **p-value**, which quantifies the probability of obtaining results at least as extreme as those observed, assuming that the null hypothesis is true.
 
 ![Null Hypothesis Testing Illustration](https://github.com/djeada/Statistics-Notes/assets/37275728/d45fdb61-9d6f-4adf-a54b-4106382d2087)
 
