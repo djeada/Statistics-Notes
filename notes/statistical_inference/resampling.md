@@ -106,18 +106,20 @@ Estimate of Standard Error:
 
 #### Bootstrap Procedure
 
-1. Start with the **original sample**, denoted as $X = \{ X_1, X_2, \dots, X_n \}$.
+1. Start with the **original sample**, denoted as $X = { X_1, X_2, \dots, X_n }$.
 2. Generate **bootstrap samples** by sampling with replacement from $X$ to create $B$ bootstrap samples $X^{*b}$, each of size $n$.
 3. For each bootstrap sample $X^{*b}$, **compute bootstrap estimates** $\hat{\theta}^*_b$.
-4. Finally, **estimate the standard error** using the formula:
+4. Finally, estimate the standard error using the formula:
 
 $$
-SE_{\text{boot}}(\hat{\theta}) = \sqrt{\frac{1}{B - 1} \sum_{b=1}^{B} (\hat{\theta}^*_b - \bar{\hat{\theta}}^*)^2}
+SE_{boot}(\hat{\theta}) = \sqrt{\frac{1}{B-1}\sum_{b=1}^{B}\left(\hat{\theta}_b - \bar{\hat{\theta}}\right)^2}
 $$
 
-where:
+with
 
-$$\bar{\hat{\theta}}^* = \frac{1}{B} \sum_{b=1}^{B} \hat{\theta}^*_b$$
+$$
+\bar{\hat{\theta}} = \frac{1}{B}\sum_{b=1}^{B}\hat{\theta}_b.
+$$
 
 ### Bootstrap Confidence Intervals
 
@@ -129,7 +131,7 @@ Bootstrapping allows construction of confidence intervals without relying on nor
 - The **interval** is calculated as:
 
 $$
-\left[ \hat{\theta} - z_{\alpha/2} \cdot SE_{\text{boot}}(\hat{\theta}), \quad \hat{\theta} + z_{\alpha/2} \cdot SE_{\text{boot}}(\hat{\theta}) \right]
+[\hat{\theta} - z_{\alpha/2} \cdot SE_{\text{boot}}(\hat{\theta}), \quad \hat{\theta} + z_{\alpha/2} \cdot SE_{\text{boot}}(\hat{\theta})]
 $$
 
 This approach is appropriate for symmetric distributions and large sample sizes.
@@ -151,9 +153,7 @@ $$
 - This method **adjusts for bias** by centering the interval around $\hat{\theta}$.
 - The **interval** is calculated as:
 
-$$
-\left[ 2\hat{\theta} - \hat{\theta}_{(1 - \alpha/2)}, \quad 2\hat{\theta} - \hat{\theta}_{(\alpha/2)} \right]
-$$
+$$[2\hat{\theta} - \hat{\theta}_{1-\alpha/2},\quad 2\hat{\theta} - \hat{\theta}_{\alpha/2}]$$
 
 This interval is more accurate for skewed distributions.
 
@@ -164,7 +164,7 @@ Bootstrapping can estimate the variability of regression coefficients when tradi
 #### Simple Linear Regression Model
 
 $$
-Y_i = a + b X_i + e_i, \quad i = 1, 2, \dots, n
+Y_i = a + b X_i + e_i, \quad i = 1, 2 \dots n
 $$
 
 - $Y_i$: Response variable.
@@ -172,7 +172,7 @@ $$
 - $a$, $b$: Regression coefficients.
 - $e_i$: Error terms, assumed to be independent with mean zero.
 
-#### 1. Residual Resampling
+#### Residual Resampling
 
 - The first step is to **fit the original model** and obtain estimates for $\hat{a}$ and $\hat{b}$.
 - Next, **compute the residuals** as $\hat{e}_i = Y_i - \hat{a} - \hat{b} X_i$.
@@ -183,7 +183,7 @@ $$
 - Finally, **estimate the variability** by using the distribution of $\hat{b}^*$ to calculate $SE(\hat{b})$.
 - This method assumes that the **error terms $e_i$** are identically distributed.
 
-#### 2. Case Resampling (Pairs Method)
+#### Case Resampling (Pairs Method)
 
 - Begin by **bootstrapping samples** by resampling $(X_i, Y_i)$ pairs with replacement.
 - **Refit the model** for each sample to calculate $\hat{a}^*$ and $\hat{b}^*$.
@@ -191,13 +191,13 @@ $$
 - **Estimate the variability** by analyzing the distribution of $\hat{b}^*$ from the bootstrap results.
 - An advantage of this method is that it captures the variability in both **$X$ and $Y$**.
 
-#### 3. Wild Bootstrap
+#### Wild Bootstrap
 
 - The **purpose** of the wild bootstrap is to handle heteroscedasticity, where the variance of errors is not constant.
 - The **method** involves multiplying residuals by random variables $\eta_i$ that have a mean of zero and variance of one.
 - New responses are then generated as $Y_i^* = \hat{a} + \hat{b} X_i + \hat{e}_i \eta_i$ to account for this variability.
 
-### Example: Estimating Variability of Regression Slope Using Residual Resampling
+#### Example: Estimating Variability of Regression Slope Using Residual Resampling
 
 In this example, we demonstrate the Residual Resampling method to estimate the variability of the regression slope $b$.
 
@@ -211,17 +211,12 @@ Steps:
 
 ![Distribution of Slope Estimates from Residual Resampling](https://github.com/user-attachments/assets/57bc7cef-80a1-4fea-bab0-7ae3fc0bb765)
 
-Original Model Fit:
-
-- The initial linear regression model provided an estimate for the slope of approximately $\hat{b} = 1.954$.
+The initial linear regression model provided an estimate for the slope of approximately $\hat{b} = 1.954$.
 
 Bootstrap Resampling:
 
 - We performed $B = 1000$ bootstrap iterations by resampling the residuals from the original model and refitting the model to compute new slope estimates each time.
 - This process generates a distribution of slope estimates under different bootstrap samples, reflecting the variability in the slope.
-
-Estimated Standard Error:
-
 - The standard error of the slope was estimated to be 0.0311, indicating the variability of the slope estimates.
 
 ### Practical Considerations
