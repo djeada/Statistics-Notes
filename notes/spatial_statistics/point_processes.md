@@ -6,7 +6,7 @@ Point processes are mathematical models that help us understand random collectio
 
 A point process can be informally described as a random countable set of points, denoted by $\{x_i\}$, located within a mathematical space $S$ (such as the real line $\mathbb{R}$, the plane $\mathbb{R}^2$, or higher-dimensional spaces). In this framework, the randomness concerns both the number of points and their locations. Imagine observing the random times at which buses arrive at a station or the irregular pattern of stars scattered across the night sky. The randomness in both the timing and positioning of these events is captured by point process models.
 
-An ASCII diagram can help illustrate a random pattern of points on a line:
+A diagram can help illustrate a random pattern of points on a line:
 
 ```
     x       x   x       x       x
