@@ -158,7 +158,7 @@ $$\sigma_K^2 = \gamma(0) - \sum_{i=1}^{n} \lambda_i \gamma(x_i - x_0) - \mu$$
 
 The final step involves applying the kriging prediction across a grid that covers the study area, thus generating a continuous prediction map for soil pH. An example of such a map is shown below:
 
-![Soil pH Level Map](https://github.com/djeada/Statistics-Notes/assets/37275728/d2e73c01-0891-48a9-9adb-186ff40e95a7)
+![soil_ph_map](https://github.com/user-attachments/assets/04e2c8d8-c966-4b2b-a69f-5829d3ba2201)
 
 This map not only displays predicted soil pH values but can also be complemented with an uncertainty map that highlights areas where prediction variance is high.
 
