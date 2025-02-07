@@ -22,11 +22,15 @@ These formulas provide a quantitative way to assess whether the spatial distribu
 
 A variogram is a important tool that describes how the average difference between paired observations changes with distance. It is defined as
 
-$$\gamma(h) = \frac{1}{2} \operatorname{Var}[Z(x) - Z(x + h)] = \frac{1}{2} \mathbb{E}[(Z(x) - Z(x + h))^2]$$
+$$
+\gamma(h) = \frac{1}{2} \mathrm{Var}[Z(x) - Z(x+h)] = \frac{1}{2}\, \mathbb{E}\bigl[(Z(x)-Z(x+h))^2\bigr]
+$$
 
 with $h$ representing the lag distance between two locations and $Z(x)$ being the value at location $x$. Complementing the variogram is the covariance function, which measures the degree to which values at two locations vary together:
 
-$$C(h) = \operatorname{Cov}[Z(x), Z(x + h)] = \mathbb{E}[(Z(x) - \mu)(Z(x + h) - \mu)]$$
+$$
+C(h) = \mathrm{Cov}[Z(x), Z(x+h)] = \mathbb{E}\bigl[(Z(x)-\mu)(Z(x+h)-\mu)\bigr]
+$$
 
 where $\mu$ is the mean of $Z$. The variogram and covariance function are closely linked by the relation
 
@@ -53,6 +57,7 @@ This diagram shows that as the lag distance increases, the variogram value incre
 - The nugget ($c_0$) reflects measurement error or microscale variation.
 - The sill ($c_0 + c$) is the plateau where the variogram levels off, indicating the total variance.
 - The range ($a$) is the distance at which the sill is reached, beyond which spatial correlation is minimal.
+
 Common variogram models include the spherical model,
 
 $$\gamma(h) = c_0 + c \left[ \frac{3h}{2a} - \frac{1}{2} \left( \frac{h}{a} \right)^3 \right] \quad \text{for } 0 \leq h \leq a$$
@@ -77,7 +82,9 @@ $$Z^*(x_0) = \sum_{i=1}^{n} \lambda_i Z(x_i)$$
 
 where $Z^*(x_0)$ is the predicted value at the location $x_0$, $Z(x_i)$ are the observed values, and $\lambda_i$ are the weights determined through optimization. The goal is to minimize the estimation variance
 
-$$\operatorname{Var}[Z^*(x_0) - Z(x_0)]$$
+$$
+\mathrm{Var}[Z^*(x_0) - Z(x_0)]
+$$
 
 subject to the unbiasedness constraint
 
