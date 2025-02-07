@@ -128,7 +128,10 @@ Selecting a suitable statistical test is critical in hypothesis testing, and sev
 - A **t-test** is ideal for comparing the means of two groups with interval or ratio data that is normally distributed. For non-normally distributed data or ordinal data, consider a non-parametric alternative like the **Mann-Whitney U test**.
 - To compare means across more than two groups, an **Analysis of Variance (ANOVA)** is appropriate. 
 - For categorical data, a **chi-square test** is often used to examine differences in proportions.
-
+- **Left-tailed** and **right-tailed tests** are specific to the direction of the hypothesis. A left-tailed test is used when the research hypothesis suggests a decrease or lower value, while a right-tailed test is for an increase or higher value.
+- **Two-tailed tests** are applied when the research question does not specify a direction of effect. These tests are more conservative and broadly applicable.
+- **Parametric tests** assume underlying statistical distributions and typically require interval or ratio data. In contrast, **non-parametric tests** do not assume a specific distribution and are often used with ordinal data or when the assumptions of parametric tests are not met.
+  
 The following table summarizes some common statistical tests and their applications:
 
 | Test                         | Data Type           | Number of Groups | Assumptions                                      |
@@ -145,12 +148,7 @@ The following table summarizes some common statistical tests and their applicati
 | **Wilcoxon Signed-Rank Test**| Ordinal/Continuous  | Two              | Non-parametric, dependent samples                |
 | **Friedman Test**            | Ordinal/Continuous  | More than Two    | Non-parametric, dependent samples                |
 
-### Key Considerations
 
-- **Left-tailed** and **right-tailed tests** are specific to the direction of the hypothesis. A left-tailed test is used when the research hypothesis suggests a decrease or lower value, while a right-tailed test is for an increase or higher value.
-- **Two-tailed tests** are applied when the research question does not specify a direction of effect. These tests are more conservative and broadly applicable.
-- **Parametric tests** assume underlying statistical distributions and typically require interval or ratio data. In contrast, **non-parametric tests** do not assume a specific distribution and are often used with ordinal data or when the assumptions of parametric tests are not met.
-  
 ### Example: Hypothesis Test for the Mean
 
 An agronomist suggests that a new fertilizer increases the average yield of a particular crop to more than 2 tons per hectare. To test this claim, a study is conducted where the new fertilizer is applied to randomly selected plots. The yield of 25 plots is measured, resulting in a mean yield of 2.1 tons per hectare and a standard deviation of 0.3 tons per hectare. Is the new fertilizer effective at increasing the average yield at a significance level of $\alpha = 0.05$?
