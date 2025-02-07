@@ -71,7 +71,7 @@ When testing the population mean, hypothesis testing considers three possibiliti
 **II. Right-Tailed Test**
 
 - The **null hypothesis ($H_0$)** suggests that $\mu$ is equal to $\mu_0$ ($\mu = \mu_0$).
-- The **alternative hypothesis ($H_a$)** asserts that $\mu$ is greater than $\mu_0$ ($$\mu > \mu_0$).
+- The **alternative hypothesis ($H_a$)** asserts that $\mu$ is greater than $\mu_0$ ($\mu > \mu_0$).
 
 **III. Two-Tailed Test**
 
