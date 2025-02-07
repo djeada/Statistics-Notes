@@ -175,38 +175,59 @@ $$
 #### Residual Resampling
 
 - The first step is to **fit the original model** and obtain estimates for $\hat{a}$ and $\hat{b}$.
-- Next, **compute the residuals** as $\hat{e}_i = Y_i - \hat{a} - \hat{b} X_i$.
+- Next, **compute the residuals** as
+
+$$
+\hat{e}_i = Y_i - \hat{a} - \hat{b}\, X_i.
+$$
+
 - Optionally, **center the residuals** to ensure they have a mean of zero.
-- Then, **bootstrap samples** are created by resampling residuals $\hat{e}_i*$ with replacement, and generating new responses as $Y_i* = \hat{a} + \hat{b} X_i + \hat{e}_i*$.
-- **Refit the model** using the new responses to compute $\hat{a}*$ and $\hat{b}*$.
+- Then, **bootstrap samples** are created by resampling the residuals $\hat{e}_i^*$ with replacement and generating new responses as
+
+$$
+Y_i^* = \hat{a} + \hat{b}\, X_i + \hat{e}_i^*.
+$$
+
+- **Refit the model** using the new responses to compute $\hat{a}^*$ and $\hat{b}^*$.
 - **Repeat this process** for $B$ bootstrap samples to obtain a reliable estimate.
-- Finally, **estimate the variability** by using the distribution of $\hat{b}*$ to calculate $SE(\hat{b})$.
-- This method assumes that the **error terms $e_i$** are identically distributed.
+- Finally, **estimate the variability** by using the distribution of $\hat{b}^*$ to calculate $SE(\hat{b})$.
+- This method assumes that the **error terms** $e_i$ are identically distributed.
 
 #### Case Resampling (Pairs Method)
 
-- Begin by **bootstrapping samples** by resampling $(X_i, Y_i)$ pairs with replacement.
-- **Refit the model** for each sample to calculate $\hat{a}*$ and $\hat{b}*$.
+- Begin by **bootstrapping samples** by resampling the $(X_i, Y_i)$ pairs with replacement.
+- **Refit the model** for each sample to calculate $\hat{a}^*$ and $\hat{b}^*$.
 - **Repeat this process** for $B$ bootstrap samples.
-- **Estimate the variability** by analyzing the distribution of $\hat{b}*$ from the bootstrap results.
+- **Estimate the variability** by analyzing the distribution of $\hat{b}^*$ from the bootstrap results.
 - An advantage of this method is that it captures the variability in both $X$ and $Y$.
 
 #### Wild Bootstrap
 
-- The **purpose** of the wild bootstrap is to handle heteroscedasticity, where the variance of errors is not constant.
-- The **method** involves multiplying residuals by random variables $\eta_i$ that have a mean of zero and variance of one.
-- New responses are then generated as $Y_i* = \hat{a} + \hat{b} X_i + \hat{e}_i \eta_i$ to account for this variability.
+- The **purpose** of the wild bootstrap is to handle heteroscedasticity, where the variance of the errors is not constant.
+- The **method** involves multiplying residuals by random variables $\eta_i$ that have a mean of zero and a variance of one.
+- New responses are then generated as
+
+$$
+Y_i^* = \hat{a} + \hat{b}\, X_i + \hat{e}_i\, \eta_i
+$$
+
+to account for this variability.
 
 #### Example: Estimating Variability of Regression Slope Using Residual Resampling
 
 In this example, we demonstrate the Residual Resampling method to estimate the variability of the regression slope $b$.
 
-Steps:
+**Steps:**
 
 - Generate synthetic data with a known true intercept $a = 3$ and slope $b = 2$, along with random noise.
 - Fit the original linear regression model and obtain estimates for $\hat{a}$ and $\hat{b}$.
-- Compute the residuals $\hat{e_i} = Y_i - \hat{a} - \hat{b}X_i$.
-- Perform bootstrapping by resampling residuals, generating new responses, and refitting the model to obtain new estimates $\hat{a}*$ and $\hat{b}*$.
+- Compute the residuals
+
+$$
+\hat{e}_i = Y_i - \hat{a} - \hat{b}\, X_i.
+$$
+
+- Perform bootstrapping by resampling the residuals, generating new responses, and refitting the model to obtain new estimates $\hat{a}^*$ and $\hat{b}^*$.
 - Repeat the process for $B$ bootstrap samples to estimate the standard error of $\hat{b}$.
 
 ![Distribution of Slope Estimates from Residual Resampling](https://github.com/user-attachments/assets/57bc7cef-80a1-4fea-bab0-7ae3fc0bb765)
