@@ -131,11 +131,7 @@ $$
 
 Since we fail to reject $H_0$ at this step, there is no need to test further hypotheses, as the procedure stops here.
 
-**Visualization**
-
 ![output(29)](https://github.com/user-attachments/assets/e1dfbabc-e720-448d-a8b3-228f91d665eb)
-
-**Conclusion:**
 
 Using the Bonferroni-Holm procedure, we reject the null hypothesis for the first two tests but fail to reject for the remaining tests.
 
