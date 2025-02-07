@@ -1,8 +1,8 @@
 ## Hypothesis Testing
 
-A hypothesis is a statement that might be true.
+Hypothesis testing is a tool in statistics that drives much of scientific research. It lets us draw conclusions about entire populations based on the information we collect from samples. You'll find it applied in many areas—from evaluating how well a new drug works in clinical trials to unraveling the mysteries of customer behavior in business analytics.
 
-Hypothesis testing is a key tool in the field of statistics and forms the backbone of scientific research. It helps us make decisions about population parameters using sample data. Hypothesis testing is used across a wide variety of fields - from testing the effectiveness of a new drug in medical trials, to understanding customer behavior in business analytics.
+A hypothesis is a statement that might be true.
 
 ### Inputs and Outputs of Hypothesis Testing
 
@@ -15,7 +15,7 @@ Hypothesis testing is a key tool in the field of statistics and forms the backbo
 
 **Output**:
 
-- The **p-value** is the probability of observing data as extreme as, or more extreme than, the sample data, assuming the null hypothesis is true. A small p-value (typically ≤ $\alpha$) provides strong evidence against the null hypothesis.
+The **p-value** is the probability of observing data as extreme as, or more extreme than, the sample data, assuming the null hypothesis is true. A small p-value (typically ≤ $\alpha$) provides strong evidence against the null hypothesis.
 
 ### Overview of Hypothesis Testing Steps
 
@@ -180,8 +180,6 @@ $$z = \frac{2.1 - 2}{0.3/\sqrt{25}}$$
 $$z = \frac{0.1}{0.06}$$
 
 $$z \approx 1.667$$
-
-**Conclusion**:
 
 We look up the critical z-value for a right-tailed test at $\alpha = 0.05$, which is approximately 1.645. Since our calculated z-value of 1.667 is greater than 1.645, we reject the null hypothesis.
 
