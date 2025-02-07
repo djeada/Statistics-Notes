@@ -171,9 +171,15 @@ This map not only displays predicted soil pH values but can also be complemented
 
 ## Important Considerations
 
-When functioning with geostatistical methods, it is necessary to be aware of certain assumptions and limitations. The assumption of stationarity implies that statistical properties such as the mean and variance remain constant over space or vary in a predictable manner. Researchers must also consider whether the spatial correlation is isotropic—uniform in all directions—or anisotropic, which might require directional variogram analysis.
-
-The quality and design of the sampling campaign are also important. Outliers or errors in the data can distort variogram estimation and affect kriging results, while the spatial arrangement and density of sampling locations influence the reliability of predictions. Additionally, geostatistical methods, particularly kriging, can be computationally demanding when applied to large datasets.
+- Geostatistical methods assume that the mean, variance, and spatial covariance of the data remain constant over the study area, which often requires detrending or transformation of the dataset.  
+- Analysis of spatial correlation begins with determining whether the variogram is isotropic or anisotropic, and if directional dependence is found, a variogram model must account for varying correlation lengths.  
+- The design of the sampling campaign, including the number, location, and spatial distribution of samples, directly influences the accuracy of variogram estimation and kriging predictions.  
+- Data quality control is essential because outliers and measurement errors can distort the empirical variogram and subsequent spatial predictions, making it necessary to maintain a representative dataset.  
+- Kriging and similar geostatistical techniques require solving large systems of equations, and the computational effort increases with dataset size, so approximation methods may be employed to keep the workload manageable.  
+- The selection of a variogram model, such as spherical, exponential, or Gaussian, is guided by fitting the empirical variogram to capture the observed spatial structure.  
+- Variogram parameters like nugget, sill, and range are estimated from the data to quantify measurement error, spatial variability, and the distance over which observations are correlated.  
+- When spatial data exhibit non-stationary behavior, localized modeling or trend surface analysis can be used to partition the study area and ensure that statistical properties remain consistent within each subregion.  
+- Sensitivity analysis is applied to evaluate how variations in model parameters and sampling configurations affect predictions, aiding in the understanding of dependencies in the geostatistical model.
 
 ## Software for Geostatistical Analysis
 
