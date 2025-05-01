@@ -44,6 +44,13 @@ X O O X
 
 A frequentist would report the **sample proportion** of the attribute, which is 50 % (2 out of 4), as the maximum-likelihood **point estimate** of the population proportion. They might also calculate its standard error and construct a confidence interval before applying the resulting estimate to future inference.
 
+| Step                           | Equation                                                    | Plugging the numbers                                                                  |
+|--------------------------------|-------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| **Point estimate**             | $\hat p = x/n$                                            | $\hat p = 2/4 = 0.50$                                                               |
+| **Standard error**             | $SE(\hat p) = \sqrt{\hat p(1-\hat p)/n}$                  | $\sqrt{0.5,(1-0.5)/4} = \sqrt{0.0625} = 0.25$                                      |
+| **95 % confidence interval**<br>(Wald large-sample) | $\hat p \pm z_{0.975},SE(\hat p)$, $z_{0.975}=1.96$ | $0.50 \pm 1.96\times0.25 = 0.50 \pm 0.49$  ⇒ **CI ≈ [0.01, 0.99]**                      |
+| **Null-hypothesis test**<br>($H_0: p = p_0$)      | $z = (\hat p - p_0)/\sqrt{p_0(1-p_0)/n}$                  | For $p_0=0.5$:<br>$z = (0.50-0.50)/\sqrt{0.5\cdot0.5/4} = 0$<br>p-value = 1 (fail to reject) |
+
 ### Bayesian Statistics
 
 - Bayesian statistics treats parameters as random variables with associated probability distributions, reflecting the uncertainty about their true values rather than considering them fixed.  
@@ -55,9 +62,7 @@ A frequentist would report the **sample proportion** of the attribute, which is 
 
 **Bayes' Theorem** serves as the foundation of Bayesian analysis. It mathematically updates the prior belief in light of new evidence by using the formula:   
 
-$
-\text{Posterior} \;\propto\; \text{Likelihood} \times \text{Prior},
-$
+$\text{Posterior} \propto \text{Likelihood} \times \text{Prior}$
 
 reflecting how new data influence prior knowledge.  
 
@@ -83,7 +88,7 @@ In Bayesian statistics, probability is interpreted as a **degree of belief** or 
 
 #### Example
 
-Assume we have a **Beta(1, 1)** prior, which is uniform on the interval \([0,1]\), expressing equal belief in any value of the probability of a coin landing heads (H) or tails (T).
+Assume we have a **Beta(1, 1)** prior, which is uniform on the interval $[0,1]$, expressing equal belief in any value of the probability of a coin landing heads (H) or tails (T).
 
 ```
 Prior:
@@ -97,7 +102,7 @@ Data:
 H H H
 ```
 
-Updating the Beta(1, 1) prior with these data yields the posterior **Beta(4, 1)**. The posterior mean is \(4/5 = 0.8\):
+Updating the Beta(1, 1) prior with these data yields the posterior **Beta(4, 1)**. The posterior mean is $4/5 = 0.8$:
 
 ```
 Posterior:
@@ -105,6 +110,14 @@ H: 0.8, T: 0.2
 ```
 
 This demonstrates how the Bayesian approach systematically updates beliefs (probabilities) based on new data.
+
+| Step                      | Equation                                                                                 | Plugging the numbers                      |
+|---------------------------|------------------------------------------------------------------------------------------|-------------------------------------------|
+| **Prior density**         | $f(p)=dfrac{\Gamma(a+b)}{\Gamma(a),\Gamma(b)},p^{a-1}(1-p)^{b-1}$                   | $a=b=1\implies f(p)=1$ for $p\in[0,1]$ |
+| **Likelihood**            | $L(p)=\binom{n}{x}p^x(1-p)^{n-x}$                                                      | $\binom{3}{3}p^3(1-p)^0=p^3$             |
+| **Posterior**             | $p\mid\mathrm{data}\sim\mathrm{Beta}(a+x,b+n-x)$                                     | $\mathrm{Beta}(1+3,1+0)=\mathrm{Beta}(4,1)$ |
+| **Posterior mean**        | $\mathbb{E}[p\mid\mathrm{data}]=\frac{a+x}{a+b+n}$                       | $\frac{4}{5}=0.8$                       |
+| **95 % credible interval** | Central interval between the 0.025 and 0.975 quantiles of $\mathrm{Beta}(4,1)$         | $\approx[0.50,0.97]$                  |
 
 ### Bayesian vs Frequentist Convergence
 
