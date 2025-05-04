@@ -14,6 +14,7 @@ Z_t \stackrel{\text{i.i.d.}}{\sim} \text{WN}\bigl(0,\sigma_Z^{2}\bigr)}
 $$
 
 where $Z_t$ is white noise.
+
 Define the autocovariance function (ACVF) and autocorrelation function (ACF) by
 
 $$
@@ -35,7 +36,7 @@ $$
 \gamma(0)=\sum_{j=1}^{p}\phi_j \gamma(j)+\sigma_Z^{2}} \tag{\(*\)}
 $$
 
-Dividing every equation (except $*$) by $\gamma(0)$ converts them to *autocorrelation form*—the version most frequently quoted:
+Dividing every equation (except $\*$) by $\gamma(0)$ converts them to *autocorrelation form* —the version most frequently quoted:
 
 $$
 \boxed{%
