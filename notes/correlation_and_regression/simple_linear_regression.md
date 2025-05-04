@@ -133,7 +133,7 @@ $$
 
 Where:
 
-$\mathrm{SE}(\hat{\beta}_1) = \frac{s}{\sqrt{\sum_{i=1}^n (x_i - \bar{x})^2}}$
+$$\mathrm{SE}(\hat{\beta}_1) = \frac{s}{\sqrt{\sum_{i=1}^n (x_i - \bar{x})^2}}$$
 
 And:
 
