@@ -138,19 +138,19 @@ $$
 
 We want to illustrate how the Yule-Walker equations connect an AR(2) model’s parameters to its (theoretical) autocovariance and autocorrelation functions.  Concretely, we will
 
-1. **Check stationarity** of the given coefficient pair \$(\phi\_1,\phi\_2)\$ by inspecting the roots of \$1-\phi\_1z-\phi\_2z^2=0\$.
-2. **Derive the first two Yule-Walker equations** and solve for \$\gamma(1)\$ and \$\gamma(2)\$.
-3. **Convert to autocorrelations** \$\rho(1)\$ and \$\rho(2)\$ and comment on whether the results are admissible.
-4. **Solve the homogeneous recurrence** \$\rho(k)=\phi\_1\rho(k-1)+\phi\_2\rho(k-2)\$ to obtain the closed-form \$\rho(k)\$.
+1. **Check stationarity** of the given coefficient pair $(\phi\_1,\phi\_2)$ by inspecting the roots of $1-\phi\_1z-\phi\_2z^2=0$.
+2. **Derive the first two Yule-Walker equations** and solve for $\gamma(1)$ and $\gamma(2)$.
+3. **Convert to autocorrelations** $\rho(1)$ and $\rho(2)$ and comment on whether the results are admissible.
+4. **Solve the homogeneous recurrence** $\rho(k)=\phi\_1\rho(k-1)+\phi\_2\rho(k-2)$ to obtain the closed-form $\rho(k)$.
 5. **Contrast a non-stationary versus a stationary parameter set** so the difference is visible at a glance.
 
 Input data — numbers we will plug in:
 
 | Symbol            | Description             | Non-stationary run                                                         | Stationary check |
 | ----------------- | ----------------------- | -------------------------------------------------------------------------- | ---------------- |
-| \$\phi\_1\$       | AR coefficient on lag 1 | \$3\$                                                                      | \$0.3\$          |
-| \$\phi\_2\$       | AR coefficient on lag 2 | \$2\$                                                                      | \$0.2\$          |
-| \$\sigma\_Z^{2}\$ | Innovation variance     | kept symbolic (you can set \$\sigma\_Z^{2}=1\$ without loss of generality) | same             |
+| $\phi\_1$       | AR coefficient on lag 1 | $3$                                                                      | $0.3$          |
+| $\phi\_2$       | AR coefficient on lag 2 | $2$                                                                      | $0.2$          |
+| $\sigma\_Z^{2}$ | Innovation variance     | kept symbolic (you can set $\sigma\_Z^{2}=1$ without loss of generality) | same             |
 
 *Everything beyond this point uses these inputs unless stated otherwise.*
 
