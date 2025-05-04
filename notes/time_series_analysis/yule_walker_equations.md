@@ -1,194 +1,298 @@
 ## Yule-Walker Equations
 
-The **Yule-Walker equations** are a set of linear equations that relate the autocorrelations of an **autoregressive (AR) process** to its parameters. These equations are crucial for estimating the parameters of AR models and for understanding the autocorrelation structure of the process.
+The **Yule-Walker equations** are a set of linear relationships that tie the **autocovariances/autocorrelations** of a *stationary* **autoregressive (AR $p$) process** to its parameters. They are the work-horse for parameter estimation, diagnostic checking, and theoretical analysis of AR models.
 
 ### Definition
 
-The Yule-Walker equations provide a way to estimate the **parameters of an AR(p) process** by relating them to the **autocorrelations** of the process. The key idea is to derive a system of equations that link the parameters $\phi_1, \phi_2, \dots, \phi_p$ with the autocorrelation function (ACF) at different lags $k$.
-
-For an AR(p) process, the Yule-Walker equations are:
+First recall the *AR $p$* model itself
 
 $$
-\rho(k) = \phi_1 \rho(k-1) + \phi_2 \rho(k-2) + \dots + \phi_p \rho(k-p) \quad \text{for } k = 1, 2, \dots, p
+\boxed{%
+X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + \dots + \phi_p X_{t-p} + Z_t,
+\qquad 
+Z_t \stackrel{\text{i.i.d.}}{\sim} \text{WN}\bigl(0,\sigma_Z^{2}\bigr)}
 $$
 
-Where:
+where $Z_t$ is white noise.
+Define the autocovariance function (ACVF) and autocorrelation function (ACF) by
 
-- $\rho(k)$ is the autocorrelation at lag $k$.
-- $\rho(0) = 1$, since the autocorrelation at lag 0 is always 1.
+$$
+\gamma(k)=\mathrm{Cov}(X_t,X_{t-k}),\quad
+\rho(k)=\frac{\gamma(k)}{\gamma(0)},\quad
+k\in\mathbb{Z}
+$$
 
-These equations can be used to estimate the parameters $\phi_1, \phi_2, \dots, \phi_p$ of the AR process from the sample autocorrelations.
+**Yule-Walker system (covariance form, including variance equation)**
+
+$$
+\boxed{%
+\gamma(k)=\sum_{j=1}^{p}\phi_j \gamma(k-j)}, 
+\qquad k=1,2,\dots ,p
+$$
+
+$$
+\boxed{%
+\gamma(0)=\sum_{j=1}^{p}\phi_j \gamma(j)+\sigma_Z^{2}} \tag{\(*\)}
+$$
+
+Dividing every equation (except $*$) by $\gamma(0)$ converts them to *autocorrelation form*—the version most frequently quoted:
+
+$$
+\boxed{%
+\rho(k)=\sum_{j=1}^{p}\phi_j \rho(k-j)},
+\qquad k=1,2,\dots ,p.
+$$
+
+Because $\rho(0)=1$, each equation involves only *observable* autocorrelations on the left and right sides.
 
 ### Deriving the Yule-Walker Equations
 
 #### Assumptions
 
-1. The **stationarity** assumption for an AR process means that the mean and variance of the process remain constant over time, and the autocovariance function depends only on the lag, not on the time.
-2. In the AR process, the **white noise** error term $Z_t$ has zero mean and constant variance $\sigma_Z^2$, meaning $Z_t$ is uncorrelated with past values of the process.
+1. **Second-order stationarity** – mean and variance are constant; $\gamma(k)$ depends only on $k$.
+2. **White-noise innovations** – $E[Z_t]=0,\quad \mathrm{Var}(Z_t)=\sigma_Z^2.$, and $Z_t$ is uncorrelated with $\{X_{t-k}\}_{k\ge1}$.
 
 #### Derivation Steps
 
-1. **Multiply the AR(p) model by $X_{t-k}$** for a given lag $k$:
+I. **Multiply by a lagged value.**
+
+For a fixed $k\in\{1dots ,p\}$,
+
+$$X_tX_{t-k}= \sum_{j=1}^{p} \phi_j,X_{t-j}X_{t-k}+Z_tX_{t-k}$$
+
+II. **Take expectations.**
+
+Using stationarity,
 
 $$
-X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + \dots + \phi_p X_{t-p} + Z_t
+E[X_t X_{t-k}]
+= \sum_{j=1}^p \phi_j\,E[X_{t-j} X_{t-k}] + E[Z_t X_{t-k}]
 $$
 
-Multiply both sides by $X_{t-k}$ for $k = 1, 2, \dots, p$.
+Because $Z_t$ is uncorrelated with past $X$’s, the final expectation vanishes for $k\ge1$.
 
-2. **Take the expectation** of both sides: Use the definition of the **autocovariance function** $\gamma(k) = E[X_t X_{t-k}]$, and replace the expectations accordingly. Since the white noise $Z_t$ is uncorrelated with $X_{t-k}$, the expected value of $Z_t X_{t-k}$ is zero for all $k \geq 1$.
+III. **Replace expectations with autocovariances.**
 
-3. **Use covariance definitions**: Express the expectations as autocovariances $\gamma(k)$ and normalize by $\gamma(0)$, which is the variance of the process, to convert them into autocorrelations $\rho(k)$.
+$$\gamma(k)=\sum_{j=1}^{p}\phi_j,\gamma(k-j), 
+\qquad k=1dots ,p$$
 
-4. **Formulate the Yule-Walker equations**: You will end up with a system of linear equations that relate the autocorrelations at different lags $\rho(1), \rho(2), \dots, \rho(p)$ to the AR model parameters $\phi_1, \phi_2, \dots, \phi_p$.
+For $k=0$ the expectation $E[Z_tX_t]=\sigma_Z^{2}$ is non-zero, flexible equation $*$ above.
+
+IV. **Normalize to autocorrelations.**
+
+Divide by $\gamma(0)$ (the variance) whenever $\gamma(0)\neq0$ to obtain the autocorrelation version.
+
+Matrix view (same equations in compact form):
+
+Let
+
+$$r = 
+\begin{pmatrix}
+\rho(1)\\
+\rho(2)\\
+\vdots\\
+\rho(p)
+\end{pmatrix}$$
+
+known from the data.
+
+Let
+
+$$
+R 
+= \bigl[\rho(|i-j|)\bigr]_{i,j=1}^p
+= \begin{pmatrix}
+\rho(0)&\rho(1)&\cdots&\rho(p-1)\\
+\rho(1)&\rho(0)&\cdots&\rho(p-2)\\
+\vdots&\vdots&\vdots&\vdots\\
+\rho(p-1)&\rho(p-2)&\cdots&\rho(0)
+\end{pmatrix}$$
+
+the Toeplitz matrix.
+
+Finally, let
+
+$$\phi = 
+\begin{pmatrix}
+\phi_1\\
+\phi_2\\
+\vdots\\
+\phi_p
+\end{pmatrix}$$
+
+Then the Yule–Walker equations read
+
+$$R,\phi = r$$
+
+Solving this Toeplitz system (e.g. by Levinson–Durbin recursion) delivers the **Yule-Walker estimates** 
+
+$$\hat{\phi}_j$$ 
+
+and 
+
+$$
+\hat\sigma_Z^2 = \gamma(0) - \sum_{j=1}^p \hat\phi_j \gamma(j)
+$$
 
 ### Example: Yule-Walker Equations for an AR(2) Process
 
-Consider the AR(2) process:
+We want to illustrate how the Yule-Walker equations connect an AR(2) model’s parameters to its (theoretical) autocovariance and autocorrelation functions.  Concretely, we will
+
+1. **Check stationarity** of the given coefficient pair \$(\phi\_1,\phi\_2)\$ by inspecting the roots of \$1-\phi\_1z-\phi\_2z^2=0\$.
+2. **Derive the first two Yule-Walker equations** and solve for \$\gamma(1)\$ and \$\gamma(2)\$.
+3. **Convert to autocorrelations** \$\rho(1)\$ and \$\rho(2)\$ and comment on whether the results are admissible.
+4. **Solve the homogeneous recurrence** \$\rho(k)=\phi\_1\rho(k-1)+\phi\_2\rho(k-2)\$ to obtain the closed-form \$\rho(k)\$.
+5. **Contrast a non-stationary versus a stationary parameter set** so the difference is visible at a glance.
+
+Input data — numbers we will plug in:
+
+| Symbol            | Description             | Non-stationary run                                                         | Stationary check |
+| ----------------- | ----------------------- | -------------------------------------------------------------------------- | ---------------- |
+| \$\phi\_1\$       | AR coefficient on lag 1 | \$3\$                                                                      | \$0.3\$          |
+| \$\phi\_2\$       | AR coefficient on lag 2 | \$2\$                                                                      | \$0.2\$          |
+| \$\sigma\_Z^{2}\$ | Innovation variance     | kept symbolic (you can set \$\sigma\_Z^{2}=1\$ without loss of generality) | same             |
+
+*Everything beyond this point uses these inputs unless stated otherwise.*
+
+> **Warning on stationarity.**
+> For an AR(2) model the coefficients must satisfy $1-\phi_1 z-\phi_2 z^{2}=0$ having both roots $|z|>1$ to be *stationary*.
+> With $\phi_1=3,\phi_2=2$ **one root lies inside the unit circle**, so the model is *non-stationary* and its theoretical autocorrelation function (ACF) does not exist in the usual sense.
+> We nevertheless go through the algebra to illustrate the mechanics of the Yule-Walker equations; the arithmetic is still correct even though the result is not a valid ACF.
+
+#### Write down the model
 
 $$
-X_t = 3 X_{t-1} + 2 X_{t-2} + Z_t
+\boxed{%
+X_t = 3X_{t-1} + 2X_{t-2} + Z_t}, 
+\qquad 
+Z_t\stackrel{\text{i.i.d.}}{\sim}\text{WN}\bigl(0,\sigma_Z^{2}\bigr).
 $$
 
-Where $Z_t$ is white noise with variance $\sigma_Z^2$.
+#### Derive the Yule-Walker equations
 
-#### Deriving the Yule-Walker Equations
-
-I. **Multiply by $X_{t-1}$** and take the expectation:
+**(k = 1)**
 
 $$
-E[X_t X_{t-1}] = 3 E[X_{t-1}^2] + 2 E[X_{t-2} X_{t-1}]
+\boxed{%
+\gamma(1)=3\gamma(0)+2\gamma(1)}
+\quad\Longrightarrow\quad
+(1-2)\gamma(1)=3\gamma(0)
+\quad\Longrightarrow\quad
+\boxed{\gamma(1)=-3\gamma(0)}.
 $$
 
-Using $\gamma(1) = E[X_t X_{t-1}]$ and $\gamma(0) = E[X_{t-1}^2]$, we get:
+**(k = 2)**
 
 $$
-\gamma(1) = 3 \gamma(0) + 2 \gamma(1)
+\boxed{%
+\gamma(2)=3\gamma(1)+2\gamma(0)}
+\quad\Longrightarrow\quad
+\gamma(2)=3(-3\gamma(0))+2\gamma(0)
+= -9\gamma(0)+2\gamma(0)
+= \boxed{-7\gamma(0)}.
 $$
 
-II. **Multiply by $X_{t-2}$** and take the expectation:
+#### Convert to autocorrelations
 
 $$
-E[X_t X_{t-2}] = 3 E[X_{t-1} X_{t-2}] + 2 E[X_{t-2}^2]
+\boxed{\rho(1)=\dfrac{\gamma(1)}{\gamma(0)}=-3},
+\qquad
+\boxed{\rho(2)=\dfrac{\gamma(2)}{\gamma(0)}=-7}.
 $$
 
-Using $\gamma(2) = E[X_t X_{t-2}]$, we get:
+Because $|\rho(1)|>1$ (and similarly for $\rho(2)$), this confirms the earlier warning: the parameter pair $(3,2)$ produces a non-stationary AR(2) and hence impossible ACF values.
+
+#### Solve the homogeneous difference equation
+
+The Yule-Walker recursion for an AR(2) can be written as
 
 $$
-\gamma(2) = 3 \gamma(1) + 2 \gamma(0)
+\boxed{\rho(k)=3\rho(k-1)+2\rho(k-2)}, \qquad k\ge2.
 $$
 
-III. **Express the autocovariances as autocorrelations**: Normalize by the variance $\gamma(0)$, to convert autocovariances into autocorrelations $\rho(k)$:
+Assume a solution $\rho(k)=\lambda^{k}$. Substituting gives
 
 $$
-\rho(1) = \frac{3}{1 + 2} = \frac{3}{3} = 1, \quad \rho(2) = \frac{3 \cdot 1 + 2}{\gamma(0)}
+\lambda^{2}=3\lambda+2
+\quad\Longrightarrow\quad
+\boxed{\lambda^{2}-3\lambda-2=0}.
 $$
 
-### Solving the Difference Equations for AR(2)
-
-To solve the Yule-Walker equations for the AR(2) process, we assume a solution of the form $\rho(k) = \lambda^k$. Substituting into the equation:
+Solving the quadratic,
 
 $$
-\lambda^2 = 3 \lambda + 2
+\boxed{\lambda_{1,2}= \dfrac{3\pm\sqrt{17}}{2}}
+\quad\bigl(\lambda_{1}\approx3.5616,\lambda_{2}\approx-0.5616\bigr).
 $$
 
-The characteristic equation is:
+Hence the general form is
 
 $$
-\lambda^2 - 3 \lambda - 2 = 0
+\boxed{\rho(k)=c_{1}\lambda_{1}^{k}+c_{2}\lambda_{2}^{k}}.
 $$
 
-Solving the quadratic equation:
+#### Determine $c_{1}$ and $c_{2}$
+
+Using $\rho(0)=1$:
 
 $$
-\lambda = \frac{3 \pm \sqrt{9 + 8}}{2} = \frac{3 \pm \sqrt{17}}{2}
+\boxed{c_{1}+c_{2}=1}.
 $$
 
-Thus, the roots are:
+Using the previously derived $\rho(1)=-3$:
 
 $$
-\lambda_1 = \frac{3 + \sqrt{17}}{2}, \quad \lambda_2 = \frac{3 - \sqrt{17}}{2}
+\boxed{c_{1}\lambda_{1}+c_{2}\lambda_{2}=-3}.
 $$
 
-The general solution for the autocorrelation function $\rho(k)$ is:
+Solving the two-equation system gives
 
 $$
-\rho(k) = c_1 \lambda_1^k + c_2 \lambda_2^k
+\boxed{%
+c_{1}= \frac{-3-\lambda_{2}}{\lambda_{1}-\lambda_{2}},
+\qquad
+c_{2}=1-c_{1}
+}.
 $$
 
-### Finding Coefficients c_1 and c_2
+(Substituting numerical values, $c_{1}\approx-0.592,c_{2}\approx1.592$.)
 
-#### Use $\rho(0) = 1$
+Although these constants satisfy the recursion, the resulting $\rho(k)$ diverges because $|\lambda_{1}|>1$; again, the process is not stationary.
 
-At $k = 0$, we know $\rho(0) = 1$. This gives the equation:
+#### Quick check: a stationary alternative
 
-$$
-c_1 + c_2 = 1
-$$
-
-#### Use $\rho(1)$
-
-At $k = 1$, we use the relationship $\rho(1) = 3 \rho(0) + 2 \rho(1)$ to find:
+For comparison, if we instead chose $\phi_1=0.3,\phi_2=0.2$ (both roots outside the unit circle), the same steps would yield
 
 $$
-\rho(1) = 3 \cdot 1 + 2 \cdot \rho(1)
+\rho(1)=\frac{0.3}{1-0.2}=0.375,
+\qquad
+\rho(2)=0.3\rho(1)+0.2=0.3125,
 $$
 
-Solving this, we get:
+and the characteristic roots would both have magnitude $<1$, giving a decaying, admissible ACF.
+
+#### Matrix form 
+
+Vector of autocorrelations
 
 $$
-\rho(1) = \frac{3}{2}
-$$
-
-Substituting into the general solution:
-
-$$
-c_1 \lambda_1 + c_2 \lambda_2 = \frac{3}{2}
-$$
-
-Solving the system of equations:
-
-$$
-\begin{aligned}
-c_1 + c_2 &= 1 \\
-c_1 \lambda_1 + c_2 \lambda_2 &= \frac{3}{2}
-\end{aligned}
-$$
-
-This gives the values for $c_1$ and $c_2$, which can then be substituted back into the general solution for $\rho(k)$.
-
-### Matrix Form of Yule-Walker Equations for AR(p)
-
-For an AR(p) process, the Yule-Walker equations can be written in **matrix form**. Define:
-
-Vector of autocorrelations:
-
-$$\mathbf{r} = \begin{bmatrix} \rho(1) \\ \rho(2) \\ \vdots \\ \rho(p) \end{bmatrix}$$ 
-
-Vector of AR coefficients:
-
-$$\mathbf{\phi} = \begin{bmatrix} \phi_1 \\ \phi_2 \\ \vdots \\ \phi_p \end{bmatrix}$$
-
-The **autocorrelation matrix** $R$ is a Toeplitz matrix:
-
-$$
-R = \begin{bmatrix}
-1 & \rho(1) & \rho(2) & \dots & \rho(p-1) \\
-\rho(1) & 1 & \rho(1) & \dots & \rho(p-2) \\
-\rho(2) & \rho(1) & 1 & \dots & \rho(p-3) \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
+\mathbf{r}=
+\begin{bmatrix}
+\rho(1)\\\rho(2)\\\vdots\\\rho(p)
+\end{bmatrix}, 
+\qquad
+\text{Toeplitz matrix }
+R=
+\begin{bmatrix}
+1 & \rho(1) & \rho(2) & \dots & \rho(p-1)\\
+\rho(1) & 1 & \rho(1) & \dots & \rho(p-2)\\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
 \rho(p-1) & \rho(p-2) & \rho(p-3) & \dots & 1
-\end{bmatrix}
+\end{bmatrix}.
 $$
 
-The Yule-Walker equations are then written as:
-
 $$
-R \mathbf{\phi} = \mathbf{r}
-$$
-
-To solve for the AR coefficients $\mathbf{\phi}$:
-
-$$
-\mathbf{\phi} = R^{-1} \mathbf{r}
+\boxed{R\boldsymbol{\phi}= \mathbf{r}},
+\qquad
+\boxed{\boldsymbol{\phi}=R^{-1}\mathbf{r}}.
 $$
