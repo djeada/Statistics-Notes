@@ -50,9 +50,19 @@ The least squares estimates are calculated using the following formulas:
 
 ##### Slope ($\hat{\beta}\_1$)
 
-$\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n (x_i - \bar{x})^2}$
+$$
+\hat{\beta}_1 = \frac{Sxy}{Sxx}
+$$
 
-$\hat{\beta}_1 = \frac{\mathrm{Cov}(x, y)}{\mathrm{Var}(x)}$
+$$
+S_{xy} = \sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})
+$$
+
+$$
+S_{xx} = \sum_{i=1}^n (x_i - \bar{x})^2
+$$
+
+$$\hat{\beta}_1 = \frac{\mathrm{Cov}(x, y)}{\mathrm{Var}(x)}$$
 
 ##### Intercept ($\hat{\beta}\_0$)
 
@@ -133,7 +143,10 @@ $$
 
 Where:
 
-$$\mathrm{SE}(\hat{\beta}_1) = \frac{s}{\sqrt{\sum_{i=1}^n (x_i - \bar{x})^2}}$$
+$$
+\mathrm{SE}(\hat\beta_1)
+= \frac{s}{\sqrt{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2}}
+$$
 
 And:
 
@@ -141,7 +154,7 @@ $$
 s = \sqrt{\frac{\text{SSE}}{n - 2}}
 $$
 
-The test statistic follows a $t $-distribution with $n - 2 $ degrees of freedom.
+The test statistic follows a T-distribution with $n - 2$ degrees of freedom.
 
 If the absolute value of $t$ is large (or equivalently, the $p$-value is small), we reject $H\_0$ and conclude that the slope is statistically different from zero—i.e., $x$ provides meaningful information about $y$.  In practice, analysts often complement the $t$-test with a confidence interval for $\beta\_1$ to see a plausible range of slopes.
 
