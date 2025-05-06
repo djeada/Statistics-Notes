@@ -1,6 +1,6 @@
 ## Simple Linear Regression
 
-Simple linear regression is a fundamental statistical method used to model the relationship between a single dependent variable and one independent variable. It aims to find the best-fitting straight line through the data points, which can be used to predict the dependent variable based on the independent variable.
+Simple linear regression is a statistical method used to model the relationship between a single dependent variable and one independent variable. It aims to find the best-fitting straight line through the data points, which can be used to predict the dependent variable based on the independent variable.
 
 In everyday terms, you can think of it as drawing a single straight line that best summarizes how one quantity (for instance, house price) tends to move whenever another quantity (such as house size) changes.
 
