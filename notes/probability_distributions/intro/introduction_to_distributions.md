@@ -2,35 +2,35 @@
 
 A distribution is a function that describes the probability of a random variable. It helps to understand the underlying patterns and characteristics of a dataset. Distributions are widely used in statistics, data analysis, and machine learning for tasks such as hypothesis testing, confidence intervals, and predictive modeling.
 
-## Random Variables
+### Random Variables
 
 Random variables assign numerical values to outcomes of random processes in probability and statistics. Random variables can be **discrete** (taking specific values) or **continuous** (taking any value within a range).
 
-### Example: Drawing a Card from a Deck
+#### Example: Drawing a Card from a Deck
 
 - **Suit of the Card (Discrete)**: Assigns a category based on the suit (e.g., hearts, spades).
 - **Rank of the Card (Discrete)**: Numerical value or face (e.g., 2, 10, King).
 - **Color of the Card (Discrete)**: Red or Black.
 
-### Example: Weather Forecast
+#### Example: Weather Forecast
 
 - **Temperature (Continuous)**: The forecasted temperature in degrees.
 - **Chance of Precipitation (Continuous)**: Probability of rain or snow, expressed in percentage.
 - **Wind Speed (Continuous)**: Speed of the wind in kilometers or miles per hour.
 
-### Probability Calculations
+#### Probability Calculations
 
 - **Discrete Example (Card Drawing)**: If X represents the suit of a card, $P(X = Hearts)$ is the probability of drawing a heart.
 - **Continuous Example (Temperature)**: If Y represents temperature, $P(Y > 20°C)$ is the chance that the temperature is above 20 degrees Celsius.
 - **General Probability Notations**: Calculate probabilities like $P(X < x), P(X ≤ x), P(X > x), P(X ≥ x)$, where 'x' is a specific value.
 
-## Types of Probability Distributions
+### Types of Probability Distributions
 
 - **Probability Distribution**: A mathematical description of the likelihood of different outcomes in an experiment or process.
 - **Discrete Probability Distributions**: Used for discrete variables (e.g., counting outcomes like the number of heads in coin flips).
 - **Continuous Probability Distributions**: Used for continuous variables (e.g., measurements like height or weight).
 
-### Example: Probability Distribution of a Discrete Random Variable
+#### Example: Probability Distribution of a Discrete Random Variable
 
 Consider a discrete random variable $X$ with the following probability distribution:
 
@@ -47,9 +47,6 @@ Consider a discrete random variable $X$ with the following probability distribut
 | 9                | 0.05                     |
 | 10               | 0.05                     |
 
-
-Interpreting the Table:
-
 - **Higher Probability Values**: The value 4 has the highest probability (0.20), suggesting that it is the most likely outcome.
 - **Comparing Probabilities**: The probability of getting a 4 is higher than getting a 10, as indicated by their respective probabilities (0.20 vs. 0.05).
 - **Sum of Probabilities**: The sum of all these probabilities equals 1, confirming that the table represents a complete probability distribution.
@@ -58,7 +55,7 @@ This table can be visualized using a bar graph, with the height of each bar repr
 
 ![be5cfcd9-6dcb-48ab-80a4-c10313a0ace0](https://github.com/djeada/Statistics-Notes/assets/37275728/f32e53be-7840-4574-b3e2-2e62782f3ec1)
 
-### Example: Roll a Six-Sided Die Until a 6 Appears
+#### Example: Roll a Six-Sided Die Until a 6 Appears
 
 Roll a fair six-sided die repeatedly until the die shows a 6.
 
@@ -91,7 +88,7 @@ Now let's do calculations:
 5. $P(X > 3) = 1 - P(X \leq 3) ≈ 1 - 0.4213 ≈ 0.5787$
 6. $P(X \geq 3) = P(3) + P(4) + P(5) + P(6) + ... ≈ 0.1157 + 0.0964 + 0.0803 + 0.0669 + ...$
 
-### Example: Number of Pets Owned by Individuals
+#### Example: Number of Pets Owned by Individuals
 
 Consider the following probability distribution for the number of pets $P$ owned by individuals.
 
@@ -119,23 +116,20 @@ Find the probability that an individual owns:
 5. 2 or fewer, or more than 4 pets.
    $P(P \leq 2 \text{ or } P > 4) = P(P \leq 2) + P(P > 4) = (0.28 + 0.35 + 0.22) + 0.01 = 0.86$
 
-## Expected Value
+### Expected Value
 
 - The expected value (often denoted as $E(X)$ or $\mu$) is a fundamental concept in probability, representing the average or mean value of a random variable over a large number of trials or observations.
 - It is calculated as a weighted average of all possible values, with weights being their respective probabilities.
 - The expected value alone might not be sufficient to understand a distribution fully, especially if the distribution is skewed or has heavy tails.
+- The expected value provides a measure of the 'center' of a probability distribution.
+- It does not necessarily correspond to the most probable value but is a long-run average if an experiment is repeated many times.
 
-### Calculating Expected Value
+#### Calculating Expected Value
 
 - For a discrete random variable: $E(X) = \sum [x_i \times P(x_i)]$, where $x_i$ are the possible values and $P(x_i)$ their probabilities.
 - For a continuous random variable, it involves integrating the product of the variable's value and its probability density function.
 
-### Interpretation
-
-- The expected value provides a measure of the 'center' of a probability distribution.
-- It does not necessarily correspond to the most probable value but is a long-run average if an experiment is repeated many times.
-
-### Example: Expected Value in a Dice Roll
+#### Example: Expected Value in a Dice Roll
 Consider a fair six-sided dice roll. Each side, numbered from 1 to 6, has an equal probability of appearing on a single roll. The probability for each outcome is $\frac{1}{6}$. 
 
 Step-by-Step Calculation of Expected Value:
@@ -180,7 +174,7 @@ IV. Interpretation:
 - It's important to note that while 3.5 is not a possible outcome of a single roll, it represents the long-term average or the 'center' of the distribution of outcomes.
 - This concept is a cornerstone in probability theory, providing a predictive measure of the behavior of a random variable over many trials.
 
-## Probability Density Function (PDF) - Continuous Variables
+### Probability Density Function (PDF) - Continuous Variables
 For continuous random variables, the PDF provides the probability density at a specific point $x$. The area under the curve between two points on the PDF represents the probability of the variable falling within that range.
 
 $$f_X(x)$$
@@ -196,7 +190,7 @@ Properties:
 
 ![9ebbf08c-de34-44c8-b0f3-5632b0faa7e5](https://github.com/djeada/Statistics-Notes/assets/37275728/a6b7b175-2d5b-4bdb-b987-d427949de9da)
 
-## Probability Mass Function (PMF) - Discrete Variables
+### Probability Mass Function (PMF) - Discrete Variables
 
 For discrete random variables, the PMF specifies the probability of the variable taking a particular value $x$. Directly find the probability of specific outcomes.
 
@@ -215,7 +209,7 @@ Properties:
 
 ![31d2a302-cacc-472a-a5cc-83e0a640e4d3](https://github.com/djeada/Statistics-Notes/assets/37275728/370352a5-ffbd-467c-acd4-6610f18e109f)
 
-## Cumulative Distribution Function (CDF) - Both Continuous and Discrete Variables
+### Cumulative Distribution Function (CDF) - Both Continuous and Discrete Variables
 The CDF shows the probability that a random variable is less than or equal to a specific value $x$. Calculate the probability of the variable falling below a certain threshold.
 
 $$
@@ -235,34 +229,3 @@ Properties:
 
 ![36f05abf-38ae-49c3-898a-18c34edef19d](https://github.com/djeada/Statistics-Notes/assets/37275728/d1c763a8-1ca8-4e7d-a27e-7bf2ca15cd6c)
 
-## Moments and Moment Generating Functions
-
-Moments are key statistical measures that provide insights into the characteristics of a distribution, such as its central tendency, dispersion, and overall shape. Specifically, the $n$th moment of a random variable $X$ around a constant $c$ is defined as the expected value of the $n$th power of the deviation of $X$ from $c$:
-
-$$
-E[(X - c)^n]
-$$
-
-Where $E[\cdot]$ denotes the expected value.
-
-The Moment-Generating Function (MGF) is a powerful tool in the analysis of random variables. For a random variable $X$, the MGF is a function that encapsulates all the moments of $X$. It is defined as the expected value of $e^{tX}$, where $t$ is a real number:
-
-$$
-M_X(t) = E[e^{tX}]
-$$
-
-One of the key properties of the MGF is its ability to generate moments. Specifically, the $n$th moment about the origin is obtained by differentiating the MGF $n$ times with respect to $t$ and then evaluating it at $t=0$:
-
-I. **Mean (First Moment):** The mean or the first moment of $X$ is the expected value of $X$, denoted as $\mu$. It is derived from the first derivative of the MGF at $t=0$:
-
-$$
-E[X] = \mu = M_X^{(1)}(0)
-$$
-
-II. **Variance (Second Moment):** The variance measures the dispersion of the random variable around its mean. It is the second central moment, and it can be derived from the MGF as follows:
-  
-$$
-Var(X) = \sigma^2 = E[X^2] - (E[X])^2 = M_X^{(2)}(0) - \left( M_X^{(1)}(0) \right)^2
-$$
-
-Here, $M_X^{(1)}(0)$ and $M_X^{(2)}(0)$ represent the first and second derivatives of the MGF evaluated at $t=0$, respectively.
