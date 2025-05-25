@@ -5,6 +5,77 @@
 * [ ] `-1`
 * [ ] `2`
 
+#### Q. What is the **null hypothesis** when comparing two population means using a two-sample t-test?
+
+* [x] `μ₁ = μ₂`
+* [ ] `μ₁ ≠ μ₂`
+* [ ] `σ₁² = σ₂²`
+* [ ] `The samples come from different distributions`
+
+#### Q. Which test would you use to compare variances of two normally distributed populations?
+
+* [ ] `Independent t-test`
+* [x] `F-test`
+* [ ] `Chi-square test`
+* [ ] `Paired t-test`
+
+#### Q. What does a **confidence level** of 95% signify?
+
+* [ ] `There is a 95% chance the null hypothesis is true`
+* [x] `If we repeated the experiment many times, 95% of the computed intervals would contain the true parameter`
+* [ ] `The p-value must be less than 0.05`
+* [ ] `The result is statistically significant`
+
+#### Q. Which of the following increases the **width** of a confidence interval, all else being equal?
+
+* [ ] `Decreasing the confidence level`
+* [x] `Decreasing the sample size`
+* [ ] `Reducing the standard deviation`
+* [ ] `Using a one-tailed test instead of two-tailed`
+
+#### Q. What is the **pooled variance** in the context of two-sample t-tests?
+
+* [ ] `A weighted average of the two sample means`
+* [x] `A weighted average of the two sample variances`
+* [ ] `The difference between the two sample variances`
+* [ ] `The variance of the difference in means`
+
+#### Q. When performing a **paired t-test**, what key assumption is different from the independent t-test?
+
+* [ ] `Variances of the two groups are equal`
+* [ ] `Data come from different subjects`
+* [x] `Observations are matched pairs`
+* [ ] `Samples must be large (n>30)`
+
+#### Q. In hypothesis testing, what does **Bonferroni correction** adjust for?
+
+* [ ] `Small sample sizes`
+* [x] `Multiple comparisons to control family-wise error rate`
+* [ ] `Non-normal data distributions`
+* [ ] `Unequal variances between groups`
+
+#### Q. Which nonparametric test is used as an alternative to the one-sample t-test?
+
+* [ ] `Wilcoxon signed-rank test`
+* [x] `Sign test`
+* [ ] `Mann–Whitney U test`
+* [ ] `Kruskal–Wallis test`
+
+#### Q. What is the main advantage of a **nonparametric** hypothesis test?
+
+* [ ] `Greater statistical power when normality holds`
+* [x] `No assumption of specific distributional form`
+* [ ] `Always yields narrower confidence intervals`
+* [ ] `Requires larger sample sizes`
+
+#### Q. In an ANOVA, what does a significant F-statistic indicate?
+
+* [x] `At least one group mean differs from the others`
+* [ ] `All group variances are equal`
+* [ ] `No differences among group means`
+* [ ] `The data are normally distributed`
+
+
 #### Q. What is the purpose of conducting a **chi-square test**?
 
 * [ ] `To test the difference between two sample means`
