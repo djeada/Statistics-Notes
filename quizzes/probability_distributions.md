@@ -1,218 +1,139 @@
-### **Question 1:**  
-Which of the following is true for a **uniform distribution**?  
-1 point  
+#### Q. Which of the following is true for a **uniform distribution**?
 
-- Every outcome has an equal probability  
-- Some outcomes are more likely than others  
-- It can only be applied to discrete variables  
-- It is skewed to the right  
+* [x] `Every outcome has an equal probability`
+* [ ] `Some outcomes are more likely than others`
+* [ ] `It can only be applied to discrete variables`
+* [ ] `It is skewed to the right`
 
----
+#### Q. If the price of a stock is following a **log-normal distribution**, what can we infer?
 
-### **Question 2:**  
-If the price of a stock is following a **log-normal distribution**, what can we infer?  
-1 point  
+* [x] `Stock prices cannot go below zero`
+* [ ] `Stock prices are normally distributed`
+* [ ] `Stock prices are symmetric around the mean`
+* [ ] `Stock returns follow a uniform distribution`
 
-- Stock prices cannot go below zero  
-- Stock prices are normally distributed  
-- Stock prices are symmetric around the mean  
-- Stock returns follow a uniform distribution  
+#### Q. Which of the following is true for a **Poisson distribution**?
 
----
+* [x] `The mean is always equal to the variance`
+* [ ] `It only applies to continuous random variables`
+* [ ] `It assumes that the trials are dependent`
+* [ ] `The events occur in non-overlapping intervals of time`
 
-### **Question 3:**  
-Which of the following is true for a **Poisson distribution**?  
-1 point  
+#### Q. Which of the following is a property of the **exponential distribution**?
 
-- The mean is always equal to the variance  
-- It only applies to continuous random variables  
-- It assumes that the trials are dependent  
-- The events occur in non-overlapping intervals of time  
+* [x] `It models continuous random variables with constant failure rates`
+* [ ] `It models categorical variables`
+* [ ] `It is symmetric`
+* [ ] `It has two peaks`
 
----
+#### Q. Which of the following distributions is appropriate for modeling the number of events in a fixed interval of time or space?
 
-### **Question 4:**  
-Which of the following is a property of the **exponential distribution**?  
-1 point  
+* [ ] `Normal distribution`
+* [x] `Poisson distribution`
+* [ ] `Exponential distribution`
+* [ ] `Binomial distribution`
 
-- It models continuous random variables with constant failure rates  
-- It models categorical variables  
-- It is symmetric  
-- It has two peaks  
+#### Q. In a **binomial distribution**, if we increase the number of trials, what happens to the shape of the distribution?
 
----
+* [ ] `Becomes more skewed`
+* [x] `Approaches a normal distribution`
+* [ ] `Becomes more discrete`
+* [ ] `Becomes less symmetrical`
 
-### **Question 5:**  
-Which of the following distributions is appropriate for modeling the number of events in a fixed interval of time or space?  
-1 point  
+#### Q. In a normally distributed dataset, what percentage of data falls within one standard deviation of the mean?
 
-- Normal distribution  
-- Poisson distribution  
-- Exponential distribution  
-- Binomial distribution  
+* [ ] `50%`
+* [x] `68%`
+* [ ] `95%`
+* [ ] `99%`
 
----
+#### Q. What is the relationship between the **mean and the median** in a left-skewed distribution?
 
-### **Question 6:**  
-In a **binomial distribution**, if we increase the number of trials, what happens to the shape of the distribution?  
-1 point  
+* [ ] `The mean is greater than the median`
+* [x] `The mean is less than the median`
+* [ ] `The mean is equal to the median`
+* [ ] `The mean is unaffected by the skewness`
 
-- Becomes more skewed  
-- Approaches a normal distribution  
-- Becomes more discrete  
-- Becomes less symmetrical  
+#### Q. What does the **Central Limit Theorem (CLT)** state?
 
----
+* [ ] `Any sample will have a normal distribution`
+* [x] `The sample mean will approximate a normal distribution as the sample size increases`
+* [ ] `The population mean is always normally distributed`
+* [ ] `Larger samples have more skewed distributions`
 
-### **Question 7:**  
-In a normally distributed dataset, what percentage of data falls within one standard deviation of the mean?  
-1 point  
+#### Q. What is the **variance** of a standard normal distribution?
 
-- 50%  
-- 68%  
-- 95%  
-- 99%  
+* [ ] `0`
+* [x] `1`
+* [ ] `2`
+* [ ] `0.5`
 
----
+#### Q. The **binomial distribution** can be used to model:
 
-### **Question 8:**  
-What is the relationship between the **mean and the median** in a left-skewed distribution?  
-1 point  
+* [ ] `The time between two events`
+* [x] `The number of successes in a fixed number of trials`
+* [ ] `The rate at which events occur`
+* [ ] `The average value of a dataset`
 
-- The mean is greater than the median  
-- The mean is less than the median  
-- The mean is equal to the median  
-- The mean is unaffected by the skewness  
+#### Q. Which of the following is a **continuous distribution**?
 
----
+* [ ] `Poisson distribution`
+* [ ] `Binomial distribution`
+* [x] `Normal distribution`
+* [ ] `Geometric distribution`
 
-### **Question 9:**  
-What does the **Central Limit Theorem (CLT)** state?  
-1 point  
+#### Q. The **cumulative distribution function (CDF)** of a random variable gives:
 
-- Any sample will have a normal distribution  
-- The sample mean will approximate a normal distribution as the sample size increases  
-- The population mean is always normally distributed  
-- Larger samples have more skewed distributions  
+* [ ] `The probability of all outcomes`
+* [x] `The probability that a random variable takes a value less than or equal to a certain value`
+* [ ] `The sum of the probabilities of all possible values`
+* [ ] `The mean of the distribution`
 
----
+#### Q. Which of the following is true for a **normal distribution**?
 
-### **Question 10:**  
-What is the **variance** of a standard normal distribution?  
-1 point  
+* [ ] `It is skewed to the right`
+* [x] `It is bell-shaped and symmetric`
+* [ ] `It can model the number of events in an interval`
+* [ ] `It is only applicable to categorical data`
 
-- 0  
-- 1  
-- 2  
-- 0.5  
+#### Q. Which of the following distributions is appropriate for modeling the **time between independent events**?
 
----
+* [ ] `Normal distribution`
+* [ ] `Binomial distribution`
+* [x] `Exponential distribution`
+* [ ] `Poisson distribution`
 
-### **Question 11:**  
-The **binomial distribution** can be used to model:  
-1 point  
+#### Q. What is the **skewness** of a normal distribution?
 
-- The time between two events  
-- The number of successes in a fixed number of trials  
-- The rate at which events occur  
-- The average value of a dataset  
+* [ ] `Positive`
+* [ ] `Negative`
+* [x] `Zero`
+* [ ] `Undefined`
 
----
+#### Q. For a **Poisson distribution**, as the rate parameter (λ) increases, the distribution becomes:
 
-### **Question 12:**  
-Which of the following is a **continuous distribution**?  
-1 point  
+* [ ] `More skewed`
+* [x] `More symmetric`
+* [ ] `More discrete`
+* [ ] `Unaffected`
 
-- Poisson distribution  
-- Binomial distribution  
-- Normal distribution  
-- Geometric distribution  
+#### Q. In a **geometric distribution**, what does the random variable represent?
 
----
+* [ ] `The number of successes in a fixed number of trials`
+* [ ] `The time between two events`
+* [x] `The number of trials until the first success`
+* [ ] `The probability of a specific event`
 
-### **Question 13:**  
-The **cumulative distribution function (CDF)** of a random variable gives:  
-1 point  
+#### Q. Which of the following is true about the **variance of a binomial distribution**?
 
-- The probability of all outcomes  
-- The probability that a random variable takes a value less than or equal to a certain value  
-- The sum of the probabilities of all possible values  
-- The mean of the distribution  
+* [ ] `It is always equal to the number of trials`
+* [x] `It depends on both the number of trials and the probability of success`
+* [ ] `It is independent of the probability of success`
+* [ ] `It is always less than 1`
 
----
+#### Q. A **Bernoulli distribution** can only take which two values?
 
-### **Question 14:**  
-Which of the following is true for a **normal distribution**?  
-1 point  
-
-- It is skewed to the right  
-- It is bell-shaped and symmetric  
-- It can model the number of events in an interval  
-- It is only applicable to categorical data  
-
----
-
-### **Question 15:**  
-Which of the following distributions is appropriate for modeling the **time between independent events**?  
-1 point  
-
-- Normal distribution  
-- Binomial distribution  
-- Exponential distribution  
-- Poisson distribution  
-
----
-
-### **Question 16:**  
-What is the **skewness** of a normal distribution?  
-1 point  
-
-- Positive  
-- Negative  
-- Zero  
-- Undefined  
-
----
-
-### **Question 17:**  
-For a **Poisson distribution**, as the rate parameter (λ) increases, the distribution becomes:  
-1 point  
-
-- More skewed  
-- More symmetric  
-- More discrete  
-- Unaffected  
-
----
-
-### **Question 18:**  
-In a **geometric distribution**, what does the random variable represent?  
-1 point  
-
-- The number of successes in a fixed number of trials  
-- The time between two events  
-- The number of trials until the first success  
-- The probability of a specific event  
-
----
-
-### **Question 19:**  
-Which of the following is true about the **variance of a binomial distribution**?  
-1 point  
-
-- It is always equal to the number of trials  
-- It depends on both the number of trials and the probability of success  
-- It is independent of the probability of success  
-- It is always less than 1  
-
----
-
-### **Question 20:**  
-A **Bernoulli distribution** can only take which two values?  
-1 point  
-
-- -1 and 1  
-- 0 and 1  
-- 0 and any positive integer  
-- Any real number  
-
+* [ ] `-1 and 1`
+* [x] `0 and 1`
+* [ ] `0 and any positive integer`
+* [ ] `Any real number`
