@@ -19,6 +19,132 @@
 * [ ] `To forecast future values`
 * [ ] `To smooth the time series`
 
+#### Q. In an **ARIMA(p, d, q)** model, what does the **d** parameter represent?
+
+* [ ] `The number of autoregressive terms`
+* [x] `The number of differences needed to make the series stationary`
+* [ ] `The number of moving-average terms`
+* [ ] `The seasonal period`
+
+#### Q. Which plot would you examine to decide the AR order **p** when fitting an ARIMA model?
+
+* [x] `Partial Autocorrelation Function (PACF)`
+* [ ] `Autocorrelation Function (ACF)`
+* [ ] `Histogram of residuals`
+* [ ] `Time-series decomposition plot`
+
+#### Q. What is the main purpose of **seasonal differencing** in a SARIMA model?
+
+* [ ] `To stabilize variance`
+* [ ] `To remove the overall trend`
+* [x] `To remove recurring seasonal patterns of period m`
+* [ ] `To smooth random noise`
+
+#### Q. In a **SARIMA(p, d, q)×(P, D, Q)m** model, what does **P** control?
+
+* [x] `The number of seasonal autoregressive terms`
+* [ ] `The seasonal differencing order`
+* [ ] `The seasonal moving-average order`
+* [ ] `The non-seasonal moving-average order`
+
+#### Q. What information criterion balances model fit against complexity when selecting ARIMA orders?
+
+* [ ] `R²`
+* [ ] `Log-likelihood`
+* [x] `AIC (Akaike Information Criterion)`
+* [ ] `Durbin–Watson statistic`
+
+#### Q. Over-differencing an ARIMA model typically leads to:
+
+* [ ] `Underestimated parameter standard errors`
+* [x] `Introduction of spurious MA terms and inflated variance`
+* [ ] `Persistent autocorrelation in residuals`
+* [ ] `Lower AIC values`
+
+#### Q. After fitting an ARIMA or SARIMA model, which diagnostic indicates residuals are still autocorrelated?
+
+* [ ] `Shapiro–Wilk test on residuals`
+* [x] `Significant spikes in the ACF of residuals`
+* [ ] `Constant variance in residuals over time`
+* [ ] `Ljung–Box p-value > 0.05`
+#### Q. Which method is commonly used to **remove trend** in time series data?
+
+* [ ] `Exponential smoothing`
+* [x] `Differencing`
+* [ ] `Cross-validation`
+* [ ] `Seasonal decomposition` 
+
+#### Q. How does **LSTM** differ from a traditional **RNN** in time series forecasting?
+
+* [ ] `LSTM models use moving averages instead of past values`
+* [x] `LSTM can capture long-term dependencies by mitigating the vanishing gradient problem`
+* [ ] `LSTM requires data to be stationary while RNN does not`
+* [ ] `LSTM only works for seasonal data` 
+
+#### Q. Which technique is commonly used to **impute missing values** in a time series?
+
+* [ ] `Dropping the entire series`
+* [ ] `Mean substitution across the full dataset`
+* [x] `Interpolation or forward/backward fill`
+* [ ] `Ignoring them during modeling` 
+
+#### Q. Which method provides a **robust evaluation** of time series models by respecting temporal ordering?
+
+* [ ] `Random k-fold cross-validation`
+* [ ] `Leave-one-out cross-validation`
+* [x] `Time Series Cross-Validation (e.g., TimeSeriesSplit)`
+* [ ] `Bootstrapping` 
+
+#### Q. What is the key **difference** between an **ARIMA** and a **SARIMA** model?
+
+* [ ] `ARIMA includes seasonal terms; SARIMA does not`
+* [ ] `SARIMA does not require differencing`
+* [x] `SARIMA adds explicit seasonal AR, differencing, and MA components`
+* [ ] `ARIMA can only model additive components` 
+
+#### Q. A standard **time series decomposition** splits data into which three components?
+
+* [ ] `Autoregression, Integration, Moving Average`
+* [ ] `Trend, Autocorrelation, Residual`
+* [x] `Trend, Seasonality, Residual (Noise)`
+* [ ] `Mean, Median, Mode`
+
+#### Q. Which metric measures the **average absolute percentage error** in forecasts?
+
+* [ ] `MAE (Mean Absolute Error)`
+* [ ] `MSE (Mean Squared Error)`
+* [ ] `RMSE (Root Mean Squared Error)`
+* [x] `MAPE (Mean Absolute Percentage Error)` 
+
+#### Q. What is the primary **purpose of time series cross-validation**?
+
+* [ ] `To remove seasonality from data`
+* [ ] `To impute missing values`
+* [x] `To assess model performance on unseen future data segments`
+* [ ] `To test for stationarity`
+
+#### Q. What does the **“m”** in SARIMA(p, d, q)×(P, D, Q)m denote?
+
+* [ ] `The order of non-seasonal MA terms`
+* [ ] `The total number of parameters`
+* [x] `The seasonal period (e.g., 12 for monthly data)`
+* [ ] `The number of differences applied`
+
+#### Q. In forecasting with ARIMA, the **prediction intervals** widen over longer horizons because:
+
+* [ ] `The model’s parameters change over time`
+* [x] `Forecast uncertainty accumulates with each step ahead`
+* [ ] `Seasonality increases at longer lags`
+* [ ] `Residuals become more autocorrelated`
+
+#### Q. Which method automates ARIMA order selection by testing stationarity and minimizing AIC?
+
+* [ ] `Ljung–Box test`
+* [ ] `Box–Cox transformation`
+* [x] `auto.arima()`
+* [ ] `KPSS test`
+
+
 #### Q. Which of the following is a characteristic of a **stationary time series**?
 
 * [ ] `The mean and variance change over time`
