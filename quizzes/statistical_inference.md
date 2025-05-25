@@ -1,220 +1,281 @@
+#### Q. What is the **z-score** in a standard normal distribution for a value that is exactly equal to the mean?
 
+* [x] `0`
+* [ ] `1`
+* [ ] `-1`
+* [ ] `2`
 
-### **Question 1:**  
-What is the **z-score** in a standard normal distribution for a value that is exactly equal to the mean?  
-1 point  
+#### Q. What is the purpose of conducting a **chi-square test**?
 
-- 0  
-- 1  
-- -1  
-- 2  
+* [ ] `To test the difference between two sample means`
+* [ ] `To test the variance of a population`
+* [x] `To test for the independence of categorical variables`
+* [ ] `To test for correlation between two continuous variables`
 
----
+#### Q. Which of the following would increase the **power of a statistical test**?
 
-### **Question 2:**  
-What is the purpose of conducting a **chi-square test**?  
-1 point  
+* [ ] `Decreasing the sample size`
+* [x] `Increasing the significance level`
+* [ ] `Decreasing the effect size`
+* [ ] `Decreasing the number of trials`
 
-- To test the difference between two sample means  
-- To test the variance of a population  
-- To test for the independence of categorical variables  
-- To test for correlation between two continuous variables  
+#### Q. What does a **wide confidence interval** suggest about the data?
 
----
+* [ ] `The data has low variability`
+* [x] `The data has high variability`
+* [ ] `The sample size is large`
+* [ ] `The p-value is small`
 
-### **Question 3:**  
-Which of the following would increase the **power of a statistical test**?  
-1 point  
+#### Q. Which statistical test would you use to compare the **means of two independent groups**?
 
-- Decreasing the sample size  
-- Increasing the significance level  
-- Decreasing the effect size  
-- Decreasing the number of trials  
+* [ ] `Paired t-test`
+* [x] `Independent t-test`
+* [ ] `Chi-square test`
+* [ ] `ANOVA`
 
----
+#### Q. What does the "alpha" (α) represent in **hypothesis testing**?
 
-### **Question 4:**  
-What does a **wide confidence interval** suggest about the data?  
-1 point  
+* [ ] `The confidence interval`
+* [x] `The probability of rejecting the null hypothesis when it is true`
+* [ ] `The p-value of the test`
+* [ ] `The likelihood that the alternative hypothesis is true`
 
-- The data has low variability  
-- The data has high variability  
-- The sample size is large  
-- The p-value is small  
+#### Q. Which of the following is a condition for the use of a **t-test**?
 
----
+* [ ] `The sample size must be larger than 100`
+* [ ] `The population variance must be known`
+* [x] `The sample data should be normally distributed`
+* [ ] `The data must be categorical`
 
-### **Question 5:**  
-Which statistical test would you use to compare the **means of two independent groups**?  
-1 point  
+#### Q. What does a **p-value** in hypothesis testing represent?
 
-- Paired t-test  
-- Independent t-test  
-- Chi-square test  
-- ANOVA  
+* [ ] `The probability that the null hypothesis is true`
+* [x] `The probability of observing the data if the null hypothesis is true`
+* [ ] `The confidence level of the test`
+* [ ] `The significance level of the test`
 
----
+#### Q. Which of the following is true about a **p-value** in a two-tailed test?
 
-### **Question 6:**  
-What does the "alpha" (α) represent in **hypothesis testing**?  
-1 point  
+* [ ] `It measures the probability of the alternative hypothesis being true`
+* [x] `It is the sum of the probabilities of both tails of the distribution`
+* [ ] `It equals the area under the curve for one tail only`
+* [ ] `It is the probability of observing the sample data given the null hypothesis is false`
 
-- The confidence interval  
-- The probability of rejecting the null hypothesis when it is true  
-- The p-value of the test  
-- The likelihood that the alternative hypothesis is true  
+#### Q. Which type of hypothesis test assumes a **specific direction** in the test (e.g., μ > 0)?
 
----
+* [x] `One-tailed test`
+* [ ] `Two-tailed test`
+* [ ] `Chi-square test`
+* [ ] `F-test`
 
-### **Question 7:**  
-Which of the following is a condition for the use of a **t-test**?  
-1 point  
+#### Q. What does the **null hypothesis (H₀)** usually represent in hypothesis testing?
 
-- The sample size must be larger than 100  
-- The population variance must be known  
-- The sample data should be normally distributed  
-- The data must be categorical  
+* [x] `There is no effect or difference`
+* [ ] `The alternative hypothesis is true`
+* [ ] `The sample mean is greater than the population mean`
+* [ ] `The p-value is less than alpha`
 
----
+#### Q. When the **p-value** is **less than alpha (α)**, what is the correct conclusion?
 
-### **Question 8:**  
-What does a **p-value** in hypothesis testing represent?  
-1 point  
+* [ ] `Fail to reject the null hypothesis`
+* [ ] `Accept the null hypothesis`
+* [x] `Reject the null hypothesis`
+* [ ] `There is insufficient evidence to make a decision`
 
-- The probability that the null hypothesis is true  
-- The probability of observing the data if the null hypothesis is true  
-- The confidence level of the test  
-- The significance level of the test  
+#### Q. In a **one-tailed hypothesis test**, what does the critical region represent?
 
----
+* [ ] `The area under the curve that includes the mean`
+* [x] `The region where the null hypothesis is rejected`
+* [ ] `The region where the null hypothesis is accepted`
+* [ ] `The entire distribution of the sample data`
 
-### **Question 9:**  
-Which of the following is true about a **p-value** in a two-tailed test?  
-1 point  
+#### Q. What does it mean if the **p-value** is **greater than alpha (α)**?
 
-- It measures the probability of the alternative hypothesis being true  
-- It is the sum of the probabilities of both tails of the distribution  
-- It equals the area under the curve for one tail only  
-- It is the probability of observing the sample data given the null hypothesis is false  
+* [ ] `There is strong evidence against the null hypothesis`
+* [ ] `The result is statistically significant`
+* [x] `The result is not statistically significant`
+* [ ] `The sample mean is less than the population mean`
 
----
+#### Q. In a **paired t-test**, the data must:
 
-### **Question 10:**  
-Which type of hypothesis test assumes a **specific direction** in the test (e.g., μ > 0)?  
-1 point  
+* [ ] `Come from independent groups`
+* [x] `Be continuous and normally distributed`
+* [ ] `Involve categorical variables`
+* [ ] `Come from populations with unequal variances`
 
-- One-tailed test  
-- Two-tailed test  
-- Chi-square test  
-- F-test  
+#### Q. What does the **standard error** measure in hypothesis testing?
 
----
+* [ ] `The variability within the population`
+* [x] `The variability of the sample mean from the population mean`
+* [ ] `The probability of a Type I error`
+* [ ] `The significance level of the test`
 
-### **Question 11:**  
-What does the **null hypothesis (H₀)** usually represent in hypothesis testing?  
-1 point  
+#### Q. What is a **Type I error** in hypothesis testing?
 
-- There is no effect or difference  
-- The alternative hypothesis is true  
-- The sample mean is greater than the population mean  
-- The p-value is less than alpha  
+* [x] `Rejecting the null hypothesis when it is true`
+* [ ] `Failing to reject the null hypothesis when it is false`
+* [ ] `Accepting the alternative hypothesis when it is false`
+* [ ] `Concluding the sample mean is greater than the population mean`
 
----
+#### Q. Which of the following represents a **Type II error**?
 
-### **Question 12:**  
-When the **p-value** is **less than alpha (α)**, what is the correct conclusion?  
-1 point  
+* [ ] `Rejecting the null hypothesis when it is true`
+* [x] `Failing to reject the null hypothesis when it is false`
+* [ ] `Accepting the alternative hypothesis when it is false`
+* [ ] `Concluding the p-value is less than alpha`
 
-- Fail to reject the null hypothesis  
-- Accept the null hypothesis  
-- Reject the null hypothesis  
-- There is insufficient evidence to make a decision  
+#### Q. In hypothesis testing, **power** refers to:
 
----
+* [x] `The probability of rejecting the null hypothesis when it is false`
+* [ ] `The probability of failing to reject the null hypothesis when it is false`
+* [ ] `The probability of making a Type I error`
+* [ ] `The probability of observing a sample mean equal to the population mean`
 
-### **Question 13:**  
-In a **one-tailed hypothesis test**, what does the critical region represent?  
-1 point  
+#### Q. What does an **F-test** assess?
 
-- The area under the curve that includes the mean  
-- The region where the null hypothesis is rejected  
-- The region where the null hypothesis is accepted  
-- The entire distribution of the sample data  
+* [ ] `The mean differences between multiple groups`
+* [ ] `The correlation between two variables`
+* [x] `The equality of variances between two or more groups`
+* [ ] `The independence of categorical variables`
 
 ---
 
-### **Question 14:**  
-What does it mean if the **p-value** is **greater than alpha (α)**?  
-1 point  
+#### Q. Which of the following is true for a **uniform distribution**?
 
-- There is strong evidence against the null hypothesis  
-- The result is statistically significant  
-- The result is not statistically significant  
-- The sample mean is less than the population mean  
+* [x] `Every outcome has an equal probability`
+* [ ] `Some outcomes are more likely than others`
+* [ ] `It can only be applied to discrete variables`
+* [ ] `It is skewed to the right`
 
----
+#### Q. If the price of a stock is following a **log-normal distribution**, what can we infer?
 
-### **Question 15:**  
-In a **paired t-test**, the data must:  
-1 point  
+* [x] `Stock prices cannot go below zero`
+* [ ] `Stock prices are normally distributed`
+* [ ] `Stock prices are symmetric around the mean`
+* [ ] `Stock returns follow a uniform distribution`
 
-- Come from independent groups  
-- Be continuous and normally distributed  
-- Involve categorical variables  
-- Come from populations with unequal variances  
+#### Q. Which of the following is true for a **Poisson distribution**?
 
----
+* [x] `The mean is always equal to the variance`
+* [ ] `It only applies to continuous random variables`
+* [ ] `It assumes that the trials are dependent`
+* [ ] `The events occur in non-overlapping intervals of time`
 
-### **Question 16:**  
-What does the **standard error** measure in hypothesis testing?  
-1 point  
+#### Q. Which of the following is a property of the **exponential distribution**?
 
-- The variability within the population  
-- The variability of the sample mean from the population mean  
-- The probability of a Type I error  
-- The significance level of the test  
+* [x] `It models continuous random variables with constant failure rates`
+* [ ] `It models categorical variables`
+* [ ] `It is symmetric`
+* [ ] `It has two peaks`
 
----
+#### Q. Which of the following distributions is appropriate for modeling the number of events in a fixed interval of time or space?
 
-### **Question 17:**  
-What is a **Type I error** in hypothesis testing?  
-1 point  
+* [ ] `Normal distribution`
+* [x] `Poisson distribution`
+* [ ] `Exponential distribution`
+* [ ] `Binomial distribution`
 
-- Rejecting the null hypothesis when it is true  
-- Failing to reject the null hypothesis when it is false  
-- Accepting the alternative hypothesis when it is false  
-- Concluding the sample mean is greater than the population mean  
+#### Q. In a **binomial distribution**, if we increase the number of trials, what happens to the shape of the distribution?
 
----
+* [ ] `Becomes more skewed`
+* [x] `Approaches a normal distribution`
+* [ ] `Becomes more discrete`
+* [ ] `Becomes less symmetrical`
 
-### **Question 18:**  
-Which of the following represents a **Type II error**?  
-1 point  
+#### Q. In a normally distributed dataset, what percentage of data falls within one standard deviation of the mean?
 
-- Rejecting the null hypothesis when it is true  
-- Failing to reject the null hypothesis when it is false  
-- Accepting the alternative hypothesis when it is false  
-- Concluding the p-value is less than alpha  
+* [ ] `50%`
+* [x] `68%`
+* [ ] `95%`
+* [ ] `99%`
 
----
+#### Q. What is the relationship between the **mean and the median** in a left-skewed distribution?
 
-### **Question 19:**  
-In hypothesis testing, **power** refers to:  
-1 point  
+* [ ] `The mean is greater than the median`
+* [x] `The mean is less than the median`
+* [ ] `The mean is equal to the median`
+* [ ] `The mean is unaffected by the skewness`
 
-- The probability of rejecting the null hypothesis when it is false  
-- The probability of failing to reject the null hypothesis when it is false  
-- The probability of making a Type I error  
-- The probability of observing a sample mean equal to the population mean  
+#### Q. What does the **Central Limit Theorem (CLT)** state?
 
----
+* [ ] `Any sample will have a normal distribution`
+* [x] `The sample mean will approximate a normal distribution as the sample size increases`
+* [ ] `The population mean is always normally distributed`
+* [ ] `Larger samples have more skewed distributions`
 
-### **Question 20:**  
-What does an **F-test** assess?  
-1 point  
+#### Q. What is the **variance** of a standard normal distribution?
 
-- The mean differences between multiple groups  
-- The correlation between two variables  
-- The equality of variances between two or more groups  
-- The independence of categorical variables  
+* [ ] `0`
+* [x] `1`
+* [ ] `2`
+* [ ] `0.5`
 
+#### Q. The **binomial distribution** can be used to model:
+
+* [ ] `The time between two events`
+* [x] `The number of successes in a fixed number of trials`
+* [ ] `The rate at which events occur`
+* [ ] `The average value of a dataset`
+
+#### Q. Which of the following is a **continuous distribution**?
+
+* [ ] `Poisson distribution`
+* [ ] `Binomial distribution`
+* [x] `Normal distribution`
+* [ ] `Geometric distribution`
+
+#### Q. The **cumulative distribution function (CDF)** of a random variable gives:
+
+* [ ] `The probability of all outcomes`
+* [x] `The probability that a random variable takes a value less than or equal to a certain value`
+* [ ] `The sum of the probabilities of all possible values`
+* [ ] `The mean of the distribution`
+
+#### Q. Which of the following is true for a **normal distribution**?
+
+* [ ] `It is skewed to the right`
+* [x] `It is bell-shaped and symmetric`
+* [ ] `It can model the number of events in an interval`
+* [ ] `It is only applicable to categorical data`
+
+#### Q. Which of the following distributions is appropriate for modeling the **time between independent events**?
+
+* [ ] `Normal distribution`
+* [ ] `Binomial distribution`
+* [x] `Exponential distribution`
+* [ ] `Poisson distribution`
+
+#### Q. What is the **skewness** of a normal distribution?
+
+* [ ] `Positive`
+* [ ] `Negative`
+* [x] `Zero`
+* [ ] `Undefined`
+
+#### Q. For a **Poisson distribution**, as the rate parameter (λ) increases, the distribution becomes:
+
+* [ ] `More skewed`
+* [x] `More symmetric`
+* [ ] `More discrete`
+* [ ] `Unaffected`
+
+#### Q. In a **geometric distribution**, what does the random variable represent?
+
+* [ ] `The number of successes in a fixed number of trials`
+* [ ] `The time between two events`
+* [x] `The number of trials until the first success`
+* [ ] `The probability of a specific event`
+
+#### Q. Which of the following is true about the **variance of a binomial distribution**?
+
+* [ ] `It is always equal to the number of trials`
+* [x] `It depends on both the number of trials and the probability of success`
+* [ ] `It is independent of the probability of success`
+* [ ] `It is always less than 1`
+
+#### Q. A **Bernoulli distribution** can only take which two values?
+
+* [ ] `-1 and 1`
+* [x] `0 and 1`
+* [ ] `0 and any positive integer`
+* [ ] `Any real number`
