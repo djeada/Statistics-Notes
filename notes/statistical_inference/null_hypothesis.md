@@ -1,6 +1,6 @@
 ## Null Hypotheses and Alternative Hypotheses
 
-Statistical hypothesis testing is a fundamental method used in research to make inferences about populations based on sample data. Understanding the concepts of null and alternative hypotheses, as well as how to calculate and interpret p-values, is crucial for conducting robust and meaningful analyses. This section delves into these concepts, providing a comprehensive overview to enhance your statistical toolkit.
+Statistical hypothesis testing is a method used in research to make inferences about populations based on sample data. Understanding the concepts of null and alternative hypotheses, as well as how to calculate and interpret p-values, is crucial for conducting robust and meaningful analyses. This section delves into these concepts, providing a comprehensive overview to enhance your statistical toolkit.
 
 After reading this material you should be able to tell:
 
@@ -85,12 +85,12 @@ IV. **Sum of Probabilities**:
 
 $$
 \begin{align*}
-P(X = 0) &= 0.00098 \\
-P(X = 1) &= 0.00977 \\
-P(X = 2) &= 0.04395 \\
-P(X = 3) &= 0.11719 \\
-P(X = 4) &= 0.20508 \\
-\sum_{k=0}^{4} P(X = k) &= 0.37697
+P(X = 0) = 0.00098 \\
+P(X = 1) = 0.00977 \\
+P(X = 2) = 0.04395 \\
+P(X = 3) = 0.11719 \\
+P(X = 4) = 0.20508 \\
+\sum_{k=0}^{4} P(X = k) = 0.37697
 \end{align*}
 $$
 
