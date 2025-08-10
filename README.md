@@ -175,7 +175,7 @@ Antifragile: Things That Gain from Disorder https://amzn.to/4mhWf7e
 - [SpringerLink: An Introduction to Statistical Learning](https://link.springer.com/book/10.1007/978-1-4614-7138-7)
 - [SpringerLink: The Elements of Statistical Learning](https://link.springer.com/book/10.1007/978-0-387-21736-9)
 
-### OpenSource eBooks
+### Open Source eBooks
 
 - [Think Bayes by Allen Downey](https://allendowney.github.io/ThinkBayes2/)
 - [Online Statistics Education: An Interactive Multimedia Course](https://onlinestatbook.com/2/index.html)
