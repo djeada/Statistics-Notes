@@ -156,7 +156,7 @@ We encourage contributions that enhance the repository's value. To contribute:
 Naked Statistics: Stripping the Dread from the Data https://amzn.to/3JahNUE
 
 
-The Signal and the Noise: Why So Many Predictions Fail--but Some Don't https://amzn.to/41CE57B
+- [The Signal and the Noise: Why So Many Predictions Fail--but Some Don't](https://amzn.to/41CE57B)
 
 How Not to Be Wrong: The Power of Mathematical Thinking https://amzn.to/45aIWzf
 The Black Swan: The Impact of the Highly Improbable https://amzn.to/4fu9MG1
