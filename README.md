@@ -180,7 +180,7 @@ Antifragile: Things That Gain from Disorder https://amzn.to/4mhWf7e
 - [Think Bayes by Allen Downey](https://allendowney.github.io/ThinkBayes2/)
 - [Online Statistics Education: An Interactive Multimedia Course](https://onlinestatbook.com/2/index.html)
 - [OpenStax: Introductory Statistics 2e](https://openstax.org/books/introductory-statistics-2e)
-https://people.math.umass.edu/%7Elavine/Book/book.pdf
+- [Introduction to Probability by Charles M. Grinstead and J. Laurie Snell (PDF)](https://people.math.umass.edu/%7Elavine/Book/book.pdf)
 
 ### Resources and Cheat Sheets
 - [Probability Cheatsheet on GitHub](https://github.com/wzchen/probability_cheatsheet)
