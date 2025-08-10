@@ -152,26 +152,13 @@ We encourage contributions that enhance the repository's value. To contribute:
 
 ### Books
 
-
-Naked Statistics: Stripping the Dread from the Data https://amzn.to/3JahNUE
-
-
 - [The Signal and the Noise: Why So Many Predictions Fail--but Some Don't](https://amzn.to/41CE57B)
-
-How Not to Be Wrong: The Power of Mathematical Thinking https://amzn.to/45aIWzf
 - [The Black Swan: The Impact of the Highly Improbable](https://amzn.to/4fu9MG1)
 Antifragile: Things That Gain from Disorder https://amzn.to/4mhWf7e
 - [Naked Statistics: Stripping the Dread from the Data](https://amzn.to/3JahNUE)
-
-
-- [The Signal and the Noise: Why So Many Predictions Fail--but Some Don't](https://amzn.to/41CE57B)
-
 - [How Not to Be Wrong: The Power of Mathematical Thinking](https://amzn.to/45aIWzf)
-- [The Black Swan: The Impact of the Highly Improbable](https://amzn.to/4fu9MG1)
 - [Antifragile: Things That Gain from Disorder](https://amzn.to/4mhWf7e)
 - [Fooled by Randomness: The Hidden Role of Chance in Life and in the Markets](https://amzn.to/4mfiBGq)
-
-
 - [SpringerLink: An Introduction to Statistical Learning](https://link.springer.com/book/10.1007/978-1-4614-7138-7)
 - [SpringerLink: The Elements of Statistical Learning](https://link.springer.com/book/10.1007/978-0-387-21736-9)
 
