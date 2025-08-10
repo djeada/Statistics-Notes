@@ -1,46 +1,51 @@
 # Statistics
 
-This repository contains notes, explanations, and code snippets related to essential statistics concepts and techniques. The materials cover a range of topics, from basic probability and descriptive statistics to more advanced concepts like hypothesis testing and confidence intervals.
+This repository contains notes, explanations, and code snippets covering essential statistics concepts and techniques. Topics range from basic probability and descriptive statistics to more advanced concepts such as hypothesis testing and confidence intervals.
 
 ## Requirements
 
-The programming examples in this repository are primarily implemented in Python due to its simplicity, versatility, and the robustness of its scientific computing ecosystem. The code exploits various widely-used libraries such as NumPy for numerical computing, SciPy for advanced scientific computations, and pandas for data manipulation and analysis. As a result, a basic understanding of Python programming and its scientific libraries would be beneficial for comprehending and utilizing the code snippets.
+The programming examples are implemented in **Python** for its simplicity, versatility, and rich scientific computing ecosystem. The code makes use of widely used libraries such as:
 
-To ensure you can run the code snippets and notebooks seamlessly, please make sure your environment fulfills the Python dependencies. We recommend setting up a virtual environment to avoid any package conflicts.
+* **NumPy** for numerical computing
+* **SciPy** for advanced scientific computations
+* **pandas** for data manipulation and analysis
 
-You can set up a virtual environment using the following steps:
+A basic understanding of Python and its scientific libraries will help you make the most of the code examples.
+
+### Setting up your environment
+
+We recommend using a virtual environment to avoid package conflicts.
 
 ```bash
 # Create a virtual environment
 python3 -m venv env
 ```
 
-To activate the virtual environment, the command differs based on your operating system:
+Activate the environment:
 
 ```bash
-# On Windows, use:
+# On Windows
 env\Scripts\activate
 
-# On Unix or MacOS, use:
+# On Unix or macOS
 source env/bin/activate
 ```
 
-Once the virtual environment is activated, install the necessary packages using pip:
+Install the dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Now, you should be ready to run the code in this repository.
+Now you’re ready to run the scripts:
 
 ```bash
-# Here's an example of how you can run a Python script
 python scripts/basic_concepts/basic_concepts.py
 ```
 
-Remember to replace 'scripts/basic_concepts/basic_concepts.py' with the actual name of the script you wish to run.
+Replace `scripts/basic_concepts/basic_concepts.py` with the actual path to the script you want to run.
 
-When you're done working, you can deactivate the virtual environment by simply running the deactivate command.
+When finished, deactivate the environment:
 
 ```bash
 deactivate
