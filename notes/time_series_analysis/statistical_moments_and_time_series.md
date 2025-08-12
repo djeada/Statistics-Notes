@@ -6,8 +6,8 @@ Understanding the behavior of time series data is crucial across various fields 
 
 Statistical moments are used to summarize and describe the key characteristics of random variables. When applied to time series data, these moments can change over time, revealing important insights about the dynamics of the process.
 
-* **Mean (First Moment)**: The mean represents the central tendency of the data, showing where the "center" or average value of the time series lies.
-* **Standard Deviation (Second Moment)**: The standard deviation measures how spread out or dispersed the data points are around the mean, indicating the degree of variability.
+* Using the *mean* (First Momemnt) as a summary measure provides a clear reference point for the central location of the data, whereas neglecting it can make comparisons across datasets inconsistent; for example, knowing the average daily temperature helps compare climates between two cities.
+* Calculating the *standard deviation* (Second Moment) reveals how much individual data points deviate from the mean, while omitting it can hide the true variability of the dataset; for instance, two factories might have the same average production output, but one could have far greater fluctuations in daily output than the other.
 
 While these two moments are fundamental, time series data often exhibit more complex behaviors, where both the mean and/or variance change over time. This makes the analysis of time series more intricate compared to simple datasets.
 
@@ -53,6 +53,6 @@ To explore this difference, consider the following visualization.
 
 Recognizing the dependence structure in time series data is critical for accurate modeling and forecasting. Traditional statistical techniques, which assume that data points are independent, may fail to identify important patterns in time series data, leading to incorrect or misleading results.
 
-* **Autoregressive Models (AR)**: These models capture the dependence of a value at time \$t\$ on its previous values, \$x(t-1), x(t-2), \dots\$ This helps in forecasting based on past behaviors.
-* **Moving Average Models (MA)**: These models use past forecast errors to predict future values, essentially smoothing out the random noise in the data.
-* **Hybrid Models (ARMA)**: These models combine both autoregressive and moving average components, allowing them to capture more complex relationships and dependencies within the data.
+* When past values are used to predict the next value, an *autoregressive model* can identify recurring patterns and trends, whereas omitting this approach may cause forecasts to ignore momentum in the data; for example, predicting stock prices without past price information often yields less accurate short-term projections.
+* If predictions are instead based on past errors rather than past values, a *moving average model* can help smooth random fluctuations, while skipping it can lead to forecasts being overly sensitive to sudden noise; for instance, weather temperature forecasts can be improved by smoothing daily measurement errors.
+* By integrating both past values and past errors, a *hybrid ARMA model* can capture relationships that neither component alone could model effectively, whereas avoiding this combination might miss interactions between trends and noise; for example, sales forecasts often improve when both seasonal patterns and past prediction inaccuracies are considered.
