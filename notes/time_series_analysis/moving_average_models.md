@@ -99,6 +99,8 @@ I. **Plot the Autocorrelation Function (ACF):**
 
 - Identify the lag beyond which the autocorrelations drop to zero.
 - A sharp cutoff in the ACF after lag $q$ suggests an MA($q$) model.
+- A common screening rule is to use the $\\pm 1.96/\\sqrt{n}$ bounds:
+  - If only lags up to $h_0$ exceed the bounds and all $h > h_0$ are inside, then an MA($q$) with $q=h_0$ is a natural first guess.
 
 II. **Estimate Models with Varying Orders:**
 

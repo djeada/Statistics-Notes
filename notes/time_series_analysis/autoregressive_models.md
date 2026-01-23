@@ -203,6 +203,9 @@ Both AIC and BIC are minimized at **AR(2)**, indicating that an AR(2) model is t
 - A time series is stationary when its statistical properties, such as mean and variance, remain constant over time.  
 - An AR model is stationary if the roots of its characteristic equation lie outside the unit circle in the complex plane.  
 - For an AR(1) model, stationarity is ensured if \( |\phi_1| < 1 \), meaning the absolute value of the autoregressive coefficient is less than one.  
+- For AR(1), a **causal** (future‑independent) stationary solution exists only when \( |\phi_1| < 1 \).  
+- If \( |\phi_1| > 1 \), a stationary solution can be written only in a **noncausal** form that depends on future shocks.  
+- If \( \phi_1 = \pm 1 \), no stationary solution exists.  
 
 **Autocorrelation Function (ACF)**
 

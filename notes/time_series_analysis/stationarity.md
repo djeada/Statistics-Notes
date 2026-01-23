@@ -31,6 +31,10 @@ By subtracting this linear trend from the original stock price data, we obtain "
 - Top panel displays the synthetic stock prices over time with a fitted linear trend (red dashed line) using least squares regression. This trend captures the overall upward movement in stock prices.
 - Bottom panel shows the detrended stock prices (residuals), highlighting the seasonal variations after removing the linear trend. These residuals are more suitable for analyzing periodic patterns without the confounding effect of the trend.
 
+Another synthetic detrending example:
+
+![detrending example](../assets/time_series/detrending_example.png)
+
 ### Intuition for Stationary Time Series
 
 A **stationary time series** behaves similarly over time, meaning:
@@ -76,6 +80,14 @@ To analyze a stationary process, we focus on three key functions:
 - The **variance function** $\sigma^2(t) = \text{Var}(X_t)$ gives the variance at time $t$, which must also be constant for stationarity.
 - The **autocovariance function** $\gamma(k) = \text{Cov}(X_t, X_{t+k})$ measures how the process correlates with itself at different time lags $k$, and for a stationary process, it depends only on the lag $k$, not on time $t$.
 
+More generally, the covariance function can be written as:
+
+$$
+\\gamma(r, s) = \\text{Cov}(X_r, X_s)
+$$
+
+Weak stationarity implies $\\mu(t) = \\mu$ and $\\gamma(r, s)$ depends only on the lag $h = s - r$.
+
 #### Autocorrelation and Bounds
 
 For a weakly stationary process, the **autocorrelation function** $\rho(k)$, which measures the correlation between two points in the series separated by lag $k$, is bounded by -1 and 1:
@@ -86,7 +98,46 @@ $$
 
 This bound can be derived from basic linear algebra principles that apply to correlations between random variables.
 
+#### q-Dependence and q-Correlation
+
+A stationary series is **q-dependent** if observations more than $q$ time units apart are independent. In particular:
+
+- **IID noise** is **0-dependent**.
+- Many short-memory models are **q-dependent** for some small $q$.
+
+A series is **q-correlated** if its autocovariance vanishes beyond lag $q$:
+
+$$
+\\gamma(h) = 0 \\quad \\text{for} \\quad |h| > q
+$$
+
+Examples:
+
+- **White noise** is **0-correlated**.
+- **MA(q)** processes are **q-correlated**.
+- Conversely, any **mean-zero stationary** series that is **q-correlated** can be represented as an **MA(q)** process.
+
+#### Linear Processes and Linear Filters
+
+If $\\{Y_t\\}$ is a stationary series with mean 0 and autocovariance $\\gamma_Y$, then a linear filter:
+
+$$
+X_t = \\sum_{j=-\\infty}^{\\infty} \\psi_j Y_{t-j} = \\psi(B) Y_t
+$$
+
+is also stationary when $\\sum_{j=-\\infty}^{\\infty} |\\psi_j| < \\infty$. Many ARMA models can be viewed as linear filters applied to white noise.
+
+The autocovariance of the filtered process is:
+
+$$
+\\gamma_X(h) = \\sum_{j=-\\infty}^{\\infty} \\sum_{k=-\\infty}^{\\infty} \\psi_j \\psi_k\\, \\gamma_Y(h - k + j)
+$$
+
 ### Examples of Stationary Processes
+
+#### IID Noise vs. White Noise
+
+IID noise with mean 0 and variance $\\sigma^2$ is the simplest stationary building block. White noise is slightly weaker: it only requires zero mean and zero autocovariance for nonzero lags (uncorrelated), not full independence.
 
 #### **White Noise**
 
@@ -211,6 +262,20 @@ To prepare a non-stationary time series for modeling with techniques that requir
 - For a series $Y_t$, the transformed series becomes $\log(Y_t)$.  
 - This method is particularly effective for data exhibiting exponential growth or multiplicative seasonality.  
 - It also compresses the scale of large values, making trends easier to identify visually.  
+
+**Box-Cox Transformations**
+
+The Box-Cox transform generalizes the log transform for positive series:
+
+$$
+Y_t^{(\\lambda)} =
+\\begin{cases}
+\\frac{Y_t^{\\lambda} - 1}{\\lambda}, & \\lambda \\neq 0 \\\\
+\\log(Y_t), & \\lambda = 0
+\\end{cases}
+$$
+
+Choosing $\\lambda$ can stabilize variance and improve linearity before modeling.
 
 **Detrending**
 

@@ -427,3 +427,38 @@ Selecting the appropriate time series model is pivotal for accurate forecasting 
 | **TBATS (Exponential Smoothing State Space Model)** | Exponential smoothing + trend + seasonality + Box-Cox transformation | Models complex seasonal patterns (e.g., multiple seasonalities).                                 | Handles irregular and multiple seasonalities.                                                                             | Flexible for advanced forecasting scenarios.                       | Computationally intensive.                                         |
 | **Prophet (Facebook)**            | Trend + seasonality + holidays                       | Forecasts with irregular data and explicit handling of external events.                         | Assumes linear or logistic growth; holidays/events are known and well-defined.                                            | User-friendly; handles missing data and holidays.                  | Less precise for short-term, high-frequency data.                   |
 
+### Model Identification and Selection
+
+A practical workflow for fitting time series models is:
+
+1. **Plot the series** to identify trend, seasonality, and variance changes.  
+2. **Remove trend/seasonality** (detrending, seasonal adjustment, or differencing).  
+3. **Inspect ACF/PACF** to propose AR and MA orders.  
+4. **Estimate parameters** and check residual diagnostics.  
+5. **Forecast** with the selected model.  
+
+Common estimation tools include **Yule-Walker** or **Burg** for pure AR models and **Innovations** or **Hannan-Rissanen** for ARMA models. These estimates are often used to initialize maximum likelihood optimization.
+
+#### ARMA Identification and Estimation Checklist
+
+For a stationary series, a common ARMA workflow is:
+
+1. **Choose orders $p, q$** using ACF/PACF patterns.  
+2. **Estimate the mean** and work with the mean-corrected series $X_t - \\bar{X}$.  
+3. **Estimate AR/MA coefficients** (Innovations for MA, Yule-Walker or Burg for AR, Hannan-Rissanen for ARMA).  
+4. **Estimate innovation variance** $\\sigma^2$.  
+5. **Select the final model** using diagnostics and information criteria.  
+
+#### Order Selection with AICc
+
+The **Akaike Information Criterion with correction (AICc)** adjusts AIC for smaller samples:
+
+$$
+\\text{AICc} = -2\\ln(L) + \\frac{2k n}{n - k - 1}
+$$
+
+where $k$ is the number of estimated parameters and $n$ is the sample size. For ARMA($p, q$) with mean, a common choice is $k = p + q + 1$ (plus any additional terms if included). Lower AICc values indicate a better balance between fit and complexity.
+
+#### Parameter Redundancy
+
+Sometimes an over-parameterized ARMA model can describe a simpler process. For example, a white-noise series can be written in ARMA form with canceling AR and MA polynomials, even though the underlying process is still noise. Checking for **common factors** in the AR and MA polynomials helps avoid redundant parameters.

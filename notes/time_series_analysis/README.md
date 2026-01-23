@@ -12,9 +12,10 @@
 
 ### Core with Focus on Practice
 
-- The **modeling_time_series.md** provides an introduction to various models used in time series analysis.
+- The **time_series_modeling.md** provides an introduction to various models used in time series analysis.
 - The **autoregressive_models.md** introduces AR models, which are a foundational approach in time series modeling.
 - The **moving_average_models.md** discusses MA models, which complement AR models in time series analysis.
+- The **arima_models.md** covers ARMA, ARIMA, and SARIMA modeling for stationary and seasonal data.
 
 ### More Mathematical Background
 
@@ -23,7 +24,10 @@
 - The **backward_shift_operator.md** explores tools like the backward shift operator, which are useful for modeling time series data.
 - The **invertibility.md** explains conditions like invertibility that are necessary for ensuring the consistency of time series models.
 - The **yule_walker_equations.md** dives into the equations used for estimating the parameters of AR models.
+- The **randomness_tests.md** summarizes quick nonparametric checks for randomness and trend.
 
 ### Ultimate
 
 - The **forecasting.md** applies all the discussed concepts to the goal of forecasting future values in a time series.
+- The **regression_with_arma_errors.md** covers regression models with autocorrelated residuals.
+- The **financial_time_series_models.md** introduces ARCH/GARCH-style volatility modeling.

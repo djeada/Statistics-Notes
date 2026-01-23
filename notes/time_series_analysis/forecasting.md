@@ -254,6 +254,57 @@ $$
 - In **retail forecasting**, demand is predicted for products with seasonal sales patterns, such as those seen during holiday sales or back-to-school periods.
 - **Energy consumption forecasting** focuses on predicting energy usage patterns with seasonal fluctuations, such as the demand for electricity or gas.
   
+### Linear Prediction for Stationary Series
+
+For a weakly stationary series with mean $\\mu$, the **best linear predictor** of $X_{n+h}$ can be written as:
+
+$$
+\\hat{X}_{n+h} = \\mu + \\sum_{i=1}^{n} a_i (X_{n+1-i} - \\mu)
+$$
+
+The coefficient vector $a$ solves:
+
+$$
+\\Gamma_n a = \\gamma_n(h)
+$$
+
+where $\\Gamma_n$ is the **Toeplitz** autocovariance matrix and $\\gamma_n(h)$ is the lag-$h$ autocovariance vector. The intercept can be written as:
+
+$$
+a_0 = \\mu \\left(1 - \\sum_{i=1}^{n} a_i\\right)
+$$
+
+The mean squared error is:
+
+$$
+\\text{MSE} = \\gamma(0) - a^T \\gamma(h)
+$$
+
+For a **stationary Gaussian** series with a single predictor $X_n$, the conditional mean is:
+
+$$
+E(X_{n+h} \\mid X_n) = \\mu + \\rho(h)(X_n - \\mu)
+$$
+
+This is also the **best linear** predictor in that single-lag case.
+
+Special cases:
+
+- **AR(1)**: $\\hat{X}_{n+h} = \\mu + \\phi^h (X_n - \\mu)$  
+- **AR(p)**: $\\hat{X}_{n+1} = \\phi_1 X_n + \\cdots + \\phi_p X_{n+1-p}$  
+
+Algorithms such as **Durbin-Levinson** (for AR) and the **Innovations algorithm** (for MA) are standard tools for solving these systems efficiently.
+
+### ARAR Algorithm
+
+The **ARAR algorithm** is a forecasting approach designed to handle series with long-range dependence.
+
+- Apply a low-order **AR filter** to shorten the memory of the series.
+- Fit an **ARMA model** to the filtered series.
+- Forecast on the filtered scale, then transform the forecasts back to the original scale.
+
+This method is useful when direct ARMA fitting is unstable due to slow decay in autocorrelation.
+
 ### Machine Learning for Time Series Forecasting
 
 Machine learning (ML) has become increasingly popular for time series forecasting, especially as data grows more complex and requires non-linear methods. Traditional statistical approaches like ARIMA work well for simpler datasets, but machine learning can handle complex patterns, high-dimensionality, and non-linear relationships better. In this overview, we'll cover key machine learning models used for time series forecasting, with detailed explanations of each approach.

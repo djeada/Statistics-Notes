@@ -44,6 +44,15 @@ $$
 \text{Cov}(X, Y) = \text{Cov}(Y, X)
 $$
 
+Useful identities:
+
+- $\text{Var}(X) = \text{Cov}(X, X)$  
+- $\text{Cov}(X, Y) = E[XY] - E[X]E[Y]$  
+- $\text{Var}(X) = E[X^2] - (E[X])^2$  
+- $\text{Var}(a + bX) = b^2 \text{Var}(X)$  
+- $\text{Cov}(aX + bY, cZ + dW) = ac\,\text{Cov}(X, Z) + ad\,\text{Cov}(X, W) + bc\,\text{Cov}(Y, Z) + bd\,\text{Cov}(Y, W)$  
+- $E\left(\sum_i X_i\right) = \sum_i E(X_i)$  
+
 Interpretation:
 
 - If $\text{Cov}(X, Y) > 0$, $X$ and $Y$ increase together.

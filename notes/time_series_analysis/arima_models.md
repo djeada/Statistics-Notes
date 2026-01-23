@@ -29,6 +29,16 @@ An AR($p$) process is **stationary** if all the roots of the characteristic poly
 
 An MA($q$) process is **invertible** if all the roots of $\theta(B) = 0$ lie outside the unit circle. Invertibility allows the MA process to be expressed as an infinite AR process, ensuring a unique representation and facilitating parameter estimation.
 
+#### Causality of ARMA Processes
+
+An ARMA process is **causal** if it can be written as a convergent linear filter of current and past shocks:
+
+$$
+X_t = \\sum_{j=0}^{\\infty} \\psi_j \\epsilon_{t-j}
+$$
+
+This holds when the AR polynomial has no roots on or inside the unit circle, ensuring the solution depends only on present and past innovations.
+
 #### Infinite Order Representations
 
 **AR(∞) Representation of MA Processes**:
@@ -50,6 +60,29 @@ Consider the ARMA(1,1) model:
 $$X_t = \phi X_{t-1} + \epsilon_t + \theta \epsilon_{t-1}$$
 
 Let $\phi = 0.7$, $\theta = 0.2$, and $\epsilon_t$ is white noise.
+
+**Existence and causality (ARMA(1,1))**
+
+- A stationary solution exists as long as $\\phi \\ne \\pm 1$.  
+- If $|\\phi| < 1$, the **causal** (future‑independent) solution is:
+
+$$
+X_t = \\epsilon_t + (\\theta + \\phi)\\sum_{j=1}^{\\infty} \\phi^{j-1} \\epsilon_{t-j}.
+$$
+
+- If $|\\phi| > 1$, the stationary solution is **noncausal** and depends on future shocks:
+
+$$
+X_t = -\\theta \\phi^{-1} \\epsilon_t + (\\theta + \\phi)\\sum_{j=1}^{\\infty} \\phi^{-j-1} \\epsilon_{t+j}.
+$$
+
+- When $\\theta + \\phi = 0$, the model reduces to white noise and the AR/MA effects cancel.
+
+**Invertibility (ARMA(1,1))**
+
+- If $|\\theta| < 1$, the model is **invertible** (innovations can be expressed using past $X_t$).  
+- If $|\\theta| > 1$, the model is **non‑invertible** (requires future values to recover shocks).  
+- If $\\theta = \\pm 1$, invertibility holds only in a mean‑square limit of finite linear combinations.
 
 ##### Simulation
 
@@ -122,6 +155,11 @@ where:
 - **Unit Root Tests**: Tests like the Augmented Dickey-Fuller (ADF) test assess whether differencing is needed.
 - **Visual Inspection**: Time series plots reveal trends or changing variance.
 - **ACF Analysis**: A slow decay in the ACF suggests non-stationarity.
+- **Box-Jenkins Approach**: Apply differencing operators until the series appears stationary and the ACF/PACF behave like a short-memory process.
+
+Synthetic differencing sequence:
+
+![arima differencing](../assets/time_series/arima_differencing.png)
 
 #### Fitting ARIMA Models: Numerical Example
 

@@ -4,6 +4,55 @@ Time series data consists of sequential observations collected over a period of 
 
 **Definition:** An ordered sequence of values representing a variable, recorded at equally spaced time intervals.
 
+**Discrete vs. continuous time series**
+
+- A **discrete-time** series records observations at a set of discrete times (e.g., daily, monthly, yearly).
+- A **continuous-time** series records observations continuously over a time interval.
+- Most applied work in these notes focuses on **discrete-time** series.
+
+### Ordered Index, Not Just Time
+
+The indexing variable only needs to be ordered with a clear direction. Besides clock time, examples include spatial order (machine 1, machine 2, ...) or depth (1 mm, 2 mm, ...). What matters is that past, present, and future are well-defined.
+
+### First Look: Plotting the Series
+
+Plotting a time series is an important early step. A plot can reveal:
+
+- **Trend** (upward or downward movement that may extend into the future).
+- **Periodicity** (repeating behavior with a regular pattern).
+- **Seasonality** (periodic behavior with a known period, like monthly or quarterly).
+- **Heteroskedasticity** (changing variance over time).
+- **Dependence** (successive observations tend to be similar or dissimilar).
+- **Outliers, missing data, or structural breaks**.
+
+### Goals of Time Series Analysis
+
+Time series analysis commonly aims to:
+
+- **Model the data** to explain structure or test scientific hypotheses.
+- **Forecast future values**.
+- **Provide a compact description** of the series (useful for data compression).
+
+### Modeling Mindset
+
+We often treat the observed series as a single realization of a random process. Unlike many textbook settings, time series data are typically **not IID**:
+
+- Observations are **dependent** due to trend or seasonality.
+- Variance can change over time.
+- Distributions can shift across time.
+
+A practical first goal is to remove **trend**, **seasonality**, and **heteroskedasticity**, then model the remainder as a dependent but more stable process.
+
+Distinguishing **trend** from **dependence** can be difficult because there is no unique decomposition and we only observe one realization. This is one reason we rely on dependence summaries (like autocovariances) instead of full joint distributions, which are usually impractical to specify.
+
+A complete probabilistic model of a time series $\{X_t\}$ observed at times $t_1, \dots, t_n$ is the **joint distribution**:
+
+$$
+F(C_1, \dots, C_n) = P(X_1 \le C_1, \dots, X_n \le C_n)
+$$
+
+In practice this is hard to specify except in special cases (e.g., jointly normal variables), so we typically summarize dependence via means, variances, and autocovariances instead.
+
 ### The need for Time Series Models
 
 You are probably aware of regression models, where models predict one quantity based on the relationship with another quantity. They typically involve using independent variables to predict dependent variables. For example, when predicting electricity consumption for a particular month, we would take into consideration temperature, number of residents, and so on. These factors might seem sufficient for all cases of prediction, making the creation of an entirely new domain of models just for time series seem unnecessary, doesn’t it? However, the issue arises when past values influence the current value. This is where time series models come into play. For instance, predicting this month's electricity consumption based on last month's consumption can be achieved using an AR(1) model.
@@ -35,6 +84,46 @@ The plot includes three components:
 2. **Regression Prediction** represented by a dashed blue line, this forecast is based on a linear regression model. It captures a simple trend over the historical data and projects it forward for the first three months of 2023.
 3. **Time Series Prediction** shown as another dashed line, this prediction uses an Exponential Smoothing model with a seasonal component. It considers both trend and seasonality in the data to provide a more dynamic projection for the same three-month period.
 
+### Diagnostic Gallery (Synthetic Examples)
+
+The examples below are synthetic and are meant to highlight specific diagnostic patterns without copying any original figures.
+
+![synthetic nonlinear trend](../assets/time_series/intro_nonlinear_trend.png)
+
+- Smooth upward change with a nonlinear trend component.
+
+![synthetic seasonal heteroskedastic series](../assets/time_series/intro_seasonal_heteroskedastic.png)
+
+- Regular seasonality with variance that grows over time.
+
+![synthetic structural break](../assets/time_series/intro_structural_break.png)
+
+- A clear regime shift where the long-term slope changes.
+
+![synthetic seasonal structural break](../assets/time_series/intro_seasonal_structural_break.png)
+
+- Seasonal pattern with a regime shift in level and amplitude.
+
+![synthetic periodic but nonseasonal signal](../assets/time_series/intro_periodic_nonseasonal.png)
+
+- Periodic behavior without an obvious calendar-based season.
+
+![synthetic negative dependence series](../assets/time_series/intro_negative_dependence.png)
+
+- Successive observations tend to alternate around the mean.
+
+![synthetic positive dependence series](../assets/time_series/intro_positive_dependence.png)
+
+- Successive observations tend to remain on the same side of the mean.
+
+![synthetic white noise](../assets/time_series/intro_white_noise.png)
+
+- No trend, no seasonality, and no visible dependence structure.
+
+![synthetic random walk](../assets/time_series/intro_random_walk.png)
+
+- A non-stationary series with drifting level and growing variance.
+
 ### Components of a Time Series
 
 A time series is a series of data points indexed in chronological order, typically at regular time intervals. It can be decomposed into four primary components:
@@ -48,6 +137,13 @@ A time series is a series of data points indexed in chronological order, typical
 ### Time Series Analysis Techniques
 
 Timeseries analysis methods can be broadly classified into two main categories: time-domain methods and frequency-domain methods.
+
+### A Simple Modeling Workflow
+
+1. **Plot the series** to identify trend, seasonality, breaks, and variance changes.  
+2. **Remove trend/seasonality** using detrending, seasonal adjustment, or differencing.  
+3. **Model the residuals** using ACF/PACF-guided AR/MA/ARMA choices.  
+4. **Forecast residuals**, then reconstruct forecasts for the original series.  
 
 #### Time-Domain Methods
 

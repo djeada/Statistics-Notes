@@ -53,11 +53,44 @@ Where:
 - $N$ is the number of observations.
 - $x_t$ is the observed value at time $t$.
 
+**Remark:** The sample ACF can be computed for any dataset and is not restricted to stationary series, though interpretation is most meaningful under (approximate) stationarity.
+
+#### Sampling Properties (Large Samples)
+
+For a weakly stationary series with mean $\mu$ and autocovariance $\gamma(h)$:
+
+- $E(\bar{X}_n) = \mu$.
+- $\text{Var}(\bar{X}_n) = \frac{1}{n} \sum_{h=-(n-1)}^{n-1} \left(1 - \frac{|h|}{n}\right)\gamma(h)$.
+- If the series is Gaussian (or under regularity conditions for linear processes),  
+  $\sqrt{n}(\bar{X}_n - \mu)$ is approximately normal with variance given by the sum above.
+
+A practical large-sample CI for $\mu$ is:
+
+$$
+\bar{X}_n \pm z_{1-\alpha/2}\sqrt{\hat{v}_n}, \quad
+\hat{v}_n = \sum_{|h|<\sqrt{n}} \left(1 - \frac{|h|}{\sqrt{n}}\right)\hat{\gamma}(h)
+$$
+
+For sample autocorrelations in linear models (ARMA), an approximate multivariate normal limit holds:
+
+$$
+\hat{\rho} = (\hat{\rho}(1), \dots, \hat{\rho}(k))^\top \approx \mathcal{N}\left(\rho, \frac{W}{n}\right),
+$$
+
+where Bartlett’s formula gives
+
+$$
+W_{ij} = \sum_{m=1}^{\infty} \{\rho(m+i)+\rho(m-i)-2\rho(i)\rho(m)\}
+        \{\rho(m+j)+\rho(m-j)-2\rho(j)\rho(m)\}.
+$$
+
+**Practical guidance:** sample ACF estimates become unreliable for large lags; a common rule is to use $n \ge 50$ and lags $h \le n/4$.
+
 #### Plotting the ACF
 
 The **Autocorrelation Function (ACF) plot**, or **Correlogram**, is a useful tool for understanding the structure of time series data. In Python, you can generate and interpret the ACF plot using libraries like `statsmodels` and `matplotlib`. The ACF plot helps identify significant correlations at different lags and reveals patterns in the data.
 
-e ACF plot can provide answers to the following questions:
+The ACF plot can provide answers to the following questions:
 
     Is the observed time series white noise / random?
     Is an observation related to an adjacent observation, an observation twice-removed, and so on?
@@ -68,6 +101,30 @@ Key Points for Interpreting the ACF Plot
 1. If the ACF values decrease slowly over many lags, this suggests the presence of a **trend** in the data.
 2. Repeated peaks or cyclic behavior in the ACF plot indicate **seasonal patterns** in the data, with regular intervals of high correlation.
 3. A rapid drop-off or sharp cutoff after a few lags suggests the data may follow a **Moving Average (MA)** process, where the current value is explained by a few prior error terms (shocks).
+
+For a large sample of white noise, an approximate 95% confidence band is:
+
+$$
+\pm \frac{1.96}{\sqrt{n}}
+$$
+
+Spikes outside these bounds are often treated as statistically significant.
+
+For a correlated series, a rough standard error is given by **Bartlett's formula**:
+
+$$
+\\text{Var}(r_k) \\approx \\frac{1}{n} \\left(1 + 2 \\sum_{j=1}^{k-1} \\rho_j^2\\right)
+$$
+
+This yields wider bands as dependence accumulates. A common rule is to use the white-noise bands for $r_1$, and if $r_1$ is significant, use Bartlett bands for the remaining lags.
+
+Example ACF for a synthetic AR(1) series:
+
+![acf ar1 synthetic](../assets/time_series/acf_ar1_example.png)
+
+Example ACF/PACF for a synthetic ARMA(1,1) series:
+
+![arma acf pacf synthetic](../assets/time_series/arma_acf_pacf.png)
 
 #### Python Example
 
@@ -189,7 +246,7 @@ The **Partial Autocorrelation Function (PACF) plot** is a valuable tool for unde
 
 The PACF is particularly useful for identifying the order of an **Autoregressive (AR) process**. If you suspect your time series follows an AR model, the PACF plot can help you determine the number of lag terms to include in your model.
 
-he PACF plot can provide answers to the following questions:
+The PACF plot can provide answers to the following questions:
 
     Can the observed time series be modeled with an AR model? If yes, what is the order?
 
@@ -377,4 +434,3 @@ acf and pacf plots for
     White Noise: A purely random series.
 
 ![acf_pacf_cheat_sheet](https://github.com/user-attachments/assets/8271d59f-a3a1-42bf-8472-3565f2a04c99)
-

@@ -115,6 +115,10 @@ Here is an example plot of the random walk:
 
 ![Figure_1](https://github.com/user-attachments/assets/0328869d-6a94-4f9b-b623-09e9d3e42311)
 
+Additional synthetic example:
+
+![random walk synthetic](../assets/time_series/intro_random_walk.png)
+
 ### Autocorrelation of the Random Walk
 
 Autocorrelation measures how a time series is correlated with its past values. A random walk typically exhibits **high autocorrelation** because each step is dependent on the previous step. We can visualize the autocorrelation function (ACF) of the random walk using `statsmodels`.
