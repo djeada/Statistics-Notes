@@ -117,7 +117,7 @@ Here is an example plot of the random walk:
 
 Additional synthetic example:
 
-![random walk synthetic](../assets/time_series/intro_random_walk.png)
+![random walk synthetic](../../assets/time_series/intro_random_walk.png)
 
 ### Autocorrelation of the Random Walk
 

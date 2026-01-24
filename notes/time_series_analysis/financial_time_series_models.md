@@ -43,6 +43,6 @@ with $\\alpha_0 > 0$ and $\\alpha_i, \\beta_j \\ge 0$.
 
 The plot below shows a synthetic series with volatility clustering and the corresponding conditional volatility.
 
-![garch volatility](../assets/time_series/garch_volatility.png)
+![garch volatility](../../assets/time_series/garch_volatility.png)
 
 These models are foundational for risk management, option pricing, and measuring time-varying uncertainty in financial markets.

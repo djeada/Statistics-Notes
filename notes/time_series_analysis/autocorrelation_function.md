@@ -120,11 +120,11 @@ This yields wider bands as dependence accumulates. A common rule is to use the w
 
 Example ACF for a synthetic AR(1) series:
 
-![acf ar1 synthetic](../assets/time_series/acf_ar1_example.png)
+![acf ar1 synthetic](../../assets/time_series/acf_ar1_example.png)
 
 Example ACF/PACF for a synthetic ARMA(1,1) series:
 
-![arma acf pacf synthetic](../assets/time_series/arma_acf_pacf.png)
+![arma acf pacf synthetic](../../assets/time_series/arma_acf_pacf.png)
 
 #### Python Example
 

@@ -115,7 +115,7 @@ Set $X(\\omega) = 0$ for frequencies $|\\omega| > \\omega_c$, then invert the tr
 
 Synthetic example of spectral smoothing:
 
-![spectral smoothing](../assets/time_series/spectral_smoothing.png)
+![spectral smoothing](../../assets/time_series/spectral_smoothing.png)
 
 #### Practical Decomposition Workflow
 
@@ -129,7 +129,7 @@ When both trend and seasonality are present, a common workflow is:
 
 Synthetic example of a simple decomposition:
 
-![simple decomposition](../assets/time_series/simple_decomposition.png)
+![simple decomposition](../../assets/time_series/simple_decomposition.png)
 
 ##### Classical Estimation (Trend + Seasonal)
 
@@ -155,7 +155,7 @@ For multiplicative seasonality, use ratios $X_t / \\hat{m}_t$ and normalize to h
 
 Synthetic example of trend smoothing with two filters:
 
-![trend smoothing filters](../assets/time_series/trend_smoothing_filters.png)
+![trend smoothing filters](../../assets/time_series/trend_smoothing_filters.png)
 
 #### Differencing as an Alternative
 
@@ -189,7 +189,7 @@ and an additional nonseasonal difference can remove the remaining trend term.
 
 Synthetic example of seasonal differencing:
 
-![seasonal differencing](../assets/time_series/seasonal_differencing.png)
+![seasonal differencing](../../assets/time_series/seasonal_differencing.png)
 
 ### Trends
 

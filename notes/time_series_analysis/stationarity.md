@@ -33,7 +33,7 @@ By subtracting this linear trend from the original stock price data, we obtain "
 
 Another synthetic detrending example:
 
-![detrending example](../assets/time_series/detrending_example.png)
+![detrending example](../../assets/time_series/detrending_example.png)
 
 ### Intuition for Stationary Time Series
 

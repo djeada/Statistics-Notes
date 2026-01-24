@@ -40,7 +40,7 @@ A standardized score $(T - E[T]) / \\sqrt{\\text{Var}(T)}$ can be compared to a 
 
 Turning points marked on a synthetic series:
 
-![turning points example](../assets/time_series/turning_points_example.png)
+![turning points example](../../assets/time_series/turning_points_example.png)
 
 ### Difference-Sign Test (Randomness)
 

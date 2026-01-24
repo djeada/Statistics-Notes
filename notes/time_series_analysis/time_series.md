@@ -88,39 +88,39 @@ The plot includes three components:
 
 The examples below are synthetic and are meant to highlight specific diagnostic patterns without copying any original figures.
 
-![synthetic nonlinear trend](../assets/time_series/intro_nonlinear_trend.png)
+![synthetic nonlinear trend](../../assets/time_series/intro_nonlinear_trend.png)
 
 - Smooth upward change with a nonlinear trend component.
 
-![synthetic seasonal heteroskedastic series](../assets/time_series/intro_seasonal_heteroskedastic.png)
+![synthetic seasonal heteroskedastic series](../../assets/time_series/intro_seasonal_heteroskedastic.png)
 
 - Regular seasonality with variance that grows over time.
 
-![synthetic structural break](../assets/time_series/intro_structural_break.png)
+![synthetic structural break](../../assets/time_series/intro_structural_break.png)
 
 - A clear regime shift where the long-term slope changes.
 
-![synthetic seasonal structural break](../assets/time_series/intro_seasonal_structural_break.png)
+![synthetic seasonal structural break](../../assets/time_series/intro_seasonal_structural_break.png)
 
 - Seasonal pattern with a regime shift in level and amplitude.
 
-![synthetic periodic but nonseasonal signal](../assets/time_series/intro_periodic_nonseasonal.png)
+![synthetic periodic but nonseasonal signal](../../assets/time_series/intro_periodic_nonseasonal.png)
 
 - Periodic behavior without an obvious calendar-based season.
 
-![synthetic negative dependence series](../assets/time_series/intro_negative_dependence.png)
+![synthetic negative dependence series](../../assets/time_series/intro_negative_dependence.png)
 
 - Successive observations tend to alternate around the mean.
 
-![synthetic positive dependence series](../assets/time_series/intro_positive_dependence.png)
+![synthetic positive dependence series](../../assets/time_series/intro_positive_dependence.png)
 
 - Successive observations tend to remain on the same side of the mean.
 
-![synthetic white noise](../assets/time_series/intro_white_noise.png)
+![synthetic white noise](../../assets/time_series/intro_white_noise.png)
 
 - No trend, no seasonality, and no visible dependence structure.
 
-![synthetic random walk](../assets/time_series/intro_random_walk.png)
+![synthetic random walk](../../assets/time_series/intro_random_walk.png)
 
 - A non-stationary series with drifting level and growing variance.
 

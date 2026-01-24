@@ -159,7 +159,7 @@ where:
 
 Synthetic differencing sequence:
 
-![arima differencing](../assets/time_series/arima_differencing.png)
+![arima differencing](../../assets/time_series/arima_differencing.png)
 
 #### Fitting ARIMA Models: Numerical Example
 
