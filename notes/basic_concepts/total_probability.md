@@ -1,4 +1,4 @@
-## The Law of Total Probability
+# The Law of Total Probability
 
 The law of total probability allows for the computation of the probability of an event A based on a set of mutually exclusive and exhaustive events. It's particularly useful when the overall sample space is divided into several distinct scenarios, or partitions, that cover all possible outcomes. The formula for the law of total probability is given by:
 
@@ -7,6 +7,17 @@ P(A) = \sum_{i=1}^{n} P(A|B_i) \times P(B_i)
 $$
 
 where $B_1, B_2, ..., B_n$ are the partitions of the sample space and $P(A|B_i)$ is the conditional probability of A given $B_i$.
+
+### Conditions for Applying the Law
+
+For the law of total probability to hold, the events $B_1, B_2, \ldots, B_n$ must satisfy two conditions:
+
+- **Mutually exclusive**: No two events can occur simultaneously, meaning $B_i \cap B_j = \emptyset$ for all $i \neq j$.
+- **Exhaustive**: Together, the events cover the entire sample space, so $B_1 \cup B_2 \cup \cdots \cup B_n = S$.
+
+When these conditions are met, every outcome in the sample space belongs to exactly one partition $B_i$. The law then computes $P(A)$ by summing the probability of $A$ within each partition, weighted by the probability of that partition itself. This decomposition is especially valuable when $P(A)$ is difficult to calculate directly but the conditional probabilities $P(A|B_i)$ and the partition probabilities $P(B_i)$ are known or easier to determine.
+
+The law of total probability also serves as a key step in deriving Bayes' theorem, where $P(B)$ in the denominator is often expanded using this law.
 
 ### Example: Probability of Drawing a Red Ball Second
 

@@ -1,4 +1,4 @@
-## Bayesian vs Frequentist Statistics
+# Bayesian vs Frequentist Statistics
 
 Bayesian and frequentist statistics are two distinct approaches to statistical inference. Both approaches aim to make inferences about an underlying population based on sample data. However, the way they interpret probability and handle uncertainty is fundamentally different.
 

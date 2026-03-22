@@ -1,4 +1,4 @@
-## ANOVA and the Analysis of Variance for Multiple Groups
+# ANOVA and the Analysis of Variance for Multiple Groups
 
 ### Scenario: Peer Assessment and Student Learning
 
@@ -38,7 +38,7 @@ I. **t-Test Formula**
 The t-statistic is calculated as:
 
 $$
-t = \frac{y_1 - y_2}{SE_{y_1 - y_2}}
+t = \frac{\bar{y}_1 - \bar{y}_2}{SE_{\bar{y}_1 - \bar{y}_2}}
 $$
 
 where:
@@ -330,7 +330,7 @@ $$
 II. **Compute the t-Statistic for Each Pair**:
 
 $$
-t = \frac{y_i - y_j}{SE_{y_i - y_j}}
+t = \frac{\bar{y}_i - \bar{y}_j}{SE_{\bar{y}_i - \bar{y}_j}}
 $$
 
 III. **Determine the Adjusted p-Values**:

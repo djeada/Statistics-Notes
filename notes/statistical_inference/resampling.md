@@ -1,4 +1,4 @@
-##  Simulations in Statistical Inference
+#  Simulations in Statistical Inference
 
 Statistical inference often involves estimating population parameters and constructing confidence intervals based on sample data. Traditional methods rely on assumptions about the sampling distribution of estimators, such as normality and known standard errors. However, these assumptions may not hold, especially with small sample sizes or complex estimators. **Simulations**, like the **Monte Carlo method** and **bootstrap techniques**, offer powerful alternatives to traditional inference by using computational methods to approximate sampling distributions and estimate standard errors.
 
@@ -57,8 +57,6 @@ where $\bar{\hat{\theta}} = \frac{1}{B} \sum_{b=1}^{B} \hat{\theta}_b$.
 - The **flexibility** of this method allows it to be applied to complex estimators where analytical solutions are not feasible.
 - **Accuracy** improves as the number of simulations $B$ increases.
 
-Here’s the improved version with the plot reference included and a better name for it:
-
 ### Example: Estimating Standard Error Using Monte Carlo Simulation
 
 In this example, we estimate the standard error of the sample mean $\hat{\theta}$ using a Monte Carlo approach. This method involves generating multiple independent samples from a population, calculating the mean $\hat{\theta_b}$ for each sample, and using these means to estimate the standard error.
@@ -106,7 +104,7 @@ Estimate of Standard Error:
 
 #### Bootstrap Procedure
 
-1. Start with the **original sample**, denoted as $X = { X_1, X_2, \dots, X_n }$.
+1. Start with the **original sample**, denoted as $X = \{ X_1, X_2, \dots, X_n \}$.
 2. Generate **bootstrap samples** by sampling with replacement from $X$ to create $B$ bootstrap samples $X^{*b}$, each of size $n$.
 3. For each bootstrap sample $X^{*b}$, **compute bootstrap estimates** $\hat{\theta}^*_b$.
 4. Finally, estimate the standard error using the formula:
@@ -164,7 +162,7 @@ Bootstrapping can estimate the variability of regression coefficients when tradi
 #### Simple Linear Regression Model
 
 $$
-Y_i = a + b X_i + e_i, \quad i = 1, 2 \dots n
+Y_i = a + b X_i + e_i, \quad i = 1, 2, \dots, n
 $$
 
 - $Y_i$: Response variable.

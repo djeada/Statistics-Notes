@@ -20,7 +20,7 @@ These formulas provide a quantitative way to assess whether the spatial distribu
 
 ### Variogram and Covariance Function
 
-A variogram is a important tool that describes how the average difference between paired observations changes with distance. It is defined as
+A variogram is an important tool that describes how the average difference between paired observations changes with distance. It is defined as
 
 $$
 \gamma(h) = \frac{1}{2} \mathrm{Var}[Z(x) - Z(x+h)] = \frac{1}{2}\, \mathbb{E}\bigl[(Z(x)-Z(x+h))^2\bigr]
@@ -72,6 +72,14 @@ $$\gamma(h) = c_0 + c \left[ 1 - e^{-(h/a)^2} \right]$$
 
 Each model offers a different way to capture the spatial dependence observed in the data.
 
+### Cross-Validation for Variogram Model Selection
+
+Once a variogram model has been fitted, its predictive quality should be assessed through cross-validation. In leave-one-out cross-validation, each observation $Z(x_i)$ is temporarily removed from the dataset and predicted from the remaining $n - 1$ observations using kriging. The standardized prediction error for each location is
+
+$$e_i^* = \frac{Z(x_i) - Z^*(x_i)}{\sigma_K(x_i)}$$
+
+where $Z^*(x_i)$ is the kriging prediction and $\sigma_K(x_i)$ is the corresponding kriging standard deviation. A well-specified variogram model should produce standardized errors that have a mean close to 0 and a variance close to 1, confirming that the model neither systematically over- nor under-predicts and that the uncertainty estimates are reliable.
+
 ### Kriging
 
 Kriging is a powerful geostatistical interpolation technique that provides the best linear unbiased prediction (BLUP) for unsampled locations. It relies on the spatial autocorrelation captured by the variogram to weight nearby observations optimally.
@@ -100,7 +108,7 @@ $$Z^*(x_0) = \mu + \sum_{i=1}^{n} \lambda_i [Z(x_i) - \mu]$$
 
 with the kriging equations given by
 
-$$\sum_{j=1}^{n} \lambda_j C(x_i - x_j) = C(x_i - x_0), \quad i = 1, 2, dots, n$$
+$$\sum_{j=1}^{n} \lambda_j C(x_i - x_j) = C(x_i - x_0), \quad i = 1, 2, \dots, n$$
 
 When the mean is unknown but assumed constant locally, ordinary kriging is used. Its estimator is
 
@@ -113,11 +121,11 @@ $$\sum_{i=1}^{n} \lambda_i = 1$$
 The corresponding kriging system becomes
 
 $$\begin{cases}
-\sum_{j=1}^{n} \lambda_j \gamma(x_i - x_j) + \mu = \gamma(x_i - x_0), & i = 1, dots, n \\
+\sum_{j=1}^{n} \lambda_j \gamma(x_i - x_j) + \mu = \gamma(x_i - x_0), & i = 1, \dots, n \\
 \sum_{j=1}^{n} \lambda_j = 1,
 \end{cases}$$
 
-where $\mu$ is a Lagrange multiplier making sure unbiasedness. In cases where the mean exhibits a trend across the study area, universal kriging is applied. The mean is modeled as a deterministic function,
+where $\mu$ is a Lagrange multiplier ensuring unbiasedness. In cases where the mean exhibits a trend across the study area, universal kriging is applied. The mean is modeled as a deterministic function,
 
 $$\mu(x) = \sum_{k=1}^{m} \beta_k f_k(x)$$
 
@@ -128,8 +136,8 @@ $$Z^*(x_0) = \sum_{i=1}^{n} \lambda_i Z(x_i)$$
 The weights are then obtained by solving the kriging system with constraints that account for the trend functions:
 
 $$\begin{cases}
-\sum_{j=1}^{n} \lambda_j \gamma(x_i - x_j) + \sum_{k=1}^{m} \mu_k f_k(x_i) = \gamma(x_i - x_0), & i = 1, dots, n \\
-\sum_{j=1}^{n} \lambda_j f_k(x_j) = f_k(x_0), & k = 1, dots, m,
+\sum_{j=1}^{n} \lambda_j \gamma(x_i - x_j) + \sum_{k=1}^{m} \mu_k f_k(x_i) = \gamma(x_i - x_0), & i = 1, \dots, n \\
+\sum_{j=1}^{n} \lambda_j f_k(x_j) = f_k(x_0), & k = 1, \dots, m,
 \end{cases}$$
 
 where the $\mu_k$ are Lagrange multipliers for the trend constraints.
@@ -151,7 +159,7 @@ where $N(h)$ is the number of pairs of points separated by lag distance $h$. By 
 Once the variogram model is set up, the kriging system is set up. In the case of ordinary kriging, the system to be solved is
 
 $$\begin{cases}
-\sum_{j=1}^{n} \lambda_j \gamma(x_i - x_j) + \mu = \gamma(x_i - x_0), & i = 1, dots, n \\
+\sum_{j=1}^{n} \lambda_j \gamma(x_i - x_j) + \mu = \gamma(x_i - x_0), & i = 1, \dots, n \\
 \sum_{j=1}^{n} \lambda_j = 1,
 \end{cases}$$
 

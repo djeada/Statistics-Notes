@@ -12,15 +12,15 @@ Probability theory offers a structured approach to assessing the probability of 
 
 When you roll a 6-sided (fair) die, the sample space is:
 
-$$S = {1, 2, 3, 4, 5, 6}$$
+$$S = \{1, 2, 3, 4, 5, 6\}$$
 
 And the possible events include:
 
-* Odd Numbers = ${1, 3, 5}$
-* Even Numbers = ${2, 4, 6}$
-* Rolling at Least a 5 = ${5, 6}$
-* Prime Numbers = ${2, 3, 5}$
-* Rolling a Number Less Than 4 = ${1, 2, 3}$
+* Odd Numbers = $\{1, 3, 5\}$
+* Even Numbers = $\{2, 4, 6\}$
+* Rolling at Least a 5 = $\{5, 6\}$
+* Prime Numbers = $\{2, 3, 5\}$
+* Rolling a Number Less Than 4 = $\{1, 2, 3\}$
 
 Each event is a subset of the sample space and represents a particular outcome or set of outcomes that we are interested in observing. The probability of an event is a measure of how likely that event is to occur, calculated by dividing the number of favorable outcomes (the size of event set) by the total number of possible outcomes (the size of sample space).
 
@@ -42,7 +42,7 @@ Each event is a subset of the sample space and represents a particular outcome o
 | 5 | (5,1)| (5,2)| (5,3)| (5,4)| (5,5)| (5,6)|
 | 6 | (6,1)| (6,2)| (6,3)| (6,4)| (6,5)| (6,6)|
 
-For instance, (1,1) means both are in the first corner, and (1,2) means the first is in the first corner and the second in the second corner.
+For instance, (1,1) means the first die shows 1 and the second die shows 1, and (1,2) means the first die shows 1 and the second die shows 2. Each ordered pair represents one of the 36 equally likely outcomes.
 
 ## Probability
 
@@ -75,7 +75,7 @@ Consider the random variable X which represents the sum of the numbers that come
 
 The sample space S for the sum of two dice is:
 
-$$S = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}$$
+$$S = \{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}$$
 
 Which is better represented using a table:
 

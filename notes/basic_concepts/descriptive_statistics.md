@@ -14,7 +14,7 @@ $$\text{Relative Frequency} = \frac{\text{Frequency}}{\text{Total Observations}}
   
 $$\text{Cumulative Relative Frequency} = \sum_{i=1}^{n} \text{Relative Frequency}_i$$
 
-Be careful cumulative frequencies don't make sense when the data doesn't have natural order!
+Note that cumulative relative frequencies are only meaningful when the data has a natural ordering. For unordered categorical data, cumulative frequencies do not provide a valid interpretation.
 
 ### Example: List of People and Their Sibling Count
 
@@ -116,7 +116,7 @@ $$\mu_{X} = \frac{\sum w_ix_i}{\sum w_i}$$
 
 - The **geometric mean** is ideal for averaging ratios or handling multiplicative data. It is always smaller than the arithmetic mean and is calculated as:
 
-$$\text{mean} =\sqrt[n]{a_{1}a_{2}...a_{n}}$$
+$$\text{mean} =\sqrt[n]{a_{1}a_{2}\cdots a_{n}}$$
 
 - The **median** is the middle value of a dataset when sorted in ascending order and is particularly suitable for skewed distributions or datasets with outliers.
 - The **mode** refers to the most frequently occurring value in a dataset, making it a measure of the most common observation.
@@ -293,11 +293,13 @@ $$
 \text{Mean} \approx 21.57
 $$
 
-Now, we can calculate the variance:
+Now, we can calculate the variance (treating the seven days as the entire population of interest):
 
 $$
 \text{Variance} = \frac{(17 - 21.57)^2 + (21 - 21.57)^2 + (17 - 21.57)^2 + (35 - 21.57)^2 + (23 - 21.57)^2 + (14 - 21.57)^2 + (24 - 21.57)^2}{7} \approx 47.39
 $$
+
+If the dataset were a sample drawn from a larger population, the sample variance would use $N - 1 = 6$ in the denominator instead of $N = 7$.
 
 #### Standard Deviation
 
@@ -470,6 +472,6 @@ The boxplot below provides a visual summary of the distribution of the dataset:
 - The **third quartile (Q3)** is 32.5, showing that 75% of the data points are less than or equal to this value.
 - The **minimum value** in the dataset is approximately 15, as indicated by the left whisker.
 - The **maximum value** is around 40, as indicated by the right whisker.
-- The **interquartile range (IQR)** is 11.5, calculated as \(32.5 - 21.0$, representing the spread of the middle 50% of the data.
+- The **interquartile range (IQR)** is $32.5 - 21.0 = 11.5$, representing the spread of the middle 50% of the data.
 - The **distribution** appears slightly skewed to the right, as the range from the median to the maximum is larger than the range from the median to the minimum.
 - There are **no visible outliers**, as no points fall outside the whiskers on either side of the box.

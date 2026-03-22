@@ -1,4 +1,4 @@
-## Difference Equation
+# Difference Equation
 
 A **difference equation** (also known as a recurrence relation) defines each term of a sequence based on previous terms. In some cases, the general term of a sequence is given explicitly (e.g., $a_n = 3n + 2$, resulting in the sequence $5, 8, 11, \dots$). However, more commonly, a difference equation provides a relationship between terms.
 

@@ -1,4 +1,4 @@
-## Geometric Probability
+# Geometric Probability
 
 Geometric probability is a fascinating branch of probability theory where outcomes are associated with geometric figures and their measures—such as lengths, areas, and volumes—rather than discrete numerical outcomes. It often deals with continuous random variables and employs integral calculus to calculate probabilities.
 
@@ -176,7 +176,7 @@ For $r \geq \sqrt{2}$, the entire square lies within the circle of radius $r$ ce
 
 $$P(D < r) = 1.$$
 
-## Example 2: Probability of a Random Chord in a Circle Being Longer Than the Radius
+### Example 2: Probability of a Random Chord in a Circle Being Longer Than the Radius
 
 Calculate the probability that a randomly drawn chord in a circle is longer than the radius of the circle.
 
@@ -231,7 +231,7 @@ $$P(L > R) = \frac{A_E}{A_S} = \frac{\frac{3\pi R^2}{4}}{\pi R^2} = \frac{3}{4}.
 
 Therefore, the probability that a randomly drawn chord (using the Random Midpoint Method) is longer than the radius of the circle is $\frac{3}{4}$ or 75%.
 
-## Example 3: Probability That the Sum of Two Random Numbers Is Less Than 1
+### Example 3: Probability That the Sum of Two Random Numbers Is Less Than 1
 
 Calculate the probability that the sum of two independent random numbers $X$ and $Y$, each uniformly distributed between 0 and 1, is less than 1.
 

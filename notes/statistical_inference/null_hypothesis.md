@@ -1,4 +1,4 @@
-## Null Hypotheses and Alternative Hypotheses
+# Null Hypotheses and Alternative Hypotheses
 
 Statistical hypothesis testing is a method used in research to make inferences about populations based on sample data. Understanding the concepts of null and alternative hypotheses, as well as how to calculate and interpret p-values, is crucial for conducting robust and meaningful analyses. This section delves into these concepts, providing a comprehensive overview to enhance your statistical toolkit.
 

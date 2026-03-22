@@ -1,4 +1,4 @@
-## Time Series Analysis
+# Time Series Analysis
 
 Time series data consists of sequential observations collected over a period of time. This kind of data is prevalent in a range of fields such as finance, economics, climatology, and more. Time series analysis involves the exploration of this data to identify inherent structures such as patterns or trends, forecasting future points in the series, and providing insights for strategic decision-making.
 

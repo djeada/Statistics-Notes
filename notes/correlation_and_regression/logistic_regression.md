@@ -305,3 +305,10 @@ $$
 
 - Plotting True Positive Rate (Recall) vs. False Positive Rate at various thresholds.
 - Calculate Area Under the ROC Curve (AUC) to assess model performance.
+
+### Extensions to Multiple Classes
+
+The logistic regression framework described above handles binary outcomes. When the dependent variable has more than two categories, two common extensions are used:
+
+- **Multinomial logistic regression** generalizes binary logistic regression to $K > 2$ unordered classes. It models the log-odds of each class relative to a reference category, estimating a separate set of coefficients for each class.
+- **Ordinal logistic regression** is appropriate when the outcome categories have a natural ordering (e.g., low, medium, high). It models cumulative log-odds using a single set of slope coefficients shared across all thresholds, with separate intercept terms for each cumulative split.

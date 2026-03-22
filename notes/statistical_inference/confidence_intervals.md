@@ -1,4 +1,4 @@
-## Confidence Intervals
+# Confidence Intervals
 
 Confidence intervals (CIs) provide a range of values which are believed, with a certain degree of confidence, to contain a population parameter, like the mean or proportion. They are constructed from a sampled data set and offer an interval estimate for the parameter of interest.
 
@@ -313,3 +313,27 @@ $$
 - With **99% confidence**, we can state that the true mean is likely between **125.63 mmHg** and **134.37 mmHg**.
 
 Note how the **99% confidence interval** is wider than the **90% confidence interval**. This reflects the trade-off between **certainty** (higher confidence levels) and **precision** (narrower intervals).
+
+### Prediction Intervals vs. Confidence Intervals
+
+A **confidence interval** estimates the range in which a population parameter (such as the mean) is likely to fall, whereas a **prediction interval** estimates the range in which a single future observation is likely to fall. Because an individual observation is subject to both the uncertainty of the mean estimate and the natural variability of the data, a prediction interval is always wider than a confidence interval computed at the same confidence level.
+
+For a normally distributed population with known $\sigma$, the 95% prediction interval for a new observation $X_{\text{new}}$ is:
+
+$$
+\bar{x} \pm z_{\alpha/2} \cdot \sigma \sqrt{1 + \frac{1}{n}}
+$$
+
+When $\sigma$ is unknown and estimated by the sample standard deviation $s$, the $t$-distribution is used instead:
+
+$$
+\bar{x} \pm t_{\alpha/2,\, n-1} \cdot s \sqrt{1 + \frac{1}{n}}
+$$
+
+| Aspect             | Confidence Interval                         | Prediction Interval                             |
+|--------------------|---------------------------------------------|-------------------------------------------------|
+| **Target**         | Population parameter (e.g., $\mu$)          | Individual future observation                   |
+| **Width**          | Narrower                                    | Wider                                           |
+| **Shrinks with $n$** | Yes — approaches zero as $n \to \infty$    | No — bounded below by the data variability $\sigma$ |
+
+This distinction is especially important in regression, where a confidence interval for the predicted mean response at a given $x$ is much narrower than the prediction interval for a single new response at the same $x$.

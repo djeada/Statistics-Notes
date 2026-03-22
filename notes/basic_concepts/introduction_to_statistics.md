@@ -1,4 +1,4 @@
-## Introduction to Statistics
+# Introduction to Statistics
 
 Statistics is an empirical science, focusing on data-driven insights for real-world applications. This guide offers a concise exploration of statistical fundamentals, aimed at providing practical knowledge for data analysis and interpretation.
 
@@ -155,8 +155,8 @@ Variables are broadly categorized into two types: Numerical and Categorical.
                   All Variables
                    /            \
             Numerical       Categorical
-           /        \       
-   Discrete  Continuous 
+           /        \        /        \
+   Discrete  Continuous  Nominal   Ordinal
 ```
 
 #### Numerical Variables
@@ -167,8 +167,9 @@ Variables are broadly categorized into two types: Numerical and Categorical.
 
 #### Categorical Variables
 
-- Categorical variables represent data that classify into categories or groups, without any inherent numerical order.
-- Examples of categorical variables include **fruits**, **car brands**, **animal species**, **shoe sizes**, **book genres**, **movie ratings**, and **types of beverages**.
+- Categorical variables represent data that classify into categories or groups, without any inherent numerical value.
+- A **nominal variable** is a categorical variable where the categories have no natural ranking or order. Examples include **fruits**, **car brands**, **animal species**, **types of beverages**, and **blood types**.
+- An **ordinal variable** is a categorical variable where the categories have a meaningful order or ranking, but the differences between the ranks are not necessarily equal. Examples include **education level** (high school, bachelor's, master's, Ph.D.), **movie ratings** (poor, fair, good, excellent), and **shoe sizes**.
 
 #### Data Table Example with Variable Types
 
@@ -186,8 +187,8 @@ Explanation of Variables in the Table:
 - **Age** is a numerical variable, specifically discrete, as it represents the whole number of years.
 - **Height (inches)** is a numerical variable, specifically continuous, as it can include fractional measurements.
 - **Income ($)** is a numerical variable, specifically continuous, since income can take any value within a range.
-- **Education Level** is a categorical variable that classifies individuals based on their highest educational achievement.
-- **Marital Status** is a categorical variable, representing different categories of relationship status.
+- **Education Level** is an ordinal categorical variable that classifies individuals based on their highest educational achievement, with a meaningful ranking from lower to higher levels.
+- **Marital Status** is a nominal categorical variable, representing different categories of relationship status with no inherent ranking.
 
 #### Explanatory and Response Variables
 

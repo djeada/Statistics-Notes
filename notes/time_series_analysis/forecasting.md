@@ -1,4 +1,4 @@
-## Forecasting with Time Series
+# Forecasting with Time Series
 
 Time series forecasting is a technique used to predict future values based on historical data. It is widely used in various fields, such as finance, economics, and meteorology. In this section, we will discuss the basics of time series forecasting.
 
@@ -256,42 +256,42 @@ $$
   
 ### Linear Prediction for Stationary Series
 
-For a weakly stationary series with mean $\\mu$, the **best linear predictor** of $X_{n+h}$ can be written as:
+For a weakly stationary series with mean $\mu$, the **best linear predictor** of $X_{n+h}$ can be written as:
 
 $$
-\\hat{X}_{n+h} = \\mu + \\sum_{i=1}^{n} a_i (X_{n+1-i} - \\mu)
+\hat{X}_{n+h} = \mu + \sum_{i=1}^{n} a_i (X_{n+1-i} - \mu)
 $$
 
 The coefficient vector $a$ solves:
 
 $$
-\\Gamma_n a = \\gamma_n(h)
+\Gamma_n a = \gamma_n(h)
 $$
 
-where $\\Gamma_n$ is the **Toeplitz** autocovariance matrix and $\\gamma_n(h)$ is the lag-$h$ autocovariance vector. The intercept can be written as:
+where $\Gamma_n$ is the **Toeplitz** autocovariance matrix and $\gamma_n(h)$ is the lag-$h$ autocovariance vector. The intercept can be written as:
 
 $$
-a_0 = \\mu \\left(1 - \\sum_{i=1}^{n} a_i\\right)
+a_0 = \mu \left(1 - \sum_{i=1}^{n} a_i\right)
 $$
 
 The mean squared error is:
 
 $$
-\\text{MSE} = \\gamma(0) - a^T \\gamma(h)
+\text{MSE} = \gamma(0) - a^T \gamma(h)
 $$
 
 For a **stationary Gaussian** series with a single predictor $X_n$, the conditional mean is:
 
 $$
-E(X_{n+h} \\mid X_n) = \\mu + \\rho(h)(X_n - \\mu)
+E(X_{n+h} \mid X_n) = \mu + \rho(h)(X_n - \mu)
 $$
 
 This is also the **best linear** predictor in that single-lag case.
 
 Special cases:
 
-- **AR(1)**: $\\hat{X}_{n+h} = \\mu + \\phi^h (X_n - \\mu)$  
-- **AR(p)**: $\\hat{X}_{n+1} = \\phi_1 X_n + \\cdots + \\phi_p X_{n+1-p}$  
+- **AR(1)**: $\hat{X}_{n+h} = \mu + \phi^h (X_n - \mu)$  
+- **AR(p)**: $\hat{X}_{n+1} = \phi_1 X_n + \cdots + \phi_p X_{n+1-p}$  
 
 Algorithms such as **Durbin-Levinson** (for AR) and the **Innovations algorithm** (for MA) are standard tools for solving these systems efficiently.
 

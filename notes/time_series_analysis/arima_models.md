@@ -1,4 +1,4 @@
-## ARMA, ARIMA and SARIMA Models
+# ARMA, ARIMA and SARIMA Models
 
 ARMA, ARIMA, and SARIMA are models commonly used to analyze and forecast time series data. ARMA (AutoRegressive Moving Average) combines two ideas: using past values to predict current ones (**autoregression**) and smoothing out noise using past forecast errors (**moving average**). ARIMA (AutoRegressive Integrated Moving Average) builds on ARMA by adding a step to handle trends in non-stationary data through differencing. SARIMA (Seasonal ARIMA) takes it a step further by accounting for repeating seasonal patterns. These models are practical and versatile for working with time series data that show trends, noise, or seasonal effects.
 
@@ -34,7 +34,7 @@ An MA($q$) process is **invertible** if all the roots of $\theta(B) = 0$ lie out
 An ARMA process is **causal** if it can be written as a convergent linear filter of current and past shocks:
 
 $$
-X_t = \\sum_{j=0}^{\\infty} \\psi_j \\epsilon_{t-j}
+X_t = \sum_{j=0}^{\infty} \psi_j \epsilon_{t-j}
 $$
 
 This holds when the AR polynomial has no roots on or inside the unit circle, ensuring the solution depends only on present and past innovations.
@@ -63,26 +63,26 @@ Let $\phi = 0.7$, $\theta = 0.2$, and $\epsilon_t$ is white noise.
 
 **Existence and causality (ARMA(1,1))**
 
-- A stationary solution exists as long as $\\phi \\ne \\pm 1$.  
-- If $|\\phi| < 1$, the **causal** (future‑independent) solution is:
+- A stationary solution exists as long as $\phi \ne \pm 1$.  
+- If $|\phi| < 1$, the **causal** (future‑independent) solution is:
 
 $$
-X_t = \\epsilon_t + (\\theta + \\phi)\\sum_{j=1}^{\\infty} \\phi^{j-1} \\epsilon_{t-j}.
+X_t = \epsilon_t + (\theta + \phi)\sum_{j=1}^{\infty} \phi^{j-1} \epsilon_{t-j}.
 $$
 
-- If $|\\phi| > 1$, the stationary solution is **noncausal** and depends on future shocks:
+- If $|\phi| > 1$, the stationary solution is **noncausal** and depends on future shocks:
 
 $$
-X_t = -\\theta \\phi^{-1} \\epsilon_t + (\\theta + \\phi)\\sum_{j=1}^{\\infty} \\phi^{-j-1} \\epsilon_{t+j}.
+X_t = -\theta \phi^{-1} \epsilon_t + (\theta + \phi)\sum_{j=1}^{\infty} \phi^{-j-1} \epsilon_{t+j}.
 $$
 
-- When $\\theta + \\phi = 0$, the model reduces to white noise and the AR/MA effects cancel.
+- When $\theta + \phi = 0$, the model reduces to white noise and the AR/MA effects cancel.
 
 **Invertibility (ARMA(1,1))**
 
-- If $|\\theta| < 1$, the model is **invertible** (innovations can be expressed using past $X_t$).  
-- If $|\\theta| > 1$, the model is **non‑invertible** (requires future values to recover shocks).  
-- If $\\theta = \\pm 1$, invertibility holds only in a mean‑square limit of finite linear combinations.
+- If $|\theta| < 1$, the model is **invertible** (innovations can be expressed using past $X_t$).  
+- If $|\theta| > 1$, the model is **non‑invertible** (requires future values to recover shocks).  
+- If $\theta = \pm 1$, invertibility holds only in a mean‑square limit of finite linear combinations.
 
 ##### Simulation
 
@@ -193,6 +193,18 @@ Estimate $\phi$, $\theta$, and $c$ using MLE.
 - **Residual Analysis**: Plot residuals to check for randomness.
 - **Ljung-Box Test**: Confirm absence of autocorrelation in residuals.
 - **Information Criteria**: Compare AIC and BIC values for different models.
+
+##### ACF/PACF Signatures for Model Identification
+
+The sample ACF and PACF plots provide characteristic patterns that help determine the orders $p$ and $q$:
+
+| Model | ACF pattern | PACF pattern |
+|-------|-------------|--------------|
+| AR($p$) | Tails off (decays exponentially or oscillates) | Cuts off after lag $p$ |
+| MA($q$) | Cuts off after lag $q$ | Tails off (decays exponentially or oscillates) |
+| ARMA($p, q$) | Tails off after lag $q - p$ | Tails off after lag $p - q$ |
+
+When both ACF and PACF tail off gradually, an ARMA model is likely needed. If neither shows a clean cutoff, iterating over candidate $(p, q)$ pairs and comparing AIC or BIC values is a practical strategy.
 
 ##### Step 5: Forecasting
 

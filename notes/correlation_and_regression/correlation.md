@@ -118,10 +118,6 @@ $$
 
 **Pearson's $r = 1 $** indicates a perfect positive linear relationship between hours studied and test scores. As the number of hours studied increases, the test score increases proportionally.
 
-### Note on Initial Error Correction
-
-In the initial content, it was incorrectly stated that Pearson's $r$ for this data is zero, indicating no linear correlation. This is inaccurate because the data shows a clear linear relationship. The correct calculation, as shown above, yields $r = 1 $, confirming a strong positive linear correlation.
-
 ## Spearman Rank Correlation Coefficient ($\rho$)
 
 The **Spearman rank correlation coefficient** measures the strength and direction of the monotonic relationship between two ranked variables. It is a non-parametric measure, meaning it does not assume a specific distribution for the variables and is less sensitive to outliers.
@@ -262,6 +258,8 @@ Interpretation:
 ### Correlation vs. Causation
 
 - **Correlation does not imply causation**. A high correlation between two variables does not mean that one variable causes changes in the other.
+- A **confounding variable** (or lurking variable) may influence both correlated variables, creating a statistical association without a direct causal link. For example, ice cream sales and drowning incidents are positively correlated, but neither causes the other — the confounding variable is hot weather, which independently increases both.
+- **Spurious correlations** can arise purely by chance, especially when testing many variable pairs simultaneously or when working with small sample sizes. Always consider the underlying mechanism before drawing conclusions from observed correlations.
 
 ### Outliers
 

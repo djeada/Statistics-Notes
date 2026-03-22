@@ -1,4 +1,4 @@
-## Random Walk Model
+# Random Walk Model
 
 The **random walk** is a fundamental and widely used time series model, often applied in finance to represent stock prices and other economic indicators. The idea behind the random walk is that the value of the process at time $t$ is the sum of its value at time $t-1$ and a random shock (or noise). Essentially, each step of the process is unpredictable and governed by randomness.
 
@@ -59,6 +59,30 @@ $$
 $$
 
 This means that the variance of a random walk increases linearly with time, implying that the uncertainty around $X_t$ grows as $t$ increases. The longer the random walk progresses, the more dispersed the values become.
+
+### Random Walk with Drift
+
+A **random walk with drift** adds a constant term $\delta$ to each step, so the process trends upward (if $\delta > 0$) or downward (if $\delta < 0$) over time:
+
+$$
+X_t = \delta + X_{t-1} + Z_t
+$$
+
+Expanding from the initial value $X_0$:
+
+$$
+X_t = \delta t + \sum_{i=1}^{t} Z_i
+$$
+
+The drift parameter shifts the expected path of the process:
+
+| Property | Random Walk ($\delta = 0$) | Random Walk with Drift ($\delta \neq 0$) |
+|----------|---------------------------|------------------------------------------|
+| $E[X_t]$ | $0$ | $\delta t$ |
+| $\text{Var}(X_t)$ | $\sigma^2 t$ | $\sigma^2 t$ |
+| Trend | None | Linear trend with slope $\delta$ |
+
+The drift term makes the process non-stationary in the mean (it grows without bound), while the variance still increases linearly with $t$. In finance, a random walk with drift is a common model for log-prices, where $\delta$ represents the average return per period.
 
 ### Simulation of a Random Walk in Python
 

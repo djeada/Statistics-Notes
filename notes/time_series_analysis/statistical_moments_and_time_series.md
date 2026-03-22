@@ -1,4 +1,4 @@
-## Statistical Moments and Time Series
+# Statistical Moments and Time Series
 
 Understanding the behavior of time series data is crucial across various fields such as finance, economics, and engineering. Statistical moments, especially the mean and standard deviation, are essential tools in summarizing and analyzing time series data. This section explores how these statistical moments help characterize time series, provides examples, and highlights the differences between time series data and independent random observations.
 
@@ -6,7 +6,7 @@ Understanding the behavior of time series data is crucial across various fields 
 
 Statistical moments are used to summarize and describe the key characteristics of random variables. When applied to time series data, these moments can change over time, revealing important insights about the dynamics of the process.
 
-* Using the *mean* (First Momemnt) as a summary measure provides a clear reference point for the central location of the data, whereas neglecting it can make comparisons across datasets inconsistent; for example, knowing the average daily temperature helps compare climates between two cities.
+* Using the *mean* (First Moment) as a summary measure provides a clear reference point for the central location of the data, whereas neglecting it can make comparisons across datasets inconsistent; for example, knowing the average daily temperature helps compare climates between two cities.
 * Calculating the *standard deviation* (Second Moment) reveals how much individual data points deviate from the mean, while omitting it can hide the true variability of the dataset; for instance, two factories might have the same average production output, but one could have far greater fluctuations in daily output than the other.
 
 While these two moments are fundamental, time series data often exhibit more complex behaviors, where both the mean and/or variance change over time. This makes the analysis of time series more intricate compared to simple datasets.
