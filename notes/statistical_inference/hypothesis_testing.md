@@ -1,4 +1,4 @@
-## Hypothesis Testing
+# Hypothesis Testing
 
 Hypothesis testing is a tool in statistics that drives much of scientific research. It lets us draw conclusions about entire populations based on the information we collect from samples. You'll find it applied in many areas—from evaluating how well a new drug works in clinical trials to unraveling the mysteries of customer behavior in business analytics.
 
@@ -182,3 +182,31 @@ $$z \approx 1.667$$
 We look up the critical z-value for a right-tailed test at $\alpha = 0.05$, which is approximately 1.645. Since our calculated z-value of 1.667 is greater than 1.645, we reject the null hypothesis.
 
 There is sufficient evidence at the $\alpha = 0.05$ significance level to support the claim that the new fertilizer increases the average yield of the crop to more than 2 tons per hectare.
+
+### Effect Size and Practical Significance
+
+A statistically significant result does not necessarily imply a practically meaningful one. **Effect size** quantifies the magnitude of the difference or relationship, independent of sample size, and helps researchers assess whether an observed effect is large enough to matter in practice.
+
+#### Cohen's d
+
+Cohen's d is the most widely used effect size measure for comparing two means. It expresses the difference in units of the pooled standard deviation:
+
+$$
+d = \frac{\bar{x}_1 - \bar{x}_2}{s_p}
+$$
+
+where $s_p$ is the pooled standard deviation:
+
+$$
+s_p = \sqrt{\frac{(n_1 - 1) s_1^2 + (n_2 - 1) s_2^2}{n_1 + n_2 - 2}}
+$$
+
+Conventional benchmarks for interpreting Cohen's d are:
+
+| $|d|$     | Interpretation |
+|-----------|----------------|
+| 0.2       | Small effect   |
+| 0.5       | Medium effect  |
+| 0.8       | Large effect   |
+
+Because the p-value depends on both the effect size and the sample size, a very large sample can produce a statistically significant p-value even when the effect is trivially small. Reporting the effect size alongside the p-value provides a more complete picture of the findings.

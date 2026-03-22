@@ -1,6 +1,6 @@
-## Errors in Hypothesis Testing
+# Errors in Hypothesis Testing
 
-Hypothesis testing is a core concept in statistics that allows researchers to evaluate assumptions about a population by examining sample data. In this process, we start with a null hypothesis, denoted by $H_0$, which represents a baseline or default position, and an alternative hypothesis, $H_a$, which challenges that assumption. Even with careful planning, the process is prone to mistakes, and understanding these potential missteps is necessary for drawing reliable conclusions. Two main errors, known as Type I and Type II errors, can occur, and balancing these is key to designing strong experiments and interpreting results correctly.
+Hypothesis testing is a core concept in statistics that allows researchers to evaluate assumptions about a population by examining sample data. In this process, we start with a null hypothesis, denoted by $H_0$, which represents a baseline or default position, and an alternative hypothesis, $H_a$, which challenges that assumption. Even with careful planning, the process is prone to mistakes, and understanding these potential missteps is essential for drawing reliable conclusions. Two main errors, known as Type I and Type II errors, can occur, and balancing these is key to designing strong experiments and interpreting results correctly.
 
 ### Overview of Hypothesis Testing Errors
 
@@ -23,10 +23,10 @@ A Type I error occurs when we reject a true null hypothesis, resulting in what i
 
 Consider a scenario in which researchers are testing the effectiveness of a new drug; if the analysis erroneously concludes that the drug is effective when it is not, the study has committed a Type I error.
 
-The following diagram offers a visual representation of this concept. In the diagram, the bell-shaped curve represents the distribution of the test statistic under the null hypothesis, and the important region (corresponding to the significance level) is marked to indicate the area where data would lead to a rejection of $H_0$:
+The following diagram offers a visual representation of this concept. In the diagram, the bell-shaped curve represents the distribution of the test statistic under the null hypothesis, and the critical region (corresponding to the significance level) is marked to indicate the area where data would lead to a rejection of $H_0$:
 
 ```
-         Important Region (α)
+         Critical Region (α)
                 │
                 ▼
          _______________
@@ -38,7 +38,7 @@ The following diagram offers a visual representation of this concept. In the dia
         \_______________/
 ```
 
-The diagram shows that even if the data comes from a distribution where the null hypothesis holds true (centered at $μ_0$), random variations might produce a result that falls within the important region, leading to a false positive decision.
+The diagram shows that even if the data comes from a distribution where the null hypothesis holds true (centered at $μ_0$), random variations might produce a result that falls within the critical region, leading to a false positive decision.
 
 ![type_i_error](https://github.com/djeada/Statistics-Notes/assets/37275728/cf55385c-a4b9-4d56-9a70-52b0da6fe106)
 
@@ -52,7 +52,7 @@ This error is represented by the symbol $\beta$, and its probability can be infl
 
 For example, if a drug is genuinely effective but the study does not detect this effect—perhaps due to an insufficient sample size—the result is a Type II error.
 
-The following diagram provides an illustration of how a Type II error can occur. In this diagram, two overlapping distributions are depicted: one for the null hypothesis (centered at $μ_0$) and one for the alternative hypothesis (centered at $μ_1$). The important threshold is set based on the $H_0$ distribution, and if the true effect does not push the observed value beyond this threshold, the test fails to reject $H_0$, thereby committing a Type II error:
+The following diagram provides an illustration of how a Type II error can occur. In this diagram, two overlapping distributions are depicted: one for the null hypothesis (centered at $μ_0$) and one for the alternative hypothesis (centered at $μ_1$). The critical threshold is set based on the $H_0$ distribution, and if the true effect does not push the observed value beyond this threshold, the test fails to reject $H_0$, thereby committing a Type II error:
 
 ```
               H0 Distribution              H1 Distribution
@@ -64,7 +64,7 @@ The following diagram provides an illustration of how a Type II error can occur.
                   \      /                     \      /
                    \____/                       \____/
                        │
-                       ▼  (Important Threshold)
+                       ▼  (Critical Threshold)
           Failure to reject $H_0$ leads to a Type II error
 ```
 
@@ -87,3 +87,26 @@ $$P(\text{Type II Error}) = \beta$$
 $$\text{Power} = 1 - \beta$$
 
 These formulas provide a clear framework for understanding the trade-offs inherent in hypothesis testing. Researchers must carefully consider these relationships when designing studies, as the optimal balance depends on the context and the consequences of making either type of error.
+
+### Power Analysis and Sample Size Determination
+
+Power analysis is the process of determining the sample size needed to detect an effect of a given size with a specified level of confidence. It links four quantities, any three of which determine the fourth:
+
+1. **Significance level** ($\alpha$): the probability of a Type I error.
+2. **Power** ($1 - \beta$): the probability of correctly rejecting a false $H_0$.
+3. **Effect size** ($d$, $r$, $f$, etc.): the magnitude of the difference or relationship the study aims to detect.
+4. **Sample size** ($n$): the number of observations.
+
+For a two-sample z-test with equal group sizes, the minimum per-group sample size is approximately:
+
+$$
+n \approx \frac{(z_{\alpha/2} + z_{\beta})^2 \cdot 2\sigma^2}{\Delta^2}
+$$
+
+where $\Delta = \mu_1 - \mu_0$ is the smallest meaningful difference to detect and $\sigma$ is the common standard deviation. For example, with $\alpha = 0.05$, power $= 0.80$ (so $z_{\beta} = 0.84$), $\sigma = 10$, and $\Delta = 5$:
+
+$$
+n \approx \frac{(1.96 + 0.84)^2 \cdot 2 \cdot 100}{25} = \frac{7.84 \cdot 200}{25} \approx 63
+$$
+
+so each group would need about 63 observations. Conducting a power analysis before data collection ensures that the study is adequately sized to detect a meaningful effect while keeping the risks of both Type I and Type II errors under control.
