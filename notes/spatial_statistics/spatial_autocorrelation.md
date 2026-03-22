@@ -1,6 +1,6 @@
 # Spatial Autocorrelation
 
-Spatial autocorrelation describes how similar or dissimilar values of a variable are arranged across geographic space. This concept builds on the idea that nearby locations tend to have related characteristics, a principle often summarized by Tobler’s First Law of Geography: “Everything is related to everything else, but near things are more related than distant things.” This idea is necessary in fields such as spatial analysis, geography, environmental science, and urban planning.
+Spatial autocorrelation describes how similar or dissimilar values of a variable are arranged across geographic space. This concept builds on the idea that nearby locations tend to have related characteristics, a principle often summarized by Tobler’s First Law of Geography: “Everything is related to everything else, but near things are more related than distant things.” This idea is essential in fields such as spatial analysis, geography, environmental science, and urban planning.
 
 In the discussion that follows, we explore different types of spatial autocorrelation, key measures for quantifying it, various applications, and a detailed example involving tree heights. We also delve into the mathematical underpinnings that support spatial autocorrelation analysis.
 
@@ -72,6 +72,14 @@ $$I_i = (x_i - \bar{x}) \cdot \sum_{j} w_{ij} (x_j - \bar{x})$$
 
 where $I_i$ is the local measure at location $i$. This statistic helps identify hot spots, where high values cluster, cold spots, where low values cluster, and spatial outliers where the value at a location is significantly different from those of its neighbors.
 
+### Getis-Ord $G_i^*$ Statistic
+
+The Getis-Ord $G_i^*$ statistic complements LISA by identifying locations surrounded by unusually high or low values. Unlike Local Moran's I, which detects both clusters and outliers, $G_i^*$ focuses specifically on the concentration of high or low values. It is computed as
+
+$$G_i^* = \frac{\sum_{j=1}^{n} w_{ij} x_j - \bar{x} \sum_{j=1}^{n} w_{ij}}{s \sqrt{\frac{n \sum_{j=1}^{n} w_{ij}^2 - \left(\sum_{j=1}^{n} w_{ij}\right)^2}{n - 1}}}$$
+
+where $s$ is the standard deviation of the variable. A large positive $G_i^*$ indicates a hot spot (clustering of high values), and a large negative $G_i^*$ indicates a cold spot (clustering of low values). The $G_i^*$ statistic yields a $z$-score that can be compared directly against the standard normal distribution, making significance testing straightforward.
+
 ## Applications of Spatial Autocorrelation
 
 Understanding the spatial arrangement of variables has practical implications in many fields. In geography and cartography, spatial autocorrelation helps in mapping and spatial interpolation, enabling researchers to estimate values at unmeasured locations. In epidemiology, analyzing spatial patterns can provide insights into disease spread and support health resource allocation. Urban planners benefit from spatial autocorrelation when assessing land use patterns and optimizing transportation networks. Environmental scientists use these techniques to study biodiversity, monitor pollution levels, and identify regions with distinct environmental characteristics.
@@ -92,7 +100,7 @@ constructing a spatial weights matrix that defines the relationships between nei
 
 ## Mathematical Rigor in Spatial Autocorrelation
 
-Making sure mathematical rigor in spatial autocorrelation analysis requires careful construction of the spatial weights matrix and thorough statistical significance testing.
+Ensuring mathematical rigor in spatial autocorrelation analysis requires careful construction of the spatial weights matrix and thorough statistical significance testing.
 
 ### Spatial Weights Matrix
 
@@ -100,7 +108,7 @@ The spatial weights matrix, denoted $w_{ij}$, formalizes the spatial relationshi
 
 $$w_{ij} = \frac{1}{d_{ij}^\beta}$$
 
-with $d_{ij}$ representing the distance between locations $i$ and $j$, and $\beta$ being a distance decay parameter. Such formulations make sure that closer points have a greater influence on each other than distant ones.
+with $d_{ij}$ representing the distance between locations $i$ and $j$, and $\beta$ being a distance decay parameter. Such formulations ensure that closer points have a greater influence on each other than distant ones.
 
 ### Statistical Significance Testing
 
