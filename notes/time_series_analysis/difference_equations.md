@@ -5,7 +5,7 @@ A **difference equation** (also known as a recurrence relation) defines each ter
 For example:
 
 $$
-a_n = 4 a_{n-1} - 5 a_{n-2}
+a_n = 5 a_{n-1} - 6 a_{n-2}
 $$
 
 is a second-order difference equation because it relates $a_n$ to the two previous terms $a_{n-1}$ and $a_{n-2}$.
@@ -25,19 +25,19 @@ This assumes a solution structure where each term is proportional to the previou
 For the difference equation:
 
 $$
-a_n = 4 a_{n-1} - 5 a_{n-2}
+a_n = 5 a_{n-1} - 6 a_{n-2}
 $$
 
 Substitute $a_n = \lambda^n$ into the equation:
 
 $$
-\lambda^n = 4 \lambda^{n-1} - 5 \lambda^{n-2}
+\lambda^n = 5 \lambda^{n-1} - 6 \lambda^{n-2}
 $$
 
 Dividing both sides by $\lambda^{n-2}$, we get the **characteristic equation**:
 
 $$
-\lambda^2 - 4 \lambda + 5 = 0
+\lambda^2 - 5 \lambda + 6 = 0
 $$
 
 This is a quadratic equation. Solving for $\lambda$, we get the roots:

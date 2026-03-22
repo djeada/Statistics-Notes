@@ -184,7 +184,7 @@ $$
 **Level equation**:
 
 $$
-\ell_t = \alpha \frac{x_t}{s_{t-L}} + (1 - \alpha)(\ell_{t-1} + b_{t-1})
+\ell_t = \alpha (x_t - s_{t-L}) + (1 - \alpha)(\ell_{t-1} + b_{t-1})
 $$
 
 where:
@@ -203,7 +203,7 @@ $$
 **Seasonality equation**:
 
 $$
-s_t = \gamma \frac{x_t}{\ell_t} + (1 - \gamma) s_{t-L}
+s_t = \gamma (x_t - \ell_t) + (1 - \gamma) s_{t-L}
 $$
 
 where:
@@ -213,7 +213,7 @@ where:
 **Forecast equation**:
 
 $$
-\hat{x}_{t+h} = (\ell_t + h b_t) s_{t+h-L(k+1)}
+\hat{x}_{t+h} = \ell_t + h b_t + s_{t+h-L(k+1)}
 $$
 
 where:
@@ -225,7 +225,7 @@ where:
 **Level equation**:
 
 $$
-\ell_t = \alpha (x_t - s_{t-L}) + (1 - \alpha)(\ell_{t-1} + b_{t-1})
+\ell_t = \alpha \frac{x_t}{s_{t-L}} + (1 - \alpha)(\ell_{t-1} + b_{t-1})
 $$
 
 **Trend equation**:
@@ -237,7 +237,7 @@ $$
 **Seasonality equation**:
 
 $$
-s_t = \gamma (x_t - \ell_t) + (1 - \gamma) s_{t-L}
+s_t = \gamma \frac{x_t}{\ell_t} + (1 - \gamma) s_{t-L}
 $$
 
 **Forecast equation**:

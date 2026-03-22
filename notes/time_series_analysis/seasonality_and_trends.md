@@ -142,7 +142,7 @@ $$
 Estimate seasonal indices by averaging detrended values for each season:
 
 $$
-w_k = \text{average of } \\{ Y_{k + jd} \\}, \quad k = 1, \ldots, d
+w_k = \text{average of } \{ Y_{k + jd} \}, \quad k = 1, \ldots, d
 $$
 
 Normalize the seasonal indices so they sum to zero:
