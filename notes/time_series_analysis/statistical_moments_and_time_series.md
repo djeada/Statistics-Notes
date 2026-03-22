@@ -46,7 +46,7 @@ To explore this difference, consider the following visualization.
 * The top subplot shows a time series plotted over time.
 * The bottom subplot displays a normal distribution that fits the discrete data points from the time series, overlaid with a continuous best-fit distribution.
 * While the data points of the time series can be described using a statistical distribution like the normal distribution, there's an important distinction in their behavior.
-* In a time series, each data point \$x(t)\$ is not independent; it depends on the previous value \$x(t-1)\$. This relationship introduces autocorrelation, meaning the data points are correlated with each other over time.
+* In a time series, each data point $x(t)$ is not independent; it depends on the previous value $x(t-1)$. This relationship introduces autocorrelation, meaning the data points are correlated with each other over time.
 * If you randomly sample from the fitted distribution, it will not replicate the behavior of the time series. This is because the autocorrelation, or the dependency between consecutive points, cannot be captured by independent random sampling.
 
 ### Implications for Modeling and Analysis

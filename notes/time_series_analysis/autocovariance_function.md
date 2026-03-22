@@ -24,7 +24,7 @@ $$
 X = 20 \quad \text{and} \quad Y = 30.29
 $$
 
-###  Covariance
+### Covariance
 
 The **covariance** between two random variables $X$ and $Y$ measures the linear relationship between them. It is defined as:
 

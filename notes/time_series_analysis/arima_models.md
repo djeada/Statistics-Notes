@@ -202,7 +202,7 @@ The sample ACF and PACF plots provide characteristic patterns that help determin
 |-------|-------------|--------------|
 | AR($p$) | Tails off (decays exponentially or oscillates) | Cuts off after lag $p$ |
 | MA($q$) | Cuts off after lag $q$ | Tails off (decays exponentially or oscillates) |
-| ARMA($p, q$) | Tails off after lag $q - p$ | Tails off after lag $p - q$ |
+| ARMA($p, q$) | Tails off | Tails off |
 
 When both ACF and PACF tail off gradually, an ARMA model is likely needed. If neither shows a clean cutoff, iterating over candidate $(p, q)$ pairs and comparing AIC or BIC values is a practical strategy.
 
@@ -218,7 +218,7 @@ Seasonal ARIMA (SARIMA) models are widely used for time series data exhibiting b
 
 #### Mathematical Formulation
 
-A **SARIMA($p, d, q \times P, D, Q$)$_s$** model incorporates both non-seasonal and seasonal factors:
+A **SARIMA$(p, d, q)(P, D, Q)_s$** model incorporates both non-seasonal and seasonal factors:
 
 $$\Phi_P(B^s) \phi_p(B) (1 - B^s)^D (1 - B)^d X_t = \Theta_Q(B^s) \theta_q(B) \epsilon_t$$
 
