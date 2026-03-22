@@ -1,4 +1,4 @@
-## Standard Error and Law of Large Numbers
+# Standard Error and Law of Large Numbers
 
 ### Expected Value
 

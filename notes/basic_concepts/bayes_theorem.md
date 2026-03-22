@@ -1,4 +1,4 @@
-## Bayes' Theorem
+# Bayes' Theorem
 
 Bayes' theorem provides a way to update our probability estimates for an event based on new evidence. It connects the conditional and marginal probabilities of events, allowing us to revise our predictions or hypotheses in light of additional information. The theorem is stated mathematically as:
 

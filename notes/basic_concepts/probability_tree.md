@@ -1,4 +1,4 @@
-## Probability Trees
+# Probability Trees
 
 Probability trees are a visual representation of all possible outcomes of a probabilistic experiment and the paths leading to these outcomes. They are especially helpful in understanding sequences of events, particularly when these events are conditional on previous outcomes.
 

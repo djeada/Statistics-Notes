@@ -1,4 +1,4 @@
-## Axioms of Probability
+# Axioms of Probability
 
 Probability theory is based on a set of principles, or axioms, that define the properties of the probability measure. These axioms, first formalized by the Russian mathematician Andrey Kolmogorov, are the foundation upon which the entire framework of probability is built.
 

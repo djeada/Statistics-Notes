@@ -1,4 +1,4 @@
-## Introduction to Statistics
+# Introduction to Statistics
 
 Statistics is an empirical science, focusing on data-driven insights for real-world applications. This guide offers a concise exploration of statistical fundamentals, aimed at providing practical knowledge for data analysis and interpretation.
 

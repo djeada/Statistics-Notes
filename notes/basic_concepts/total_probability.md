@@ -1,4 +1,4 @@
-## The Law of Total Probability
+# The Law of Total Probability
 
 The law of total probability allows for the computation of the probability of an event A based on a set of mutually exclusive and exhaustive events. It's particularly useful when the overall sample space is divided into several distinct scenarios, or partitions, that cover all possible outcomes. The formula for the law of total probability is given by:
 
