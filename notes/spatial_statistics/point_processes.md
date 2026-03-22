@@ -33,7 +33,7 @@ The intensity function $\lambda(x)$ (sometimes called the rate or density functi
 
 $$\lambda(x) = \lim_{\delta \to 0} \frac{E[N(B_{\delta}(x))]}{\text{Volume}(B_{\delta}(x))}$$
 
-where $B_{\delta}(x)$ is a small neighborhood around $x$.In a homogeneous point process, $\lambda(x) = \lambda$ is constant across $S$, whereas an inhomogeneous process allows $\lambda(x)$ to vary with $x$.
+where $B_{\delta}(x)$ is a small neighborhood around $x$. In a homogeneous point process, $\lambda(x) = \lambda$ is constant across $S$, whereas an inhomogeneous process allows $\lambda(x)$ to vary with $x$.
 
 ### Stationarity and Isotropy
 

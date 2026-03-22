@@ -125,7 +125,7 @@ $$\begin{cases}
 \sum_{j=1}^{n} \lambda_j = 1,
 \end{cases}$$
 
-where $\mu$ is a Lagrange multiplier ensuring unbiasedness.In cases where the mean exhibits a trend across the study area, universal kriging is applied. The mean is modeled as a deterministic function,
+where $\mu$ is a Lagrange multiplier ensuring unbiasedness. In cases where the mean exhibits a trend across the study area, universal kriging is applied. The mean is modeled as a deterministic function,
 
 $$\mu(x) = \sum_{k=1}^{m} \beta_k f_k(x)$$
 
@@ -163,7 +163,7 @@ $$\begin{cases}
 \sum_{j=1}^{n} \lambda_j = 1,
 \end{cases}$$
 
-where $\mu$ is the Lagrange multiplier.Solving this system yields the weights $\lambda_i$ used in the kriging estimator
+where $\mu$ is the Lagrange multiplier. Solving this system yields the weights $\lambda_i$ used in the kriging estimator
 
 $$Z^*(x_0) = \sum_{i=1}^{n} \lambda_i Z(x_i)$$
 
