@@ -136,7 +136,18 @@ Where:
 - $X_i$ and $Y_i$ are the $i$-th observations of variables $X$ and $Y$.
 - $\bar{X}$ and $\bar{Y}$ are the sample means of $X$ and $Y$.
 
-**Note**: The denominator $n - 1$ provides an unbiased estimate of the covariance for a sample drawn from a population.
+**Note**: The denominator $n - 1$ (Bessel's correction) provides an unbiased estimate of the population covariance when working with a sample. Using $n$ in the denominator would systematically underestimate the true population covariance.
+
+### Population vs. Sample Covariance
+
+| Aspect | Population Covariance | Sample Covariance |
+|--------|----------------------|-------------------|
+| **Formula** | $\sigma_{XY} = \frac{1}{N} \sum_{i=1}^{N} (X_i - \mu_X)(Y_i - \mu_Y)$ | $s_{XY} = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})$ |
+| **Denominator** | $N$ (population size) | $n - 1$ (degrees of freedom) |
+| **Parameters** | Uses population means $\mu_X$, $\mu_Y$ | Uses sample means $\bar{X}$, $\bar{Y}$ |
+| **Usage** | When data for the entire population is available | When working with a sample drawn from a larger population |
+
+In practice, population parameters are rarely known, so the sample covariance with $n - 1$ in the denominator is the standard choice.
 
 ## Example: Calculating Covariance Step by Step
 

@@ -1,4 +1,4 @@
-## Simple Linear Regression
+# Simple Linear Regression
 
 Simple linear regression is a statistical method used to model the relationship between a single dependent variable and one independent variable. It aims to find the best-fitting straight line through the data points, which can be used to predict the dependent variable based on the independent variable.
 
@@ -14,29 +14,29 @@ $$
 
 Where:
 
-* $y\_i$ is the $i $-th observation of the dependent variable.
-* $x\_i$ is the $i $-th observation of the independent variable.
-* $\beta\_0$ is the intercept (the expected value of $y$ when $x = 0$).
-* $\beta\_1$ is the slope (the average change in $y$ for a one-unit change in $x$).
-* $\varepsilon\_i$ is the error term, assumed to be independently and identically distributed with mean zero and constant variance $\sigma^2 $.
+* $y_i$ is the $i $-th observation of the dependent variable.
+* $x_i$ is the $i $-th observation of the independent variable.
+* $\beta_0$ is the intercept (the expected value of $y$ when $x = 0$).
+* $\beta_1$ is the slope (the average change in $y$ for a one-unit change in $x$).
+* $\varepsilon_i$ is the error term, assumed to be independently and identically distributed with mean zero and constant variance $\sigma^2 $.
 
-Conceptually, $\varepsilon\_i$ captures everything about $y\_i$ that is **not** explained by $x\_i$.  If the model is perfect, $\varepsilon\_i$ would always be exactly zero—something that almost never happens with real-world data.
+Conceptually, $\varepsilon_i$ captures everything about $y_i$ that is **not** explained by $x_i$.  If the model is perfect, $\varepsilon_i$ would always be exactly zero—something that almost never happens with real-world data.
 
 #### Assumptions of the Model
 
 For the simple linear regression model to be valid, several key assumptions must be met:
 
 1. **Linearity** indicates that the relationship between $x$ and $y$ is linear.
-2. **Independence** means the residuals (errors) $\varepsilon\_i$ are independent of one another.
+2. **Independence** means the residuals (errors) $\varepsilon_i$ are independent of one another.
 3. **Homoscedasticity** suggests that the residuals have a constant variance ($\sigma^2$) across all values of $x$.
 4. **Normality** assumes that the residuals follow a normal distribution.
-5. Finally, **no measurement error in $x** ensures that the independent variable $x$ is measured without error.
+5. Finally, **no measurement error in $x$** ensures that the independent variable $x$ is measured without error.
 
 A quick way to remember these assumptions is “LINE” plus “no‐error-in-$x$”: **L**inearity, **I**ndependence, **N**ormality, **E**qual variance.  Diagnostic plots such as residual-vs-fit, Q-Q plots, and scale-location plots are routinely used to check whether LINE holds in practice.
 
 ### Estimation of Coefficients Using the Least Squares Method
 
-The goal is to find estimates $\hat{\beta}\_0$ and $\hat{\beta}\_1$ that minimize the sum of squared residuals (differences between observed and predicted values):
+The goal is to find estimates $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimize the sum of squared residuals (differences between observed and predicted values):
 
 $\mathrm{SSE} = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$
 
@@ -44,11 +44,11 @@ $\mathrm{SSE} = \sum_{i=1}^{n} \bigl(y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i\big
 
 “Least squares” literally means “make the squares of the vertical distances from the data points to the line as small as possible.”  Squaring the distances keeps positive and negative residuals from canceling and penalizes large misses more heavily than small ones, giving us a single objective function (SSE) to minimize.
 
-### Calculating the Slope ($\hat{\beta}\_1$) and Intercept ($\hat{\beta}\_0$)
+### Calculating the Slope ($\hat{\beta}_1$) and Intercept ($\hat{\beta}_0$)
 
 The least squares estimates are calculated using the following formulas:
 
-##### Slope ($\hat{\beta}\_1$)
+##### Slope ($\hat{\beta}_1$)
 
 $$
 \hat{\beta}_1 = \frac{Sxy}{Sxx}
@@ -64,7 +64,7 @@ $$
 
 $$\hat{\beta}_1 = \frac{\mathrm{Cov}(x, y)}{\mathrm{Var}(x)}$$
 
-##### Intercept ($\hat{\beta}\_0$)
+##### Intercept ($\hat{\beta}_0$)
 
 $$
 \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}
@@ -72,17 +72,17 @@ $$
 
 Where:
 
-* $\bar{x} = \dfrac{1}{n} \sum\_{i=1}^{n} x\_i$ is the mean of the independent variable.
-* $\bar{y} = \dfrac{1}{n} \sum\_{i=1}^{n} y\_i$ is the mean of the dependent variable.
+* $\bar{x} = \dfrac{1}{n} \sum_{i=1}^{n} x_i$ is the mean of the independent variable.
+* $\bar{y} = \dfrac{1}{n} \sum_{i=1}^{n} y_i$ is the mean of the dependent variable.
 
-Notice how $\hat{\beta}\_1$ is essentially the ratio of how $x$ and $y$ co-vary to how $x$ varies by itself.  Intuitively, if $x$ and $y$ move together a lot compared with how much $x$ moves on its own, the slope must be steep; if they hardly move together, the slope must be shallow.
+Notice how $\hat{\beta}_1$ is essentially the ratio of how $x$ and $y$ co-vary to how $x$ varies by itself.  Intuitively, if $x$ and $y$ move together a lot compared with how much $x$ moves on its own, the slope must be steep; if they hardly move together, the slope must be shallow.
 
 ### Interpretation of the Coefficients
 
-* The **intercept ($\hat{\beta}\_0$)** represents the expected value of $y$ when $x = 0$, marking the point where the regression line intersects the $y$-axis.
-* The **slope ($\hat{\beta}\_1$)** indicates the average change in $y$ for each one-unit increase in $x$.
+* The **intercept ($\hat{\beta}_0$)** represents the expected value of $y$ when $x = 0$, marking the point where the regression line intersects the $y$-axis.
+* The **slope ($\hat{\beta}_1$)** indicates the average change in $y$ for each one-unit increase in $x$.
 
-In some applications (for example, predicting salary from years of experience), $x = 0$ may not make practical sense.  In such cases, $\hat{\beta}\_0$ is still needed mathematically—even if we never literally interpret it—because it “anchors” the regression line.
+In some applications (for example, predicting salary from years of experience), $x = 0$ may not make practical sense.  In such cases, $\hat{\beta}_0$ is still needed mathematically—even if we never literally interpret it—because it “anchors” the regression line.
 
 ### Assessing the Fit of the Model
 
@@ -132,8 +132,8 @@ For example, $R^2 = 0.87$ means “87 % of the variability in the outcome is cap
 
 #### Testing the Significance of the Slope
 
-* **Null Hypothesis ($H\_0$)**: $\beta\_1 = 0$ (no linear relationship)
-* **Alternative Hypothesis ($H\_a $)**: $\beta\_1 \neq 0$
+* **Null Hypothesis ($H_0$)**: $\beta_1 = 0$ (no linear relationship)
+* **Alternative Hypothesis ($H_a $)**: $\beta_1 \neq 0$
 
 **Test Statistic**:
 
@@ -156,7 +156,7 @@ $$
 
 The test statistic follows a T-distribution with $n - 2$ degrees of freedom.
 
-If the absolute value of $t$ is large (or equivalently, the $p$-value is small), we reject $H\_0$ and conclude that the slope is statistically different from zero—i.e., $x$ provides meaningful information about $y$.  In practice, analysts often complement the $t$-test with a confidence interval for $\beta\_1$ to see a plausible range of slopes.
+If the absolute value of $t$ is large (or equivalently, the $p$-value is small), we reject $H_0$ and conclude that the slope is statistically different from zero—i.e., $x$ provides meaningful information about $y$.  In practice, analysts often complement the $t$-test with a confidence interval for $\beta_1$ to see a plausible range of slopes.
 
 ### Example
 
@@ -189,7 +189,7 @@ The means serve as the “balance points” of the $x$ and $y$ distributions.  C
 
 Create a table to organize calculations:
 
-| $x\_i$  | $y\_i$ | $x\_i - \bar{x} $ | $y\_i - \bar{y} $ | $(x\_i - \bar{x})(y\_i - \bar{y})$ | $(x\_i - \bar{x})^2 $ |
+| $x_i$  | $y_i$ | $x_i - \bar{x} $ | $y_i - \bar{y} $ | $(x_i - \bar{x})(y_i - \bar{y})$ | $(x_i - \bar{x})^2 $ |
 | --------- | -------- | ------------------- | ------------------- | ------------------------------------ | ----------------------- |
 | 2         | 50       | -3                  | -15                 | 45                                   | 9                       |
 | 4         | 60       | -1                  | -5                  | 5                                    | 1                       |
@@ -213,7 +213,7 @@ $$
 
 Think of the first sum as the **numerator** of the slope (how $x$ co-varies with $y$) and the second as the **denominator** (how much $x$ varies by itself).
 
-**III. Calculate the Slope ($\hat{\beta}\_1$)**
+**III. Calculate the Slope ($\hat{\beta}_1$)**
 
 $$
 \hat{\beta}_1 = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sum (x_i - \bar{x})^2} = \frac{100}{20} = 5
@@ -221,7 +221,7 @@ $$
 
 Interpreted literally, every additional hour of study is associated with a 5-point increase in the test score.
 
-**IV. Calculate the Intercept ($\hat{\beta}\_0$)**
+**IV. Calculate the Intercept ($\hat{\beta}_0$)**
 
 $$
 \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x} = 65 - (5)(5) = 40
@@ -239,7 +239,7 @@ This compact equation now lets us predict a test score for **any** study-hours v
 
 **VI. Predict the Test Scores and Calculate Residuals**
 
-| $x\_i$ | $y\_i$ | $\hat{y}\_i = 40 + 5x\_i$ | Residuals ($y\_i - \hat{y}\_i$) |
+| $x_i$ | $y_i$ | $\hat{y}_i = 40 + 5x_i$ | Residuals ($y_i - \hat{y}_i$) |
 | -------- | -------- | --------------------------- | --------------------------------- |
 | 2        | 50       | 50                          | 0                                 |
 | 4        | 60       | 60                          | 0                                 |
@@ -292,10 +292,10 @@ The standard error measures typical residual size.  Here, with all residuals exa
 
 Consequently,
 
-> *the estimated standard errors for both $\hat{\beta}\_0$ and $\hat{\beta}\_1$ are also zero, implying infinite precision—again a mathematical quirk of a perfect fit, not a realistic outcome.*
+> *the estimated standard errors for both $\hat{\beta}_0$ and $\hat{\beta}_1$ are also zero, implying infinite precision—again a mathematical quirk of a perfect fit, not a realistic outcome.*
 
 **X. Hypothesis Testing (Optional)**
 
-In this case, the test statistic for $\hat{\beta}\_1$ is undefined due to division by zero in the standard error. However, in practice, with more realistic data where $s > 0$, you would perform a $t $-test to assess the significance of the slope.
+In this case, the test statistic for $\hat{\beta}_1$ is undefined due to division by zero in the standard error. However, in practice, with more realistic data where $s > 0$, you would perform a $t $-test to assess the significance of the slope.
 
 When $s$ is positive the $t$-test asks, “Is the observed slope big compared with the noise?”  Here there is no noise, so the usual inferential machinery breaks down—which actually reinforces the lesson that **perfect fits are the exception, not the rule**.
