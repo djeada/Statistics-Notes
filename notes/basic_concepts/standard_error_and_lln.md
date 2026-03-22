@@ -141,6 +141,24 @@ $$
 
 This principle ensures that with a sufficiently large sample, the sample mean becomes a reliable estimator of the population mean.
 
+There are two forms of the Law of Large Numbers:
+
+- The **Weak Law of Large Numbers** (WLLN) states that for any positive number $\epsilon$, the probability that the sample mean deviates from the population mean by more than $\epsilon$ approaches zero as the sample size grows:
+
+$$
+\lim_{n \to \infty} P\left(|\bar{x}_n - \mu| > \epsilon\right) = 0
+$$
+
+This is known as convergence in probability. It guarantees that large deviations become increasingly unlikely, but does not rule out occasional deviations for any finite sample.
+
+- The **Strong Law of Large Numbers** (SLLN) provides a stronger guarantee: the sample mean converges to the population mean almost surely, meaning:
+
+$$
+P\left(\lim_{n \to \infty} \bar{x}_n = \mu\right) = 1
+$$
+
+Almost sure convergence means that with probability 1, the sequence of sample means will eventually settle at the population mean and stay there. The SLLN requires slightly stronger conditions (such as finite variance) but provides a definitive statement about the long-run behavior of the sample mean.
+
 - **Impact on Standard Error**:
 
 The **Standard Error (SE)** of the sample mean $\bar{x}_n$, which measures the variability of the sample mean around the population mean, decreases as the sample size increases. The SE is given by:

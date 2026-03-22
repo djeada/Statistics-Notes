@@ -13,6 +13,40 @@ where:
 - $P(A)$ is the probability of event A, and
 - $P(B)$ is the probability of event B.
 
+### Derivation from Conditional Probability
+
+Bayes' theorem follows directly from the definition of conditional probability. Recall that conditional probability gives us:
+
+$$
+P(A|B) = \frac{P(A \cap B)}{P(B)}
+$$
+
+Similarly, we can write:
+
+$$
+P(B|A) = \frac{P(A \cap B)}{P(A)}
+$$
+
+From the second equation, we can solve for the joint probability:
+
+$$
+P(A \cap B) = P(B|A) \times P(A)
+$$
+
+Substituting this expression for $P(A \cap B)$ into the first equation yields Bayes' theorem:
+
+$$
+P(A|B) = \frac{P(B|A) \times P(A)}{P(B)}
+$$
+
+When $P(B)$ is not directly known, it can be expanded using the law of total probability. If $A$ and $A^c$ (the complement of $A$) partition the sample space, then:
+
+$$
+P(B) = P(B|A) \times P(A) + P(B|A^c) \times P(A^c)
+$$
+
+This expanded form is especially useful in diagnostic and classification problems, where the prior probability $P(A)$ and the likelihoods $P(B|A)$ and $P(B|A^c)$ are known.
+
 Let's say $P(A)=0.3$ and $P(B)=0.4$ then:
 
 ![a10438be-8900-4dab-92ce-9c9fcb89875b](https://github.com/djeada/Statistics-Notes/assets/37275728/34f9b564-ba7b-4d70-aa57-ad324c168b82)
