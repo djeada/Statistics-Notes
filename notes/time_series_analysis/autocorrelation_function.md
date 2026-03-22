@@ -145,10 +145,12 @@ trend_series = np.cumsum(np.random.normal(1, 1, N))  # Random walk simulating a 
 # Example 2: Time Series with clearer seasonality (less noise)
 seasonal_series = np.sin(np.linspace(0, 20 * np.pi, N))  # A sine wave to emphasize seasonality
 
-# Moving Average Process (MA(1)) remains the same
-ma_series = np.random.normal(0, 1, N)
+# Moving Average Process (MA(1))
+noise = np.random.normal(0, 1, N)
+ma_series = np.zeros(N)
+ma_series[0] = noise[0]
 for i in range(1, N):
-    ma_series[i] += 0.5 * ma_series[i - 1]  # Moving average with lag 1
+    ma_series[i] = noise[i] + 0.5 * noise[i - 1]  # MA(1): current noise plus weighted previous noise
 
 # Plotting the time series
 plt.figure(figsize=(12, 8))

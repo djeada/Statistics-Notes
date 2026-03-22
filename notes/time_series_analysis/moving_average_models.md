@@ -208,7 +208,7 @@ SMA helps in reducing the noise in the data to see the underlying trend more cle
 The Exponential Moving Average (EMA) places a greater weight on more recent data points, making it more responsive to new information. The formula for EMA is:
 
 $$
-EMA_{t} = (1 - \alpha) y_t + \alpha \cdot {EMA}_{t-1}
+EMA_{t} = \alpha \cdot y_t + (1 - \alpha) \cdot {EMA}_{t-1}
 $$
 
 - $y_t$ is the observation at time `t`.
@@ -224,7 +224,7 @@ When analyzing stock prices, technical indicators like the Simple Moving Average
 #### SMA Analysis
 The Simple Moving Average (SMA) is a calculation that takes the arithmetic mean of a given set of prices over a specific number of days in the past; for instance, over the previous 20 days.
 
-$SMA = (P1 + P2 + ... + P20) / 20$$
+$$SMA = (P1 + P2 + ... + P20) / 20$$
 
 Here, $P1$, $P2$, ..., $P20$ represent the stock prices for each of the 20 days.
 

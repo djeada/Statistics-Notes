@@ -156,7 +156,7 @@ $$\gamma(h) = \frac{1}{2N(h)} \sum_{i=1}^{N(h)} [Z(x_i) - Z(x_i + h)]^2$$
 
 where $N(h)$ is the number of pairs of points separated by lag distance $h$. By plotting $\gamma(h)$ versus $h$, one can observe how the spatial variability increases with distance. A theoretical variogram model, such as the spherical model, is then fitted to the experimental data by estimating parameters like the nugget ($c_0$), sill ($c_0 + c$), and range ($a$).
 
-Once the variogram model is set up, the kriging system is set up. In the case of ordinary kriging, the system to be solved is
+Once the variogram model is in place, the kriging system is set up. In the case of ordinary kriging, the system to be solved is
 
 $$\begin{cases}
 \sum_{j=1}^{n} \lambda_j \gamma(x_i - x_j) + \mu = \gamma(x_i - x_0), & i = 1, \dots, n \\
@@ -191,4 +191,4 @@ This map not only displays predicted soil pH values but can also be complemented
 
 ## Software for Geostatistical Analysis
 
-A range of software packages and libraries help geostatistical modeling and kriging. In the realm of proprietary software, ArcGIS Geostatistical Analyst is widely used. Open-source tools in R, such as the packages `gstat`, `geoR`, and `sp`, offer strong geostatistical capabilities. Python users may explore libraries like `PyKrige`, `GeostatsPy`, or `GSTools`, while specialized platforms like SGeMS (Stanford Geostatistical Modeling Software) provide dedicated environments for geostatistical analysis.
+A range of software packages and libraries support geostatistical modeling and kriging. In the realm of proprietary software, ArcGIS Geostatistical Analyst is widely used. Open-source tools in R, such as the packages `gstat`, `geoR`, and `sp`, offer strong geostatistical capabilities. Python users may explore libraries like `PyKrige`, `GeostatsPy`, or `GSTools`, while specialized platforms like SGeMS (Stanford Geostatistical Modeling Software) provide dedicated environments for geostatistical analysis.

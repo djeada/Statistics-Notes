@@ -444,9 +444,9 @@ Common estimation tools include **Yule-Walker** or **Burg** for pure AR models a
 For a stationary series, a common ARMA workflow is:
 
 1. **Choose orders $p, q$** using ACF/PACF patterns.  
-2. **Estimate the mean** and work with the mean-corrected series $X_t - \\bar{X}$.  
+2. **Estimate the mean** and work with the mean-centered series $X_t - \bar{X}$.  
 3. **Estimate AR/MA coefficients** (Innovations for MA, Yule-Walker or Burg for AR, Hannan-Rissanen for ARMA).  
-4. **Estimate innovation variance** $\\sigma^2$.  
+4. **Estimate innovation variance** $\sigma^2$.  
 5. **Select the final model** using diagnostics and information criteria.  
 
 #### Order Selection with AICc
@@ -454,7 +454,7 @@ For a stationary series, a common ARMA workflow is:
 The **Akaike Information Criterion with correction (AICc)** adjusts AIC for smaller samples:
 
 $$
-\\text{AICc} = -2\\ln(L) + \\frac{2k n}{n - k - 1}
+\text{AICc} = -2\ln(L) + \frac{2k n}{n - k - 1}
 $$
 
 where $k$ is the number of estimated parameters and $n$ is the sample size. For ARMA($p, q$) with mean, a common choice is $k = p + q + 1$ (plus any additional terms if included). Lower AICc values indicate a better balance between fit and complexity.

@@ -176,7 +176,7 @@ $$
 |\beta| < 1
 $$
 
-This ensures that the MA(1) model is **invertible**, meaning we can express the white noise $Z_t$ as a finite sum of past values of $X_t$.
+This ensures that the MA(1) model is **invertible**, meaning we can express the white noise $Z_t$ as a convergent infinite sum of past values of $X_t$.
 
 #### Generalization to Higher-Order MA Models
 

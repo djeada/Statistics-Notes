@@ -37,8 +37,8 @@ This alternating pattern can occur in scenarios where contrasting land uses—su
 Zero spatial autocorrelation implies that there is no discernible spatial pattern; values are distributed randomly across the area of interest. In such cases, the location of each observation does not provide useful information about the values of its neighbors. An ASCII diagram reflecting randomness might appear as a scattered arrangement of symbols:
 
 ```
-  *   o   *
   o   *   o
+  o   o   *
   *   o   *
 ```
 
@@ -118,7 +118,7 @@ The expected value of Moran’s I under the null hypothesis is given by
 
 $$E[I] = -\frac{1}{n - 1}$$
 
-and a complicated formula is used to compute the variance $\text{Var}[I]$ based on the spatial weights. A Z-score is then calculated as
+and the variance $\text{Var}[I]$ is computed from the spatial weights matrix and the sample size (the exact expression depends on the normality or randomization assumption used). A Z-score is then calculated as
 
 $$Z = \frac{I_{\text{observed}} - E[I]}{\sqrt{\text{Var}[I]}}$$
 

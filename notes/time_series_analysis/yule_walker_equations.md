@@ -57,9 +57,9 @@ Because $\rho(0)=1$, each equation involves only *observable* autocorrelations o
 
 I. **Multiply by a lagged value.**
 
-For a fixed $k\in\{1dots ,p\}$,
+For a fixed $k\in\{1, 2, \ldots, p\}$,
 
-$$X_tX_{t-k}= \sum_{j=1}^{p} \phi_j,X_{t-j}X_{t-k}+Z_tX_{t-k}$$
+$$X_t X_{t-k} = \sum_{j=1}^{p} \phi_j X_{t-j} X_{t-k} + Z_t X_{t-k}$$
 
 II. **Take expectations.**
 
@@ -74,10 +74,10 @@ Because $Z_t$ is uncorrelated with past $X$’s, the final expectation vanishes 
 
 III. **Replace expectations with autocovariances.**
 
-$$\gamma(k)=\sum_{j=1}^{p}\phi_j,\gamma(k-j), 
-\qquad k=1dots ,p$$
+$$\gamma(k)=\sum_{j=1}^{p}\phi_j \gamma(k-j), 
+\qquad k=1, 2, \ldots, p$$
 
-For $k=0$ the expectation $E[Z_tX_t]=\sigma_Z^{2}$ is non-zero, flexible equation $*$ above.
+For $k=0$ the expectation $E[Z_tX_t]=\sigma_Z^{2}$ is non-zero, yielding equation $*$ above.
 
 IV. **Normalize to autocorrelations.**
 

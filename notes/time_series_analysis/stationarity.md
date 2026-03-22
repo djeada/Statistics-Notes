@@ -119,7 +119,7 @@ Examples:
 
 #### Linear Processes and Linear Filters
 
-If $\\{Y_t\\}$ is a stationary series with mean 0 and autocovariance $\gamma_Y$, then a linear filter:
+If $\{Y_t\}$ is a stationary series with mean 0 and autocovariance $\gamma_Y$, then a linear filter:
 
 $$
 X_t = \sum_{j=-\infty}^{\infty} \psi_j Y_{t-j} = \psi(B) Y_t
@@ -368,9 +368,7 @@ import matplotlib.pyplot as plt
 np.random.seed(42)
 N = 1000
 Z = np.random.normal(0, 1, N)
-X = np.cumsum(Z)  #
-
- Random walk as cumulative sum of white noise
+X = np.cumsum(Z)  # Random walk as cumulative sum of white noise
 
 # Apply differencing to make it stationary
 diff_X = np.diff(X)

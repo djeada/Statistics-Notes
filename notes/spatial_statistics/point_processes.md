@@ -126,7 +126,8 @@ for $x \neq y$. For a stationary process, $\lambda_2$ depends only on the vector
 
 ## Applications of Point Processes
 
-- Point processes have diverse applications across many fields, including telecommunications, neuroscience, environmental science, social science, physics, and materials science.
+Point processes have diverse applications across many fields:
+
 - In telecommunications, point processes model the locations of transmitters, receivers, and users, as well as the timing of call arrivals.
 - Neuroscientists use point processes to analyze spike trains, which represent the times at which neurons fire.
 - Environmental scientists use these models to study the occurrence of earthquakes or the spatial distribution of species in an ecosystem.
