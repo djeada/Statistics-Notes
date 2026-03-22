@@ -1,4 +1,4 @@
-## Financial Time Series Models
+# Financial Time Series Models
 
 Financial series (prices, returns, exchange rates) often look very different from the classical stationary Gaussian assumptions. Common features include:
 
@@ -12,7 +12,7 @@ Financial series (prices, returns, exchange rates) often look very different fro
 If $P_t$ is the price at time $t$, the **log return** is:
 
 $$
-Z_t = \\log(P_t) - \\log(P_{t-1})
+Z_t = \log(P_t) - \log(P_{t-1})
 $$
 
 Working with returns instead of prices often produces a more stable series for modeling.
@@ -24,20 +24,20 @@ ARCH-type models describe changing variance over time by making variance depend 
 **ARCH($p$):**
 
 $$
-Z_t = \\sqrt{h_t} \\, \\epsilon_t, \\quad \\epsilon_t \\sim IID\\,N(0,1)
+Z_t = \sqrt{h_t} \, \epsilon_t, \quad \epsilon_t \sim IID\,N(0,1)
 $$
 
 $$
-h_t = \\alpha_0 + \\sum_{i=1}^{p} \\alpha_i Z_{t-i}^2
+h_t = \alpha_0 + \sum_{i=1}^{p} \alpha_i Z_{t-i}^2
 $$
 
 **GARCH($p, q$):**
 
 $$
-h_t = \\alpha_0 + \\sum_{i=1}^{p} \\alpha_i Z_{t-i}^2 + \\sum_{j=1}^{q} \\beta_j h_{t-j}
+h_t = \alpha_0 + \sum_{i=1}^{p} \alpha_i Z_{t-i}^2 + \sum_{j=1}^{q} \beta_j h_{t-j}
 $$
 
-with $\\alpha_0 > 0$ and $\\alpha_i, \\beta_j \\ge 0$.
+with $\alpha_0 > 0$ and $\alpha_i, \beta_j \ge 0$.
 
 ### Synthetic Volatility Example
 

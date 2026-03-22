@@ -1,4 +1,4 @@
-## Time Series Modeling
+# Time Series Modeling
 
 Time series modeling involves analyzing data points collected or recorded at specific time intervals to understand underlying structures and make forecasts. Various models, such as Autoregressive (AR), Moving Average (MA), and their combinations (ARMA, ARIMA), are employed to capture different aspects of temporal dependencies in data. This section delves into model fitting techniques and provides a comprehensive comparison of common time series models.
 

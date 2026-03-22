@@ -1,4 +1,4 @@
-## Stationarity in Time Series
+# Stationarity in Time Series
 
 Stationarity is an important idea in time series analysis. A time series is considered stationary if its statistical properties—like the mean, variance, and autocovariance—stay constant over time. This matters because methods like ARIMA and ARMA are designed to work with stationary data, so it’s a good idea to check for stationarity before using these models.
 
@@ -83,10 +83,10 @@ To analyze a stationary process, we focus on three key functions:
 More generally, the covariance function can be written as:
 
 $$
-\\gamma(r, s) = \\text{Cov}(X_r, X_s)
+\gamma(r, s) = \text{Cov}(X_r, X_s)
 $$
 
-Weak stationarity implies $\\mu(t) = \\mu$ and $\\gamma(r, s)$ depends only on the lag $h = s - r$.
+Weak stationarity implies $\mu(t) = \mu$ and $\gamma(r, s)$ depends only on the lag $h = s - r$.
 
 #### Autocorrelation and Bounds
 
@@ -108,7 +108,7 @@ A stationary series is **q-dependent** if observations more than $q$ time units 
 A series is **q-correlated** if its autocovariance vanishes beyond lag $q$:
 
 $$
-\\gamma(h) = 0 \\quad \\text{for} \\quad |h| > q
+\gamma(h) = 0 \quad \text{for} \quad |h| > q
 $$
 
 Examples:
@@ -119,25 +119,25 @@ Examples:
 
 #### Linear Processes and Linear Filters
 
-If $\\{Y_t\\}$ is a stationary series with mean 0 and autocovariance $\\gamma_Y$, then a linear filter:
+If $\\{Y_t\\}$ is a stationary series with mean 0 and autocovariance $\gamma_Y$, then a linear filter:
 
 $$
-X_t = \\sum_{j=-\\infty}^{\\infty} \\psi_j Y_{t-j} = \\psi(B) Y_t
+X_t = \sum_{j=-\infty}^{\infty} \psi_j Y_{t-j} = \psi(B) Y_t
 $$
 
-is also stationary when $\\sum_{j=-\\infty}^{\\infty} |\\psi_j| < \\infty$. Many ARMA models can be viewed as linear filters applied to white noise.
+is also stationary when $\sum_{j=-\infty}^{\infty} |\psi_j| < \infty$. Many ARMA models can be viewed as linear filters applied to white noise.
 
 The autocovariance of the filtered process is:
 
 $$
-\\gamma_X(h) = \\sum_{j=-\\infty}^{\\infty} \\sum_{k=-\\infty}^{\\infty} \\psi_j \\psi_k\\, \\gamma_Y(h - k + j)
+\gamma_X(h) = \sum_{j=-\infty}^{\infty} \sum_{k=-\infty}^{\infty} \psi_j \psi_k\, \gamma_Y(h - k + j)
 $$
 
 ### Examples of Stationary Processes
 
 #### IID Noise vs. White Noise
 
-IID noise with mean 0 and variance $\\sigma^2$ is the simplest stationary building block. White noise is slightly weaker: it only requires zero mean and zero autocovariance for nonzero lags (uncorrelated), not full independence.
+IID noise with mean 0 and variance $\sigma^2$ is the simplest stationary building block. White noise is slightly weaker: it only requires zero mean and zero autocovariance for nonzero lags (uncorrelated), not full independence.
 
 #### **White Noise**
 
@@ -268,14 +268,14 @@ To prepare a non-stationary time series for modeling with techniques that requir
 The Box-Cox transform generalizes the log transform for positive series:
 
 $$
-Y_t^{(\\lambda)} =
-\\begin{cases}
-\\frac{Y_t^{\\lambda} - 1}{\\lambda}, & \\lambda \\neq 0 \\\\
-\\log(Y_t), & \\lambda = 0
-\\end{cases}
+Y_t^{(\lambda)} =
+\begin{cases}
+\frac{Y_t^{\lambda} - 1}{\lambda}, & \lambda \neq 0 \\
+\log(Y_t), & \lambda = 0
+\end{cases}
 $$
 
-Choosing $\\lambda$ can stabilize variance and improve linearity before modeling.
+Choosing $\lambda$ can stabilize variance and improve linearity before modeling.
 
 **Detrending**
 
@@ -406,3 +406,37 @@ The result plot would look like the following:
 ![differenced_random_walk](https://github.com/user-attachments/assets/2cebba56-7d3b-470c-9511-56d617be7159)
 
 In this plot, the upper section shows the random walk (non-stationary), while the lower section shows the differenced series (stationary). Differencing removes the trend from the original series, making it easier to model and predict future values.
+
+### Formal Tests for Stationarity
+
+Visual inspection of a time series can suggest whether it is stationary, but formal statistical tests provide objective evidence. The two most widely used tests take opposite null hypotheses, so applying both gives a more complete picture.
+
+#### Augmented Dickey–Fuller (ADF) Test
+
+The ADF test checks for a **unit root**, which is a signature of non-stationarity. It fits the regression:
+
+$$
+\Delta X_t = \alpha + \beta t + \gamma X_{t-1} + \sum_{i=1}^{p} \delta_i \Delta X_{t-i} + \epsilon_t
+$$
+
+where $\Delta X_t = X_t - X_{t-1}$ and $p$ lagged differences absorb serial correlation. The hypotheses are:
+
+- $H_0$: $\gamma = 0$ (a unit root is present — the series is non-stationary).
+- $H_1$: $\gamma < 0$ (no unit root — the series is stationary).
+
+If the test statistic falls below the critical value (i.e., the p-value is small), we reject $H_0$ and conclude that the series is stationary.
+
+#### KPSS Test
+
+The Kwiatkowski–Phillips–Schmidt–Shin (KPSS) test reverses the null hypothesis:
+
+- $H_0$: The series is stationary (around a deterministic trend or level).
+- $H_1$: The series has a unit root (non-stationary).
+
+Using both tests together helps resolve ambiguous cases:
+
+| ADF result | KPSS result | Conclusion |
+|------------|-------------|------------|
+| Reject $H_0$ | Fail to reject $H_0$ | Series is stationary |
+| Fail to reject $H_0$ | Reject $H_0$ | Series is non-stationary |
+| Both reject | Both reject | Series may be difference-stationary or trend-stationary; further analysis needed |

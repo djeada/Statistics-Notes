@@ -1,4 +1,4 @@
-## Yule-Walker Equations
+# Yule-Walker Equations
 
 The **Yule-Walker equations** are a set of linear relationships that tie the **autocovariances/autocorrelations** of a *stationary* **autoregressive (AR $p$) process** to its parameters. They are the work-horse for parameter estimation, diagnostic checking, and theoretical analysis of AR models.
 

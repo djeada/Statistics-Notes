@@ -1,4 +1,4 @@
-## Randomness and Trend Tests
+# Randomness and Trend Tests
 
 When a series looks noisy, it is still useful to check whether the noise is **random** or whether weak structure (trend or dependence) is present. The tests below are lightweight diagnostics for an IID or weak-dependence null.
 

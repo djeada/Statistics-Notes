@@ -1,4 +1,4 @@
-## Sequences and Series
+# Sequences and Series
 
 ### Sequences
 

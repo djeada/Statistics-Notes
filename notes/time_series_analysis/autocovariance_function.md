@@ -1,4 +1,4 @@
-## Autocovariance functions and coefficients
+# Autocovariance functions and coefficients
 
 Autocovariance functions describe how values of a time series relate to their lagged counterparts, measuring the joint variability between a series at time $t$ and its value at a previous time $t-k$ (where $k$ is the lag). In autoregressive models, these relationships are expressed through **coefficients**, which quantify the influence of past values on future values. The autocovariance function helps in estimating these coefficients by analyzing the strength and pattern of correlations at different lags. Higher autocovariance at a specific lag suggests a stronger influence of past values on the present, aiding in model selection and parameter estimation for time series models like AR, MA, and ARIMA.
 

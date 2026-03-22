@@ -1,4 +1,4 @@
-## Moving Average (MA) Models
+# Moving Average (MA) Models
 
 Moving Average (MA) models are a fundamental class of univariate time series models used for forecasting and understanding temporal data. Unlike Autoregressive (AR) models, which rely on past values of the series itself, MA models utilize past forecast errors to model the current value of the series. This approach is particularly effective for capturing short-term dependencies and abrupt changes in the data.
 
@@ -99,7 +99,7 @@ I. **Plot the Autocorrelation Function (ACF):**
 
 - Identify the lag beyond which the autocorrelations drop to zero.
 - A sharp cutoff in the ACF after lag $q$ suggests an MA($q$) model.
-- A common screening rule is to use the $\\pm 1.96/\\sqrt{n}$ bounds:
+- A common screening rule is to use the $\pm 1.96/\sqrt{n}$ bounds:
   - If only lags up to $h_0$ exceed the bounds and all $h > h_0$ are inside, then an MA($q$) with $q=h_0$ is a natural first guess.
 
 II. **Estimate Models with Varying Orders:**
@@ -185,7 +185,7 @@ Visual Representation:
 ![MA(1) Model ACF Plot](https://github.com/user-attachments/assets/5ec986c9-db7f-4ab7-b02b-81211009ceca)
 
 - At **Lag 1** the ACF is significantly positive at 0.4.
-- At **Lags $h \geq 2$** he ACF values are approximately zero, as expected for an MA(1) process.
+- At **Lags $h \geq 2$** the ACF values are approximately zero, as expected for an MA(1) process.
 
 **Note:** In practice, sample ACF plots may not perfectly align with theoretical expectations due to randomness and finite sample sizes. However, the characteristic pattern—significant autocorrelation at lag 1 and near-zero autocorrelations at higher lags—serves as a strong indicator for identifying the order of an MA model.
 

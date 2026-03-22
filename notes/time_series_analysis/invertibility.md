@@ -1,4 +1,4 @@
-## Invertibility in Time Series Models
+# Invertibility in Time Series Models
 
 In time series modeling, **invertibility** is the property of a model that allows the innovation process (also called the noise or disturbance process) to be expressed as a function of the observed series and its past values. This is particularly relevant for **Moving Average (MA)** models.
 

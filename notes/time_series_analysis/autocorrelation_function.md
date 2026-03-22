@@ -1,4 +1,4 @@
-## Autocorrelation Function (ACF) and Partial Autocorrelation Function (PACF)
+# Autocorrelation Function (ACF) and Partial Autocorrelation Function (PACF)
 
 In time series analysis, understanding the relationships between observations at different time lags is crucial for model identification and forecasting. Two essential tools for analyzing these relationships are the **Autocorrelation Function (ACF)** and the **Partial Autocorrelation Function (PACF)**.
 
@@ -113,7 +113,7 @@ Spikes outside these bounds are often treated as statistically significant.
 For a correlated series, a rough standard error is given by **Bartlett's formula**:
 
 $$
-\\text{Var}(r_k) \\approx \\frac{1}{n} \\left(1 + 2 \\sum_{j=1}^{k-1} \\rho_j^2\\right)
+\text{Var}(r_k) \approx \frac{1}{n} \left(1 + 2 \sum_{j=1}^{k-1} \rho_j^2\right)
 $$
 
 This yields wider bands as dependence accumulates. A common rule is to use the white-noise bands for $r_1$, and if $r_1$ is significant, use Bartlett bands for the remaining lags.

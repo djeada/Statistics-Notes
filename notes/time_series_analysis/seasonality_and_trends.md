@@ -1,4 +1,4 @@
-## Seasonality and Trends
+# Seasonality and Trends
 
 **Seasonality** and **trends** are fundamental components in time series data that significantly impact analysis and forecasting. Understanding and correctly modeling these elements are useful for accurate predictions and effective time series modeling.
 
@@ -60,19 +60,19 @@ If seasonal or random fluctuations increase with the level of the series, apply 
 For an odd seasonal period $d = 2q + 1$:
 
 $$
-\\hat{m}_t = \\frac{1}{d} \\sum_{j=-q}^{q} X_{t+j}
+\hat{m}_t = \frac{1}{d} \sum_{j=-q}^{q} X_{t+j}
 $$
 
 For an even seasonal period $d = 2q$ (half-weight the endpoints):
 
 $$
-\\hat{m}_t = \\frac{0.5 X_{t-q} + \\sum_{j=-q+1}^{q-1} X_{t+j} + 0.5 X_{t+q}}{d}
+\hat{m}_t = \frac{0.5 X_{t-q} + \sum_{j=-q+1}^{q-1} X_{t+j} + 0.5 X_{t+q}}{d}
 $$
 
 These are examples of **linear filters**:
 
 $$
-\\hat{m}_t = \\sum_{j=-\\infty}^{\\infty} a_j X_{t-j}
+\hat{m}_t = \sum_{j=-\infty}^{\infty} a_j X_{t-j}
 $$
 
 with weights $a_j$ that act as a low-pass filter, removing high-frequency noise while preserving slow trend movement.
@@ -80,7 +80,7 @@ with weights $a_j$ that act as a low-pass filter, removing high-frequency noise 
 **Spencer 15-point moving average** (passes polynomials up to degree 3 without distortion):
 
 $$
-\\frac{1}{320}[-3, -6, -5, 3, 21, 46, 67, 74, 67, 46, 21, 3, -5, -6, -3]
+\frac{1}{320}[-3, -6, -5, 3, 21, 46, 67, 74, 67, 46, 21, 3, -5, -6, -3]
 $$
 
 **II. Seasonal Decomposition of Time Series by Loess (STL)**
@@ -99,7 +99,7 @@ $$
 
 **IV. Additional Trend Smoothing Options**
 
-- **Exponential smoothing**: $\\hat{m}_t = \\alpha X_t + (1 - \\alpha) \\hat{m}_{t-1}$, which downweights older observations.
+- **Exponential smoothing**: $\hat{m}_t = \alpha X_t + (1 - \alpha) \hat{m}_{t-1}$, which downweights older observations.
 - **Spectral (Fourier) smoothing**: remove high-frequency components in the Fourier domain to retain only low-frequency trend behavior.
 - **Polynomial regression**: fit $m_t$ with a polynomial in $t$ (linear, quadratic, or higher) using least squares.
 
@@ -108,10 +108,10 @@ $$
 Spectral smoothing applies a **low-pass filter** by removing high-frequency components in the Fourier domain:
 
 $$
-X(\\omega) = \\sum_{t=0}^{n-1} X_t e^{-i 2\\pi \\omega t}
+X(\omega) = \sum_{t=0}^{n-1} X_t e^{-i 2\pi \omega t}
 $$
 
-Set $X(\\omega) = 0$ for frequencies $|\\omega| > \\omega_c$, then invert the transform to recover a smoothed series. This keeps only slow oscillations and trend components.
+Set $X(\omega) = 0$ for frequencies $|\omega| > \omega_c$, then invert the transform to recover a smoothed series. This keeps only slow oscillations and trend components.
 
 Synthetic example of spectral smoothing:
 
@@ -136,22 +136,22 @@ Synthetic example of a simple decomposition:
 Let $d$ be the seasonal period. First estimate the trend using a centered moving average (formulas above). For additive seasonality, compute the detrended series:
 
 $$
-Y_t = X_t - \\hat{m}_t
+Y_t = X_t - \hat{m}_t
 $$
 
 Estimate seasonal indices by averaging detrended values for each season:
 
 $$
-w_k = \\text{average of } \\{ Y_{k + jd} \\}, \\quad k = 1, \\ldots, d
+w_k = \text{average of } \\{ Y_{k + jd} \\}, \quad k = 1, \ldots, d
 $$
 
 Normalize the seasonal indices so they sum to zero:
 
 $$
-\\hat{s}_k = w_k - \\frac{1}{d} \\sum_{i=1}^{d} w_i
+\hat{s}_k = w_k - \frac{1}{d} \sum_{i=1}^{d} w_i
 $$
 
-For multiplicative seasonality, use ratios $X_t / \\hat{m}_t$ and normalize to have average 1.
+For multiplicative seasonality, use ratios $X_t / \hat{m}_t$ and normalize to have average 1.
 
 Synthetic example of trend smoothing with two filters:
 
@@ -161,28 +161,28 @@ Synthetic example of trend smoothing with two filters:
 
 Differencing removes trend and seasonal components without explicitly estimating them.
 
-- **First differences** remove linear trend: $\\nabla X_t = X_t - X_{t-1}$  
-- **Seasonal differences** remove periodic effects: $\\nabla_s X_t = X_t - X_{t-s}$  
-- **Combined differencing** can remove both: $\\nabla \\nabla_s X_t$  
+- **First differences** remove linear trend: $\nabla X_t = X_t - X_{t-1}$  
+- **Seasonal differences** remove periodic effects: $\nabla_s X_t = X_t - X_{t-s}$  
+- **Combined differencing** can remove both: $\nabla \nabla_s X_t$  
 
 Operator notation:
 
 $$
-\\nabla X_t = (1 - B)X_t, \\quad B X_t = X_{t-1}, \\quad B^j X_t = X_{t-j}
+\nabla X_t = (1 - B)X_t, \quad B X_t = X_{t-1}, \quad B^j X_t = X_{t-j}
 $$
 
 Higher-order differences are defined recursively:
 
 $$
-\\nabla^k X_t = \\nabla(\\nabla^{k-1} X_t), \\quad \\nabla^0 X_t = X_t
+\nabla^k X_t = \nabla(\nabla^{k-1} X_t), \quad \nabla^0 X_t = X_t
 $$
 
-Applying $\\nabla^k$ to a polynomial trend of degree $k$ yields a constant. In practice, the required differencing order is usually small (often 1 or 2).
+Applying $\nabla^k$ to a polynomial trend of degree $k$ yields a constant. In practice, the required differencing order is usually small (often 1 or 2).
 
 For a classical decomposition $X_t = m_t + s_t + Y_t$, a seasonal difference yields:
 
 $$
-\\nabla_s X_t = (m_t - m_{t-s}) + (Y_t - Y_{t-s})
+\nabla_s X_t = (m_t - m_{t-s}) + (Y_t - Y_{t-s})
 $$
 
 and an additional nonseasonal difference can remove the remaining trend term.

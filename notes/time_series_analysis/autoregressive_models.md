@@ -1,4 +1,4 @@
-## Autoregressive (AR) Models in Time Series Analysis
+# Autoregressive (AR) Models in Time Series Analysis
 
 Autoregressive (AR) models are fundamental tools in time series analysis, used to describe and forecast time-dependent data. An AR model predicts future values based on a linear combination of past observations. The order of an AR model, denoted as $p$, indicates how many lagged past values are used.
 
