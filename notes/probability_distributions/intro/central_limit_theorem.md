@@ -1,284 +1,344 @@
 ## Central Limit Theorem (CLT)
 
-The Central Limit Theorem (CLT) is a fundamental concept in statistics, explaining why the distribution of sample means approximates a normal distribution, often known as the bell curve, as the sample size becomes larger, irrespective of the population's original distribution.
+The Central Limit Theorem (CLT) is a fundamental result in statistics. It explains why the distribution of sample means often approaches a normal distribution as the sample size increases, even when the population itself is not normally distributed.
 
 ### Mathematical Background
 
-- The CLT states that if you have a population with a mean $\mu$ and a standard deviation $\sigma$, and you take sufficiently large random samples from this population (with replacement), then the distribution of the sample means will approximate a normal distribution.
-- The mean of the sample means ($\bar{X}$) will be approximately equal to the population mean ($\mu$).
-- The standard deviation of the sample means, also known as the standard error, will be $\frac{\sigma}{\sqrt{n}}$, where $n$ is the sample size.
+Suppose a population has mean $\mu$ and standard deviation $\sigma$. If we repeatedly take sufficiently large random samples of size $n$, then the distribution of the sample means is approximately normal under the usual CLT assumptions.
+
+The sampling distribution of the mean has:
+
+I. Mean approximately equal to the population mean:
+
+$$
+E[\bar{X}] = \mu
+$$
+
+II. Standard deviation, called the standard error:
+
+$$
+SE(\bar{X}) = \frac{\sigma}{\sqrt{n}}
+$$
+
+As $n$ increases, the standard error decreases, so sample means become more tightly concentrated around $\mu$.
 
 ### Formal Description
 
-Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and identically distributed random variables, each with a mean $\mu$ and a variance $\sigma^2$.
+Let $X_1, X_2, \ldots, X_n$ be independent and identically distributed random variables, each with mean $\mu$ and variance $\sigma^2$.
 
-As $n$ (the sample size) tends to infinity, the distribution of the standardized sum
+As $n$ tends to infinity, the standardized sum
 
-$$\frac{X_1 + X_2 + \ldots + X_n - n\mu}{\sigma\sqrt{n}}$$
+$$
+\frac{X_1 + X_2 + \cdots + X_n - n\mu}{\sigma\sqrt{n}}
+$$
 
-converges in distribution to a standard normal distribution. Mathematically, this is expressed as:
+converges in distribution to a standard normal distribution. Equivalently,
 
-$$P\left(\frac{X_1 + X_2 + \ldots + X_n - n\mu}{\sigma\sqrt{n}} \leq a\right) \to \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{a} e^{-x^2/2} \, dx$$
+$$
+P\left(
+\frac{X_1 + X_2 + \cdots + X_n - n\mu}
+{\sigma\sqrt{n}}
+\leq a
+\right)
+\to
+\frac{1}{\sqrt{2\pi}}
+\int_{-\infty}^{a} e^{-x^2/2}dx
+$$
 
-Key Points:
+Important points:
 
-1. "Large" is typically considered to be a sample size of 30 or more, though this can vary based on the distribution's initial shape.
-2. Samples should be independent of each other.
-3. It's the distribution of the means (and other statistics like sum and percentage) of these samples that becomes normal, not the distribution of the individual data points (it can still be skewed).
+1. A sample size of 30 is often used as a rough rule of thumb, but the required size depends on the shape of the population distribution.
+2. The sampled observations should be independent.
+3. The theorem applies to the distribution of sample means, sums, and some related statistics. It does not make the individual observations normally distributed.
+4. Strongly skewed or heavy-tailed populations may require much larger samples before the normal approximation becomes accurate.
 
 ### Implications and Applications
 
-The Central Limit Theorem (CLT) enables us to approximate probabilities and percentages for large samples using the normal distribution. This has wide-ranging implications, particularly in statistical analysis and data inference. For example:
+The CLT allows probabilities involving large samples to be approximated with the normal distribution. This is central to statistical inference.
 
-- In an online game with a 20% chance of winning a small prize, the distribution of wins in a large number of attempts (n) follows a binomial distribution. However, when the sample size (n) is large, the binomial distribution can be approximated by a normal distribution, simplifying the analysis.
+For example, suppose an online game has a 20% probability of awarding a small prize on each independent attempt. The number of wins follows a binomial distribution. When the number of attempts is large, that binomial distribution can often be approximated by a normal distribution, which simplifies probability calculations.
 
-Key points regarding the CLT:
+The CLT is useful because:
 
-- The CLT applies to almost any population distribution, regardless of whether the distribution is normal, as long as the sample size is sufficiently large.
-- The CLT allows statisticians to make inferences about population parameters using sample statistics. This is especially useful when analyzing large datasets where accessing the entire population is impractical or impossible.
-- Many statistical procedures, experiments, and tests are grounded in the CLT, making it a fundamental concept in statistical analysis. Its ability to approximate complex distributions with a normal one is crucial for practical applications in various fields. 
+- It applies to many population distributions when the sample size is sufficiently large.
+- It allows population parameters to be estimated from sample statistics.
+- It supports confidence intervals and hypothesis tests.
+- It makes many otherwise difficult probability calculations manageable.
+- It underlies a large number of statistical methods used in science, engineering, economics, and data analysis.
 
 ### Limitations
 
-- The theorem applies only when the **sample size** is large enough. "Large enough" varies depending on the underlying distribution, but a common rule of thumb is a sample size greater than 30.
-- The sampled values must be **independent** of each other. This assumption can be violated in many real-world scenarios.
+The theorem depends on several conditions:
+
+- The sample size must be large enough for the population being studied. There is no universal cutoff that works for every distribution.
+- Observations should be independent.
+- The classical CLT assumes that the population has a finite variance.
+- Severe skewness, extreme outliers, or heavy tails can make convergence to normality slow.
+- Dependence between observations can invalidate the standard form of the theorem.
 
 ### Visualization
 
-A histogram of the sample means will tend to form a bell-shaped curve as the number of samples increases, reflecting the normal distribution predicted by the CLT.
+A histogram of sample means tends to become bell-shaped as the number and size of the samples increase. This is the normal sampling distribution predicted by the CLT.
 
 #### Data Generation
 
-- Population data generated from a non-normal (exponential) distribution.
-- Distribution used is an exponential distribution with a scale parameter of 1.0.
-- The population size consists of 10,000 data points.
-- Sample details: 1000 samples, each with a sample size of 50.
+In this example:
 
-The plot below shows the non-normal exponential distribution, which is right-skewed:
+- The population is generated from a non-normal exponential distribution.
+- The exponential distribution has scale parameter $1.0$.
+- The population contains 10, 000 observations.
+- We draw 1, 000 samples.
+- Each sample contains 50 observations.
 
-![output(8)](https://github.com/user-attachments/assets/66b67dc3-a589-41a3-b812-0b9fb347f78b)
+The plot below shows the original exponential population, which is strongly right-skewed.
 
-#### Distribution of Sample Means 
+![Exponential population distribution](https://github.com/user-attachments/assets/66b67dc3-a589-41a3-b812-0b9fb347f78b)
 
-- For each of the 1000 samples, a sample mean is calculated.
-- The formula used is: $\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$, where $\bar{x}$ represents the sample mean, $n$ is the sample size, and $x_i$ are the data points in the sample.
+#### Distribution of Sample Means
 
-The second plot demonstrates the distribution of sample means, where the sample means form a bell-shaped (approximately normal) distribution, even though the original population is non-normal. This illustrates the Central Limit Theorem in action.
-
-![output(9)](https://github.com/user-attachments/assets/207b027a-b3f9-4d92-beca-c7a1517de754)
-
-- The mean of the population data is approximately 0.9775.
-- The mean of the sample means is approximately 0.9843, indicating that the average of the sample means closely aligns with the population mean, consistent with the prediction of the Central Limit Theorem.
-- The standard error was calculated using the formula $\frac{\sigma}{\sqrt{n}}$, where $\sigma$ is the population standard deviation and $n$ is the sample size. The resulting standard error was approximately 0.1378.
-- The histogram of the sample means formed a bell-shaped curve, indicating a normal distribution as predicted by the Central Limit Theorem.
-
-### Standardizing Using CLT
-
-When standardizing a sample statistic, we use the following formula to calculate the z-score:
+For each of the 1, 000 samples, the sample mean is calculated using
 
 $$
-z = \frac{{\text{statistic} - \text{expected value}}}{{\text{Standard Error (SE) of the statistic}}}
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i
 $$
+
+where:
+
+- $\bar{x}$ is the sample mean;
+- $n$ is the sample size;
+- $x_i$ is the $i$-th observation in the sample.
+
+The second plot shows the distribution of those sample means. The distribution is approximately bell-shaped even though the original population is not normal.
+
+![Distribution of sample means](https://github.com/user-attachments/assets/207b027a-b3f9-4d92-beca-c7a1517de754)
+
+Results from the simulation:
+
+- Population mean: approximately $0.9775$.
+- Mean of the sample means: approximately $0.9843$.
+- Standard error: approximately $0.1378$.
+- The sample means form an approximately normal distribution.
+
+The mean of the sample means is close to the population mean, as predicted by the CLT. The observed spread is also consistent with the standard-error formula
+
+$$
+SE(\bar{X}) = \frac{\sigma}{\sqrt{n}}
+$$
+
+### Standardizing Using the CLT
+
+A sample statistic can be standardized with a z-score:
+
+$$
+z = \frac{\text{statistic} - \text{expected value}}
+{\text{standard error of the statistic}}
+$$
+
+For a sample mean, this becomes
+
+$$
+z = \frac{\bar{x} - \mu}{SE(\bar{X})}
+= \frac{\bar{x} - \mu}{\sigma/\sqrt{n}}
+$$
+
+The z-score tells us how many standard errors the observed sample mean lies above or below the population mean.
 
 #### Step-by-Step Example
 
-Let’s assume we are sampling incomes with the following population parameters:
+Suppose incomes have the following population parameters:
 
-- Population mean: $\mu = 67,000$
-- Population standard deviation: $\sigma = 38,000$
-- Sample size: $n$
+- Population mean: $\mu = 67{,}000$.
+- Population standard deviation: $\sigma = 38{,}000$.
+- Sample size: $n$.
 
-**Step 1: Calculate the Standard Error of the Sample Mean**
+##### Step 1: Calculate the Standard Error
 
-The standard error of the sample mean ($SE(\bar{x}_n)$) is calculated using the formula:
-
-$$
-SE(\bar{x}_n) = \frac{\sigma}{\sqrt{n}}
-$$
-
-Where:
-
-- $\sigma = 38,000$ is the population standard deviation.
-- $n$ is the sample size.
-
-For example, if we take a sample size of $n = 100$, we can calculate the standard error as follows:
+The standard error of the sample mean is
 
 $$
-SE(\bar{x}_{100}) = \frac{38,000}{\sqrt{100}} = \frac{38,000}{10} = 3,800
+SE(\bar{X}) = \frac{\sigma}{\sqrt{n}}
 $$
 
-**Step 2: Calculate the z-score**
-
-Once we have the standard error, we can calculate the z-score, which measures how far the sample statistic (e.g., sample mean) is from the expected value (population mean), in terms of standard errors. The z-score formula is:
+For $n = 100$,
 
 $$
-z = \frac{{\bar{x} - \mu}}{{SE(\bar{x}_n)}}
+SE(\bar{X}) = \frac{38{,}000}{\sqrt{100}} = \frac{38{,}000}{10} = 3{,}800
 $$
 
-Where:
+##### Step 2: Calculate the z-score
 
-- $\bar{x}$ is the sample mean.
-- $\mu = 67,000$ is the population mean.
-- $SE(\bar{x}_n)$ is the standard error of the sample mean.
-
-For instance, if the sample mean $\bar{x}$ is 70,000, the z-score would be:
+Suppose the observed sample mean is $\bar{x} = 70{,}000$. Then
 
 $$
-z = \frac{{70,000 - 67,000}}{{3,800}} = \frac{3,000}{3,800} = 0.79
+z = \frac{70{,}000 - 67{,}000}{3{,}800} = \frac{3{,}000}{3{,}800}
+\approx
+0.79
 $$
 
-This means the sample mean is 0.79 standard errors above the population mean.
+The sample mean is approximately $0.79$ standard errors above the population mean.
 
-### Example: Applying CLT
+### Example: Applying the CLT
 
-Consider a scenario where the heights of a certain plant species are normally distributed with a population mean $\mu = 15$ cm and a population standard deviation $\sigma = 3$ cm. We will analyze random samples of different sizes and calculate the probability that the sample mean falls between 14 cm and 16 cm.
+Suppose the heights of a plant species are normally distributed with:
 
-Definitions:
+- Population mean: $\mu = 15$ cm.
+- Population standard deviation: $\sigma = 3$ cm.
+- Sample size: $n$.
 
-- $\mu = 15$: Population mean height.
-- $\sigma = 3$: Population standard deviation of heights.
-- $n$: Sample size.
-- Standard Error of the Mean (SEM): $\text{SEM} = \frac{\sigma}{\sqrt{n}}$.
-- Z-score formula: $Z = \frac{X - \mu_{\text{sample mean}}}{\text{SEM}}$.
-
-We will calculate the probability that the sample mean is between 14 cm and 16 cm for various sample sizes.
-
-#### Step 1: Sample Size of 16 Plants
-
-Estimate the probability that the sample mean height of 16 plants lies between 14 cm and 16 cm.
-
-I. **Calculate the Standard Error of the Mean (SEM)**:
+The standard error of the sample mean is
 
 $$
-\text{SEM} = \frac{\sigma}{\sqrt{n}} = \frac{3}{\sqrt{16}} = \frac{3}{4} = 0.75
+SE(\bar{X}) = \frac{\sigma}{\sqrt{n}}
 $$
 
-II. **Calculate the Z-scores for 14 cm and 16 cm**:
-
-- For $X = 14$:
+The z-score for a possible sample mean $x$ is
 
 $$
-Z_{14} = \frac{14 - 15}{0.75} = \frac{-1}{0.75} = -1.33
+z = \frac{x-\mu}{SE(\bar{X})}
 $$
 
-- For $X = 16$:
+We want to calculate
 
 $$
-Z_{16} = \frac{16 - 15}{0.75} = \frac{1}{0.75} = 1.33
+P(14 \leq \bar{X} \leq 16)
 $$
 
-III. **Find the probabilities associated with the Z-scores**:
+for several sample sizes.
 
-Using standard normal distribution tables (or a calculator):
+#### Sample Size of 16 Plants
 
-- $P(Z \leq -1.33) \approx 0.0918$
-- $P(Z \leq 1.33) \approx 0.9082$
-
-IV. **Calculate the probability that the sample mean lies between 14 and 16 cm**:
+For $n=16$,
 
 $$
-P(14 \leq \bar{X} \leq 16) = P(Z \leq 1.33) - P(Z \leq -1.33)
+SE(\bar{X}) = \frac{3}{\sqrt{16}} = \frac{3}{4} = 0.75
 $$
+
+The z-score for $14$ cm is
+
+$$
+z_{14} = \frac{14-15}{0.75} = \frac{-1}{0.75}
+\approx
+-1.33
+$$
+
+The z-score for $16$ cm is
+
+$$
+z_{16} = \frac{16-15}{0.75} = \frac{1}{0.75}
+\approx
+1.33
+$$
+
+Using the standard normal distribution,
+
+$$
+P(Z \leq -1.33) \approx 0.0918
+$$
+
+and
+
+$$
+P(Z \leq 1.33) \approx 0.9082
+$$
+
+Therefore,
 
 $$
 P(14 \leq \bar{X} \leq 16) = 0.9082 - 0.0918 = 0.8164
 $$
 
-Thus, the probability is approximately **81.64%**.
+The probability is approximately 81. 64%.
 
-#### Step 2: Sample Size of 64 Plants
+#### Sample Size of 64 Plants
 
-Estimate the probability that the sample mean height of 64 plants lies between 14 cm and 16 cm.
-
-I. **Calculate the Standard Error of the Mean (SEM)**:
+For $n=64$,
 
 $$
-\text{SEM} = \frac{\sigma}{\sqrt{n}} = \frac{3}{\sqrt{64}} = \frac{3}{8} = 0.375
+SE(\bar{X}) = \frac{3}{\sqrt{64}} = \frac{3}{8} = 0.375
 $$
 
-II. **Calculate the Z-scores for 14 cm and 16 cm**:
-
-- For $X = 14$:
+The corresponding z-scores are
 
 $$
-Z_{14} = \frac{14 - 15}{0.375} = \frac{-1}{0.375} = -2.67
+z_{14} = \frac{14-15}{0.375}
+\approx
+-2.67
 $$
 
-- For $X = 16$:
+and
 
 $$
-Z_{16} = \frac{16 - 15}{0.375} = \frac{1}{0.375} = 2.67
+z_{16} = \frac{16-15}{0.375}
+\approx
+2.67
 $$
 
-III. **Find the probabilities associated with the Z-scores**:
-
-Using standard normal distribution tables (or a calculator):
-
-- $P(Z \leq -2.67) \approx 0.0038$
-- $P(Z \leq 2.67) \approx 0.9962$
-
-IV. **Calculate the probability that the sample mean lies between 14 and 16 cm**:
+Using the standard normal distribution,
 
 $$
-P(14 \leq \bar{X} \leq 16) = P(Z \leq 2.67) - P(Z \leq -2.67)
+P(Z \leq -2.67) \approx 0.0038
 $$
+
+and
+
+$$
+P(Z \leq 2.67) \approx 0.9962
+$$
+
+Therefore,
 
 $$
 P(14 \leq \bar{X} \leq 16) = 0.9962 - 0.0038 = 0.9924
 $$
 
-Thus, the probability is approximately **99.24%**.
+The probability is approximately 99. 24%.
 
-#### Step 3: Sample Size of 144 Plants
+#### Sample Size of 144 Plants
 
-Estimate the probability that the sample mean height of 144 plants lies between 14 cm and 16 cm.
-
-I. **Calculate the Standard Error of the Mean (SEM)**:
+For $n=144$,
 
 $$
-\text{SEM} = \frac{\sigma}{\sqrt{n}} = \frac{3}{\sqrt{144}} = \frac{3}{12} = 0.25
+SE(\bar{X}) = \frac{3}{\sqrt{144}} = \frac{3}{12} = 0.25
 $$
 
-II. **Calculate the Z-scores for 14 cm and 16 cm**:
-
-- For $X = 14$:
+The corresponding z-scores are
 
 $$
-Z_{14} = \frac{14 - 15}{0.25} = \frac{-1}{0.25} = -4
+z_{14} = \frac{14-15}{0.25} = -4
 $$
 
-- For $X = 16$:
+and
 
 $$
-Z_{16} = \frac{16 - 15}{0.25} = \frac{1}{0.25} = 4
+z_{16} = \frac{16-15}{0.25} = 4
 $$
 
-III. **Find the probabilities associated with the Z-scores**:
-
-Using standard normal distribution tables (or a calculator):
-
-- $P(Z \leq -4) \approx 0.00003$
-- $P(Z \leq 4) \approx 0.99997$
-
-IV. **Calculate the probability that the sample mean lies between 14 and 16 cm**:
+Using the standard normal distribution,
 
 $$
-P(14 \leq \bar{X} \leq 16) = P(Z \leq 4) - P(Z \leq -4)
+P(Z \leq -4) \approx 0.00003
 $$
+
+and
+
+$$
+P(Z \leq 4) \approx 0.99997
+$$
+
+Therefore,
 
 $$
 P(14 \leq \bar{X} \leq 16) = 0.99997 - 0.00003 = 0.99994
 $$
 
-Thus, the probability is approximately **99.99%**.
+The probability is approximately 99. 99%.
 
-#### Step 4: Unknown Population Distribution
+As the sample size increases, the standard error decreases. This makes the sample mean more concentrated around the population mean.
 
-Estimate the probability for the same range if the population distribution is unknown.
+#### Unknown Population Distribution
 
-If the distribution of plant heights is unknown, the Central Limit Theorem assures us that the sampling distribution of the sample mean will still approximate normality as long as the sample size is sufficiently large (usually $n \geq 30$).
+Suppose the distribution of plant heights is unknown.
 
-CLT Estimation:
+The CLT still allows the sampling distribution of the mean to be approximated by a normal distribution when the sample size is sufficiently large and the observations satisfy the theorem's assumptions.
 
-- For a sample size $n = 64$ (as in Step 2), the sampling distribution of the sample mean will still be approximately normal, even if the population distribution is not normal.
-- Therefore, the same calculations as in Step 2 can be applied, and the probability remains approximately **99.24%**.
+For $n=64$, the calculations above may still be used as an approximation. The estimated probability remains approximately 99. 24%, although the quality of the approximation depends on the actual shape of the population distribution.
