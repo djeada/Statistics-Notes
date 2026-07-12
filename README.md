@@ -2,6 +2,8 @@
 
 This repository contains notes, explanations, and code snippets covering essential statistics concepts and techniques. Topics range from basic probability and descriptive statistics to more advanced concepts such as hypothesis testing and confidence intervals.
 
+<img width="1254" height="1254" alt="stats" src="https://github.com/user-attachments/assets/c552ab19-2c31-4405-910c-8f03a89945fd" />
+
 ## Requirements
 
 The programming examples are implemented in **Python** for its simplicity, versatility, and rich scientific computing ecosystem. The code makes use of widely used libraries such as:
