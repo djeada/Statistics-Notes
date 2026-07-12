@@ -23,6 +23,38 @@ $$
 
 The **confidence level**, commonly 90%, 95%, or 99%, describes the long-run success rate of the interval-construction method. A higher confidence level produces a wider interval: certainty increases, but precision decreases.
 
+A confidence interval is **not limited to one particular probability distribution**. It can be constructed for many different population parameters and data-generating distributions.
+
+What changes is the **method used to build the interval**.
+
+For example:
+
+* For a population mean with known standard deviation, we often use the **normal distribution**.
+* For a mean with unknown standard deviation, we commonly use the **t-distribution**.
+* For proportions, we may use a normal approximation, Wilson interval, or exact binomial method.
+* For variances, intervals often use the **chi-square distribution**.
+* For ratios of variances, the **F-distribution** may be used.
+* When the underlying distribution is unknown or complicated, **bootstrap confidence intervals** can be used.
+
+The key requirement is that we know, estimate, or approximate the **sampling distribution of the estimator**.
+
+So the general idea is:
+
+$$
+\text{Estimate} \pm \text{Critical Value} \times \text{Standard Error}
+$$
+
+but the critical value and standard error depend on the situation.
+
+Also, confidence intervals can be:
+
+* **Parametric**, where a distributional model is assumed.
+* **Nonparametric**, with fewer assumptions about the population distribution.
+* **Approximate**, often relying on large-sample results such as the Central Limit Theorem.
+* **Exact**, when the interval has the stated coverage under the assumed model.
+
+Therefore, confidence intervals are broadly applicable, but **not every confidence-interval formula works for every distribution**. The method must match the parameter, sample size, data type, and assumptions.
+
 #### Example: Confidence Interval for the Mean
 
 Suppose we generate sample data from a population with a true mean of 50 and a standard deviation of 5. From the sample, we calculate the sample mean and construct a confidence interval around it.
