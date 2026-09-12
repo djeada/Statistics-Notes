@@ -1,142 +1,342 @@
 # Bayesian vs Frequentist Statistics
 
-Bayesian and frequentist statistics are two distinct approaches to statistical inference. Both approaches aim to make inferences about an underlying population based on sample data. However, the way they interpret probability and handle uncertainty is fundamentally different.
+Bayesian and frequentist statistics are two major approaches to statistical inference. Both use sample data to learn about an underlying population or data-generating process, but they differ in how they interpret probability, represent uncertainty, and draw conclusions about unknown parameters.
+
+A useful distinction is:
+
+| AspectFrequentistBayesian |                                                         |                                                                      |
+| ------------------------- | ------------------------------------------------------- | -------------------------------------------------------------------- |
+| Unknown parameter         | Fixed but unknown                                       | Represented by a probability distribution                            |
+| Probability               | Long-run behavior of repeated experiments               | Quantifies uncertainty given a model and available information       |
+| Prior information         | Not represented through a prior distribution            | Encoded through a prior distribution                                 |
+| Main inferential output   | Point estimates, confidence intervals, hypothesis tests | Posterior distributions, credible intervals, posterior probabilities |
+| Data                      | Random before observation                               | Observed data are treated as fixed once collected                    |
+| Parameter uncertainty     | Described through sampling procedures                   | Described directly by the posterior distribution                     |
+
+Neither framework is universally better. The appropriate choice depends on the problem, the model, the available information, and the type of conclusion we want to make.
 
 ### Frequentist Statistics
 
-- Frequentist statistics operates under the assumption that parameters in a population are fixed but unknown, such as the true mean, which remains constant even though its value is not directly observed.  
-- Confidence intervals are constructed by procedures that *cover* the true parameter value a known proportion of the time in repeated sampling. For example, a 95 % confidence interval means that if an experiment were repeated many times, 95 % of the intervals produced by the same method would capture the true parameter value. (The parameter itself is fixed; it is the interval that varies from sample to sample.)  
-- Null hypothesis testing is a core component of frequentist analysis. It tests observed data against a null hypothesis, which typically asserts no effect or no difference, such as the hypothesis that two groups do not differ significantly.  
+- Frequentist statistics treats population parameters as fixed but unknown quantities. For example, a population mean $\mu$ has one true value, even though we may not know what that value is.
+- Uncertainty comes from the fact that different random samples would produce different estimates.
+- Confidence intervals are constructed using procedures with a specified long-run coverage rate. For example, a 95% confidence interval is produced by a method that, under repeated sampling and the model assumptions, would contain the true parameter in 95% of repetitions.
+- Hypothesis testing evaluates how compatible the observed data are with a specified null hypothesis.
+
+A frequentist does not normally assign a probability distribution to a fixed parameter itself. Instead, probability statements describe the behavior of data, estimators, and procedures under repeated sampling.
 
 #### Mathematical Foundations
 
-- Frequentist probability is defined in terms of long-run frequency. This interpretation suggests that, in a large number of trials, the probability of an event—like getting heads in a coin toss—reflects its relative frequency over time.  
-- Test statistics are used to measure how unusual the observed data are compared to what would be expected under the null hypothesis. The extremeness of the data is quantified by the p-value, which indicates the probability of obtaining such data if the null hypothesis is true. A small p-value suggests the observed data are inconsistent with the null hypothesis.  
+In the frequentist interpretation, probability is connected to the long-run frequency of events under repeated trials. For example, if a fair coin is tossed many times, the proportion of heads is expected to approach $0.5$.
+
+An estimator such as the sample mean $\bar{x}$ or sample proportion $\hat p$ varies from sample to sample. Its **sampling distribution** describes this variation and forms the basis of standard errors, confidence intervals, and hypothesis tests.
+
+In hypothesis testing, a test statistic measures how far the observed data depart from what would typically be expected under the null hypothesis.
+
+The **p-value** is the probability, assuming the null hypothesis and the statistical model are correct, of obtaining a test statistic at least as extreme as the one observed.
+
+It is important that:
+
+$$
+\text{p-value} \neq P(H_0 \mid \text{data})
+$$
+
+A p-value does not give the probability that the null hypothesis is true.
 
 #### Advantages
 
-- Frequentist methods are known for their simplicity and accessibility, making them easier for non-experts to understand and apply in practical settings.  
-- These methods are well-suited for large sample sizes, often yielding highly reliable results when ample data are available.  
-- Frequentist statistics offer standardized methods, supported by extensive tables and procedures, which have been widely adopted in fields like medicine and social sciences.  
+- Frequentist methods provide well-established procedures with known long-run operating properties, such as confidence-interval coverage and error rates.
+- Many standard frequentist models have efficient analytical solutions and are computationally inexpensive.
+- Frequentist methods are widely used and supported by mature statistical theory, software, and reporting conventions.
+- With sufficient data and an appropriate model, estimates are often relatively insensitive to subjective modeling choices.
 
 #### Limitations
 
-- One major limitation is that frequentist methods can produce misleading results when applied to small sample sizes or complex data structures, potentially leading to inaccurate conclusions.  
-- Frequentist statistics do not incorporate prior knowledge or beliefs about the parameters; they rely solely on the data at hand, potentially missing valuable context.  
-- The binary decision-making process, where one either rejects or fails to reject the null hypothesis, can be overly simplistic, often ignoring the nuance and depth of the data, leading to a lack of deeper interpretation.  
+- Confidence intervals and p-values are frequently misinterpreted because their definitions depend on hypothetical repeated sampling rather than direct probability statements about parameters.
+- Standard methods may perform poorly with very small samples, parameters near boundaries, or strongly non-normal data unless more appropriate procedures are used.
+- Prior scientific information is not incorporated through a probability distribution in the standard frequentist framework.
+- A binary "reject" or "fail to reject" decision can hide important information about effect size, uncertainty, and practical significance if hypothesis testing is used in isolation.
+
+These limitations are properties of particular methods and interpretations, not evidence that frequentist statistics is inherently unreliable.
 
 #### Example
 
-Let's assume we have a population of ten items, where **X** represents the attribute we are looking for and **O** represents the absence of this attribute.
+Suppose the attribute of interest is represented by **X**, while **O** represents its absence. For illustration, imagine the following population:
 
+```
 Population:
-
-```
 O O X O O O X X O X
+
 ```
 
-We take a sample of 4 randomly from this population:
+A random sample of four items gives:
 
 ```
 Sample:
 X O O X
+
 ```
 
-A frequentist would report the **sample proportion** of the attribute, which is 50 % (2 out of 4), as the maximum-likelihood **point estimate** of the population proportion. They might also calculate its standard error and construct a confidence interval before applying the resulting estimate to future inference.
+The observed sample proportion is:
 
-| Step                           | Equation                                                    | Plugging the numbers                                                                  |
-|--------------------------------|-------------------------------------------------------------|---------------------------------------------------------------------------------------|
-| **Point estimate**             | $\hat p = x/n$                                            | $\hat p = 2/4 = 0.50$                                                               |
-| **Standard error**             | $SE(\hat p) = \sqrt{\hat p(1-\hat p)/n}$                  | $\sqrt{0.5,(1-0.5)/4} = \sqrt{0.0625} = 0.25$                                      |
-| **95 % confidence interval**<br>(Wald large-sample) | $\hat p \pm z_{0.975},SE(\hat p)$, $z_{0.975}=1.96$ | $0.50 \pm 1.96\times0.25 = 0.50 \pm 0.49$  ⇒ **CI ≈ [0.01, 0.99]**                      |
-| **Null-hypothesis test**<br>($H_0: p = p_0$)      | $z = (\hat p - p_0)/\sqrt{p_0(1-p_0)/n}$                  | For $p_0=0.5$:<br>$z = (0.50-0.50)/\sqrt{0.5\cdot0.5/4} = 0$<br>p-value = 1 (fail to reject) |
+$$
+\hat p = \frac{2}{4} = 0.50
+$$
+
+A frequentist can use $\hat p$ as a point estimate of the unknown population proportion $p$.
+
+There is an important modeling detail here: if the entire 10-item population shown above were actually known, there would be no need to estimate its proportion—we could calculate it exactly. The example should therefore be understood as an illustration of sampling, with the full population shown only for intuition.
+
+For the standard calculations below, we use the usual Bernoulli/binomial approximation. If the target really were a small finite population sampled without replacement, a finite-population or hypergeometric model would be more appropriate.
+
+| StepEquationPlugging the numbers        |                                                           |                                                        |
+| --------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------ |
+| **Point estimate**                      | $\hat p=x/n$                                              | $\hat p=2/4=0.50$                                      |
+| **Standard error**                      | $SE(\hat p)=\sqrt{\hat p(1-\hat p)/n}$                    | $\sqrt{0.5(1-0.5)/4}=0.25$                             |
+| **95% Wald confidence interval**        | $\hat p\pm z\_{0.975}SE(\hat p)$, where $z\_{0.975}=1.96$ | $0.50\pm1.96(0.25)\approx[0.01,0.99]$                  |
+| **Null-hypothesis test** $H\_0\:p=p\_0$ | $z=(\hat p-p\_0)/\sqrt{p\_0(1-p\_0)/n}$                   | For $p\_0=0.5$, $z=0$ and the two-sided p-value is $1$ |
+
+The Wald interval is shown because it follows directly from the familiar standard-error formula, but with only four observations it is not a reliable confidence interval. Methods such as the Wilson or exact binomial interval are preferable for such a small sample.
+
+This illustrates an important frequentist idea: the estimate is based entirely on the observed sample, while its uncertainty is evaluated through the sampling behavior of the estimator.
 
 ### Bayesian Statistics
 
-- Bayesian statistics treats parameters as random variables with associated probability distributions, reflecting the uncertainty about their true values rather than considering them fixed.  
-- A **prior distribution** represents pre-existing knowledge or beliefs about a parameter, formulated as a probability distribution that captures this initial understanding before observing new data.  
-- The **likelihood function** expresses the probability of observing the data given different parameter values. This function plays a key role in updating beliefs as new data become available.  
-- The **posterior distribution** is the updated probability distribution after combining the prior distribution and the likelihood. It forms the core of Bayesian inference, offering a new perspective on the parameter based on the data.  
+Bayesian statistics represents uncertainty about unknown parameters using probability distributions.
+
+- A **prior distribution** describes uncertainty about a parameter before the current data are observed.
+- The **likelihood function** describes how compatible different parameter values are with the observed data.
+- The **posterior distribution** combines the prior and likelihood and represents updated uncertainty after observing the data.
+- Predictions can then be made by averaging over the posterior uncertainty in the parameter.
+
+Saying that a Bayesian parameter is "random" does not necessarily mean that the underlying physical quantity is changing randomly. Rather, a probability distribution is used to represent our uncertainty about its unknown value.
 
 #### Mathematical Framework
 
-**Bayes' Theorem** serves as the foundation of Bayesian analysis. It mathematically updates the prior belief in light of new evidence by using the formula:   
+**Bayes' theorem** is the foundation of Bayesian inference:
 
-$\text{Posterior} \propto \text{Likelihood} \times \text{Prior}$
+$$
+P(\theta \mid D) = \frac{P(D\mid\theta)P(\theta)} {P(D)}
+$$
 
-reflecting how new data influence prior knowledge.  
+where:
 
-In Bayesian statistics, probability is interpreted as a **degree of belief** or certainty about an event or parameter, rather than as a long-run frequency of occurrence as in frequentist statistics.  
+- $\theta$ is the unknown parameter,
+- $D$ represents the observed data,
+- $P(\theta)$ is the prior,
+- $P(D\mid\theta)$ is the likelihood,
+- $P(\theta\mid D)$ is the posterior.
+
+Because $P(D)$ does not depend on $\theta$, the relationship is often written as:
+
+$$
+\text{Posterior} \propto \text{Likelihood} \times \text{Prior}
+$$
+
+The denominator,
+
+$$
+P(D) = \int P(D\mid\theta)P(\theta)\,d\theta,
+$$
+
+normalizes the posterior so that it forms a valid probability distribution.
+
+Bayesian probability can therefore be used to quantify uncertainty about events, hypotheses, predictions, and unknown parameters given a specified model and available information.
 
 #### Incorporating Prior Knowledge
 
-- Bayesian methods allow for the use of general-knowledge priors, even without specific domain expertise. For example, in a study on snake lifespans, a prior could favor a lifespan around 10 years, rather than something implausible like 1000 years, based on biological understanding.  
-- As new data are collected, Bayesian inference updates the prior to form the posterior, which reflects the combined influence of prior knowledge and new observations. For instance, if new research suggests that certain snakes live longer than expected, the posterior distribution adjusts to reflect this new evidence alongside previous beliefs.  
+A prior distribution can represent previous studies, domain knowledge, physical constraints, or weak background information.
+
+For example, when modeling snake lifespans, biological knowledge tells us that values near 10 or 20 years may be plausible for some species, while a lifespan of 1000 years is not. A prior can encode this information without claiming that we know the exact lifespan in advance.
+
+Priors can vary in strength:
+
+- **Informative priors** represent substantial prior knowledge.
+- **Weakly informative priors** rule out implausible values while allowing the data to dominate within a broad plausible range.
+- **Reference or diffuse priors** attempt to contribute relatively little information, although no prior is completely neutral in every parameterization.
+
+After observing data, Bayes' theorem combines the prior with the likelihood to produce the posterior distribution.
+
+As the amount of informative data increases, the likelihood often has more influence on the posterior and the effect of a reasonable prior becomes smaller.
 
 #### Advantages
 
-- One of the key strengths of Bayesian statistics is its ability to incorporate prior knowledge or expertise into the analysis, making it particularly valuable in situations where data are limited or difficult to obtain.  
-- Bayesian methods often lead to more intuitive and direct interpretations, especially in scenarios where the data are complex or the sample size is small, as the results are framed in terms of probabilities and uncertainties.  
-- Bayesian analysis provides a **probabilistic** understanding of estimates, allowing for a more nuanced and detailed interpretation of uncertainty around the parameter estimates (credible intervals give the probability that the parameter lies in a specified range).  
-- These methods offer great flexibility in handling complex models and uncertainty, making them well-suited for sophisticated models and smaller datasets.  
+- Bayesian methods can incorporate relevant prior information in a mathematically explicit way.
+- Posterior probabilities often allow direct answers to questions such as:
+
+$$
+P(\theta>0\mid D)
+$$
+
+or
+
+$$
+P(a<\theta<b\mid D).
+$$
+
+- Credible intervals have a direct probabilistic interpretation conditional on the model, prior, and observed data.
+- Bayesian methods are highly flexible for hierarchical models, missing-data problems, latent variables, prediction, and other complex statistical structures.
+- Regularizing priors can stabilize estimates when the available data are limited.
 
 #### Limitations
 
-- Bayesian analysis is computationally intensive, requiring significant resources to calculate posterior distributions—particularly when dealing with complex hierarchical models or large datasets—although Markov-chain Monte Carlo and variational inference have made many such analyses practical.  
-- The choice of prior can heavily influence the results, potentially introducing bias if the prior is not carefully selected or justified based on solid reasoning.  
-- Implementing Bayesian methods requires a more advanced understanding of statistical principles, making them harder to apply and interpret without specialized knowledge.  
+- Results can be sensitive to the choice of prior when the data provide limited information.
+- Poorly chosen priors can distort inference, so priors should be justified and sensitivity to reasonable alternatives should often be examined.
+- Complex Bayesian models can require substantial computation, particularly when posterior distributions cannot be calculated analytically.
+- Methods such as Markov chain Monte Carlo and variational inference make many difficult models practical, but they introduce additional computational and diagnostic considerations.
+- Bayesian inference is always conditional on the chosen likelihood, prior, and model assumptions. A precise posterior does not compensate for a badly specified model.
 
 #### Example
 
-Assume we have a **Beta(1, 1)** prior, which is uniform on the interval $[0,1]$, expressing equal belief in any value of the probability of a coin landing heads (H) or tails (T).
+Suppose we want to estimate the probability $p$ that a coin lands heads.
+
+We begin with a **Beta(1,1)** prior:
+
+$$
+p\sim\mathrm{Beta}(1,1)
+$$
+
+The Beta(1,1) distribution is uniform over $[0,1]$, meaning that before observing the data, every value of $p$ between 0 and 1 has the same prior density.
+
+It is important not to interpret the prior as simply:
 
 ```
 Prior:
 H: 0.5, T: 0.5
+
 ```
 
-Now we flip the coin 3 times and observe all heads:
+The prior is a distribution over the unknown parameter $p$, not a statement that the parameter must equal $0.5$.
+
+Now flip the coin three times and observe:
 
 ```
 Data:
 H H H
-```
-
-Updating the Beta(1, 1) prior with these data yields the posterior **Beta(4, 1)**. The posterior mean is $4/5 = 0.8$:
 
 ```
-Posterior:
-H: 0.8, T: 0.2
+
+For a Beta prior and binomial likelihood, the posterior is also a Beta distribution. If:
+
+$$
+p\sim\mathrm{Beta}(a,b)
+$$
+
+and we observe $x$ heads in $n$ flips, then:
+
+$$
+p\mid D \sim \mathrm{Beta}(a+x,b+n-x)
+$$
+
+Here:
+
+$$
+a=1,\qquad b=1,\qquad x=3,\qquad n=3
+$$
+
+so:
+
+$$
+p\mid D \sim \mathrm{Beta}(4,1)
+$$
+
+The posterior mean is:
+
+$$
+E[p\mid D] = \frac{4}{5} = 0.8
+$$
+
+Therefore, after observing three heads, our posterior mean estimate of the probability of heads is $0.8$.
+
+This value also equals the posterior predictive probability of heads on the next flip:
+
+$$
+P(\text{next flip is H}\mid D)=0.8
+$$
+
+so the prediction for the next flip can be summarized as:
+
+```
+Posterior predictive probability:
+H: 0.8
+T: 0.2
+
 ```
 
-This demonstrates how the Bayesian approach systematically updates beliefs (probabilities) based on new data.
+This is different from saying that the posterior distribution itself consists only of the values $0.8$ and $0.2$.
 
-| Step                      | Equation                                                                                 | Plugging the numbers                      |
-|---------------------------|------------------------------------------------------------------------------------------|-------------------------------------------|
-| **Prior density**         | $f(p)=dfrac{\Gamma(a+b)}{\Gamma(a),\Gamma(b)},p^{a-1}(1-p)^{b-1}$                   | $a=b=1\implies f(p)=1$ for $p\in[0,1]$ |
-| **Likelihood**            | $L(p)=\binom{n}{x}p^x(1-p)^{n-x}$                                                      | $\binom{3}{3}p^3(1-p)^0=p^3$             |
-| **Posterior**             | $p\mid\mathrm{data}\sim\mathrm{Beta}(a+x,b+n-x)$                                     | $\mathrm{Beta}(1+3,1+0)=\mathrm{Beta}(4,1)$ |
-| **Posterior mean**        | $\mathbb{E}[p\mid\mathrm{data}]=\frac{a+x}{a+b+n}$                       | $\frac{4}{5}=0.8$                       |
-| **95 % credible interval** | Central interval between the 0.025 and 0.975 quantiles of $\mathrm{Beta}(4,1)$         | $\approx[0.50,0.97]$                  |
+| StepEquationPlugging the numbers |                                                                  |                                           |
+| -------------------------------- | ---------------------------------------------------------------- | ----------------------------------------- |
+| **Prior density**                | $f(p)=\dfrac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}p^{a-1}(1-p)^{b-1}$ | $a=b=1\Rightarrow f(p)=1$ for $p\in[0,1]$ |
+| **Likelihood**                   | $L(p)\propto p^x(1-p)^{n-x}$                                     | $p^3(1-p)^0=p^3$                          |
+| **Posterior**                    | $p\mid D\sim\mathrm{Beta}(a+x,b+n-x)$                      | $\mathrm{Beta}(4,1)$                |
+| **Posterior mean**               | $E[p\mid D]=\dfrac{a+x}{a+b+n}$                                  | $\dfrac45=0.8$                            |
+| **95% credible interval**        | 0.025 and 0.975 quantiles of $\mathrm{Beta}(4,1)$          | $\approx[0.398,0.994]$                    |
+
+The interval is wide because only three observations have been collected. Although all three flips were heads, there is still substantial uncertainty about the underlying value of $p$.
 
 ### Bayesian vs Frequentist Convergence
 
-As the sample size increases, Bayesian and frequentist methods often produce similar numerical results—*provided the prior is non-informative or weakly informative*. When using uninformed or non-informative priors (indicating a lack of strong prior knowledge), the results from Bayesian and frequentist approaches are frequently comparable, if not identical. However, the **interpretation** of these results can still differ between the two frameworks: a frequentist 95 % confidence interval has 95 % coverage in repeated sampling, whereas a Bayesian 95 % credible interval contains the parameter with 95 % posterior probability.
+Bayesian and frequentist procedures often produce similar numerical estimates when the sample size becomes large, provided the statistical model is regular and the prior does not rule out parameter values strongly supported by the data.
+
+The prior does not necessarily need to be completely "non-informative." Under many common conditions, the influence of a reasonable prior decreases as the amount of data grows.
+
+For example, both approaches may eventually produce estimates close to the maximum-likelihood estimate.
+
+Their interpretations, however, remain different.
+
+A frequentist 95% confidence interval is generated by a procedure with 95% long-run coverage under its assumptions.
+
+A Bayesian 95% credible interval means:
+
+$$
+P(\theta\in C\mid D)=0.95
+$$
+
+under the chosen Bayesian model and prior.
+
+Numerically similar intervals therefore do not have identical interpretations.
 
 #### When Do They Diverge?
 
-- In cases involving complex models or smaller sample sizes, Bayesian and frequentist methods may produce significantly different outcomes. Bayesian approaches may perform better in these scenarios because they can incorporate prior information, which helps when data are limited or the model is sophisticated.  
-- The specific context of the problem—such as the presence of strong prior information or a complicated data structure—can also lead to divergence between the two methods. Bayesian methods might yield more nuanced results in certain situations where frequentist methods may struggle.
+Bayesian and frequentist analyses can differ substantially when:
+
+- the sample is small,
+- the prior contains meaningful information,
+- parameters are weakly identified by the data,
+- the model is hierarchical or otherwise complex,
+- parameters lie near boundaries,
+- different loss functions or decision rules are used.
+
+A Bayesian method is not automatically more accurate in these situations. Its advantage is that additional information can be incorporated through the prior. Whether that improves inference depends on whether the prior and model are appropriate.
+
+Similarly, frequentist methods are not restricted to simple models. Modern frequentist statistics includes likelihood-based inference, mixed models, penalized estimation, bootstrap methods, and many other techniques designed for complex problems.
 
 #### Example: Frequentist vs. Bayesian Mean Estimation
 
-1. We generated synthetic data consisting of 100 random values drawn from a normal distribution with a mean of 5 and a standard deviation of 2. This dataset simulates real-world measurements with inherent variability around the central value of 5. The goal was to compare how the frequentist and Bayesian approaches estimate the mean and uncertainty of this data.  
-2. Using the **frequentist approach**, we calculated the sample mean and constructed a 95 % confidence interval (CI). The mean came out to be approximately 4.79, and the confidence interval was between 4.44 and 5.15. This interval suggests that, if we repeated this experiment many times, 95 % of the calculated intervals would contain the true population mean.  
-3. In the **Bayesian approach**, we incorporated prior knowledge about the data by assuming a prior mean of 5 and a prior variance of 1. Combining this prior belief with the observed data, we calculated a posterior mean of 4.80. The 95 % credible interval, which reflects where the true mean is likely to lie *given both the prior and observed data*, ranged from 4.42 to 5.18. This interval accounts for both the prior information and the variability in the data.  
+1. We generate synthetic data consisting of 100 observations from a normal distribution with mean 5 and standard deviation 2. The goal is to compare how frequentist and Bayesian methods estimate the population mean and describe its uncertainty.
+2. Using the **frequentist approach**, the sample mean is approximately 4.79, with a 95% confidence interval of approximately:
 
-![output(11)](https://github.com/user-attachments/assets/4ba1be0a-21d3-4627-ad7e-f357f5453487)
+$$
+(4.44,\;5.15)
+$$
 
-The analysis results are as follows:
+The point estimate comes directly from the observed sample. The confidence interval is interpreted through repeated sampling: if we repeatedly generated samples and constructed intervals using the same procedure, approximately 95% of those intervals would contain the true population mean, assuming the model is correct.
 
-- **Frequentist Mean:** 4.79, with a 95 % confidence interval of (4.44, 5.15).  
-- **Bayesian Mean:** 4.80, with a 95 % credible interval of (4.42, 5.18).  
+3. Using the **Bayesian approach**, suppose we assign a prior distribution to the population mean with prior mean 5 and prior variance 1. Combining this prior with the likelihood from the observed data produces a posterior mean of approximately 4.80 and a 95% credible interval of approximately:
+
+$$
+(4.42,\;5.18)
+$$
+
+The credible interval has a different interpretation: conditional on the model, prior, and observed data, the population mean has 95% posterior probability of lying inside this interval.
+
+[output(11)](https://github.com/user-attachments/assets/4ba1be0a-21d3-4627-ad7e-f357f5453487)
+
+The analysis results are:
+
+- **Frequentist Mean:** 4.79, with a 95% confidence interval of $(4.44,5.15)$.
+- **Bayesian Mean:** 4.80, with a 95% credible interval of $(4.42,5.18)$.
+
+The numerical results are similar because the dataset contains enough information for the likelihood to dominate much of the inference. The important difference is therefore not simply the final numbers, but how uncertainty is represented and how each interval should be interpreted.
+
+In practice, Bayesian and frequentist statistics should not be viewed as competing recipes that always produce different answers. They are different inferential frameworks. Understanding their assumptions and interpretations is more important than treating either approach as universally superior.
