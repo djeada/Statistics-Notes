@@ -325,21 +325,15 @@ IV. Apply the Addition Rule
 Now apply the general addition rule:
 
 $$
-P(\text{Ace} \cup \text{Red}) = P(\text{Ace})
-+
-P(\text{Red})
--
-P(\text{Ace} \cap \text{Red})
+P(\text{Ace} \cup \text{Red}) = 
+P(\text{Ace}) + P(\text{Red}) - P(\text{Ace} \cap \text{Red})
 $$
 
 Substituting the values:
 
 $$
-P(\text{Ace} \cup \text{Red}) = \frac{1}{13}
-+
-\frac{1}{2}
--
-\frac{1}{26}
+P(\text{Ace} \cup \text{Red}) = 
+\frac{1}{13} + \frac{1}{2} - \frac{1}{26}
 $$
 
 Using a common denominator of 52:
@@ -355,13 +349,9 @@ $$
 Therefore:
 
 $$
-P(\text{Ace} \cup \text{Red}) = \frac{4}{52}
-+
-\frac{26}{52}
--
-\frac{2}{52} = \frac{28}{52} = \frac{7}{13}
+P(\text{Ace} \cup \text{Red}) = 
+\frac{4}{52} + \frac{26}{52} - \frac{2}{52} = 
+\frac{28}{52} = \frac{7}{13}
 $$
 
 Thus, the probability of drawing either an Ace or a red card is $\frac{7}{13}$.
-
-These examples illustrate how the basic probability axioms lead naturally to useful rules such as the addition rule. When events are mutually exclusive, their probabilities can be added directly. When events overlap, the intersection must be subtracted once to avoid double-counting.
