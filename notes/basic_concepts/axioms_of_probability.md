@@ -4,7 +4,7 @@ Probability theory is built on a small set of principles, called axioms, that de
 
 ### The Three Axioms
 
-I. **Non-negativity** states that the probability of any event \(A\) cannot be negative:
+I. Non-negativity states that the probability of any event $A$ cannot be negative:
 
 $$
 P(A) \geq 0
@@ -12,7 +12,7 @@ $$
 
 Probabilities represent the likelihood of events, so their values must always be non-negative.
 
-II. **Unit Measure** states that the probability of the entire sample space \(S\), which contains all possible outcomes of an experiment, is equal to 1:
+II. Unit Measure states that the probability of the entire sample space $S$, which contains all possible outcomes of an experiment, is equal to 1:
 
 $$
 P(S) = 1
@@ -20,15 +20,13 @@ $$
 
 In other words, some outcome from the sample space must occur.
 
-III. **Additivity** applies to disjoint, or mutually exclusive, events. More precisely, if \(A_1, A_2, \ldots\) are pairwise disjoint events, then:
+III. Additivity applies to disjoint, or mutually exclusive, events. More precisely, if $A_1, A_2, \ldots$ are pairwise disjoint events, then:
 
 $$
-P\left(\bigcup_{i=1}^{\infty} A_i\right)
-=
-\sum_{i=1}^{\infty} P(A_i)
+P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)
 $$
 
-For two mutually exclusive events \(A\) and \(B\), this gives the familiar rule:
+For two mutually exclusive events $A$ and $B$, this gives the familiar rule:
 
 $$
 P(A \cup B) = P(A) + P(B)
@@ -71,20 +69,14 @@ $$
 we get:
 
 $$
-P(5 \text{ or } 6)
-=
-\frac{1}{6} + \frac{1}{6}
-=
-\frac{2}{6}
-=
-\frac{1}{3}
+P(5 \text{ or } 6) = \frac{1}{6} + \frac{1}{6} = \frac{2}{6} = \frac{1}{3}
 $$
 
-So, the probability of rolling either a 5 or a 6 is \(\frac{1}{3}\).
+So, the probability of rolling either a 5 or a 6 is $\frac{1}{3}$.
 
 #### 2. Probability of Rolling an Even or Odd Number
 
-Every possible outcome is either even or odd, and no outcome can be both. The two events are therefore mutually exclusive, and together they cover the entire sample space \(S\).
+Every possible outcome is either even or odd, and no outcome can be both. The two events are therefore mutually exclusive, and together they cover the entire sample space $S$.
 
 The even outcomes are:
 
@@ -110,7 +102,7 @@ This matches the intuitive result: every roll must produce either an even or an 
 
 The events "rolling an even number" and "rolling a 3" are mutually exclusive because 3 is not even.
 
-The even outcomes are \(\{2,4,6\}\), so:
+The even outcomes are $\{2,4,6\}$, so:
 
 $$
 P(\text{even}) = \frac{3}{6} = \frac{1}{2}
@@ -125,11 +117,7 @@ $$
 Since the events are mutually exclusive, their probabilities can be added:
 
 $$
-P(\text{even} \text{ or } 3)
-=
-P(\text{even}) + P(3)
-=
-\frac{1}{2} + \frac{1}{6}
+P(\text{even} \text{ or } 3) = P(\text{even}) + P(3) = \frac{1}{2} + \frac{1}{6}
 $$
 
 Using a common denominator:
@@ -141,16 +129,10 @@ $$
 Therefore:
 
 $$
-P(\text{even} \text{ or } 3)
-=
-\frac{3}{6} + \frac{1}{6}
-=
-\frac{4}{6}
-=
-\frac{2}{3}
+P(\text{even} \text{ or } 3) = \frac{3}{6} + \frac{1}{6} = \frac{4}{6} = \frac{2}{3}
 $$
 
-So, the probability of rolling either an even number or a 3 is \(\frac{2}{3}\).
+So, the probability of rolling either an even number or a 3 is $\frac{2}{3}$.
 
 #### 4. Probability of Rolling an Even Number or a 4
 
@@ -171,50 +153,36 @@ $$
 Because rolling a 4 belongs to both events, their overlap is:
 
 $$
-P(\text{even} \text{ and } 4)
-=
-P(4)
-=
-\frac{1}{6}
+P(\text{even} \text{ and } 4) = P(4) = \frac{1}{6}
 $$
 
 For events that are not mutually exclusive, we use the general addition rule:
 
 $$
-P(A \cup B)
-=
-P(A) + P(B) - P(A \cap B)
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
 $$
 
 Applying it here:
 
 $$
-P(\text{even} \text{ or } 4)
-=
-P(\text{even}) + P(4) - P(\text{even} \text{ and } 4)
+P(\text{even} \text{ or } 4) = P(\text{even}) + P(4) - P(\text{even} \text{ and } 4)
 $$
 
 Substituting the values:
 
 $$
-P(\text{even} \text{ or } 4)
-=
-\frac{1}{2} + \frac{1}{6} - \frac{1}{6}
+P(\text{even} \text{ or } 4) = \frac{1}{2} + \frac{1}{6} - \frac{1}{6}
 $$
 
 Therefore:
 
 $$
-P(\text{even} \text{ or } 4)
-=
-\frac{1}{2}
-=
-\frac{3}{6}
+P(\text{even} \text{ or } 4) = \frac{1}{2} = \frac{3}{6}
 $$
 
-This also makes sense directly: because every 4 is already an even number, the event "even or 4" is simply the event "even."
+This also makes sense directly: because every 4 is already an even number, the event "even or 4" is simply the event "even. "
 
-Thus, the probability is \(\frac{1}{2}\).
+Thus, the probability is $\frac{1}{2}$.
 
 ### Example: Deck of Cards
 
@@ -233,9 +201,7 @@ We want to calculate the probability of drawing a card that is either a heart or
 These events are not mutually exclusive because the queen of hearts belongs to both categories. We therefore use the general addition rule:
 
 $$
-P(\text{Heart} \cup \text{Queen})
-=
-P(\text{Heart})
+P(\text{Heart} \cup \text{Queen}) = P(\text{Heart})
 +
 P(\text{Queen})
 -
@@ -244,13 +210,13 @@ $$
 
 where:
 
-* \(P(\text{Heart})\) is the probability of drawing a heart,
-* \(P(\text{Queen})\) is the probability of drawing a queen,
-* \(P(\text{Heart} \cap \text{Queen})\) is the probability of drawing the queen of hearts.
+* $P(\text{Heart})$ is the probability of drawing a heart,
+* $P(\text{Queen})$ is the probability of drawing a queen,
+* $P(\text{Heart} \cap \text{Queen})$ is the probability of drawing the queen of hearts.
 
 Step-by-Step Breakdown:
 
-I. **Calculate \(P(\text{Heart})\)**
+I. Calculate $P(\text{Heart})$
 
 There are 13 hearts in a 52-card deck, so:
 
@@ -258,7 +224,7 @@ $$
 P(\text{Heart}) = \frac{13}{52}
 $$
 
-II. **Calculate \(P(\text{Queen})\)**
+II. Calculate $P(\text{Queen})$
 
 There are 4 queens in the deck, so:
 
@@ -266,7 +232,7 @@ $$
 P(\text{Queen}) = \frac{4}{52}
 $$
 
-III. **Calculate \(P(\text{Heart} \cap \text{Queen})\)**
+III. Calculate $P(\text{Heart} \cap \text{Queen})$
 
 Only the queen of hearts is both a heart and a queen. Therefore:
 
@@ -274,14 +240,12 @@ $$
 P(\text{Heart} \cap \text{Queen}) = \frac{1}{52}
 $$
 
-IV. **Apply the Addition Rule**
+IV. Apply the Addition Rule
 
 Substitute the values into the formula:
 
 $$
-P(\text{Heart} \cup \text{Queen})
-=
-\frac{13}{52}
+P(\text{Heart} \cup \text{Queen}) = \frac{13}{52}
 +
 \frac{4}{52}
 -
@@ -291,16 +255,10 @@ $$
 Simplifying:
 
 $$
-P(\text{Heart} \cup \text{Queen})
-=
-\frac{13 + 4 - 1}{52}
-=
-\frac{16}{52}
-=
-\frac{4}{13}
+P(\text{Heart} \cup \text{Queen}) = \frac{13 + 4 - 1}{52} = \frac{16}{52} = \frac{4}{13}
 $$
 
-Thus, the probability of drawing either a heart or a queen is \(\frac{4}{13}\).
+Thus, the probability of drawing either a heart or a queen is $\frac{4}{13}$.
 
 #### 2. Drawing an Ace or a Red Card
 
@@ -323,67 +281,51 @@ $$
 Using the general addition rule:
 
 $$
-P(A \cup B)
-=
-P(A) + P(B) - P(A \cap B)
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
 $$
 
 where:
 
-* \(P(A)\) is the probability of drawing an Ace,
-* \(P(B)\) is the probability of drawing a red card,
-* \(P(A \cap B)\) is the probability of drawing a card that is both an Ace and red.
+* $P(A)$ is the probability of drawing an Ace,
+* $P(B)$ is the probability of drawing a red card,
+* $P(A \cap B)$ is the probability of drawing a card that is both an Ace and red.
 
 Step-by-Step Breakdown:
 
-I. **Calculate \(P(\text{Ace})\)**
+I. Calculate $P(\text{Ace})$
 
 There are 4 Aces in the deck, so:
 
 $$
-P(\text{Ace})
-=
-\frac{4}{52}
-=
-\frac{1}{13}
+P(\text{Ace}) = \frac{4}{52} = \frac{1}{13}
 $$
 
 This is non-negative, as required by the non-negativity axiom.
 
-II. **Calculate \(P(\text{Red})\)**
+II. Calculate $P(\text{Red})$
 
 There are 26 red cards in the deck, so:
 
 $$
-P(\text{Red})
-=
-\frac{26}{52}
-=
-\frac{1}{2}
+P(\text{Red}) = \frac{26}{52} = \frac{1}{2}
 $$
 
 Again, the probability is non-negative.
 
-III. **Calculate \(P(\text{Ace} \cap \text{Red})\)**
+III. Calculate $P(\text{Ace} \cap \text{Red})$
 
 The Ace of hearts and the Ace of diamonds are both red Aces, so there are 2 cards in the intersection:
 
 $$
-P(\text{Ace} \cap \text{Red})
-=
-\frac{2}{52}
-=
-\frac{1}{26}
+P(\text{Ace} \cap \text{Red}) = \frac{2}{52} = \frac{1}{26}
 $$
 
-IV. **Apply the Addition Rule**
+IV. Apply the Addition Rule
 
 Now apply the general addition rule:
 
 $$
-P(\text{Ace} \cup \text{Red})
-=
-P(\text{Ace})
+P(\text{Ace} \cup \text{Red}) = P(\text{Ace})
 +
 P(\text{Red})
 -
@@ -393,9 +335,7 @@ $$
 Substituting the values:
 
 $$
-P(\text{Ace} \cup \text{Red})
-=
-\frac{1}{13}
+P(\text{Ace} \cup \text{Red}) = \frac{1}{13}
 +
 \frac{1}{2}
 -
@@ -415,19 +355,13 @@ $$
 Therefore:
 
 $$
-P(\text{Ace} \cup \text{Red})
-=
-\frac{4}{52}
+P(\text{Ace} \cup \text{Red}) = \frac{4}{52}
 +
 \frac{26}{52}
 -
-\frac{2}{52}
-=
-\frac{28}{52}
-=
-\frac{7}{13}
+\frac{2}{52} = \frac{28}{52} = \frac{7}{13}
 $$
 
-Thus, the probability of drawing either an Ace or a red card is \(\frac{7}{13}\).
+Thus, the probability of drawing either an Ace or a red card is $\frac{7}{13}$.
 
 These examples illustrate how the basic probability axioms lead naturally to useful rules such as the addition rule. When events are mutually exclusive, their probabilities can be added directly. When events overlap, the intersection must be subtracted once to avoid double-counting.
