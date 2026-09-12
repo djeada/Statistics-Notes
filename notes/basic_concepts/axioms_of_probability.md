@@ -201,11 +201,8 @@ We want to calculate the probability of drawing a card that is either a heart or
 These events are not mutually exclusive because the queen of hearts belongs to both categories. We therefore use the general addition rule:
 
 $$
-P(\text{Heart} \cup \text{Queen}) = P(\text{Heart})
-+
-P(\text{Queen})
--
-P(\text{Heart} \cap \text{Queen})
+P(\text{Heart} \cup \text{Queen}) = 
+P(\text{Heart}) + P(\text{Queen}) - P(\text{Heart} \cap \text{Queen})
 $$
 
 where:
