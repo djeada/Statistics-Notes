@@ -1,5 +1,9 @@
 # Forecast Evaluation and Backtesting
 
+Forecast evaluation measures how an entire forecasting procedure performs on observations that were genuinely unknown when each prediction was made. It is therefore different from in-sample fit: transformations, feature construction, parameter estimation, predictor values, and model selection all have to respect the historical information boundary.
+
+A useful backtest preserves chronological order, compares against sensible baselines, and reports accuracy by the horizons and loss functions that matter in deployment. Point metrics, interval calibration, and error behavior over time answer different questions, while leakage at any stage can make all of them look better than the live forecasting process would actually be.
+
 ## Worked calculation: three errors and one scale
 
 Suppose the actual values are $(10,12,9)$ and forecasts are $(9,11,10)$. Using the convention $e=y-\hat y$, the errors are $(1,1,-1)$, so
