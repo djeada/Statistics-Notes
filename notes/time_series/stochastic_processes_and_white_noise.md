@@ -1,0 +1,58 @@
+# Stochastic Processes and White Noise
+
+A time series is one observed path from an underlying **stochastic process**: a family of random variables indexed by time,
+
+$$
+\{X_t : t \in T\}.
+$$
+
+For a fixed time $t$, $X_t$ is a random variable. After observation, its realized value is written $x_t$. The sequence $x_1,\ldots,x_n$ is one **sample path** or realization of the process.
+
+## Innovations
+
+Many time-series models are written as a predictable component plus a new shock:
+
+$$
+X_t = m_t + \varepsilon_t.
+$$
+
+The term $m_t$ summarizes information available before time $t$, while $\varepsilon_t$ is the new information arriving at time $t$. In ARMA-type models these shocks are often called **innovations**.
+
+## White Noise
+
+A weak white-noise process $\{\varepsilon_t\}$ satisfies
+
+$$
+E[\varepsilon_t] = 0,
+\qquad
+\operatorname{Var}(\varepsilon_t)=\sigma^2,
+\qquad
+\operatorname{Cov}(\varepsilon_t,\varepsilon_{t-h})=0 \quad (h\ne 0).
+$$
+
+Weak white noise has zero mean, constant variance, and no linear serial correlation. It is not automatically independent: uncorrelated random variables can still be dependent. **Independent white noise** adds independence across time; **Gaussian white noise** usually means independent normal innovations with constant variance.
+
+A fitted time-series model should explain the systematic temporal structure in the data, so its residuals should resemble white noise. White-noise residuals do not prove that a model is correct: variance changes, heavy tails, structural breaks, or nonlinear dependence can still remain.
+
+## White Noise vs Random Walk
+
+White noise is stationary, while a random walk accumulates white-noise shocks:
+
+$$
+X_t = X_{t-1} + \varepsilon_t
+= X_0 + \sum_{j=1}^{t}\varepsilon_j.
+$$
+
+Its variance grows with time, so the random walk is not weakly stationary even though its increments are white noise.
+
+## Martingale Differences
+
+If $\mathcal{F}_{t-1}$ represents information available before time $t$, a martingale difference satisfies
+
+$$
+E[\varepsilon_t \mid \mathcal{F}_{t-1}] = 0.
+$$
+
+This rules out predictable conditional-mean structure, while weak white noise only rules out linear autocorrelation.
+
+The companion script [`white_noise.py`](../../scripts/time_series/white_noise.py) demonstrates white-noise behavior. Continue with [stationarity](stationarity.md), [autocovariance](autocovariance_function.md), and [autocorrelation](autocorrelation_function.md).
