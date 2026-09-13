@@ -1,5 +1,8 @@
 # Stationarity in Time Series
 
+Stationarity describes which probabilistic features of a time series remain stable when the time origin is shifted. Weak stationarity focuses on a constant mean and variance together with an autocovariance that depends only on lag, while strict stationarity requires the full joint distribution to be invariant to time shifts.
+
+Many classical ARMA calculations rely on this stability because it lets dependence learned in one part of the series remain meaningful elsewhere. Trends, unit roots, seasonality, structural breaks, and changing variance violate stationarity in different ways, so the appropriate response may be detrending, differencing, seasonal modeling, variance transformation, or a model that explicitly allows change.
 
 ## Worked calculation: the stationary AR(1) mean and variance
 
