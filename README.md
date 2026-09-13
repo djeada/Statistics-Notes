@@ -1,191 +1,60 @@
-# Statistics
+# Statistics Notes
 
-This repository contains notes, explanations, and code snippets covering essential statistics concepts and techniques. Topics range from basic probability and descriptive statistics to more advanced concepts such as hypothesis testing and confidence intervals.
+This repository combines conceptual notes, Python implementations, notebooks, exercises, and flashcards for learning statistics. The notes are organized as a dependency-aware curriculum: probability comes before random variables, sampling comes before inference, and model assessment comes after model fitting.
 
-<img width="1254" height="1254" alt="stats" src="https://github.com/user-attachments/assets/c552ab19-2c31-4405-910c-8f03a89945fd" />
+## Learning Path
 
-## Requirements
+The main curriculum lives in [`notes/`](notes/README.md):
 
-The programming examples are implemented in **Python** for its simplicity, versatility, and rich scientific computing ecosystem. The code makes use of widely used libraries such as:
+| Unit | Purpose |
+|---|---|
+| [Foundations](notes/foundations/README.md) | Statistical vocabulary, data, populations, samples, and descriptive summaries. |
+| [Probability](notes/probability/README.md) | Events, axioms, conditioning, Bayes' theorem, and probability calculations. |
+| [Random Variables & Distributions](notes/random_variables_and_distributions/README.md) | Random variables, moments, PMFs/PDFs/CDFs, and common distribution families. |
+| [Joint Distributions & Covariance](notes/joint_distributions_and_covariance/README.md) | Multivariate distributions, marginal/conditional structure, covariance, and correlation. |
+| [Sampling & Sampling Distributions](notes/sampling_and_sampling_distributions/README.md) | Law of large numbers, standard error, CLT, and reference distributions. |
+| [Estimation](notes/estimation/README.md) | Point estimators, bias, variance, consistency, method of moments, and likelihood. |
+| [Hypothesis Testing & Confidence Intervals](notes/hypothesis_testing_and_confidence_intervals/README.md) | Interval estimation, tests, errors, multiplicity, and categorical-data inference. |
+| [Regression](notes/regression/README.md) | Linear models, ANOVA, multiple regression, and logistic regression. |
+| [Resampling & Model Assessment](notes/resampling_and_model_assessment/README.md) | Bootstrap/permutation ideas, validation, model selection, and predictive metrics. |
+| [Time Series](notes/time_series/README.md) | Serial dependence, stationarity, AR/MA/ARIMA models, diagnostics, and forecasting. |
+| [Spatial Statistics](notes/spatial_statistics/README.md) | Spatial autocorrelation, geostatistics, and point processes. |
+| [Extensions](notes/extensions/README.md) | Cross-cutting perspectives and topics beyond the main sequence. |
 
-* **NumPy** for numerical computing
-* **SciPy** for advanced scientific computations
-* **pandas** for data manipulation and analysis
+The shared notation and writing rules are documented in [`notes/CONVENTIONS.md`](notes/CONVENTIONS.md).
 
-A basic understanding of Python and its scientific libraries will help you make the most of the code examples.
+## Repository Layout
 
-### Setting up your environment
+- [`notes/`](notes/README.md) — the conceptual curriculum.
+- [`scripts/`](scripts/) — small Python implementations and demonstrations.
+- [`notebooks/`](notebooks/) — interactive examples and visualizations.
+- [`exercises/`](exercises/) — practice material.
+- [`flashcards/`](flashcards/) — compact review prompts.
+- [`assets/`](assets/) — local figures used by the notes.
 
-We recommend using a virtual environment to avoid package conflicts.
+The notes are organized pedagogically. The implementation folders retain their existing topic-oriented layout, so there is not always a one-to-one directory-name match between `notes/` and `scripts/` or `notebooks/`.
+
+## Getting Started
+
+Create and activate a virtual environment, then install the dependencies:
 
 ```bash
-# Create a virtual environment
 python3 -m venv env
-```
-
-Activate the environment:
-
-```bash
-# On Windows
-env\Scripts\activate
-
-# On Unix or macOS
-source env/bin/activate
-```
-
-Install the dependencies:
-
-```bash
+source env/bin/activate        # Unix/macOS
+# env\Scripts\activate         # Windows
 pip install -r requirements.txt
 ```
 
-Now you’re ready to run the scripts:
+Then run an implementation directly, for example:
 
 ```bash
-python scripts/basic_concepts/basic_concepts.py
+python scripts/basic_concepts/averages.py
 ```
 
-Replace `scripts/basic_concepts/basic_concepts.py` with the actual path to the script you want to run.
+Or open one of the notebooks in [`notebooks/`](notebooks/).
 
-When finished, deactivate the environment:
+## Suggested Study Workflow
 
-```bash
-deactivate
-```
+Read the README for the current curriculum unit first. It explains prerequisites, reading order, and conceptual boundaries. Then read the individual note, reproduce a worked example, and use the matching script or notebook when one exists. Exercises and flashcards are most useful after the conceptual pass rather than as a substitute for it.
 
-## Topics
-
-### Basic Concepts
-
-Concept                                 | Notes                                                                                                         | Implementation                                                                                                | Examples                                                                                                  |
---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-Introduction to Statistics             | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/basic_concepts/introduction_to_statistics.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/basic_concepts/population_sample.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/basic_concepts/variables_and_data.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/basic_concepts/introduction_to_statistics.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-Descriptive Statistics | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/basic_concepts/descriptive_statistics.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/basic_concepts/averages.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/basic_concepts/frequency_tables_and_histograms.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/basic_concepts/quartiles.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/basic_concepts/standard_deviation.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/basic_concepts/descriptive_statistics.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-Introduction to Probability             | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/basic_concepts/introduction_to_probability.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | N/A |  N/A  |
-Geometric Probability                   | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/basic_concepts/geometric_probability.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/basic_concepts/geometric_probability.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/basic_concepts/geometric_probability.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-Axioms of Probability                   | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/basic_concepts/axioms_of_probability.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | N/A | N/A |
-Conditional Probability and Independence | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/basic_concepts/conditional_probability_and_independence.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | N/A  | N/A |
-Bayes Theorem                           | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/basic_concepts/bayes_theorem.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/basic_concepts/venn_diagram_bayes_theorem.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/basic_concepts/bayes_theorem.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-Probability Trees                        | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/basic_concepts/probability_tree.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | N/A  | N/A |
-Total Probability                       | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/basic_concepts/total_probability.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | N/A | N/A |
-Bayesian vs Frequentist                | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/basic_concepts/bayesian_vs_frequentist.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/basic_concepts/bayesian_vs_frequentist.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/basic_concepts/bayesian_vs_frequentist.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-
-### Probability Distributions
-
-| Concept                               | Notes                                                                                                   | Implementation                                                                                        | Examples                                                                                              |
-|---------------------------------------|---------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| Introduction to Distributions         | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/introduction_to_distributions.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/introduction_to_distributions.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/introduction_to_distributions.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Central Limit Theorem                 | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/central_limit_theorem.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/central_limit_theorem.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/central_limit_theorem.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Beta Distribution                    | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/continuous_distributions/beta_distribution.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/beta_distribution.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/beta_distribution.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Chi-Square Distribution              | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/continuous_distributions/chi_square_distribution.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/chi_square_distribution.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/chi_square_distribution.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Exponential Distribution             | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/continuous_distributions/exponential_distribution.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/exponential_distribution.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/exponential_distribution.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| F Distribution                       | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/continuous_distributions/f_distribution.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/f_distribution.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/f_distribution.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Gamma Distribution                   | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/continuous_distributions/gamma_distribution.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/gamma_distribution.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/gamma_distribution.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Log-Normal Distribution              | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/continuous_distributions/log_normal_distribution.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/log_normal_distribution.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/log_normal_distribution.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Normal Distribution                  | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/continuous_distributions/normal_distribution.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/normal_distribution.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/normal_distribution.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Student t Distribution               | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/continuous_distributions/student_t_distribution.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/student_t_distribution.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/student_t_distribution.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Uniform Distribution                 | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/continuous_distributions/uniform_distribution.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/uniform_distribution.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/uniform_distribution.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Binomial Distribution                | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/discrete_distributions/binomial_distribution.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/binomial_distribution.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/binomial_distribution.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Geometric Distribution               | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/discrete_distributions/geometric_distribution.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/geometric_distribution.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/geometric_distribution.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Negative Binomial Distribution       | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/discrete_distributions/negative_binomial_distribution.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/negative_binomial_distribution.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/negative_binomial_distribution.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Poisson Distribution                 | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/probability_distributions/discrete_distributions/poisson_distribution.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/scripts/probability_distributions/poisson_distribution.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/main/notebooks/probability_distributions/poisson_distribution.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-
-### Hypothesis Testing and Confidence Intervals
-
-| Concept                  | Notes                                                                                               | Implementation                                                                                        | Examples                                                                                              |
-|--------------------------|-----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| Null Hypothesis           | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/statistical_inference/null_hypothesis.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/statistical_inference/null_hypothesis.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/statistical_inference/statistical_inference.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Hypothesis Testing        | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/statistical_inference/hypothesis_testing.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/statistical_inference/p_value.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/statistical_inference/hypothesis_testing.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Type I and Type II Errors | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/statistical_inference/type_i_and_type_ii_errors.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/statistical_inference/type_i_and_type_ii_errors.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/statistical_inference/type_i_and_type_ii_errors.md.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Confidence Intervals      | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/statistical_inference/confidence_intervals.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/statistical_inference/confidence_intervals.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/statistical_inference/confidence_intervals.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Multiple Comparisons      | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/statistical_inference/multiple_comparisons.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/statistical_inference/multiple_comparisons.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/statistical_inference/multiple_comparisons.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Analysis of Variance (ANOVA) | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/statistical_inference/analysis_of_variance.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/statistical_inference/analysis_of_variance.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/statistical_inference/analysis_of_variance.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Analysis of Categorical Data | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/statistical_inference/analysis_of_categorical_data.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/statistical_inference/analysis_of_categorical_data.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/statistical_inference/analysis_of_categorical_data.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Resampling                | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/statistical_inference/resampling.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/statistical_inference/resampling.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/statistical_inference/resampling.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-
-### Correlation and Regression
-
-Concept | Notes | Implementation | Examples
------- | ----- | -------------- | --------
-Correlation | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/correlation_and_regression/correlation.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/correlation_and_regression/correlation.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/correlation_and_regression/correlation.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a>
-Covariance | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/correlation_and_regression/covariance.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/correlation_and_regression/covariance.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/correlation_and_regression/covariance.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a>
-Simple Linear Regression | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/correlation_and_regression/simple_linear_regression.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/correlation_and_regression/linear_regression.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/correlation_and_regression/linear_regression.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a>
-Multiple Regression | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/correlation_and_regression/multiple_regression.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/correlation_and_regression/multiple_regression.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/correlation_and_regression/multiple_regression.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a>
-Logistic Regression | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/correlation_and_regression/logistic_regression.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/correlation_and_regression/logistic_regression.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/correlation_and_regression/logistic_regression.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a>
-Metrics | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/correlation_and_regression/metrics.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/correlation_and_regression/metrics.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/correlation_and_regression/metrics.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a>
-
-### Time Series Analysis
-
-| Concept                     | Notes                                                                                               | Implementation                                                                                        | Examples                                                                                              |
-|-----------------------------|-----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| Time Series                  | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/time_series.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/time_series_analysis.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/time_series_analysis.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Seasonality and Trends       | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/seasonality_and_trends.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/seasonality.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/seasonality.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Series                       | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/series.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/series.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/series.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Difference Equations         | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/difference_equations.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/difference_equations.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/difference_equations.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Stationarity                 | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/stationarity.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/stationarity.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/stationarity.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Invertibility                | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/invertibility.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/invertibility.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/invertibility.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Backward Shift Operator      | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/backward_shift_operator.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/backward_shift_operator.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/backward_shift_operator.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Random Walk                  | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/random_walk.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/random_walk.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/random_walk.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Forecasting                  | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/forecasting.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/forecasting.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/forecasting.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Autoregressive Models        | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/autoregressive_models.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/autoregressive_model.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/autoregressive_model.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Moving Average Models        | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/moving_average_models.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/moving_average_models.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/moving_average_models.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Autocorrelation Function     | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/autocorrelation_function.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/autocorrelation_function.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/autocorrelation_function.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Autocovariance Function      | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/autocovariance_function.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/autocovariance_function.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/autocovariance_function.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-| Yule-Walker Equations        | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/time_series_analysis/yule_walker_equations.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/time_series_analysis/yule_walker_equations.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/time_series_analysis/yule_walker_equations.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a> |
-
-### Spatial Statistics
-
-Concept | Notes | Implementation | Examples
------- | ----- | -------------- | --------
-Point Processes | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/spatial_statistics/point_processes.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/spatial_statistics/point_processes.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/spatial_statistics/point_processes.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a>
-Spatial Autocorrelation | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/spatial_statistics/spatial_autocorrelation.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/spatial_statistics/spatial_autocorrelation.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/spatial_statistics/spatial_autocorrelation.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a>
-Geostatistics | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notes/spatial_statistics/geostatistics.md"><img src="https://img.icons8.com/color/344/markdown.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/scripts/spatial_statistics/spatial_statistics.py"><img src="https://img.icons8.com/color/344/python.png" height="50" /></a> | <a href="https://github.com/djeada/Statistics-Notes/blob/master/notebooks/spatial_statistics/geostatistics.ipynb"><img src="https://img.icons8.com/fluency/344/jupyter.png" height="50" /></a>
-
-## How to Contribute
-
-We encourage contributions that enhance the repository's value. To contribute:
-
-1. Fork the repository.
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
-4. Push to the branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request.
-
-## References
-
-### Online Courses and Educational Platforms
-- [Harvard University's Introduction to Probability](https://projects.iq.harvard.edu/stat110)
-- [edX: Fundamentals of Statistics](https://www.edx.org/course/fundamentals-of-statistics)
-
-### Books
-
-- [The Signal and the Noise: Why So Many Predictions Fail--but Some Don't](https://amzn.to/41CE57B)
-- [The Black Swan: The Impact of the Highly Improbable](https://amzn.to/4fu9MG1)
-Antifragile: Things That Gain from Disorder https://amzn.to/4mhWf7e
-- [Naked Statistics: Stripping the Dread from the Data](https://amzn.to/3JahNUE)
-- [How Not to Be Wrong: The Power of Mathematical Thinking](https://amzn.to/45aIWzf)
-- [Antifragile: Things That Gain from Disorder](https://amzn.to/4mhWf7e)
-- [Fooled by Randomness: The Hidden Role of Chance in Life and in the Markets](https://amzn.to/4mfiBGq)
-- [SpringerLink: An Introduction to Statistical Learning](https://link.springer.com/book/10.1007/978-1-4614-7138-7)
-- [SpringerLink: The Elements of Statistical Learning](https://link.springer.com/book/10.1007/978-0-387-21736-9)
-
-### Open Source eBooks
-
-- [Think Bayes by Allen Downey](https://allendowney.github.io/ThinkBayes2/)
-- [Online Statistics Education: An Interactive Multimedia Course](https://onlinestatbook.com/2/index.html)
-- [OpenStax: Introductory Statistics 2e](https://openstax.org/books/introductory-statistics-2e)
-- [Introduction to Probability by Charles M. Grinstead and J. Laurie Snell (PDF)](https://people.math.umass.edu/%7Elavine/Book/book.pdf)
-
-### Resources and Cheat Sheets
-- [Probability Cheatsheet on GitHub](https://github.com/wzchen/probability_cheatsheet)
-- [Allen Downey's Blog on Probability and Bayesian Stats](http://allendowney.blogspot.com/2016/06/there-is-still-only-one-test.html)
-- [Saylor Academy: Introductory Statistics](https://saylordotorg.github.io/text_introductory-statistics/index.html)
-- [Statistical Learning with Sparsity by Hastie, Tibshirani, and Wainwright](https://hastie.su.domains/CASI/)
-- [Statistics How To: Probability and Statistics Main Index](https://www.statisticshowto.datasciencecentral.com/probability-and-statistics/probability-main-index/)
-
-### Video Lectures and Playlists
-- [Oxford Playlist on Probability and Statistics](https://youtube.com/playlist?list=PL4d5ZtfQonW0B3qW24yAj1u1SuOvgKfP5&si=8nQpv13gbZEWuuqe)
-
-## License
-
-This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
+The curriculum is intentionally layered: later sections may use results from earlier sections without re-deriving them. When a topic feels abrupt, follow the prerequisite links in its section README before continuing.
