@@ -239,7 +239,3 @@ An impulse-response plot traces the model-implied effect of a specified system s
 8. Recheck residuals and parameter stability.
 9. Backtest the entire predictor-plus-target procedure.
 10. Report coefficient interpretation separately from forecasting performance.
-
-### Visual companions
-
-The figures are placed with the modeling decisions they support: residual dynamics beside ARMA errors, distributed lags beside delayed effects, predictor availability beside forecast information, and the multivariate figures beside the distinction between external predictors and jointly endogenous systems.
