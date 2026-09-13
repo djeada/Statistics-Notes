@@ -435,7 +435,3 @@ The stationarity figure places stable, unit-root, and explosive behavior side by
 8. Preserve chronological order in validation.
 9. Diagnose residuals and forecast errors.
 10. Explain the limitations of the chosen representation.
-
-### Visual companions
-
-The foundational visuals are placed with the concepts they explain: series components beside decomposition, changing moments beside stationarity assumptions, filters beside smoothing, sampling beside aliasing and timestamp structure, difference equations beside stability, and white-noise/random-walk cases beside stationarity. Together they form the conceptual path from observing a sequence to specifying and validating a time-series model.
