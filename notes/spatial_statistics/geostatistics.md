@@ -1,6 +1,6 @@
 # Geostatistics: A Student Guide to Spatial Dependence and the Semivariogram
 
-Geostatistics is used when observations are attached to locations and **nearby values may be more similar than distant values**.
+Geostatistics is used when observations are tied to locations and nearby values may be more similar than distant values.
 
 Typical examples are:
 
@@ -10,12 +10,9 @@ Typical examples are:
 - temperature measured across a region;
 - pollutant concentration measured at monitoring sites.
 
-The central problem is that we usually observe a variable at only a limited number of coordinates, but we want to understand the spatial process between those coordinates.
+The central problem is that we usually observe a variable at only a limited set of coordinates, yet we want to understand the spatial process between them.
 
-This chapter develops the ideas needed before kriging. The main goal is to understand **what spatial dependence means, how the semivariogram measures it, why its parameters matter, and what can go wrong when the assumptions are inappropriate**.
-
----
-
+This chapter develops the ideas needed before kriging. The goal is to understand what spatial dependence means, how the semivariogram measures it, why its parameters matter, and what can go wrong when the assumptions do not fit the data.
 ## Learning objectives
 
 After working through this chapter, you should be able to:
@@ -30,20 +27,7 @@ After working through this chapter, you should be able to:
 8. explain why the sampling design affects the empirical variogram;
 9. describe how a variogram model is used later in kriging;
 10. recognize common diagnostic problems.
-
-The companion script [`geostatistics_visualizations.py`](../../scripts/spatial_statistics/geostatistics_visualizations.py) creates the figures referenced throughout the chapter.
-
-Run it from the repository root:
-
-```bash
-python scripts/spatial_statistics/geostatistics_visualizations.py
-```
-
-It will create a `assets/spatial_statistics/geostatistics/` folder containing all plots.
-
----
-
-## 1. The spatial random field
+## The spatial random field
 
 A geostatistical variable is written as
 
@@ -73,9 +57,9 @@ might mean that the measured nitrate concentration at coordinate $(3,7)$ is $18.
 
 ### What is being modeled?
 
-The notation $Z(s)$ does **not** mean that the observed map is random in the everyday sense.
+The notation $Z(s)$ does not mean that the observed map is random in the everyday sense.
 
-Instead, it expresses uncertainty about values that could have occurred or values at locations we did not sample. The observed dataset is treated as one realization of an underlying spatial process.
+Instead, it represents uncertainty about possible values, including values at locations we did not sample. The observed dataset is treated as one realization of an underlying spatial process.
 
 Suppose five observations are:
 
@@ -87,23 +71,20 @@ Suppose five observations are:
 | D | 1 | 1 | 14 |
 | E | 2 | 0 | 13 |
 
-The data tell us the field value at five locations. They do not directly tell us the value at, for example, $(0.7,0.4)$.
+The data give the field value at five locations, but not at an unsampled location such as $(0.7,0.4)$.
 
-Geostatistics uses the observed spatial pattern to quantify dependence and make principled predictions at unsampled locations.
+Geostatistics uses the observed spatial pattern to quantify dependence and make predictions at unsampled locations.
 
 ![Sampled spatial field](../../assets/spatial_statistics/geostatistics/01_spatial_samples.png)
 
 #### Why this matters
 
-Ordinary non-spatial methods often act as if observations are independent. Spatial data frequently violate that assumption.
+Many non-spatial methods assume observations are independent. Spatial data often violate that assumption.
 
 If two groundwater wells are only 20 m apart, their measurements may contain overlapping information. If two wells are 100 km apart, their measurements may be much less related.
 
 Geostatistics makes that dependence explicit.
-
----
-
-## 2. Large-scale mean and small-scale residual variation
+## Large-scale mean and small-scale residual variation
 
 A useful decomposition is
 
@@ -116,7 +97,7 @@ where
 - $m(s)$ is the large-scale mean or trend;
 - $\varepsilon(s)$ is the residual spatial variation around that trend.
 
-This separation is one of the most important ideas in geostatistics.
+This separation is fundamental in geostatistics.
 
 ### What is being calculated?
 
@@ -138,7 +119,7 @@ $$
 
 ### Why calculate residuals?
 
-A trend can make distant locations appear spatially dependent even when the residual process has little spatial dependence.
+A trend can make distant locations appear spatially dependent even when little dependence remains after the trend is removed.
 
 Consider three observations along a straight line:
 
@@ -148,7 +129,7 @@ Consider three observations along a straight line:
 | 1 | 13 |
 | 2 | 16 |
 
-The observations rise by 3 units for every 1 unit increase in $x$.
+The observations increase by 3 units for each 1-unit increase in $x$.
 
 If we incorrectly assume a constant mean, the sample mean is
 
@@ -190,7 +171,7 @@ $$
 \varepsilon(2)=16-16=0.
 $$
 
-The apparent spatial structure was entirely explained by the mean trend.
+In this example, the apparent spatial structure is entirely explained by the mean trend.
 
 ![Trend and residual idea](../../assets/spatial_statistics/geostatistics/02_trend_and_residuals.png)
 
@@ -198,16 +179,13 @@ The apparent spatial structure was entirely explained by the mean trend.
 
 Before interpreting a variogram, ask whether a trend should first be modeled.
 
-Otherwise, the variogram may try to describe two different things at once:
+Otherwise, the variogram may mix two different sources of variation:
 
 1. large-scale change in the mean;
 2. local spatial dependence around the mean.
 
 That often produces an inflated apparent range or sill.
-
----
-
-## 3. Second-order stationarity
+## Second-order stationarity
 
 A common geostatistical assumption is **second-order stationarity**.
 
@@ -222,7 +200,7 @@ $$
 Second, covariance depends only on the separation between locations:
 
 $$
-\operatorname{Cov}[Z(s),Z(s+h)] = C(h).
+\mathrm{Cov}[Z(s),Z(s+h)] = C(h).
 $$
 
 Here $h$ is a spatial lag vector.
@@ -257,9 +235,9 @@ $$
 
 ### What is covariance calculating?
 
-Covariance measures how strongly two values tend to move together relative to their mean.
+Covariance measures how two values vary together relative to their mean.
 
-A positive covariance means that when one location is above the mean, the other location also tends to be above the mean.
+Positive covariance means that when one location is above the mean, the other also tends to be above the mean.
 
 A typical spatial covariance function decreases with distance.
 
@@ -299,7 +277,7 @@ So the model says that locations 30 units apart share much less spatial dependen
 
 Stationarity allows us to combine information from many pairs of locations.
 
-If two pairs of observations have the same separation, a stationary model treats them as having the same covariance structure even if the pairs occur in different parts of the map.
+If two pairs of observations have the same separation, a stationary model assigns them the same covariance structure even when they occur in different parts of the map.
 
 For example, under stationarity:
 
@@ -312,15 +290,12 @@ This assumption makes estimation possible from a limited number of samples.
 
 #### Important warning
 
-Stationarity is a **modeling assumption**, not a universal property of nature.
+Stationarity is a modeling assumption, not a universal property of nature.
 
 Strong trends, boundaries, land-use changes, coastlines, geological contacts, or different ecological zones can violate it.
+## Isotropy
 
----
-
-## 4. Isotropy
-
-A stationary spatial model is **isotropic** if dependence depends only on distance and not direction.
+A stationary spatial model is **isotropic** if dependence depends only on distance, not direction.
 
 Then
 
@@ -330,7 +305,7 @@ $$
 
 For an isotropic model, a pair of points 10 km apart east-west has the same covariance as a pair 10 km apart north-south.
 
-This is convenient, but it may be unrealistic.
+This assumption is convenient, but it may be unrealistic.
 
 Examples where direction may matter include:
 
@@ -341,14 +316,11 @@ Examples where direction may matter include:
 - ocean currents.
 
 We return to directional dependence in the anisotropy section.
-
----
-
-## 5. Intrinsic stationarity and the semivariogram
+## Intrinsic stationarity and the semivariogram
 
 Geostatistics often uses a weaker assumption called **intrinsic stationarity**.
 
-Instead of requiring a covariance function for the field itself, we focus on increments:
+Instead of requiring a covariance function for the field itself, intrinsic stationarity focuses on increments:
 
 $$
 Z(s+h)-Z(s).
@@ -360,12 +332,12 @@ $$
 \gamma(h)
 =
 \frac{1}{2}
-\operatorname{Var}[Z(s+h)-Z(s)].
+\mathrm{Var}[Z(s+h)-Z(s)].
 $$
 
 ### What is the semivariogram calculating?
 
-The semivariogram measures how different two observations tend to be as a function of their separation.
+The semivariogram measures how dissimilar two observations tend to be as their separation changes.
 
 A small semivariogram value means:
 
@@ -375,7 +347,7 @@ A large semivariogram value means:
 
 > points separated by this distance tend to have more different values.
 
-The factor $1/2$ is part of the standard definition and makes the semivariogram connect neatly to covariance.
+The factor $1/2$ is part of the standard definition and gives the semivariogram a direct relationship with covariance.
 
 Under second-order stationarity,
 
@@ -438,12 +410,9 @@ $$
 The greater separation has a larger semivariance because the values are less strongly related.
 
 ![Covariance and semivariogram](../../assets/spatial_statistics/geostatistics/03_covariance_and_variogram.png)
+## The empirical semivariogram
 
----
-
-## 6. The empirical semivariogram
-
-In real data we do not know the true semivariogram. We estimate it from observed pairs.
+With real data, the true semivariogram is unknown, so we estimate it from observed pairs.
 
 For a lag bin around distance $h$,
 
@@ -471,11 +440,8 @@ For every pair in a distance bin:
 4. divide by the number of pairs;
 5. divide by 2.
 
-So the empirical semivariogram is essentially **half of the average squared difference** between observations separated by approximately the same distance.
-
----
-
-## 7. Fully worked empirical semivariogram example
+The empirical semivariogram is therefore half the average squared difference between observations separated by approximately the same distance.
+## Fully worked empirical semivariogram example
 
 Use the five-point dataset:
 
@@ -487,9 +453,9 @@ Use the five-point dataset:
 | D | $(1,1)$ | 14 |
 | E | $(2,0)$ | 13 |
 
-We will calculate the empirical semivariance for pairs exactly 1 distance unit apart.
+We will calculate the empirical semivariance for pairs exactly 1 unit apart.
 
-### Step 1: Find pairs separated by distance 1
+### Find pairs separated by distance 1
 
 The relevant pairs are:
 
@@ -505,7 +471,7 @@ $$
 N(1)=5.
 $$
 
-### Step 2: Calculate each value difference and square it
+### Calculate each value difference and square it
 
 #### Pair A-B
 
@@ -567,13 +533,13 @@ $$
 (-3)^2=9.
 $$
 
-### Step 3: Add the squared differences
+### Add the squared differences
 
 $$
 4+1+4+1+9=19.
 $$
 
-### Step 4: Divide by $2N(h)$
+### Divide by $2N(h)$
 
 Because
 
@@ -603,7 +569,7 @@ $$
 
 It is not a distance and it is not a correlation.
 
-It is **half the mean squared difference** for pairs approximately 1 unit apart.
+It is half the mean squared difference for pairs approximately 1 unit apart.
 
 The mean squared difference is
 
@@ -618,10 +584,7 @@ $$
 $$
 
 If a later distance bin had a semivariance of 6, that would indicate substantially greater dissimilarity at that larger separation.
-
----
-
-## 8. Why lag bins are needed
+## Why lag bins are needed
 
 In a real dataset, very few pairs have exactly the same distance.
 
@@ -646,27 +609,24 @@ Each point on an empirical variogram summarizes all pairs in one bin.
 
 ### Why pair count matters
 
-A lag bin based on 150 pairs is generally more stable than a lag bin based on 3 pairs.
+A lag bin based on 150 pairs is generally more stable than one based on 3 pairs.
 
-That is why empirical variogram plots should ideally show or inspect pair counts.
+For that reason, pair counts should be shown or inspected when evaluating an empirical variogram.
 
 A noisy high-distance bin may simply have very few available pairs.
 
 ### Why empirical variogram points are not ordinary independent data
 
-Each sampled observation can appear in many point pairs.
+A sampled observation can appear in many pairs.
 
 For example, observation A may contribute to A-B, A-C, A-D, and A-E.
 
-Therefore different variogram points are not independent observations in the sense assumed by ordinary least squares.
+As a result, variogram points are not independent observations in the sense assumed by ordinary least squares.
 
 They also do not generally have equal sampling variance.
 
-For teaching demonstrations, weighted least squares using pair counts is common and intuitive. More advanced fitting may use likelihood-based methods or specialized variogram-weighting schemes.
-
----
-
-## 9. Nugget, partial sill, and sill
+For teaching examples, weighted least squares based on pair counts is common and intuitive. More advanced fitting can use likelihood-based methods or specialized variogram-weighting schemes.
+## Nugget, partial sill, and sill
 
 A widely used exponential semivariogram model is
 
@@ -704,9 +664,9 @@ $$
 c_0+c=0.5+4.5=5.
 $$
 
-### 9.1 Nugget
+### Nugget
 
-The nugget is the jump immediately to the right of the origin.
+The nugget is the discontinuity immediately to the right of the origin.
 
 Here,
 
@@ -730,15 +690,12 @@ $$
 
 so the semivariance is zero by definition.
 
-With a nugget model, the theoretical variogram jumps from 0 at exactly $h=0$ to approximately $c_0$ for arbitrarily small positive separation.
+With a nugget model, the theoretical variogram is 0 at exactly $h=0$ and approaches $c_0$ as the separation becomes arbitrarily small but positive.
 
 This discontinuity represents unresolved variability or measurement noise.
+### Partial sill
 
----
-
-### 9.2 Partial sill
-
-The partial sill is the amount of spatially structured variance represented by the model.
+The partial sill is the portion of variance represented as spatially structured by the model.
 
 Here,
 
@@ -747,10 +704,7 @@ c=4.5.
 $$
 
 The structured part begins near zero separation and grows toward 4.5 as distance increases.
-
----
-
-### 9.3 Sill
+### Sill
 
 The sill is
 
@@ -761,16 +715,13 @@ $$
 With the chosen values,
 
 $$
-5.0.
+c_0+c=5.0.
 $$
 
-At sufficiently large distance, the model says observations have essentially lost their spatial correlation, so the semivariogram approaches the total variance level represented by the model.
+At sufficiently large distances, the modeled spatial covariance approaches zero, so the semivariogram approaches the total variance level represented by the model.
+### Scale parameter and practical range
 
----
-
-### 9.4 Scale parameter and practical range
-
-For the exponential model, $a$ is **not a hard cutoff distance**.
+For the exponential model, $a$ is a scale parameter, not a hard cutoff distance.
 
 The model approaches its sill asymptotically.
 
@@ -837,7 +788,7 @@ $$
 1-e^{-3}\approx0.9502.
 $$
 
-Thus the exponential model's **practical range** is often described as approximately
+Thus, the exponential model's **practical range** is often taken as approximately
 
 $$
 3a.
@@ -848,18 +799,15 @@ With $a=20$,
 $$
 \text{practical range}\approx60.
 $$
+## Comparing common valid variogram models
 
----
+Several valid variogram model families are widely used.
 
-## 10. Comparing common valid variogram models
-
-Several mathematically valid model families are widely used.
-
-The main difference is how quickly spatial dependence changes near the origin and whether the model reaches the sill at a finite distance.
+They differ mainly in how quickly spatial dependence changes near the origin and whether the sill is reached at a finite distance.
 
 ![Variogram model comparison](../../assets/spatial_statistics/geostatistics/05_variogram_models.png)
 
-### 10.1 Exponential model
+### Exponential model
 
 $$
 \gamma(h)
@@ -873,10 +821,7 @@ Characteristics:
 - approaches the sill gradually;
 - has no finite exact range;
 - useful for spatial processes that are not extremely smooth.
-
----
-
-### 10.2 Gaussian model
+### Gaussian model
 
 $$
 \gamma(h)
@@ -890,11 +835,8 @@ Characteristics:
 - implies a smoother spatial process than the exponential model;
 - approaches the sill asymptotically.
 
-A very flat near-origin variogram means very close locations are predicted to have highly similar process values.
-
----
-
-### 10.3 Spherical model
+A very flat variogram near the origin implies that process values at very close locations are highly similar.
+### Spherical model
 
 For
 
@@ -936,12 +878,9 @@ a=20,
 $$
 
 locations farther than 20 units apart have zero modeled spatial covariance for the structured component.
+## Parameter names are not perfectly comparable across model families
 
----
-
-## 11. Parameter names are not perfectly comparable across model families
-
-A common student mistake is to assume that a parameter called $a$ means the same physical range in every model.
+A common mistake is to assume that a parameter called $a$ represents the same physical range in every model.
 
 It does not.
 
@@ -951,11 +890,8 @@ For example:
 - in the exponential model, $a$ is a scale parameter and the practical range is about $3a$;
 - in the Gaussian model, the practical range is related to $a$ differently.
 
-Therefore, compare models using their implied curves or a consistently defined practical range, not only the raw parameter symbol.
-
----
-
-## 12. A covariance interpretation of the sill
+Compare models using their implied curves or a consistently defined practical range rather than the raw parameter symbol alone.
+## A covariance interpretation of the sill
 
 Under second-order stationarity,
 
@@ -993,15 +929,12 @@ $$
 \gamma(h)\approx5.
 $$
 
-That is why the semivariogram often levels off near the variance of the process.
-
----
-
-## 13. Isotropy versus anisotropy
+This is why a bounded semivariogram often levels off near the process variance.
+## Isotropy versus anisotropy
 
 An isotropic model assumes that dependence depends only on distance.
 
-An anisotropic model allows dependence to change with direction.
+An anisotropic model allows spatial dependence to vary with direction.
 
 ### Example
 
@@ -1021,7 +954,7 @@ Suppose an anisotropic exponential correlation model uses a major-axis scale of 
 
 Consider two pairs, each physically 10 units apart.
 
-#### Pair 1: along the major axis
+#### Along the major axis
 
 Scaled separation:
 
@@ -1044,7 +977,7 @@ e^{-0.333}
 \approx0.717.
 $$
 
-#### Pair 2: along the minor axis
+#### Along the minor axis
 
 Scaled separation:
 
@@ -1061,7 +994,7 @@ e^{-1}
 \approx0.368.
 $$
 
-So the same physical distance can imply very different correlation depending on direction.
+Thus, the same physical distance can imply very different correlations depending on direction.
 
 ### How anisotropy is diagnosed
 
@@ -1070,56 +1003,41 @@ A common diagnostic is to calculate **directional empirical variograms**.
 For example, estimate one variogram using pairs approximately east-west and another using pairs approximately north-south.
 
 If the ranges or sills differ systematically by direction, anisotropy may be present.
+## Sampling design controls what the variogram can learn
 
----
+The empirical variogram can only reflect distances and directions represented by the sampled point pairs.
 
-## 14. Sampling design controls what the variogram can learn
+This has important practical consequences.
 
-The empirical variogram only contains information about distances and directions that actually occur among the sampled points.
-
-This has major practical consequences.
-
-### 14.1 Estimating the nugget requires short-distance pairs
+### Estimating the nugget requires short-distance pairs
 
 Suppose the closest two samples are 500 m apart.
 
-Then the data contain almost no direct evidence about what happens between 0 and 500 m.
+Then the data contain little direct evidence about spatial behavior below 500 m.
 
-A fitted nugget or short-range behavior will therefore be weakly constrained.
+The nugget and short-range behavior will therefore be weakly constrained by the data.
 
 Dense local sampling is valuable when estimating near-origin behavior.
-
----
-
-### 14.2 Estimating long-range structure requires broad spatial coverage
+### Estimating long-range structure requires broad spatial coverage
 
 If every sample lies inside a 1 km area, the data cannot strongly identify dependence at 10 km.
 
 To estimate long-range structure, the study design must contain long-distance pairs.
-
----
-
-### 14.3 Clustered sampling creates unequal information
+### Clustered sampling creates unequal information
 
 Imagine 80 samples in one small corner and only 10 samples across the rest of the study area.
 
-The empirical variogram may then be dominated by pair distances created inside the dense cluster.
+The empirical variogram may then be dominated by pairs from the dense cluster.
 
-This does not automatically invalidate the analysis, but it changes what the empirical variogram represents most strongly.
+This does not invalidate the analysis, but it changes which parts of the sampling design contribute most strongly to the empirical variogram.
+### Large holes increase prediction uncertainty
 
----
-
-### 14.4 Large holes increase prediction uncertainty
-
-If an unsampled region lies far from every observation, kriging must rely more heavily on the assumed covariance/variogram model and the estimated trend.
+If an unsampled region lies far from every observation, kriging relies more heavily on the fitted covariance or variogram model and on the estimated trend.
 
 Predictions in that region are usually less certain.
 
 ![Sampling designs](../../assets/spatial_statistics/geostatistics/07_sampling_design.png)
-
----
-
-## 15. Trend models and universal kriging
+## Trend models and universal kriging
 
 If the mean changes with location or covariates, write
 
@@ -1188,19 +1106,16 @@ $$
 0.7.
 $$
 
-The variogram should then describe dependence in these residual deviations rather than trying to reproduce the broad trend itself.
+The variogram should then describe dependence among these residuals rather than reproduce the broad trend itself.
 
-Methods that combine a spatially varying mean with spatial residual dependence include:
+Methods that combine a spatially varying mean with spatially dependent residuals include:
 
 - universal kriging;
 - regression kriging;
 - spatial regression models.
+## Why the variogram matters for kriging
 
----
-
-## 16. Why the variogram matters for kriging
-
-Kriging predicts an unsampled location using a weighted combination of nearby observations.
+Kriging predicts at an unsampled location using a weighted combination of observed values.
 
 Conceptually,
 
@@ -1216,21 +1131,18 @@ where
 - $\lambda_i$ are kriging weights;
 - $Z(s_i)$ are observed values.
 
-The weights are **not chosen only from distance**.
+The weights are not determined by distance alone.
 
-They depend on the entire spatial dependence structure.
+They depend on the full spatial dependence structure.
 
-Two observations that are both close to the prediction point but almost duplicates of one another should not receive the same combined influence as two equally close observations providing independent spatial information.
+Two observations that are both close to the prediction point but highly redundant should not have the same combined influence as two equally close observations that provide less redundant information.
 
 The covariance or variogram model is what allows kriging to account for this redundancy.
 
-That is why variogram modeling is not merely curve fitting: it defines the dependence structure used to calculate prediction weights and uncertainty.
+Variogram modeling is therefore more than curve fitting: it defines the dependence structure used to calculate prediction weights and uncertainty.
+## Interpreting a fitted empirical variogram
 
----
-
-## 17. Interpreting a fitted empirical variogram
-
-When looking at a fitted variogram, ask the following questions.
+When interpreting a fitted variogram, consider the following questions.
 
 ### Near the origin
 
@@ -1247,7 +1159,7 @@ Possible explanations include:
 
 Does semivariance increase smoothly?
 
-This is where the spatial range or scale is often most visible.
+This part of the curve often provides the clearest information about spatial range or scale.
 
 ### At long distances
 
@@ -1261,16 +1173,13 @@ If it continues rising, possible explanations include:
 - nonstationarity;
 - insufficient spatial extent to observe the sill;
 - a process whose model does not have a sill in the observed range.
+## Diagnostics: what should be checked before trusting the model?
 
----
-
-## 18. Diagnostics: what should be checked before trusting the model?
-
-A geostatistical workflow should not consist only of "calculate variogram, fit curve, krige."
+A geostatistical workflow should involve more than calculating a variogram, fitting a curve, and kriging.
 
 At minimum, inspect the following.
 
-### 18.1 Map the raw observations
+### Map the raw observations
 
 Look for:
 
@@ -1282,7 +1191,7 @@ Look for:
 
 A variogram plot alone cannot show where the problematic observations are located.
 
-### 18.2 Examine possible trend
+### Examine possible trend
 
 Plot the response against:
 
@@ -1292,17 +1201,17 @@ Plot the response against:
 
 If a trend is present, model it before interpreting residual dependence.
 
-### 18.3 Inspect directional dependence
+### Inspect directional dependence
 
 Compare directional variograms.
 
 A single omnidirectional variogram can hide anisotropy.
 
-### 18.4 Check pair counts
+### Check pair counts
 
-A dramatic point based on 4 pairs should not automatically be interpreted as strongly as a point based on 400 pairs.
+A striking point based on 4 pairs should not be given the same weight in interpretation as one based on 400 pairs.
 
-### 18.5 Investigate outliers
+### Investigate outliers
 
 Because the empirical semivariogram uses squared differences,
 
@@ -1312,17 +1221,17 @@ $$
 
 a single extreme observation can affect many pairs and inflate several lag bins.
 
-### 18.6 Check sensitivity to binning
+### Check sensitivity to binning
 
 Changing lag width changes which pairs are grouped together.
 
-If conclusions change drastically under reasonable bin choices, the empirical structure may be weak.
+If conclusions change substantially under reasonable bin choices, the empirical spatial structure may be weak.
 
-### 18.7 Check sensitivity to the model family
+### Check sensitivity to the model family
 
 If exponential, Gaussian, and spherical models produce very different predictions, model choice matters and should be reported.
 
-### 18.8 Validate predictions
+### Validate predictions
 
 Use cross-validation or held-out observations to examine:
 
@@ -1330,40 +1239,37 @@ Use cross-validation or held-out observations to examine:
 - bias;
 - standardized errors;
 - whether uncertainty estimates are realistic.
+## Common mistakes
 
----
-
-## 19. Common mistakes
-
-### Mistake 1: treating the empirical variogram as the true variogram
+### Treating the empirical variogram as the true variogram
 
 The empirical variogram is a noisy estimate from finite data.
 
 It should not be over-interpreted point by point.
 
-### Mistake 2: fitting the variogram before removing a strong trend
+### Fitting the variogram before removing a strong trend
 
-This can make the covariance structure absorb deterministic large-scale change.
+This can cause the fitted dependence structure to absorb deterministic large-scale change.
 
-### Mistake 3: calling the exponential parameter $a$ the exact range
+### Calling the exponential parameter $a$ the exact range
 
 For the exponential model, $a$ is a scale parameter. A commonly used practical range is approximately $3a$.
 
-### Mistake 4: ignoring anisotropy
+### Ignoring anisotropy
 
 A good omnidirectional fit can still hide strong directional differences.
 
-### Mistake 5: ignoring the sampling design
+### Ignoring the sampling design
 
-The variogram cannot estimate distances that were never sampled well.
+The variogram cannot reliably characterize distances that are poorly represented by the sampling design.
 
-### Mistake 6: assuming a smooth-looking curve must be mathematically valid
+### Assuming a smooth-looking curve must be mathematically valid
 
-A covariance or variogram function must satisfy validity conditions so that it corresponds to a legitimate random field.
+A covariance or variogram function must satisfy mathematical validity conditions so that it corresponds to a legitimate random field.
 
 Not every visually appealing curve is allowed.
 
-### Mistake 7: confusing measurement error with process variation
+### Confusing measurement error with process variation
 
 A nugget may contain measurement error, microscale spatial variation, or both.
 
@@ -1371,10 +1277,7 @@ That distinction affects whether the goal is to predict:
 
 - the latent underlying process; or
 - a future noisy observation.
-
----
-
-## 20. A compact worked example from data to interpretation
+## A compact worked example from data to interpretation
 
 Suppose an empirical variogram suggests:
 
@@ -1382,7 +1285,7 @@ Suppose an empirical variogram suggests:
 - increasing semivariance until roughly 40-60 m;
 - a plateau near 3.0.
 
-A reasonable first interpretation might be:
+A reasonable initial interpretation is:
 
 #### Nugget
 
@@ -1390,7 +1293,7 @@ $$
 c_0\approx0.4.
 $$
 
-There is some unresolved or measurement-scale variation.
+This suggests some unresolved microscale variation, measurement error, or both.
 
 #### Sill
 
@@ -1406,7 +1309,7 @@ $$
 c\approx3.0-0.4=2.6.
 $$
 
-So about 2.6 variance units are associated with spatially structured variation.
+About 2.6 variance units are therefore associated with spatially structured variation.
 
 #### Practical range
 
@@ -1432,11 +1335,8 @@ $$
 2.6\left(1-e^{-\|h\|/20}\right).
 $$
 
-This is not yet a final model. It is an interpretable starting point that should be checked against the empirical variogram, directional behavior, trend, and predictive validation.
-
----
-
-## 21. Concept map
+This is not a final model. It is an interpretable starting point that should be checked against the empirical variogram, directional behavior, trend, and predictive validation.
+## Concept map
 
 The logic of introductory geostatistics is:
 
@@ -1502,13 +1402,10 @@ $$
 
 The essential idea is simple:
 
-> **Spatial dependence tells us how much information one location provides about another.**
+> Spatial dependence tells us how much information one location provides about another.
 
-The semivariogram measures that dependence through squared differences, while the fitted variogram model summarizes the dependence in a mathematically usable form.
-
----
-
-## 22. Questions students should be able to answer
+The semivariogram measures that dependence through squared differences, while a fitted variogram model summarizes it in a form that can be used in spatial prediction.
+## Questions students should be able to answer
 
 1. Why can a large-scale trend create an apparently long-range variogram?
 2. What does a small semivariogram value mean physically?
@@ -1520,9 +1417,3 @@ The semivariogram measures that dependence through squared differences, while th
 8. Why are short-distance sample pairs important for estimating the nugget?
 9. Why are empirical variogram points not ordinary independent regression observations?
 10. Why does kriging need the complete covariance or variogram structure rather than only the distance to the prediction point?
-
-## Practice
-
-Use the companion [geostatistics exercises](../../exercises/spatial_statistics/geostatistics.md).
-
----
