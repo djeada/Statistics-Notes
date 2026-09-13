@@ -1,5 +1,9 @@
 # Autocovariance functions and coefficients
 
+Autocovariance measures how a time series varies jointly with lagged versions of itself. Lag 0 is the variance, while nonzero lags show the direction and scale of linear dependence between observations separated in time, expressed in the squared units of the original series.
+
+For a weakly stationary process, autocovariance depends only on the lag rather than the absolute time. Normalizing it by the variance produces the unit-free autocorrelation function, while sample estimates require an explicit denominator convention and become noisier as fewer observation pairs remain at larger lags.
+
 ## Worked calculation: a lagged covariance
 
 For $x=(1,2,4,3)$, the mean is $\bar x=2.5$, so the centered values are
