@@ -227,19 +227,29 @@ $$
 
 III. **Limit Comparison Test**:
 
-The limit comparison test is useful when the terms of the series are not directly comparable to a known series but have similar behavior as $n \to \infty$. If the limit of the ratio between the terms of two series is a finite, positive constant, both series either converge or diverge together.
+The limit comparison test is useful when the terms of the series are not directly comparable to a known series but have similar behavior as $n \to \infty$. If the limit of the ratio between the terms of two positive-term series is a finite, positive constant, both series either converge or diverge together.
 
 $$
 \lim_{n \to \infty} \frac{a_n}{b_n} = c \quad \text{where} \quad 0 < c < \infty.
 $$
 
-**Example**: Consider the series $\sum_{n=1}^{\infty} \frac{n^2 + 1}{2n^2 + 3}$. Compare it to $\sum_{n=1}^{\infty} \frac{1}{n^2}$. The limit of the ratio of terms is:
+**Example**: Consider the series
 
 $$
-\lim_{n \to \infty} \frac{\frac{n^2 + 1}{2n^2 + 3}}{\frac{1}{n^2}} = \frac{1}{2}.
+\sum_{n=1}^{\infty} \frac{n^2 + 1}{n^4 + 3}.
 $$
 
-Since the comparison series $\sum \frac{1}{n^2}$ converges, the original series also converges.
+Compare it to the convergent p-series $\sum_{n=1}^{\infty} \frac{1}{n^2}$. The ratio of terms satisfies
+
+$$
+\lim_{n \to \infty}
+\frac{\frac{n^2 + 1}{n^4 + 3}}{\frac{1}{n^2}}
+=
+\lim_{n \to \infty}\frac{n^4+n^2}{n^4+3}
+=1.
+$$
+
+Because the limit is finite and positive and $\sum 1/n^2$ converges, the original series also converges by the limit comparison test.
 
 IV. **Alternating Series Test (Leibniz's Test)**:
 
@@ -259,13 +269,27 @@ $$
 - If $L > 1$, the series diverges.
 - If $L = 1$, the test is inconclusive.
 
-**Example**: For the series $\sum_{n=1}^{\infty} \frac{n!}{n^n}$, applying the ratio test gives:
+**Example**: For the series $\sum_{n=1}^{\infty} \frac{n!}{n^n}$,
 
 $$
-L = \lim_{n \to \infty} \left| \frac{(n+1)!/(n+1)^{n+1}}{n!/n^n} \right| = \lim_{n \to \infty} \frac{(n+1)}{n+1} \cdot \left(\frac{n}{n+1}\right)^n = 0.
+\frac{a_{n+1}}{a_n}
+=
+\frac{(n+1)!}{(n+1)^{n+1}}\frac{n^n}{n!}
+=
+\left(\frac{n}{n+1}\right)^n.
 $$
 
-Since $L = 0$, the series converges.
+Therefore,
+
+$$
+L
+=
+\lim_{n \to \infty}\left(\frac{n}{n+1}\right)^n
+=
+e^{-1}<1.
+$$
+
+Hence the series converges by the ratio test.
 
 VI. **Root Test**:
 
@@ -313,7 +337,7 @@ $$
 Z_t = \sum_{k=0}^{\infty} (-\beta)^k X_{t-k}
 $$
 
-This infinite sum can be shown to **converge in the mean-square sense**, provided certain conditions on $\beta$ are satisfied. Specifically, we need to ensure that the sum of these terms remains bounded as $n \to \infty$, which ensures that the approximation $\sum_{k=0}^{n} (-\beta)^k X_{t-k}$ becomes increasingly close to $Z_t$.
+This infinite sum converges in the mean-square sense when the geometric coefficients decay, which for this MA(1) representation requires $|\beta| < 1$.
 
 #### Autocovariance Function of the MA(1) Process
 
@@ -350,41 +374,47 @@ $$
 
 This expression represents the expected value of the squared difference between the partial sum and the true value of $Z_t$, and we aim to show that this difference diminishes as more terms are added to the sum.
 
-Expanding this expression:
+For the MA(1) recursion, the truncation error can be written directly. Iterating
 
 $$
-\mathbb{E}\left[\left(\sum_{k=0}^{n} (-\beta)^k X_{t-k}\right)^2 - 2\mathbb{E}\left(\sum_{k=0}^{n} (-\beta)^k X_{t-k} Z_t \right) + \mathbb{E}[Z_t^2]\right]
+Z_t = X_t - \beta Z_{t-1}
 $$
 
-Breaking this down into individual terms:
-- The first term involves the expected value of the squared partial sum: $\mathbb{E}\left[\sum_{k=0}^{n} \beta^{2k} X_{t-k}^2\right]$.
-- The second term represents the cross terms between the partial sum and $Z_t$.
-- The third term is the variance of $Z_t$, which is $\sigma_Z^2$.
+gives
 
-To achieve mean-square convergence, the total expression must approach 0 as $n \to \infty$.
+$$
+Z_t = \sum_{k=0}^{n}(-\beta)^k X_{t-k} + (-\beta)^{n+1} Z_{t-n-1}.
+$$
+
+Therefore the mean-square truncation error is
+
+$$
+\mathbb{E}\left[\left((-\beta)^{n+1}Z_{t-n-1}\right)^2\right]
+= \beta^{2(n+1)}\sigma_Z^2.
+$$
 
 #### Condition for Convergence
 
-For the series to converge in the mean-square sense, we require that the individual terms involving powers of $\beta$ decay sufficiently fast. Specifically, we need:
+For the series to converge in the mean-square sense, we require
 
 $$
-\sigma_Z^2 \beta^{2(n+2)} \to 0 \quad \text{as} \quad n \to \infty
+\beta^{2(n+1)}\sigma_Z^2 \to 0 \quad \text{as} \quad n \to \infty,
 $$
 
-This will only occur if:
+which occurs exactly when
 
 $$
-|\beta| < 1
+|\beta| < 1.
 $$
 
-When $|\beta| < 1$, the powers of $\beta$ diminish as $n$ increases, ensuring that the sum remains bounded and that the partial sums converge to $Z_t$.
+When $|\beta| < 1$, the powers of $\beta$ diminish as $n$ increases, and the partial sums converge to $Z_t$ in mean square.
 
 #### Invertibility Condition
 
-The condition $|\beta| < 1$ is also known as the **invertibility condition** for the MA(1) process. This condition guarantees that the moving average process can be expressed as an infinite autoregressive (AR) process. In terms of the polynomial $\beta(B) = 1 + \beta B$ (where $B$ is the backshift operator), the invertibility condition states that the root of the polynomial must lie **outside the unit circle** in the complex plane, meaning:
+The condition $|\beta| < 1$ is the **invertibility condition** for the MA(1) process. In terms of the polynomial $\beta(B) = 1 + \beta B$ (where $B$ is the backshift operator), the zero of the polynomial is $B=-1/\beta$. Requiring that zero to lie **outside the unit circle** is equivalent to
 
 $$
-|\beta| < 1
+|\beta| < 1.
 $$
 
-Thus, the invertibility condition ensures that the MA(1) process can be uniquely represented as an **AR(∞)** process, which is crucial for the identification and estimation of time series models.
+Thus, invertibility ensures that the innovations can be recovered uniquely as a stable infinite series in current and past observations.
