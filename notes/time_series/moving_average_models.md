@@ -379,9 +379,3 @@ Keep these three objects distinct:
 | exponential smoother | observed values through a recursive level update |
 
 A rolling mean or EMA can be calculated directly from the data. An MA model requires inference about the latent innovation sequence.
-
-### Visual companions
-
-The shock-duration and invertibility figures above connect the two central properties of MA models: finite shock effects explain the ACF cutoff, while invertibility makes the parameterization identifiable.
-
-The AR/MA identification figure at the start of the chapter places this cutoff beside the contrasting autoregressive pattern, where the ACF typically tails off rather than ending after a fixed lag.
