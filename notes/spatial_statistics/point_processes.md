@@ -1,8 +1,8 @@
-# Point Processes: A Student Guide to Spatial Event Patterns
+# Point Processes
 
-A spatial point process is used when the observed data are **event locations themselves**.
+A spatial point process is used when the observed data are the event locations themselves.
 
-This is different from geostatistics.
+This differs from geostatistics.
 
 In geostatistics, locations are usually fixed and a value is observed at each location:
 
@@ -18,7 +18,7 @@ $$
 \{s_1,s_2,\ldots,s_n\}.
 $$
 
-Both the **number of events** and their **positions** may be random.
+Both the number of events and their positions may be random.
 
 Examples include:
 
@@ -30,18 +30,6 @@ Examples include:
 - crime incidents;
 - lightning strikes;
 - animal sightings.
-
-The companion script [`point_process_visualizations.py`](../../scripts/spatial_statistics/point_process_visualizations.py) creates the figures used throughout this chapter.
-
-Run it with:
-
-```bash
-python scripts/spatial_statistics/point_process_visualizations.py
-```
-
-The script creates a `assets/spatial_statistics/point_processes/` folder automatically.
-
----
 
 ## Learning objectives
 
@@ -61,9 +49,7 @@ After working through this chapter, you should be able to:
 12. distinguish clustering caused by intensity from clustering caused by interaction;
 13. describe clustered, inhibitory, and marked point-process models.
 
----
-
-## 1. What is the random object?
+## What is the random object?
 
 Suppose events occur inside a study region $W$.
 
@@ -87,15 +73,15 @@ $$
 \{(1.2,3.0),(2.5,7.1),(4.8,4.4),(6.3,8.2),(8.1,2.7)\}.
 $$
 
-Unlike ordinary regression, there is no fixed set of sites at which the response is measured.
+Unlike ordinary regression, there is no fixed set of sites where a response is measured.
 
-The locations themselves are the outcome.
+The event locations themselves are the outcome.
 
 ![A point pattern inside an observation window](../../assets/spatial_statistics/point_processes/01_point_pattern_basics.png)
 
 ### Why the observation window matters
 
-A point pattern has meaning only relative to a region in which events could have been observed.
+A point pattern has meaning only relative to the region in which events could have been observed.
 
 That region is the **observation window** $W$.
 
@@ -108,9 +94,7 @@ Always record:
 - whether all parts of $W$ were equally observable;
 - whether the window boundaries have scientific meaning.
 
----
-
-## 2. The counting measure
+## The counting measure
 
 For any region
 
@@ -121,12 +105,11 @@ $$
 define
 
 $$
-N(B)
-=
+N(B) =
 \text{number of observed events inside }B.
 $$
 
-The quantity $N(B)$ is random because a different realization of the point process could contain a different number of events in $B$.
+The quantity $N(B)$ is random because another realization of the process could contain a different number of events in $B$.
 
 ### Numerical example
 
@@ -170,27 +153,22 @@ or another count.
 
 This is why a point process can be viewed as a **random counting measure**.
 
----
+## First-order structure: intensity
 
-## 3. First-order structure: intensity
-
-The **intensity** $\lambda(s)$ describes expected event density around location $s$.
+The **intensity** $\lambda(s)$ describes the expected event density around location $s$.
 
 The fundamental relationship is
 
 $$
-E[N(B)]
-=
+E[N(B)] =
 \int_B\lambda(s)\,ds.
 $$
 
-This equation answers the question:
+This relationship answers the question:
 
 > How many events should we expect inside region $B$?
 
----
-
-## 4. Homogeneous intensity
+## Homogeneous intensity
 
 For a homogeneous process,
 
@@ -203,8 +181,7 @@ is constant across the window.
 Then
 
 $$
-E[N(B)]
-=
+E[N(B)] =
 \lambda|B|.
 $$
 
@@ -227,11 +204,7 @@ $$
 Then
 
 $$
-E[N(B)]
-=
-0.2(12)
-=
-2.4.
+E[N(B)] = 0.2(12) = 2.4.
 $$
 
 Therefore
@@ -244,11 +217,11 @@ $$
 
 ### What does 2.4 mean?
 
-It does **not** mean that 2.4 events will literally be observed.
+It does not mean that 2.4 events will literally be observed.
 
 Counts must be integers.
 
-It means that across many hypothetical repetitions of the process, the average number of events in regions of this size would approach 2.4.
+It means that across many hypothetical repetitions, the average count in regions of this size would approach 2.4.
 
 For example, observed counts across repeated regions might be
 
@@ -257,17 +230,12 @@ $$
 $$
 
 while their long-run average is about 2.4.
-
----
-
-## 5. Estimating a homogeneous intensity
+## Estimating a homogeneous intensity
 
 If $n$ events are observed in a window of area $|W|$, the natural estimator is
 
 $$
-\hat\lambda
-=
-\frac{n}{|W|}.
+\hat\lambda = \frac{n}{|W|}.
 $$
 
 ### Example
@@ -293,11 +261,7 @@ $$
 Therefore
 
 $$
-\hat\lambda
-=
-\frac{35}{20}
-=
-1.75.
+\hat\lambda = \frac{35}{20} = 1.75.
 $$
 
 So the estimated intensity is
@@ -308,13 +272,11 @@ $$
 }.
 $$
 
-This is only a sensible summary if a constant intensity is scientifically plausible.
+This is a sensible summary only when constant intensity is scientifically plausible.
 
----
+## Inhomogeneous intensity
 
-## 6. Inhomogeneous intensity
-
-Intensity does not need to be constant.
+Intensity need not be constant.
 
 An inhomogeneous point process has
 
@@ -327,14 +289,10 @@ that changes with location.
 For example,
 
 $$
-\lambda(x,y)
-=
-\exp(
-\beta_0+\beta_1x+\beta_2y
-)
+\lambda(x,y) = \exp( \beta_0+\beta_1x+\beta_2y )
 $$
 
-can represent a smoothly varying event density.
+can represent a smoothly varying spatial intensity.
 
 Intensity can also depend on covariates such as:
 
@@ -351,9 +309,7 @@ Intensity can also depend on covariates such as:
 Suppose
 
 $$
-\lambda(x)
-=
-\exp(-1+0.15x).
+\lambda(x) = \exp(-1+0.15x).
 $$
 
 At
@@ -365,18 +321,7 @@ $$
 the intensity is
 
 $$
-\lambda(2)
-=
-\exp(-1+0.15(2))
-$$
-
-$$
-=
-\exp(-0.7)
-$$
-
-$$
-\approx0.497.
+\lambda(2) = \exp(-1+0.15(2)) = \exp(-0.7) \approx0.497.
 $$
 
 At
@@ -386,33 +331,20 @@ x=8,
 $$
 
 $$
-\lambda(8)
-=
-\exp(-1+0.15(8))
+\lambda(8) = \exp(-1+0.15(8)) = \exp(0.2) \approx1.221.
 $$
 
-$$
-=
-\exp(0.2)
-$$
+So the expected local event density is much higher near $x=8$ than near $x=2$.
 
-$$
-\approx1.221.
-$$
+## Why intensity must be separated from interaction
 
-So the expected local event density is much higher near $x=8$.
+This distinction is fundamental in point-process analysis.
 
----
+A map can appear clustered for two very different reasons.
 
-## 7. Why intensity must be separated from interaction
+### varying first-order intensity
 
-This is one of the most important ideas in point-process analysis.
-
-A map can look clustered for two very different reasons.
-
-### Mechanism 1: varying first-order intensity
-
-Events are independently located conditional on a high intensity in some places and low intensity elsewhere.
+Events may be conditionally independent even when intensity is high in some places and low in others.
 
 Example:
 
@@ -421,9 +353,9 @@ Example:
 
 The stores may be conditionally independent once population density and commercial opportunity are accounted for.
 
-### Mechanism 2: event interaction
+### event interaction
 
-The occurrence of one event changes the probability of another nearby event.
+The occurrence of one event changes the probability of another event occurring nearby.
 
 Examples:
 
@@ -432,37 +364,35 @@ Examples:
 - territorial animals avoiding one another;
 - plants competing for local resources.
 
-These are different scientific mechanisms.
+These mechanisms have different scientific interpretations.
 
 ![Same visual clustering, different mechanisms](../../assets/spatial_statistics/point_processes/02_intensity_vs_interaction.png)
 
 #### Main lesson
 
-A clustered-looking map does not by itself prove attraction among events.
+A clustered-looking map does not by itself show attraction among events.
 
-First model or account for $\lambda(s)$.
+First model or otherwise account for $\lambda(s)$.
 
 This is the point-process analogue of separating a spatial mean trend from residual dependence in geostatistics.
 
----
+## The homogeneous Poisson process
 
-## 8. The homogeneous Poisson process
+The homogeneous Poisson point process is the standard reference model for **complete spatial randomness (CSR)** under homogeneous intensity.
 
-The homogeneous Poisson point process is the standard reference model for **complete spatial randomness (CSR)** in a homogeneous window.
+It has three key properties.
 
-It has three important properties.
-
-### Property 1: Poisson counts
+### Poisson counts
 
 For a region $B$,
 
 $$
 N(B)
 \sim
-\operatorname{Poisson}(\lambda|B|).
+\mathrm{Poisson}(\lambda|B|).
 $$
 
-### Property 2: independent disjoint counts
+### independent disjoint counts
 
 If
 
@@ -484,7 +414,7 @@ $$
 
 are independent.
 
-### Property 3: uniform locations conditional on the count
+### uniform locations conditional on the count
 
 Conditional on
 
@@ -494,23 +424,18 @@ $$
 
 the $n$ event locations are independent and uniformly distributed over $W$.
 
----
-
-## 9. Poisson count calculation
+## Poisson count calculation
 
 For
 
 $$
-N(B)\sim\operatorname{Poisson}(\mu),
+N(B)\sim\mathrm{Poisson}(\mu),
 $$
 
 the probability of exactly $k$ events is
 
 $$
-P[N(B)=k]
-=
-e^{-\mu}
-\frac{\mu^k}{k!}.
+P[N(B)=k] = e^{-\mu} \frac{\mu^k}{k!}.
 $$
 
 For a homogeneous Poisson process,
@@ -542,10 +467,7 @@ $$
 What is the probability of observing exactly 3 events?
 
 $$
-P[N(B)=3]
-=
-e^{-2.4}
-\frac{2.4^3}{3!}.
+P[N(B)=3] = e^{-2.4} \frac{2.4^3}{3!}.
 $$
 
 Now
@@ -563,10 +485,7 @@ $$
 Therefore
 
 $$
-P[N(B)=3]
-=
-e^{-2.4}
-\frac{13.824}{6}.
+P[N(B)=3] = e^{-2.4} \frac{13.824}{6}.
 $$
 
 Because
@@ -591,9 +510,7 @@ $$
 
 So under this model there is about a 20.9% chance of exactly 3 events in the region.
 
----
-
-## 10. Unconditional Poisson simulation versus fixed-count simulation
+## Unconditional Poisson simulation versus fixed-count simulation
 
 This distinction is subtle but important.
 
@@ -604,12 +521,12 @@ First draw
 $$
 N(W)
 \sim
-\operatorname{Poisson}(\lambda|W|).
+\mathrm{Poisson}(\lambda|W|).
 $$
 
 Then, conditional on that random count, draw all event locations independently and uniformly over $W$.
 
-Both the count and positions are random.
+Both the total count and the event positions are random.
 
 ### Fixed-count uniform simulation
 
@@ -621,7 +538,7 @@ $$
 
 and then draw exactly 50 independent uniform locations.
 
-That simulation has the same location distribution as a homogeneous Poisson process **conditional on**
+That simulation has the same distribution of locations as a homogeneous Poisson process **conditional on**
 
 $$
 N(W)=50.
@@ -635,56 +552,41 @@ But the count is no longer random.
 
 If the observed count is treated as fixed by the study design, conditioning on $n$ can be appropriate.
 
-If variability in the total count is scientifically relevant, an unconditional Poisson simulation is more faithful to the complete model.
+If variability in the total count is scientifically relevant, an unconditional Poisson simulation better represents the full model.
 
----
+## Nearest-neighbor distance
 
-## 11. Nearest-neighbor distance
-
-For each event, calculate the distance to its nearest *other* event.
+For each event, calculate the distance to its nearest other event.
 
 For event $i$,
 
 $$
-d_i
-=
-\min_{j\neq i}
-\|s_i-s_j\|.
+d_i = \min_{j\neq i} \|s_i-s_j\|.
 $$
 
-Nearest-neighbor distances describe short-range spacing.
+Nearest-neighbor distances summarize short-range spacing.
 
 Small nearest-neighbor distances suggest that events often have close companions.
 
 Large nearest-neighbor distances suggest regular spacing or inhibition.
 
----
-
-## 12. The theoretical nearest-neighbor distribution under CSR
+## The theoretical nearest-neighbor distribution under CSR
 
 For a homogeneous planar Poisson process on an unbounded region,
 
 $$
-G(r)
-=
-P(
-\text{nearest-neighbor distance}\le r
-)
+G(r) = P(\text{nearest-neighbor distance}\le r )
 $$
 
 is
 
 $$
-\boxed{
-G(r)
-=
-1-e^{-\lambda\pi r^2}
-}.
+\boxed{ G(r) = 1-e^{-\lambda\pi r^2} }.
 $$
 
 ### Why this formula appears
 
-For the nearest neighbor to be farther than $r$, there must be no other event in a disk of radius $r$ around the typical event.
+For the nearest neighbor to be farther than $r$, there must be no other event within a disk of radius $r$ around a typical event.
 
 The area of that disk is
 
@@ -707,22 +609,16 @@ $$
 Therefore
 
 $$
-P(D>r)
-=
-e^{-\lambda\pi r^2}.
+P(D>r) = e^{-\lambda\pi r^2}.
 $$
 
 Hence
 
 $$
-P(D\le r)
-=
-1-e^{-\lambda\pi r^2}.
+P(D\le r) = 1-e^{-\lambda\pi r^2}.
 $$
 
----
-
-## 13. Numerical nearest-neighbor example
+## Numerical nearest-neighbor example
 
 Suppose
 
@@ -743,9 +639,7 @@ units?
 Use
 
 $$
-G(2)
-=
-1-e^{-0.08\pi(2^2)}.
+G(2) = 1-e^{-0.08\pi(2^2)}.
 $$
 
 Because
@@ -755,25 +649,19 @@ $$
 $$
 
 $$
-0.08\pi(4)
-=
-0.32\pi
-\approx1.0053.
+0.08\pi(4) = 0.32\pi \approx1.0053.
 $$
 
 Therefore
 
 $$
-G(2)
-=
-1-e^{-1.0053}.
+G(2) = 1-e^{-1.0053}.
 $$
 
 Since
 
 $$
-e^{-1.0053}
-\approx0.366,
+e^{-1.0053} \approx0.366,
 $$
 
 we get
@@ -790,9 +678,7 @@ Interpretation:
 
 ![Nearest-neighbor distribution](../../assets/spatial_statistics/point_processes/04_nearest_neighbor_G.png)
 
----
-
-## 14. Boundary effects in nearest-neighbor calculations
+## Boundary effects in nearest-neighbor calculations
 
 The theoretical formula
 
@@ -802,13 +688,13 @@ $$
 
 assumes an unbounded plane.
 
-Real studies have finite windows.
+Real studies use finite observation windows.
 
 An event near the boundary has part of its surrounding neighborhood outside the observed region.
 
-A potential nearest neighbor just outside the window would be unobserved.
+A potential nearest neighbor just outside the window would not be observed.
 
-Therefore naive nearest-neighbor summaries can be distorted near edges.
+Naive nearest-neighbor summaries can therefore be distorted near boundaries.
 
 Possible responses include:
 
@@ -817,17 +703,14 @@ Possible responses include:
 - model-based edge corrections;
 - restricting interpretation to short distances relative to the window.
 
----
+## Ripley's K function
 
-## 15. Ripley's K function
-
-Ripley's $K$ function summarizes spatial dependence over a range of distances.
+Ripley's $K$ function summarizes point-pattern structure over a range of distances.
 
 For a stationary process with intensity $\lambda$,
 
 $$
-K(r)
-=
+K(r) =
 \frac{1}{\lambda}
 E[
 \text{number of additional events within distance }r
@@ -835,13 +718,11 @@ E[
 ].
 $$
 
-This definition asks:
+This definition addresses the question:
 
 > After adjusting for overall event density, how many neighboring events are found within distance $r$ of a typical event?
 
----
-
-## 16. CSR benchmark for Ripley's K
+## CSR benchmark for Ripley's K
 
 Under homogeneous complete spatial randomness in two dimensions,
 
@@ -851,7 +732,7 @@ K_{\mathrm{CSR}}(r)=\pi r^2
 }.
 $$
 
-This is exactly the area of a radius-$r$ circle.
+This equals the area of a circle of radius $r$.
 
 Why?
 
@@ -864,14 +745,11 @@ $$
 Dividing by $\lambda$ gives
 
 $$
-K(r)
-=
+K(r) =
 \pi r^2.
 $$
 
----
-
-## 17. Interpreting K
+## Interpreting K
 
 Compare an observed or estimated $\hat K(r)$ with
 
@@ -887,7 +765,7 @@ $$
 
 suggests more nearby event pairs than expected under CSR.
 
-This is consistent with clustering at scale $r$.
+This is consistent with clustering over distances up to $r$.
 
 Conversely,
 
@@ -897,9 +775,9 @@ $$
 
 suggests fewer nearby pairs than expected.
 
-This is consistent with inhibition or regularity.
+This is consistent with inhibition or regular spacing over distances up to $r$.
 
-But the interpretation is **scale dependent**.
+The interpretation is **scale dependent**.
 
 A process might be:
 
@@ -907,17 +785,14 @@ A process might be:
 - approximately CSR around 3 m;
 - clustered around 10 m.
 
-That is why $K$ is examined as a curve rather than at only one distance.
+For this reason, $K$ is examined as a curve rather than at a single distance.
 
----
+## A simple empirical K calculation
 
-## 18. A simple empirical K calculation
-
-Ignoring edge correction for the moment, a common estimator in a window of area $A$ is
+Ignoring edge correction for the moment, a common estimator for a window of area $A$ is
 
 $$
-\hat K(r)
-=
+\hat K(r) =
 \frac{A}{n(n-1)}
 \sum_{i=1}^n
 \sum_{j\neq i}
@@ -974,8 +849,7 @@ ordered pairs.
 Therefore
 
 $$
-\hat K(3)
-=
+\hat K(3) =
 \frac{100}{5(4)}(6).
 $$
 
@@ -986,14 +860,8 @@ $$
 $$
 
 $$
-\hat K(3)
-=
-\frac{100}{20}(6)
-$$
-
-$$
-=
-5(6)
+\hat K(3) =
+\frac{100}{20}(6) = 5(6)
 $$
 
 $$
@@ -1005,18 +873,7 @@ $$
 Under CSR,
 
 $$
-K_{\mathrm{CSR}}(3)
-=
-\pi(3^2)
-$$
-
-$$
-=
-9\pi
-$$
-
-$$
-\approx28.27.
+K_{\mathrm{CSR}}(3) = \pi(3^2) = 9\pi \approx28.27.
 $$
 
 Thus
@@ -1025,13 +882,10 @@ $$
 30>28.27.
 $$
 
-This small difference points toward slightly more close pairs than CSR at that scale, but it is far too small a calculation to establish statistically significant clustering.
+This small difference suggests slightly more nearby pairs than expected under CSR at that scale, but the calculation alone does not establish statistically significant clustering.
+## K is cumulative
 
----
-
-## 19. K is cumulative
-
-A key property of Ripley's $K$ function is that it is cumulative.
+A key feature of Ripley's $K$ function is that it is cumulative.
 
 If
 
@@ -1047,21 +901,19 @@ $$
 
 Therefore nearby-pair information from shorter distances contributes to every larger value of $K(r)$.
 
-This means adjacent points on a $K$ curve are strongly dependent.
+As a result, nearby points on a $K$ curve are strongly dependent.
 
-Do not interpret each radius as an independent statistical test.
+Each radius should not be interpreted as an independent statistical test.
 
----
-
-## 20. Edge effects in K
+## Edge effects in K
 
 Consider an event near the left boundary of a rectangular study window.
 
 A circle of radius $r$ around the event extends partly outside the observed window.
 
-If we count only visible neighbors, we are missing possible neighbors in the unobserved part of the circle.
+If only visible neighbors are counted, possible neighbors in the unobserved part of the circle are missed.
 
-Ignoring this tends to create downward bias in estimated pair counts.
+Ignoring this typically biases estimated pair counts downward.
 
 ![Edge effect](../../assets/spatial_statistics/point_processes/05_edge_effect.png)
 
@@ -1071,11 +923,9 @@ Common corrections include:
 - translation correction;
 - isotropic correction.
 
-No correction can create information that was never observed. Edge correction adjusts the contribution of available information under assumptions about the observation process.
+No correction can recover information that was never observed. Edge correction adjusts the contribution of available information under assumptions about the observation process.
 
----
-
-## 21. Simple border correction
+## Simple border correction
 
 A simple border method uses only points at least distance $r$ from the window boundary as focal points.
 
@@ -1111,15 +961,13 @@ is more than 2 units from every boundary and can be retained.
 
 ### Tradeoff
 
-Border correction reduces edge bias, but it also discards information.
+Border correction reduces edge bias but also discards information.
 
 At large $r$, very few interior focal points may remain.
 
-That is why $K(r)$ should not be extended to arbitrarily large radii relative to the study window.
+For this reason, $K(r)$ should not be evaluated at arbitrarily large radii relative to the study window.
 
----
-
-## 22. L transformation
+## L transformation
 
 Because
 
@@ -1132,8 +980,7 @@ the CSR curve is nonlinear.
 A common transformation is
 
 $$
-L(r)
-=
+L(r) =
 \sqrt{
 \frac{K(r)}{\pi}
 }.
@@ -1158,13 +1005,11 @@ Broadly:
 - positive $L(r)-r$: clustering;
 - negative $L(r)-r$: inhibition.
 
-This transformation makes departures from CSR easier to visualize, but it does not remove the need for simulation-based uncertainty.
+This transformation makes departures from CSR easier to visualize, but simulation-based uncertainty is still needed.
 
----
+## Monte Carlo envelopes
 
-## 23. Monte Carlo envelopes
-
-A common point-process diagnostic compares the observed summary function with simulations under a reference model.
+A common point-process diagnostic compares an observed summary function with simulations from a reference model.
 
 For example, to assess homogeneous CSR:
 
@@ -1176,13 +1021,11 @@ For example, to assess homogeneous CSR:
 
 For each radius, one can calculate lower and upper simulated quantiles.
 
-These form a **pointwise Monte Carlo envelope**.
+These bounds form a **pointwise Monte Carlo envelope**.
 
 ![Monte Carlo envelope](../../assets/spatial_statistics/point_processes/06_monte_carlo_envelope.png)
 
----
-
-## 24. What is the envelope calculating?
+## What is the envelope calculating?
 
 Suppose we generate
 
@@ -1208,33 +1051,29 @@ A 95% pointwise envelope can be approximated using the 2.5% and 97.5% quantiles 
 
 The same is done separately for every radius.
 
----
+## Pointwise is not the same as global
 
-## 25. Pointwise is not the same as global
-
-This distinction matters.
+This distinction is important.
 
 A 95% pointwise envelope controls the simulated range **separately at each radius**.
 
-If we examine many radii, an observed curve may leave the envelope somewhere simply by chance.
+When many radii are examined, an observed curve may leave the envelope somewhere simply by chance.
 
 Therefore a pointwise envelope is not automatically a 5% global test over the entire curve.
 
 Formal global-envelope methods handle the multiple-distance problem more carefully.
 
-For introductory analysis, pointwise envelopes are still useful exploratory diagnostics when described honestly.
+For introductory analysis, pointwise envelopes remain useful exploratory diagnostics when their limitations are stated clearly.
 
----
+## The reference model must match the scientific question
 
-## 26. The reference model must match the scientific question
-
-A CSR envelope is meaningful only if homogeneous CSR is a scientifically plausible null model.
+A CSR envelope is meaningful only when homogeneous CSR is a scientifically plausible reference model.
 
 Suppose event intensity clearly increases with population density.
 
 Then homogeneous CSR is already wrong at the first-order level.
 
-Comparing the pattern with homogeneous CSR may simply rediscover the known intensity gradient.
+Comparing such a pattern with homogeneous CSR may simply rediscover the known intensity gradient.
 
 A better reference process might be an inhomogeneous Poisson process with fitted intensity
 
@@ -1242,15 +1081,13 @@ $$
 \hat\lambda(s).
 $$
 
-Then simulation asks:
+Simulation can then address the question:
 
 > Is there extra spatial interaction beyond what the fitted intensity explains?
 
----
+## Cluster processes
 
-## 27. Cluster processes
-
-Some point patterns contain genuine event clustering even after first-order intensity has been modeled.
+Some point patterns still show clustering after first-order intensity has been modeled.
 
 A common model is the **Thomas process**.
 
@@ -1262,13 +1099,13 @@ One construction is:
 4. Gaussian displacement is often used;
 5. only the offspring may be observed.
 
-The parents can be latent.
+The parent points may be latent.
 
 ![CSR, clustered, and inhibited patterns](../../assets/spatial_statistics/point_processes/07_process_types.png)
 
 ### Scientific interpretation
 
-A Thomas process is plausible when observed events arise around unobserved or observed cluster centers.
+A Thomas process is plausible when observed events arise around underlying cluster centers.
 
 Examples might include:
 
@@ -1276,11 +1113,9 @@ Examples might include:
 - disease cases around local transmission sources;
 - animal locations around resource patches.
 
----
+## Inhibitory processes
 
-## 28. Inhibitory processes
-
-Some processes exhibit repulsion rather than clustering.
+Some processes exhibit inhibition or repulsion rather than clustering.
 
 Examples include:
 
@@ -1301,13 +1136,11 @@ $$
 d_{ij}<h.
 $$
 
-This produces regular spacing at short distances.
+This produces more regular spacing at short distances.
 
-More general Gibbs processes can represent softer attraction or repulsion.
+More general Gibbs processes can represent softer forms of attraction or repulsion.
 
----
-
-## 29. A simple inhibition calculation
+## A simple inhibition calculation
 
 Suppose a hard-core model has minimum distance
 
@@ -1328,23 +1161,7 @@ $$
 Their distance is
 
 $$
-d
-=
-\sqrt{(4-3)^2+(5-4)^2}
-$$
-
-$$
-=
-\sqrt{1+1}
-$$
-
-$$
-=
-\sqrt2
-$$
-
-$$
-\approx1.414.
+d = \sqrt{(4-3)^2+(5-4)^2} = \sqrt{1+1} = \sqrt2 \approx1.414.
 $$
 
 Because
@@ -1355,20 +1172,18 @@ $$
 
 the pair violates the hard-core constraint.
 
-Both events cannot appear in the final pattern under that model.
+Both events cannot occur together in a pattern that satisfies this hard-core model.
 
----
+## Inhomogeneous Poisson processes
 
-## 30. Inhomogeneous Poisson processes
-
-A Poisson process does not need to be homogeneous.
+A Poisson process need not be homogeneous.
 
 For an inhomogeneous Poisson process:
 
 $$
 N(B)
 \sim
-\operatorname{Poisson}
+\mathrm{Poisson}
 \left(
 \int_B\lambda(s)\,ds
 \right),
@@ -1376,20 +1191,16 @@ $$
 
 and events are conditionally independent given the intensity surface.
 
-This is important because an inhomogeneous Poisson pattern can look highly clustered.
+This matters because an inhomogeneous Poisson pattern can look highly clustered.
 
-The visual clustering comes from varying $\lambda(s)$, not event-event attraction.
+The visual clustering comes from variation in $\lambda(s)$ rather than event-to-event attraction.
 
----
-
-## 31. Example of an intensity model with a covariate
+## Example of an intensity model with a covariate
 
 Suppose event intensity depends on population density $x(s)$:
 
 $$
-\log\lambda(s)
-=
-\beta_0+\beta_1x(s).
+\log\lambda(s) = \beta_0+\beta_1x(s).
 $$
 
 Let
@@ -1411,23 +1222,13 @@ x=20,
 $$
 
 $$
-\log\lambda
-=
--2+0.03(20)
-$$
-
-$$
-=
--1.4.
+\log\lambda = -2+0.03(20) = -1.4.
 $$
 
 So
 
 $$
-\lambda
-=
-e^{-1.4}
-\approx0.247.
+\lambda = e^{-1.4} \approx0.247.
 $$
 
 At
@@ -1437,30 +1238,18 @@ x=60,
 $$
 
 $$
-\log\lambda
-=
--2+0.03(60)
-$$
-
-$$
-=
--0.2,
+\log\lambda = -2+0.03(60) = -0.2,
 $$
 
 so
 
 $$
-\lambda
-=
-e^{-0.2}
-\approx0.819.
+\lambda = e^{-0.2} \approx0.819.
 $$
 
-The second location has much higher expected event density even without interaction.
+The second location therefore has much higher expected event density even without interaction.
 
----
-
-## 32. Marked point processes
+## Marked point processes
 
 Events can carry additional attributes called **marks**.
 
@@ -1489,13 +1278,11 @@ is the mark attached to event $i$.
 
 ![Marked point pattern](../../assets/spatial_statistics/point_processes/08_marked_pattern.png)
 
----
+## Point pattern versus mark dependence
 
-## 33. Point pattern versus mark dependence
+These two questions should be kept separate.
 
-Do not confuse these two questions.
-
-### Question 1: are the event locations clustered?
+### are the event locations clustered?
 
 This concerns the point process itself.
 
@@ -1506,25 +1293,23 @@ Examples of tools:
 - $K$ functions;
 - point-process models.
 
-### Question 2: are similar marks located near one another?
+### are similar marks located near one another?
 
-This concerns dependence in the marks conditional on or jointly with the point locations.
+This concerns dependence in the marks, conditional on or jointly with the event locations.
 
 For example:
 
 - Are large trees near other large trees?
 - Are high-magnitude earthquakes spatially grouped?
-- Are one type of store located near the same type?
+- Are stores of one type located near stores of the same type?
 
 These require mark-specific summaries or models.
 
 A point pattern may be CSR while its marks are strongly spatially associated, or vice versa.
 
----
+## Observation bias and exposure
 
-## 34. Observation bias and exposure
-
-Point-process intensity can reflect both the true event-generating process and the observation process.
+Point-process intensity can reflect both the underlying event-generating process and the observation process.
 
 Suppose wildlife sightings are collected near roads.
 
@@ -1536,15 +1321,13 @@ A high concentration of sightings near roads could mean:
 
 Similarly, disease cases may be concentrated where more people live simply because more people are at risk.
 
-Potential exposure and observation effort should therefore be considered when interpreting intensity.
+Exposure and observation effort should therefore be considered when interpreting intensity.
 
----
+## A complete point-process workflow
 
-## 35. A complete point-process workflow
+A practical analysis can follow these steps.
 
-A defensible analysis can follow these steps.
-
-### Step 1: define the event
+### define the event
 
 Decide exactly what counts as one event.
 
@@ -1554,15 +1337,15 @@ Examples:
 - one earthquake epicenter;
 - one confirmed disease case.
 
-Duplicated or ambiguously defined events can change the analysis.
+Duplicate or ambiguously defined events can change the analysis.
 
-### Step 2: define the observation window
+### define the observation window
 
 Record the geometry and area of $W$.
 
 Check whether all parts were observable.
 
-### Step 3: map the event pattern
+### map the event pattern
 
 Look for:
 
@@ -1572,7 +1355,7 @@ Look for:
 - boundaries;
 - suspicious duplicates.
 
-### Step 4: investigate first-order intensity
+### investigate first-order intensity
 
 Ask whether density depends on:
 
@@ -1581,7 +1364,7 @@ Ask whether density depends on:
 - population or exposure;
 - sampling effort.
 
-### Step 5: choose a meaningful reference model
+### choose a meaningful reference model
 
 Possible examples:
 
@@ -1590,7 +1373,7 @@ Possible examples:
 - fitted cluster model;
 - fitted inhibitory model.
 
-### Step 6: examine second-order summaries
+### examine second-order summaries
 
 Use appropriate tools such as:
 
@@ -1598,65 +1381,60 @@ Use appropriate tools such as:
 - $K$ or $L$ functions;
 - directional summaries when needed.
 
-### Step 7: use edge correction
+### use edge correction
 
 Make sure boundary bias is addressed.
 
-### Step 8: compare with simulation
+### compare with simulation
 
 Simulate from the fitted reference model and compute the same summary statistic.
 
-### Step 9: fit interaction models only when needed
+### fit interaction models only when needed
 
-Do not add interaction merely because the raw map looks clustered.
+Do not add an interaction component merely because the raw map looks clustered.
 
-### Step 10: validate
+### validate
 
 Use simulation diagnostics, residual analysis, or held-out spatial information when possible.
+## Common mistakes
 
----
-
-## 36. Common mistakes
-
-### Mistake 1: treating point-process data like geostatistical data
+### treating point-process data like geostatistical data
 
 In a point process, the locations themselves are random.
 
-### Mistake 2: ignoring the observation window
+### ignoring the observation window
 
-Counts and intensity have no interpretation without the area where events could have been observed.
+Counts and intensity have no clear interpretation without the region where events could have been observed.
 
-### Mistake 3: calling every visual cluster "interaction"
+### calling every visual cluster "interaction"
 
-A varying intensity can create clustering without event-event attraction.
+Varying intensity can create apparent clustering without event-to-event attraction.
 
-### Mistake 4: simulating a fixed number of uniform points and calling it an unconditional Poisson process
+### simulating a fixed number of uniform points and calling it an unconditional Poisson process
 
-That is the Poisson process conditional on the total count.
+That is a Poisson process conditional on the total count.
 
-### Mistake 5: interpreting $K(r)$ without edge correction
+### interpreting $K(r)$ without edge correction
 
 Boundary truncation can reduce observed pair counts.
 
-### Mistake 6: treating each radius on a K curve as an independent test
+### treating each radius on a K curve as an independent test
 
 $K$ is cumulative and nearby radii are highly dependent.
 
-### Mistake 7: treating a pointwise simulation envelope as a global 5% test
+### treating a pointwise simulation envelope as a global 5% test
 
 Pointwise and simultaneous inference are not the same.
 
-### Mistake 8: using homogeneous CSR when intensity is obviously inhomogeneous
+### using homogeneous CSR when intensity is obviously inhomogeneous
 
-The test may simply detect a first-order gradient.
+The comparison may simply detect a first-order intensity gradient.
 
-### Mistake 9: confusing event clustering with spatial autocorrelation of marks
+### confusing event clustering with spatial autocorrelation of marks
 
 They are separate questions.
 
----
-
-## 37. A compact worked analysis
+## A compact worked analysis
 
 Suppose 80 tree stems are observed in a
 
@@ -1669,21 +1447,13 @@ plot.
 The plot area is
 
 $$
-|W|
-=
-20(20)
-=
-400\text{ m}^2.
+|W| = 20(20) = 400\text{ m}^2.
 $$
 
 The homogeneous intensity estimate is
 
 $$
-\hat\lambda
-=
-\frac{80}{400}
-=
-0.2
+\hat\lambda = \frac{80}{400} = 0.2
 $$
 
 trees per square meter.
@@ -1697,10 +1467,7 @@ $$
 CSR predicts
 
 $$
-K_{\mathrm{CSR}}(1)
-=
-\pi
-\approx3.142.
+K_{\mathrm{CSR}}(1) = \pi \approx3.142.
 $$
 
 Suppose an edge-corrected estimate gives
@@ -1709,9 +1476,9 @@ $$
 \hat K(1)=5.2.
 $$
 
-The observed value is above CSR.
+The observed value is above the CSR benchmark.
 
-But before concluding that trees attract one another, ask:
+Before concluding that trees attract one another, ask:
 
 1. Is tree density higher in wetter or better-lit areas?
 2. Is the pattern inhomogeneous?
@@ -1719,11 +1486,9 @@ But before concluding that trees attract one another, ask:
 4. Could the window or sampling protocol create apparent clusters?
 5. Does the observed $K$ curve exceed simulations from an appropriate fitted first-order model?
 
-The numerical difference alone does not identify the mechanism.
+The numerical difference alone does not identify the underlying mechanism.
 
----
-
-## 38. Concept map
+## Concept map
 
 The logic of point-process analysis is:
 
@@ -1789,11 +1554,9 @@ $$
 
 The central idea is:
 
-> **First-order intensity describes where events are expected to occur; second-order structure describes how events are arranged relative to one another after that intensity structure is considered.**
+> First-order intensity describes where events are expected to occur; second-order structure describes how events are arranged relative to one another after that intensity structure is considered.
 
----
-
-## 39. Questions students should be able to answer
+## Questions students should be able to answer
 
 1. What is random in a spatial point process?
 2. What does $N(B)$ represent?
@@ -1810,9 +1573,3 @@ The central idea is:
 13. What scientific mechanism does a Thomas process represent?
 14. What scientific mechanism does a hard-core process represent?
 15. What is the difference between location interaction and spatial dependence in marks?
-
-## Practice
-
-Use the companion [point-process exercises](../../exercises/spatial_statistics/point_processes.md).
-
----
