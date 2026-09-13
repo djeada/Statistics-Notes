@@ -450,7 +450,7 @@ as the distance between locations $i$ and $j$.
 A distance-band matrix can be defined as
 
 $$
-\boxed{ w_{ij} = \mathbf 1(0<d_{ij}\le d_0) }
+\boxed{w_{ij}=\mathbf{1}_{\{0<d_{ij}\le d_0\}}}
 $$
 
 Locations are treated as neighbors when they lie within the threshold $d_0$.
