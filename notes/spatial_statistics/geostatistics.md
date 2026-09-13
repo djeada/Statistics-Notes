@@ -1,4 +1,4 @@
-# Geostatistics: A Student Guide to Spatial Dependence and the Semivariogram
+# Geostatistics
 
 Geostatistics is used when observations are tied to locations and nearby values may be more similar than distant values.
 
