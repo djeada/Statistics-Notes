@@ -182,4 +182,4 @@ To quantify uncertainty, we need additional information about the estimator's sa
 
 These ideas lead naturally to confidence intervals and hypothesis tests.
 
-Continue to **Hypothesis Testing & Confidence Intervals**.
+Continue to **[Hypothesis Testing & Confidence Intervals](../hypothesis_testing_and_confidence_intervals/README.md)**.
