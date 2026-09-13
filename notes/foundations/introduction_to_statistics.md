@@ -1,39 +1,45 @@
 # Introduction to Statistics
 
-Statistics is an empirical science, focusing on data-driven insights for real-world applications. This guide offers a concise exploration of statistical fundamentals, aimed at providing practical knowledge for data analysis and interpretation.
+Statistics is the science of learning from data. It provides methods for collecting, summarizing, analyzing, and interpreting observations so that we can describe patterns, quantify uncertainty, and make informed decisions.
+
+This guide introduces the main ideas used throughout statistical analysis.
 
 ### Key Concepts in Statistics
 
-- **Descriptive statistics** involve summarizing key features of a dataset using tools like the mean, median, mode, and standard deviation to describe central tendencies and variability.
-- **Inferential statistics** include techniques that allow researchers to make inferences or predictions about a larger population based on sample data, such as through confidence intervals or hypothesis testing.
-- **Regression analysis** refers to methods used to model and analyze the relationship between a dependent variable and one or more independent variables, often to predict outcomes or identify trends.
+* **Descriptive statistics** summarize the main features of a dataset using measures such as the mean, median, mode, standard deviation, and graphical displays.
+* **Inferential statistics** use sample data to learn about a larger population. Common tools include confidence intervals, hypothesis tests, and statistical models.
+* **Regression analysis** models relationships between a response variable and one or more explanatory variables. It can be used for prediction, estimation, and studying associations.
+
+Descriptive statistics tell us what the observed data look like, while inferential methods help us reason beyond the observed sample.
 
 ### Real-World Importance of Statistics
 
-- In **decision making**, companies rely on customer survey data analyzed using statistics to decide whether to launch new products.
-- In **healthcare**, statistical analysis of patient data helps doctors make better diagnoses and create more effective treatment plans.
-- In **quality control**, manufacturers use statistical methods to ensure product consistency and maintain high standards in their production processes.
-- **Economic policy** is shaped by governments using statistical data to evaluate economic conditions and guide policy decisions.
+* In **decision making**, companies analyze customer and market data to guide choices such as whether to launch a new product.
+* In **healthcare**, statistical methods are used to evaluate diagnostic tests, compare treatments, and analyze patient outcomes.
+* In **quality control**, manufacturers use statistical methods to monitor production processes and detect unusual variation.
+* In **economic policy**, governments analyze data on employment, inflation, production, and other indicators when evaluating economic conditions and policy options.
+
+Statistics does not make decisions automatically. It provides evidence and measures of uncertainty that can support better decisions.
 
 ### Applied Statistical Methods
 
-- **Experimental design** involves structuring experiments to test hypotheses, such as using randomized control trials in clinical research to assess new treatments.
-- In **market research**, statistical analysis of consumer data helps businesses understand purchasing behavior and customer preferences.
-- **Operational analysis** uses statistical process control to optimize logistics and improve operational efficiency in business settings.
-- **Risk assessment** models the probability distributions of asset prices to evaluate and manage financial risks in markets.
+* **Experimental design** involves planning experiments so that effects can be estimated reliably. Randomized controlled trials are an important example in clinical research.
+* In **market research**, statistical analysis of consumer data helps businesses understand purchasing behavior, preferences, and market trends.
+* **Operational analysis** uses statistical models and process-control methods to study efficiency, logistics, and system performance.
+* **Risk assessment** uses probability models and statistical analysis to quantify uncertainty and evaluate potential losses or adverse outcomes.
 
 ### Statistical Tools in Action
 
-- In **education**, statistical analysis of test scores aids in enhancing teaching methods and refining curriculum development.
-- **Sports analytics** leverage player and game data to inform strategic decisions and improve overall team performance.
-- **Environmental studies** use pollution data analysis to guide environmental protection and policy-making.
-- In **technology and AI**, machine learning algorithms rely on statistical methods for predictive analytics and automated decision-making.
-  
-### Population and Sample 
+* In **education**, test scores and other data can be analyzed to evaluate teaching methods and student outcomes.
+* **Sports analytics** uses player and game data to evaluate performance and support strategic decisions.
+* **Environmental studies** analyze measurements such as pollution levels, temperature, and biodiversity to understand environmental conditions and changes.
+* In **technology and AI**, many machine-learning methods rely on ideas from probability, statistics, optimization, and statistical inference.
 
-- The **population** refers to the entire group of individuals or elements under study. It represents the full set from which data could theoretically be collected and conclusions drawn.
+### Population and Sample
 
-```
+* The **population** is the entire group of individuals, objects, measurements, or outcomes that a study aims to understand.
+
+```text
 # @ * ! % * # ! @
 * ! % # @ ! % @ *
 @ # ! % * @ # % #
@@ -41,183 +47,262 @@ Statistics is an empirical science, focusing on data-driven insights for real-wo
 % * # @ ! % @ * #
 ```
 
-- A **sample** is a smaller, strategically selected subset of the population, used to analyze and draw inferences about the entire group.
+* A **sample** is the subset of the population that is actually observed or measured.
 
-```
+```text
 @ !
-* % 
+* %
 ```
+
+Researchers often study a sample because collecting data from the entire population may be too expensive, slow, or impractical.
+
+The goal is usually to use information from the sample to learn about the population.
 
 #### Illustrative Scenarios
 
-1. In a poll of 1,200 registered voters, 45% preferred candidate A over candidate B.
-   - The **population** in this case is all registered voters in the country.
-   - The **sample** consists of 1,200 voters polled, with 45% supporting candidate A.
+1. In a poll of 1,200 registered voters, 45% prefer candidate A over candidate B.
 
-2. An educational researcher surveyed 100 teachers across 20 schools to study remote learning.
-   - The **population** includes all teachers involved in remote learning.
-   - The **sample** is the group of 100 teachers surveyed from 20 different schools.
+   * The **population** is the group of registered voters that the poll is intended to represent.
+   * The **sample** is the 1,200 registered voters who were surveyed.
+   * The observed 45% is a sample statistic used to estimate the corresponding population proportion.
 
-3. Researchers interviewed 250 gym members from a city to estimate how often residents visit gym facilities.
-   - The **population** is the total membership of all city gyms.
-   - The **sample** includes the 250 gym members interviewed for the study.
+2. An educational researcher surveys 100 teachers across 20 schools to study remote learning.
 
-- A **representative sample** accurately reflects the characteristics of the population, ensuring proportionality in terms of gender, age, or socio-economic status.
+   * The **population** is the broader group of teachers the researcher wants to draw conclusions about.
+   * The **sample** consists of the 100 teachers who were surveyed.
+
+3. Researchers interview 250 gym members to study how often gym members in a city use gym facilities.
+
+   * The **population** is the relevant population of gym members in that city.
+   * The **sample** consists of the 250 members who were interviewed.
+
+Notice that the population is determined by the research question. A sample cannot reliably support conclusions about a broader population than the one it was designed to represent.
+
+* A **representative sample** reflects important features of the target population well enough to support the intended inference.
+
+Representativeness is not achieved simply by making every demographic percentage in the sample identical to the population. The sampling method matters because hidden differences between sampled and unsampled individuals can still introduce bias.
 
 #### Population Distribution (Gender Example)
 
-- If the population includes equal numbers of **females (F)** and **males (M)**:
+Suppose a population contains equal numbers of individuals in two categories, **F** and **M**:
 
-```
+```text
 | F | F | M | M | F | M |
 ```
 
-- A **representative sample** should maintain this balance, such as:
+A sample with the same overall balance might look like:
 
+```text
+| F | M | F | M |
 ```
-| F | M | F |
-```
+
+Matching the population proportions can be desirable, but representativeness also depends on how the sample was selected.
 
 #### Types of Biases
 
-- **Selection bias** occurs when participants are not randomly selected, leading to unrepresentative samples, such as excluding non-internet users in an online survey.
-- **Sampling bias** arises when certain population segments have a lower likelihood of being included in the sample than others.
-- **Non-response bias** happens when individuals in the sample do not respond, potentially skewing the data based on the non-responders' characteristics.
-- **Measurement bias** involves systematic errors in data collection, often due to the use of inaccurate measurement tools or methods.
-- **Observer bias** refers to subjective influences by the researcher during data collection or interpretation, such as when placebo effects alter the outcomes in clinical trials.
-- **Survivorship bias** emphasizes only the elements that "survive" a process, disregarding those that did not, as seen when analyzing only successful companies.
-- **Confirmation bias** occurs when researchers prefer data that supports their hypothesis and overlook data that contradicts it.
-- **Recall bias** arises when participants provide inaccurate retrospective data due to faulty memory.
-- **Publication bias** occurs when studies are more likely to be published if they have positive or significant results, leading to a skew in the research literature.
+Bias refers to a systematic tendency for a measurement, estimate, or study design to favor certain outcomes.
+
+* **Selection bias** occurs when the process used to include individuals in a study systematically favors some members of the target population over others.
+* **Sampling bias** occurs when the sampling procedure systematically underrepresents or overrepresents parts of the population. It can be viewed as a form of selection bias.
+* **Non-response bias** occurs when people who do not respond differ systematically from those who do respond in ways relevant to the study.
+* **Measurement bias** occurs when the measurement process systematically produces values that differ from the quantity being measured, for example because of a poorly calibrated instrument.
+* **Observer bias** occurs when a researcher's expectations or judgments systematically influence measurements or recorded outcomes. Blinding observers to treatment assignments can help reduce this problem.
+* **Survivorship bias** occurs when analysis focuses only on individuals or objects that remain visible after a selection process while ignoring those that did not "survive." Studying only successful companies is a common example.
+* **Confirmation bias** occurs when people favor evidence that supports an existing belief while giving less attention to contradictory evidence.
+* **Recall bias** occurs when participants systematically remember past events inaccurately, particularly when different groups recall them differently.
+* **Publication bias** occurs when studies with statistically significant, positive, or otherwise notable findings are more likely to be published than studies with null or less striking results.
+
+Different biases arise at different stages of a study, so no single procedure eliminates all forms of bias.
 
 #### Strategies to Counteract Bias
 
-- **Random sampling** ensures that every member of the population has an equal chance of being selected, reducing the risk of selection bias.
-- **Stratified sampling** involves dividing the population into homogeneous groups (strata) and sampling from each, ensuring better representation.
-- **Systematic sampling** uses a fixed interval to select participants, though care must be taken to avoid alignment with population patterns that could introduce bias.
-- **Cluster sampling** is effective when populations are large or geographically spread out; it involves randomly selecting clusters and then sampling all elements within those clusters.
-  
+* **Simple random sampling** gives each member of a finite population an equal chance of selection and can reduce systematic sampling bias when implemented correctly.
+* **Stratified sampling** divides a population into relevant groups, or strata, and samples within each group. This can improve representation and statistical precision.
+* **Systematic sampling** selects units according to a regular interval after choosing a starting point. It can work well, but hidden periodic patterns in the population may create bias.
+* **Cluster sampling** divides the population into clusters, randomly selects some clusters, and then observes either all units or a sample of units within those clusters. It is often useful when populations are geographically dispersed.
+* **Random assignment** is different from random sampling. In an experiment, random assignment allocates sampled participants to treatment conditions and helps balance confounding variables between groups.
+* **Blinding** can reduce observer and participant-related biases when people involved in a study do not know which treatment was assigned.
+
+Sampling determines **who enters the study**; random assignment determines **which treatment they receive**. These ideas serve different purposes.
+
 ### Variables and Data
 
-- A **variable** is the specific characteristic or attribute that researchers are interested in measuring or analyzing. Variables can represent things like age, height, income, or any measurable trait in a study.
-- **Data** refers to the actual values or observations that are collected for variables. These can be numbers, categories, or measurements, and they form the basis of statistical analysis.
-- The **population** is the entire group of individuals or items that researchers want to understand or make conclusions about. This could be all people living in a country, all trees in a forest, or all manufactured products from a factory.
-- A **parameter** is a summary value that describes something about the entire population. For example, the average height of all adult men in a country is a parameter. Since it's often impractical to collect data from every individual, parameters are usually estimated.
-- A **sample** is a smaller subset of the population that researchers collect data from. Studying the entire population may be impossible or costly, so a sample is used to make estimates about the population.
-- A **statistic** is a summary value calculated from a sample. It is used to estimate the population parameter. For instance, the average height calculated from a sample of adult men is a statistic.
+* A **variable** is a characteristic that can take different values across individuals, objects, or observations. Examples include age, height, income, and blood type.
+* **Data** are the observed values recorded for one or more variables.
+* The **population** is the complete set of units or outcomes about which we want to draw conclusions.
+* A **parameter** is a numerical quantity describing a population or statistical model.
+* A **sample** is the subset of observations actually collected.
+* A **statistic** is a numerical quantity calculated from sample data.
+
+A statistic can be used to estimate a parameter, but the two are not the same.
 
 #### Visualization of Data Collection from a Group
 
-Imagine a group of individuals, each with unique attributes to be measured:
+Imagine a group of individuals:
 
-```
+```text
    O   O   O   O   O
   /|\ /|\ /|\ /|\ /|\
   / \ / \ / \ / \ / \
 ```
 
-Each stick figure represents a person, and the data collected could include measurements like weight, height, and gender.
+Each person may have several measured characteristics, such as height or weight, as well as recorded categorical characteristics.
 
-Tabular representation of collected data:
+A possible data table is:
 
-|   Name  |  Gender  |  Weight  |  Height  |
-|---------|----------|----------|----------|
-|  Alice  |  Female  |   135    |   5'6"   |
-|   Bob   |   Male   |   180    |   6'0"   |
-|  Carol  |  Female  |   140    |   5'5"   |
-|  David  |   Male   |   175    |   5'11"  |
-|   Eve   |  Female  |   150    |   5'7"   |
+| Name  | Gender | Weight | Height |
+| ----- | ------ | -----: | -----: |
+| Alice | Female |    135 |   5'6" |
+| Bob   | Male   |    180 |   6'0" |
+| Carol | Female |    140 |   5'5" |
+| David | Male   |    175 |  5'11" |
+| Eve   | Female |    150 |   5'7" |
 
-In this table, the variables being measured are **Name** (categorical), **Gender** (categorical), **Weight** (numerical), and **Height** (numerical).
+Here, each **row** represents an observational unit, while each **column** represents a recorded variable.
+
+`Name` may function mainly as an identifier rather than as a variable of statistical interest. Gender is categorical, while weight and height are numerical.
 
 #### Parameter vs. Statistic
 
-- A **parameter** refers to a value that describes an entire population, such as the average height of all people in a city. 
-- The **population mean** ($\mu$) is an example of a parameter, representing the average of a numerical variable across the whole population.
-- Another example of a parameter is the **population standard deviation** ($\sigma$), which measures the spread or variability of a numerical variable in the population.
-- A **statistic** is a value calculated from a sample of the population, such as the average height of a subset of individuals. It is used to estimate the corresponding population parameter.
-- The **sample mean** ($\bar{x}$) is an example of a statistic, representing the average of a numerical variable within a sample.
-- Similarly, the **sample standard deviation** ($s$) is a statistic that measures the spread of a numerical variable in the sample.
+* A **parameter** describes a population or model.
+* The **population mean**, $\mu$, is a parameter describing the mean of a numerical variable in the population.
+* The **population standard deviation**, $\sigma$, is a parameter describing population variability.
+* A **statistic** is calculated from a sample.
+* The **sample mean**, $\bar{x}$, is a statistic commonly used to estimate $\mu$.
+* The **sample standard deviation**, $s$, is a statistic commonly used to estimate population variability.
+
+The notation helps distinguish population quantities from sample quantities:
+
+| Population                   | Sample                  |
+| ---------------------------- | ----------------------- |
+| Mean: $\mu$                  | Mean: $\bar{x}$         |
+| Standard deviation: $\sigma$ | Standard deviation: $s$ |
+| Proportion: $p$              | Proportion: $\hat p$    |
 
 #### Example: Application of Parameters and Statistics
 
-1. Suppose researchers want to find the average income of all adults in a large city. The **population** is all adults in the city, and the **parameter** of interest is the average income.
-2. Since it’s impractical to collect income data from every adult, they take a **sample** of 500 adults. The average income from this sample is calculated as the **statistic**.
-3. Using this sample statistic, researchers estimate the **population parameter**—the average income for all adults in the city.
+1. Researchers want to estimate the average income of all adults in a city. The **population** consists of the adults included in the target population, and the population mean income is the **parameter** of interest.
 
-This process of using a **statistic** to estimate a **parameter** is foundational in inferential statistics, allowing researchers to draw conclusions about large populations from manageable samples.
+2. Because measuring every adult may be impractical, the researchers collect a sample of 500 adults.
+
+3. They calculate the sample mean income:
+
+```math id="xk2hnc"
+\bar{x}
+=
+\frac{1}{n}\sum_{i=1}^{n}x_i.
+```
+
+This sample mean is a **statistic**.
+
+4. The statistic can then be used as an estimate of the unknown population mean $\mu$.
+
+Using sample statistics to learn about unknown population parameters is one of the central ideas of inferential statistics.
 
 #### Classification of Variables
 
-Variables are broadly categorized into two types: Numerical and Categorical.
+Variables are commonly divided into numerical and categorical types:
 
-```
+```text
                   All Variables
-                   /            \
-            Numerical       Categorical
-           /        \        /        \
-   Discrete  Continuous  Nominal   Ordinal
+                   /          \
+             Numerical      Categorical
+             /      \        /       \
+       Discrete  Continuous Nominal  Ordinal
 ```
+
+This classification is useful because the type of variable affects which summaries, visualizations, and statistical methods are appropriate.
 
 #### Numerical Variables
 
-- Numerical variables represent data consisting of numbers, allowing for meaningful arithmetic operations.
-- A **discrete numerical variable** refers to data that takes on distinct, separate values, typically representing counts or whole numbers. An example is the **number of children** in a family, which can only be a whole number.
-- A **continuous numerical variable** refers to data that can take any value within a range, often involving measurements. An example is **temperature** in degrees Celsius, which can include decimals.
+* **Numerical variables** take numerical values for which arithmetic operations can be meaningful.
+
+* A **discrete numerical variable** takes values from a countable set. Counts are common examples. The number of children in a family might take values $0,1,2,\ldots$.
+
+* A **continuous numerical variable** is modeled as being able to take any value within an interval. Measurements such as exact height, mass, or temperature are commonly treated as continuous.
+
+Whether a recorded variable appears discrete can depend on measurement precision. For example, age recorded only in completed years takes integer values, while exact age is naturally modeled as continuous.
 
 #### Categorical Variables
 
-- Categorical variables represent data that classify into categories or groups, without any inherent numerical value.
-- A **nominal variable** is a categorical variable where the categories have no natural ranking or order. Examples include **fruits**, **car brands**, **animal species**, **types of beverages**, and **blood types**.
-- An **ordinal variable** is a categorical variable where the categories have a meaningful order or ranking, but the differences between the ranks are not necessarily equal. Examples include **education level** (high school, bachelor's, master's, Ph.D.), **movie ratings** (poor, fair, good, excellent), and **shoe sizes**.
+* **Categorical variables** place observations into groups or categories rather than measuring quantities on a numerical scale.
+
+* A **nominal variable** has categories with no natural ranking. Examples include blood type, animal species, or car manufacturer.
+
+* An **ordinal variable** has categories with a meaningful order, but the distances between categories are not necessarily equal. Examples include satisfaction levels such as *poor*, *fair*, *good*, and *excellent*, or education levels.
+
+A variable can sometimes be encoded with numbers without becoming numerical. For example, assigning `1 = poor`, `2 = fair`, and `3 = good` does not imply that the difference between poor and fair is quantitatively equal to the difference between fair and good.
 
 #### Data Table Example with Variable Types
 
-|   Name   | Age | Height (inches) | Income ($) | Education Level | Marital Status |
-|----------|-----|-----------------|------------|-----------------|----------------|
-|   Alice  |  28 |      64         |   50000    |   High School   |     Married    |
-|   Bob    |  35 |      70         |   75000    |   Bachelor's    |     Single     |
-|   Carol  |  42 |      62         |   60000    |   Master's      |     Married    |
-|   David  |  31 |      68         |   80000    |   Ph.D.         |     Single     |
-|   Eve    |  26 |      66         |   45000    |   Associate's   |     Married    |
+| Name  | Age | Height (inches) | Income ($) | Education Level | Marital Status |
+| ----- | --: | --------------: | ---------: | --------------- | -------------- |
+| Alice |  28 |              64 |      50000 | High School     | Married        |
+| Bob   |  35 |              70 |      75000 | Bachelor's      | Single         |
+| Carol |  42 |              62 |      60000 | Master's        | Married        |
+| David |  31 |              68 |      80000 | Ph.D.           | Single         |
+| Eve   |  26 |              66 |      45000 | Associate's     | Married        |
 
 Explanation of Variables in the Table:
 
-- **Name** is a categorical variable representing individuals' names.
-- **Age** is a numerical variable, specifically discrete, as it represents the whole number of years.
-- **Height (inches)** is a numerical variable, specifically continuous, as it can include fractional measurements.
-- **Income ($)** is a numerical variable, specifically continuous, since income can take any value within a range.
-- **Education Level** is an ordinal categorical variable that classifies individuals based on their highest educational achievement, with a meaningful ranking from lower to higher levels.
-- **Marital Status** is a nominal categorical variable, representing different categories of relationship status with no inherent ranking.
+* **Name** is primarily an identifier. It could technically be treated as a nominal categorical variable, but it is usually not analyzed as a substantive variable.
+* **Age** is recorded here in whole years, so the observed values are discrete. Exact age, however, is conceptually continuous.
+* **Height** is a continuous numerical variable, even if it has been rounded to whole inches in this table.
+* **Income** is numerical. In many statistical models it is treated as continuous, although actual recorded monetary values occur in discrete currency units.
+* **Education Level** is an ordinal categorical variable because the categories have a meaningful ordering.
+* **Marital Status** is a nominal categorical variable because its categories have no natural numerical ordering.
+
+The distinction between the underlying variable and the way it is recorded is important. Rounding a continuous measurement does not necessarily change the conceptual type of the variable.
 
 #### Explanatory and Response Variables
 
-Explanatory Variable (Independent Variable):
+Explanatory Variable:
 
-- In a study, the **explanatory variable** is the one manipulated or selected to observe its effect on another variable.
-- This variable, often represented as "X," plays a key role in determining outcomes in both experimental and observational research.
-- For example, if researchers are interested in how study duration affects exam performance, the **explanatory variable** would be the amount of time spent studying.
+* An **explanatory variable** is a variable used to explain or predict variation in another variable.
+* It is often denoted by $X$.
+* In an experiment, the explanatory variable may be deliberately manipulated.
+* In an observational study, it may simply be observed rather than controlled.
 
-Response Variable (Dependent Variable):
+For example, when studying the relationship between study time and exam performance, study time may be treated as the explanatory variable.
 
-- The **response variable** is the outcome that researchers measure to see how it is influenced by the explanatory variable.
-- This variable is usually denoted as "Y" and reflects the effect or result of changes in the explanatory variable.
-- For instance, in the context of study duration affecting exam performance, the **response variable** would be the exam scores.
+Response Variable:
+
+* A **response variable** is the outcome being explained or predicted.
+* It is often denoted by $Y$.
+* In the study-time example, the exam score is the response variable.
+
+The terms **independent variable** and **dependent variable** are also widely used, but **explanatory** and **response** are often clearer because they do not imply statistical independence.
 
 Practical Illustration:
 
-- In a study at Elmswood University, researchers examined the impact of study duration on exam scores. The **explanatory variable** in this case was study time, either manipulated or naturally observed.
-- The **response variable**, which was measured to see the effect of study duration, was the exam scores.
-- This research focused on exploring how variations in study duration influenced academic performance.
-  
+* Researchers at Elmswood University study the relationship between study duration and exam scores.
+* The **explanatory variable** is study time.
+* The **response variable** is exam score.
+
+If the researchers only observe existing study habits, the study can identify an association between study time and exam performance.
+
+If they randomly assign students to different study-duration conditions under an appropriate experimental design, they have a stronger basis for investigating a causal effect.
+
 ### Observational Studies and Experiments
 
-Below is a table for the comparison between observational studies and experiments:
+Observational studies and experiments differ mainly in whether researchers assign or manipulate the explanatory variable.
 
-| **Aspect**          | **Observational Studies**                                             | **Experiments**                                                      |
-|---------------------|----------------------------------------------------------------------|----------------------------------------------------------------------|
-| **Purpose**         | Observe and collect data on naturally occurring events without intervention. | Investigate cause-and-effect relationships by actively manipulating variables. |
-| **Control**         | Limited control over variables; focus on observing existing conditions. | High level of control, including manipulation of independent variables and control groups. |
-| **Causation**       | Can identify associations or correlations, but cannot establish causation. | Can establish causation by manipulating variables and observing effects. |
-| **Examples**        | Cross-sectional studies, cohort studies, case-control studies, surveys. | Clinical trials, laboratory experiments, field experiments. |
-| **Ethics**          | Generally less intrusive, often not requiring consent for public or existing data. | Requires informed consent, with strict ethical considerations for human or animal subjects. |
+| **Aspect**    | **Observational Studies**                                                                                                                               | **Experiments**                                                                                                                          |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| **Purpose**   | Study variables as they naturally occur.                                                                                                                | Study responses to deliberately assigned interventions or conditions.                                                                    |
+| **Control**   | Researchers do not assign the exposure or treatment; control over confounding is therefore more limited.                                                | Researchers assign treatments and can often use randomization, control groups, and blinding.                                             |
+| **Causation** | Can provide strong evidence of association, but causal interpretation requires additional assumptions and careful design.                               | Well-designed randomized experiments can provide strong evidence for causal effects because random assignment helps control confounding. |
+| **Examples**  | Cross-sectional studies, cohort studies, case-control studies, surveys.                                                                                 | Randomized clinical trials, laboratory experiments, field experiments.                                                                   |
+| **Ethics**    | Ethical requirements depend on the type of data and study design. Observational research involving people may still require consent and ethical review. | Interventions involving human or animal participants may require informed consent, risk assessment, and formal ethical oversight.        |
+
+The distinction between association and causation is important.
+
+If an observational study finds that people who study longer tend to receive higher exam scores, several explanations are possible. Study time may affect performance, but other variables—such as prior preparation, motivation, or course difficulty—may influence both.
+
+These additional variables are called **confounders**.
+
+A randomized experiment helps address this problem by assigning treatments independently of participants' pre-existing characteristics. When randomization is successful and the study is otherwise well designed, differences between treatment groups can more credibly be attributed to the treatment itself.
+
+Even randomized experiments do not establish causation automatically. Poor adherence, missing data, measurement problems, inappropriate analysis, or lack of external validity can still limit the conclusions.
+
+Statistics therefore depends not only on calculations, but also on how the data were collected, what population they represent, and what assumptions are required to interpret them.
