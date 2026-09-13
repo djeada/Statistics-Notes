@@ -1,6 +1,6 @@
 # Spatial Statistics
 
-Spatial statistics studies observations whose dependence is related to location. The right starting chapter depends on what kind of spatial object is observed.
+Spatial statistics studies observations whose dependence is structured by location. This unit comes after the core probability, covariance, inference, regression, and model-assessment material because spatial dependence changes how ordinary independent-sample reasoning should be applied.
 
 ## Choose by Data Type
 
@@ -12,8 +12,15 @@ Spatial statistics studies observations whose dependence is related to location.
 
 ## Prerequisites and Connections
 
-Covariance and correlation provide useful background: see **[Correlation and Regression](../correlation_and_regression/README.md)**. Spatial dependence plays a role analogous to serial dependence in **[Time Series Analysis](../time_series_analysis/README.md)**: observations that are close in space or time often cannot be treated as independent replicates.
+- **[Joint Distributions & Covariance](../joint_distributions_and_covariance/README.md)** provides covariance and correlation concepts.
+- **[Regression](../regression/README.md)** provides the conditional-modeling perspective used by many spatial models.
+- **[Resampling & Model Assessment](../resampling_and_model_assessment/README.md)** is important because random validation can be optimistic when nearby observations are strongly dependent.
+- **[Time Series](../time_series/README.md)** is the temporal analogue: both fields model structured dependence rather than exchangeable observations.
 
 ## Terminology Boundary
 
-Do not use “spatial autocorrelation,” “geostatistics,” and “point process” interchangeably. They can all describe spatial dependence, but they model different data objects and answer different questions. Identifying the observed spatial object is the first modeling decision.
+Do not use “spatial autocorrelation,” “geostatistics,” and “point process” interchangeably. They can all describe spatial structure, but they model different data objects and answer different questions. Identifying the observed spatial object is the first modeling decision.
+
+## Model Assessment
+
+Prediction at unsampled locations may require spatially blocked validation rather than random folds. The validation design should mimic the actual prediction task: interpolation near observed locations is different from extrapolation to a new region.
