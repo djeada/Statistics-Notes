@@ -1,5 +1,25 @@
 # Forecast Evaluation and Backtesting
 
+## Worked calculation: three errors and one scale
+
+Suppose the actual values are $(10,12,9)$ and forecasts are $(9,11,10)$. The errors $y-\hat y$ are $(1,1,-1)$, so
+
+$$
+\operatorname{MAE}=\frac{1+1+1}{3}=1,
+\qquad
+\operatorname{RMSE}=\sqrt{\frac{1+1+1}{3}}=1.
+$$
+
+If the in-sample naive scale is $2$, then
+
+$$
+\operatorname{MASE}=\frac{1}{2}=0.5.
+$$
+
+The scale must be calculated using only the training portion at each origin. Reusing a scale computed from the full series is a small but real form of leakage. A rolling-origin evaluation repeats this calculation after each training window so that every forecast is made with past information only.
+
+![Rolling-origin forecasts and forecast errors](../../assets/time_series/student/15_forecast_backtesting.png)
+
 Forecast evaluation asks a different question from in-sample fit: **How well would this procedure have predicted observations that were genuinely in the future at the time of fitting?**
 
 ## Preserve Temporal Order

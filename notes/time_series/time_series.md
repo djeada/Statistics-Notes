@@ -1,5 +1,20 @@
 # Time Series Analysis
 
+## Worked decomposition: identifying the pieces
+
+Suppose a monthly series is described by
+
+$$
+y_t=100+0.5t+10\sin\left(\frac{2\pi t}{12}\right)+\varepsilon_t,
+\qquad \varepsilon_t\sim(0,4).
+$$
+
+At $t=6$, the seasonal term is $10\sin(\pi)=0$, so the deterministic part is $103$. At $t=3$, the seasonal term is $10\sin(\pi/2)=10$, so the deterministic part is $111. The same trend can therefore produce very different neighboring observations because the seasonal phase changes.
+
+This example also separates three questions: is the level changing, is a pattern repeating at a known period, and how large is the unpredictable remainder? Those questions determine whether trend removal, seasonal differencing, or a stochastic model is appropriate.
+
+The existing introduction figures in [assets/time_series/](../../assets/time_series/) show these features, including trend, seasonality, a structural break, white noise, and a random walk.
+
 Time series data consists of sequential observations collected over a period of time. This kind of data is prevalent in a range of fields such as finance, economics, climatology, and more. Time series analysis involves the exploration of this data to identify inherent structures such as patterns or trends, forecasting future points in the series, and providing insights for strategic decision-making.
 
 **Definition:** An ordered sequence of values representing a variable, recorded at equally spaced time intervals.

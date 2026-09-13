@@ -440,7 +440,7 @@ def save_garch_plot(out_dir: Path, rng: np.random.Generator) -> None:
 
 
 def main() -> None:
-    out_dir = Path("notes/assets/time_series")
+    out_dir = Path(__file__).resolve().parents[2] / "assets" / "time_series"
     out_dir.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(7)
     save_series_plots(out_dir, rng)

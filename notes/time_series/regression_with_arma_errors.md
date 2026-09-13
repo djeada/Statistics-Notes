@@ -1,5 +1,25 @@
 # Regression with ARMA Errors
 
+## Worked calculation: a regression mean plus serial error
+
+Consider
+
+$$
+y_t=1+2x_t+n_t,
+\qquad
+n_t=0.7n_{t-1}+\varepsilon_t.
+$$
+
+If $x_t=3$ and the current error happens to be $n_t=0.4$, then the observed value is
+
+$$
+y_t=1+2(3)+0.4=7.4.
+$$
+
+The regression mean is $1+2(3)=7$, but the error is not independent from the previous error. Ordinary least squares may estimate the mean slope reasonably under exogeneity, yet its usual standard errors assume a dependence structure that is not present here. Modeling the ARMA error uses the predictable part of $n_t$ and produces more appropriate forecasts and uncertainty estimates.
+
+![A regression mean with autocorrelated errors](../../assets/time_series/student/16_dynamic_regression.png)
+
 In many applications, we want to explain a response series $Y_t$ using covariates while still accounting for autocorrelation. A standard approach is **regression with ARMA errors**:
 
 $$

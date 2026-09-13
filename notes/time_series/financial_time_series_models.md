@@ -1,5 +1,24 @@
 # Financial Time Series Models
 
+## Worked calculation: returns and conditional variance
+
+If a price rises from $P_{t-1}=100$ to $P_t=102$, the log return is
+
+$$
+r_t=\log(102)-\log(100)=\log(1.02)\approx0.01980.
+$$
+
+For a GARCH-style variance recursion with $\alpha_0=0.01$, $\alpha_1=0.10$, $\beta_1=0.85$, previous return $r_{t-1}=0.2$, and previous variance $h_{t-1}=0.04$,
+
+$$
+h_t=0.01+0.10(0.2^2)+0.85(0.04)
+=0.048.
+$$
+
+The conditional standard deviation is $\sqrt{0.048}\approx0.219$. The squared previous return contributes a shock effect, while the previous variance carries persistence. This is why raw returns may have little autocorrelation while squared returns remain dependent.
+
+![Synthetic volatility clustering](../../assets/time_series/student/20_financial_volatility.png)
+
 Financial series (prices, returns, exchange rates) often look very different from the classical stationary Gaussian assumptions. Common features include:
 
 - **Heavy tails** (extreme events occur more often than normal theory predicts).

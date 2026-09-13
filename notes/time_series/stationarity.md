@@ -1,5 +1,35 @@
 # Stationarity in Time Series
 
+## Worked calculation: the stationary AR(1) mean and variance
+
+Consider
+
+$$
+X_t=1+0.8X_{t-1}+\varepsilon_t,
+\qquad \operatorname{Var}(\varepsilon_t)=1.
+$$
+
+The stationary mean solves
+
+$$
+\mu=1+0.8\mu
+\quad\Longrightarrow\quad
+\mu=5.
+$$
+
+After centering around 5, the stationary variance is
+
+$$
+\operatorname{Var}(X_t)
+=\frac{1}{1-0.8^2}
+=\frac{1}{0.36}
+\approx2.778.
+$$
+
+The calculation requires $|0.8|<1$. If the coefficient were 1, the denominator would be zero and the variance would not settle to a finite constant. If it were 1.03, deviations would grow rather than decay.
+
+![Stationary, unit-root, and explosive AR(1) behavior](../../assets/time_series/student/10_stationarity_cases.png)
+
 Stationarity is an important idea in time series analysis. A time series is considered stationary if its statistical properties—like the mean, variance, and autocovariance—stay constant over time. This matters because methods like ARIMA and ARMA are designed to work with stationary data, so it’s a good idea to check for stationarity before using these models.
 
 Stationarity can be classified into two types:

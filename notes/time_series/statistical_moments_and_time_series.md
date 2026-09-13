@@ -1,5 +1,37 @@
 # Statistical Moments and Time Series
 
+## Worked calculation: mean, variance, and lag covariance
+
+For the four observations
+
+$$
+2,\quad 4,\quad 4,\quad 6,
+$$
+
+the sample mean is
+
+$$
+\bar x=\frac{2+4+4+6}{4}=4.
+$$
+
+The population-style variance is
+
+$$
+\frac{(-2)^2+0^2+0^2+2^2}{4}=2,
+$$
+
+while the unbiased sample variance divides by $4-1$ and is $8/3\approx2.667$. The distinction matters when estimating a population moment from a short series.
+
+For lag 1, the paired centered products are
+
+$$
+(-2)(0)+(0)(0)+(0)(2)=0.
+$$
+
+Thus this tiny sample has lag-1 covariance zero, even though zero sample covariance does not prove independence. With a time series, moments are indexed by the lag as well as by the variable, so a changing mean or variance can make one overall summary misleading.
+
+![Series with different sample variances](../../assets/time_series/student/03_moments_mean_and_variance.png)
+
 Understanding the behavior of time series data is crucial across various fields such as finance, economics, and engineering. Statistical moments, especially the mean and standard deviation, are essential tools in summarizing and analyzing time series data. This section explores how these statistical moments help characterize time series, provides examples, and highlights the differences between time series data and independent random observations.
 
 ### Introduction to Statistical Moments in Time Series

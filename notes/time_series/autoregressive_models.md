@@ -1,5 +1,23 @@
 # Autoregressive (AR) Models in Time Series Analysis
 
+## Worked calculation: one AR(2) update
+
+Take
+
+$$
+X_t=0.4+0.6X_{t-1}-0.2X_{t-2}+\varepsilon_t.
+$$
+
+If $X_{t-1}=3$, $X_{t-2}=2$, and the new shock is $\varepsilon_t=0.5$, then
+
+$$
+X_t=0.4+0.6(3)-0.2(2)+0.5=2.3.
+$$
+
+The conditional mean, before observing the new shock, is $1.8$. The shock moves the realized value away from that mean. The AR polynomial is $1-0.6B+0.2B^2$; its roots determine whether the recursion is stationary.
+
+![AR and MA identification patterns](../../assets/time_series/student/06_ar_ma_identification.png)
+
 Autoregressive (AR) models are fundamental tools in time series analysis, used to describe and forecast time-dependent data. An AR model predicts future values based on a linear combination of past observations. The order of an AR model, denoted as $p$, indicates how many lagged past values are used.
 
 ### Definition of Autoregressive Models

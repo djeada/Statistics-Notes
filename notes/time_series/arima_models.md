@@ -1,5 +1,35 @@
 # ARMA, ARIMA and SARIMA Models
 
+## Worked calculation: ordinary and seasonal differencing
+
+For the short series
+
+$$
+120,\ 123,\ 126,\ 130,
+$$
+
+the first differences are
+
+$$
+3,\ 3,\ 4.
+$$
+
+The difference is the amount of change, so a model for the differenced series describes changes rather than the original level. If monthly data have seasonal period $s=12$, the seasonal difference is
+
+$$
+\nabla_{12}y_t=y_t-y_{t-12}.
+$$
+
+For example, if January sales are 100 this year and 92 last year, the January seasonal difference is $100-92=8$. Ordinary and seasonal differences can be combined as
+
+$$
+(1-B)(1-B^{12})y_t.
+$$
+
+Use the smallest differencing order that makes the remaining series reasonably stable; extra differencing can create unnecessary dependence.
+
+![Ordinary and seasonal differencing](../../assets/time_series/student/12_arima_and_seasonal_differencing.png)
+
 ARMA, ARIMA, and SARIMA are models commonly used to analyze and forecast time series data. ARMA (AutoRegressive Moving Average) combines two ideas: using past values to predict current ones (**autoregression**) and smoothing out noise using past forecast errors (**moving average**). ARIMA (AutoRegressive Integrated Moving Average) builds on ARMA by adding a step to handle trends in non-stationary data through differencing. SARIMA (Seasonal ARIMA) takes it a step further by accounting for repeating seasonal patterns. These models are practical and versatile for working with time series data that show trends, noise, or seasonal effects.
 
 ### Autoregressive Moving Average (ARMA) Models

@@ -1,5 +1,19 @@
 # Randomness and Trend Tests
 
+## Worked calculation: counting turning points
+
+For the short sequence
+
+$$
+1,\ 3,\ 2,\ 4,\ 3,
+$$
+
+the interior observations at positions 2, 3, and 4 are turning points: the sequence goes up then down at 3, down then up at 2, and up then down at 4. Thus the count is 3. A turning-point test compares the observed count with the distribution expected under randomness; it is not a general test of every possible dependence pattern.
+
+For a fitted model, the more important question is whether residuals still contain predictable structure. A residual ACF, a Ljung-Box test, and a plot of residual squares answer different questions and should be read together.
+
+![Turning points in a synthetic series](../../assets/time_series/turning_points_example.png)
+
 When a series looks noisy, it is still useful to check whether the noise is **random** or whether weak structure (trend or dependence) is present. The tests below are lightweight diagnostics for an IID or weak-dependence null.
 
 ### Ljung-Box Q Test (Independence)
