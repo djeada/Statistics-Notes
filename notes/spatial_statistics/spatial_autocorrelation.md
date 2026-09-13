@@ -2,7 +2,7 @@
 
 Spatial autocorrelation asks whether values attached to locations show a systematic spatial pattern.
 
-The key idea is:
+The idea is:
 
 > Are neighboring locations more similar, or more dissimilar, than we would expect under a stated reference mechanism?
 
