@@ -1,5 +1,9 @@
 # State-Space Models and the Kalman Filter
 
+State-space models separate a time series into an unobserved state that evolves through time and an observation process that measures that state with noise. This framework is flexible enough to represent latent levels, trends, seasonal components, regression effects, missing observations, and many familiar ARIMA or smoothing models.
+
+The Kalman filter is the recursive algorithm that makes linear Gaussian state-space models practical. At each step it predicts the next state, compares that prediction with the new observation, and updates the estimate according to their relative uncertainty, creating a clean distinction among filtering, forecasting, and retrospective smoothing.
+
 ## Worked calculation: one local-level Kalman update
 
 Suppose the predicted level is $a_{t|t-1}=10$, its predicted variance is $P_{t|t-1}=1.25$, and the observation is $y_t=12$ with measurement variance $R=1$. The innovation is
