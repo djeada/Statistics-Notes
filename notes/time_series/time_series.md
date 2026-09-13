@@ -6,256 +6,241 @@ Suppose a monthly series is described by
 
 $$
 y_t=100+0.5t+10\sin\left(\frac{2\pi t}{12}\right)+\varepsilon_t,
-\qquad \varepsilon_t\sim(0,4).
+\qquad E(\varepsilon_t)=0,
+\qquad \mathrm{Var}(\varepsilon_t)=4.
 $$
 
-At $t=6$, the seasonal term is $10\sin(\pi)=0$, so the deterministic part is $103$. At $t=3$, the seasonal term is $10\sin(\pi/2)=10$, so the deterministic part is $111. The same trend can therefore produce very different neighboring observations because the seasonal phase changes.
+At $t=6$, the seasonal term is
 
-This example also separates three questions: is the level changing, is a pattern repeating at a known period, and how large is the unpredictable remainder? Those questions determine whether trend removal, seasonal differencing, or a stochastic model is appropriate.
+$$
+10\sin(\pi)=0,
+$$
 
-The existing introduction figures in [assets/time_series/](../../assets/time_series/) show these features, including trend, seasonality, a structural break, white noise, and a random walk.
+so the deterministic part is $100+0.5(6)=103$. At $t=3$, the seasonal term is
 
-Time series data consists of sequential observations collected over a period of time. This kind of data is prevalent in a range of fields such as finance, economics, climatology, and more. Time series analysis involves the exploration of this data to identify inherent structures such as patterns or trends, forecasting future points in the series, and providing insights for strategic decision-making.
+$$
+10\sin\left(\frac{\pi}{2}\right)=10,
+$$
 
-**Definition:** An ordered sequence of values representing a variable, recorded at equally spaced time intervals.
+so the deterministic part is $100+0.5(3)+10=111.5$.
+
+The same trend can therefore produce very different observations at different seasonal positions. This example separates three questions: is the level changing, is a pattern repeating at a known period, and how large is the unpredictable remainder? Those questions determine whether trend modeling, seasonal adjustment or differencing, and a stochastic dependence model are appropriate.
+
+![Series components](../../assets/time_series/foundations/03_series_components.png)
+
+The figure shows these components together. Trend describes slow level movement, seasonality describes regular within-cycle variation, and the remainder captures variation not explained by the chosen decomposition.
+
+A **time series** is an ordered collection of observations indexed by time or another meaningful ordered variable. In applied work, the observations are often recorded on a regular grid such as hourly, daily, monthly, or quarterly, but irregularly spaced observations are also time series and require methods that respect their sampling pattern.
+
+Time-series analysis studies how observations evolve, how their dependence changes with lag, which systematic structures are present, and how uncertainty propagates into future forecasts.
 
 **Discrete vs. continuous time series**
 
-- A **discrete-time** series records observations at a set of discrete times (e.g., daily, monthly, yearly).
-- A **continuous-time** series records observations continuously over a time interval.
-- Most applied work in these notes focuses on **discrete-time** series.
+- A **discrete-time** series is observed at distinct indexed times, such as daily or monthly observations.
+- A **continuous-time** process is defined over a continuous time interval, even if it may only be sampled at discrete times.
+- Most methods in these notes focus on discrete-time data.
 
 ### Ordered Index, Not Just Time
 
-The indexing variable only needs to be ordered with a clear direction. Besides clock time, examples include spatial order (machine 1, machine 2, ...) or depth (1 mm, 2 mm, ...). What matters is that past, present, and future are well-defined.
+The index only needs a meaningful order and direction. Besides clock time, examples include depth, distance along a transect, or sequential position in a production line. What matters is that the order is scientifically meaningful and that lagged relationships can be interpreted consistently.
 
 ### First Look: Plotting the Series
 
-Plotting a time series is an important early step. A plot can reveal:
+A time plot is one of the most informative first diagnostics. It can reveal trend, repeating seasonality, cycles, changing variance, outliers, missing periods, and structural breaks.
 
-- **Trend** (upward or downward movement that may extend into the future).
-- **Periodicity** (repeating behavior with a regular pattern).
-- **Seasonality** (periodic behavior with a known period, like monthly or quarterly).
-- **Heteroskedasticity** (changing variance over time).
-- **Dependence** (successive observations tend to be similar or dissimilar).
-- **Outliers, missing data, or structural breaks**.
+The plot should be read together with a description of what each observation represents. A daily total, a monthly average, and an instantaneous measurement have different meanings even if they share the same timestamps.
 
-### Goals of Time Series Analysis
-
-Time series analysis commonly aims to:
-
-- **Model the data** to explain structure or test scientific hypotheses.
-- **Forecast future values**.
-- **Provide a compact description** of the series (useful for data compression).
-
-### Modeling Mindset
-
-We often treat the observed series as a single realization of a random process. Unlike many textbook settings, time series data are typically **not IID**:
-
-- Observations are **dependent** due to trend or seasonality.
-- Variance can change over time.
-- Distributions can shift across time.
-
-A practical first goal is to remove **trend**, **seasonality**, and **heteroskedasticity**, then model the remainder as a dependent but more stable process.
-
-Distinguishing **trend** from **dependence** can be difficult because there is no unique decomposition and we only observe one realization. This is one reason we rely on dependence summaries (like autocovariances) instead of full joint distributions, which are usually impractical to specify.
-
-A complete probabilistic model of a time series $\{X_t\}$ observed at times $t_1, \dots, t_n$ is the **joint distribution**:
-
-$$
-F(C_1, \dots, C_n) = P(X_1 \le C_1, \dots, X_n \le C_n)
-$$
-
-In practice this is hard to specify except in special cases (e.g., jointly normal variables), so we typically summarize dependence via means, variances, and autocovariances instead.
-
-### The need for Time Series Models
-
-You are probably aware of regression models, where models predict one quantity based on the relationship with another quantity. They typically involve using independent variables to predict dependent variables. For example, when predicting electricity consumption for a particular month, we would take into consideration temperature, number of residents, and so on. These factors might seem sufficient for all cases of prediction, making the creation of an entirely new domain of models just for time series seem unnecessary, doesn’t it? However, the issue arises when past values influence the current value. This is where time series models come into play. For instance, predicting this month's electricity consumption based on last month's consumption can be achieved using an AR(1) model.
-
-**Non-Time Series Approach:**
-
-- Often involves **interpolation**, predicting within the range of existing data points based on relationships between independent and dependent variables.
-- Predict electricity consumption based on **external factors** like temperature.
-- Lower temperatures generally lead to increased consumption up to a certain plateau.
-- **Prediction errors** remain relatively consistent across different prediction points.
-- **Confidence intervals** (prediction intervals) are similar across various predictions.
-
-**Time Series Approach:** 
-
-- Primarily involves **extrapolation**, forecasting future values beyond the range of available data, which inherently carries more uncertainty.
-- Time series data have inherent **temporal structures** where current values are dependent on past values. Capturing these dependencies requires models that can account for autocorrelation and temporal dynamics, which traditional regression models are not designed to handle.
-- In time series forecasting, **prediction errors** can accumulate over time, leading to increasing uncertainty the further into the future the forecast extends. Specialized time series models incorporate mechanisms to manage and quantify this growing uncertainty, unlike standard regression models where errors are typically more stable.
-- Time series often have trends, seasonality, and other **dynamic patterns** that need to be explicitly modeled. Specialized approaches like **ARIMA**, **Exponential Smoothing**, and **state-space models** are tailored to identify and forecast these patterns effectively.
-- Time series models provide **prediction intervals** that expand over time, reflecting the increasing uncertainty of forecasts. Standard regression models usually offer fixed confidence intervals that do not account for the temporal horizon of predictions.
-- Time series analysis uses unique methodologies and models (e.g., **ARIMA**, **GARCH**, **LSTM networks**) that are specifically designed to handle the sequential and dependent nature of the data, which are not accommodated by conventional regression techniques.
-
-Below is a plot that visualizes the historical data and predictions of electricity consumption over time. 
-
-![electricity consumption over time](https://github.com/user-attachments/assets/89a67e4f-1c56-4ca8-8ff2-66ce2fb663ee)
-
-The plot includes three components:
-
-1. **Historical Data** shown as a solid line, this represents the actual electricity consumption data collected over a two-year period from January 2021 to December 2022.
-2. **Regression Prediction** represented by a dashed blue line, this forecast is based on a linear regression model. It captures a simple trend over the historical data and projects it forward for the first three months of 2023.
-3. **Time Series Prediction** shown as another dashed line, this prediction uses an Exponential Smoothing model with a seasonal component. It considers both trend and seasonality in the data to provide a more dynamic projection for the same three-month period.
-
-### Diagnostic Gallery (Synthetic Examples)
-
-The examples below are synthetic and are meant to highlight specific diagnostic patterns without copying any original figures.
+The following synthetic examples isolate common patterns.
 
 ![synthetic nonlinear trend](../../assets/time_series/intro_nonlinear_trend.png)
 
-- Smooth upward change with a nonlinear trend component.
+A smooth nonlinear rise suggests that a constant-level stationary model would be inappropriate without a trend component or transformation.
 
 ![synthetic seasonal heteroskedastic series](../../assets/time_series/intro_seasonal_heteroskedastic.png)
 
-- Regular seasonality with variance that grows over time.
+Here the seasonal pattern repeats while its amplitude grows. The increasing spread suggests considering a log or other variance-stabilizing transformation before modeling the seasonal structure.
 
 ![synthetic structural break](../../assets/time_series/intro_structural_break.png)
 
-- A clear regime shift where the long-term slope changes.
+A structural break changes the data-generating mechanism. Fitting one stable parameter set across both regimes can produce misleading averages.
 
 ![synthetic seasonal structural break](../../assets/time_series/intro_seasonal_structural_break.png)
 
-- Seasonal pattern with a regime shift in level and amplitude.
+This example shows that both the level and seasonal amplitude can change after a break, so simply estimating one seasonal index for the full sample may be inadequate.
 
 ![synthetic periodic but nonseasonal signal](../../assets/time_series/intro_periodic_nonseasonal.png)
 
-- Periodic behavior without an obvious calendar-based season.
+A series can oscillate without having calendar seasonality. Seasonality refers to a fixed repeating period tied to the sampling structure; other periodic or cyclic behavior may have a different mechanism.
 
 ![synthetic negative dependence series](../../assets/time_series/intro_negative_dependence.png)
 
-- Successive observations tend to alternate around the mean.
+Negative short-lag dependence tends to produce alternation around the mean.
 
 ![synthetic positive dependence series](../../assets/time_series/intro_positive_dependence.png)
 
-- Successive observations tend to remain on the same side of the mean.
+Positive short-lag dependence tends to produce runs of observations on the same side of the mean.
 
 ![synthetic white noise](../../assets/time_series/intro_white_noise.png)
 
-- No trend, no seasonality, and no visible dependence structure.
+White noise has a stable mean and variance with no linear autocorrelation at nonzero lags. A finite realization can still show apparent short runs by chance.
 
 ![synthetic random walk](../../assets/time_series/intro_random_walk.png)
 
-- A non-stationary series with drifting level and growing variance.
+A random walk accumulates shocks, so its level wanders and its variance grows with time. The visual contrast with white noise is a first illustration of stationary versus non-stationary behavior.
+
+### Goals of Time Series Analysis
+
+Time-series analysis can be used to describe recurring structure, estimate dynamic relationships, detect changes, explain mechanisms, and forecast future values. The appropriate method depends on the goal: a descriptive smoother, a causal analysis, and an operational forecast may use the same dataset but require different assumptions.
+
+### Modeling Mindset
+
+We often treat the observed series as one realization of an underlying stochastic process. The observations are generally not assumed to be IID because their distributions, conditional means, variances, or lag relationships can depend on time and past information.
+
+Trend and seasonality are forms of systematic time structure, but they are not themselves the same as stochastic serial dependence. After deterministic or evolving mean structure is modeled, the remaining process may still have autocorrelation that requires an ARMA-type description.
+
+A complete probabilistic specification for observations $X_1,\ldots,X_n$ is their joint distribution,
+
+$$
+F(c_1,\ldots,c_n)
+=P(X_1\le c_1,\ldots,X_n\le c_n).
+$$
+
+In practice, specifying a high-dimensional joint distribution directly is usually impractical. Time-series models instead exploit structure: conditional distributions, state equations, means, variances, autocovariances, or factorized likelihoods.
+
+![Changing moments](../../assets/time_series/foundations/04_moments_change_over_time.png)
+
+The changing-moments figure illustrates why one global mean and variance can be misleading when the process evolves. Stationarity assumptions should be checked against the time variation visible in the data.
+
+### The need for Time Series Models
+
+Ordinary regression and time-series modeling are not competing domains. Regression can include time, lagged predictors, calendar effects, and serial-error structures. The distinctive challenge in forecasting is that observations are ordered, future information is unavailable, and uncertainty often depends on forecast horizon.
+
+For electricity consumption, temperature and household characteristics may explain part of the conditional mean, while recent consumption, day-of-week effects, and seasonal dynamics can explain additional temporal structure. A dynamic regression or state-space model can combine both sources of information.
+
+A useful contrast is therefore not "regression versus time series," but **static independent-error modeling versus models that respect temporal information and dependence**.
+
+In a forecasting problem:
+
+- training and evaluation must preserve chronological order;
+- lagged observations can contain predictive information;
+- future predictor values may need their own forecasts;
+- uncertainty usually changes with horizon;
+- trend, seasonality, breaks, and evolving variance must be handled explicitly.
+
+The following electricity-consumption example compares a simple regression-style projection with a seasonal time-series forecast.
+
+![electricity consumption over time](https://github.com/user-attachments/assets/89a67e4f-1c56-4ca8-8ff2-66ce2fb663ee)
+
+The historical line establishes the observed pattern. The linear projection extends a simple trend, while the exponential-smoothing forecast also reflects seasonal structure. The comparison demonstrates how different structural assumptions lead to different extrapolations beyond the observed sample.
+
+### Diagnostic Gallery (Synthetic Examples)
+
+The synthetic examples above form a diagnostic gallery: each plot isolates a feature that changes the modeling decision. Trend suggests a changing mean, seasonality suggests a repeating component, heteroskedasticity suggests changing variance, breaks suggest parameter instability, and positive or negative lag dependence motivates explicit dynamic structure.
+
+The point of the gallery is not to classify a real series from appearance alone. Real data often combine several of these features, so plots should be followed by transformations, lag diagnostics, domain knowledge, and forecast validation.
 
 ### Components of a Time Series
 
-A time series is a series of data points indexed in chronological order, typically at regular time intervals. It can be decomposed into four primary components:
+A time series can often be described in terms of several broad components:
 
-- **Trend** in a time series reflects the general direction in which the values are moving over a longer time frame. This could be an upward trend indicating growth, a downward trend signaling decline, or a stationary trend showing no significant change over time.
-- **Seasonality** in a time series is identified by regular, repeating patterns that occur at fixed intervals, such as daily, monthly, or yearly. Examples include increased sales during holiday seasons or higher electricity demand in summer months.
-- **Cyclicity** in a time series refers to patterns that occur over irregular intervals and are influenced by external or macroeconomic factors. Unlike seasonality, cyclic patterns are not tied to a fixed calendar period and can vary in duration.
-- **Irregularity** or **noise** in a time series represents random and unpredictable fluctuations that are not explained by the trend, seasonality, or cyclicity. These could be caused by unexpected events such as policy changes, economic shocks, or natural disasters.
-- **Decomposition** of a time series involves breaking it down into its constituent components: trend, seasonality, cyclicity, and irregularity. This is useful for analysis and forecasting.
+- **Trend:** a persistent long-run movement in level or slope.
+- **Seasonality:** a pattern tied to a fixed, known period.
+- **Cycles:** oscillations whose timing is less regular than seasonality.
+- **Irregular variation:** variation not explained by the chosen systematic structure.
+- **Structural breaks:** changes in the mechanism itself rather than ordinary fluctuations around one stable model.
+
+A decomposition is a modeling choice, not a unique physical partition. Different smoothers or state-space models can assign variation differently between trend, cycle, seasonality, and remainder.
 
 ### Time Series Analysis Techniques
 
-Timeseries analysis methods can be broadly classified into two main categories: time-domain methods and frequency-domain methods.
+Time-series methods are often grouped into time-domain and frequency-domain approaches. The two views are complementary: one describes relationships by lag, while the other describes variation by frequency.
 
 ### A Simple Modeling Workflow
 
-1. **Plot the series** to identify trend, seasonality, breaks, and variance changes.  
-2. **Remove trend/seasonality** using detrending, seasonal adjustment, or differencing.  
-3. **Model the residuals** using ACF/PACF-guided AR/MA/ARMA choices.  
-4. **Forecast residuals**, then reconstruct forecasts for the original series.  
+1. **Plot the series** and identify trend, seasonality, breaks, missingness, and variance changes.
+2. **Define the target and information set** before choosing transformations.
+3. **Model or transform systematic structure** such as trend and seasonality when justified.
+4. **Inspect dependence** with residual plots, ACF/PACF, or state-space innovations.
+5. **Fit parsimonious candidates** that match the remaining structure.
+6. **Forecast and reconstruct the target scale** when transformations were used.
+7. **Evaluate chronologically** against suitable baselines.
 
 #### Time-Domain Methods
 
-These methods analyze the temporal sequences of data points directly. The focus here is on identifying patterns such as trends, seasonality, noise, and fluctuations within the time series data. 
+Time-domain methods work directly with ordered observations and lags. The autocorrelation function summarizes linear dependence within one series, while cross-correlation describes lagged linear association between two series. Cross-correlation does not by itself establish direction or causality because common trends, seasonality, and omitted variables can create apparent lead-lag patterns.
 
-Important Techniques Include:
+Common time-domain model families include autoregressive and moving-average models, ARIMA, exponential smoothing, dynamic regression, state-space models, and multivariate VAR/VECM models.
 
-- **Autocorrelation** analysis measures the correlation between a time series and its lagged values. This helps identify repetitive patterns and predictability based on the relationships between past and current observations.
-- **Cross-correlation** analysis evaluates the relationship between two different time series at varying time lags. It reveals how changes in one series may lead to or influence changes in another over time.
+A **rolling moving average** is a descriptive smoother computed from observed values. An **MA($q$) stochastic model** is different: it represents the current value as a finite combination of unobserved innovations. Keeping these terms separate avoids a common source of confusion.
 
-Some of the methods used for time-domain analysis include:
+Exponential smoothing recursively updates latent level, trend, or seasonal states. ARIMA combines differencing with AR and MA dependence. Neither method is universally preferable; each encodes a different representation of evolving structure.
 
-- **Stochastic Processes**
-- **Random Vectors**
-- **Deterministic Signals**
-- **Time Delay Analysis**
-- **Nonlinear Systems**
+![Linear filter](../../assets/time_series/foundations/08_linear_filter.png)
 
-After decomposing the time series into its components, statistical techniques can be employed to model and forecast future points in the series. Some widely used techniques include:
-
-- **Moving averages (MA)** involve calculating the average of a fixed number of consecutive data points around each observation. This method smooths out short-term fluctuations, reducing noise and emphasizing the underlying trend.
-- **Exponential smoothing (ES)** assigns exponentially decreasing weights to older observations, giving more importance to recent data. This method is particularly useful for capturing trends and seasonal effects in dynamic datasets.
-- **Autoregressive integrated moving average (ARIMA)** combines autoregression (using past values), differencing (removing trends to achieve stationarity), and moving averages (smoothing residuals) in one model. It is effective for modeling and forecasting non-stationary time series with trends or seasonality.
+The linear-filter figure connects many time-domain operations. Smoothing, differencing, and ARMA representations can all be expressed as weighted combinations of lagged observations or shocks, with different weight patterns serving different purposes.
 
 #### Frequency-Domain Methods
 
-These methods focus on transforming the time series data into the frequency domain to detect and study cyclic behaviors and periodicities. This is typically done through mathematical transforms that help decompose the time series into constituent frequencies.
+Frequency-domain methods decompose variation into oscillations at different frequencies. Fourier and spectral methods are especially useful for detecting dominant cycles and comparing frequency-specific relationships between series.
 
-Important Techniques Include:
-
-- **Spectral analysis** uses techniques such as Fourier Series for analyzing periodic signals, Fourier Transform for decomposing aperiodic signals into frequency components, and Laplace Transform for signal decomposition and stability analysis.
-- **Wavelet analysis** applies discrete and continuous wavelet transforms to study localized phenomena in both time and frequency domains, making it particularly useful for analyzing non-stationary or transient signals.
-
-These techniques enable you to study the frequency composition of the data, highlighting dominant cycles that might not be apparent in the time domain.
+Wavelet methods add time localization, making them useful when the frequency content changes over the record. Frequency-domain analysis still depends on the sampling rate and stationarity assumptions; aliasing and spectral leakage can distort interpretation.
 
 #### Parametric vs. Non-Parametric Methods
 
-- **Parametric methods** involve models like autoregressive and moving average models, which assume a specific structure for the data-generating process. These methods estimate a finite set of parameters and typically require strong assumptions, such as stationarity of the series.
-- **Non-parametric methods** include approaches like covariance or spectral analysis, which impose fewer assumptions on the data. These methods provide greater flexibility by not requiring a predetermined model structure, allowing for a more adaptable analysis of the series.
+**Parametric methods** specify a finite-dimensional model such as ARMA, VAR, or a state-space system and estimate its parameters. **Non-parametric or weakly parametric methods** estimate features such as autocovariance or spectral density with fewer assumptions about a complete data-generating equation.
+
+Both require assumptions. A non-parametric estimate is not assumption-free; smoothing choices, stationarity, bandwidth, and sampling structure still matter.
 
 #### Types of Timeseries
 
-The classification also distinguishes between:
+Models can also be described by the number of series and the form of their relationships:
 
-- **Linear univariate** models analyze time series with a single variable and assume a linear relationship between the current and past values of the series.
-- **Linear multivariate** models extend linear analysis to multiple variables, capturing the relationships and interactions between them over time.
-- **Nonlinear univariate** models deal with a single variable but allow for complex, nonlinear relationships within the series, often capturing dynamics that linear models cannot.
-- **Nonlinear multivariate** models analyze multiple variables, accounting for nonlinear interactions and dependencies among them, which are common in complex systems.
-
-Below is a plot demonstrating the four concepts of time series modeling:
+- **Linear univariate:** one target with linear dependence on its own history or innovations.
+- **Linear multivariate:** several series linked through linear dynamic relationships.
+- **Nonlinear univariate:** one target with nonlinear state or lag dependence.
+- **Nonlinear multivariate:** several variables with nonlinear interactions.
 
 ![types_of_models](https://github.com/user-attachments/assets/e49984c5-e6d1-46c1-b7ba-e6aea8a437df)
 
-1. **Linear Univariate Model** shows predictions using a single variable with a linear ARIMA model.
-2. **Linear Multivariate Model** shows predictions with multiple variables using a VAR model.
-3. **Nonlinear Univariate Model** shows predictions using a single variable with a nonlinear MLP model.
-4. **Nonlinear Multivariate Model** shows predictions with multiple variables using a nonlinear MLP model.
+The figure places representative model classes into these four categories. The classification describes structural flexibility, not forecast quality; a simpler linear model can outperform a nonlinear model when the extra flexibility is unsupported by the data.
 
 ### Applications of Time Series Analysis
 
-Time series analysis finds widespread applications across various industries, including:
+Time-series analysis is used wherever ordered observations support monitoring or forecasting. Financial applications model returns, volatility, and risk; meteorological applications forecast evolving physical variables; and sales or demand forecasting supports inventory, staffing, and production planning.
 
-- **Financial forecasting** involves analyzing historical stock prices, indices, or financial metrics to predict future market trends, assisting in investment and trading decisions.
-- **Weather forecasting** uses historical meteorological data to predict future weather patterns, aiding in planning and mitigating the impact of severe weather events.
-- **Sales forecasting** applies time series analysis to estimate future product demand, enabling businesses to optimize inventory, production, and supply chain operations.
+The modeling objective and information set differ across these domains, so the same method should not be transferred without checking sampling, loss functions, and forecast horizons.
 
 ### Example
 
-Let's consider a simplified example of time series data and apply some basic analysis techniques to it. Imagine we have the following monthly sales data for a retail store:
+Consider monthly sales:
 
 | Month | Sales |
-| ----- | ----- |
-| 1     |  100 |
-| 2     |  120 |
-| 3     |  110 |
-| 4     |  130 |
-| 5     |  140 |
-| 6     |  150 |
-| 7     |  160 |
-| 8     |  180 |
-| 9     |  170 |
-| 10    |  190 |
-| 11    |  200 |
-| 12    |  210 |
+|---|---:|
+| 1 | 100 |
+| 2 | 120 |
+| 3 | 110 |
+| 4 | 130 |
+| 5 | 140 |
+| 6 | 150 |
+| 7 | 160 |
+| 8 | 180 |
+| 9 | 170 |
+| 10 | 190 |
+| 11 | 200 |
+| 12 | 210 |
 
 ### Plotting the Time Series Data
 
-First, we can visualize the data using an ASCII plot:
+An ASCII plot makes the upward movement visible:
 
-```
+```text
 Sales
 210 |                                   x
 200 |                                x
 190 |                             x
 180 |                         x
-170 |                      x 
-160 |                   x 
+170 |                      x
+160 |                   x
 150 |                x
 140 |             x
 130 |          x
@@ -267,39 +252,38 @@ Sales
                    Month
 ```
 
-From the plot, we can see an increasing trend in the sales data.
+The plot suggests an increasing level, but twelve observations are not enough to establish a stable long-run trend or a seasonal pattern. Any forecast should therefore be compared with a simple baseline and treated as highly uncertain.
 
 #### Applying Moving Average
 
-Next, let's apply a moving average with a window size of 3 to smooth out short-term fluctuations:
+A trailing three-month moving average smooths short-run fluctuations:
 
 | Month | Sales | Moving Average (Window=3) |
-| ----- | ----- | ------------------------- |
-| 1     |  100  |         |
-| 2     |  120  |         |
-| 3     |  110  |     110 |
-| 4     |  130  |     120 |
-| 5     |  140  |     127 |
-| 6     |  150  |     140 |
-| 7     |  160  |     150 |
-| 8     |  180  |     163 |
-| 9     |  170  |     170 |
-| 10    |  190  |     180 |
-| 11    |  200  |     187 |
-| 12    |  210  |     200 |
+|---|---:|---:|
+| 1 | 100 |  |
+| 2 | 120 |  |
+| 3 | 110 | 110 |
+| 4 | 130 | 120 |
+| 5 | 140 | 127 |
+| 6 | 150 | 140 |
+| 7 | 160 | 150 |
+| 8 | 180 | 163 |
+| 9 | 170 | 170 |
+| 10 | 190 | 180 |
+| 11 | 200 | 187 |
+| 12 | 210 | 200 |
 
-The moving average shows an increasing trend in sales, similar to the original time series plot.
+The smoother confirms the broad upward movement but is descriptive: it does not by itself define a probabilistic forecast model.
 
-Here's the plot with the analysis using Simple Exponential Smoothing (SES) on the given sales data:
+The same data can be fit with simple exponential smoothing (SES):
 
 ![sales_prediction](https://github.com/djeada/Statistics-Notes/assets/37275728/85db196f-ac46-438a-8011-a6a3f952bdb8)
 
-- The blue line represents the actual sales data for each month.
-- The purple dashed line shows the predictions from the optimized SES model.
+The actual sales line provides the target, while the SES line shows a recursively updated level estimate. Because SES has no explicit trend component, its appropriateness should be judged against trend-aware alternatives if the upward movement persists.
 
 ## Student guide: a time series is data plus an information structure
 
-A time series is not only a vector $y_1,\ldots,y_T$. Its timestamps, sampling rule, support, release timing, and order determine which observations can inform a forecast and which dependence patterns are scientifically plausible.
+A time series is not only a vector $y_1,\ldots,y_T$. Timestamps, sampling rules, support, release timing, and order determine which observations can inform a forecast and which dependence patterns are scientifically plausible.
 
 ### Learning objectives
 
@@ -307,51 +291,43 @@ After working through this chapter, you should be able to:
 
 1. distinguish a time series from an unordered sample;
 2. identify trend, seasonality, cycles, breaks, and irregular variation;
-3. write a decomposition and calculate its pieces for a chosen time point;
-4. explain why sampling frequency determines the questions that can be answered;
-5. choose a first transformation without hiding the original target;
-6. define a forecast origin and a valid information set;
-7. separate descriptive smoothing from stochastic model terms.
+3. write a decomposition and calculate its pieces at a chosen time;
+4. explain why sampling frequency limits the patterns that can be identified;
+5. choose an initial transformation without losing sight of the original target;
+6. define a forecast origin and valid information set;
+7. distinguish descriptive smoothing from stochastic model terms.
 
 ### What is indexed by time?
 
-At each time $t$, the observed value may be:
+At each time $t$, an observation may be a point measurement, interval total, interval average, event count, or vector of measurements recorded together. These supports are not interchangeable.
 
-- a point measurement, such as temperature at 12:00;
-- an interval total, such as daily sales;
-- an interval average, such as a monthly rate;
-- an event count;
-- a vector of measurements recorded together.
-
-The same physical process can look different under these supports. Aggregating hourly demand into daily totals changes variance, seasonality, and dependence. A model for an interval total should not be interpreted as a model for an instantaneous value.
+Aggregating hourly demand into daily totals changes variance, seasonality, and lag dependence. A model for a daily total should therefore not be interpreted as a model for an instantaneous hourly value.
 
 ### Components with a numerical example
 
 An additive teaching decomposition is
 
 $$
-y_t=T_t+S_t+R_t,
+y_t=T_t+S_t+R_t.
 $$
 
-where $T_t$ is trend, $S_t$ is a repeating seasonal component, and $R_t$ is the remainder.
-
-Take
+For
 
 $$
-y_t=100+0.5t+10\sin(2\pi t/12)+\varepsilon_t,
-\qquad
-\varepsilon_t\sim(0,4).
+y_t=100+0.5t+10\sin\left(\frac{2\pi t}{12}\right)+\varepsilon_t,
 $$
 
-At $t=3$:
+at $t=3$,
 
 $$
 T_3=100+0.5(3)=101.5,
 \qquad
-S_3=10\sin(\pi/2)=10.
+S_3=10\sin\left(\frac{\pi}{2}\right)=10.
 $$
 
-The deterministic part is $111.5$. If $\varepsilon_3=-1.2$, the observed value is $110.3$. At $t=6$, $S_6=0$, so the deterministic part is $103$. A visible change between these months need not be a change in the long-run trend; it can be seasonal phase.
+The deterministic part is $111.5$. If $\varepsilon_3=-1.2$, the observed value is $110.3$. At $t=6$, $S_6=0$, so the deterministic part is $103$.
+
+A visible difference between the two months therefore need not indicate a change in the long-run trend; it can be entirely due to seasonal phase.
 
 For multiplicative behavior,
 
@@ -359,31 +335,31 @@ $$
 y_t=T_tS_tR_t,
 $$
 
-the seasonal amplitude grows with the level. Taking logs gives
+a log transformation gives
 
 $$
 \log y_t=\log T_t+\log S_t+\log R_t,
 $$
 
-which converts multiplication into addition when a log transform is appropriate.
+when the values are positive and the multiplicative representation is appropriate.
 
 ### Trend, seasonality, cycle, and break
 
-These terms describe different structures:
+- **Trend:** persistent movement in level or slope.
+- **Seasonality:** a pattern tied to a fixed repeating period.
+- **Cycle:** a longer or less regular oscillation.
+- **Structural break:** a change in the process or parameter regime.
+- **Irregular component:** variation not explained by the chosen structure.
 
-- **trend:** a persistent change in level or slope;
-- **seasonality:** a pattern tied to a known repeating period;
-- **cycle:** a longer or less regular oscillation;
-- **structural break:** a change in the data-generating mechanism;
-- **irregular component:** variation not explained by the chosen structure.
-
-A trend is not necessarily a unit root. A seasonal pattern is not necessarily a seasonal AR term. A break is not an outlier that can be removed without explanation.
+A trend is not necessarily a unit root, a seasonal pattern is not necessarily a seasonal AR term, and a structural break is not automatically an outlier to delete.
 
 ### Sampling and aliasing
 
-Suppose an underlying signal contains a cycle of 0.65 cycles per observation. Sampling once per interval has Nyquist limit 0.5, so the signal can appear as an alias at a lower frequency. More frequent observations are needed to distinguish the cycles.
+Sampling determines which frequencies can be distinguished. With one observation per interval, the Nyquist frequency is $0.5$ cycles per observation. A higher-frequency signal can appear as a lower-frequency alias when the sampling rate is too low.
 
-Irregular timestamps also change the problem. Standard ACF and Fourier formulas assume a regular grid; an irregularly sampled process may require interpolation, continuous-time methods, or a model for the observation process. Interpolation can introduce dependence and should be treated as a modeling choice.
+![Regular and irregular sampling](../../assets/time_series/foundations/07_regular_and_irregular_sampling.png)
+
+The figure also contrasts regular and irregular timestamps. Standard ACF and Fourier formulas assume a regular grid. Interpolating irregular observations onto such a grid can be useful, but it creates synthetic values and can alter dependence, so it should be treated as a modeling decision.
 
 ### First-pass exploration
 
@@ -393,44 +369,59 @@ Record the following before modeling:
 |---|---|
 | Is the index regular? | timestamp differences |
 | Are values missing? | missingness by time and season |
-| Does the spread grow with level? | level plot and log plot |
-| Is there a repeating period? | seasonal subplots, lag-$s$ ACF |
+| Does spread grow with level? | level plot and log plot |
+| Is there a repeating period? | seasonal subplots and lag-$s$ dependence |
 | Is there a break? | rolling moments and event history |
 | Are observations dependent? | ACF/PACF and domain mechanism |
 | What will be forecast? | target definition and horizon |
 
-The first plot should be accompanied by a statement of what one observation represents.
+The first plot should always be accompanied by a statement of what one observation represents.
 
 ### Smoothing versus forecasting
 
-A moving average
+A trailing moving average
 
 $$
-\tilde y_t=\frac1w\sum_{j=0}^{w-1}y_{t-j}
+\tilde y_t=\frac{1}{w}\sum_{j=0}^{w-1}y_{t-j}
 $$
 
-is a descriptive filter. It can reveal a level or trend, but a centered smoother uses future observations and is unsuitable as a real-time feature unless the task is retrospective description.
+is a descriptive filter. A centered moving average uses future observations relative to $t$ and is therefore retrospective rather than a valid real-time feature.
 
-Simple exponential smoothing uses
+Simple exponential smoothing updates a level recursively:
 
 $$
 \ell_t=\alpha y_t+(1-\alpha)\ell_{t-1}.
 $$
 
-This is both a smoother and a forecasting method because $\ell_t$ is used as a future level forecast. The smoothing parameter controls responsiveness, not a universal measure of model quality.
+The filtered level can also be used as a forecast. The smoothing parameter controls responsiveness; it is not by itself a measure of model quality.
+
+![Geometric series](../../assets/time_series/foundations/01_geometric_series.png)
+
+The geometric-series figure explains why exponential weighting has a long but decaying memory: recursively applied weights shrink geometrically as observations become older.
 
 ### The information set
 
-If a forecast is issued at time $t$, define $\mathcal F_t$. Any transformation, feature, model fit, and parameter choice must be measurable with respect to $\mathcal F_t$ in a backtest. This includes:
+If a forecast is issued at time $t$, define the available information $\mathcal F_t$. Every transformation, feature, parameter estimate, and model choice used in a historical backtest must be based only on information in that set.
 
-- scaling;
-- imputation;
-- seasonal adjustment;
-- feature selection;
-- predictor values;
-- hyperparameter tuning.
+This includes scaling, imputation, seasonal adjustment, feature selection, predictor values, and hyperparameter tuning. The same formula can be valid or leaked depending on whether it is recomputed inside each historical training window.
 
-The same formula can be valid or invalid depending on whether it is recomputed inside each historical training window.
+### Difference equations and stochastic dynamics
+
+Many time-series models are recursions. Their stability depends on whether the effect of an initial condition or shock decays.
+
+![Difference-equation stability](../../assets/time_series/foundations/02_difference_equation_stability.png)
+
+The figure shows stable and unstable recursions. In a stable system, deviations shrink over time; in an unstable system, they grow.
+
+### White noise, random walks, and stationarity
+
+![White noise and random walk](../../assets/time_series/foundations/05_white_noise_random_walk.png)
+
+White noise has stable second-order properties, while a random walk accumulates shocks and develops increasing level uncertainty.
+
+![Stationarity cases](../../assets/time_series/foundations/06_stationarity_cases.png)
+
+The stationarity figure places stable, unit-root, and explosive behavior side by side. These cases can look similar in short samples, which is why plots, root conditions, transformations, and formal tests should be interpreted together.
 
 ### Recommended workflow
 
@@ -438,29 +429,13 @@ The same formula can be valid or invalid depending on whether it is recomputed i
 2. Plot levels and relevant transformations.
 3. Audit timestamp regularity and missingness.
 4. Describe trend, seasonality, breaks, and changing variance.
-5. Define the forecast target and horizon.
-6. Choose a baseline before fitting a complex model.
-7. Transform only for a stated reason.
-8. Preserve the time order in validation.
+5. Define the forecast target, horizon, and information set.
+6. Choose a simple baseline before fitting a complex model.
+7. Transform only for a stated modeling reason.
+8. Preserve chronological order in validation.
 9. Diagnose residuals and forecast errors.
 10. Explain the limitations of the chosen representation.
 
 ### Visual companions
 
-Run [foundations_visualizations.py](../../scripts/time_series/foundations_visualizations.py):
-
-![Geometric series](../../assets/time_series/foundations/01_geometric_series.png)
-
-![Difference-equation stability](../../assets/time_series/foundations/02_difference_equation_stability.png)
-
-![Series components](../../assets/time_series/foundations/03_series_components.png)
-
-![Changing moments](../../assets/time_series/foundations/04_moments_change_over_time.png)
-
-![White noise and random walk](../../assets/time_series/foundations/05_white_noise_random_walk.png)
-
-![Stationarity cases](../../assets/time_series/foundations/06_stationarity_cases.png)
-
-![Regular and irregular sampling](../../assets/time_series/foundations/07_regular_and_irregular_sampling.png)
-
-![Linear filter](../../assets/time_series/foundations/08_linear_filter.png)
+The foundational visuals are placed with the concepts they explain: series components beside decomposition, changing moments beside stationarity assumptions, filters beside smoothing, sampling beside aliasing and timestamp structure, difference equations beside stability, and white-noise/random-walk cases beside stationarity. Together they form the conceptual path from observing a sequence to specifying and validating a time-series model.
