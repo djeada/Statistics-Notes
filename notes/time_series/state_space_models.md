@@ -297,8 +297,4 @@ After fitting, inspect standardized innovations, their ACF, squared innovations,
 
 A Gaussian state-space model can produce a smooth-looking latent path even when the data contain heavy tails, nonlinear dynamics, or structural breaks. A smoother improves the estimate under the assumed model; it does not repair a misspecified model.
 
-### Visual companions
-
-The local-level, Kalman-gain, missing-observation, and filtering-versus-smoothing figures are integrated with the corresponding explanations above. Together they show the full state-space cycle: predict a latent state, update it with a noisy observation when available, propagate uncertainty, and distinguish real-time filtering from retrospective smoothing.
-
 The related frequency-domain material is covered in the [frequency-domain chapter](frequency_domain_analysis.md), and the [state-space/frequency notebook](../../notebooks/time_series/state_space_and_frequency.ipynb) provides an additional worked environment.
