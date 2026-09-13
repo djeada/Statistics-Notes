@@ -63,13 +63,7 @@ The Bonferroni correction is conservative, particularly when many tests are perf
 Suppose we conduct 20 hypothesis tests and want to control the family-wise error rate at $\alpha = 0.05$. The Bonferroni-adjusted significance level is:
 
 $$
-\alpha_{\text{adjusted}}
-=
-\frac{\alpha}{m}
-=
-\frac{0.05}{20}
-=
-0.0025
+\alpha_{\text{adjusted}} = \frac{\alpha}{m} = \frac{0.05}{20} = 0.0025
 $$
 
 where:
