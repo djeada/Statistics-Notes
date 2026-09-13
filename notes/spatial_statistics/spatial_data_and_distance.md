@@ -1,8 +1,7 @@
-# Spatial Data, Support, and Distance: A Student Guide
+# Spatial Data, Support, and Distance
+Spatial analysis begins before any spatial statistic is calculated.
 
-Spatial analysis begins **before** any spatial statistic is calculated.
-
-Before using Moran's \(I\), fitting a variogram, running kriging, or analyzing a point pattern, we must decide what the spatial observations actually represent.
+Before using Moran's $I$, fitting a variogram, running kriging, or analyzing a point pattern, we first need to decide what the spatial observations actually represent.
 
 The most important questions are:
 
@@ -13,19 +12,7 @@ The most important questions are:
 5. What notion of distance is scientifically meaningful?
 6. At what spatial scale should the conclusion be interpreted?
 
-These choices affect every method that comes later.
-
-The companion script [`spatial_data_support_distance_visualizations.py`](../../scripts/spatial_statistics/spatial_data_support_distance_visualizations.py) creates the figures used in this chapter.
-
-Run it with:
-
-```bash
-python scripts/spatial_statistics/spatial_data_support_distance_visualizations.py
-```
-
-It will create a `assets/spatial_statistics/data_support_distance/` directory automatically.
-
----
+These choices affect every method that follows.
 
 ## Learning objectives
 
@@ -42,26 +29,22 @@ After this chapter, you should be able to:
 9. explain why study boundaries matter;
 10. write down the spatial assumptions that should be documented before modeling.
 
----
+## Three common spatial data objects
 
-## 1. Three common spatial data objects
+Many spatial analyses go wrong because the analyst starts with a technique instead of identifying the data-generating object.
 
-Many spatial methods fail because the analyst begins with a technique instead of identifying the data-generating object.
+Three spatial data objects recur throughout spatial statistics.
 
-Three objects recur throughout spatial statistics.
-
----
-
-## 2. Areal or lattice data
+## Areal or lattice data
 
 For areal data, one value is attached to each region or cell.
 
 Write
 
-\[
+$$
 y_i
 \quad\text{for region }A_i.
-\]
+$$
 
 Examples include:
 
@@ -71,25 +54,23 @@ Examples include:
 - average income by census tract;
 - vegetation index by raster cell.
 
-The region itself is part of the observation.
+The region itself is part of what is observed.
 
-A county unemployment rate is not a point measurement taken at the county centroid. It summarizes people or households distributed over the whole county.
+A county unemployment rate is not a point measurement taken at the county centroid. It summarizes people or households distributed across the county.
 
 ![Three spatial data objects](../../assets/spatial_statistics/data_support_distance/01_spatial_data_objects.png)
 
----
-
-## 3. Point-referenced measurements
+## Point-referenced measurements
 
 For point-referenced data, a quantity is measured at sampling locations.
 
 Write
 
-\[
+$$
 Z(s_i),
 \qquad
 s_i\in\mathbb R^2.
-\]
+$$
 
 Examples include:
 
@@ -98,29 +79,27 @@ Examples include:
 - groundwater level measured at wells;
 - air pollution measured at monitoring stations.
 
-The sampling locations are usually treated as known design points.
+The sampling locations are usually treated as known design locations.
 
 The spatially varying quantity
 
-\[
+$$
 Z(s)
-\]
+$$
 
 is the random object of interest.
 
 This is the setting used in geostatistics and kriging.
 
----
-
-## 4. Point patterns
+## Point patterns
 
 For point-pattern data, the locations themselves are the observed outcome.
 
 Write
 
-\[
+$$
 \{s_1,\ldots,s_N\}.
-\]
+$$
 
 Examples include:
 
@@ -133,11 +112,9 @@ Examples include:
 
 Here both the number of events and their locations can be random.
 
-This is fundamentally different from measuring a value at a fixed monitoring station.
+This is fundamentally different from measuring a value at a fixed sampling location.
 
----
-
-## 5. Why the distinction matters
+## Why the distinction matters
 
 Suppose we have 40 geographic coordinates.
 
@@ -151,21 +128,19 @@ They may look identical in a scatterplot, but they represent different statistic
 
 For the air-quality stations, we may model
 
-\[
+$$
 Z(s).
-\]
+$$
 
 For the trees, we model the point process generating locations.
 
 For districts, we model region-level outcomes and neighborhood relationships.
 
-The correct method depends on what the coordinates mean.
+The appropriate method depends on what the coordinates represent.
 
----
+## Coordinate reference systems
 
-## 6. Coordinate reference systems
-
-Coordinates have meaning only relative to a coordinate reference system, or CRS.
+Coordinates have meaning only relative to a coordinate reference system (CRS).
 
 A CRS specifies how positions on or near the Earth are represented numerically.
 
@@ -174,9 +149,7 @@ Two broad cases are important:
 - geographic coordinates;
 - projected coordinates.
 
----
-
-## 7. Geographic coordinates: longitude and latitude
+## Geographic coordinates: longitude and latitude
 
 Longitude and latitude are angular coordinates.
 
@@ -184,256 +157,238 @@ They are usually measured in degrees.
 
 A coordinate such as
 
-\[
+$$
 (13.4^\circ E, 52.5^\circ N)
-\]
+$$
 
 does not mean 13.4 km east and 52.5 km north.
 
 A naive Euclidean calculation in degree space is
 
-\[
-d_{\text{deg}}
-=
+$$
+d_{\text{deg}} =
 \sqrt{
 (\Delta\text{lon})^2+
 (\Delta\text{lat})^2
 }.
-\]
+$$
 
-The result is in **degrees**, not meters or kilometers.
+The result is in degrees, not meters or kilometers.
 
----
-
-## 8. Why one degree is not one fixed distance
+## Why one degree is not one fixed distance
 
 One degree of latitude corresponds to roughly the same north-south distance over much of the Earth.
 
-One degree of longitude does not.
+One degree of longitude does not correspond to a fixed physical distance.
 
-Its physical east-west length decreases as latitude increases.
+Its east-west length decreases as latitude increases.
 
 Approximately,
 
-\[
+$$
 \text{longitude distance}
 \propto
 \cos(\phi),
-\]
+$$
 
-where \(\phi\) is latitude.
+where $\phi$ is latitude.
 
 At the equator,
 
-\[
+$$
 \cos(0^\circ)=1.
-\]
+$$
 
 At latitude
 
-\[
+$$
 60^\circ,
-\]
+$$
 
-\[
+$$
 \cos(60^\circ)=0.5.
-\]
+$$
 
-So one degree of longitude near \(60^\circ\) latitude is roughly half the east-west distance of one degree at the equator.
+So one degree of longitude near $60^\circ$ latitude is roughly half the east-west distance of one degree at the equator.
 
 ![Longitude distortion](../../assets/spatial_statistics/data_support_distance/02_longitude_distance_by_latitude.png)
 
----
-
-## 9. Numerical example: one degree of longitude
+## Numerical example: one degree of longitude
 
 The Earth's mean radius is approximately
 
-\[
+$$
 R=6371\text{ km}.
-\]
+$$
 
 The length of one degree along a great circle is approximately
 
-\[
+$$
 \frac{2\pi R}{360}.
-\]
+$$
 
 Substitute:
 
-\[
+$$
 \frac{2\pi(6371)}{360}
 \approx111.2\text{ km}.
-\]
+$$
 
-At latitude \(\phi\), one degree of longitude is approximately
+At latitude $\phi$, one degree of longitude is approximately
 
-\[
+$$
 111.2\cos(\phi)\text{ km}.
-\]
+$$
 
 ### At the equator
 
-\[
-111.2\cos(0^\circ)
-=
+$$
+111.2\cos(0^\circ) =
 111.2\text{ km}.
-\]
+$$
 
-### At \(45^\circ\)
+### At $45^\circ$
 
-\[
+$$
 111.2\cos(45^\circ)
 \approx
 111.2(0.7071)
-\]
+$$
 
-\[
+$$
 \approx78.6\text{ km}.
-\]
+$$
 
-### At \(60^\circ\)
+### At $60^\circ$
 
-\[
-111.2\cos(60^\circ)
-=
+$$
+111.2\cos(60^\circ) =
 111.2(0.5)
-\]
+$$
 
-\[
+$$
 \boxed{
 55.6\text{ km}
 }.
-\]
+$$
 
-The same one-degree longitude difference represents very different physical distances.
+The same one-degree longitude difference therefore represents very different physical distances.
 
----
-
-## 10. Great-circle distance
+## Great-circle distance
 
 For large geographic extents, distance along the Earth's surface is often more appropriate than planar Euclidean distance.
 
-A common great-circle formula is the haversine formula.
+A common formula for great-circle distance is the haversine formula.
 
 For two points with latitude/longitude
 
-\[
+$$
 (\phi_1,\lambda_1)
-\]
+$$
 
 and
 
-\[
+$$
 (\phi_2,\lambda_2),
-\]
+$$
 
 in radians, define
 
-\[
+$$
 \Delta\phi=\phi_2-\phi_1,
 \qquad
 \Delta\lambda=\lambda_2-\lambda_1.
-\]
+$$
 
 Then
 
-\[
-a
-=
+$$
+a =
 \sin^2\left(\frac{\Delta\phi}{2}\right)
 +
 \cos(\phi_1)\cos(\phi_2)
 \sin^2\left(\frac{\Delta\lambda}{2}\right).
-\]
+$$
 
 The central angle is
 
-\[
-c
-=
+$$
+c =
 2\arctan2(\sqrt a,\sqrt{1-a}).
-\]
+$$
 
 The great-circle distance is
 
-\[
+$$
 \boxed{
 d=Rc
 }.
-\]
+$$
 
----
-
-## 11. Worked great-circle example
+## Worked great-circle example
 
 Consider two locations on the equator:
 
-\[
+$$
 (0^\circ,0^\circ)
-\]
+$$
 
 and
 
-\[
+$$
 (0^\circ,1^\circ).
-\]
+$$
 
 Then
 
-\[
+$$
 \Delta\phi=0
-\]
+$$
 
 and
 
-\[
-\Delta\lambda=1^\circ
-=
+$$
+\Delta\lambda=1^\circ =
 \frac{\pi}{180}
 \text{ radians}.
-\]
+$$
 
 So
 
-\[
-a
-=
+$$
+a =
 \sin^2\left(
 \frac{\pi/180}{2}
 \right).
-\]
+$$
 
 This gives
 
-\[
+$$
 c
 \approx0.0174533.
-\]
+$$
 
 With
 
-\[
+$$
 R=6371\text{ km},
-\]
+$$
 
-\[
-d
-=
+$$
+d =
 6371(0.0174533)
-\]
+$$
 
-\[
+$$
 \boxed{
 d\approx111.2\text{ km}
 }.
-\]
+$$
 
-The same one-degree longitude difference at \(60^\circ\) latitude is only about 55.6 km.
+The same one-degree longitude difference at $60^\circ$ latitude is only about 55.6 km.
 
----
-
-## 12. Projected coordinate systems
+## Projected coordinate systems
 
 A projected CRS maps part of the curved Earth onto a plane.
 
@@ -444,14 +399,13 @@ Coordinates are then often expressed in linear units such as:
 
 For a suitable local projection, Euclidean distance
 
-\[
-d
-=
+$$
+d =
 \sqrt{
 (x_2-x_1)^2+
 (y_2-y_1)^2
 }
-\]
+$$
 
 can be interpreted directly in meters.
 
@@ -459,57 +413,46 @@ can be interpreted directly in meters.
 
 Suppose projected coordinates are
 
-\[
+$$
 s_1=(500000,5700000)
-\]
+$$
 
 and
 
-\[
+$$
 s_2=(500300,5700400),
-\]
+$$
 
 in meters.
 
 Then
 
-\[
+$$
 \Delta x=300,
 \qquad
 \Delta y=400.
-\]
+$$
 
 Therefore
 
-\[
-d
-=
-\sqrt{300^2+400^2}
-\]
-
-\[
-=
-\sqrt{90000+160000}
-\]
-
-\[
-=
+$$
+d =
+\sqrt{300^2+400^2} =
+\sqrt{90000+160000} =
 \sqrt{250000}
-\]
+$$
 
-\[
+$$
 \boxed{
 d=500\text{ m}
 }.
-\]
+$$
 
 This is the familiar 3-4-5 triangle scaled by 100.
 
----
+## Projection choice still matters
 
-## 13. Projection choice still matters
-
-A projection cannot preserve everything simultaneously.
+No projection can preserve every spatial property simultaneously.
 
 Different projections may preserve different properties better:
 
@@ -520,7 +463,7 @@ Different projections may preserve different properties better:
 
 A projection appropriate for a local city-scale analysis may be poor for a continent-wide study.
 
-Therefore the correct question is not:
+The important question is therefore not:
 
 > Is the data projected?
 
@@ -528,11 +471,9 @@ It is:
 
 > Is the projection suitable for the region and measurement being analyzed?
 
----
+## Spatial support
 
-## 14. Spatial support
-
-**Spatial support** is the spatial region over which a measurement is defined or averaged.
+**Spatial support** is the spatial region over which a measurement is defined, measured, or averaged.
 
 Examples:
 
@@ -541,13 +482,11 @@ Examples:
 - a county rate summarizes a polygon;
 - a soil composite sample may summarize several subsamples over a field plot.
 
-Support describes what one observed value represents spatially.
+Support describes what a single observed value represents spatially.
 
 ![Different supports](../../assets/spatial_statistics/data_support_distance/03_spatial_support.png)
 
----
-
-## 15. Point support versus area support
+## Point support versus area support
 
 Suppose temperature is measured in two ways.
 
@@ -555,9 +494,9 @@ Suppose temperature is measured in two ways.
 
 A weather station reports
 
-\[
+$$
 22.4^\circ C.
-\]
+$$
 
 That reading describes conditions near the sensor location.
 
@@ -565,39 +504,35 @@ That reading describes conditions near the sensor location.
 
 A satellite product reports average temperature over a
 
-\[
+$$
 1\text{ km}\times1\text{ km}
-\]
+$$
 
 pixel.
 
 That value averages conditions over an entire square kilometer.
 
-Even if the pixel center is exactly at the station coordinate, the two observations do not have the same support.
+Even if the pixel center is exactly at the station coordinate, the two observations do not have the same spatial support.
 
-The matching centroid does not make the measurements equivalent.
+A matching centroid does not make the measurements equivalent.
 
----
+## Why support changes variability
 
-## 16. Why support changes variability
-
-Averaging over larger regions smooths local variation.
+Averaging over larger regions tends to smooth local variation.
 
 Suppose four point-level values inside a block are
 
-\[
+$$
 8,\ 10,\ 14,\ 16.
-\]
+$$
 
 Their mean is
 
-\[
-\bar x
-=
-\frac{8+10+14+16}{4}
-=
+$$
+\bar x =
+\frac{8+10+14+16}{4} =
 12.
-\]
+$$
 
 If many small-scale fluctuations occur inside regions and only region averages are retained, the resulting area-level data will usually vary less than the original point-level data.
 
@@ -605,25 +540,23 @@ This is called a **change-of-support** effect.
 
 ![Aggregation smooths variability](../../assets/spatial_statistics/data_support_distance/04_support_and_aggregation.png)
 
----
-
-## 17. Numerical aggregation example
+## Numerical aggregation example
 
 Suppose eight fine-scale values are
 
-\[
+$$
 2,\ 4,\ 6,\ 8,\ 12,\ 14,\ 16,\ 18.
-\]
+$$
 
 Their mean is
 
-\[
+$$
 10.
-\]
+$$
 
 The population variance is
 
-\[
+$$
 \frac{
 (2-10)^2+
 (4-10)^2+
@@ -634,91 +567,87 @@ The population variance is
 (16-10)^2+
 (18-10)^2
 }{8}.
-\]
+$$
 
 The squared deviations are
 
-\[
+$$
 64,\ 36,\ 16,\ 4,\ 4,\ 16,\ 36,\ 64.
-\]
+$$
 
 Their sum is
 
-\[
+$$
 240.
-\]
+$$
 
 So the fine-scale variance is
 
-\[
-\frac{240}{8}
-=
+$$
+\frac{240}{8} =
 30.
-\]
+$$
 
 Now aggregate neighboring pairs:
 
-\[
+$$
 (2,4)\rightarrow3,
-\]
+$$
 
-\[
+$$
 (6,8)\rightarrow7,
-\]
+$$
 
-\[
+$$
 (12,14)\rightarrow13,
-\]
+$$
 
-\[
+$$
 (16,18)\rightarrow17.
-\]
+$$
 
 The four block means are
 
-\[
+$$
 3,\ 7,\ 13,\ 17.
-\]
+$$
 
 Their mean is still
 
-\[
+$$
 10.
-\]
+$$
 
 Their squared deviations are
 
-\[
+$$
 49,\ 9,\ 9,\ 49.
-\]
+$$
 
 The variance is
 
-\[
-\frac{116}{4}
-=
+$$
+\frac{116}{4} =
 29.
-\]
+$$
 
-This small example shows some smoothing, though the amount depends on how values are arranged.
+This small example shows some smoothing, although the amount depends on how the values are arranged.
 
 In spatial fields with strong high-frequency variation, aggregation can reduce variance much more dramatically.
 
----
-
-## 18. Support can change correlation
+## Support can change correlation
 
 Suppose two fine-scale variables are noisy:
 
-\[
+$$
 X(s)
-\]
+$$
 
 and
 
-\[
+$$
 Y(s).
-\]
+$$
 
 At point level, measurement noise may weaken their observed correlation.
 
@@ -726,13 +655,11 @@ If both variables are averaged over larger regions, some small-scale noise may c
 
 The area-level correlation can therefore be larger than the point-level correlation.
 
-The reverse can also occur.
+The reverse can also happen.
 
-This is one reason ecological correlations cannot automatically be interpreted as individual-level relationships.
+This is one reason area-level correlations cannot automatically be interpreted as individual-level relationships.
 
----
-
-## 19. The modifiable areal unit problem
+## The modifiable areal unit problem
 
 For areal data, statistical results can depend on how space is divided into regions.
 
@@ -743,9 +670,7 @@ It has two related forms:
 1. scale effect;
 2. zoning effect.
 
----
-
-## 20. MAUP scale effect
+## MAUP scale effect
 
 The scale effect occurs when small regions are aggregated into larger ones.
 
@@ -768,43 +693,41 @@ at different aggregation levels.
 
 ![MAUP scale effect](../../assets/spatial_statistics/data_support_distance/05_maup_scale.png)
 
----
-
-## 21. Numerical scale-effect example
+## Numerical scale-effect example
 
 Suppose six small regions have values
 
-\[
+$$
 2,\ 3,\ 4,\ 8,\ 9,\ 10.
-\]
+$$
 
 The mean is
 
-\[
+$$
 6.
-\]
+$$
 
 Now combine them into three larger regions:
 
-\[
+$$
 (2,3)\rightarrow2.5,
-\]
+$$
 
-\[
+$$
 (4,8)\rightarrow6,
-\]
+$$
 
-\[
+$$
 (9,10)\rightarrow9.5.
-\]
+$$
 
 The larger-unit data are
 
-\[
+$$
 2.5,\ 6,\ 9.5.
-\]
+$$
 
-They retain the same broad gradient but with fewer observations and smoother values.
+They retain the same broad gradient, but with fewer observations and smoother values.
 
 Any statistic based on local variation or adjacency can change because:
 
@@ -812,55 +735,51 @@ Any statistic based on local variation or adjacency can change because:
 - the values changed;
 - the neighborhood graph changed.
 
-The statistic now describes the aggregated regions, not the original six units.
+The statistic now describes the aggregated regions rather than the original six units.
 
----
-
-## 22. MAUP zoning effect
+## MAUP zoning effect
 
 The zoning effect occurs when boundaries change while the number of regions remains similar.
 
 Imagine four fine-scale cells with values
 
-\[
+$$
 2,\ 4,\ 8,\ 10.
-\]
+$$
 
 One zoning scheme could group:
 
-\[
+$$
 (2,4)
 \quad\text{and}\quad
 (8,10),
-\]
+$$
 
 producing regional means
 
-\[
+$$
 3,\ 9.
-\]
+$$
 
 Another scheme could group:
 
-\[
+$$
 (2,8)
 \quad\text{and}\quad
 (4,10),
-\]
+$$
 
 producing
 
-\[
+$$
 5,\ 7.
-\]
+$$
 
-The same fine-scale data produce very different apparent regional contrasts.
+The same fine-scale data can therefore produce very different apparent regional contrasts.
 
 ![MAUP zoning effect](../../assets/spatial_statistics/data_support_distance/06_maup_zoning.png)
 
----
-
-## 23. Why MAUP is not just a plotting issue
+## Why MAUP is not just a plotting issue
 
 Suppose a regression coefficient is estimated using district-level data.
 
@@ -871,9 +790,9 @@ If district boundaries are redrawn, both:
 
 can change.
 
-The fitted coefficient may change even though the underlying individuals or fine-scale values did not.
+The fitted coefficient may change even though the underlying individuals or fine-scale values have not changed.
 
-Therefore conclusions should always name the spatial unit of analysis.
+Conclusions should therefore state the spatial unit of analysis explicitly.
 
 A statement such as
 
@@ -885,50 +804,43 @@ A better statement is
 
 > county-level average income is associated with county-level disease rate under the chosen county geography.
 
----
+## Distance is a modeling choice
 
-## 24. Distance is a modeling choice
-
-The shortest straight-line distance is not always the relevant scientific distance.
+The shortest straight-line distance is not always the scientifically relevant distance.
 
 Euclidean distance is
 
-\[
-d_{ij}
-=
+$$
+d_{ij} =
 \sqrt{
 (x_i-x_j)^2+
 (y_i-y_j)^2
 }.
-\]
+$$
 
 It is appropriate when straight-line spatial separation is scientifically meaningful.
 
-But many processes do not move in straight lines.
+Many processes, however, do not operate along straight-line paths.
 
----
-
-## 25. Road-network distance
+## Road-network distance
 
 Suppose two houses lie on opposite sides of a river.
 
 Their Euclidean distance may be only
 
-\[
+$$
 500\text{ m}.
-\]
+$$
 
 If the nearest bridge is several kilometers away, road distance may be
 
-\[
+$$
 6\text{ km}.
-\]
+$$
 
-For ambulance response, shopping access, or commuting, the 500 m distance may be misleading.
+For ambulance response, shopping access, or commuting, the 500 m Euclidean distance may be misleading.
 
----
-
-## 26. Travel-time distance
+## Travel-time distance
 
 Two locations can be the same road distance apart but have different travel times.
 
@@ -937,11 +849,9 @@ For example:
 - 10 km along a motorway;
 - 10 km through a dense city center.
 
-If the scientific mechanism depends on human movement, travel time may be more meaningful than distance.
+If the scientific mechanism depends on human movement, travel time may be more meaningful than physical distance.
 
----
-
-## 27. River-network distance
+## River-network distance
 
 For aquatic organisms or pollutants, movement may follow a river network.
 
@@ -949,11 +859,9 @@ Two sampling sites can be physically close in straight-line distance but belong 
 
 Their hydrological connection may be weak or nonexistent.
 
-River-network distance can therefore be more scientifically meaningful than Euclidean distance.
+River-network distance can therefore be more meaningful than Euclidean distance for such processes.
 
----
-
-## 28. Ecological resistance distance
+## Ecological resistance distance
 
 Animals, seeds, or genes may move more easily through some land-cover types than others.
 
@@ -963,116 +871,104 @@ Movement through forest might have low resistance while highways or steep terrai
 
 The resulting effective distance can be much larger than the straight-line distance.
 
----
-
-## 29. Worked network-distance example
+## Worked network-distance example
 
 Suppose locations A and B have coordinates
 
-\[
+$$
 A=(0,0),
 \qquad
 B=(3,4).
-\]
+$$
 
 Their Euclidean distance is
 
-\[
-\sqrt{3^2+4^2}
-=
+$$
+\sqrt{3^2+4^2} =
 5.
-\]
+$$
 
 But suppose travel must follow a road from A to C to B.
 
 If
 
-\[
+$$
 d(A,C)=4
-\]
+$$
 
 and
 
-\[
+$$
 d(C,B)=5,
-\]
+$$
 
 then network distance is
 
-\[
-4+5
-=
+$$
+4+5 =
 9.
-\]
+$$
 
 Thus:
 
-\[
+$$
 d_{\text{Euclidean}}=5,
-\]
+$$
 
 while
 
-\[
+$$
 d_{\text{network}}=9.
-\]
+$$
 
 ![Euclidean versus network distance](../../assets/spatial_statistics/data_support_distance/07_distance_metrics.png)
 
-The correct distance depends on the process being modeled.
+The appropriate distance depends on the process being modeled.
 
----
-
-## 30. Distance affects spatial weights
+## Distance affects spatial weights
 
 Suppose a spatial weights matrix defines neighbors using
 
-\[
+$$
 d_{ij}\le5\text{ km}.
-\]
+$$
 
 Changing from Euclidean to road-network distance may change whether two locations satisfy the threshold.
 
 That changes:
 
 - the weights matrix;
-- Moran's \(I\);
+- Moran's $I$;
 - local cluster categories;
 - spatial regression structure.
 
-So distance choice propagates into later statistics.
+Distance choice therefore propagates into later statistics.
 
----
-
-## 31. Distance affects geostatistical covariance
+## Distance affects geostatistical covariance
 
 A variogram model may use
 
-\[
+$$
 \gamma(h)
-\]
+$$
 
-where \(h\) is separation distance.
+where $h$ is separation distance.
 
-If the wrong distance metric is used, the estimated range and covariance structure can be misleading.
+If the wrong distance metric is used, the estimated range and covariance structure may be misleading.
 
 For example, two stream sites separated by 1 km Euclidean distance but 12 km along the stream network should not necessarily be treated as strongly related.
 
----
-
-## 32. Distance affects validation design
+## Distance affects validation design
 
 Spatial validation often groups observations into blocks.
 
 If blocks are defined using straight-line distance while the scientific process follows travel corridors or rivers, the validation design may not represent the intended transfer problem.
 
-Distance is therefore not just a preprocessing choice.
+Distance is therefore more than a preprocessing choice.
 
-It affects the question being evaluated.
+It affects the scientific question being evaluated.
 
----
-
-## 33. Directional and anisotropic distance
+## Directional and anisotropic distance
 
 Some processes propagate more strongly in one direction than another.
 
@@ -1087,29 +983,26 @@ An anisotropic distance can stretch one direction relative to another.
 
 A simple example is
 
-\[
-d_A
-=
+$$
+d_A =
 \sqrt{
 \left(\frac{\Delta x}{a_x}\right)^2
 +
 \left(\frac{\Delta y}{a_y}\right)^2
 }.
-\]
+$$
 
 If
 
-\[
+$$
 a_x>a_y,
-\]
+$$
 
-then separation in the \(x\) direction is treated as effectively shorter than the same physical separation in \(y\).
+then separation in the $x$ direction is treated as effectively shorter than the same physical separation in $y$.
 
-This creates longer spatial dependence along \(x\).
+This represents longer spatial dependence along the $x$ direction.
 
----
-
-## 34. Study-region boundaries
+## Study-region boundaries
 
 Every spatial study has a domain or observation window.
 
@@ -1119,21 +1012,19 @@ For geostatistics, it may be the sampled landscape.
 
 For a point process, it is the region in which events could have been observed.
 
-The boundary is part of the data-generating and observation process.
+The boundary is part of both the data-generating process and the observation process.
 
 ![Boundary effect](../../assets/spatial_statistics/data_support_distance/08_boundary_effect.png)
 
----
-
-## 35. Why boundaries matter
+## Why boundaries matter
 
 Consider a point near the edge of a study region.
 
 It has less observed surrounding area than an interior point.
 
-A point-process neighborhood of radius \(r\) may extend outside the observation window.
+A point-process neighborhood of radius $r$ may extend outside the observation window.
 
-Similarly, a location near a national border may have true neighbors across the border that are absent from the dataset.
+Similarly, a location near a national border may have relevant neighbors across the border that are absent from the dataset.
 
 Ignoring boundaries can create:
 
@@ -1142,9 +1033,7 @@ Ignoring boundaries can create:
 - artificial edge effects;
 - misleading spatial weights.
 
----
-
-## 36. Administrative boundaries versus process boundaries
+## Administrative boundaries versus process boundaries
 
 A dataset may end at an administrative boundary even when the physical process does not.
 
@@ -1159,9 +1048,7 @@ The data boundary and the scientific process boundary are not necessarily the sa
 
 This should be documented explicitly.
 
----
-
-## 37. Support mismatch
+## Support mismatch
 
 Two datasets may cover the same geographic area but have incompatible support.
 
@@ -1171,9 +1058,9 @@ Example:
 - health outcome: county-level rate;
 - income: census-tract average.
 
-A naive merge based only on centroid proximity can mix incompatible spatial supports.
+A naive merge based only on centroid proximity can combine incompatible spatial supports.
 
-Before regression or correlation, determine what transformation is scientifically appropriate.
+Before regression or correlation, determine which transformation is scientifically appropriate.
 
 Possible approaches include:
 
@@ -1182,55 +1069,50 @@ Possible approaches include:
 - point-to-area integration;
 - explicit change-of-support models.
 
----
-
-## 38. Example: area-weighted aggregation
+## Example: area-weighted aggregation
 
 Suppose a county overlaps two raster cells.
 
 Cell 1 has value
 
-\[
+$$
 10
-\]
+$$
 
 and contributes 70% of the county area.
 
 Cell 2 has value
 
-\[
+$$
 20
-\]
+$$
 
 and contributes 30%.
 
 An area-weighted county average is
 
-\[
+$$
 0.7(10)+0.3(20).
-\]
+$$
 
 Therefore
 
-\[
-7+6
-=
+$$
+7+6 =
 \boxed{
 13
 }.
-\]
+$$
 
 A simple unweighted average would be
 
-\[
+$$
 15,
-\]
+$$
 
-which gives the two cells equal importance even though their overlap differs greatly.
+which gives the two cells equal importance even though their overlap with the county differs greatly.
 
----
-
-## 39. Area weighting is not always enough
+## Area weighting is not always enough
 
 Suppose the raster represents air pollution and the county outcome represents human exposure.
 
@@ -1240,15 +1122,13 @@ A population-weighted average might be more appropriate.
 
 This illustrates a general principle:
 
-> Aggregation weights should reflect the scientific support of the target quantity.
+> Aggregation weights should reflect the spatial and scientific support of the target quantity.
 
----
+## Before modeling: a spatial data audit
 
-## 40. Before modeling: a spatial data audit
+Before running a spatial method, document the following.
 
-Before running a spatial method, record the following.
-
-### 1. Spatial object
+### Spatial object
 
 Is the dataset:
 
@@ -1256,7 +1136,7 @@ Is the dataset:
 - point-referenced;
 - a point pattern?
 
-### 2. CRS and units
+### CRS and units
 
 Are coordinates:
 
@@ -1264,7 +1144,7 @@ Are coordinates:
 - projected meters;
 - another system?
 
-### 3. Support
+### Support
 
 Does each value represent:
 
@@ -1274,7 +1154,7 @@ Does each value represent:
 - moving window;
 - population average?
 
-### 4. Boundary
+### Boundary
 
 What region defines the study?
 
@@ -1284,11 +1164,11 @@ Is it:
 - administrative;
 - observational?
 
-### 5. Distance or neighborhood
+### Distance or neighborhood
 
 What notion of closeness represents the scientific process?
 
-### 6. Intended scale of inference
+### Intended scale of inference
 
 Does the conclusion apply to:
 
@@ -1298,9 +1178,7 @@ Does the conclusion apply to:
 - districts;
 - regions?
 
----
-
-## 41. A complete worked example
+## A complete worked example
 
 Suppose a researcher wants to study heat and health.
 
@@ -1311,9 +1189,9 @@ Available data are:
 - district population;
 - district boundaries in longitude/latitude.
 
-Several decisions must be made before analysis.
+Several decisions must be made before the analysis begins.
 
-### Step 1: identify the spatial objects
+### identify the spatial objects
 
 Temperature is area-supported raster data.
 
@@ -1321,137 +1199,131 @@ Hospital admissions are areal counts.
 
 Population is also areal, but may represent residential exposure rather than physical area.
 
-### Step 2: choose a suitable CRS
+### choose a suitable CRS
 
-For local planar calculations, project the district boundaries and raster to an appropriate local projected CRS.
+For local planar calculations, project the district boundaries and raster to an appropriate local CRS.
 
-### Step 3: reconcile support
+### reconcile support
 
 Aggregate raster temperature to districts.
 
 If health risk relates to where people live, population-weighted temperature may be more relevant than area-weighted temperature.
 
-### Step 4: define neighborhood
+### define neighborhood
 
 For spatial autocorrelation in residual disease risk, adjacency may be scientifically meaningful.
 
 For heat exposure, physical distance might be more meaningful.
 
-### Step 5: interpret results at the correct scale
+### interpret results at the correct scale
 
 A district-level association is a district-level ecological result.
 
-It does not automatically describe individual risk.
+It does not automatically describe individual-level risk.
 
----
+## Common mistakes
 
-## 42. Common mistakes
+### treating longitude and latitude as Cartesian meters
 
-### Mistake 1: treating longitude and latitude as Cartesian meters
+Degree differences are angular quantities, not linear distances.
 
-Degree differences are angular, not linear distances.
+### assuming any projected CRS is suitable
 
-### Mistake 2: assuming any projected CRS is suitable
+Projection distortion depends on the region and the intended use.
 
-Projection distortion depends on region and purpose.
-
-### Mistake 3: treating polygon centroids as if observations had point support
+### treating polygon centroids as if observations had point support
 
 The value usually summarizes the entire polygon.
 
-### Mistake 4: aggregating without considering change of support
+### aggregating without considering change of support
 
-Aggregation changes variance and potentially correlation.
+Aggregation changes variance and can also change correlation.
 
-### Mistake 5: ignoring MAUP
+### ignoring MAUP
 
 Results can depend on both scale and zoning.
 
-### Mistake 6: assuming Euclidean distance is always scientifically meaningful
+### assuming Euclidean distance is always scientifically meaningful
 
-Movement may follow roads, rivers, currents, or resistance surfaces.
+Relevant movement may follow roads, rivers, currents, or resistance surfaces.
 
-### Mistake 7: forgetting the boundary
+### forgetting the boundary
 
 Missing space outside the study region can bias neighborhood and point-process summaries.
 
-### Mistake 8: mixing spatial scales in interpretation
+### mixing spatial scales in interpretation
 
 A county-level result is not automatically an individual-level result.
 
----
-
-## 43. Concept map
+## Concept map
 
 The correct sequence is:
 
-\[
+$$
 \text{spatial dataset}
-\]
+$$
 
-\[
+$$
 \downarrow
-\]
+$$
 
-\[
+$$
 \text{identify spatial object}
-\]
+$$
 
-\[
+$$
 \downarrow
-\]
+$$
 
-\[
+$$
 \text{check CRS and units}
-\]
+$$
 
-\[
+$$
 \downarrow
-\]
+$$
 
-\[
+$$
 \text{identify support}
-\]
+$$
 
-\[
+$$
 \downarrow
-\]
+$$
 
-\[
+$$
 \text{define study boundary}
-\]
+$$
 
-\[
+$$
 \downarrow
-\]
+$$
 
-\[
+$$
 \text{choose scientifically meaningful distance/neighborhood}
-\]
+$$
 
-\[
+$$
 \downarrow
-\]
+$$
 
-\[
+$$
 \text{state intended scale of inference}
-\]
+$$
 
-\[
+$$
 \downarrow
-\]
+$$
 
-\[
+$$
 \text{only then choose a spatial model or statistic}.
-\]
+$$
 
 The central lesson is:
 
-> **Spatial coordinates are not enough. Spatial analysis depends on what the observations represent, over what support they are defined, and which geometry matches the scientific process.**
+> Spatial coordinates are not enough. Spatial analysis depends on what the observations represent, over what support they are defined, and which geometry matches the scientific process.
 
----
-
-## 44. Questions students should be able to answer
+## Questions students should be able to answer
 
 1. What is the difference between point-referenced data and a point pattern?
 2. Why is an areal value not simply a point located at its centroid?
@@ -1467,9 +1339,3 @@ The central lesson is:
 12. Why can a study boundary create missing neighbors?
 13. Why can area-weighted aggregation be inappropriate for human exposure?
 14. What should be documented before computing a spatial statistic?
-
-## Practice
-
-Use the companion [spatial data, support, and distance exercises](../../exercises/spatial_statistics/spatial_data_and_distance.md).
-
----
