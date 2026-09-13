@@ -330,7 +330,7 @@ $$
 
 The credible interval has a different interpretation: conditional on the model, prior, and observed data, the population mean has 95% posterior probability of lying inside this interval.
 
-[output(11)](https://github.com/user-attachments/assets/4ba1be0a-21d3-4627-ad7e-f357f5453487)
+![output(10)](https://github.com/user-attachments/assets/c0b74baa-a2d8-4695-ac32-ab0fdeb49543)
 
 The analysis results are:
 
@@ -340,3 +340,4 @@ The analysis results are:
 The numerical results are similar because the dataset contains enough information for the likelihood to dominate much of the inference. The important difference is therefore not simply the final numbers, but how uncertainty is represented and how each interval should be interpreted.
 
 In practice, Bayesian and frequentist statistics should not be viewed as competing recipes that always produce different answers. They are different inferential frameworks. Understanding their assumptions and interpretations is more important than treating either approach as universally superior.
+
