@@ -1,40 +1,50 @@
 # Descriptive Statistics
 
-Descriptive statistics offer a summary of the main characteristics of a dataset or sample. They facilitate the understanding and interpretation of data by providing measures of central tendency, dispersion, and shape. In this section, we will discuss the essential concepts and measures in descriptive statistics.
+Descriptive statistics summarize the main characteristics of a dataset or sample. They help us understand data by describing its frequency, center, spread, and overall distribution.
 
 ## Frequencies and Frequency Tables
 
-- The **frequency** refers to the number of times a specific value or category appears in a dataset. For example, if 3 individuals report having 1 sibling, the frequency for "1 sibling" is 3.
-  
-- The **relative frequency** represents the proportion of times a particular value occurs relative to the total number of observations. It is calculated as:
+* The **frequency** of a value or category is the number of times it appears in a dataset. For example, if 3 people report having 1 sibling, the frequency of "1 sibling" is 3.
 
-$$\text{Relative Frequency} = \frac{\text{Frequency}}{\text{Total Observations}}$$
+* The **relative frequency** is the proportion of observations belonging to a particular value or category:
 
-- The **cumulative relative frequency** is the sum of the relative frequencies up to a specific category, showing the proportion of observations up to and including that category. It is calculated as:
-  
-$$\text{Cumulative Relative Frequency} = \sum_{i=1}^{n} \text{Relative Frequency}_i$$
+```math
+\text{Relative Frequency}
+=
+\frac{\text{Frequency}}{\text{Total Number of Observations}}
+```
 
-Note that cumulative relative frequencies are only meaningful when the data has a natural ordering. For unordered categorical data, cumulative frequencies do not provide a valid interpretation.
+Relative frequency may also be expressed as a percentage.
+
+* The **cumulative relative frequency** is the sum of the relative frequencies up to and including a particular value:
+
+```math
+\text{Cumulative Relative Frequency}_k
+=
+\sum_{i=1}^{k}\text{Relative Frequency}_i
+```
+
+Cumulative relative frequencies are meaningful only when the values or categories have a natural ordering. They generally do not make sense for unordered categorical data such as colors or countries.
 
 ### Example: List of People and Their Sibling Count
 
-Consider a dataset of people and their corresponding number of siblings:
+Consider a dataset containing people and their numbers of siblings:
 
-1. Alice - 2 siblings  
-2. Bob - 0 siblings  
-3. Charlie - 1 sibling  
-4. Dana - 3 siblings  
-5. Elliot - 1 sibling  
-6. Fatima - 2 siblings  
-7. George - 0 siblings  
-8. Hina - 4 siblings  
-9. Ivan - 1 sibling  
-10. Julia - 2 siblings  
+1. Alice - 2 siblings
+2. Bob - 0 siblings
+3. Charlie - 1 sibling
+4. Dana - 3 siblings
+5. Elliot - 1 sibling
+6. Fatima - 2 siblings
+7. George - 0 siblings
+8. Hina - 4 siblings
+9. Ivan - 1 sibling
+10. Julia - 2 siblings
 
-This dataset can be organized into a frequency distribution table based on the number of siblings:
+The data can be summarized with a frequency table:
 
 | Number of Siblings | Frequency | Relative Frequency | Cumulative Relative Frequency |
-|--------------------|-----------|--------------------|-------------------------------|
+| ------------------ | --------- | ------------------ | ----------------------------- |
 | 0                  | 2         | 20%                | 20%                           |
 | 1                  | 3         | 30%                | 50%                           |
 | 2                  | 3         | 30%                | 80%                           |
@@ -43,435 +53,747 @@ This dataset can be organized into a frequency distribution table based on the n
 
 Explanation:
 
-- **Number of Siblings** represents the possible values for the number of siblings a person has.
-- The **frequency** column shows how many people have a given number of siblings. For example, 2 people have 0 siblings, 3 people have 1 sibling, and so on.
-- The **relative frequency** is the proportion of people in each category, expressed as a percentage. It is calculated as:
+* **Number of Siblings** lists the observed values.
+* **Frequency** shows how many people have each number of siblings.
+* **Relative Frequency** gives the proportion of observations in each group.
 
-$$
-\text{Relative Frequency} = \frac{\text{Frequency}}{\text{Total Number of People}} \times 100
-$$
-  
-In this case, the total number of people is 10. So, for 0 siblings, the relative frequency is $\frac{2}{10} \times 100 = 20\% $.
+For example:
 
-- **Cumulative Relative Frequency** represents the cumulative sum of the relative frequencies as we move down the table. It shows the percentage of people with a number of siblings less than or equal to the current value. For example, 50% of the people have 1 or fewer siblings.
+```math
+\text{Relative Frequency}
+=
+\frac{\text{Frequency}}{\text{Total Number of People}}
+\times 100\%
+```
+
+For 0 siblings:
+
+```math
+\frac{2}{10}\times100\%=20\%
+```
+
+* **Cumulative Relative Frequency** gives the percentage of observations at or below a particular value. For example, 50% of the people have 1 or fewer siblings.
 
 ### Continuous data
 
-Continuous data can take any value within a range, making it impractical to calculate frequency for each exact number. For example, consider measuring the heights of a group of people. Heights can vary infinitely within a range (e.g., 170.1 cm, 170.2 cm, 170.25 cm), making it unfeasible to have a frequency for each distinct measurement.
+Continuous variables can take any value within a range. Height, time, and temperature are common examples.
 
-Instead, we group continuous data into intervals or ranges and then calculate frequencies for these intervals. This approach simplifies the data and makes it more interpretable.
+Although recorded measurements have finite precision, a continuous variable is modeled as being able to take any value in an interval. Listing the frequency of every exact observed value is therefore often not very informative.
+
+Instead, continuous observations are commonly grouped into intervals, or **bins**, and the number of observations in each interval is counted.
 
 #### Example: Height Measurements of a Group of People
 
 **I. Raw Data (Continuous):**
 
-Consider the following raw height measurements (in centimeters) of a group of people:
+Consider the following height measurements, in centimeters:
 
-$$
-[170.2, 165.5, 172.3, 168.7, 171.6, 167.4, 169.5, 174.2, 166.1, 173.5]
-$$
+```math
+[170.2,165.5,172.3,168.7,171.6,167.4,169.5,174.2,166.1,173.5]
+```
 
 **II. Grouping the Data into Intervals:**
 
-Since the data consists of continuous measurements, it is often useful to group the data into intervals (or "bins") to analyze it more easily. Here, the height data has been grouped into the following intervals (ranges in cm):
+To avoid ambiguity at interval boundaries, we can use half-open intervals:
 
-- 165-167
-- 168-170
-- 171-173
-- 174-176
+* $165 \leq x < 168$
+* $168 \leq x < 171$
+* $171 \leq x < 174$
+* $174 \leq x < 177$
+
+This means, for example, that a height of exactly 168 cm belongs to the second interval rather than the first.
 
 **III. Frequency Distribution Table:**
 
-Based on the grouped data, the frequency distribution table is constructed as follows:
+| Height Range (cm)  | Frequency |
+| ------------------ | --------- |
+| $165 \leq x < 168$ | 3         |
+| $168 \leq x < 171$ | 3         |
+| $171 \leq x < 174$ | 3         |
+| $174 \leq x < 177$ | 1         |
 
-| Height Range (cm) | Frequency |
-|-------------------|-----------|
-| 165 - 167         | 2         |
-| 168 - 170         | 3         |
-| 171 - 173         | 3         |
-| 174 - 176         | 2         |
+The frequencies add to 10, matching the number of observations in the original dataset.
 
-- **Height Range (cm)** represents the grouped intervals of height. The choice of these intervals provides a clear way to categorize the continuous data.
-- **Frequency** shows the number of people whose heights fall within each respective range. For instance, 2 people have heights between 165 cm and 167 cm, while 3 people have heights between 171 cm and 173 cm.
+* **Height Range** identifies the interval used to group observations.
+* **Frequency** shows how many measurements fall into each interval.
+
+The choice of bin boundaries and widths affects the appearance of a grouped distribution, so they should be chosen and reported clearly.
 
 ### Visualization
 
-The histogram below visually represents the frequency distribution of the grouped height data. The horizontal axis represents the height ranges (in cm), while the vertical axis represents the frequency, i.e., the number of people whose heights fall within each range.
+A **histogram** provides a visual representation of the distribution of continuous numerical data. The horizontal axis contains intervals of values, while the vertical axis shows their frequencies or relative frequencies.
 
 ![image](https://github.com/djeada/Statistics-Notes/assets/37275728/5619116b-f65b-47fc-a1cf-a5bfa0640353)
 
-This histogram shows a roughly uniform distribution across the ranges, with slightly more people having heights in the middle ranges (168-173 cm). The plot helps to quickly identify how the data is distributed among different height groups and highlights that the majority of people fall within the middle two ranges (168-173 cm).
+A histogram can help reveal features such as concentration, spread, skewness, gaps, and possible multiple peaks.
+
+When constructing a histogram, the bin boundaries used in the plot should match those used in the corresponding frequency table.
 
 ## Measures of Central Tendency
 
-Measures of central tendency provide an idea of the average or central value of the dataset.
+Measures of central tendency describe the center or typical value of a dataset. Different measures are useful in different situations.
 
-- The **arithmetic mean** is useful for characterizing symmetric distributions without outliers and represents the balancing point of a distribution. It is calculated as:
+* The **arithmetic mean** of a sample is the sum of its values divided by the number of observations:
 
-$$\mu_{X} = \frac{1}{n} \sum x$$
+```math
+\bar{x}
+=
+\frac{1}{n}\sum_{i=1}^{n}x_i
+```
 
-- The **weighted mean** accounts for the importance or weight of each value in the dataset, giving more influence to values with higher weights. It is calculated as:
+The mean uses every observation and is often a useful measure of center for roughly symmetric data without influential outliers.
 
-$$\mu_{X} = \frac{\sum w_ix_i}{\sum w_i}$$
+* The **weighted mean** gives different observations different levels of influence:
 
-- The **geometric mean** is ideal for averaging ratios or handling multiplicative data. It is always smaller than the arithmetic mean and is calculated as:
+```math
+\bar{x}_w
+=
+\frac{\sum_i w_i x_i}
+{\sum_i w_i}
+```
 
-$$\text{mean} =\sqrt[n]{a_{1}a_{2}\cdots a_{n}}$$
+where $w_i$ is the weight assigned to observation $x_i$.
 
-- The **median** is the middle value of a dataset when sorted in ascending order and is particularly suitable for skewed distributions or datasets with outliers.
-- The **mode** refers to the most frequently occurring value in a dataset, making it a measure of the most common observation.
+* The **geometric mean** is useful for multiplicative quantities such as growth factors, ratios, and some rates:
+
+```math
+G
+=
+\sqrt[n]{x_1x_2\cdots x_n}
+```
+
+For the standard real-valued definition, the observations should be positive.
+
+For positive data, the geometric mean is less than or equal to the arithmetic mean, with equality when all observations are equal.
+
+* The **median** is the middle value after the observations are ordered. If the dataset contains an even number of observations, the median is usually defined as the mean of the two middle values.
+
+* The **mode** is the most frequently occurring value. A dataset may have one mode, multiple modes, or no unique mode.
 
 ### Example
 
-Measures of central tendency help us identify the middle value in a dataset. Let's consider a dataset representing the number of sales per day for a store during a week:
+Consider the number of sales per day for a store during one week:
 
-| Day       | Sales       |
-|-----------|-------------|
-| Monday    | 17          |
-| Tuesday   | 21          |
-| Wednesday | 17          |
-| Thursday  | 35          |
-| Friday    | 23          |
-| Saturday  | 14          |
-| Sunday    | 24          |
+| Day       | Sales |
+| --------- | ----: |
+| Monday    |    17 |
+| Tuesday   |    21 |
+| Wednesday |    17 |
+| Thursday  |    35 |
+| Friday    |    23 |
+| Saturday  |    14 |
+| Sunday    |    24 |
 
-We can use different measures to determine the central value: mean, median, and mode.
+We can summarize the center of the data using the mean, median, and mode.
 
 #### Mean
 
-The mean (or average) is the sum of all values divided by the number of values. In this example:
+The arithmetic mean is:
 
-$$
-\text{Mean} = \frac{17 + 21 + 17 + 35 + 23 + 14 + 24}{7} \approx 21.57
-$$
+```math
+\text{Mean}
+=
+\frac{17+21+17+35+23+14+24}{7}
+=
+\frac{151}{7}
+\approx21.57
+```
 
 #### Median
 
-The median is the middle value in the sorted dataset. For our example, after sorting:
+First, sort the values:
 
-| Sales      |
-|------------|
-| 14         |
-| 17         |
-| 17         |
-| 21         |
-| 23         |
-| 24         |
-| 35         |
+| Sales |
+| ----: |
+|    14 |
+|    17 |
+|    17 |
+|    21 |
+|    23 |
+|    24 |
+|    35 |
 
-The median value is 21.
+There are seven observations, so the fourth value is the median:
+
+```math
+\text{Median}=21
+```
 
 #### Mode
 
-The mode is the most frequently occurring value. In our example, the mode is 17, as it occurs twice:
+The most frequently occurring value is 17:
 
-| Sales      |
-|------------|
-| 14         |
-|**17**      |
-|**17**      |
-| 21         |
-| 23         |
-| 24         |
-| 35         |
+| Sales |
+| ----: |
+|    14 |
+|    17 |
+|    17 |
+|    21 |
+|    23 |
+|    24 |
+|    35 |
 
-Each measure of central tendency can provide different insights into the dataset. In this example, the mean is slightly affected by the larger sales number on Thursday, while the median and mode give a more typical representation of the central value.
+Therefore:
+
+```math
+\text{Mode}=17
+```
+
+These measures describe the center in different ways. The relatively large value of 35 pulls the mean upward, while the median is less affected by it.
 
 ![image](https://github.com/djeada/Statistics-Notes/assets/37275728/8b59fddf-4218-4365-a345-24075da9326f)
 
 ### Choosing Between Mean and Median
 
-- You should **use the median** when minimizing the impact of outliers is important. Since the median is less sensitive to extreme values, it serves as a reliable measure of central tendency, particularly in skewed distributions.
-- **Opt for the mean** when it is important to include every value, including outliers, in the calculation. The mean considers all data points, making it useful in situations where each value is equally significant.
-- **Be cautious with the mean in skewed data**, as it can provide a misleading sense of central tendency. In skewed distributions, the median often offers a more accurate representation of the typical value in the dataset.
-  
+The choice between the mean and median depends on what we want to describe.
+
+* **Use the median to describe a typical value when the distribution is strongly skewed or contains influential outliers.** The median depends mainly on the ordering of the observations and is therefore resistant to extreme values.
+
+* **Use the mean when the arithmetic average itself is the quantity of interest.** Because every observation contributes to the calculation, the mean reflects the total amount distributed across all observations.
+
+* **Be cautious when interpreting the mean as a "typical" value in a strongly skewed distribution.** In such cases, the mean and median answer different questions.
+
+Neither measure is automatically more accurate. The appropriate choice depends on the purpose of the summary.
+
 #### Example 1: Evaluating Salaries in a Tech Company
 
-Alice is researching salaries of graphic designers at a well-known tech firm. The company has several top-level designers whose salaries are substantially higher than the rest. To get a realistic expectation of her potential earnings, should Alice consider the mean or the median salary?
+Alice is researching the salaries of graphic designers at a technology company. A few senior designers earn substantially more than most employees.
 
-**Answer**: The median salary would be more indicative of what Alice might earn. It diminishes the impact of the exceptionally high salaries of a few top-level designers, presenting a more typical salary level for a graphic designer at that company.
+If Alice wants to know what a **typical designer** earns, the median is generally more informative because a few very high salaries can pull the mean upward.
+
+If she were instead interested in the company's average salary cost per designer, the mean could be the relevant measure.
 
 #### Example 2: Reporting Average Customer Spending in a Bookstore
 
-Tom, managing a small bookstore, needs to report the average spending per customer. While most customers spend about $20, occasionally there are significant purchases of over $500. For an accurate report of average spending, should Tom use the mean or the median?
+Tom manages a small bookstore. Most customers spend around $20, but occasionally a customer spends more than $500.
 
-**Answer**: Tom should use the median for his report. The infrequent, high-value transactions are outliers that would disproportionately inflate the mean, creating a misleading impression of the typical customer spending. The median, less affected by these outliers, would provide a more accurate reflection of regular customer expenditures.
+If Tom wants to describe the spending of a **typical customer**, the median is useful because it is less affected by unusually large purchases.
+
+However, if Tom needs the arithmetic **average spending per customer** for revenue calculations, he should use the mean:
+
+```math
+\text{Mean Spending}
+=
+\frac{\text{Total Customer Spending}}
+{\text{Number of Customers}}
+```
+
+The mean and median are not competing versions of the same statistic; they summarize different aspects of the distribution.
 
 ## Measures of Dispersion
 
-Dispersion measures indicate the spread or variability of the data in the dataset.
-- The **range** is the difference between the maximum and minimum values in a dataset, providing a basic measure of spread.
-  
-- The **interquartile range (IQR)** is the difference between the first quartile (Q1) and the third quartile (Q3), capturing the range of the central 50% of the data and reducing the influence of outliers.
+Measures of dispersion describe how spread out the observations are.
 
-- **Variance** measures the average of the squared differences from the mean, indicating the spread of data points around the mean. It is calculated as:
+* The **range** is the difference between the maximum and minimum values:
 
-$$V = \frac{\sum (x_i - \overline{x})^2}{N-1}$$ (for a sample)
+```math
+\text{Range}
+=
+\max(x)-\min(x)
+```
 
-$$V = \frac{\sum (x_i - \overline{x})^2}{N}$$ (for a population)
+It is simple to calculate but depends entirely on the two most extreme observations.
 
-- The **standard deviation** is the square root of the variance, giving a direct interpretation of how much the values in a dataset deviate from the mean. It is calculated as:
+* The **interquartile range (IQR)** measures the spread of the middle 50% of the data:
 
-$$\sigma = \sqrt{\frac{\sum (x_i - \overline{x})^2}{N-1}}$$ (for a sample)
+```math
+\mathrm{IQR}=Q_3-Q_1
+```
 
-$$\sigma = \sqrt{\frac{\sum (x_i - \overline{x})^2}{N}}$$ (for a population)
+Because it ignores the most extreme quarters of the data, the IQR is relatively resistant to outliers.
+
+* **Variance** measures average squared deviation from the mean.
+
+For a population of size $N$:
+
+```math
+\sigma^2
+=
+\frac{1}{N}
+\sum_{i=1}^{N}(x_i-\mu)^2
+```
+
+For a sample of size $n$, the usual sample variance is:
+
+```math
+s^2
+=
+\frac{1}{n-1}
+\sum_{i=1}^{n}(x_i-\bar{x})^2
+```
+
+The denominator $n-1$ is used when estimating population variance from a sample.
+
+* The **standard deviation** is the square root of the variance.
+
+For a population:
+
+```math
+\sigma
+=
+\sqrt{
+\frac{1}{N}
+\sum_{i=1}^{N}(x_i-\mu)^2
+}
+```
+
+For a sample:
+
+```math
+s
+=
+\sqrt{
+\frac{1}{n-1}
+\sum_{i=1}^{n}(x_i-\bar{x})^2
+}
+```
+
+Unlike variance, standard deviation is expressed in the same units as the original variable.
+
+Both variance and standard deviation are sensitive to extreme values because deviations from the mean are squared.
+
 ### Example: Comparing Athletic Performances
 
-Consider that Chloe swam the 100m freestyle in 53 seconds at a regional competition, and Liam completed a marathon in 2 hours and 55 minutes at a city event. Who performed more exceptionally compared to typical results?
+Suppose Chloe swims the 100 m freestyle in 53 seconds, while Liam completes a marathon in 2 hours and 55 minutes.
+
+Because the events use different scales, their raw times cannot be compared directly. We can instead standardize each performance relative to the typical performance in its event.
 
 Given Data:
 
-I. For the 100m freestyle:
+I. For the 100 m freestyle:
 
-- Average time (μ) = 60 seconds
-- Standard Deviation (σ) = 4 seconds
-  
+* Mean time: $\mu=60$ seconds
+* Standard deviation: $\sigma=4$ seconds
+
 II. For the marathon:
 
-- Average time (μ) = 4 hours
-- Standard Deviation (σ) = 30 minutes
+* Mean time: $\mu=4$ hours $=240$ minutes
+* Standard deviation: $\sigma=30$ minutes
 
 Analysis:
 
-I. Chloe's Performance: 
+I. Chloe's Performance:
 
-- Chloe's swim time is 53 seconds.
-- Calculation of standard deviations from the mean:
+Chloe's standardized score is:
 
-$$
-\text{Number of SDs} = \frac{60 - 53}{4} = 1.75
-$$
+```math
+z
+=
+\frac{x-\mu}{\sigma}
+=
+\frac{53-60}{4}
+=
+-1.75
+```
 
-- Chloe's time is 1.75 standard deviations better (faster) than the average.
+Her time is 1.75 standard deviations below the mean. Because lower times represent better performance, this means she is 1.75 standard deviations faster than average.
 
 II. Liam's Performance:
 
-- Liam's marathon time is 2 hours and 55 minutes (175 minutes).
-- Conversion of average time to minutes: 4 hours = 240 minutes.
-- Calculation of standard deviations from the mean:
+Liam's time is:
 
-$$
-\text{Number of SDs} = \frac{240 - 175}{30} = 2.17
-$$
+```math
+2\text{ h }55\text{ min}=175\text{ min}
+```
 
-- Liam's time is 2.17 standard deviations better (faster) than the average.
+His standardized score is:
+
+```math
+z
+=
+\frac{175-240}{30}
+\approx-2.17
+```
+
+Liam's time is therefore about 2.17 standard deviations below the mean.
+
+Relative to their respective reference distributions, Liam's performance is farther from the average in the favorable direction.
+
+This comparison assumes that the supplied means and standard deviations are meaningful reference values for the athletes being compared.
 
 ### Understanding Variance
 
-Variance is an intrinsic aspect of the universe.
-Obtaining identical results after repeated observations of the same event is impossible due to random noise or error. Variance can be attributed to sampling or measurement errors. In some cases, variance results from the random fluctuations of the universe.
+Variability is a common feature of real data, but it can arise for different reasons.
+
+For example, observations may differ because of:
+
+* genuine differences among individuals or objects,
+* natural random variation,
+* measurement error,
+* changes in experimental conditions,
+* sampling variation.
+
+Variance summarizes the amount of variability in numerical observations. It does not, by itself, identify the cause of that variability.
+
+Repeated measurements can sometimes be identical, especially when measurements are discrete or rounded, so variation should not be interpreted as something that must appear in every repeated observation.
 
 ### Example
 
-Measures of dispersion help us understand the spread or variability of data in a dataset. Continuing with the store sales dataset:
+Continuing with the store sales dataset:
 
-| Day       | Sales       |
-|-----------|-------------|
-| Monday    | 17          |
-| Tuesday   | 21          |
-| Wednesday | 17          |
-| Thursday  | 35          |
-| Friday    | 23          |
-| Saturday  | 14          |
-| Sunday    | 24          |
+| Day       | Sales |
+| --------- | ----: |
+| Monday    |    17 |
+| Tuesday   |    21 |
+| Wednesday |    17 |
+| Thursday  |    35 |
+| Friday    |    23 |
+| Saturday  |    14 |
+| Sunday    |    24 |
 
-We can use different measures to determine the dispersion: range, variance, and standard deviation.
+We can summarize its dispersion using the range, variance, and standard deviation.
 
 #### Range
 
-The range is the difference between the maximum and minimum values in the dataset. In this example:
+The maximum value is 35 and the minimum is 14:
 
-$$
-\text{Range} = 35 - 14 = 21
-$$
+```math
+\text{Range}
+=
+35-14
+=
+21
+```
 
 #### Variance
 
-Variance measures the average squared difference of each value from the mean. For our example, first, we need to calculate the mean:
+The mean is:
 
-$$
-\text{Mean} \approx 21.57
-$$
+```math
+\bar{x}
+=
+\frac{151}{7}
+\approx21.57
+```
 
-Now, we can calculate the variance (treating the seven days as the entire population of interest):
+Suppose these seven days are treated as the entire population of interest. The population variance is then:
 
-$$
-\text{Variance} = \frac{(17 - 21.57)^2 + (21 - 21.57)^2 + (17 - 21.57)^2 + (35 - 21.57)^2 + (23 - 21.57)^2 + (14 - 21.57)^2 + (24 - 21.57)^2}{7} \approx 47.39
-$$
+```math
+\sigma^2
+=
+\frac{
+(17-21.57)^2
++(21-21.57)^2
++(17-21.57)^2
++(35-21.57)^2
++(23-21.57)^2
++(14-21.57)^2
++(24-21.57)^2
+}{7}
+\approx41.10
+```
 
-If the dataset were a sample drawn from a larger population, the sample variance would use $N - 1 = 6$ in the denominator instead of $N = 7$.
+If these seven days were instead treated as a sample from a larger population of possible days, the usual sample variance would use $n-1=6$ in the denominator:
+
+```math
+s^2\approx47.95
+```
+
+The distinction depends on whether the observed data are being described as the complete population of interest or used to estimate the variability of a larger population.
 
 #### Standard Deviation
 
-The standard deviation is the square root of the variance. In our example:
+For the population interpretation:
 
-$$
-\text{Standard Deviation} = \sqrt{47.39} \approx 6.88
-$$
+```math
+\sigma
+=
+\sqrt{41.10}
+\approx6.41
+```
 
-Each measure of dispersion provides different information about the spread of the dataset. The range gives us an overall view of the spread, but it can be influenced by extreme values. The variance and standard deviation give a more detailed representation of the dispersion and are less sensitive to outliers.
+For the sample interpretation:
+
+```math
+s
+=
+\sqrt{47.95}
+\approx6.92
+```
+
+The range, variance, and standard deviation describe spread in different ways. The range depends only on the smallest and largest observations, whereas variance and standard deviation use every observation.
+
+However, all three can be affected substantially by extreme values. The IQR is generally more resistant to outliers.
 
 ![2a2f7449-2a21-4c44-8ce9-438d7b85135e](https://github.com/djeada/Statistics-Notes/assets/37275728/8a18e3bd-e1cd-44c4-ac04-61f027e10882)
 
 ## Percentiles and Quartiles
 
-Percentiles and quartiles provide a way to understand the distribution of values in a dataset, going beyond the range. The range is not always helpful, as it doesn't give much information about how values are distributed around the mean or about the comparative position of an individual value within the distribution.
+Percentiles and quartiles describe the relative position of observations within an ordered dataset.
+
+Unlike the range, they provide information about how values are distributed throughout the dataset rather than using only the minimum and maximum.
 
 ### Percentiles
 
-A percentile tells us where a given value is ranked in the overall distribution. For example, 25% of the data in a distribution has a value lower than the 25th percentile; 75% of the data has a value lower than the 75th percentile, and so on. The 50th percentile is also the median.
+The $P$-th percentile is a value below which approximately $P%$ of the observations lie.
 
-To calculate the percentile for a given value, use the following equation:
+For example:
 
-$$
-\frac{\text{Number of values less than the given value}}{\text{Total number of values}} \times 100
-$$
+* the 25th percentile marks roughly the lower quarter of the data,
+* the 50th percentile is the median,
+* the 75th percentile marks roughly the lower three quarters of the data.
+
+For finite datasets, the exact definition of a percentile depends on the convention used for ranking and interpolation. Different statistical packages can therefore return slightly different percentile values for the same small dataset.
+
+One common convention, used by many software implementations, assigns the one-based position
+
+```math
+r
+=
+1+(n-1)\frac{P}{100}.
+```
+
+If $r$ is not an integer, linear interpolation is performed between the neighboring observations.
 
 #### Example: Exam Scores
 
-Consider a dataset of exam scores $S = [40, 30, 15, 24, 20, 22, 35]$. We aim to calculate the 30th percentile of this dataset.
+Consider:
+
+```math
+S=[40,30,15,24,20,22,35]
+```
+
+We want to calculate the 30th percentile.
 
 **Step 1: Sort the Dataset**
 
-First, sort the dataset $S$ in ascending order:
+```math
+S_{\text{sorted}}
+=
+[15,20,22,24,30,35,40]
+```
 
-$$
-S_{sorted} = [15, 20, 22, 24, 30, 35, 40]
-$$
+There are:
 
-The dataset contains $n = 7$ elements.
+```math
+n=7
+```
 
-**Step 2: Calculate the Rank Index for the 30th Percentile**
+observations.
 
-To find the position $i_P$ corresponding to the $P$-th percentile, we use the formula:
+**Step 2: Calculate the Rank Position for the 30th Percentile**
 
-$$
-i_P = \frac{P \times (n + 1)}{100}
-$$
+Using:
 
-where $P = 30$ (the desired percentile) and $n = 7$ (the number of data points).
+```math
+r
+=
+1+(n-1)\frac{P}{100},
+```
 
-Substituting in the values:
+we obtain:
 
-$$
-i_{30} = \frac{30 \times (7 + 1)}{100} = \frac{240}{100} = 2.4
-$$
+```math
+r
+=
+1+(7-1)(0.30)
+=
+1+1.8
+=
+2.8.
+```
 
-Since $i_{30} = 2.4$, the position is not an integer. This means the 30th percentile lies between the 2nd and 3rd values in the sorted dataset, requiring interpolation.
+The 30th percentile therefore lies 80% of the way between the second and third sorted observations.
+
+Those values are:
+
+```math
+x_{(2)}=20,
+\qquad
+x_{(3)}=22.
+```
 
 **Step 3: Interpolation**
 
-To perform interpolation, let:
+```math
+P_{30}
+=
+20+0.8(22-20)
+```
 
-- $\lfloor i_P \rfloor = 2$ (the integer part, corresponding to the 2nd value in the sorted dataset, $S_{sorted}[2] = 20$),
-- $\lceil i_P \rceil = 3$ (the next integer, corresponding to the 3rd value, $S_{sorted}[3] = 22$),
-- $r = i_P - \lfloor i_P \rfloor = 0.4$ (the fractional part).
+so:
 
-Now apply linear interpolation using the formula:
+```math
+P_{30}
+=
+20+1.6
+=
+21.6.
+```
 
-$$
-\text{Interpolated value} = (1 - r) \times S_{sorted}[\lfloor i_P \rfloor] + r \times S_{sorted}[\lceil i_P \rceil]
-$$
+Under this percentile convention, the 30th percentile is therefore approximately:
 
-Substitute the values:
+```math
+21.6
+```
 
-$$
-\text{Interpolated value} = (1 - 0.4) \times 20 + 0.4 \times 22
-$$
-
-$$
-= 0.6 \times 20 + 0.4 \times 22 = 12 + 8.8 = 20.8
-$$
+Another valid percentile convention may produce a slightly different value. The important point is to use the same convention consistently when comparing results.
 
 ![5ea8e097-b512-40b2-8959-b9d88f4657af](https://github.com/djeada/Statistics-Notes/assets/37275728/f940e95e-4e08-4696-ab10-618cdb49b6da)
 
 ### Quartiles
 
-Quartiles divide the data into four equal parts using percentiles. The first quartile contains the values from the minimum to the 25th percentile, the second from the 25th percentile to the 50th percentile (which is the median), the third from the 50th percentile to the 75th percentile, and the fourth from the 75th percentile to the maximum.
+Quartiles are three percentile thresholds that divide an ordered dataset into four regions:
 
-To find the quartile thresholds, use the following quantiles:
+* **First Quartile:** $Q_1$, the 25th percentile
+* **Second Quartile:** $Q_2$, the 50th percentile or median
+* **Third Quartile:** $Q_3$, the 75th percentile
 
-- First Quartile: $0.25$
-- Second Quartile (Median): $0.5$
-- Third Quartile: $0.75$
+The interquartile range is:
+
+```math
+\mathrm{IQR}
+=
+Q_3-Q_1.
+```
+
+As with percentiles in general, quartile values can vary slightly depending on the interpolation convention.
 
 #### Example: Exam Scores
 
-Consider a dataset of exam scores $S = [40, 30, 15, 24, 20, 22, 35]$. To calculate the quartiles, we need to compute the 25th percentile ($Q_1$), the 50th percentile (median, $Q_2$), and the 75th percentile ($Q_3$).
+Consider the same sorted dataset:
 
-**Step 1: Sort the Dataset**
+```math
+S_{\text{sorted}}
+=
+[15,20,22,24,30,35,40]
+```
 
-First, sort the dataset $S$ in ascending order:
+with:
 
-$$
-S_{sorted} = [15, 20, 22, 24, 30, 35, 40]
-$$
+```math
+n=7.
+```
 
-The dataset contains $n = 7$ elements.
+We use the same percentile position rule as above:
 
-**Step 2: Calculate the Position Index for Each Quartile**
-
-For a dataset of size $n$, the position index $i_q$ for the $q$-th percentile is calculated using the formula:
-
-$$
-i_q = \frac{q \times (n + 1)}{100}
-$$
-
-where $q$ is the desired percentile, and $n$ is the number of data points.
+```math
+r
+=
+1+(n-1)\frac{P}{100}.
+```
 
 **First Quartile (Q1)**
 
-For $q = 25$ (first quartile, $Q_1$):
+For $P=25$:
 
-$$
-i_1 = \frac{25 \times (7 + 1)}{100} = \frac{200}{100} = 2
-$$
+```math
+r
+=
+1+6(0.25)
+=
+2.5.
+```
 
-Since $i_1 = 2$, which is an integer, the first quartile corresponds exactly to the 2nd value in the sorted dataset:
+The first quartile lies halfway between the second and third observations:
 
-$$
-Q_1 = S_{sorted}[2] = 20
-$$
+```math
+Q_1
+=
+20+0.5(22-20)
+=
+21.
+```
 
 **Second Quartile (Q2)**
 
-For $q = 50$ (second quartile, or median, $Q_2$):
+For $P=50$:
 
-$$
-i_2 = \frac{50 \times (7 + 1)}{100} = \frac{400}{100} = 4
-$$
+```math
+r
+=
+1+6(0.50)
+=
+4.
+```
 
-Since $i_2 = 4$ is an integer, the second quartile corresponds to the 4th value in the sorted dataset:
+Therefore:
 
-$$
-Q_2 = S_{sorted}[4] = 24
-$$
+```math
+Q_2
+=
+24.
+```
 
 **Third Quartile (Q3)**
 
-For $q = 75$ (third quartile, $Q_3$):
+For $P=75$:
 
-$$
-i_3 = \frac{75 \times (7 + 1)}{100} = \frac{600}{100} = 6
-$$
+```math
+r
+=
+1+6(0.75)
+=
+5.5.
+```
 
-Since $i_3 = 6$ is an integer, the third quartile corresponds to the 6th value in the sorted dataset:
+The third quartile lies halfway between the fifth and sixth observations:
 
-$$
-Q_3 = S_{sorted}[6] = 35
-$$
+```math
+Q_3
+=
+30+0.5(35-30)
+=
+32.5.
+```
+
+Thus:
+
+```math
+Q_1=21,
+\qquad
+Q_2=24,
+\qquad
+Q_3=32.5.
+```
+
+The interquartile range is:
+
+```math
+\mathrm{IQR}
+=
+32.5-21
+=
+11.5.
+```
 
 **Visualization**
 
-The boxplot below provides a visual summary of the distribution of the dataset:
+A boxplot summarizes the distribution using the median, quartiles, and whiskers:
 
 ![b0f49b50-ef84-4a8c-908f-e57b69fcd874](https://github.com/djeada/Statistics-Notes/assets/37275728/5b77b42b-4b08-4e69-b33e-7bb36e4d2aae)
 
-- The **first quartile (Q1)** is 21.0, indicating that 25% of the data points are less than or equal to this value.
-- The **median** is 24.0, meaning that 50% of the data points are less than or equal to this value, and 50% are greater.
-- The **third quartile (Q3)** is 32.5, showing that 75% of the data points are less than or equal to this value.
-- The **minimum value** in the dataset is approximately 15, as indicated by the left whisker.
-- The **maximum value** is around 40, as indicated by the right whisker.
-- The **interquartile range (IQR)** is $32.5 - 21.0 = 11.5$, representing the spread of the middle 50% of the data.
-- The **distribution** appears slightly skewed to the right, as the range from the median to the maximum is larger than the range from the median to the minimum.
-- There are **no visible outliers**, as no points fall outside the whiskers on either side of the box.
+For this dataset:
+
+* The **first quartile**, $Q_1$, is 21.
+* The **median**, $Q_2$, is 24.
+* The **third quartile**, $Q_3$, is 32.5.
+* The **interquartile range** is $32.5-21=11.5$.
+* The minimum observed value is 15.
+* The maximum observed value is 40.
+
+A common boxplot convention extends the whiskers to the most extreme observations still within $1.5,\mathrm{IQR}$ of the quartiles and plots observations beyond those limits individually as potential outliers.
+
+For this dataset:
+
+```math
+Q_1-1.5\,\mathrm{IQR}
+=
+21-1.5(11.5)
+=
+3.75
+```
+
+and:
+
+```math
+Q_3+1.5\,\mathrm{IQR}
+=
+32.5+1.5(11.5)
+=
+49.75.
+```
+
+All observations lie within these limits, so there are no observations flagged as outliers under the usual $1.5,\mathrm{IQR}$ rule.
+
+The upper half of the data is somewhat more spread out than the lower half, but with only seven observations it is better not to make a strong claim about the distribution's skewness from the boxplot alone.
