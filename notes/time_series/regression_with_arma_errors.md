@@ -10,48 +10,55 @@ y_t=1+2x_t+n_t,
 n_t=0.7n_{t-1}+\varepsilon_t.
 $$
 
-If $x_t=3$ and the current error happens to be $n_t=0.4$, then the observed value is
+If $x_t=3$ and the current error happens to be $n_t=0.4$, then
 
 $$
 y_t=1+2(3)+0.4=7.4.
 $$
 
-The regression mean is $1+2(3)=7$, but the error is not independent from the previous error. Ordinary least squares may estimate the mean slope reasonably under exogeneity, yet its usual standard errors assume a dependence structure that is not present here. Modeling the ARMA error uses the predictable part of $n_t$ and produces more appropriate forecasts and uncertainty estimates.
+The regression mean is $1+2(3)=7$, but the error is serially dependent. Under suitable exogeneity, ordinary least squares can still estimate the mean coefficients consistently, but the usual independent-error standard errors and forecast formulas are no longer appropriate. Modeling the ARMA error captures the predictable part of $n_t$ and produces uncertainty estimates that reflect the temporal dependence.
 
 ![A regression mean with autocorrelated errors](../../assets/time_series/student/16_dynamic_regression.png)
 
-In many applications, we want to explain a response series $Y_t$ using covariates while still accounting for autocorrelation. A standard approach is **regression with ARMA errors**:
+The figure separates the regression mean from the serial error around it. The covariates explain the systematic mean structure, while the ARMA component describes dependence that remains after conditioning on those predictors.
+
+In many applications, the response $Y_t$ depends on observed covariates and still has autocorrelated residual variation. A **regression with ARMA errors** writes
 
 $$
-Y_t = \beta^T X_t + R_t
+Y_t=\beta^TX_t+R_t,
 $$
 
-where the residual process $R_t$ follows an ARMA model:
+where the error process follows an ARMA model such as
 
 $$
-R_t = \phi_1 R_{t-1} + \cdots + \phi_p R_{t-p} + Z_t - \theta_1 Z_{t-1} - \cdots - \theta_q Z_{t-q}
+R_t=\phi_1R_{t-1}+\cdots+\phi_pR_{t-p}
++Z_t-\theta_1Z_{t-1}-\cdots-\theta_qZ_{t-q}.
 $$
 
-with $Z_t$ as white noise.
+Here $Z_t$ is white noise. The signs on the MA coefficients are a convention; some texts and software use plus signs instead, so compare full model equations rather than parameter labels alone.
 
 ### Why This Matters
 
-- Ordinary least squares assumes independent errors.  
-- Autocorrelated residuals lead to **biased standard errors** and misleading inference.  
-- Modeling the residuals as ARMA provides more reliable uncertainty estimates.  
+Serially correlated errors affect both inference and forecasting. Even when the regression coefficients remain consistently estimable under appropriate exogeneity assumptions, the ordinary independent-error covariance formula is generally wrong. Ignoring residual dependence can therefore produce misleading standard errors, confidence intervals, and tests.
+
+A fitted error process also improves dynamic forecasts because part of the current residual may be predictable from previous residuals. This is different from merely adjusting standard errors after fitting the mean model.
 
 ### Practical Workflow
 
-1. **Fit a regression model** for the deterministic part ($\beta^T X_t$).
-2. **Inspect residuals** using ACF/PACF to identify ARMA structure.
-3. **Fit the combined model** with ARMA errors using MLE or GLS.
-4. **Validate residuals** to confirm they resemble white noise.
+A practical workflow is:
 
-This approach blends explanatory modeling (regression) with time series dependence (ARMA), which is common in econometrics and forecasting.
+1. align the response and predictors and specify the regression mean;
+2. inspect residual ACF/PACF and plots after fitting a simple mean model;
+3. choose a parsimonious ARMA structure for the remaining serial dependence;
+4. estimate the regression coefficients and error process together, commonly by maximum likelihood or generalized least squares methods;
+5. check that the final standardized residuals no longer contain systematic autocorrelation;
+6. evaluate forecasts using only predictors and observations available at each forecast origin.
+
+This structure combines explanatory regression with a time-series model for the unexplained dynamics.
 
 ## Student guide: estimate the mean and the error process together
 
-Let
+Write
 
 $$
 y_t=x_t^\top\beta+n_t,
@@ -59,7 +66,7 @@ y_t=x_t^\top\beta+n_t,
 \phi(B)n_t=\theta(B)\varepsilon_t.
 $$
 
-The regression part answers how the target changes with the predictors, conditional on the error process. The ARMA part explains serial structure left after the mean has been modeled.
+The regression part describes how the conditional mean changes with the predictors. The ARMA part describes serial dependence left after that mean has been specified. Keeping those roles separate helps avoid using lagged error structure to compensate for a missing predictor or trend.
 
 ### Numerical example
 
@@ -71,41 +78,55 @@ y_t=1+2x_t+n_t,
 n_t=0.7n_{t-1}+\varepsilon_t.
 $$
 
-For $x_t=3$ and $n_t=0.4$, the observation is
+For $x_t=3$ and $n_t=0.4$,
 
 $$
 y_t=1+2(3)+0.4=7.4.
 $$
 
-The regression mean is 7. If the previous error was $n_{t-1}=0.5$, the predictable part of the current error is $0.35$ and the innovation is $0.05$.
+The regression mean is 7. If $n_{t-1}=0.5$, the predictable AR contribution to the current error is
+
+$$
+0.7(0.5)=0.35,
+$$
+
+so the innovation is
+
+$$
+\varepsilon_t=0.4-0.35=0.05.
+$$
+
+This decomposition shows how the observed value can depart from the regression mean in a way that is partly predictable from earlier errors and partly new information.
 
 ### Why ordinary least squares can mislead
 
-Under suitable exogeneity, OLS can estimate $\beta$ consistently even when the errors are autocorrelated. The usual independent-error variance estimator, however, is generally wrong. Serial dependence also means that a model of the error can improve forecasts.
+Under suitable exogeneity, OLS can estimate $\beta$ consistently even when the errors are autocorrelated. Its usual independent-error variance estimator, however, is generally invalid, and OLS is no longer efficient among linear unbiased estimators when the covariance structure is known.
 
-A heteroskedasticity-and-autocorrelation robust covariance estimate may improve inference about $\beta$, but it does not by itself produce dynamic forecasts or model the serial error process. Regression with ARMA errors addresses a different objective.
+A heteroskedasticity-and-autocorrelation robust covariance estimator can improve inference about $\beta$ without specifying a full dynamic error model. It does not, by itself, model the serial errors or provide the same recursive forecasts. Choose between these approaches according to the inferential or forecasting objective.
 
 ### GLS intuition
 
-If the error covariance matrix $\Sigma$ were known, generalized least squares would use
+If the error covariance matrix $\Sigma$ were known, generalized least squares would estimate
 
 $$
 \hat\beta_{\mathrm{GLS}}
 =(X^\top\Sigma^{-1}X)^{-1}X^\top\Sigma^{-1}y.
 $$
 
-The weights account for the fact that observations carry overlapping information. In practice, $\Sigma$ is estimated jointly or iteratively, so misspecification of the ARMA error matters.
+The transformation accounts for the fact that observations with correlated errors contain overlapping information. In practice, $\Sigma$ is unknown and must be estimated from the ARMA parameters, often jointly or iteratively. Misspecifying the error model can therefore affect both coefficient uncertainty and forecasts.
+
+![Regression with dynamic errors](../../assets/time_series/dynamic_multivariate/01_dynamic_regression_errors.png)
+
+The figure illustrates this joint view: the regression component follows the predictor-driven mean, while the dynamic error model accounts for systematic departures around it.
 
 ### Workflow
 
-1. Align response and predictors.
-2. Fit a simple mean model.
+1. Align the response and predictors on the correct timestamps.
+2. Fit a simple, interpretable mean model.
 3. Inspect residual ACF/PACF and squared residuals.
 4. Choose a parsimonious error structure.
 5. Estimate the combined model.
-6. Check standardized residuals.
-7. Backtest predictions using only information available at each origin.
+6. Check standardized residuals and parameter stability.
+7. Backtest predictions using only information available at each forecast origin.
 
-See [dynamic regression](dynamic_regression.md) for predictor availability and lagged effects.
-
-![Regression with dynamic errors](../../assets/time_series/dynamic_multivariate/01_dynamic_regression_errors.png)
+See [dynamic regression](dynamic_regression.md) for predictor availability, lagged effects, and forecast scenarios for future covariates.

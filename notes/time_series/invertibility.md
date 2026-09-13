@@ -14,231 +14,238 @@ $$
 \varepsilon_t=(1-0.5B+0.25B^2-0.125B^3+\cdots)X_t.
 $$
 
-The weights shrink, so the representation is stable and invertible. If $\theta=2$, the first inverse weights are $1,-2,4,-8,\ldots$ and grow in magnitude. The same observed autocovariance can be represented by reciprocal MA parameters, so the invertibility convention chooses the stable representation $|\theta|<1$.
+The weights shrink, so the inverse representation is stable. If $\theta=2$, the first inverse weights are $1,-2,4,-8,\ldots$ and grow in magnitude. Because reciprocal MA parameters can generate the same autocorrelation structure after rescaling the innovation variance, the usual invertibility convention selects the representation with $|\theta|<1$.
 
 ![Inverse-filter weights for invertible and non-invertible MA(1) parameters](../../assets/time_series/student/08_invertibility_inverse_weights.png)
 
-In time series modeling, **invertibility** is the property of a model that allows the innovation process (also called the noise or disturbance process) to be expressed as a function of the observed series and its past values. This is particularly relevant for **Moving Average (MA)** models.
+In time-series modeling, **invertibility** means that the innovation sequence can be recovered as a stable function of the observed series and its past values. The concept is especially important for moving average models, whose equations are written in terms of unobserved current and lagged shocks.
 
 ### Intuition Behind Invertibility
 
-Invertibility ensures that a **Moving Average (MA)** model, which expresses the current value of a series as a linear combination of white noise terms, can be transformed into an **Autoregressive (AR)** form. This is crucial because it allows us to use observed data to infer the underlying white noise, making the model estimable and stable.
+An MA model maps innovations into observations. Invertibility asks whether this mapping can be reversed using current and past observations with coefficients that decay sufficiently fast.
 
-An **invertible model** ensures a unique relationship between the observed values of the time series and the underlying innovations. Without invertibility, the same time series could be explained by multiple different models, which makes interpretation and prediction difficult.
+This matters for two related reasons. First, it gives a stable way to infer innovations from observed data. Second, it selects a canonical parameterization when different MA coefficient sets imply the same second-order behavior. Without an invertibility convention, the observable autocovariances may not identify a unique MA representation.
 
 ### Mathematical Definition of Invertibility
 
-Formally, a process $\{X_t\}$ is said to be **invertible** if the white noise sequence $\{Z_t\}$ can be expressed as a convergent infinite sum of past observations $\{X_t\}$:
+A process $\{X_t\}$ is invertible if its innovation $Z_t$ can be written as a convergent linear filter of present and past observations:
 
 $$
-Z_t = \sum_{k=0}^{\infty} \pi_k X_{t-k}
+Z_t=\sum_{k=0}^{\infty}\pi_kX_{t-k}.
 $$
 
-where the series $\sum_{k=0}^{\infty} |\pi_k|$ converges.
+A common sufficient stability condition is absolute summability,
+
+$$
+\sum_{k=0}^{\infty}|\pi_k|<\infty.
+$$
+
+The exact convergence condition can be stated in several related ways, but the practical idea is the same: increasingly old observations should receive diminishing weight when reconstructing the current innovation.
 
 ### Why is Invertibility Important?
 
-Invertibility is essential for practical purposes because:
+Invertibility provides a unique, stable representation of an MA process under the usual root convention. It makes the recovered innovations usable for residual diagnostics and recursive forecasting, and it avoids interpreting observationally equivalent coefficient sets as different models.
 
-- It ensures that the noise (or shock) sequence $Z_t$ can be uniquely recovered from the observed data.
-- It prevents model ambiguity by ensuring a one-to-one correspondence between the observed series and the underlying noise.
-- It is necessary for model estimation, as non-invertible models may lead to poor or misleading parameter estimates.
-  
-Invertibility also allows the series to be expressed in an **AR(∞)** (AutoRegressive process of infinite order) form, which helps in analysis and forecasting.
+A non-invertible MA specification can still be written and numerically fitted, but it is not the canonical representation and can create identification and optimization problems. Software therefore commonly reports the invertible equivalent whenever one exists.
+
+Invertibility also gives an infinite autoregressive representation of the innovation filter, which connects MA models to AR-style recursions.
 
 ### General Conditions for Invertibility
 
-For a **Moving Average (MA)** process to be invertible, the parameters associated with the lagged noise terms must satisfy certain conditions. Specifically, for an MA process of order $q$:
+For an MA($q$),
 
 $$
-X_t = Z_t + \theta_1 Z_{t-1} + \theta_2 Z_{t-2} + \dots + \theta_q Z_{t-q}
+X_t=Z_t+\theta_1Z_{t-1}+\theta_2Z_{t-2}+\dots+\theta_qZ_{t-q},
 $$
 
-the model is invertible if and only if the roots of the associated characteristic equation lie outside the unit circle in the complex plane. The characteristic equation is:
+define the MA polynomial
 
 $$
-1 + \theta_1 z + \theta_2 z^2 + \dots + \theta_q z^q = 0
+\theta(z)=1+\theta_1z+\theta_2z^2+\dots+\theta_qz^q.
 $$
+
+The process is invertible under the standard convention when every root of
+
+$$
+\theta(z)=0
+$$
+
+lies outside the unit circle. This root condition, rather than a separate bound on each individual coefficient, is the general criterion for MA($q$) models.
 
 ### Example: MA(1) Process
 
-Now let's apply the concept of invertibility to a specific case, the **Moving Average (MA(1))** process.
-
-Consider an **MA(1)** process:
+Consider
 
 $$
-X_t = Z_t + \beta Z_{t-1}
+X_t=Z_t+\beta Z_{t-1},
 $$
 
-where $Z_t$ is white noise with mean 0 and variance $\sigma_Z^2$, and $\beta$ is a constant. To determine the invertibility of this model, we need to express $Z_t$ in terms of $X_t$ and its past values.
+where $Z_t$ is white noise with mean 0 and variance $\sigma_Z^2$.
 
 #### Inversion Using Backward Substitution
 
-We can express $Z_t$ in terms of $X_t$ and its lagged values by backward substitution. Starting from:
+Rearrange the model as
 
 $$
-Z_t = X_t - \beta Z_{t-1}
+Z_t=X_t-\beta Z_{t-1}.
 $$
 
-Now substitute $Z_{t-1}$ from the same equation:
+Substitute the same relation for $Z_{t-1}$:
 
 $$
-Z_t = X_t - \beta \left( X_{t-1} - \beta Z_{t-2} \right) = X_t - \beta X_{t-1} + \beta^2 Z_{t-2}
+Z_t=X_t-\beta(X_{t-1}-\beta Z_{t-2})
+=X_t-\beta X_{t-1}+\beta^2Z_{t-2}.
 $$
 
-Continuing this process:
+Repeating the substitution gives
 
 $$
-Z_t = X_t - \beta X_{t-1} + \beta^2 X_{t-2} - \beta^3 X_{t-3} + \dots
+Z_t=X_t-\beta X_{t-1}+\beta^2X_{t-2}-\beta^3X_{t-3}+\dots.
 $$
 
-This shows that the **MA(1)** process can be written as an infinite autoregressive process:
+Equivalently,
 
 $$
-Z_t = \sum_{k=0}^{\infty} (-\beta)^k X_{t-k}
+Z_t=\sum_{k=0}^{\infty}(-\beta)^kX_{t-k}.
 $$
 
-This series converges if $|\beta| < 1$. Therefore, the MA(1) process is **invertible** if $|\beta| < 1$.
+The coefficients decay geometrically when $|\beta|<1$, so the inverse filter is stable under that condition.
 
 #### Inversion Using the Backward Shift Operator
 
-Alternatively, we can use the **backward shift operator** to invert the MA(1) process.
-
-Given:
+Write the MA(1) as
 
 $$
-X_t = (1 + \beta B) Z_t
+X_t=(1+\beta B)Z_t.
 $$
 
-where $B$ is the backward shift operator (i.e., $B Z_t = Z_{t-1}$), we aim to find $Z_t$ in terms of $X_t$ by inverting the operator $1 + \beta B$:
+Formally inverting the operator gives
 
 $$
-Z_t = (1 + \beta B)^{-1} X_t
+Z_t=(1+\beta B)^{-1}X_t.
 $$
 
-The inverse of $1 + \beta B$ can be expanded as a power series:
+For $|\beta|<1$, the geometric expansion is
 
 $$
-(1 + \beta B)^{-1} = 1 - \beta B + \beta^2 B^2 - \beta^3 B^3 + \dots
+(1+\beta B)^{-1}
+=1-\beta B+\beta^2B^2-\beta^3B^3+\dots.
 $$
 
-Thus, applying this operator to $X_t$, we get:
+Therefore,
 
 $$
-Z_t = X_t - \beta X_{t-1} + \beta^2 X_{t-2} - \beta^3 X_{t-3} + \dots
+Z_t=X_t-\beta X_{t-1}+\beta^2X_{t-2}-\beta^3X_{t-3}+\dots,
 $$
 
-This is the same result obtained by backward substitution. Again, the series converges if $|\beta| < 1$, confirming that the MA(1) process is invertible under this condition.
+which is the same inverse obtained by backward substitution. The operator form makes clear that invertibility is a property of the MA polynomial.
 
 ### Example: MA(2) Process
 
-Consider an **MA(2)** process:
+Consider
 
 $$
-X_t = Z_t + \theta_1 Z_{t-1} + \theta_2 Z_{t-2}
+X_t=Z_t+\theta_1Z_{t-1}+\theta_2Z_{t-2}.
 $$
 
-The characteristic equation for this process is:
+The MA polynomial is
 
 $$
-1 + \theta_1 z + \theta_2 z^2 = 0
+1+\theta_1z+\theta_2z^2.
 $$
 
-For invertibility, the roots of this equation must lie outside the unit circle. Suppose $\theta_1 = 0.5$ and $\theta_2 = 0.3$. The characteristic equation becomes:
+For $\theta_1=0.5$ and $\theta_2=0.3$,
 
 $$
-1 + 0.5 z + 0.3 z^2 = 0
+1+0.5z+0.3z^2=0.
 $$
 
-Solving this quadratic equation:
+The roots are
 
 $$
-z = \frac{-0.5 \pm \sqrt{0.5^2 - 4 \cdot 0.3 \cdot 1}}{2 \cdot 0.3} = \frac{-0.5 \pm \sqrt{0.25 - 1.2}}{0.6}
+z=\frac{-0.5\pm\sqrt{0.25-1.2}}{0.6}
+=\frac{-0.5\pm i\sqrt{0.95}}{0.6}.
 $$
 
+They are complex conjugates. Because their product is $1/0.3$, each root has modulus
+
 $$
-z = \frac{-0.5 \pm \sqrt{-0.95}}{0.6}
+|z|=\sqrt{\frac{1}{0.3}}\approx1.826>1.
 $$
 
-Since the discriminant is negative, the roots are complex numbers. The modulus of these complex roots must be greater than 1 for the process to be invertible. If the modulus of the roots is less than 1, the process is not invertible.
+Both roots therefore lie outside the unit circle, so this MA(2) specification is invertible.
+
+This example also shows why individual coefficient bounds are not the correct general test: invertibility depends on the roots of the full polynomial.
 
 ### Convergence of the Series in MA Models
 
-When working with **Moving Average (MA)** models, it's important to ensure that the infinite series we obtain when trying to express the noise term $Z_t$ as a function of past observations $X_t$ converges. This is crucial because we want to guarantee that the process remains stable and well-defined over time.
+The inverse representation is useful only if truncating it after many lags gives a progressively better approximation to the innovation. In an invertible model, the inverse-filter coefficients decay, so increasingly distant observations contribute less.
 
 #### Understanding Mean-Square Convergence
 
-In time series analysis, when we express $Z_t$ (the white noise term) as an infinite sum of past values of the observed series $X_t$, we need this sum to **converge in the mean-square sense**. This type of convergence is important because it means that, as we include more and more past terms, the series approaches a stable value in terms of the average squared deviation from the true value of the noise term $Z_t$.
-
-In the context of an MA(1) model, this means we can write:
+For the MA(1),
 
 $$
-Z_t = X_t - \beta X_{t-1} + \beta^2 X_{t-2} - \beta^3 X_{t-3} + \dots
+Z_t=X_t-\beta X_{t-1}+\beta^2X_{t-2}-\beta^3X_{t-3}+\dots.
 $$
 
-This representation involves an **infinite series** of lagged values of $X_t$, where each term is weighted by increasing powers of $\beta$. For this series to be **stable** and **convergent**, the terms $\beta^n$ must decay as $n \to \infty$, meaning that as we go further back in time (larger lags), the influence of past values should diminish.
+Mean-square convergence means that finite truncations of this series approach $Z_t$ in expected squared error. When the inverse coefficients decay geometrically, the contribution from the omitted tail becomes negligible.
 
-#### Condition for Convergence: $|\beta| < 1$
+#### Condition for Convergence: $|\beta|<1$
 
-For the series to converge in the mean-square sense, the absolute value of $\beta$ must be **less than 1**. This condition ensures that the powers of $\beta$ become progressively smaller as $n$ increases, which in turn guarantees that the terms in the infinite sum $\beta^n X_{t-n}$ shrink in magnitude. If $|\beta| \geq 1$, the terms would grow or remain constant, and the series would fail to converge, leading to instability in the model.
+For MA(1), the inverse coefficients are powers of $-\beta$. Thus:
 
-Let’s break it down:
+- if $|\beta|<1$, the weights decay and the standard past-based inverse is stable;
+- if $|\beta|=1$, the weights do not decay;
+- if $|\beta|>1$, the weights grow in the direct geometric expansion.
 
-- **If $|\beta| < 1$:** Each successive term $\beta^n$ becomes smaller and smaller as $n$ increases, causing the series to converge to a finite value.
-- **If $|\beta| = 1$:** The terms do not decay, and the series either oscillates (if $\beta = -1$) or remains constant (if $\beta = 1$).
-- **If $|\beta| > 1$:** The terms $\beta^n$ grow larger as $n$ increases, causing the series to diverge.
-
-Therefore, the necessary condition for the **convergence of the series** in an MA(1) process is:
+Therefore the standard MA(1) invertibility condition is
 
 $$
-|\beta| < 1
+|\beta|<1.
 $$
 
-This ensures that the MA(1) model is **invertible**, meaning we can express the white noise $Z_t$ as a convergent infinite sum of past values of $X_t$.
+This condition is equivalent to requiring the zero $z=-1/\beta$ of $1+\beta z$ to lie outside the unit circle.
 
 #### Generalization to Higher-Order MA Models
 
-The concept of convergence extends to higher-order MA models as well. For an MA(q) model:
+For
 
 $$
-X_t = Z_t + \theta_1 Z_{t-1} + \theta_2 Z_{t-2} + \dots + \theta_q Z_{t-q}
+X_t=Z_t+\theta_1Z_{t-1}+\dots+\theta_qZ_{t-q},
 $$
 
-We can express the noise $Z_t$ as an infinite sum of past values of $X_t$ using a similar process. The condition for convergence in this case is that the **roots** of the characteristic polynomial:
+the same idea applies, but the coefficients of the inverse filter are determined by the roots of
 
 $$
-1 + \theta_1 z + \theta_2 z^2 + \dots + \theta_q z^q = 0
+1+\theta_1z+\dots+\theta_qz^q=0.
 $$
 
-must lie **outside the unit circle** in the complex plane. This ensures that the coefficients of the lagged terms (analogous to powers of $\beta$ in MA(1)) decay as we go further back in time, leading to a convergent series.
+The model is invertible when all of these roots lie outside the unit circle. It is not necessary, and is not sufficient in general, to require every $|\theta_j|<1$ separately.
 
 #### Example: MA(1) Process
 
-For an MA(1) process:
+For
 
 $$
-X_t = Z_t + \beta Z_{t-1}
+X_t=Z_t+\beta Z_{t-1},
 $$
 
-Using backward substitution, we express $Z_t$ as an infinite series:
+the inverse is
 
 $$
-Z_t = X_t - \beta X_{t-1} + \beta^2 X_{t-2} - \beta^3 X_{t-3} + \dots
+Z_t=X_t-\beta X_{t-1}+\beta^2X_{t-2}-\beta^3X_{t-3}+\dots.
 $$
 
-The condition for this series to converge is:
+With $|\beta|<1$, the weights decay as the lag increases. The recovered innovation can therefore be approximated using a sufficiently long but finite history of observed values.
 
-$$
-|\beta| < 1
-$$
+The figure below visualizes this contrast between decaying and expanding inverse-filter weights.
 
-This ensures that the terms $\beta^n$ decay as $n \to \infty$, leading to convergence of the series. In practical terms, if $|\beta|$ is too large, the influence of past values remains strong, and the infinite series becomes unstable and non-convergent.
-
-Thus, for any MA process, ensuring that the absolute values of the coefficients of the lagged noise terms are **less than 1** is a key requirement for convergence and invertibility.
+![Stable and unstable inverse weights](../../assets/time_series/dependence/06_invertibility.png)
 
 ## Student guide: why roots and inverse filters matter
 
-Invertibility asks whether the unobserved innovations can be represented as a stable function of observed values. It is analogous to choosing a canonical representation for an MA model.
+Invertibility asks whether unobserved innovations can be represented as a stable function of observed values. It is also the convention that chooses a canonical representation when more than one MA parameterization produces the same covariance structure.
 
 ### MA(1) calculation
 
@@ -262,13 +269,13 @@ $$
 1,\ -0.5,\ 0.25,\ -0.125.
 $$
 
-They decay geometrically. For $\theta=2$, the weights are
+They decay geometrically. For $\theta=2$, the corresponding direct expansion starts
 
 $$
 1,\ -2,\ 4,\ -8,
 $$
 
-and grow. The latter is not a stable way to recover shocks from observations.
+and grows instead. The second representation is therefore not the stable past-based inverse.
 
 ### Root condition
 
@@ -278,10 +285,10 @@ $$
 \theta(B)=1+\theta B.
 $$
 
-Its zero is $B=-1/\theta$. Invertibility requires the zero to be outside the unit circle:
+Its zero is $B=-1/\theta$. Invertibility requires
 
 $$
-\left|-\frac1\theta\right|>1
+\left|-\frac{1}{\theta}\right|>1
 \quad\Longleftrightarrow\quad
 |\theta|<1.
 $$
@@ -290,7 +297,7 @@ For higher-order MA models, every zero of the MA polynomial must lie outside the
 
 ### Why equivalent models appear
 
-For an MA(1), the autocovariances depend on $\theta$ through:
+For an MA(1),
 
 $$
 \gamma(0)=\sigma^2(1+\theta^2),
@@ -298,13 +305,8 @@ $$
 \gamma(1)=\sigma^2\theta.
 $$
 
-Changing $\theta$ to $1/\theta$ and changing the innovation variance appropriately can preserve the same autocorrelation. The observed second-order behavior alone cannot choose between the two representations. Invertibility supplies the convention that chooses the decaying inverse.
+Replacing $\theta$ by $1/\theta$ and rescaling the innovation variance appropriately can preserve the same autocorrelation. Second-order observations alone therefore cannot choose between the two parameterizations. Invertibility supplies the convention that selects the representation with a decaying inverse filter.
 
 ### Practical implications
 
-- Compare fitted MA parameters with root diagnostics.
-- Do not interpret a non-invertible coefficient as a different scientific shock mechanism without transforming it.
-- Check numerical optimization near unit-circle roots.
-- Use residual innovations from the canonical representation for diagnostics and forecasts.
-
-![Stable and unstable inverse weights](../../assets/time_series/dependence/06_invertibility.png)
+Check fitted MA roots rather than looking only at the raw coefficient values. Be cautious near unit-circle roots, where the inverse decays slowly and numerical estimation can become unstable. Use innovations from the canonical invertible representation for residual diagnostics and forecasting, and do not interpret reciprocal non-invertible coefficients as evidence for a different physical shock mechanism when they describe the same observed second-order behavior.

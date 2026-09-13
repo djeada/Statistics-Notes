@@ -23,322 +23,343 @@ $$
 \rho_h=0.6\rho_{h-1}-0.2\rho_{h-2}.
 $$
 
-For example, $\rho_3=0.6(0.1)-0.2(0.5)=-0.04$. The equations turn AR coefficients into moment restrictions that can be checked against a sample ACF.
+For example, $\rho_3=0.6(0.1)-0.2(0.5)=-0.04$. The equations turn AR coefficients into restrictions on the autocorrelation pattern that can be compared with a sample ACF.
 
 ![Yule-Walker recursion for an AR(2)](../../assets/time_series/student/09_yule_walker_ar2.png)
 
-The **Yule-Walker equations** are a set of linear relationships that tie the **autocovariances/autocorrelations** of a *stationary* **autoregressive (AR $p$) process** to its parameters. They are the work-horse for parameter estimation, diagnostic checking, and theoretical analysis of AR models.
+The **Yule-Walker equations** are linear relationships connecting the autocovariances or autocorrelations of a stationary autoregressive process to its AR coefficients. They provide a direct link between a model written in terms of lagged values and the second-order dependence visible in its ACF.
 
 ### Definition
 
-First recall the *AR $p$* model itself
+Consider a zero-mean stationary AR($p$) process
 
 $$
-\boxed{%
-X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + \dots + \phi_p X_{t-p} + Z_t,
-\qquad 
-Z_t \stackrel{\text{i.i.d.}}{\sim} \text{WN}\bigl(0,\sigma_Z^{2}\bigr)}
+X_t=\phi_1X_{t-1}+\phi_2X_{t-2}+\dots+\phi_pX_{t-p}+Z_t,
 $$
 
-where $Z_t$ is white noise.
+where $Z_t$ is white noise with
+
+$$
+E(Z_t)=0,
+\qquad
+\mathrm{Var}(Z_t)=\sigma_Z^2,
+$$
+
+and is uncorrelated with past values of the process.
 
 Define the autocovariance function (ACVF) and autocorrelation function (ACF) by
 
 $$
-\gamma(k)=\mathrm{Cov}(X_t,X_{t-k}),\quad
-\rho(k)=\frac{\gamma(k)}{\gamma(0)},\quad
-k\in\mathbb{Z}
+\gamma(k)=\mathrm{Cov}(X_t,X_{t-k}),
+\qquad
+\rho(k)=\frac{\gamma(k)}{\gamma(0)},
+\qquad
+k\in\mathbb Z.
 $$
 
-**Yule-Walker system (covariance form, including variance equation)**
+The covariance form of the Yule-Walker equations is
 
 $$
-\boxed{%
-\gamma(k)=\sum_{j=1}^{p}\phi_j \gamma(k-j)}, 
-\qquad k=1,2,\dots ,p
+\gamma(k)=\sum_{j=1}^{p}\phi_j\gamma(k-j),
+\qquad k=1,2,\dots,p,
 $$
 
-$$
-\boxed{%
-\gamma(0)=\sum_{j=1}^{p}\phi_j \gamma(j)+\sigma_Z^{2}} \tag{\(*\)}
-$$
-
-Dividing every equation (except $\*$) by $\gamma(0)$ converts them to *autocorrelation form* —the version most frequently quoted:
+with the variance equation
 
 $$
-\boxed{%
-\rho(k)=\sum_{j=1}^{p}\phi_j \rho(k-j)},
-\qquad k=1,2,\dots ,p.
+\gamma(0)=\sum_{j=1}^{p}\phi_j\gamma(j)+\sigma_Z^2.
 $$
 
-Because $\rho(0)=1$, each equation involves only *observable* autocorrelations on the left and right sides.
+Dividing the first set of equations by $\gamma(0)$ gives the autocorrelation form
+
+$$
+\rho(k)=\sum_{j=1}^{p}\phi_j\rho(k-j),
+\qquad k=1,2,\dots,p.
+$$
+
+Because $\rho(0)=1$, these equations relate the AR coefficients directly to the autocorrelation sequence. In estimation, the theoretical autocorrelations are replaced by sample estimates.
 
 ### Deriving the Yule-Walker Equations
 
 #### Assumptions
 
-1. **Second-order stationarity** – mean and variance are constant; $\gamma(k)$ depends only on $k$.
-2. **White-noise innovations** – $E[Z_t]=0,\quad \mathrm{Var}(Z_t)=\sigma_Z^2.$, and $Z_t$ is uncorrelated with $\{X_{t-k}\}_{k\ge1}$.
+The derivation uses two main conditions:
+
+1. **Second-order stationarity:** the mean and variance are constant, and $\gamma(k)$ depends only on the lag $k$.
+2. **White-noise innovations:** $E(Z_t)=0$, $\mathrm{Var}(Z_t)=\sigma_Z^2$, and $Z_t$ is uncorrelated with $X_{t-k}$ for $k\ge1$.
 
 #### Derivation Steps
 
-I. **Multiply by a lagged value.**
-
-For a fixed $k\in\{1, 2, \ldots, p\}$,
-
-$$X_t X_{t-k} = \sum_{j=1}^{p} \phi_j X_{t-j} X_{t-k} + Z_t X_{t-k}$$
-
-II. **Take expectations.**
-
-Using stationarity,
+For a fixed $k\in\{1,2,\ldots,p\}$, multiply the AR equation by $X_{t-k}$:
 
 $$
-E[X_t X_{t-k}]
-= \sum_{j=1}^p \phi_j\,E[X_{t-j} X_{t-k}] + E[Z_t X_{t-k}]
+X_tX_{t-k}
+=\sum_{j=1}^{p}\phi_jX_{t-j}X_{t-k}+Z_tX_{t-k}.
 $$
 
-Because $Z_t$ is uncorrelated with past $X$’s, the final expectation vanishes for $k\ge1$.
+Taking expectations gives
 
-III. **Replace expectations with autocovariances.**
+$$
+E(X_tX_{t-k})
+=\sum_{j=1}^{p}\phi_jE(X_{t-j}X_{t-k})+E(Z_tX_{t-k}).
+$$
 
-$$\gamma(k)=\sum_{j=1}^{p}\phi_j \gamma(k-j), 
-\qquad k=1, 2, \ldots, p$$
+For the zero-mean process used here, these expectations are covariances. Because the innovation is uncorrelated with past values, the final term is zero for $k\ge1$. Therefore,
 
-For $k=0$ the expectation $E[Z_tX_t]=\sigma_Z^{2}$ is non-zero, yielding equation $*$ above.
+$$
+\gamma(k)=\sum_{j=1}^{p}\phi_j\gamma(k-j),
+\qquad k=1,2,\ldots,p.
+$$
 
-IV. **Normalize to autocorrelations.**
+At $k=0$, the innovation appears inside $X_t$, so $E(Z_tX_t)=\sigma_Z^2$. This gives
 
-Divide by $\gamma(0)$ (the variance) whenever $\gamma(0)\neq0$ to obtain the autocorrelation version.
+$$
+\gamma(0)=\sum_{j=1}^{p}\phi_j\gamma(j)+\sigma_Z^2.
+$$
 
-Matrix view (same equations in compact form):
+Finally, dividing the lag equations by $\gamma(0)$ produces the autocorrelation form.
 
-Let
+The same equations can be written compactly in matrix form. Let
 
-$$r = 
+$$
+r=
 \begin{pmatrix}
 \rho(1)\\
 \rho(2)\\
 \vdots\\
 \rho(p)
-\end{pmatrix}$$
+\end{pmatrix},
+$$
 
-known from the data.
-
-Let
+and define the Toeplitz matrix
 
 $$
-R 
-= \bigl[\rho(|i-j|)\bigr]_{i,j=1}^p
-= \begin{pmatrix}
+R=
+\bigl[\rho(|i-j|)\bigr]_{i,j=1}^{p}
+=
+\begin{pmatrix}
 \rho(0)&\rho(1)&\cdots&\rho(p-1)\\
 \rho(1)&\rho(0)&\cdots&\rho(p-2)\\
-\vdots&\vdots&\vdots&\vdots\\
+\vdots&\vdots&\ddots&\vdots\\
 \rho(p-1)&\rho(p-2)&\cdots&\rho(0)
-\end{pmatrix}$$
+\end{pmatrix}.
+$$
 
-the Toeplitz matrix.
+With
 
-Finally, let
-
-$$\phi = 
+$$
+\phi=
 \begin{pmatrix}
 \phi_1\\
 \phi_2\\
 \vdots\\
 \phi_p
-\end{pmatrix}$$
+\end{pmatrix},
+$$
 
-Then the Yule–Walker equations read
-
-$$R,\phi = r$$
-
-Solving this Toeplitz system (e.g. by Levinson–Durbin recursion) delivers the **Yule-Walker estimates** 
-
-$$\hat{\phi}_j$$ 
-
-and 
+the Yule-Walker system is
 
 $$
-\hat\sigma_Z^2 = \gamma(0) - \sum_{j=1}^p \hat\phi_j \gamma(j)
+R\phi=r.
+$$
+
+Replacing the theoretical autocorrelations by sample estimates and solving this system gives the Yule-Walker coefficient estimates. The innovation variance can then be estimated from
+
+$$
+\hat\sigma_Z^2
+=\hat\gamma(0)-\sum_{j=1}^{p}\hat\phi_j\hat\gamma(j).
 $$
 
 ### Example: Yule-Walker Equations for an AR(2) Process
 
-We want to illustrate how the Yule-Walker equations connect an AR(2) model’s parameters to its (theoretical) autocovariance and autocorrelation functions.  Concretely, we will
+This example deliberately contrasts an invalid non-stationary coefficient pair with a stationary alternative. The purpose is to show both how the equations are applied and why their results must still satisfy the basic constraints of an autocorrelation function.
 
-1. **Check stationarity** of the given coefficient pair $(\phi\_1,\phi\_2)$ by inspecting the roots of $1-\phi\_1z-\phi\_2z^2=0$.
-2. **Derive the first two Yule-Walker equations** and solve for $\gamma(1)$ and $\gamma(2)$.
-3. **Convert to autocorrelations** $\rho(1)$ and $\rho(2)$ and comment on whether the results are admissible.
-4. **Solve the homogeneous recurrence** $\rho(k)=\phi\_1\rho(k-1)+\phi\_2\rho(k-2)$ to obtain the closed-form $\rho(k)$.
-5. **Contrast a non-stationary versus a stationary parameter set** so the difference is visible at a glance.
+The two parameter sets are:
 
-Input data — numbers we will plug in:
+| Symbol | Description | Non-stationary run | Stationary check |
+|---|---|---:|---:|
+| $\phi_1$ | AR coefficient on lag 1 | $3$ | $0.3$ |
+| $\phi_2$ | AR coefficient on lag 2 | $2$ | $0.2$ |
+| $\sigma_Z^2$ | Innovation variance | kept symbolic | same |
 
-| Symbol            | Description             | Non-stationary run                                                         | Stationary check |
-| ----------------- | ----------------------- | -------------------------------------------------------------------------- | ---------------- |
-| $\phi\_1$       | AR coefficient on lag 1 | $3$                                                                      | $0.3$          |
-| $\phi\_2$       | AR coefficient on lag 2 | $2$                                                                      | $0.2$          |
-| $\sigma\_Z^{2}$ | Innovation variance     | kept symbolic (you can set $\sigma\_Z^{2}=1$ without loss of generality) | same             |
+For a stationary AR(2), the roots of the AR polynomial
 
-*Everything beyond this point uses these inputs unless stated otherwise.*
+$$
+1-\phi_1z-\phi_2z^2=0
+$$
 
-> **Warning on stationarity.**
-> For an AR(2) model the coefficients must satisfy $1-\phi_1 z-\phi_2 z^{2}=0$ having both roots $|z|>1$ to be *stationary*.
-> With $\phi_1=3,\phi_2=2$ **one root lies inside the unit circle**, so the model is *non-stationary* and its theoretical autocorrelation function (ACF) does not exist in the usual sense.
-> We nevertheless go through the algebra to illustrate the mechanics of the Yule-Walker equations; the arithmetic is still correct even though the result is not a valid ACF.
+must lie outside the unit circle. With $\phi_1=3$ and $\phi_2=2$, one root lies inside the unit circle, so the model is not stationary and a valid stationary ACF does not exist. The algebra below is still useful because it shows how the failure appears in the implied correlations.
 
 #### Write down the model
 
+For the non-stationary parameter set,
+
 $$
-\boxed{%
-X_t = 3X_{t-1} + 2X_{t-2} + Z_t}, 
-\qquad 
-Z_t\stackrel{\text{i.i.d.}}{\sim}\text{WN}\bigl(0,\sigma_Z^{2}\bigr).
+X_t=3X_{t-1}+2X_{t-2}+Z_t,
 $$
+
+where $Z_t$ is white noise with variance $\sigma_Z^2$.
 
 #### Derive the Yule-Walker equations
 
-**(k = 1)**
+At lag 1,
 
 $$
-\boxed{%
-\gamma(1)=3\gamma(0)+2\gamma(1)}
-\quad\Longrightarrow\quad
+\gamma(1)=3\gamma(0)+2\gamma(1),
+$$
+
+so
+
+$$
 (1-2)\gamma(1)=3\gamma(0)
 \quad\Longrightarrow\quad
-\boxed{\gamma(1)=-3\gamma(0)}.
+\gamma(1)=-3\gamma(0).
 $$
 
-**(k = 2)**
+At lag 2,
 
 $$
-\boxed{%
-\gamma(2)=3\gamma(1)+2\gamma(0)}
-\quad\Longrightarrow\quad
-\gamma(2)=3(-3\gamma(0))+2\gamma(0)
-= -9\gamma(0)+2\gamma(0)
-= \boxed{-7\gamma(0)}.
+\gamma(2)=3\gamma(1)+2\gamma(0),
+$$
+
+which gives
+
+$$
+\gamma(2)=3[-3\gamma(0)]+2\gamma(0)=-7\gamma(0).
 $$
 
 #### Convert to autocorrelations
 
+Dividing by $\gamma(0)$ gives
+
 $$
-\boxed{\rho(1)=\dfrac{\gamma(1)}{\gamma(0)}=-3},
+\rho(1)=-3,
 \qquad
-\boxed{\rho(2)=\dfrac{\gamma(2)}{\gamma(0)}=-7}.
+\rho(2)=-7.
 $$
 
-Because $|\rho(1)|>1$ (and similarly for $\rho(2)$), this confirms the earlier warning: the parameter pair $(3,2)$ produces a non-stationary AR(2) and hence impossible ACF values.
+An autocorrelation must lie between $-1$ and $1$, so these values are impossible for a stationary covariance process. The contradiction is another indication that the coefficient pair $(3,2)$ does not define a stationary AR(2).
 
 #### Solve the homogeneous difference equation
 
-The Yule-Walker recursion for an AR(2) can be written as
+The corresponding AR(2) recursion is
 
 $$
-\boxed{\rho(k)=3\rho(k-1)+2\rho(k-2)}, \qquad k\ge2.
+\rho(k)=3\rho(k-1)+2\rho(k-2),
+\qquad k\ge2.
 $$
 
-Assume a solution $\rho(k)=\lambda^{k}$. Substituting gives
+Trying $\rho(k)=\lambda^k$ gives
 
 $$
-\lambda^{2}=3\lambda+2
-\quad\Longrightarrow\quad
-\boxed{\lambda^{2}-3\lambda-2=0}.
+\lambda^2-3\lambda-2=0,
 $$
 
-Solving the quadratic,
+with roots
 
 $$
-\boxed{\lambda_{1,2}= \dfrac{3\pm\sqrt{17}}{2}}
-\quad\bigl(\lambda_{1}\approx3.5616,\lambda_{2}\approx-0.5616\bigr).
+\lambda_{1,2}=\frac{3\pm\sqrt{17}}{2},
 $$
 
-Hence the general form is
+or approximately $3.5616$ and $-0.5616$. Hence
 
 $$
-\boxed{\rho(k)=c_{1}\lambda_{1}^{k}+c_{2}\lambda_{2}^{k}}.
+\rho(k)=c_1\lambda_1^k+c_2\lambda_2^k.
 $$
 
-#### Determine $c_{1}$ and $c_{2}$
+#### Determine $c_1$ and $c_2$
 
-Using $\rho(0)=1$:
-
-$$
-\boxed{c_{1}+c_{2}=1}.
-$$
-
-Using the previously derived $\rho(1)=-3$:
+Using $\rho(0)=1$ and the algebraic value $\rho(1)=-3$ gives
 
 $$
-\boxed{c_{1}\lambda_{1}+c_{2}\lambda_{2}=-3}.
+c_1+c_2=1
 $$
 
-Solving the two-equation system gives
+and
 
 $$
-\boxed{%
-c_{1}= \frac{-3-\lambda_{2}}{\lambda_{1}-\lambda_{2}},
+c_1\lambda_1+c_2\lambda_2=-3.
+$$
+
+Therefore,
+
+$$
+c_1=\frac{-3-\lambda_2}{\lambda_1-\lambda_2},
 \qquad
-c_{2}=1-c_{1}
-}.
+c_2=1-c_1.
 $$
 
-(Substituting numerical values, $c_{1}\approx-0.592,c_{2}\approx1.592$.)
-
-Although these constants satisfy the recursion, the resulting $\rho(k)$ diverges because $|\lambda_{1}|>1$; again, the process is not stationary.
+Numerically, $c_1\approx-0.592$ and $c_2\approx1.592$. These constants satisfy the formal recursion, but the term involving $|\lambda_1|>1$ grows rather than decays, so the sequence cannot be a stationary ACF.
 
 #### Quick check: a stationary alternative
 
-For comparison, if we instead chose $\phi_1=0.3,\phi_2=0.2$ (both roots outside the unit circle), the same steps would yield
+Now take $\phi_1=0.3$ and $\phi_2=0.2$. The Yule-Walker equations give
 
 $$
 \rho(1)=\frac{0.3}{1-0.2}=0.375,
-\qquad
-\rho(2)=0.3\rho(1)+0.2=0.3125,
 $$
 
-and the characteristic roots would both have magnitude $<1$, giving a decaying, admissible ACF.
-
-#### Matrix form 
-
-Vector of autocorrelations
+and
 
 $$
-\mathbf{r}=
+\rho(2)=0.3\rho(1)+0.2=0.3125.
+$$
+
+For this parameter set, the roots of the AR polynomial in $z$ lie outside the unit circle. Equivalently, the roots governing the homogeneous recursion in powers of $\lambda$ lie inside the unit circle, so the autocorrelation sequence decays rather than diverges.
+
+#### Matrix form
+
+For a general AR($p$), collect the autocorrelations into
+
+$$
+\mathbf r=
 \begin{bmatrix}
-\rho(1)\\\rho(2)\\\vdots\\\rho(p)
-\end{bmatrix}, 
-\qquad
-\text{Toeplitz matrix }
+\rho(1)\\
+\rho(2)\\
+\vdots\\
+\rho(p)
+\end{bmatrix}
+$$
+
+and form
+
+$$
 R=
 \begin{bmatrix}
-1 & \rho(1) & \rho(2) & \dots & \rho(p-1)\\
-\rho(1) & 1 & \rho(1) & \dots & \rho(p-2)\\
-\vdots & \vdots & \vdots & \ddots & \vdots\\
-\rho(p-1) & \rho(p-2) & \rho(p-3) & \dots & 1
+1&\rho(1)&\rho(2)&\dots&\rho(p-1)\\
+\rho(1)&1&\rho(1)&\dots&\rho(p-2)\\
+\vdots&\vdots&\ddots&\ddots&\vdots\\
+\rho(p-1)&\rho(p-2)&\dots&\rho(1)&1
 \end{bmatrix}.
 $$
 
+Then
+
 $$
-\boxed{R\boldsymbol{\phi}= \mathbf{r}},
-\qquad
-\boxed{\boldsymbol{\phi}=R^{-1}\mathbf{r}}.
+R\boldsymbol\phi=\mathbf r.
 $$
+
+When $R$ is nonsingular,
+
+$$
+\boldsymbol\phi=R^{-1}\mathbf r.
+$$
+
+In practice, numerical solvers exploit the Toeplitz structure rather than forming the inverse explicitly.
 
 ## Student guide: solve the equations and check the result
 
-For a zero-mean stationary AR($p$), the autocovariances satisfy
+For a zero-mean stationary AR($p$), the autocovariances satisfy the AR recursion at sufficiently large lags:
 
 $$
-\gamma(k)=\phi_1\gamma(k-1)+\cdots+\phi_p\gamma(k-p)
-\quad(k\ge p),
+\gamma(k)=\phi_1\gamma(k-1)+\cdots+\phi_p\gamma(k-p).
 $$
 
-with boundary equations for the first $p$ lags. Dividing by $\gamma(0)$ gives equations for autocorrelations.
+The first $p$ lags supply the boundary equations needed to determine the coefficients. Dividing by $\gamma(0)$ gives the corresponding relations for autocorrelations.
 
 ### AR(2) by hand
 
-For $\phi_1=0.6$ and $\phi_2=-0.2$:
+For $\phi_1=0.6$ and $\phi_2=-0.2$,
 
 $$
 \rho_1=\phi_1+\phi_2\rho_1,
@@ -357,13 +378,17 @@ $$
 =0.6(0.5)-0.2=0.1.
 $$
 
-For lag 3:
+At lag 3,
 
 $$
 \rho_3=0.6(0.1)-0.2(0.5)=-0.04.
 $$
 
-The recursion then continues. A sample ACF will not equal these values exactly, but the pattern should be compatible with the fitted AR coefficients.
+The recursion then continues. A sample ACF will not equal these population values exactly, but its pattern should be broadly compatible with the fitted AR coefficients.
+
+![Yule-Walker recursion](../../assets/time_series/dependence/07_yule_walker_recursion.png)
+
+The figure shows how each new autocorrelation is generated from earlier lags. For a stable AR model, the recursion produces a sequence that decays rather than growing without bound.
 
 ### Matrix form
 
@@ -387,41 +412,39 @@ Then the coefficient vector solves
 
 $$
 R
-\begin{bmatrix}\phi_1\\\phi_2\end{bmatrix}
+\begin{bmatrix}
+\phi_1\\
+\phi_2
+\end{bmatrix}
 =
-\begin{bmatrix}\rho_1\\\rho_2\end{bmatrix}.
+\begin{bmatrix}
+\rho_1\\
+\rho_2
+\end{bmatrix}.
 $$
 
-Using estimated autocorrelations makes the solution sensitive to sample noise and to the selected order. A high order can make $R$ ill-conditioned.
+When estimated autocorrelations replace the population values, the solution is affected by sampling noise. At high orders, the Toeplitz matrix can also become poorly conditioned, which makes the coefficient estimates unstable.
 
 ### Innovation variance
 
-After estimating $\boldsymbol\phi$, the innovation variance can be related to the zero-lag variance:
+After estimating $\boldsymbol\phi$, the innovation variance follows from the zero-lag equation:
 
 $$
 \sigma_\varepsilon^2
-=\gamma(0)\left(1-\sum_{j=1}^p\phi_j\rho_j\right).
+=\gamma(0)\left(1-\sum_{j=1}^{p}\phi_j\rho_j\right).
 $$
 
-For an AR(1) with $\phi=0.7$ and $\gamma(0)=1/(1-0.7^2)=1.9608$:
+For an AR(1) with $\phi=0.7$ and $\gamma(0)=1/(1-0.7^2)=1.9608$,
 
 $$
 \sigma_\varepsilon^2
 =1.9608(1-0.7^2)=1.
 $$
 
-This recovers the innovation variance used in the simulation.
+This recovers the innovation variance used to define the process and provides a useful check on the moment calculations.
 
 ### When not to use Yule-Walker blindly
 
-Yule-Walker equations assume a stationary AR structure. They are not a solution for:
+Yule-Walker equations assume a stationary AR structure. They are not, by themselves, a solution for an untransformed random walk, an MA model with latent shocks, a strongly trending series, a process with time-varying coefficients, or a series dominated by a structural break.
 
-- an untransformed random walk;
-- an MA model with unobserved shocks;
-- a series with a strong deterministic trend;
-- a system with time-varying coefficients;
-- a series whose covariance is dominated by a break.
-
-Use them as a transparent estimator or starting value, then compare with likelihood estimates and residual diagnostics.
-
-![Yule-Walker recursion](../../assets/time_series/dependence/07_yule_walker_recursion.png)
+Use the equations as a transparent estimator or theoretical relationship, then check stationarity, compare with other estimation methods when appropriate, and examine residual diagnostics before accepting the model.

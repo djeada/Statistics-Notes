@@ -2,83 +2,105 @@
 
 ## Worked calculation: three errors and one scale
 
-Suppose the actual values are $(10,12,9)$ and forecasts are $(9,11,10)$. The errors $y-\hat y$ are $(1,1,-1)$, so
+Suppose the actual values are $(10,12,9)$ and forecasts are $(9,11,10)$. Using the convention $e=y-\hat y$, the errors are $(1,1,-1)$, so
 
 $$
-\operatorname{MAE}=\frac{1+1+1}{3}=1,
+\mathrm{MAE}=\frac{1+1+1}{3}=1,
 \qquad
-\operatorname{RMSE}=\sqrt{\frac{1+1+1}{3}}=1.
+\mathrm{RMSE}=\sqrt{\frac{1+1+1}{3}}=1.
 $$
 
-If the in-sample naive scale is $2$, then
+If the in-sample naive scale is 2, then
 
 $$
-\operatorname{MASE}=\frac{1}{2}=0.5.
+\mathrm{MASE}=\frac{1}{2}=0.5.
 $$
 
-The scale must be calculated using only the training portion at each origin. Reusing a scale computed from the full series is a small but real form of leakage. A rolling-origin evaluation repeats this calculation after each training window so that every forecast is made with past information only.
+The scale must be calculated using only the training portion available at each forecast origin. Reusing a scale computed from the full series introduces leakage. A rolling-origin evaluation repeats this calculation through time so that every forecast is produced using past information only.
 
 ![Rolling-origin forecasts and forecast errors](../../assets/time_series/student/15_forecast_backtesting.png)
 
-Forecast evaluation asks a different question from in-sample fit: **How well would this procedure have predicted observations that were genuinely in the future at the time of fitting?**
+The figure makes the evaluation design explicit: the forecast origin moves forward, the model is refit or updated using the information available at that date, and the later observation is used only to score the forecast.
+
+Forecast evaluation asks a different question from in-sample fit: **How well would this forecasting procedure have predicted observations that were genuinely in the future when each forecast was issued?**
 
 ## Preserve Temporal Order
 
-Randomly shuffling observations breaks the information structure of a forecasting problem. A valid evaluation design keeps training observations earlier than validation or test observations. Use validation data for model or hyperparameter selection and reserve the final test period for the last comparison.
+Randomly shuffling observations destroys the information structure of a forecasting problem. A valid evaluation keeps training observations earlier than validation or test observations. Validation periods can be used for model or hyperparameter selection, while the final test period should remain untouched until the procedure has been selected.
+
+![Temporal leakage](../../assets/time_series/forecasting/07_temporal_leakage.png)
+
+The figure contrasts a valid chronological split with a leaked evaluation. The issue is not only where the target rows are split: preprocessing, feature construction, imputation, and predictor forecasts must also respect the same information boundary.
 
 ## Rolling-Origin Evaluation
 
-A single holdout can be noisy. Rolling-origin evaluation repeats the forecasting experiment at several historical origins. An **expanding window** keeps all available history; a **rolling window** discards older observations and is useful when the process may change.
+A single holdout period can give a noisy or regime-specific result. **Rolling-origin evaluation** repeats the forecasting experiment at several historical origins. An expanding window keeps all available history, while a rolling window retains only the most recent observations and can be useful when older regimes are less relevant.
 
-For horizon $h$, the forecast error at origin $t$ is
+For horizon $h$, define the forecast error at origin $t$ as
 
 $$
 e_{t,h}=y_{t+h}-\hat y_{t+h\mid t}.
 $$
 
-Report accuracy by horizon when the decision problem distinguishes short- and long-horizon forecasts.
+![Rolling origins](../../assets/time_series/forecasting/02_rolling_origins.png)
+
+The rolling-origin figure shows how the training window, origin, and forecast horizon move together. Accuracy should be reported by horizon whenever short- and long-horizon decisions have different importance.
 
 ## Baselines First
 
-Useful baselines include naive, seasonal-naive, drift, and historical-mean forecasts. A complicated model that cannot outperform a sensible baseline has not demonstrated forecasting value.
+Useful baselines include naive, seasonal-naive, drift, and historical-mean forecasts. A complicated method that cannot improve on a sensible baseline on the same evaluation origins has not demonstrated additional forecasting value.
+
+![Forecast baselines](../../assets/time_series/forecasting/01_baseline_forecasts.png)
+
+The baseline figure shows that different simple rules encode different assumptions: persistence, repeating seasonality, linear drift, or reversion to a stable historical mean. Choose the baseline that reflects the simplest plausible structure in the problem.
 
 ## Point Forecast Metrics
 
-For errors $e_i=y_i-\hat y_i$:
+For errors $e_i=y_i-\hat y_i$,
 
 $$
-\operatorname{MAE}=\frac{1}{n}\sum |e_i|,
+\mathrm{MAE}=\frac{1}{n}\sum_{i=1}^{n}|e_i|,
 \qquad
-\operatorname{RMSE}=\sqrt{\frac{1}{n}\sum e_i^2}.
+\mathrm{RMSE}=\sqrt{\frac{1}{n}\sum_{i=1}^{n}e_i^2}.
 $$
 
-Mean Absolute Scaled Error compares absolute forecast error with a naive in-sample scale:
+Mean Absolute Scaled Error compares the absolute forecast error with an in-sample naive scale. For seasonal period $m$,
 
 $$
-\operatorname{MASE}=
-\frac{\frac{1}{n}\sum |e_i|}
+\mathrm{MASE}=
+\frac{\frac{1}{n}\sum_{i=1}^{n}|e_i|}
 {\frac{1}{T-m}\sum_{t=m+1}^{T}|y_t-y_{t-m}|}.
 $$
 
-MAPE can be useful when values are strictly positive and not near zero, but it is unstable near zero and undefined at zero.
+MAPE can be useful when values are strictly positive and comfortably away from zero, but it is undefined at zero and unstable near zero.
+
+![Point metrics](../../assets/time_series/forecasting/03_point_metrics.png)
+
+The point-metrics figure illustrates that MAE and RMSE can rank the same errors differently because RMSE gives more weight to large misses. Metric choice should reflect the loss that matters in deployment rather than habit.
 
 ## Prediction Intervals
 
-Evaluate interval forecasts with coverage, width, and calibration by horizon. For probabilistic forecasts, quantile or pinball loss evaluates predicted quantiles directly.
+Prediction intervals should be evaluated for both calibration and sharpness. Coverage measures how often observations fall inside the stated interval, while width measures how informative the interval is. Coverage should also be inspected by forecast horizon and regime.
+
+![Interval coverage](../../assets/time_series/forecasting/04_interval_coverage.png)
+
+The figure shows why nominal coverage alone is not enough: intervals can achieve high coverage simply by being too wide. A useful interval is both appropriately calibrated and reasonably narrow.
+
+For probabilistic forecasts, quantile or pinball loss evaluates predicted quantiles directly and can be aggregated across several quantile levels.
 
 ## Leakage
 
-Common sources include full-data normalization, future-aware imputation, rolling features that include the target time, selecting hyperparameters on the final test period, using future exogenous values that would not be known at the forecast origin, and shuffled cross-validation.
+Common leakage sources include full-data normalization, future-aware imputation, centered rolling features, selecting hyperparameters on the final test period, using future exogenous values that would not have been known at the forecast origin, and shuffled cross-validation.
 
-Every feature should answer: **Would this value have been available at the forecast origin?**
+Every feature should answer the same question: **Would this value have been available when the forecast was issued?**
 
-Information criteria such as AIC/AICc/BIC are useful for in-sample candidate selection, but they are not substitutes for out-of-sample forecast evaluation.
+Information criteria such as AIC, AICc, and BIC can help select candidates in sample, but they are not substitutes for out-of-sample forecast evaluation.
 
-See [`forecast_backtesting.py`](../../scripts/time_series/forecast_backtesting.py) and the companion [forecast-backtesting notebook](../../notebooks/time_series/forecast_backtesting.ipynb).
+See the companion [forecast-backtesting notebook](../../notebooks/time_series/forecast_backtesting.ipynb) for an additional worked environment.
 
 ## Student guide: make the forecast experiment explicit
 
-Forecast evaluation is an experiment that is repeated at historical dates. The central object is not only a fitted model; it is a **forecasting procedure**:
+Forecast evaluation is an experiment repeated at historical dates. The central object is not only a fitted model; it is the entire **forecasting procedure**:
 
 1. how the data are transformed;
 2. how features are constructed;
@@ -87,31 +109,31 @@ Forecast evaluation is an experiment that is repeated at historical dates. The c
 5. how the forecast is produced;
 6. how the error or interval score is recorded.
 
-If any one of these steps uses information from after the forecast origin, the evaluation is optimistic even if the final model formula looks reasonable.
+If any step uses information from after the forecast origin, the evaluation is optimistic even if the final model equation itself looks valid.
 
 ### Information sets and forecast origins
 
-Let $\mathcal F_t$ denote the information available immediately after observing $y_t$. A one-step forecast is a random variable measurable with respect to $\mathcal F_t$:
+Let $\mathcal F_t$ denote the information available immediately after observing $y_t$. Under squared-error loss, the optimal one-step conditional-mean forecast is
 
 $$
-\hat y_{t+1|t}=E(y_{t+1}\mid\mathcal F_t)
+\hat y_{t+1|t}=E(y_{t+1}\mid\mathcal F_t),
 $$
 
-under a squared-error objective. A two-step forecast is
+and a two-step forecast is
 
 $$
 \hat y_{t+2|t}=E(y_{t+2}\mid\mathcal F_t).
 $$
 
-The notation matters. A forecast made at time $t$ cannot use $y_{t+1}$ to tune a transformation, estimate a scale, choose a lag order, or fill a missing value.
+The notation emphasizes the information boundary. A forecast made at time $t$ cannot use $y_{t+1}$ to tune a transformation, estimate a scaling constant, choose a lag order, or fill a missing value.
 
-For a fixed horizon $h$, define the error
+For fixed horizon $h$,
 
 $$
 e_{t,h}=y_{t+h}-\hat y_{t+h|t}.
 $$
 
-The sign convention should be stated because some reports define error as forecast minus actual. MAE and RMSE are unchanged by a sign reversal, but bias and calibration plots are not.
+State the sign convention because directional bias changes sign if error is defined as forecast minus actual. MAE and RMSE are unaffected by that reversal, but mean error and calibration plots are not.
 
 ### A concrete expanding-window calculation
 
@@ -130,124 +152,116 @@ Use the naive rule $\hat y_{t+1|t}=y_t$ and evaluate one-step forecasts at origi
 | 5 | 10, 12, 11, 14, 13 | 13 | 16 | 3 |
 | 6 | 10, 12, 11, 14, 13, 16 | 16 | 15 | -1 |
 
-The four errors are $(3,-1,3,-1)$. Thus
+The four errors are $(3,-1,3,-1)$. Therefore,
 
 $$
-\operatorname{MAE}=\frac{3+1+3+1}{4}=2,
+\mathrm{MAE}=\frac{3+1+3+1}{4}=2,
 $$
 
 and
 
 $$
-\operatorname{RMSE}
+\mathrm{RMSE}
 =\sqrt{\frac{3^2+(-1)^2+3^2+(-1)^2}{4}}
-=\sqrt{5}
+=\sqrt5
 \approx2.236.
 $$
 
-The error mean is $(3-1+3-1)/4=1$, so the naive forecasts underpredict on average in this short evaluation. A single accuracy number would hide that directional bias.
+The mean error is
 
-An expanding window uses every observation that has become available. A rolling window instead uses only the most recent $w$ observations. The latter can be preferable after a structural break because very old observations may describe a different regime.
+$$
+\mathrm{ME}=\frac{3-1+3-1}{4}=1,
+$$
+
+so the forecasts underpredict on average in this short evaluation. A single absolute-error score would hide that directional bias.
+
+An expanding window uses every observation that has become available. A rolling window instead retains the most recent $w$ observations and can adapt more quickly after a structural change.
 
 ### Baselines are part of the scientific question
 
-The most useful baseline depends on the data-generating features:
+The most useful baseline depends on the structure of the series.
 
-**Naive level**
+For a persistent non-seasonal level, the naive forecast is
 
 $$
 \hat y_{t+h|t}=y_t.
 $$
 
-This is a natural benchmark for a persistent non-seasonal level.
-
-**Seasonal naive**
-
-For period $s$,
+For seasonal period $s$, a seasonal-naive forecast reuses the most recent observed value from the same season:
 
 $$
 \hat y_{t+h|t}=y_{t+h-s\lceil h/s\rceil}.
 $$
 
-For monthly data, a forecast for next March may reuse the latest observed March. This is hard to beat when the seasonal pattern is stable.
-
-**Drift**
-
-One common drift forecast extrapolates the average change:
+A common drift forecast extrapolates the average historical change:
 
 $$
 \hat y_{t+h|t}
 =y_t+h\frac{y_t-y_1}{t-1}.
 $$
 
-**Mean forecast**
-
-For a stable series without meaningful persistence,
+For a stable series without meaningful persistence, a historical-mean forecast is
 
 $$
-\hat y_{t+h|t}=\frac1t\sum_{j=1}^{t}y_j.
+\hat y_{t+h|t}=\frac{1}{t}\sum_{j=1}^{t}y_j.
 $$
 
-The baseline is not a disposable preliminary. If an advanced method cannot improve on it on the same origins, the added complexity has not demonstrated value.
+The baseline is not a disposable preliminary. If an advanced procedure cannot improve on it using the same origins and horizons, the extra complexity has not shown forecasting value.
 
 ### Point metrics and what they reward
 
-For $n$ evaluation cases:
+For $n$ evaluation cases,
 
 $$
-\operatorname{MAE}=\frac1n\sum_{i=1}^n|e_i|,
+\mathrm{MAE}=\frac{1}{n}\sum_{i=1}^{n}|e_i|,
 \qquad
-\operatorname{RMSE}=\sqrt{\frac1n\sum_{i=1}^ne_i^2}.
+\mathrm{RMSE}=\sqrt{\frac{1}{n}\sum_{i=1}^{n}e_i^2}.
 $$
 
-MAE is in the units of the response and weights all absolute errors linearly. RMSE is also in response units but gives disproportionately more influence to large errors. If a single failure is costly, RMSE may be appropriate; if typical absolute deviation matters, MAE is easier to communicate.
+MAE weights absolute errors linearly. RMSE gives disproportionately more influence to large misses. The appropriate choice depends on the decision loss.
 
 Mean error,
 
 $$
-\operatorname{ME}=\frac1n\sum_i e_i,
+\mathrm{ME}=\frac{1}{n}\sum_{i=1}^{n}e_i,
 $$
 
-measures directional bias but can be zero when positive and negative errors cancel. Report it alongside an absolute metric when systematic over- or under-prediction matters.
+measures directional bias but can be close to zero when positive and negative errors cancel. Report it alongside an absolute metric when systematic over- or under-prediction matters.
 
-For a seasonal period $m$, MASE uses a training scale:
-
-$$
-Q_m
-=\frac1{T-m}\sum_{t=m+1}^{T}|y_t-y_{t-m}|,
-\qquad
-\operatorname{MASE}=\frac{\frac1n\sum_i|e_i|}{Q_m}.
-$$
-
-The scale must be recomputed inside each training window when the evaluation is designed to reproduce real deployment. A MASE below 1 means the method has smaller average absolute error than the corresponding in-sample seasonal-naive change.
-
-MAPE,
+For seasonal period $m$, define the training scale
 
 $$
-\operatorname{MAPE}=\frac{100}{n}\sum_i\left|\frac{e_i}{y_i}\right|,
+Q_m=\frac{1}{T-m}\sum_{t=m+1}^{T}|y_t-y_{t-m}|,
 $$
 
-is undefined when $y_i=0$ and can become arbitrarily large when $y_i$ is close to zero. Symmetric percentage metrics have their own behavior near zero. Metric choice should follow the decision problem rather than convention.
+then
+
+$$
+\mathrm{MASE}=\frac{\frac{1}{n}\sum_i|e_i|}{Q_m}.
+$$
+
+When the evaluation is designed to reproduce deployment, recompute the scale within each training window. A MASE below 1 means the method's average absolute error is smaller than the corresponding in-sample seasonal-naive change scale.
+
+MAPE is
+
+$$
+\mathrm{MAPE}=\frac{100}{n}\sum_i\left|\frac{e_i}{y_i}\right|.
+$$
+
+It is undefined when $y_i=0$ and can become arbitrarily large when $y_i$ is near zero. Percentage metrics should therefore be chosen only when their denominator is meaningful for the application.
 
 ### Interval forecasts
 
-An interval forecast is a pair $(L_{t,h},U_{t,h})$. For nominal coverage $1-\alpha$, the empirical coverage is
+For interval forecast $(L_i,U_i)$ with nominal coverage $1-\alpha$, empirical coverage is
 
 $$
-\widehat{\operatorname{Coverage}}
-=\frac1n\sum_{i=1}^n
-\mathbf 1\{L_i\le y_i\le U_i\}.
+\widehat{\mathrm{Coverage}}
+=\frac{1}{n}\sum_{i=1}^{n}\mathbf 1\{L_i\le y_i\le U_i\}.
 $$
 
-Coverage alone is insufficient. An interval extending from negative infinity to positive infinity has perfect coverage and no practical value. A useful report includes:
+Coverage alone is insufficient. An interval from negative infinity to positive infinity has perfect coverage and no practical value. A useful report includes coverage, average width, coverage by horizon, the size of misses, and whether misses cluster in high-volatility or changing-regime periods.
 
-- coverage;
-- average width;
-- coverage by horizon;
-- the frequency and size of misses;
-- whether misses occur mainly during high-volatility or changing-regime periods.
-
-For a Gaussian stationary AR(1) with coefficient $\phi$ and innovation variance $\sigma^2$, the $h$-step variance is
+For a Gaussian stationary AR(1) with coefficient $\phi$ and innovation variance $\sigma^2$, the $h$-step forecast-error variance is
 
 $$
 \sigma_h^2
@@ -255,7 +269,7 @@ $$
 =\sigma^2\frac{1-\phi^{2h}}{1-\phi^2}.
 $$
 
-When $|\phi|<1$, this approaches $\sigma^2/(1-\phi^2)$ as the horizon grows. The forecast mean may converge quickly while the uncertainty continues to widen.
+When $|\phi|<1$, this approaches the unconditional variance $\sigma^2/(1-\phi^2)$ as the horizon grows.
 
 ### Leakage audit
 
@@ -268,13 +282,13 @@ Ask the same question of every operation: **Could this value have been computed 
 | rolling feature | centered rolling mean | trailing rolling mean ending at $t$ |
 | feature selection | choose lags using the final test period | choose using training/validation origins |
 | external predictor | use realized $x_{t+h}$ | forecast $x_{t+h}$ or use a value known in advance |
-| seasonal normalization | estimate seasonal indices from the full sample | estimate indices using data available at each origin |
+| seasonal normalization | estimate seasonal indices from the full sample | estimate them from data available at each origin |
 
-Leakage can also enter through software defaults, cached preprocessing objects, or a feature table built before the split. Store the timestamp of every feature and inspect one forecast origin by hand.
+Leakage can also enter through software defaults, cached preprocessing objects, or feature tables built before the split. Inspect at least one forecast origin by hand and verify the timestamp of every input.
 
 ### Comparing models fairly
 
-Evaluate all candidates on identical origins, horizons, transformations, and target rows. Report a table such as:
+Evaluate all candidates on identical origins, horizons, transformations, and target rows. A comparison might look like
 
 | model | MAE $h=1$ | MAE $h=3$ | RMSE $h=1$ | mean error |
 |---|---:|---:|---:|---:|
@@ -282,9 +296,21 @@ Evaluate all candidates on identical origins, horizons, transformations, and tar
 | ARIMA |  |  |  |  |
 | dynamic regression |  |  |  |  |
 
-Do not rank models using one average if the deployment decision cares about particular horizons. Plot errors over time because a model can have a good overall score and fail during the most important regime.
+![Error by horizon](../../assets/time_series/forecasting/05_error_by_horizon.png)
 
-Statistical tests comparing forecast errors require care because errors across adjacent origins overlap, especially at long horizons. A small metric difference is not automatically a meaningful improvement.
+The horizon plot shows why one average score can hide important differences. A model can be best at one-step prediction and lose that advantage at longer horizons.
+
+Model classes also differ in how they adapt as new observations arrive. Exponential smoothing, for example, updates a latent level recursively rather than refitting a large parameter set at each step.
+
+![Exponential smoothing](../../assets/time_series/forecasting/06_exponential_smoothing.png)
+
+This figure is useful in evaluation because the update rule itself is part of the forecasting procedure. A fair backtest must reproduce that update chronologically rather than estimate the smoothed state using future observations.
+
+Plot errors over calendar time as well as by horizon.
+
+![Forecast errors over time](../../assets/time_series/forecasting/08_forecast_errors_over_time.png)
+
+The time plot can reveal regime-specific failures that disappear in an overall average. Statistical tests comparing forecast errors also require care because errors from adjacent origins can overlap, especially for multi-step horizons.
 
 ### Reproducible evaluation recipe
 
@@ -298,23 +324,3 @@ Statistical tests comparing forecast errors require care because errors across a
 8. Summarize by horizon and inspect errors over time.
 9. Refit the selected procedure on all allowed historical data.
 10. Record how the live forecast will obtain future predictors and update itself.
-
-### Visual companions
-
-The topic script [forecasting_evaluation_visualizations.py](../../scripts/time_series/forecasting_evaluation_visualizations.py) generates the following figures:
-
-![Forecast baselines](../../assets/time_series/forecasting/01_baseline_forecasts.png)
-
-![Rolling origins](../../assets/time_series/forecasting/02_rolling_origins.png)
-
-![Point metrics](../../assets/time_series/forecasting/03_point_metrics.png)
-
-![Interval coverage](../../assets/time_series/forecasting/04_interval_coverage.png)
-
-![Error by horizon](../../assets/time_series/forecasting/05_error_by_horizon.png)
-
-![Exponential smoothing](../../assets/time_series/forecasting/06_exponential_smoothing.png)
-
-![Temporal leakage](../../assets/time_series/forecasting/07_temporal_leakage.png)
-
-![Forecast errors over time](../../assets/time_series/forecasting/08_forecast_errors_over_time.png)
