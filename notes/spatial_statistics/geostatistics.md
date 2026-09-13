@@ -1,194 +1,180 @@
 # Geostatistics
 
-Geostatistics is a branch of statistics devoted to the analysis and interpretation of spatial or spatiotemporal datasets. This field finds applications in geology, hydrology, environmental science, agriculture, meteorology, and many other areas where data vary across space. The techniques of geostatistics allow us to model spatial correlations, predict values at locations where measurements are unavailable, and quantify the uncertainty inherent in these predictions. The discussion below introduces the important ideas, mathematical tools, and practical applications of geostatistics, all while using clear formulas, diagrams, and examples to make the concepts accessible.
-
-## Important Concepts in Geostatistics
-
-The core of geostatistics rests on understanding spatial relationships and dependencies. This involves grasping how nearby observations influence one another and how their variability changes with distance. The field is built on several key concepts: spatial autocorrelation, variogram and covariance functions, and interpolation methods such as kriging.
-
-### Spatial Autocorrelation
-
-Spatial autocorrelation examines how a variable correlates with itself through space. The underlying idea is that points close to one another tend to have similar values. This principle is encapsulated in Tobler’s First Law of Geography, which asserts that “everything is related to everything else, but near things are more related than distant things.” In geostatistics, measures such as Moran’s I and Geary’s C help quantify this dependence. For instance, Moran’s I is defined as
-
-$$I = \frac{n}{W} \frac{\sum_{i=1}^{n}\sum_{j=1}^{n} w_{ij}(Z_i - \bar{Z})(Z_j - \bar{Z})}{\sum_{i=1}^{n}(Z_i - \bar{Z})^2}$$
-
-where $n$ is the number of observations, $Z_i$ and $Z_j$ are the values at locations $i$ and $j$, $\bar{Z}$ is the mean value, $w_{ij}$ represents spatial weights between locations, and $W = \sum_{i=1}^{n}\sum_{j=1}^{n} w_{ij}$. Geary’s C, on the other hand, emphasizes local spatial autocorrelation with the formula
-
-$$C = \frac{(n - 1)}{2W} \frac{\sum_{i=1}^{n}\sum_{j=1}^{n} w_{ij}(Z_i - Z_j)^2}{\sum_{i=1}^{n}(Z_i - \bar{Z})^2}$$
-
-These formulas provide a quantitative way to assess whether the spatial distribution of values is clustered, dispersed, or random.
-
-### Variogram and Covariance Function
-
-A variogram is an important tool that describes how the average difference between paired observations changes with distance. It is defined as
+Geostatistics models a spatially indexed random field
 
 $$
-\gamma(h) = \frac{1}{2} \mathrm{Var}[Z(x) - Z(x+h)] = \frac{1}{2}\, \mathbb{E}\bigl[(Z(x)-Z(x+h))^2\bigr]
+\{Z(s): s\in D\}
 $$
 
-with $h$ representing the lag distance between two locations and $Z(x)$ being the value at location $x$. Complementing the variogram is the covariance function, which measures the degree to which values at two locations vary together:
+when a continuous quantity is observed at sampled coordinates and the goal is to understand or predict the field between those locations.
+
+Examples include soil chemistry, groundwater level, rainfall, temperature, and pollution concentration.
+
+## Mean and Residual Field
+
+A useful decomposition is
 
 $$
-C(h) = \mathrm{Cov}[Z(x), Z(x+h)] = \mathbb{E}\bigl[(Z(x)-\mu)(Z(x+h)-\mu)\bigr]
+Z(s)=m(s)+\varepsilon(s),
 $$
 
-where $\mu$ is the mean of $Z$. The variogram and covariance function are closely linked by the relation
+where $m(s)$ is the large-scale mean or trend and $\varepsilon(s)$ is residual spatial variation.
 
-$$\gamma(h) = C(0) - C(h)$$
+This separation matters. A smooth mean trend can produce apparent long-range dependence if the trend is not modeled before estimating covariance or a variogram.
 
-with $C(0)$ representing the variance of the variable.
+## Second-Order Stationarity
 
-A visual representation of a typical variogram helps illustrate these ideas. Imagine a simple ASCII diagram where the vertical axis represents the variogram value and the horizontal axis is the distance $h$:
-
-```
-   Variogram (γ)
-      ^
-      |          o  o  o
-      |        o
-      |      o
-      |    o
-      |  o
-      |o
-      +-----------------> Distance (h)
-```
-
-This diagram shows that as the lag distance increases, the variogram value increases until it reaches a plateau. Three key parameters describe a variogram model:
-
-- The nugget ($c_0$) reflects measurement error or microscale variation.
-- The sill ($c_0 + c$) is the plateau where the variogram levels off, indicating the total variance.
-- The range ($a$) is the distance at which the sill is reached, beyond which spatial correlation is minimal.
-
-Common variogram models include the spherical model,
-
-$$\gamma(h) = c_0 + c \left[ \frac{3h}{2a} - \frac{1}{2} \left( \frac{h}{a} \right)^3 \right] \quad \text{for } 0 \leq h \leq a$$
-
-the exponential model,
-
-$$\gamma(h) = c_0 + c \left[ 1 - e^{-h/a} \right]$$
-
-and the Gaussian model,
-
-$$\gamma(h) = c_0 + c \left[ 1 - e^{-(h/a)^2} \right]$$
-
-Each model offers a different way to capture the spatial dependence observed in the data.
-
-### Cross-Validation for Variogram Model Selection
-
-Once a variogram model has been fitted, its predictive quality should be assessed through cross-validation. In leave-one-out cross-validation, each observation $Z(x_i)$ is temporarily removed from the dataset and predicted from the remaining $n - 1$ observations using kriging. The standardized prediction error for each location is
-
-$$e_i^* = \frac{Z(x_i) - Z^*(x_i)}{\sigma_K(x_i)}$$
-
-where $Z^*(x_i)$ is the kriging prediction and $\sigma_K(x_i)$ is the corresponding kriging standard deviation. A well-specified variogram model should produce standardized errors that have a mean close to 0 and a variance close to 1, confirming that the model neither systematically over- nor under-predicts and that the uncertainty estimates are reliable.
-
-### Kriging
-
-Kriging is a powerful geostatistical interpolation technique that provides the best linear unbiased prediction (BLUP) for unsampled locations. It relies on the spatial autocorrelation captured by the variogram to weight nearby observations optimally.
-
-The general kriging estimator is expressed as
-
-$$Z^*(x_0) = \sum_{i=1}^{n} \lambda_i Z(x_i)$$
-
-where $Z^*(x_0)$ is the predicted value at the location $x_0$, $Z(x_i)$ are the observed values, and $\lambda_i$ are the weights determined through optimization. The goal is to minimize the estimation variance
+A random field is second-order stationary when
 
 $$
-\mathrm{Var}[Z^*(x_0) - Z(x_0)]
+E[Z(s)] = \mu
 $$
 
-subject to the unbiasedness constraint
+is constant and
 
-$$\sum_{i=1}^{n} \lambda_i = 1$$
+$$
+\operatorname{Cov}[Z(s),Z(s+h)] = C(h)
+$$
 
-This requirement leads to a system of linear equations derived from the variogram model that must be solved to obtain the weights.
+depends on separation $h$, not on absolute location.
 
-#### Types of Kriging
+If dependence depends only on distance $\|h\|$, not direction, the model is **isotropic**.
 
-Different forms of kriging are available depending on the assumptions made about the data’s mean and trend. In simple kriging, the mean $\mu$ of the random field is assumed known and constant. The estimator takes the form
+Stationarity and isotropy are modeling assumptions, not universal properties of spatial data.
 
-$$Z^*(x_0) = \mu + \sum_{i=1}^{n} \lambda_i [Z(x_i) - \mu]$$
+## Intrinsic Stationarity and the Semivariogram
 
-with the kriging equations given by
+A weaker framework models increments. The semivariogram is
 
-$$\sum_{j=1}^{n} \lambda_j C(x_i - x_j) = C(x_i - x_0), \quad i = 1, 2, \dots, n$$
+$$
+\gamma(h)
+=
+\frac{1}{2}
+\operatorname{Var}[Z(s+h)-Z(s)].
+$$
 
-When the mean is unknown but assumed constant locally, ordinary kriging is used. Its estimator is
+Under second-order stationarity,
 
-$$Z^*(x_0) = \sum_{i=1}^{n} \lambda_i Z(x_i)$$
+$$
+\gamma(h)=C(0)-C(h).
+$$
 
-with the constraint
+The semivariogram is especially useful because it describes how dissimilarity grows with separation.
 
-$$\sum_{i=1}^{n} \lambda_i = 1$$
+## Empirical Semivariogram
 
-The corresponding kriging system becomes
+For a lag bin around distance $h$,
 
-$$\begin{cases}
-\sum_{j=1}^{n} \lambda_j \gamma(x_i - x_j) + \mu = \gamma(x_i - x_0), & i = 1, \dots, n \\
-\sum_{j=1}^{n} \lambda_j = 1,
-\end{cases}$$
+$$
+\hat{\gamma}(h)
+=
+\frac{1}{2N(h)}
+\sum_{(i,j)\in N(h)}
+\left[Z(s_i)-Z(s_j)\right]^2.
+$$
 
-where $\mu$ is a Lagrange multiplier ensuring unbiasedness. In cases where the mean exhibits a trend across the study area, universal kriging is applied. The mean is modeled as a deterministic function,
+This is a descriptive estimator. Its points are not independent observations with equal variance, so fitting a smooth variogram model by ordinary unweighted regression is not generally justified.
 
-$$\mu(x) = \sum_{k=1}^{m} \beta_k f_k(x)$$
+The companion script [`variogram_and_kriging.py`](../../scripts/spatial_statistics/variogram_and_kriging.py) uses pair counts as simple fitting weights for an educational example.
 
-and the estimator is still
+## Nugget, Partial Sill, and Sill
 
-$$Z^*(x_0) = \sum_{i=1}^{n} \lambda_i Z(x_i)$$
+A common model is
 
-The weights are then obtained by solving the kriging system with constraints that account for the trend functions:
+$$
+\gamma(h)
+=
+c_0+c\left(1-e^{-\|h\|/a}\right),
+\qquad \|h\|>0,
+$$
 
-$$\begin{cases}
-\sum_{j=1}^{n} \lambda_j \gamma(x_i - x_j) + \sum_{k=1}^{m} \mu_k f_k(x_i) = \gamma(x_i - x_0), & i = 1, \dots, n \\
-\sum_{j=1}^{n} \lambda_j f_k(x_j) = f_k(x_0), & k = 1, \dots, m,
-\end{cases}$$
+with $\gamma(0)=0$.
 
-where the $\mu_k$ are Lagrange multipliers for the trend constraints.
+Here:
 
-## Applications of Geostatistics
+- $c_0$ is the **nugget**;
+- $c$ is the **partial sill**;
+- $c_0+c$ is the asymptotic sill;
+- $a$ controls the distance scale of correlation.
 
-Geostatistical methods are versatile tools that support decision making in many fields. In natural resource exploration, geostatistics assists in estimating mineral reserves and modeling reservoir properties such as porosity and permeability. Environmental monitoring applications include mapping pollution levels in soil, water, or air, as well as studying species distributions for ecological research. Public health initiatives benefit from geostatistics through analyses of disease spread and optimal resource allocation. In agriculture, soil analysis and crop yield prediction are enhanced by spatial predictions and uncertainty quantification.
+A nugget can represent measurement error, unresolved microscale variation, or both. Those interpretations matter when predicting the latent process versus a future noisy observation.
 
-## Example: Soil pH Prediction Using Kriging
+For the exponential model above, $a$ is a scale parameter rather than a hard cutoff. The semivariogram approaches the sill asymptotically.
 
-Imagine a scenario where soil pH is sampled at various locations within an agricultural field. The goal is to predict pH at unsampled locations, which can help inform lime application strategies and improve crop management. Data are first collected by measuring pH at $n$ distinct locations $x_i$, and the data are visualized on a map to reveal any spatial patterns.
+## Common Valid Models
 
-The next step involves computing an experimental variogram, which can be calculated as
+### Exponential
 
-$$\gamma(h) = \frac{1}{2N(h)} \sum_{i=1}^{N(h)} [Z(x_i) - Z(x_i + h)]^2$$
+$$
+\gamma(h)=c_0+c\left(1-e^{-\|h\|/a}\right).
+$$
 
-where $N(h)$ is the number of pairs of points separated by lag distance $h$. By plotting $\gamma(h)$ versus $h$, one can observe how the spatial variability increases with distance. A theoretical variogram model, such as the spherical model, is then fitted to the experimental data by estimating parameters like the nugget ($c_0$), sill ($c_0 + c$), and range ($a$).
+### Gaussian
 
-Once the variogram model is in place, the kriging system is set up. In the case of ordinary kriging, the system to be solved is
+$$
+\gamma(h)=c_0+c\left(1-e^{-(\|h\|/a)^2}\right).
+$$
 
-$$\begin{cases}
-\sum_{j=1}^{n} \lambda_j \gamma(x_i - x_j) + \mu = \gamma(x_i - x_0), & i = 1, \dots, n \\
-\sum_{j=1}^{n} \lambda_j = 1,
-\end{cases}$$
+### Spherical
 
-where $\mu$ is the Lagrange multiplier. Solving this system yields the weights $\lambda_i$ used in the kriging estimator
+For $0<\|h\|\le a$,
 
-$$Z^*(x_0) = \sum_{i=1}^{n} \lambda_i Z(x_i)$$
+$$
+\gamma(h)
+=
+c_0+c
+\left[
+\frac{3}{2}\frac{\|h\|}{a}
+-
+\frac{1}{2}\left(\frac{\|h\|}{a}\right)^3
+\right],
+$$
 
-The uncertainty associated with the prediction is quantified by the kriging variance
+and for $\|h\|>a$,
 
-$$\sigma_K^2 = \gamma(0) - \sum_{i=1}^{n} \lambda_i \gamma(x_i - x_0) - \mu$$
+$$
+\gamma(h)=c_0+c.
+$$
 
-The final step involves applying the kriging prediction across a grid that covers the study area, thus generating a continuous prediction map for soil pH. An example of such a map is shown below:
+A covariance/variogram function must satisfy mathematical validity conditions; not every visually convenient curve is a valid spatial dependence model.
 
-![soil_ph_map](https://github.com/user-attachments/assets/04e2c8d8-c966-4b2b-a69f-5829d3ba2201)
+## Anisotropy
 
-This map not only displays predicted soil pH values but can also be complemented with an uncertainty map that highlights areas where prediction variance is high.
+Dependence may change with direction. For example, pollutant transport can be longer-ranged along prevailing wind direction than across it.
 
-## Important Considerations
+Directional empirical variograms can reveal anisotropy. Common models transform distance by rotation and axis-specific scaling before applying an isotropic covariance function.
 
-- Geostatistical methods assume that the mean, variance, and spatial covariance of the data remain constant over the study area, which often requires detrending or transformation of the dataset.  
-- Analysis of spatial correlation begins with determining whether the variogram is isotropic or anisotropic, and if directional dependence is found, a variogram model must account for varying correlation lengths.  
-- The design of the sampling campaign, including the number, location, and spatial distribution of samples, directly influences the accuracy of variogram estimation and kriging predictions.  
-- Data quality control is essential because outliers and measurement errors can distort the empirical variogram and subsequent spatial predictions, making it necessary to maintain a representative dataset.  
-- Kriging and similar geostatistical techniques require solving large systems of equations, and the computational effort increases with dataset size, so approximation methods may be employed to keep the workload manageable.  
-- The selection of a variogram model, such as spherical, exponential, or Gaussian, is guided by fitting the empirical variogram to capture the observed spatial structure.  
-- Variogram parameters like nugget, sill, and range are estimated from the data to quantify measurement error, spatial variability, and the distance over which observations are correlated.  
-- When spatial data exhibit non-stationary behavior, localized modeling or trend surface analysis can be used to partition the study area and ensure that statistical properties remain consistent within each subregion.  
-- Sensitivity analysis is applied to evaluate how variations in model parameters and sampling configurations affect predictions, aiding in the understanding of dependencies in the geostatistical model.
+## Sampling Design Matters
 
-## Software for Geostatistical Analysis
+The empirical variogram is only informative over separations represented by the sample.
 
-A range of software packages and libraries support geostatistical modeling and kriging. In the realm of proprietary software, ArcGIS Geostatistical Analyst is widely used. Open-source tools in R, such as the packages `gstat`, `geoR`, and `sp`, offer strong geostatistical capabilities. Python users may explore libraries like `PyKrige`, `GeostatsPy`, or `GSTools`, while specialized platforms like SGeMS (Stanford Geostatistical Modeling Software) provide dedicated environments for geostatistical analysis.
+- dense short-range sampling helps estimate the nugget and near-origin behavior;
+- broad spatial coverage helps estimate long-range structure;
+- clustered sampling can overrepresent some distances;
+- large holes in the sampling design produce weakly constrained predictions.
+
+## Trend and Universal Kriging
+
+If
+
+$$
+m(s)=x(s)^\top\beta
+$$
+
+varies with predictors or coordinates, forcing a constant-mean ordinary-kriging model can make the covariance absorb trend.
+
+A better strategy is to model the mean and residual field together through universal kriging, regression kriging, or a spatial regression model.
+
+## Diagnostics
+
+A geostatistical workflow should inspect:
+
+- raw maps and covariates;
+- residual trend;
+- directional dependence;
+- empirical variogram stability;
+- outliers;
+- standardized prediction errors;
+- sensitivity to the variogram family and fitting range.
+
+The next chapter, [Kriging](kriging.md), turns the covariance/variogram model into spatial predictions.

@@ -1,178 +1,170 @@
 # Point Processes
 
-Point processes are mathematical models that help us understand random collections of points distributed in time, space, or both. They provide a powerful framework for studying events such as the occurrence of earthquakes, the locations of trees in a forest, or the arrival times of customers at a service center. In what follows, we explore the important ideas behind point processes, delve into key mathematical definitions and formulas, and look at examples and applications. We will also use diagrams, both images and ASCII graphics, to illustrate the concepts in an engaging and accessible way.
+A spatial point process models a random collection of event locations. The observed object is not a value attached to a fixed site; the **number and positions of events are random**.
 
-## Introduction to Point Processes
+Examples include tree stems, earthquake epicenters, disease cases, nests, stores, or incidents observed inside a study window $W$.
 
-A point process can be informally described as a random countable set of points, denoted by $\{x_i\}$, located within a mathematical space $S$ (such as the real line $\mathbb{R}$, the plane $\mathbb{R}^2$, or higher-dimensional spaces). In this framework, the randomness concerns both the number of points and their locations. Imagine observing the random times at which buses arrive at a station or the irregular pattern of stars scattered across the night sky. The randomness in both the timing and positioning of these events is captured by point process models.
+## Counting Measure
 
-A diagram can help illustrate a random pattern of points on a line:
+For region $B\subseteq W$,
 
-```
-    x       x   x       x       x
--------|-------|-------|-------|-------
-```
+$$
+N(B)
+=
+\text{number of observed events in } B
+$$
 
-Here, the "x" marks represent the random occurrence of points along the line.
+is a random variable.
 
-## Mathematical Definition
+The point process can therefore be viewed as a random counting measure.
 
-Formally, a point process $N$ on a space $S$ is defined as a random measure that counts the number of points in subsets of $S$. This is expressed mathematically by
+## First-Order Structure: Intensity
 
-$$N(B) = \text{Number of points in } B \subseteq S$$
+The intensity $\lambda(s)$ describes expected event density:
 
-where $B$ is a Borel set in $S$ and $N(B)$ is a random variable representing the count of points in $B$. This definition lays the foundation for analyzing various properties of point processes.
+$$
+E[N(B)]
+=
+\int_B \lambda(s)\,ds.
+$$
 
-## Key Concepts
+For a homogeneous process,
 
-Understanding point processes involves several key concepts that describe their behavior and structure. These concepts include the intensity function, the ideas of stationarity and isotropy, the notion of complete spatial randomness (CSR), and tools like the pair correlation function and Ripley's K-function.
+$$
+\lambda(s)=\lambda
+$$
 
-### Intensity Function
+and
 
-The intensity function $\lambda(x)$ (sometimes called the rate or density function) describes the expected number of points per unit volume at a location $x$. It is defined by the limit
+$$
+E[N(B)]=\lambda |B|.
+$$
 
-$$\lambda(x) = \lim_{\delta \to 0} \frac{E[N(B_{\delta}(x))]}{\text{Volume}(B_{\delta}(x))}$$
+If intensity changes with environmental covariates or location, apparent clustering can arise even when events are conditionally independent given that intensity.
 
-where $B_{\delta}(x)$ is a small neighborhood around $x$. In a homogeneous point process, $\lambda(x) = \lambda$ is constant across $S$, whereas an inhomogeneous process allows $\lambda(x)$ to vary with $x$.
+This is the point-process analogue of separating mean trend from residual dependence.
 
-### Stationarity and Isotropy
+## Homogeneous Poisson Process and CSR
 
-Stationarity means that the statistical properties of the point process do not change under translations in space. In practical terms, if you shift your observation window by any vector $h$, the distribution of points remains the same. Isotropy goes further by requiring that these properties are invariant under rotations. This means the process behaves the same in every direction, making it easier to model and analyze.
+For a homogeneous Poisson point process:
 
-### Complete Spatial Randomness (CSR)
+1. counts in disjoint regions are independent;
+2. for region $B$,
 
-A point process exhibits complete spatial randomness if it is both homogeneous and has no interactions between points. This means the occurrence of a point in one region does not affect the probability of points appearing in another region. The homogeneous Poisson point process is the classic example of CSR, where the points are scattered entirely at random.
+$$
+N(B)\sim\operatorname{Poisson}(\lambda |B|);
+$$
 
-### Pair Correlation Function and Ripley’s K-function
+3. conditional on $N(W)=n$, the $n$ locations are independent and uniform over $W$.
 
-To understand interactions between points, researchers use functions like the pair correlation function $g(r)$ and Ripley’s K-function. The pair correlation function describes the probability of finding a pair of points separated by a distance $r$ relative to what would be expected under CSR:
+A simulation that fixes $n$ first and samples $n$ uniform locations is therefore a simulation from the **Poisson process conditional on its count**, not a full unconditional homogeneous Poisson-process simulation.
 
-$$g(r) = \frac{\text{Observed density of point pairs at distance } r}{\text{Expected density under CSR}}$$
+The companion [`point_pattern_analysis.py`](../../scripts/spatial_statistics/point_pattern_analysis.py) makes this distinction explicit.
 
-Ripley’s K-function measures the expected number of additional points within a distance $r$ of an arbitrary point, and is defined as
+## Interaction vs Inhomogeneous Intensity
 
-$$K(r) = \frac{1}{\lambda} E[\text{Number of other points within distance } r \text{ of a typical point}]$$
+Two mechanisms can produce clusters:
 
-A diagram might illustrate clustering or inhibition:
+- a varying first-order intensity $\lambda(s)$;
+- second-order interaction among events.
 
-```
-Random (CSR):      Clustered:      Inhibited:
-   x     x            x   x            x   x
-     x   x        x   x   x        x       x
-x       x      x       x       x    x       x
-```
+A raw cluster map cannot distinguish them.
 
-These tools allow us to test for and quantify departures from randomness in spatial data.
+For example, stores may cluster downtown because downtown has higher underlying opportunity/intensity, even if stores are otherwise independently located conditional on that intensity.
 
-## Types of Point Processes
+## Nearest-Neighbor Distance
 
-Point processes can be classified into several types depending on the nature of interactions among points and the underlying distribution of the points.
+The distance from each event to its nearest other event is a simple short-range summary.
 
-### Poisson Point Process
+For a homogeneous planar Poisson process on an unbounded region, the theoretical nearest-neighbor distribution is
 
-The Poisson point process is perhaps the simplest and most widely used model. In this process, points occur independently of one another. The number of points in any region $B \subseteq S$ follows a Poisson distribution with parameter
+$$
+G(r)=1-e^{-\lambda\pi r^2}.
+$$
 
-$$\Lambda(B) = \int_B \lambda(x) \, dx$$
+Real study windows create boundary effects, so naive nearest-neighbor summaries near the edge should be interpreted carefully.
 
-For a homogeneous Poisson process, the intensity is constant and the expected number of points in region $B$ is
+## Ripley's K Function
 
-$$E[N(B)] = \lambda \cdot \text{Volume}(B)$$
+For a stationary process with intensity $\lambda$,
 
-This process is ideal when the observed points appear to be randomly scattered without any clustering or regular spacing.
+$$
+K(r)
+=
+\frac{1}{\lambda}
+E[
+\text{number of additional events within distance }r
+\text{ of a typical event}
+].
+$$
 
-### Cox Process (Doubly Stochastic Poisson Process)
+Under homogeneous complete spatial randomness in two dimensions,
 
-A Cox process extends the Poisson process by making the intensity function $\lambda(x)$ itself a random variable. In this model, the intensity is a realization of another stochastic process, which introduces additional variability. This model is particularly useful when the observed data shows clustering that cannot be explained by a simple Poisson process.
+$$
+K_{\mathrm{CSR}}(r)=\pi r^2.
+$$
 
-### Cluster Processes
+Broadly:
 
-Cluster processes model situations where points tend to group together. One example is the Neyman-Scott process, where parent points are first generated according to a Poisson process, and then a random number of offspring points are distributed around each parent according to a specified spatial distribution, such as a Gaussian. The Thomas process is a special case of the Neyman-Scott process with normally distributed offspring around each parent. These models are useful for capturing the clustering behavior seen in many natural phenomena.
+- $\hat K(r)>\pi r^2$ suggests more nearby pairs than under CSR;
+- $\hat K(r)<\pi r^2$ suggests inhibition/regularity.
 
-### Hard-Core Processes
+The comparison is scale-dependent: a pattern may be inhibited at short distances and clustered at longer distances.
 
-Hard-core processes are used when points exhibit inhibition, meaning they tend to repel each other. In such processes, there is a minimum distance $r_h$ that must separate any two points. This is particularly useful for modeling situations where physical objects, like trees competing for sunlight and nutrients, cannot be arbitrarily close to one another.
+## Edge Correction
 
-### Determinantal and Gibbs Point Processes
+A point near the observation-window boundary has part of its radius-$r$ neighborhood outside the observed window. Ignoring this creates downward bias in pair counts and in $\hat K(r)$.
 
-Determinantal point processes model repulsion using determinants and have found applications in physics and machine learning. Gibbs point processes, on the other hand, incorporate both attraction and repulsion through potential functions. These models allow for more flexible representations of interactions between points, accommodating a range of behaviors from clustering to inhibition.
+Common corrections include:
 
-## Advanced Concepts
+- border/guard-zone correction;
+- translation correction;
+- isotropic correction.
 
-A deeper understanding of point processes often involves exploring the intensity measure, conditional intensity, and important theorems that connect these concepts.
+The companion script implements a simple border correction and limits radii to scales for which interior points remain available.
 
-### Intensity Measure and Conditional Intensity
+## Monte Carlo Envelopes
 
-The intensity measure $\Lambda(B)$ for a region $B$ is defined as the expected number of points in that region:
+A common goodness-of-fit workflow is:
 
-$$\Lambda(B) = E[N(B)]$$
+1. fit or specify a reference process;
+2. simulate many patterns under it;
+3. compute the same summary curve for every simulation;
+4. compare the observed curve with simulated envelopes.
 
-In contrast, the conditional intensity $\lambda^*(x \mid \mathcal{F}_x)$ provides the expected rate at which events occur at a location $x$, given the history or information $\mathcal{F}_x$ up to that point. These measures help quantify how the expected number of points varies across space and time.
+Pointwise envelopes are useful exploratory diagnostics but are not automatically global simultaneous tests over all distances.
 
-### Campbell's Theorem
+## Cluster Processes
 
-Campbell's theorem is an important result that connects the sum over points of a function $f(x)$ with an integral involving the intensity function. The theorem states that
+A Thomas process is a common clustered model:
 
-$$E\left[ \sum_{x_i \in N} f(x_i) \right] = \int_S f(x) \lambda(x) \, dx$$
+1. parent events follow a Poisson process;
+2. each parent produces a Poisson number of offspring;
+3. offspring are displaced around the parent, commonly with Gaussian displacement.
 
-where $f(x)$ is any measurable function. This theorem is instrumental in deriving many properties and statistical measures related to point processes.
+The parent process can be latent; only offspring may be observed.
 
-### Second-Order Intensity
+## Inhibitory Processes
 
-The second-order intensity function characterizes pairwise interactions between points and is defined as
+Hard-core and Gibbs processes represent repulsion or spacing constraints. They are useful when events compete for space or cannot occur closer than a physical minimum distance.
 
-$$\lambda_2(x, y) = \lim_{\delta \to 0} \frac{E[N(B_{\delta}(x)) \cdot N(B_{\delta}(y))]}{\text{Volume}(B_{\delta}(x)) \cdot \text{Volume}(B_{\delta}(y))}$$
+## Marked Point Processes
 
-for $x \neq y$. For a stationary process, $\lambda_2$ depends only on the vector difference $x - y$. The pair correlation function is then obtained by normalizing with respect to the first-order intensity: $g(r) = \lambda_2(r) / \lambda^2$. This connection makes $\lambda_2$ the formal foundation for the summary statistics $K(r)$ and $g(r)$ introduced earlier.
+Events can carry marks such as tree species, tree height, earthquake magnitude, or incident type.
 
-## Applications of Point Processes
+Do not confuse:
 
-Point processes have diverse applications across many fields:
+- analysis of the point pattern itself;
+- spatial autocorrelation of a mark attached to the observed points.
 
-- In telecommunications, point processes model the locations of transmitters, receivers, and users, as well as the timing of call arrivals.
-- Neuroscientists use point processes to analyze spike trains, which represent the times at which neurons fire.
-- Environmental scientists use these models to study the occurrence of earthquakes or the spatial distribution of species in an ecosystem.
-- In social sciences, point processes help analyze the spatial and temporal patterns of events such as crime incidents or urban service distributions.
-- In physics and materials science, point processes are used to model the positions of particles or celestial bodies.
+Those are different questions and may require different null models.
 
-## Example: Modeling Tree Locations in a Forest
+## Modeling Workflow
 
-Consider a study that focuses on the spatial distribution of trees in a forest. Each tree is represented as a point in a two-dimensional space, and the objective is to model the distribution and understand the underlying ecological dynamics.
-
-Imagine first observing the spatial distribution of trees, which might appear as randomly scattered points. In a plot showing this distribution, one might see something like this:
-
-![Observed Spatial Distribution of Trees](https://github.com/user-attachments/assets/a49de8a2-6648-4636-aa6f-ad63588168af)
-
-In this plot, the trees (marked as green "X"s) seem to be scattered randomly, suggesting that a Poisson point process could be a good model since the trees do not exhibit noticeable clustering or regular spacing.
-
-Next, suppose we simulate a different process where trees tend to cluster in groups rather than being randomly distributed. A simulated cluster process may produce a plot like this:
-
-![Simulated Cluster Point Process](https://github.com/user-attachments/assets/9afc8235-70e1-4453-aa9c-9663b28394cd)
-
-In this simulation, trees (marked as blue "X"s) clearly form distinct clusters, which could indicate that environmental factors or biological interactions encourage grouping. The comparison between the observed random distribution and the simulated clustered distribution helps researchers decide which model best fits the data.
-
-### Analysis and Interpretation
-
-- Analysts begin by assessing complete spatial randomness through visual inspection of point maps and statistical tests such as Monte Carlo simulations to compare the observed pattern with the expectation under CSR.
-- The appearance of trees scattered without obvious clusters or inhibition may support the use of a Poisson point process model.
-- Ripley’s $K$-function, denoted as $K(r)$, quantifies the average number of additional points found within a distance $r$ from a typical point.
-- If the computed $K(r)$ exceeds the theoretical expectation under CSR, it indicates clustering, whereas a lower $K(r)$ suggests regularity or inhibition.
-- The pair correlation function, $g(r)$, evaluates the probability of finding pairs of trees at a given distance $r$ relative to what is expected under randomness.
-- Values of $g(r) > 1$ indicate that pairs of trees occur more frequently at distance $r$, suggesting clustering, while values of $g(r) < 1$ imply repulsion between trees at that scale.
-
-### Possible Models Based on Observations
-
-The choice of a model depends on the observed spatial patterns. If the trees are randomly distributed, the Poisson point process is often an appropriate model. If there is evidence of clustering, a cluster process like the Thomas process may better capture the underlying dynamics, as it incorporates the idea of parent points with offspring clustered around them. On the other hand, if the trees exhibit a regular pattern with a clear minimum distance between them, hard-core or Gibbs point processes are more suitable because they incorporate repulsion between points.
-
-### Steps in Modeling
-
-To build a point process model for tree locations, researchers typically follow these steps:
-
-- Data is collected by obtaining precise spatial coordinates for each tree within the study area.
-- Exploratory data analysis involves plotting tree locations and estimating the overall intensity, $\lambda$, which represents the average number of trees per unit area.
-- Statistical analyses are performed by calculating Ripley’s $K$-function, $K(r)$, and the pair correlation function, $g(r)$, to assess spatial dependencies and guide the selection of an appropriate model.
-- Parameter estimation is carried out using methods such as maximum likelihood estimation or the method of moments once a candidate model is selected.
-- Model validation is conducted through goodness-of-fit tests and residual analysis to ensure that the chosen model adequately describes the observed data.
-
-### Conclusion from the Example
-
-If the trees are found to be randomly distributed, a Poisson point process will likely capture the necessary characteristics of the data, reflecting complete spatial randomness. However, if clustering is observed, a cluster process such as the Thomas process is more appropriate, as it accounts for environmental heterogeneity and biological interactions that cause trees to group together. In cases where trees exhibit regular spacing, modeling efforts should focus on hard-core or Gibbs point processes to incorporate the effects of competitive inhibition.
+1. Define the observation window and event definition.
+2. Map the points and inspect potential intensity covariates.
+3. Model first-order intensity.
+4. Examine nearest-neighbor or $K$-function summaries with edge correction.
+5. Compare with simulations from a scientifically meaningful reference process.
+6. Fit an interaction/cluster model only when needed.
+7. Validate using residual or simulation diagnostics rather than visual fit alone.
