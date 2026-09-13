@@ -307,4 +307,125 @@ This visualization illustrates how the AR(2) model captures the underlying patte
 
 - Overly complex models, with high $p$, $d$, or $q$, may fit the random noise rather than the true underlying process.  
 - Overfitting leads to poor generalization, reducing the model's ability to make accurate predictions on new data.  
-- Regularization techniques and cross-validation can help mitigate this risk but may increase computational requirements.  
+- Regularization techniques and cross-validation can help mitigate this risk but may increase computational requirements.
+
+## Student guide: persistence, roots, and prediction
+
+An AR model explains the current value using observed past values:
+
+$$
+y_t=c+\phi_1y_{t-1}+\cdots+\phi_py_{t-p}+\varepsilon_t.
+$$
+
+The observed lags are regressors, but stationarity still depends on the roots of the AR polynomial.
+
+### AR(1) numbers
+
+For
+
+$$
+y_t=1+0.8y_{t-1}+\varepsilon_t,
+\qquad
+\operatorname{Var}(\varepsilon_t)=1,
+$$
+
+the stationary mean is $5$ and the variance is $1/(1-0.8^2)=2.7778$. If the latest centered value is $y_T-\mu=2$, the conditional mean deviation is
+
+$$
+\hat y_{T+1|T}-\mu=0.8(2)=1.6,
+$$
+
+and the five-step deviation is
+
+$$
+\hat y_{T+5|T}-\mu=0.8^5(2)=0.6554.
+$$
+
+Persistence affects both the ACF and the rate at which forecasts return toward the mean.
+
+### AR(2) roots
+
+For
+
+$$
+y_t=0.6y_{t-1}-0.2y_{t-2}+\varepsilon_t,
+$$
+
+the characteristic equation is
+
+$$
+r^2-0.6r+0.2=0.
+$$
+
+Its discriminant is $0.36-0.8=-0.44$, so the roots are complex:
+
+$$
+r=\frac{0.6\pm i\sqrt{0.44}}2.
+$$
+
+Their modulus is $\sqrt{0.2}\approx0.447$, below 1. The impulse response therefore oscillates while decaying. Complex roots can produce alternating or cyclical ACF patterns without a deterministic seasonal component.
+
+### Estimation and intercepts
+
+For AR($p$), create a design matrix from rows $t=p+1,\ldots,T$:
+
+$$
+\mathbf y=
+\begin{bmatrix}y_{p+1}\\ \vdots\\ y_T\end{bmatrix},
+\qquad
+\mathbf X=
+\begin{bmatrix}
+1&y_p&\cdots&y_1\\
+\vdots&\vdots&&\vdots\\
+1&y_{T-1}&\cdots&y_{T-p}
+\end{bmatrix}.
+$$
+
+The conditional least-squares estimate is
+
+$$
+\hat\beta=(X^\top X)^{-1}X^\top y
+$$
+
+when the matrix has full rank. A trend, deterministic seasonal term, or strongly collinear lag columns can make this calculation unstable. Likelihood estimation accounts more carefully for initial observations and innovation variance.
+
+The intercept $c$ is not the stationary mean. For AR(1), $\mu=c/(1-\phi)$. For AR($p$), $\mu=c/(1-\sum_j\phi_j)$ when the denominator is nonzero and the process is stationary.
+
+### Forecast uncertainty
+
+For a centered AR(1),
+
+$$
+\hat y_{T+h|T}=\phi^hy_T,
+$$
+
+and
+
+$$
+\operatorname{Var}(e_{T+h})
+=\sigma^2\sum_{j=0}^{h-1}\phi^{2j}.
+$$
+
+The mean forecast converges to zero when $|\phi|<1$, but the interval converges toward the unconditional variance. Report both the point forecast and the uncertainty.
+
+### Overfitting and stability
+
+Increasing $p$ can reduce in-sample error while making estimates unstable. Check:
+
+- root location;
+- coefficient uncertainty;
+- residual ACF;
+- parameter stability over time;
+- temporal forecast performance.
+
+A model can be statistically stationary but practically persistent when a root is close to the unit circle. Forecast intervals and finite-sample estimates then deserve extra scrutiny.
+
+### Visual companions
+
+Run [dependence_visualizations.py](../../scripts/time_series/dependence_visualizations.py):
+
+![AR persistence](../../assets/time_series/dependence/03_ar_persistence.png)
+
+![ACF/PACF identification](../../assets/time_series/dependence/02_acf_pacf_identification.png)
+
+![Yule-Walker recursion](../../assets/time_series/dependence/07_yule_walker_recursion.png)

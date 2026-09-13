@@ -296,3 +296,171 @@ Here's the plot with the analysis using Simple Exponential Smoothing (SES) on th
 
 - The blue line represents the actual sales data for each month.
 - The purple dashed line shows the predictions from the optimized SES model.
+
+## Student guide: a time series is data plus an information structure
+
+A time series is not only a vector $y_1,\ldots,y_T$. Its timestamps, sampling rule, support, release timing, and order determine which observations can inform a forecast and which dependence patterns are scientifically plausible.
+
+### Learning objectives
+
+After working through this chapter, you should be able to:
+
+1. distinguish a time series from an unordered sample;
+2. identify trend, seasonality, cycles, breaks, and irregular variation;
+3. write a decomposition and calculate its pieces for a chosen time point;
+4. explain why sampling frequency determines the questions that can be answered;
+5. choose a first transformation without hiding the original target;
+6. define a forecast origin and a valid information set;
+7. separate descriptive smoothing from stochastic model terms.
+
+### What is indexed by time?
+
+At each time $t$, the observed value may be:
+
+- a point measurement, such as temperature at 12:00;
+- an interval total, such as daily sales;
+- an interval average, such as a monthly rate;
+- an event count;
+- a vector of measurements recorded together.
+
+The same physical process can look different under these supports. Aggregating hourly demand into daily totals changes variance, seasonality, and dependence. A model for an interval total should not be interpreted as a model for an instantaneous value.
+
+### Components with a numerical example
+
+An additive teaching decomposition is
+
+$$
+y_t=T_t+S_t+R_t,
+$$
+
+where $T_t$ is trend, $S_t$ is a repeating seasonal component, and $R_t$ is the remainder.
+
+Take
+
+$$
+y_t=100+0.5t+10\sin(2\pi t/12)+\varepsilon_t,
+\qquad
+\varepsilon_t\sim(0,4).
+$$
+
+At $t=3$:
+
+$$
+T_3=100+0.5(3)=101.5,
+\qquad
+S_3=10\sin(\pi/2)=10.
+$$
+
+The deterministic part is $111.5$. If $\varepsilon_3=-1.2$, the observed value is $110.3$. At $t=6$, $S_6=0$, so the deterministic part is $103$. A visible change between these months need not be a change in the long-run trend; it can be seasonal phase.
+
+For multiplicative behavior,
+
+$$
+y_t=T_tS_tR_t,
+$$
+
+the seasonal amplitude grows with the level. Taking logs gives
+
+$$
+\log y_t=\log T_t+\log S_t+\log R_t,
+$$
+
+which converts multiplication into addition when a log transform is appropriate.
+
+### Trend, seasonality, cycle, and break
+
+These terms describe different structures:
+
+- **trend:** a persistent change in level or slope;
+- **seasonality:** a pattern tied to a known repeating period;
+- **cycle:** a longer or less regular oscillation;
+- **structural break:** a change in the data-generating mechanism;
+- **irregular component:** variation not explained by the chosen structure.
+
+A trend is not necessarily a unit root. A seasonal pattern is not necessarily a seasonal AR term. A break is not an outlier that can be removed without explanation.
+
+### Sampling and aliasing
+
+Suppose an underlying signal contains a cycle of 0.65 cycles per observation. Sampling once per interval has Nyquist limit 0.5, so the signal can appear as an alias at a lower frequency. More frequent observations are needed to distinguish the cycles.
+
+Irregular timestamps also change the problem. Standard ACF and Fourier formulas assume a regular grid; an irregularly sampled process may require interpolation, continuous-time methods, or a model for the observation process. Interpolation can introduce dependence and should be treated as a modeling choice.
+
+### First-pass exploration
+
+Record the following before modeling:
+
+| question | diagnostic |
+|---|---|
+| Is the index regular? | timestamp differences |
+| Are values missing? | missingness by time and season |
+| Does the spread grow with level? | level plot and log plot |
+| Is there a repeating period? | seasonal subplots, lag-$s$ ACF |
+| Is there a break? | rolling moments and event history |
+| Are observations dependent? | ACF/PACF and domain mechanism |
+| What will be forecast? | target definition and horizon |
+
+The first plot should be accompanied by a statement of what one observation represents.
+
+### Smoothing versus forecasting
+
+A moving average
+
+$$
+\tilde y_t=\frac1w\sum_{j=0}^{w-1}y_{t-j}
+$$
+
+is a descriptive filter. It can reveal a level or trend, but a centered smoother uses future observations and is unsuitable as a real-time feature unless the task is retrospective description.
+
+Simple exponential smoothing uses
+
+$$
+\ell_t=\alpha y_t+(1-\alpha)\ell_{t-1}.
+$$
+
+This is both a smoother and a forecasting method because $\ell_t$ is used as a future level forecast. The smoothing parameter controls responsiveness, not a universal measure of model quality.
+
+### The information set
+
+If a forecast is issued at time $t$, define $\mathcal F_t$. Any transformation, feature, model fit, and parameter choice must be measurable with respect to $\mathcal F_t$ in a backtest. This includes:
+
+- scaling;
+- imputation;
+- seasonal adjustment;
+- feature selection;
+- predictor values;
+- hyperparameter tuning.
+
+The same formula can be valid or invalid depending on whether it is recomputed inside each historical training window.
+
+### Recommended workflow
+
+1. State the observational unit and time support.
+2. Plot levels and relevant transformations.
+3. Audit timestamp regularity and missingness.
+4. Describe trend, seasonality, breaks, and changing variance.
+5. Define the forecast target and horizon.
+6. Choose a baseline before fitting a complex model.
+7. Transform only for a stated reason.
+8. Preserve the time order in validation.
+9. Diagnose residuals and forecast errors.
+10. Explain the limitations of the chosen representation.
+
+### Visual companions
+
+Run [foundations_visualizations.py](../../scripts/time_series/foundations_visualizations.py):
+
+![Geometric series](../../assets/time_series/foundations/01_geometric_series.png)
+
+![Difference-equation stability](../../assets/time_series/foundations/02_difference_equation_stability.png)
+
+![Series components](../../assets/time_series/foundations/03_series_components.png)
+
+![Changing moments](../../assets/time_series/foundations/04_moments_change_over_time.png)
+
+![White noise and random walk](../../assets/time_series/foundations/05_white_noise_random_walk.png)
+
+![Stationarity cases](../../assets/time_series/foundations/06_stationarity_cases.png)
+
+![Regular and irregular sampling](../../assets/time_series/foundations/07_regular_and_irregular_sampling.png)
+
+![Linear filter](../../assets/time_series/foundations/08_linear_filter.png)

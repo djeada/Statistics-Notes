@@ -17,3 +17,31 @@ Read [frequency-domain analysis](../../notes/time_series/frequency_domain_analys
 - Frequency spacing is $1/240\approx0.004167$, and the period-12 component is near bin 20.
 - The log return is $\log(1.02)\approx0.0198$.
 - The conditional variance is $0.048$ and the conditional standard deviation is about $0.219$.
+
+## Applied practice
+
+9. Run [state_space_frequency_visualizations.py](../../scripts/time_series/state_space_frequency_visualizations.py). Convert each visible spectral peak to a period and state the sampling assumptions.
+10. Compare a rectangular and tapered window for a frequency that does not fall exactly on a Fourier bin. Describe leakage and peak width.
+11. Sample a high-frequency sinusoid at two different rates. Demonstrate when aliasing appears.
+12. Detrend a periodic signal before calculating its periodogram. Compare low-frequency power and the peak of interest.
+13. Simulate two series with a shared cycle and calculate a frequency-specific coherence-like measure. Explain why it is not causal evidence.
+14. Run [financial_time_series_visualizations.py](../../scripts/time_series/financial_time_series_visualizations.py). Compare ACF of returns and squared returns.
+15. Calculate ARCH and GARCH variance paths after a positive and negative shock. Add an asymmetric term and compare.
+16. Backtest a one-day 95% VaR forecast. Record exceedance count, clustering, and the innovation distribution used.
+
+## Reflection
+
+Report the sampling interval, frequency resolution, detrending/window choice, return definition, variance recursion, tail distribution, and temporal validation design.
+
+## Extension tasks
+
+17. Calculate the Nyquist limit for data sampled every 15 minutes and express a one-day cycle in cycles per sample.
+18. Generate a sinusoid whose frequency lies halfway between Fourier bins. Compare leakage under two windows.
+19. Explain why a periodogram peak can move when a structural break changes the phase or amplitude.
+20. Fit or simulate a volatility model with $\alpha+\beta=0.99$. Discuss long-run variance and finite-sample persistence.
+21. Compare Gaussian and Student-$t$ tail probabilities at a chosen risk threshold.
+22. Evaluate VaR exceedances for clustering, not only total count.
+
+## Submission check
+
+Include the sampling and return definitions, numerical frequency/variance calculations, one spectral figure, one volatility figure, and a statement of what the diagnostics cannot identify.

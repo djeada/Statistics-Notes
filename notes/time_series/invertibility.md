@@ -235,3 +235,76 @@ $$
 This ensures that the terms $\beta^n$ decay as $n \to \infty$, leading to convergence of the series. In practical terms, if $|\beta|$ is too large, the influence of past values remains strong, and the infinite series becomes unstable and non-convergent.
 
 Thus, for any MA process, ensuring that the absolute values of the coefficients of the lagged noise terms are **less than 1** is a key requirement for convergence and invertibility.
+
+## Student guide: why roots and inverse filters matter
+
+Invertibility asks whether the unobserved innovations can be represented as a stable function of observed values. It is analogous to choosing a canonical representation for an MA model.
+
+### MA(1) calculation
+
+With
+
+$$
+y_t=(1+\theta B)\varepsilon_t,
+$$
+
+the formal inverse is
+
+$$
+\varepsilon_t
+=(1+\theta B)^{-1}y_t
+=\left(1-\theta B+\theta^2B^2-\theta^3B^3+\cdots\right)y_t.
+$$
+
+For $\theta=0.5$, the first weights are
+
+$$
+1,\ -0.5,\ 0.25,\ -0.125.
+$$
+
+They decay geometrically. For $\theta=2$, the weights are
+
+$$
+1,\ -2,\ 4,\ -8,
+$$
+
+and grow. The latter is not a stable way to recover shocks from observations.
+
+### Root condition
+
+The MA polynomial is
+
+$$
+\theta(B)=1+\theta B.
+$$
+
+Its zero is $B=-1/\theta$. Invertibility requires the zero to be outside the unit circle:
+
+$$
+\left|-\frac1\theta\right|>1
+\quad\Longleftrightarrow\quad
+|\theta|<1.
+$$
+
+For higher-order MA models, every zero of the MA polynomial must lie outside the unit circle.
+
+### Why equivalent models appear
+
+For an MA(1), the autocovariances depend on $\theta$ through:
+
+$$
+\gamma(0)=\sigma^2(1+\theta^2),
+\qquad
+\gamma(1)=\sigma^2\theta.
+$$
+
+Changing $\theta$ to $1/\theta$ and changing the innovation variance appropriately can preserve the same autocorrelation. The observed second-order behavior alone cannot choose between the two representations. Invertibility supplies the convention that chooses the decaying inverse.
+
+### Practical implications
+
+- Compare fitted MA parameters with root diagnostics.
+- Do not interpret a non-invertible coefficient as a different scientific shock mechanism without transforming it.
+- Check numerical optimization near unit-circle roots.
+- Use residual innovations from the canonical representation for diagnostics and forecasts.
+
+![Stable and unstable inverse weights](../../assets/time_series/dependence/06_invertibility.png)

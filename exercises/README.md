@@ -11,3 +11,5 @@ Practice sets follow the same dependency-aware curriculum as the notes.
 
 The spatial exercises are ordered to match the [spatial statistics learning path](../notes/spatial_statistics/README.md).
 The time-series exercises are ordered to match the [time-series learning path](../notes/time_series/README.md).
+
+The time-series sets include hand calculations, simulation tasks, figure interpretation, and temporal backtesting. Each set points to the script that generated its teaching figures.

@@ -87,6 +87,18 @@ Each set links back to the relevant notes and to a small implementation where on
 - [notebooks/time_series/](../../notebooks/time_series/) contains interactive notebooks for foundations, backtesting, dynamic regression, and advanced state-space/frequency-domain ideas.
 - The visualization scripts in [scripts/time_series/](../../scripts/time_series/) write deterministic teaching figures to [assets/time_series/](../../assets/time_series/) when the scientific Python dependencies are installed.
 
+The expanded chapters use these topic companions:
+
+| Chapter family | Script | Figures |
+|---|---|---|
+| foundations and stationarity | [foundations_visualizations.py](../../scripts/time_series/foundations_visualizations.py) | [foundations](../../assets/time_series/foundations/) |
+| dependence and diagnostics | [dependence_visualizations.py](../../scripts/time_series/dependence_visualizations.py), [diagnostics_visualizations.py](../../scripts/time_series/diagnostics_visualizations.py) | [dependence](../../assets/time_series/dependence/), [diagnostics](../../assets/time_series/diagnostics/) |
+| ARIMA and seasonality | [arima_seasonality_visualizations.py](../../scripts/time_series/arima_seasonality_visualizations.py) | [arima_seasonality](../../assets/time_series/arima_seasonality/) |
+| forecasting and evaluation | [forecasting_evaluation_visualizations.py](../../scripts/time_series/forecasting_evaluation_visualizations.py) | [forecasting](../../assets/time_series/forecasting/) |
+| dynamic and multivariate models | [dynamic_multivariate_visualizations.py](../../scripts/time_series/dynamic_multivariate_visualizations.py) | [dynamic_multivariate](../../assets/time_series/dynamic_multivariate/) |
+| state space and frequency | [state_space_frequency_visualizations.py](../../scripts/time_series/state_space_frequency_visualizations.py) | [state_space_frequency](../../assets/time_series/state_space_frequency/) |
+| financial models | [financial_time_series_visualizations.py](../../scripts/time_series/financial_time_series_visualizations.py) | [financial](../../assets/time_series/financial/) |
+
 ## Model Selection Map
 
 | Data feature or question | Useful starting point | Check before interpreting |

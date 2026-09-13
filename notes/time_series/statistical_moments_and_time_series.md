@@ -88,3 +88,70 @@ Recognizing the dependence structure in time series data is critical for accurat
 * When past values are used to predict the next value, an *autoregressive model* can identify recurring patterns and trends, whereas omitting this approach may cause forecasts to ignore momentum in the data; for example, predicting stock prices without past price information often yields less accurate short-term projections.
 * If predictions are instead based on past errors rather than past values, a *moving average model* can help smooth random fluctuations, while skipping it can lead to forecasts being overly sensitive to sudden noise; for instance, weather temperature forecasts can be improved by smoothing daily measurement errors.
 * By integrating both past values and past errors, a *hybrid ARMA model* can capture relationships that neither component alone could model effectively, whereas avoiding this combination might miss interactions between trends and noise; for example, sales forecasts often improve when both seasonal patterns and past prediction inaccuracies are considered.
+
+## Student guide: moments have a time index
+
+For a cross-sectional sample, one mean and one variance may summarize the marginal distribution. For a time series, the relevant quantities include:
+
+$$
+\mu_t=E(X_t),
+\qquad
+\gamma_t(0)=\operatorname{Var}(X_t),
+\qquad
+\gamma_t(h)=\operatorname{Cov}(X_t,X_{t-h}).
+$$
+
+Under weak stationarity, $\mu_t$ and $\gamma_t(0)$ do not depend on $t$, and $\gamma_t(h)$ depends only on the lag $h$. A changing mean or variance makes a single overall summary potentially misleading.
+
+### Numerical moment calculation
+
+For $(2,4,4,6)$:
+
+$$
+\bar x=4,
+\qquad
+\hat\sigma_n^2=\frac{(-2)^2+0^2+0^2+2^2}{4}=2.
+$$
+
+The unbiased sample variance is
+
+$$
+s^2=\frac{8}{3}\approx2.667.
+$$
+
+At lag 1, the centered products are $0$, $0$, and $0$ for this ordering, so the lag-1 sample covariance is zero. This small example shows why a single zero covariance is weak evidence about the process.
+
+For the sequence $(1,2,4,3)$, the centered values are $(-1.5,-0.5,1.5,0.5)$ and the lag-1 covariance using denominator $n$ is $0.1875$. The order of observations matters even when the multiset of values is unchanged.
+
+### Cross-moments and dependence
+
+For two series $X_t$ and $Y_t$, the lagged cross-covariance is
+
+$$
+\gamma_{XY}(h)=\operatorname{Cov}(X_t,Y_{t-h}).
+$$
+
+It can reveal lead-lag relationships, but it is sensitive to trend, scale, and common seasonal effects. Detrend or difference only when the question supports it, and interpret a cross-correlation peak in the context of predictor availability.
+
+### Rolling moments
+
+A rolling mean and variance are descriptive:
+
+$$
+\hat\mu_t^{(w)}=\frac1w\sum_{j=0}^{w-1}x_{t-j},
+\qquad
+\hat v_t^{(w)}
+=\frac1{w-1}\sum_{j=0}^{w-1}(x_{t-j}-\hat\mu_t^{(w)})^2.
+$$
+
+They trade temporal resolution against sampling noise. Use the same window only for a clearly defined comparison; changing $w$ can make a trend appear or disappear.
+
+### Moments do not identify a distribution
+
+Two series can have the same mean and variance but different tails, skewness, autocorrelation, conditional variance, and structural breaks. Conversely, a time series can have a stable marginal histogram while its dependence changes. Plot moments over time and inspect dependence separately.
+
+### Visual companion
+
+Run [foundations_visualizations.py](../../scripts/time_series/foundations_visualizations.py):
+
+![Changing moments](../../assets/time_series/foundations/04_moments_change_over_time.png)

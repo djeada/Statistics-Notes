@@ -93,3 +93,77 @@ $$
 If $\rho_s$ is far from zero, the series likely has a monotone trend. This test is robust to outliers and does not require a parametric model.
 
 Because multiple tests are often applied together, the probability of at least one false positive increases. Treat these as screening tools and follow up with model-based diagnostics (ACF/PACF, unit root tests, or regression diagnostics).
+
+## Student guide: randomness is a collection of null hypotheses
+
+There is no single test that proves a time series is random. Different tests ask different questions:
+
+- are adjacent values linearly dependent?
+- are there too many or too few turning points?
+- is there a monotone trend?
+- are squared residuals dependent?
+- is the process compatible with a unit-root null?
+
+Choose the diagnostic to match the model failure that matters.
+
+### Turning points
+
+For the sequence
+
+$$
+1,\ 3,\ 2,\ 4,\ 3,
+$$
+
+the interior observations at positions 2, 3, and 4 are local turning points, so the count is 3. A turning-point test compares the count with a reference distribution under a random-order or continuous iid null. Ties need a stated convention.
+
+Too few turning points can indicate persistence or trend. Too many can indicate alternation or negative dependence. The test does not distinguish a smooth trend from every other source of persistence.
+
+### Runs
+
+Convert observations to signs relative to a reference level, often the median. A run is a maximal sequence of equal signs. For signs
+
+$$
+++--+--,
+$$
+
+there are four runs: $++$, $--$, $+$, and $--$. Too few runs suggest clustering; too many suggest alternation. A median choice can discard information, so use it as a simple diagnostic rather than a complete dependence analysis.
+
+### Ljung-Box residual test
+
+The Ljung-Box statistic through lag $m$ is
+
+$$
+Q(m)=n(n+2)\sum_{h=1}^{m}\frac{\hat\rho(h)^2}{n-h}.
+$$
+
+The null is that autocorrelations through the tested lags are jointly zero, with degrees-of-freedom adjustments needed after fitting parameters. A p-value of $0.002$ is evidence that the residuals retain serial structure at one or more tested lags. It does not identify the correct new model.
+
+### Trend tests and breaks
+
+A monotone trend test can be useful when a linear trend is not justified, but a monotone trend and a structural break can look similar in a short record. Plot the series, rolling moments, and residuals around the suspected change before interpreting a test.
+
+### Multiple diagnostics
+
+If ten independent tests are each run at level $0.05$, the probability of at least one false rejection is
+
+$$
+1-(1-0.05)^{10}\approx0.401.
+$$
+
+Time-series tests are usually dependent, so this is not an exact family-wise error probability, but it demonstrates why a collection of p-values should not be read as ten independent discoveries.
+
+### A practical diagnostic sequence
+
+1. Inspect the raw plot and timestamp structure.
+2. Remove or model known trend/seasonality.
+3. Inspect residual ACF and Ljung-Box results.
+4. Inspect squared residuals for variance dependence.
+5. Use turning-point or runs tests for a complementary ordering check.
+6. Investigate breaks and outliers.
+7. Validate the resulting model by forecasting.
+
+### Visual companion
+
+Run [dependence_visualizations.py](../../scripts/time_series/dependence_visualizations.py):
+
+![Randomness and residual diagnostics](../../assets/time_series/dependence/08_randomness_residual_diagnostics.png)

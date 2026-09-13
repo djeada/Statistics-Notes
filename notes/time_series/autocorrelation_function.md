@@ -454,3 +454,123 @@ acf and pacf plots for
     White Noise: A purely random series.
 
 ![acf_pacf_cheat_sheet](https://github.com/user-attachments/assets/8271d59f-a3a1-42bf-8472-3565f2a04c99)
+
+## Student guide: calculate and interpret ACF/PACF
+
+The ACF and PACF are summaries of dependence after a mean specification has been chosen. A trend, seasonal pattern, or break can create a slow ACF decay even when there is no stationary AR mechanism.
+
+### Sample ACF calculation
+
+For observations $(1,2,4,3)$, $\bar x=2.5$ and
+
+$$
+z=(-1.5,-0.5,1.5,0.5).
+$$
+
+Using denominator $n$:
+
+$$
+\hat\gamma(0)=\frac{2.25+0.25+2.25+0.25}{4}=1.25,
+$$
+
+and
+
+$$
+\hat\gamma(1)=\frac{(-1.5)(-0.5)+(-0.5)(1.5)+(1.5)(0.5)}4
+=0.1875.
+$$
+
+Thus
+
+$$
+\hat\rho(1)=\frac{0.1875}{1.25}=0.15.
+$$
+
+The numerator contains fewer pairs at larger lags. Software may use a different finite-sample denominator, so compare conventions when reproducing values.
+
+### AR(1) pattern
+
+For
+
+$$
+X_t=0.7X_{t-1}+\varepsilon_t,
+$$
+
+the theoretical ACF is
+
+$$
+\rho(h)=0.7^{|h|}.
+$$
+
+The first values are $1$, $0.7$, $0.49$, $0.343$, and so on. The PACF is $0.7$ at lag 1 and zero at later lags in the population. A finite sample will show nonzero later values, so use uncertainty bands and model checks.
+
+### PACF as a conditional relationship
+
+The lag-2 PACF measures the relationship between $X_t$ and $X_{t-2}$ after linearly removing the contribution of the intermediate lag $X_{t-1}$. It is not an ordinary pairwise correlation.
+
+For an AR(2),
+
+$$
+X_t=\phi_1X_{t-1}+\phi_2X_{t-2}+\varepsilon_t,
+$$
+
+the PACF can remain notable through lag 2 and then cut off in the ideal stationary population. For an MA process, the ACF has a cutoff while the PACF generally tails off.
+
+### Approximate significance bands
+
+Under a simple white-noise approximation, an individual sample ACF is often compared with
+
+$$
+\pm\frac{1.96}{\sqrt n}.
+$$
+
+With $n=100$, the approximate band is $\pm0.196$. These bands are not exact for fitted models, high lags, multiple comparisons, or strong non-white processes. A single crossing should not drive model choice.
+
+### Identification is iterative
+
+Use the following loop:
+
+1. remove or model trend and seasonality;
+2. calculate ACF/PACF of the transformed series;
+3. propose a small ARMA candidate set;
+4. estimate candidates;
+5. inspect residual ACF/PACF and squared residuals;
+6. backtest the candidates.
+
+Do not treat ACF/PACF cutoff rules as a proof. Near-unit roots, small samples, outliers, missing values, and structural changes can mimic familiar patterns.
+
+### Seasonal autocorrelation
+
+For period $s$, inspect lags $s,2s,3s$. A spike at lag 12 in monthly data can arise from:
+
+- deterministic seasonal means;
+- seasonal AR dependence;
+- seasonal MA effects;
+- calendar aggregation;
+- an unmodeled annual predictor.
+
+The remedy depends on the source. Seasonal differencing is not always preferable to explicit seasonal terms or a seasonal-naive baseline.
+
+### Numerical identification table
+
+| model | typical ACF | typical PACF |
+|---|---|---|
+| AR(1) | tails off | cuts off after 1 |
+| AR(2) | tails off, possibly oscillates | cuts off after 2 |
+| MA(1) | cuts off after 1 | tails off |
+| MA(2) | cuts off after 2 | tails off |
+| ARMA | tails off | tails off |
+
+These patterns describe ideal population behavior. Use them to propose candidates, not to skip estimation and validation.
+
+### Visual companions
+
+Run [dependence_visualizations.py](../../scripts/time_series/dependence_visualizations.py):
+
+![Autocovariance geometry](../../assets/time_series/dependence/01_autocovariance_geometry.png)
+
+![ACF and PACF identification](../../assets/time_series/dependence/02_acf_pacf_identification.png)
+
+![AR persistence](../../assets/time_series/dependence/03_ar_persistence.png)
+
+![MA shock duration](../../assets/time_series/dependence/04_ma_shock_duration.png)

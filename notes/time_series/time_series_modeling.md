@@ -195,3 +195,168 @@ A more complex model can always reduce some in-sample error, but that does not g
 - See **[arima_models.md](arima_models.md)** for differencing and seasonal ARIMA models.
 - See **[randomness_tests.md](randomness_tests.md)** for residual checks.
 - See **[forecasting.md](forecasting.md)** for forecast construction and evaluation metrics.
+
+## Student guide: an end-to-end modeling record
+
+A time-series model is a set of assumptions about:
+
+1. the conditional mean;
+2. the dependence across time;
+3. the distribution of new shocks;
+4. the behavior of variance;
+5. the information available for prediction.
+
+Write these assumptions down before comparing software output. A model summary with many coefficients does not tell a reader which observations were used, how missing values were handled, or whether the residuals are adequate.
+
+### Start with the target and the index
+
+Record:
+
+- the response variable and its units;
+- the timestamp and sampling interval;
+- whether timestamps are regular;
+- the forecast horizon;
+- the difference between an observation date and a release date;
+- the deployment decision the forecast supports.
+
+For example, a monthly sales forecast issued on the last day of March may use March sales, but a forecast issued on March 10 may only have partial March information. The index is part of the information set.
+
+### Explore before fitting
+
+Inspect:
+
+1. the level series;
+2. a log or variance-stabilized version;
+3. first and seasonal differences;
+4. rolling mean and variance;
+5. missingness and outliers;
+6. ACF and PACF;
+7. known calendar effects;
+8. possible structural breaks.
+
+An ACF that decays slowly may reflect a unit root, deterministic trend, seasonal pattern, or a break. It is not a diagnosis by itself.
+
+### Estimation mechanics
+
+For an AR($p$), the conditional mean can be estimated with regression because lagged observations are observed:
+
+$$
+y_t=c+\phi_1y_{t-1}+\cdots+\phi_py_{t-p}+\varepsilon_t.
+$$
+
+For an MA($q$), lagged innovations are unobserved:
+
+$$
+y_t=\mu+\varepsilon_t+\theta_1\varepsilon_{t-1}
+\cdots+\theta_q\varepsilon_{t-q}.
+$$
+
+The innovations must be inferred recursively or through a state-space representation. Treating them as ordinary known regressors changes the problem.
+
+Likelihood-based estimation uses the innovations and their variances. The Gaussian log-likelihood is a sum of contributions of the form
+
+$$
+-\frac12\left[\log(2\pi)+\log(F_t)+\frac{v_t^2}{F_t}\right].
+$$
+
+Initial conditions and diffuse treatment can affect exact values in short samples, so compare models fit under consistent conventions.
+
+### Numerical order selection
+
+Suppose a model has log-likelihood $\ell=-100$ and $k=3$ estimated parameters:
+
+$$
+\operatorname{AIC}= -2(-100)+2(3)=206.
+$$
+
+If a larger model has $\ell=-96$ and $k=6$:
+
+$$
+\operatorname{AIC}= -2(-96)+2(6)=204.
+$$
+
+The larger model is preferred by AIC in this comparison, but the difference is not a proof of forecasting improvement. BIC applies a stronger penalty:
+
+$$
+\operatorname{BIC}=-2\ell+k\log n.
+$$
+
+Use AICc when the effective sample is not large relative to the parameter count, and compare only models fitted to comparable observations and likelihoods.
+
+### Residuals as a model check
+
+Let $\hat\varepsilon_t=y_t-\hat y_{t|t-1}$ be one-step residuals. A useful residual sequence should have:
+
+- approximately zero mean;
+- no important ACF spikes;
+- stable variance;
+- no obvious trend or break;
+- no systematic dependence on fitted values or predictors.
+
+For residual autocorrelation, inspect
+
+$$
+\hat\rho(h)
+=\frac{\sum_{t=h+1}^{T}
+(\hat\varepsilon_t-\bar\varepsilon)
+(\hat\varepsilon_{t-h}-\bar\varepsilon)}
+{\sum_{t=1}^{T}(\hat\varepsilon_t-\bar\varepsilon)^2}.
+$$
+
+The Ljung-Box statistic through lag $m$ is
+
+$$
+Q(m)=T(T+2)\sum_{h=1}^{m}\frac{\hat\rho(h)^2}{T-h}.
+$$
+
+It tests a joint null of no autocorrelation through the selected lags, subject to approximation and parameter-estimation caveats. A small p-value says the residuals retain dependence; it does not say whether to add an AR term, seasonal term, predictor, or break indicator.
+
+### Residual variance and distribution
+
+A residual ACF near zero does not guarantee independent residuals. Plot $\hat\varepsilon_t^2$ and its ACF to detect conditional heteroskedasticity. Heavy tails can make Gaussian intervals too narrow even when the conditional mean is adequate.
+
+If residuals are non-normal but the forecast objective is squared error, a Gaussian mean model may still forecast well. If tail probabilities or risk decisions matter, use a distribution and interval method appropriate to that objective.
+
+### Structural breaks
+
+A single stable parameter set can average over multiple regimes. After a break, residuals may show:
+
+- a level shift;
+- a change in persistence;
+- a variance jump;
+- a change in seasonal amplitude.
+
+Possible responses include a break indicator, separate regime model, rolling estimation window, state-space parameters, or a documented reset. Do not automatically remove unusual observations: a real event may be the phenomenon to forecast.
+
+### A model comparison table
+
+Keep an auditable record:
+
+| candidate | transformation | parameters | AIC | residual ACF | backtest MAE | notes |
+|---|---|---:|---:|---|---:|---|
+| naive | none | 0 | — | — |  | baseline |
+| AR(1) | none | 2 |  |  |  |  |
+| ARIMA | first difference |  |  |  |  |  |
+| seasonal model | seasonal difference |  |  |  |  |  |
+
+The chosen model should be the simplest candidate that captures the important structure and performs acceptably on future-like data. A lower in-sample criterion with poor residuals is a warning, not a victory.
+
+### Visual companions
+
+Run [diagnostics_visualizations.py](../../scripts/time_series/diagnostics_visualizations.py):
+
+![Detrending](../../assets/time_series/diagnostics/01_detrending.png)
+
+![Residual ACF](../../assets/time_series/diagnostics/02_residual_acf.png)
+
+![Residual variance](../../assets/time_series/diagnostics/03_residual_variance.png)
+
+![Residual nonlinearity](../../assets/time_series/diagnostics/04_residual_nonlinearity.png)
+
+![Residual distribution](../../assets/time_series/diagnostics/05_residual_distribution.png)
+
+![Ljung-Box shape](../../assets/time_series/diagnostics/06_ljung_box_shape.png)
+
+![Structural break](../../assets/time_series/diagnostics/07_structural_break.png)
+
+![Temporal validation split](../../assets/time_series/diagnostics/08_temporal_validation_split.png)

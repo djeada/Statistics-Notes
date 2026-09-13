@@ -48,3 +48,64 @@ with $Z_t$ as white noise.
 4. **Validate residuals** to confirm they resemble white noise.
 
 This approach blends explanatory modeling (regression) with time series dependence (ARMA), which is common in econometrics and forecasting.
+
+## Student guide: estimate the mean and the error process together
+
+Let
+
+$$
+y_t=x_t^\top\beta+n_t,
+\qquad
+\phi(B)n_t=\theta(B)\varepsilon_t.
+$$
+
+The regression part answers how the target changes with the predictors, conditional on the error process. The ARMA part explains serial structure left after the mean has been modeled.
+
+### Numerical example
+
+Suppose
+
+$$
+y_t=1+2x_t+n_t,
+\qquad
+n_t=0.7n_{t-1}+\varepsilon_t.
+$$
+
+For $x_t=3$ and $n_t=0.4$, the observation is
+
+$$
+y_t=1+2(3)+0.4=7.4.
+$$
+
+The regression mean is 7. If the previous error was $n_{t-1}=0.5$, the predictable part of the current error is $0.35$ and the innovation is $0.05$.
+
+### Why ordinary least squares can mislead
+
+Under suitable exogeneity, OLS can estimate $\beta$ consistently even when the errors are autocorrelated. The usual independent-error variance estimator, however, is generally wrong. Serial dependence also means that a model of the error can improve forecasts.
+
+A heteroskedasticity-and-autocorrelation robust covariance estimate may improve inference about $\beta$, but it does not by itself produce dynamic forecasts or model the serial error process. Regression with ARMA errors addresses a different objective.
+
+### GLS intuition
+
+If the error covariance matrix $\Sigma$ were known, generalized least squares would use
+
+$$
+\hat\beta_{\mathrm{GLS}}
+=(X^\top\Sigma^{-1}X)^{-1}X^\top\Sigma^{-1}y.
+$$
+
+The weights account for the fact that observations carry overlapping information. In practice, $\Sigma$ is estimated jointly or iteratively, so misspecification of the ARMA error matters.
+
+### Workflow
+
+1. Align response and predictors.
+2. Fit a simple mean model.
+3. Inspect residual ACF/PACF and squared residuals.
+4. Choose a parsimonious error structure.
+5. Estimate the combined model.
+6. Check standardized residuals.
+7. Backtest predictions using only information available at each origin.
+
+See [dynamic regression](dynamic_regression.md) for predictor availability and lagged effects.
+
+![Regression with dynamic errors](../../assets/time_series/dynamic_multivariate/01_dynamic_regression_errors.png)

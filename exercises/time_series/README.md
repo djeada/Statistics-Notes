@@ -21,3 +21,20 @@ The script writes figures to [assets/time_series/student/](../../assets/time_ser
 9. [Frequency and volatility](frequency_and_volatility.md) — spectra, aliasing, returns, and conditional variance.
 
 The first five sets build the univariate foundation. The final four apply the same ideas to external predictors, systems of series, latent states, and changing variance.
+
+## How to use the figures
+
+Each topic has a companion program in [scripts/time_series/README.md](../../scripts/time_series/README.md). Run the relevant program before answering the applied questions, then change one parameter and describe which part of the figure changes.
+
+| Practice set | Companion program |
+|---|---|
+| Foundations | [foundations_visualizations.py](../../scripts/time_series/foundations_visualizations.py) |
+| Dependence and identification | [dependence_visualizations.py](../../scripts/time_series/dependence_visualizations.py) |
+| ARIMA and seasonality | [arima_seasonality_visualizations.py](../../scripts/time_series/arima_seasonality_visualizations.py) |
+| Modeling and diagnostics | [diagnostics_visualizations.py](../../scripts/time_series/diagnostics_visualizations.py) |
+| Forecasting and evaluation | [forecasting_evaluation_visualizations.py](../../scripts/time_series/forecasting_evaluation_visualizations.py) |
+| Dynamic and multivariate models | [dynamic_multivariate_visualizations.py](../../scripts/time_series/dynamic_multivariate_visualizations.py) |
+| State space | [state_space_frequency_visualizations.py](../../scripts/time_series/state_space_frequency_visualizations.py) |
+| Frequency and volatility | [state_space_frequency_visualizations.py](../../scripts/time_series/state_space_frequency_visualizations.py), [financial_time_series_visualizations.py](../../scripts/time_series/financial_time_series_visualizations.py) |
+
+For a complete submission, include the equation used to generate a simulation, the numerical calculation, the figure, and an interpretation that states the assumptions and information available at the forecast origin.

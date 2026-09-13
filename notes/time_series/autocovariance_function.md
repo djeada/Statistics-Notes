@@ -202,3 +202,72 @@ c_k = \frac{1}{N} \sum_{t=1}^{N-k} (x_t - \bar{x})(x_{t+k} - \bar{x})
 $$
 
 This allows us to estimate the strength of the relationship between $X_t$ and $X_{t+k}$ at different lags $k$.
+
+## Student guide: units, lags, and finite samples
+
+The autocovariance at lag $h$ is
+
+$$
+\gamma(h)=\operatorname{Cov}(X_t,X_{t-h}).
+$$
+
+For a weakly stationary process, it depends on the lag and not on the absolute time. It has squared units. If temperature is measured in degrees Celsius, autocovariance has degrees Celsius squared; autocorrelation is dimensionless.
+
+### Sample calculation
+
+For $x=(1,2,4,3)$, $\bar x=2.5$ and $z=(-1.5,-0.5,1.5,0.5)$. Using denominator $n=4$:
+
+$$
+\hat\gamma(0)=1.25,
+\qquad
+\hat\gamma(1)=0.1875.
+$$
+
+The corresponding autocorrelation is
+
+$$
+\hat\rho(1)=0.1875/1.25=0.15.
+$$
+
+At larger lags there are fewer pairs. A common convention divides by $n$ for every lag; another divides by $n-h$. Neither should be called “the” sample autocovariance without stating the choice.
+
+### AR(1) covariance recursion
+
+For
+
+$$
+X_t=\phi X_{t-1}+\varepsilon_t,
+\qquad |\phi|<1,
+$$
+
+the variance is
+
+$$
+\gamma(0)=\frac{\sigma_\varepsilon^2}{1-\phi^2},
+$$
+
+and
+
+$$
+\gamma(h)=\phi^h\gamma(0),\qquad h\ge0.
+$$
+
+With $\phi=0.7$ and $\sigma_\varepsilon^2=1$:
+
+$$
+\gamma(0)=1.9608,\quad\gamma(1)=1.3725,\quad\gamma(2)=0.9608.
+$$
+
+The autocovariance decays in the same geometric pattern as the ACF but retains the variance scale.
+
+### Cross-covariance caution
+
+The cross-covariance $\gamma_{XY}(h)$ depends on which series is shifted. A peak at positive $h$ does not automatically mean $X$ causes $Y$; common trend, seasonality, and release timing can create a lead-lag pattern.
+
+### Visual companion
+
+Run [dependence_visualizations.py](../../scripts/time_series/dependence_visualizations.py):
+
+![Autocovariance geometry](../../assets/time_series/dependence/01_autocovariance_geometry.png)
+
+![AR(1) autocovariance](../../assets/time_series/student/05_autocovariance_ar1.png)

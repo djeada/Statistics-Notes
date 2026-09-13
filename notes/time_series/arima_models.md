@@ -407,3 +407,169 @@ IV. Forecast Future Values Using the Fitted Model:
 - The **seasonal component** is depicted in green, illustrating the recurring patterns that occur periodically within the data.  
 - The **differenced series** is represented in purple, demonstrating how differencing can transform the data to remove trends and achieve stationarity.  
 - The **forecast versus actual values** plot combines the original series in blue and the forecasted values in red. Confidence intervals are shaded in black to indicate the forecast's uncertainty.  
+
+## Student guide: from an integrated series to an evaluated forecast
+
+The letters in ARIMA$(p,d,q)$ describe a sequence of operations:
+
+- $d$ differences are applied to address integration or stochastic trend;
+- an AR($p$) structure models dependence in the transformed series;
+- an MA($q$) structure models the effect of recent innovations.
+
+The notation is compact, but the modeling decisions are not automatic. A low ACF at lag 1 after differencing is not enough to choose an order, and an information criterion is not a substitute for residual and forecast checks.
+
+### The operator equation
+
+For a non-seasonal ARIMA model,
+
+$$
+\phi(B)(1-B)^d y_t=c+\theta(B)\varepsilon_t.
+$$
+
+For example, an ARIMA$(1,1,1)$ can be written
+
+$$
+(1-\phi B)(1-B)y_t
+=c+(1+\theta B)\varepsilon_t.
+$$
+
+If $y=(120,123,126,130)$, then
+
+$$
+(1-B)y=(3,3,4).
+$$
+
+The ARMA structure is applied to these changes, not automatically to the original levels.
+
+### Seasonal extension
+
+For seasonal period $s$,
+
+$$
+\Phi(B^s)\phi(B)(1-B)^d(1-B^s)^D y_t
+=c+\Theta(B^s)\theta(B)\varepsilon_t.
+$$
+
+With $s=12$, one seasonal difference compares the observation with the same month in the previous year:
+
+$$
+(1-B^{12})y_t=y_t-y_{t-12}.
+$$
+
+Ordinary and seasonal differences can interact. In a finite sample, each difference removes observations, so a large $d+D$ leaves fewer values for estimation.
+
+### Choosing the differencing order
+
+Use several kinds of evidence:
+
+1. a level plot and rolling mean/variance;
+2. the level ACF;
+3. domain knowledge about a trend or accumulation mechanism;
+4. unit-root tests as supporting evidence;
+5. the behavior of the differenced series;
+6. residual diagnostics after fitting.
+
+Under-differencing leaves a slowly decaying ACF and unstable forecasts. Over-differencing can create a strong negative lag-1 autocorrelation and make the series noisier than necessary.
+
+For a random walk,
+
+$$
+y_t=y_{t-1}+\varepsilon_t,
+$$
+
+one difference gives $\nabla y_t=\varepsilon_t$. Differencing again gives $\varepsilon_t-\varepsilon_{t-1}$, which is an MA(1)-like process with negative lag dependence. This is why reducing visual trend does not prove that more differencing is better.
+
+### Identification after differencing
+
+After transformation:
+
+- an AR($p$) often has an ACF that tails off and a PACF that cuts off near $p$;
+- an MA($q$) often has an ACF that cuts off near $q$ and a PACF that tails off;
+- an ARMA process usually has both functions tailing off.
+
+These are heuristics. Finite samples, seasonal terms, structural breaks, near-unit roots, and outliers can obscure the patterns. Fit several parsimonious candidates rather than mechanically reading one plot.
+
+### Numerical candidate comparison
+
+Suppose two models are fitted to the same transformed observations:
+
+| model | log likelihood | parameters |
+|---|---:|---:|
+| ARIMA$(1,1,0)$ | $-120$ | 3 |
+| ARIMA$(1,1,1)$ | $-116$ | 4 |
+
+Then
+
+$$
+\operatorname{AIC}_1=240+6=246,
+\qquad
+\operatorname{AIC}_2=232+8=240.
+$$
+
+The second candidate has lower AIC, but still needs residual checks and temporal forecast evaluation. If it leaves a seasonal residual spike, add or model seasonality rather than accepting it because of the criterion.
+
+### Forecasting from differences
+
+When the fitted model is on differences, forecasts must be transformed back to levels. If the forecasted changes are $\hat d_{T+1}=1.2$ and $\hat d_{T+2}=0.8$ with $y_T=100$, then
+
+$$
+\hat y_{T+1}=101.2,
+\qquad
+\hat y_{T+2}=102.0.
+$$
+
+The level forecast accumulates uncertainty from every forecasted change. Seasonal differencing requires restoring the relevant seasonal values as well.
+
+### Seasonal model diagnostics
+
+For monthly data inspect:
+
+- residual ACF at 12, 24, and nearby lags;
+- seasonal-naive benchmark errors;
+- whether the seasonal amplitude changes with level;
+- whether holiday or calendar effects are missing;
+- forecast performance at horizons 1, 3, 6, and 12.
+
+An apparent seasonal AR or MA term can be a proxy for omitted deterministic calendar structure. Include known calendar variables when they describe the mechanism more directly.
+
+### Common failure modes
+
+- Differencing because a test p-value is above a threshold without inspecting the series.
+- Fitting a high-order model to compensate for a missing seasonal term.
+- Comparing likelihood criteria across models fit to different transformed responses.
+- Using a future seasonal index or full-sample decomposition during backtesting.
+- Reporting a level forecast without explaining how differenced forecasts were integrated.
+- Treating an ARIMA label as a causal or structural model.
+
+### Workflow
+
+1. Plot levels, logs, and relevant seasonal views.
+2. Decide whether the target is a level, change, growth rate, or log level.
+3. Apply the smallest justified ordinary and seasonal differences.
+4. Inspect ACF/PACF and propose a small candidate set.
+5. Estimate candidates with consistent initialization and data.
+6. Check residual autocorrelation, variance, outliers, and seasonal structure.
+7. Compare AIC/AICc/BIC within the candidate set.
+8. Backtest level forecasts against naive and seasonal-naive baselines.
+9. Examine interval coverage and errors by horizon.
+10. Document all transformations and the inverse transformation used for reporting.
+
+### Visual companions
+
+Run [arima_seasonality_visualizations.py](../../scripts/time_series/arima_seasonality_visualizations.py):
+
+![Differencing orders](../../assets/time_series/arima_seasonality/01_differencing_orders.png)
+
+![Additive and multiplicative seasonality](../../assets/time_series/arima_seasonality/02_additive_multiplicative_seasonality.png)
+
+![Additive decomposition](../../assets/time_series/arima_seasonality/03_additive_decomposition.png)
+
+![ACF before and after differencing](../../assets/time_series/arima_seasonality/04_acf_before_after_differencing.png)
+
+![Over-differencing](../../assets/time_series/arima_seasonality/05_over_differencing.png)
+
+![ARIMA level forecast](../../assets/time_series/arima_seasonality/06_arima_level_forecast.png)
+
+![Seasonal naive forecast](../../assets/time_series/arima_seasonality/07_seasonal_naive_forecast.png)
+
+![Model order selection](../../assets/time_series/arima_seasonality/08_model_order_selection.png)

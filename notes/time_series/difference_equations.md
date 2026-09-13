@@ -215,3 +215,65 @@ $$
 $$
 
 Once the roots are found, the general solution is expressed as a sum of exponentials, analogous to the powers of $\lambda$ in the difference equation solution.
+
+## Student guide: read a recursion through its roots
+
+For a homogeneous AR(2)-style recursion
+
+$$
+x_t=\phi_1x_{t-1}+\phi_2x_{t-2},
+$$
+
+try a solution $x_t=r^t$. Substitution gives
+
+$$
+r^2-\phi_1r-\phi_2=0.
+$$
+
+The roots determine whether deviations decay, oscillate, or grow. If both roots have modulus below 1, the homogeneous part decays. A repeated or complex root can produce a slowly decaying or oscillating response even when the process is stationary.
+
+### Numerical first-order example
+
+For
+
+$$
+x_t=0.7x_{t-1}+2,\qquad x_0=10,
+$$
+
+the equilibrium is $x^\star=2/(1-0.7)=6.\overline6$. The first values are
+
+$$
+x_1=9,\qquad x_2=8.3,\qquad x_3=7.81.
+$$
+
+The deviations from equilibrium are multiplied by $0.7$ each step:
+
+$$
+x_t-x^\star=0.7^t(x_0-x^\star).
+$$
+
+The same algebra explains why an AR coefficient near 1 creates persistent forecasts and why a coefficient above 1 is unstable.
+
+### Forced recursions and shocks
+
+With shocks,
+
+$$
+x_t=c+\phi x_{t-1}+\varepsilon_t,
+$$
+
+the solution contains:
+
+1. a transient term determined by the initial condition;
+2. a long-run equilibrium when it exists;
+3. a weighted sum of past shocks.
+
+For $|\phi|<1$,
+
+$$
+x_t=\frac{c}{1-\phi}+\sum_{j=0}^{\infty}\phi^j\varepsilon_{t-j}
+$$
+
+after the initial transient has decayed. Difference equations therefore connect directly to moving-average representations and forecast uncertainty.
+
+![Stable and unstable recursions](../../assets/time_series/foundations/02_difference_equation_stability.png)

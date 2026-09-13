@@ -16,3 +16,30 @@ Read [time-series modeling](../../notes/time_series/time_series_modeling.md), [r
 - The two AIC values are 206 and 204.
 - The conditional mean in question 4 is $0.4+0.6(3)-0.2(2)=1.8$, and the realized value is $2.3$ after adding the shock.
 - The Ljung-Box result suggests remaining serial dependence at one or more tested lags; it does not identify the correct replacement model by itself.
+
+## Applied practice
+
+9. Run [diagnostics_visualizations.py](../../scripts/time_series/diagnostics_visualizations.py). For each figure, identify the model assumption it challenges.
+10. Simulate residuals with a mean shift, variance shift, nonlinear dependence, and heavy tails. Which diagnostic reveals each feature most clearly?
+11. Calculate $Q(10)$ from a supplied residual ACF and explain the role of the effective sample size.
+12. Fit a model before and after a suspected structural break. Compare parameter estimates, residuals, and temporal backtests.
+13. Build a candidate table with transformation, parameter count, AIC, residual lag-1 ACF, Ljung-Box p-value, MAE, and interval coverage.
+14. Explain why selecting the candidate with the smallest in-sample SSE can favor an overfit model.
+15. Use a time-respecting train/validation/test split and document which choices are made in each segment.
+
+## Reflection
+
+State what would make you reject a fitted model even if its information criterion is lowest. Include at least one residual reason and one forecasting reason.
+
+## Extension tasks
+
+16. Compute AICc for $n=40$, $k=5$, and AIC $=120$.
+17. Simulate a residual series with a break in variance and compare raw, squared, and rolling-window plots.
+18. Calculate the Ljung-Box statistic through lag 3 for supplied ACF values $(0.2,0.1,0.05)$ and $n=100$.
+19. Compare a Gaussian likelihood with a heavy-tailed innovation assumption when the residual histogram has extreme observations.
+20. Explain why a model with white residuals can still have poor forecast performance after a structural break.
+21. Write a reproducible model-selection log that records every decision made before the final test period.
+
+## Submission check
+
+Include one table of candidates, one residual figure, one forecast-error figure, and a paragraph distinguishing in-sample fit from future performance.
