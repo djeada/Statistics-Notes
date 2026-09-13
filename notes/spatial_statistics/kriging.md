@@ -17,6 +17,7 @@ The result depends on:
 2. the covariance or variogram model;
 3. the geometry of the sample locations;
 4. the prediction target.
+
 ## Learning objectives
 
 After this chapter, you should be able to:
