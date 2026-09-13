@@ -76,11 +76,11 @@ For a weakly stationary series with mean $\mu$ and autocovariance $\gamma(h)$:
 
 - $E(\bar{X}_n)=\mu$.
 - The exact variance of the sample mean is
-  $$
-  \text{Var}(\bar{X}_n)
-  =\frac{1}{n}\sum_{h=-(n-1)}^{n-1}
-  \left(1-\frac{|h|}{n}\right)\gamma(h).
-  $$
+
+$$
+\text{Var}(\bar{X}_n) =\frac{1}{n}\sum_{h=-(n-1)}^{n-1} \left(1-\frac{|h|}{n}\right)\gamma(h)
+$$
+
 - Under suitable weak-dependence conditions, $\bar{X}_n$ is approximately normal for large $n$.
 
 A practical confidence interval therefore needs an estimate of the variance of $\bar X_n$. Using a truncated, weighted autocovariance estimate with bandwidth $m$ gives
@@ -104,8 +104,7 @@ $$
 For a fixed set of lags in a stationary linear process, the vector of sample autocorrelations also has an approximate large-sample normal distribution:
 
 $$
-\hat{\rho}
-=
+\hat{\rho} =
 (\hat{\rho}(1),\dots,\hat{\rho}(k))^\top
 \approx
 \mathcal{N}\left(\rho,\frac{W}{n}\right).
@@ -114,8 +113,7 @@ $$
 A Bartlett-type expression for the entries of the asymptotic covariance matrix is
 
 $$
-W_{ij}
-=
+W_{ij} =
 \sum_{m=1}^{\infty}
 \{\rho(m+i)+\rho(m-i)-2\rho(i)\rho(m)\}
 \{\rho(m+j)+\rho(m-j)-2\rho(j)\rho(m)\}.
