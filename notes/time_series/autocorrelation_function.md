@@ -1,5 +1,9 @@
 # Autocorrelation Function (ACF) and Partial Autocorrelation Function (PACF)
 
+The autocorrelation function measures the unit-free linear association between a time series and lagged versions of itself. The partial autocorrelation function asks a narrower question: how much direct linear relationship remains at a given lag after the intervening lags have been accounted for.
+
+Together, ACF and PACF reveal persistence and help propose AR and MA orders, but their sample patterns are noisy and can also be distorted by trend, seasonality, or structural change. They are most useful as identification tools when interpreted with stationarity, sampling uncertainty, residual diagnostics, and fitted-model comparisons.
+
 ## Worked calculation: AR(1) dependence
 
 For a stationary AR(1),
