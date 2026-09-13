@@ -362,3 +362,91 @@ By performing STL decomposition, we can separately analyze the trend, seasonal, 
 
 - The plot description displays the residuals, showing the **remaining variations** in the data after removing the trend and seasonal components.
 - The residual component reflects **random noise**. Ideally, it shows no discernible pattern, suggesting that the trend and seasonality have been effectively removed, with residuals randomly distributed around zero, confirming that the decomposition has captured the main patterns in the data.
+
+## Student guide: choose the seasonal representation before fitting
+
+Seasonality is a repeating pattern tied to a known period $s$. The pattern may be represented as:
+
+- deterministic seasonal indicators;
+- Fourier terms;
+- seasonal differencing;
+- seasonal AR or MA terms;
+- a seasonal state in an exponential-smoothing or state-space model;
+- a seasonal-naive forecast.
+
+These choices answer slightly different questions. A seasonal index describes a repeating mean pattern; a seasonal AR term describes dependence after the mean pattern is accounted for.
+
+### Additive versus multiplicative numbers
+
+Suppose the trend level is 100 and the seasonal effect is $+10$. An additive observation before noise is $110$. If the seasonal factor is $1.10$, a multiplicative observation is also $110$ at level 100.
+
+At level 200:
+
+$$
+\text{additive}=200+10=210,
+\qquad
+\text{multiplicative}=200(1.10)=220.
+$$
+
+If the seasonal amplitude grows proportionally with level, a log transformation often makes the pattern closer to additive:
+
+$$
+\log(T_tS_t)=\log T_t+\log S_t.
+$$
+
+### Seasonal differencing
+
+For monthly observations:
+
+$$
+\nabla_{12}y_t=y_t-y_{t-12}.
+$$
+
+If last year's January value is 92 and this year's January value is 100, the seasonal change is 8. Seasonal differencing removes a stable seasonal level but does not guarantee that trend, variance changes, or calendar effects have been handled.
+
+Combined differencing is
+
+$$
+(1-B)(1-B^{12})y_t
+=y_t-y_{t-1}-y_{t-12}+y_{t-13}.
+$$
+
+Each differencing operation reduces the sample and can introduce moving-average dependence. Use the smallest order that leaves a defensible residual process.
+
+### Seasonal indices
+
+For an additive decomposition, seasonal indices are often normalized to sum to zero:
+
+$$
+\sum_{j=1}^{s}\hat S_j=0.
+$$
+
+For a multiplicative decomposition, the factors are often normalized to average one:
+
+$$
+\frac1s\sum_{j=1}^{s}\hat S_j=1.
+$$
+
+Normalization is an identification convention between the level and seasonal component. It does not alter fitted values when applied consistently.
+
+### Trend smoothing and boundary effects
+
+A centered moving average uses observations on both sides of $t$. This is useful for historical decomposition but unavailable at the end of a live series. A trailing smoother can be used in forecasting features, but its phase and lag differ.
+
+At a boundary, a software routine may pad, shorten, reflect, or return missing values. Inspect the implementation before interpreting the first and last seasonal cycles.
+
+### Seasonal validation
+
+Use seasonal origins and seasonal-naive baselines. For a period-12 series, report errors at horizons 1, 3, 6, and 12. A model can win at one month and lose at twelve months because it extrapolates the seasonal pattern differently.
+
+### Visual companions
+
+Run [arima_seasonality_visualizations.py](../../scripts/time_series/arima_seasonality_visualizations.py):
+
+![Additive and multiplicative seasonality](../../assets/time_series/arima_seasonality/02_additive_multiplicative_seasonality.png)
+
+![Additive decomposition](../../assets/time_series/arima_seasonality/03_additive_decomposition.png)
+
+![Seasonal differencing](../../assets/time_series/arima_seasonality/01_differencing_orders.png)
+
+![Seasonal naive forecast](../../assets/time_series/arima_seasonality/07_seasonal_naive_forecast.png)

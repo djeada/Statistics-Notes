@@ -17,3 +17,30 @@ Read [the backshift operator](../../notes/time_series/backward_shift_operator.md
 - The seasonal difference is $100-92=8$, written $(1-B^{12})y_t$.
 - $(1-B)^2y_t=y_t-2y_{t-1}+y_{t-2}=4$ for the supplied values.
 - The seasonal indices sum to zero, and the deterministic value at $t=5$ is $60-3=57$.
+
+## Applied practice
+
+9. Run [arima_seasonality_visualizations.py](../../scripts/time_series/arima_seasonality_visualizations.py) and explain which figures show under-differencing and over-differencing.
+10. Simulate additive and multiplicative seasonality with the same period. Decide whether a log transform is justified from the changing amplitude.
+11. Fit a seasonal-naive benchmark before fitting a SARIMA candidate. Report errors at horizons 1, 3, 6, and 12.
+12. Use a period-12 series to compute both $(1-B)y_t$ and $(1-B^{12})y_t$. Explain which feature each operation targets.
+13. Show algebraically that $(1-B)(1-B^{12})y_t$ contains four terms. Verify the result numerically for a short vector.
+14. Compare candidate orders using AIC and residual ACF. Explain why models fit to different transformed responses should not be compared blindly.
+15. Integrate a sequence of forecasted changes back to levels. Include an interval and explain how uncertainty accumulates.
+
+## Reflection
+
+Write a short model card: target scale, ordinary difference order, seasonal period and difference order, candidate orders, baseline, residual result, and forecast-evaluation design.
+
+## Extension tasks
+
+16. Show that a random walk needs one ordinary difference but a seasonal random walk needs $(1-B^s)$.
+17. Generate a series with a deterministic trend and compare detrending with first differencing.
+18. Add an outlier before estimating seasonal indices. Explain how it changes the average seasonal effect.
+19. Compare additive decomposition, multiplicative decomposition, and log-additive decomposition on a growing seasonal series.
+20. Use a validation period to choose between a seasonal-naive forecast and a SARIMA candidate. Leave a final test period untouched.
+21. Explain how the inverse transformation changes the interpretation of a forecast interval.
+
+## Submission check
+
+Report the exact operators, sample loss from differencing, seasonal period, model-selection evidence, and whether the residuals resemble white noise.

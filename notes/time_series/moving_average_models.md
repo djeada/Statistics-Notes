@@ -285,3 +285,98 @@ The EMA is valuable for capturing more recent trends and is often used for short
 - The blue line represents the mock stock prices, exhibiting a more dynamic and volatile behavior, similar to real-world stock market trends.
 - The orange line is the 20-day Simple Moving Average (SMA). It smooths out the fluctuations in the stock prices, providing a clearer view of the long-term trend.
 - The green line shows the 20-day Exponential Moving Average (EMA), which reacts more quickly to recent price changes, thus capturing short-term movements more effectively.
+
+## Student guide: shock responses and identification
+
+An MA($q$) model describes the current value as a finite weighted sum of current and past innovations:
+
+$$
+y_t=\mu+\varepsilon_t+\theta_1\varepsilon_{t-1}
+\cdots+\theta_q\varepsilon_{t-q}.
+$$
+
+The innovations are new shocks, not observed lagged values. This is the central difference between MA models and regression-style AR estimation.
+
+### MA(1) numerical moments
+
+Let
+
+$$
+y_t=\varepsilon_t+0.5\varepsilon_{t-1},
+\qquad
+\operatorname{Var}(\varepsilon_t)=1.
+$$
+
+Then
+
+$$
+\gamma(0)=1+0.5^2=1.25,
+\qquad
+\gamma(1)=0.5,
+\qquad
+\gamma(h)=0\quad(h>1).
+$$
+
+Therefore
+
+$$
+\rho(1)=0.5/1.25=0.4.
+$$
+
+If a single shock $\varepsilon_t=2$ arrives and all other recent shocks are zero, its effect is 2 at time $t$, 1 at time $t+1$, and zero at $t+2$. The finite duration is the source of the theoretical ACF cutoff.
+
+### MA(2) response
+
+For
+
+$$
+y_t=\varepsilon_t+0.7\varepsilon_{t-1}-0.35\varepsilon_{t-2},
+$$
+
+a shock of size 1 produces responses
+
+$$
+1,\quad0.7,\quad-0.35,\quad0,\ldots
+$$
+
+The response can alternate in sign. The ACF cutoff occurs after lag 2, although a finite-sample estimate may display small later values.
+
+### Estimation
+
+Because $\varepsilon_{t-1}$ is unobserved, ordinary least squares on past residuals is not the exact MA estimation problem. Common approaches use:
+
+- innovations algorithms;
+- conditional likelihood;
+- exact Gaussian likelihood;
+- state-space recursions;
+- Hannan-Rissanen starting values.
+
+The initial innovation treatment can matter for a short series. Record the method and software convention when reproducing estimates.
+
+### Invertibility and equivalence
+
+An MA(1) with parameter $\theta$ can have the same second-order autocovariances as another parameter related by a reciprocal transformation. Invertibility chooses the representation whose inverse filter decays. For the convention $1+\theta B$, the condition is $|\theta|<1$.
+
+This is an identification convention, not a claim that the data can reveal the original shock parameter without assumptions.
+
+### MA versus moving-average smoother
+
+Keep three objects distinct:
+
+| object | what is averaged |
+|---|---|
+| MA($q$) model | current and past unobserved innovations |
+| rolling moving average | observed values in a fixed window |
+| exponential smoother | recursively updated level state |
+
+A rolling mean can be calculated directly from data. An MA model requires estimating the latent shock process.
+
+### Visual companions
+
+Run [dependence_visualizations.py](../../scripts/time_series/dependence_visualizations.py):
+
+![MA shock duration](../../assets/time_series/dependence/04_ma_shock_duration.png)
+
+![Invertibility](../../assets/time_series/dependence/06_invertibility.png)
+
+![AR and MA identification](../../assets/time_series/student/06_ar_ma_identification.png)

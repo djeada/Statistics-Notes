@@ -580,3 +580,150 @@ When evaluating the accuracy and performance of time series forecasting models l
 | **Akaike Information Criterion (AIC)**| Used for model selection, the AIC balances the goodness-of-fit of the model with its complexity. Lower AIC values indicate better models, but it penalizes models with more parameters.| $AIC = 2k - 2\ln(L)$                                                                            | AIC helps to compare models, taking both the fit and complexity into account, favoring models that explain the data well without overfitting.                                                                  |
 | **Bayesian Information Criterion (BIC)**| Similar to AIC but includes a stronger penalty for models with more parameters, making it more suitable when the number of data points is small.                                      | $BIC = k \ln(n) - 2 \ln(L)$                                                                      | BIC penalizes model complexity more than AIC, making it more conservative and often more appropriate when working with smaller datasets.                                                                        |
 | **Ljung-Box Q-test**                  | A statistical test that checks whether the residuals from a time series forecasting model exhibit any remaining autocorrelation. If the residuals are white noise, the model is adequate.| N/A                                                                                                  | If the test detects significant autocorrelation in the residuals, it suggests the model has not fully captured the time series' structure and may need improvement.                                             |
+
+## Student guide: construct, communicate, and test a forecast
+
+A forecast is a conditional statement:
+
+$$
+\hat y_{T+h|T}=E(y_{T+h}\mid\mathcal F_T)
+$$
+
+under a squared-error objective. The conditioning set $\mathcal F_T$ is as important as the model family. A forecast made using a realized future predictor is conditional on information unavailable in the intended deployment.
+
+### Baselines first
+
+For a level series, the naive forecast is
+
+$$
+\hat y_{T+h|T}=y_T.
+$$
+
+For seasonal period $s$, the seasonal-naive rule reuses the latest observation from the same season. A drift forecast extrapolates the average change. Report at least one baseline before presenting ARIMA, state-space, or machine-learning results.
+
+### Simple exponential smoothing
+
+For a roughly level series:
+
+$$
+\ell_t=\alpha y_t+(1-\alpha)\ell_{t-1},
+\qquad
+\hat y_{t+h|t}=\ell_t.
+$$
+
+If $\ell_{t-1}=100$, $y_t=110$, and $\alpha=0.3$:
+
+$$
+\ell_t=0.3(110)+0.7(100)=103.
+$$
+
+The next forecast is 103 for every horizon under the level-only model. Increasing $\alpha$ reacts more strongly to recent observations but can chase noise.
+
+### Holt trend and seasonal extensions
+
+Holt's linear trend keeps a level and slope:
+
+$$
+\ell_t=\alpha y_t+(1-\alpha)(\ell_{t-1}+b_{t-1}),
+$$
+
+$$
+b_t=\beta(\ell_t-\ell_{t-1})+(1-\beta)b_{t-1},
+$$
+
+with
+
+$$
+\hat y_{t+h|t}=\ell_t+hb_t.
+$$
+
+Holt-Winters adds a seasonal state. Additive seasonality is suitable when the seasonal amplitude is roughly constant; multiplicative seasonality is suitable when the amplitude scales with the level.
+
+### AR forecast example
+
+For a centered AR(1):
+
+$$
+y_t=0.8y_{t-1}+\varepsilon_t,
+\qquad y_T=5,
+$$
+
+the one-step and five-step forecasts are
+
+$$
+\hat y_{T+1|T}=4,
+\qquad
+\hat y_{T+5|T}=0.8^5(5)=1.6384.
+$$
+
+With innovation variance 1, the two-step variance is
+
+$$
+1+0.8^2=1.64.
+$$
+
+An approximate 95% interval around the two-step mean $3.2$ is
+
+$$
+3.2\pm1.96\sqrt{1.64}.
+$$
+
+The point forecast shrinks toward the mean while the interval widens.
+
+### Forecast transformations
+
+If a model forecasts $\log y_t$, back-transforming $\exp(\hat{\log y})$ gives a median-like quantity under lognormal assumptions, not always the mean on the original scale. Jensen's inequality matters:
+
+$$
+E[\exp(Z)]\ne\exp(E[Z]).
+$$
+
+For multiplicative errors, choose a transformation and bias correction consistent with the reporting target. State whether the interval is on the transformed or original scale.
+
+### Forecast combination
+
+If two forecasts are unbiased but have different error covariance, a weighted combination can improve accuracy:
+
+$$
+\hat y=w\hat y^{(1)}+(1-w)\hat y^{(2)}.
+$$
+
+The weight should be selected using temporal validation. A combination that uses the final test period to choose $w$ is leakage.
+
+### Forecast uncertainty
+
+Uncertainty comes from:
+
+- future shocks;
+- parameter estimation;
+- future predictor values;
+- transformation bias;
+- model uncertainty;
+- breaks or regime changes.
+
+Classical intervals often include only some of these. Evaluate empirical coverage and width on temporal backtests, and state which uncertainty sources were included.
+
+### Communication
+
+A useful forecast report includes:
+
+1. forecast origin and timestamp;
+2. horizon and units;
+3. point forecast;
+4. interval level and construction;
+5. baseline comparison;
+6. recent error history;
+7. known future events or predictors;
+8. limitations and update schedule.
+
+### Visual companions
+
+Run [forecasting_evaluation_visualizations.py](../../scripts/time_series/forecasting_evaluation_visualizations.py):
+
+![Baseline forecasts](../../assets/time_series/forecasting/01_baseline_forecasts.png)
+
+![Exponential smoothing](../../assets/time_series/forecasting/06_exponential_smoothing.png)
+
+![Forecast errors by horizon](../../assets/time_series/forecasting/05_error_by_horizon.png)
+
+![Forecast intervals](../../assets/time_series/student/14_forecasting_intervals.png)

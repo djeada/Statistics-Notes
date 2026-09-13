@@ -468,3 +468,137 @@ Using both tests together helps resolve ambiguous cases:
 | Reject $H_0$ | Fail to reject $H_0$ | Series is stationary |
 | Fail to reject $H_0$ | Reject $H_0$ | Series is non-stationary |
 | Both reject | Both reject | Series may be difference-stationary or trend-stationary; further analysis needed |
+
+## Student guide: stationarity is a modeling condition
+
+Stationarity is not a synonym for “the plot looks flat.” It describes which features of the joint distribution remain unchanged when the time index is shifted. The version needed depends on the model and question.
+
+### Strict and weak stationarity
+
+A process is strictly stationary if, for every collection of times and every shift $h$,
+
+$$
+(X_{t_1},\ldots,X_{t_k})
+\overset{d}{=}
+(X_{t_1+h},\ldots,X_{t_k+h}).
+$$
+
+Weak stationarity requires only:
+
+$$
+E(X_t)=\mu,
+\qquad
+\operatorname{Var}(X_t)=\gamma(0),
+\qquad
+\operatorname{Cov}(X_t,X_{t-h})=\gamma(h),
+$$
+
+with no dependence on $t$. Many ARMA calculations use weak stationarity. Gaussian processes with constant mean and covariance are strictly stationary as well, but non-Gaussian weakly stationary processes need not be strictly stationary.
+
+### Numerical AR(1) example
+
+Consider
+
+$$
+X_t=1+0.8X_{t-1}+\varepsilon_t,
+\qquad
+\operatorname{Var}(\varepsilon_t)=1.
+$$
+
+The stationary mean is
+
+$$
+\mu=\frac{1}{1-0.8}=5,
+$$
+
+and the stationary variance is
+
+$$
+\gamma(0)=\frac{1}{1-0.8^2}=2.7778.
+$$
+
+The lag-1 covariance is
+
+$$
+\gamma(1)=0.8\gamma(0)=2.2222,
+$$
+
+and the lag-1 correlation is $0.8$. The process can move substantially from one observation to the next while its distribution remains stable over time.
+
+If $\phi=1$, the mean formula divides by zero and the variance does not settle. This is the unit-root boundary. If $|\phi|>1$, deviations grow and the process is explosive.
+
+### Deterministic trend versus stochastic trend
+
+For
+
+$$
+y_t=10+0.2t+\varepsilon_t,
+$$
+
+subtracting the deterministic trend can produce a stationary remainder. For a random walk,
+
+$$
+y_t=y_{t-1}+\varepsilon_t,
+$$
+
+the uncertainty accumulates permanently. Both can look like an upward trend in one realization, but their forecasts and variance behavior differ.
+
+Use domain knowledge, repeated paths, differencing behavior, and diagnostics together. A test cannot determine the scientific mechanism by itself.
+
+### ADF and KPSS are complementary
+
+The Augmented Dickey-Fuller test has a unit-root null. The KPSS test usually has a stationarity null. Their p-values are not interchangeable:
+
+| ADF | KPSS | reading |
+|---|---|---|
+| reject unit root | fail to reject stationarity | evidence for stationarity |
+| fail to reject unit root | reject stationarity | evidence against stationarity |
+| both reject | possible trend stationarity, break, or misspecification | inspect plots and specifications |
+| neither reject | low power or insufficient information | gather more evidence |
+
+The outcome depends on whether a constant or trend is included, lag selection, sample length, and structural breaks. Tests should support a modeling decision rather than replace it.
+
+### Transformations
+
+Common transformations have different meanings:
+
+- log or Box-Cox: stabilize a variance that grows with level;
+- detrending: remove a specified deterministic mean structure;
+- first difference: model changes from one period to the next;
+- seasonal difference: compare observations one seasonal cycle apart;
+- seasonal adjustment: remove a repeating component before modeling residual dynamics.
+
+After transforming, inspect the transformed series. The goal is not to erase every pattern; it is to create a series whose remaining structure is appropriate for the proposed model.
+
+### Local stationarity
+
+Real data can be approximately stationary over a moving window and non-stationary globally. Examine rolling:
+
+$$
+\hat\mu_t=\frac1w\sum_{j=0}^{w-1}y_{t-j},
+\qquad
+\hat\sigma_t^2=\frac1{w-1}\sum_{j=0}^{w-1}(y_{t-j}-\hat\mu_t)^2.
+$$
+
+The window size $w$ is a resolution choice. A short window reacts quickly but is noisy; a long window smooths changes and can conceal a break.
+
+### Stationarity workflow
+
+1. Plot the level and relevant transforms.
+2. Inspect rolling moments and missingness.
+3. Check ACF behavior and seasonal lags.
+4. State the deterministic terms used in any test.
+5. Use ADF/KPSS or other tests as evidence, not as a single decision rule.
+6. Fit a simple candidate after transformation.
+7. Diagnose residuals and forecast behavior.
+8. Reassess whether the transformation matches the deployment question.
+
+### Visual companions
+
+Run [foundations_visualizations.py](../../scripts/time_series/foundations_visualizations.py) and [diagnostics_visualizations.py](../../scripts/time_series/diagnostics_visualizations.py):
+
+![Stationarity cases](../../assets/time_series/foundations/06_stationarity_cases.png)
+
+![Moments changing over time](../../assets/time_series/foundations/04_moments_change_over_time.png)
+
+![Detrending](../../assets/time_series/diagnostics/01_detrending.png)

@@ -324,3 +324,104 @@ $$
 \qquad
 \boxed{\boldsymbol{\phi}=R^{-1}\mathbf{r}}.
 $$
+
+## Student guide: solve the equations and check the result
+
+For a zero-mean stationary AR($p$), the autocovariances satisfy
+
+$$
+\gamma(k)=\phi_1\gamma(k-1)+\cdots+\phi_p\gamma(k-p)
+\quad(k\ge p),
+$$
+
+with boundary equations for the first $p$ lags. Dividing by $\gamma(0)$ gives equations for autocorrelations.
+
+### AR(2) by hand
+
+For $\phi_1=0.6$ and $\phi_2=-0.2$:
+
+$$
+\rho_1=\phi_1+\phi_2\rho_1,
+$$
+
+so
+
+$$
+\rho_1=\frac{0.6}{1.2}=0.5.
+$$
+
+The next equation is
+
+$$
+\rho_2=\phi_1\rho_1+\phi_2
+=0.6(0.5)-0.2=0.1.
+$$
+
+For lag 3:
+
+$$
+\rho_3=0.6(0.1)-0.2(0.5)=-0.04.
+$$
+
+The recursion then continues. A sample ACF will not equal these values exactly, but the pattern should be compatible with the fitted AR coefficients.
+
+### Matrix form
+
+For AR(2), define
+
+$$
+R=
+\begin{bmatrix}
+1&\rho_1\\
+\rho_1&1
+\end{bmatrix},
+\qquad
+r=
+\begin{bmatrix}
+\rho_1\\
+\rho_2
+\end{bmatrix}.
+$$
+
+Then the coefficient vector solves
+
+$$
+R
+\begin{bmatrix}\phi_1\\\phi_2\end{bmatrix}
+=
+\begin{bmatrix}\rho_1\\\rho_2\end{bmatrix}.
+$$
+
+Using estimated autocorrelations makes the solution sensitive to sample noise and to the selected order. A high order can make $R$ ill-conditioned.
+
+### Innovation variance
+
+After estimating $\boldsymbol\phi$, the innovation variance can be related to the zero-lag variance:
+
+$$
+\sigma_\varepsilon^2
+=\gamma(0)\left(1-\sum_{j=1}^p\phi_j\rho_j\right).
+$$
+
+For an AR(1) with $\phi=0.7$ and $\gamma(0)=1/(1-0.7^2)=1.9608$:
+
+$$
+\sigma_\varepsilon^2
+=1.9608(1-0.7^2)=1.
+$$
+
+This recovers the innovation variance used in the simulation.
+
+### When not to use Yule-Walker blindly
+
+Yule-Walker equations assume a stationary AR structure. They are not a solution for:
+
+- an untransformed random walk;
+- an MA model with unobserved shocks;
+- a series with a strong deterministic trend;
+- a system with time-varying coefficients;
+- a series whose covariance is dominated by a break.
+
+Use them as a transparent estimator or starting value, then compare with likelihood estimates and residual diagnostics.
+
+![Yule-Walker recursion](../../assets/time_series/dependence/07_yule_walker_recursion.png)

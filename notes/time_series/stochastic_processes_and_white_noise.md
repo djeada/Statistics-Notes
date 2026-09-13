@@ -40,6 +40,84 @@ $$
 
 The term $m_t$ summarizes information available before time $t$, while $\varepsilon_t$ is the new information arriving at time $t$. In ARMA-type models these shocks are often called **innovations**.
 
+## Student guide: random variables, paths, and innovations
+
+The notation $X_t$ and $x_t$ keeps two ideas separate:
+
+- $X_t$ is a random variable before the observation is made;
+- $x_t$ is the realized value in one sample path.
+
+A stochastic process is a collection of random variables indexed by time. A dataset gives one path, not every possible path. The model describes a distribution over paths and uses the observed path to infer the mechanism and future uncertainty.
+
+### Filtrations and predictable information
+
+Let $\mathcal F_t$ contain the observations and predictors available through time $t$. A one-step innovation is the unpredictable part of the next observation:
+
+$$
+\varepsilon_{t+1}=X_{t+1}-E(X_{t+1}\mid\mathcal F_t).
+$$
+
+It has conditional mean zero:
+
+$$
+E(\varepsilon_{t+1}\mid\mathcal F_t)=0.
+$$
+
+This is stronger and more targeted than merely checking an unconditional sample autocorrelation. A process can have zero linear autocorrelation while its conditional variance depends on the past.
+
+### White noise conditions
+
+Weak white noise requires
+
+$$
+E(\varepsilon_t)=0,\qquad
+\operatorname{Var}(\varepsilon_t)=\sigma^2,\qquad
+\gamma(h)=0\quad(h\ne0).
+$$
+
+There are several meanings in practice:
+
+| term | additional property |
+|---|---|
+| weak white noise | constant mean/variance and zero autocovariances |
+| independent white noise | observations independent across time |
+| Gaussian white noise | usually independent normal observations |
+| martingale difference | conditional mean zero given the past |
+
+Do not replace one definition with another without stating the assumption.
+
+### A dependence counterexample
+
+Let $Z_t$ be independent and symmetric around zero, and define
+
+$$
+X_t=Z_tZ_{t-1}.
+$$
+
+For many symmetric choices, $X_t$ has zero linear correlation with $X_{t-1}$ while the products share $Z_t$ and can remain nonlinearly dependent. This illustrates why an ACF close to zero does not prove independence.
+
+### White noise and random walk
+
+If $\varepsilon_t$ has variance $\sigma^2$ and
+
+$$
+X_t=X_0+\sum_{j=1}^{t}\varepsilon_j,
+$$
+
+then
+
+$$
+\operatorname{Var}(X_t\mid X_0)=t\sigma^2.
+$$
+
+With $\sigma^2=4$, the conditional variance after 25 steps is $100$. The increments remain white noise, but the level becomes more uncertain with time.
+
+### Residual use
+
+White-noise residuals are a target for the conditional mean model. If residuals retain autocorrelation, a predictable mean component remains. If residual squares retain autocorrelation, a variance model may be needed. If residuals have heavy tails, Gaussian intervals may be too narrow.
+
+White-noise diagnostics are evidence, not proof. A finite sample can look white by chance, and a test has limited power against nonlinear or time-varying alternatives.
+
 ## White Noise
 
 A weak white-noise process $\{\varepsilon_t\}$ satisfies

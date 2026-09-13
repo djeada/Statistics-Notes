@@ -444,3 +444,59 @@ $$
 $$
 
 Thus, invertibility ensures that the innovations can be recovered uniquely as a stable infinite series in current and past observations.
+
+## Student guide: why convergence appears in time-series filters
+
+Infinite series occur when a stable dynamic model is rewritten in terms of shocks. For $|r|<1$,
+
+$$
+\sum_{j=0}^{\infty}r^j=\frac1{1-r}.
+$$
+
+With $r=0.5$:
+
+$$
+S_4=1+0.5+0.25+0.125+0.0625=1.9375,
+\qquad
+S_\infty=2.
+$$
+
+The omitted tail is
+
+$$
+\sum_{j=5}^{\infty}0.5^j
+=\frac{0.5^5}{1-0.5}=0.0625.
+$$
+
+In mean-square calculations, a shock representation such as
+
+$$
+X_t=\sum_{j=0}^{\infty}\psi_j\varepsilon_{t-j}
+$$
+
+is well behaved when the coefficient sequence is square summable:
+
+$$
+\sum_{j=0}^{\infty}\psi_j^2<\infty.
+$$
+
+For $\psi_j=0.5^j$, the sum of squared coefficients is
+
+$$
+\sum_{j=0}^{\infty}0.25^j=\frac1{0.75}=\frac43.
+$$
+
+If $\operatorname{Var}(\varepsilon_t)=\sigma^2$, the resulting variance is $\frac43\sigma^2$. This connects sequence convergence directly to the variance of a linear process.
+
+### Numerical stability
+
+Finite computations truncate an infinite representation. If $|r|<1$, the tail bound after $m$ terms is
+
+$$
+\left|\sum_{j=m+1}^{\infty}r^j\right|
+\le\frac{|r|^{m+1}}{1-|r|}.
+$$
+
+When $r=0.99$, the same truncation converges much more slowly than when $r=0.5$. Near-unit-root time-series calculations can therefore be sensitive to initialization and finite samples even when a formal stationary representation exists.
+
+![Convergence of partial sums](../../assets/time_series/foundations/01_geometric_series.png)

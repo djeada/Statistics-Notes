@@ -213,3 +213,73 @@ $$
 $$
 
 This formulation represents the AR(p) process in terms of the backward shift operator, with $\phi(B)$ summarizing the autoregressive structure.
+
+## Student guide: expand the operator before interpreting it
+
+The backward shift operator is defined by
+
+$$
+BX_t=X_{t-1}.
+$$
+
+It is algebraic shorthand, not a new random variable. For example:
+
+$$
+(1-B)y_t=y_t-y_{t-1},
+$$
+
+and
+
+$$
+(1-B)^2y_t=y_t-2y_{t-1}+y_{t-2}.
+$$
+
+For $(y_3,y_4,y_5)=(13,12,15)$:
+
+$$
+(1-B)y_5=15-12=3,
+$$
+
+$$
+(1-B)^2y_5=15-2(12)+13=4.
+$$
+
+### Polynomial multiplication
+
+Ordinary and seasonal differences combine as
+
+$$
+(1-B)(1-B^s)
+=1-B-B^s+B^{s+1}.
+$$
+
+For $s=12$:
+
+$$
+(1-B)(1-B^{12})y_t
+=y_t-y_{t-1}-y_{t-12}+y_{t-13}.
+$$
+
+This four-term expression helps prevent indexing errors when implementing seasonal ARIMA.
+
+### AR and MA polynomials
+
+An AR(2) polynomial is
+
+$$
+\phi(B)=1-\phi_1B-\phi_2B^2.
+$$
+
+An MA(2) polynomial under one common sign convention is
+
+$$
+\theta(B)=1+\theta_1B+\theta_2B^2.
+$$
+
+Sign conventions differ across texts, so inspect the model equation before comparing reported parameters.
+
+### Implementation check
+
+For a vector $y$, calculate the operator directly with array shifts and compare it with a library's differencing output. Test the first and last valid indices explicitly. Most practical errors are off-by-one errors at the sample boundary, not algebraic mistakes.
+
+![Backshift differences](../../assets/time_series/dependence/05_backshift_differences.png)
