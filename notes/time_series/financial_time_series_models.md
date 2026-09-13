@@ -285,7 +285,3 @@ Backtests can also be biased by revised data, survivorship filtering, or paramet
 6. Check standardized residuals and squared standardized residuals.
 7. Backtest volatility forecasts and tail quantiles chronologically.
 8. Examine stability across market regimes and innovation distributions.
-
-### Visual companions
-
-The figures throughout this chapter follow the modeling sequence from price transformation to conditional variance, persistence, asymmetry, and tail risk. Read them as diagnostics tied to a specific model component rather than as standalone illustrations.
