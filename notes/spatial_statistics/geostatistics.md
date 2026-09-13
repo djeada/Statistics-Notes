@@ -13,6 +13,7 @@ Typical examples are:
 The central problem is that we usually observe a variable at only a limited set of coordinates, yet we want to understand the spatial process between them.
 
 This chapter develops the ideas needed before kriging. The goal is to understand what spatial dependence means, how the semivariogram measures it, why its parameters matter, and what can go wrong when the assumptions do not fit the data.
+
 ## Learning objectives
 
 After working through this chapter, you should be able to:
@@ -27,6 +28,7 @@ After working through this chapter, you should be able to:
 8. explain why the sampling design affects the empirical variogram;
 9. describe how a variogram model is used later in kriging;
 10. recognize common diagnostic problems.
+
 ## The spatial random field
 
 A geostatistical variable is written as
