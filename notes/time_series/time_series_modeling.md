@@ -364,7 +364,3 @@ Keep an auditable record:
 | seasonal model | seasonal difference |  |  |  |  |  |
 
 The chosen model should be the simplest candidate that captures the important structure and performs acceptably on future-like data. A lower in-sample criterion paired with poor residuals is a warning, not a victory.
-
-### Visual companions
-
-The diagnostic figures are integrated with the corresponding modeling decisions above: detrending before specification, residual ACF and Ljung-Box for remaining linear dependence, variance and distribution plots for uncertainty assumptions, structural-break plots for parameter stability, and the temporal split for forecast validation. Together they form a coherent diagnostic sequence rather than a post-hoc gallery.
