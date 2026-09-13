@@ -14,44 +14,41 @@ $$
 \rho(h)=0.7^{|h|}.
 $$
 
-Therefore $\rho(1)=0.7$, $\rho(2)=0.49$, and $\rho(3)=0.343$. The ACF tails off geometrically rather than becoming exactly zero. The PACF at lag 1 is $0.7$ and the theoretical PACF is zero after lag 1, which is the ideal identification pattern for an AR(1). Finite samples only approximate these values.
+Therefore $\rho(1)=0.7$, $\rho(2)=0.49$, and $\rho(3)=0.343$. The ACF tails off geometrically rather than becoming exactly zero. The PACF is $0.7$ at lag 1 and zero at later lags in the population, which is the ideal identification pattern for an AR(1). Finite samples only approximate these values.
 
-![ACF and PACF for a worked AR(2) example](../../assets/time_series/student/11_acf_pacf_ar2.png)
+ACF and PACF summarize dependence across time lags and are useful for model identification and forecasting. They describe related but different aspects of that dependence:
 
-In time series analysis, understanding the relationships between observations at different time lags is crucial for model identification and forecasting. Two essential tools for analyzing these relationships are the **Autocorrelation Function (ACF)** and the **Partial Autocorrelation Function (PACF)**.
-
-- The **ACF** measures the correlation between observations at different time lags.
-- The **PACF** isolates the direct effect of a specific lag by removing the influence of intermediate lags.
+- The ACF measures the correlation between observations separated by a given lag.
+- The PACF isolates the direct linear relationship at a lag after accounting for the intermediate lags.
 
 ### Autocorrelation Function (ACF)
 
-The **Autocorrelation Function (ACF)** measures the correlation between a time series and its lagged values. It helps detect patterns such as trends and seasonality. The autocorrelation at lag $k$, denoted $\rho_k$, is defined as:
+The Autocorrelation Function (ACF) measures the correlation between a time series and its lagged values. It summarizes how strongly observations separated by $k$ periods move together. Persistent or repeating ACF patterns can signal serial dependence, non-stationarity, or seasonality, although the ACF alone does not identify their cause. The autocorrelation at lag $k$, denoted $\rho_k$, is defined as:
 
 $$
 \rho_k = \frac{\gamma_k}{\gamma_0}
 $$
 
-Where:
+where:
 
-- $\gamma_k$ is the autocovariance at lag $k$.
-- $\gamma_0$ is the variance of the time series (autocovariance at lag 0).
+- $\gamma_k$ is the autocovariance at lag $k$;
+- $\gamma_0$ is the variance of the series, or equivalently the autocovariance at lag 0.
 
 #### Autocovariance Function
 
-The **autocovariance** at lag $k$ is the covariance between observations separated by $k$ time periods. It is given by:
+The autocovariance at lag $k$ measures how observations separated by $k$ periods vary together. For a weakly stationary series with mean $\mu$, it is:
 
 $$
 \gamma_k = \text{Cov}(X_t, X_{t+k}) = \mathbb{E}[(X_t - \mu)(X_{t+k} - \mu)]
 $$
 
-Where:
+where $\mu$ is the constant mean of the series and $\mathbb{E}$ denotes expectation. The following figure gives a geometric view of how observations separated by a lag contribute to autocovariance.
 
-- $\mu$ is the mean of the time series.
-- $\mathbb{E}$ denotes the expectation operator.
+![Autocovariance geometry](../../assets/time_series/dependence/01_autocovariance_geometry.png)
 
 #### Autocorrelation Coefficient
 
-The **autocorrelation coefficient** at lag $k$ normalizes the autocovariance $\gamma_k$ by dividing it by the variance $\gamma_0$. It is a dimensionless quantity that ranges between -1 and 1, making it easier to interpret:
+The autocorrelation coefficient at lag $k$ normalizes $\gamma_k$ by the variance $\gamma_0$. This makes it dimensionless and bounded between $-1$ and $1$, so values can be compared across lags and series:
 
 $$
 \rho_k = \frac{\gamma_k}{\gamma_0} = \frac{\mathbb{E}[(X_t - \mu)(X_{t+k} - \mu)]}{\mathbb{E}[(X_t - \mu)^2]}
@@ -59,7 +56,7 @@ $$
 
 #### Sample Autocorrelation Function
 
-In practice, the ACF is estimated from the data using sample autocorrelations. The **sample autocorrelation coefficient** $r_k$ at lag $k$ is calculated as:
+In practice, the population ACF is unknown and is estimated from the observed series. One common sample autocorrelation coefficient at lag $k$ is:
 
 $$
 r_k = \frac{\sum_{t=1}^{N-k} (x_t - \bar{x})(x_{t+k} - \bar{x})}{\sum_{t=1}^{N} (x_t - \bar{x})^2}
@@ -71,82 +68,107 @@ Where:
 - $N$ is the number of observations.
 - $x_t$ is the observed value at time $t$.
 
-**Remark:** The sample ACF can be computed for any dataset and is not restricted to stationary series, though interpretation is most meaningful under (approximate) stationarity.
+The sample ACF can be computed for any series, but the standard interpretation of its lag pattern is most useful when the series is approximately stationary.
 
 #### Sampling Properties (Large Samples)
 
 For a weakly stationary series with mean $\mu$ and autocovariance $\gamma(h)$:
 
-- $E(\bar{X}_n) = \mu$.
-- $\text{Var}(\bar{X}_n) = \frac{1}{n} \sum_{h=-(n-1)}^{n-1} \left(1 - \frac{|h|}{n}\right)\gamma(h)$.
-- If the series is Gaussian (or under regularity conditions for linear processes),  
-  $\sqrt{n}(\bar{X}_n - \mu)$ is approximately normal with variance given by the sum above.
+- $E(\bar{X}_n)=\mu$.
+- The exact variance of the sample mean is
+  $$
+  \text{Var}(\bar{X}_n)
+  =\frac{1}{n}\sum_{h=-(n-1)}^{n-1}
+  \left(1-\frac{|h|}{n}\right)\gamma(h).
+  $$
+- Under suitable weak-dependence conditions, $\bar{X}_n$ is approximately normal for large $n$.
 
-A practical large-sample CI for $\mu$ is:
-
-$$
-\bar{X}_n \pm z_{1-\alpha/2}\sqrt{\hat{v}_n}, \quad
-\hat{v}_n = \sum_{|h|<\sqrt{n}} \left(1 - \frac{|h|}{\sqrt{n}}\right)\hat{\gamma}(h)
-$$
-
-For sample autocorrelations in linear models (ARMA), an approximate multivariate normal limit holds:
+A practical confidence interval therefore needs an estimate of the variance of $\bar X_n$. Using a truncated, weighted autocovariance estimate with bandwidth $m$ gives
 
 $$
-\hat{\rho} = (\hat{\rho}(1), \dots, \hat{\rho}(k))^\top \approx \mathcal{N}\left(\rho, \frac{W}{n}\right),
+\hat v_n
+=\frac{1}{n}
+\left[
+\hat\gamma(0)
++2\sum_{h=1}^{m}
+\left(1-\frac{h}{m+1}\right)\hat\gamma(h)
+\right],
 $$
 
-where Bartlett’s formula gives
+and an approximate $(1-\alpha)$ confidence interval is
 
 $$
-W_{ij} = \sum_{m=1}^{\infty} \{\rho(m+i)+\rho(m-i)-2\rho(i)\rho(m)\}
-        \{\rho(m+j)+\rho(m-j)-2\rho(j)\rho(m)\}.
+\bar X_n\pm z_{1-\alpha/2}\sqrt{\hat v_n}.
 $$
 
-**Practical guidance:** sample ACF estimates become unreliable for large lags; a common rule is to use $n \ge 50$ and lags $h \le n/4$.
+For a fixed set of lags in a stationary linear process, the vector of sample autocorrelations also has an approximate large-sample normal distribution:
+
+$$
+\hat{\rho}
+=
+(\hat{\rho}(1),\dots,\hat{\rho}(k))^\top
+\approx
+\mathcal{N}\left(\rho,\frac{W}{n}\right).
+$$
+
+A Bartlett-type expression for the entries of the asymptotic covariance matrix is
+
+$$
+W_{ij}
+=
+\sum_{m=1}^{\infty}
+\{\rho(m+i)+\rho(m-i)-2\rho(i)\rho(m)\}
+\{\rho(m+j)+\rho(m-j)-2\rho(j)\rho(m)\}.
+$$
+
+The main practical point is that sampling errors are correlated across lags, so uncertainty should be interpreted as a joint pattern rather than as a collection of independent tests.
+
+At large lags, fewer observation pairs contribute to each estimate, so the sample ACF becomes increasingly noisy. Rules such as limiting plots to roughly $n/4$ lags can be useful for display, but they are heuristics rather than requirements.
 
 #### Plotting the ACF
 
-The **Autocorrelation Function (ACF) plot**, or **Correlogram**, is a useful tool for understanding the structure of time series data. In Python, you can generate and interpret the ACF plot using libraries like `statsmodels` and `matplotlib`. The ACF plot helps identify significant correlations at different lags and reveals patterns in the data.
+An ACF plot, or correlogram, displays the sample autocorrelation at each lag. It helps reveal persistence, repeating seasonal structure, and cutoff patterns that may suggest candidate time-series models.
 
-The ACF plot can provide answers to the following questions:
+Useful questions include:
 
-    Is the observed time series white noise / random?
-    Is an observation related to an adjacent observation, an observation twice-removed, and so on?
-    Can the observed time series be modeled with an MA model? If yes, what is the order?
+- Does the series resemble white noise, with most autocorrelations near zero?
+- How quickly does dependence decay as the lag increases?
+- Are there repeating spikes at seasonal lags?
+- Does the ACF show a cutoff pattern consistent with a low-order MA model?
 
-Key Points for Interpreting the ACF Plot
+Key points for interpretation are:
 
-1. If the ACF values decrease slowly over many lags, this suggests the presence of a **trend** in the data.
-2. Repeated peaks or cyclic behavior in the ACF plot indicate **seasonal patterns** in the data, with regular intervals of high correlation.
-3. A rapid drop-off or sharp cutoff after a few lags suggests the data may follow a **Moving Average (MA)** process, where the current value is explained by a few prior error terms (shocks).
+1. A slow decay across many lags can indicate strong persistence or non-stationarity, including a trend, but it does not by itself establish the cause.
+2. Repeated peaks at regular intervals can indicate seasonal dependence.
+3. A sharp cutoff after lag $q$ is the ideal population pattern for an MA($q$) process, in which the current value depends on the current shock and a finite number of past shocks.
 
-For a large sample of white noise, an approximate 95% confidence band is:
+For a large white-noise sample, an approximate 95% reference band is:
 
 $$
 \pm \frac{1.96}{\sqrt{n}}
 $$
 
-Spikes outside these bounds are often treated as statistically significant.
+Spikes outside these bounds are evidence against zero autocorrelation at an individual lag, but several lags are being inspected at once, so isolated crossings should be interpreted cautiously.
 
-For a correlated series, a rough standard error is given by **Bartlett's formula**:
+For some short-memory processes, Bartlett-type approximations give a larger sampling variance at later lags:
 
 $$
 \text{Var}(r_k) \approx \frac{1}{n} \left(1 + 2 \sum_{j=1}^{k-1} \rho_j^2\right)
 $$
 
-This yields wider bands as dependence accumulates. A common rule is to use the white-noise bands for $r_1$, and if $r_1$ is significant, use Bartlett bands for the remaining lags.
+This approximation illustrates why uncertainty can widen when earlier lags are correlated. In model diagnostics, reference bands are best used together with the full residual pattern and formal checks rather than as a mechanical lag-by-lag decision rule.
 
-Example ACF for a synthetic AR(1) series:
+The following synthetic AR(1) example shows the gradual ACF decay expected from autoregressive persistence.
 
 ![acf ar1 synthetic](../../assets/time_series/acf_ar1_example.png)
 
-Example ACF/PACF for a synthetic ARMA(1,1) series:
+For comparison, an ARMA(1,1) process usually has no clean cutoff in either function; both ACF and PACF tend to tail off.
 
 ![arma acf pacf synthetic](../../assets/time_series/arma_acf_pacf.png)
 
 #### Python Example
 
-Below is a Python example where we generate and plot the ACF for three different types of time series: one with a trend, one with seasonal patterns, and one following a moving average process.
+The following example generates three contrasting series—a random walk with drift, a seasonal signal, and an MA(1) process—and compares their ACFs. The purpose is to connect visible time-domain behavior with the corresponding lag-correlation pattern.
 
 ```python
 import numpy as np
@@ -212,49 +234,47 @@ plt.tight_layout()
 plt.show()
 ```
 
-Time Series Data:
+The first figure shows the three generated series themselves, which provides the context needed before interpreting their ACFs.
 
 ![output(1)](https://github.com/user-attachments/assets/9358ee1c-9b09-4df8-8434-1835868b38f3)
 
-Acf plots:
+The corresponding ACF plots make those structures visible in lag space.
 
 ![output(2)](https://github.com/user-attachments/assets/ce26bcd4-bbcc-4334-a8cc-b1c52d54b548)
 
-Interpreting the ACF Plot:
-
-- **Slow Decay** in the first plot indicates that the time series has a **trend** and is non-stationary.
-- **Regular Peaks** in the second plot highlight **seasonal patterns** in the data, repeating at consistent intervals.
-- **Sharp Cutoff** in the third plot suggests that the data is generated from an **MA(1)** process, where values depend only on recent observations.
+The random walk has a slowly decaying ACF because it is non-stationary and highly persistent. The seasonal series produces a repeating correlation pattern, while the MA(1) series has the characteristic population cutoff after lag 1, subject to sampling noise in a finite sample.
 
 ### Partial Autocorrelation Function (PACF)
 
-The **Partial Autocorrelation Function (PACF)** measures the correlation between the time series and its lagged values, after removing the linear effects of the intermediate lags. It helps isolate the direct impact of each lag.
+The Partial Autocorrelation Function (PACF) measures the linear relationship between observations $k$ periods apart after removing the linear effects of the intervening lags. It is especially useful for identifying autoregressive order.
 
-The PACF at lag $k$, denoted by $\phi_{kk}$, represents the correlation between $X_t$ and $X_{t+k}$, after accounting for the effect of $X_{t+1}, X_{t+2}, \dots, X_{t+k-1}$.
+The PACF at lag $k$, often denoted $\phi_{kk}$, is the coefficient on the $k$th lag when $X_t$ is linearly projected on $X_{t-1},\ldots,X_{t-k}$. Equivalently, it is the correlation between $X_t$ and $X_{t-k}$ after the intermediate lags have been accounted for.
 
 #### Yule-Walker Equations
 
-The **Yule-Walker equations** for an autoregressive (AR) process provide a recursive way to compute the PACF for different lags. For an AR(p) process:
+The Yule-Walker equations connect the autocovariances of a stationary AR($p$) process to its AR coefficients. If
 
 $$
-\gamma_k = \sum_{j=1}^{p} \phi_{pj} \gamma_{k-j}
+X_t=\phi_1X_{t-1}+\cdots+\phi_pX_{t-p}+\varepsilon_t,
 $$
 
-Where $\phi_{pj}$ are the partial autocorrelation coefficients, and $\gamma_k$ is the autocovariance at lag $k$.
+then
+
+$$
+\gamma_k=\sum_{j=1}^{p}\phi_j\gamma_{k-j},
+$$
+
+for positive lags $k$, with $\gamma_{-h}=\gamma_h$. Solving finite Yule-Walker systems of increasing order produces coefficients $\phi_{k1},\ldots,\phi_{kk}$; the final coefficient $\phi_{kk}$ is the PACF at lag $k$.
 
 #### Recursive Calculation of PACF
 
-The PACF at lag $k$ can be recursively calculated as:
-
-I. $\phi_{11} = \rho_1$
-
-II. For $k \geq 2$:
+The Durbin-Levinson recursion calculates these coefficients efficiently. It starts with $\phi_{11}=\rho_1$. For $k\geq2$,
 
 $$
 \phi_{kk} = \frac{\rho_k - \sum_{j=1}^{k-1} \phi_{k-1,j} \rho_{k-j}}{1 - \sum_{j=1}^{k-1} \phi_{k-1,j} \rho_j}
 $$
 
-III. The intermediate coefficients $\phi_{kj}$ (for $j < k$) are updated using:
+and the intermediate coefficients $\phi_{kj}$ for $j<k$ are updated using
 
 $$
 \phi_{kj} = \phi_{k-1,j} - \phi_{kk} \phi_{k-1,k-j}
@@ -262,23 +282,15 @@ $$
 
 #### Plotting the PACF
 
-The **Partial Autocorrelation Function (PACF) plot** is a valuable tool for understanding the relationship between a time series and its lagged values after accounting for the influence of intervening lags. Unlike the ACF, which shows the correlation between the series and its lagged values, the PACF removes the effect of any intermediate lags.
+A PACF plot displays the estimated partial autocorrelation at each lag. Because it removes the linear contribution of intermediate lags, it is particularly useful for proposing the order of an autoregressive component.
 
-The PACF is particularly useful for identifying the order of an **Autoregressive (AR) process**. If you suspect your time series follows an AR model, the PACF plot can help you determine the number of lag terms to include in your model.
+For an ideal AR($p$) process, the population PACF is zero beyond lag $p$. In a finite sample, the estimated values do not become exactly zero, so the practical pattern is a set of notable early lags followed by values consistent with sampling variation. By contrast, MA and ARMA processes generally have PACFs that tail off rather than cut off cleanly.
 
-The PACF plot can provide answers to the following questions:
-
-    Can the observed time series be modeled with an AR model? If yes, what is the order?
-
-Key Points for Interpreting the PACF Plot:
-
-1. Significant spikes at early lags indicate that those specific lags are important for modeling the time series. For an **AR(p)** process, you will see significant spikes up to lag \( p \), and the PACF will then cut off.
-2. A sharp drop after lag \( p \) suggests that the time series follows an **AR(p)** process, meaning that only \( p \) past observations are needed to model the series.
-3. If the PACF plot exhibits a gradual decay, this indicates the presence of a **Moving Average (MA) process**, since partial correlations decrease slowly over many lags.
+As with the ACF, these patterns suggest candidate models; they do not prove a model order on their own.
 
 #### Python Example
 
-In this example, we will simulate different time series data (AR, MA, and ARMA processes) and plot their PACF to see how they behave.
+This example simulates AR, MA, and ARMA processes and compares their PACFs. Reading the time-series plots first makes it easier to connect each process with its lag-domain pattern.
 
 ```python
 import numpy as np
@@ -299,8 +311,8 @@ MA_process = ArmaProcess([1], ma1)
 ma_series = MA_process.generate_sample(nsample=1000)
 
 # Example 3: Simulating an ARMA(1,1) process
-ar1 = np.array([1, 0.5])  # AR(1) coefficients
-ma1 = np.array([1, -0.5])  # MA(1) coefficients
+ar1 = np.array([1, -0.5])  # AR(1): X_t = 0.5 X_{t-1} + noise
+ma1 = np.array([1, 0.5])  # MA(1): current noise + 0.5 previous noise
 ARMA_process = ArmaProcess(ar1, ma1)
 arma_series = ARMA_process.generate_sample(nsample=1000)
 
@@ -346,29 +358,27 @@ plt.tight_layout()
 plt.show()
 ```
 
-Time Series Data:
+The generated series provide the time-domain context for the PACF comparison.
 
 ![Screenshot from 2024-09-09 20-32-19](https://github.com/user-attachments/assets/50ddf1a6-fcae-49fa-92e0-ea0f133f0265)
 
-Pacf plots:
+The PACF plots then show how the direct lag relationships differ across the three models.
 
 ![Screenshot from 2024-09-09 20-35-34](https://github.com/user-attachments/assets/59a1ff40-5b4f-4351-bfaf-63b0e6950947)
 
-Interpreting the PACF Plot:
-
-- In the AR(2) process, the PACF will show significant spikes at lags 1 and 2, followed by a sharp drop. This sharp cutoff indicates an autoregressive model of order 2.
-- In the MA(1) process, the PACF will display a gradual decay, characteristic of a moving average process, where the partial correlations decrease slowly over time.
-- For the ARMA(1,1) process, the PACF plot may show significant spikes at early lags, reflecting the autoregressive part, followed by a slower decay, reflecting the moving average component.
+For the AR(2) process, the population PACF cuts off after lag 2. The MA(1) and ARMA(1,1) processes instead have PACFs that tail off, although the exact finite-sample shapes depend on the parameters and simulated data.
 
 ### Comparing ACF and PACF
 
-- The **ACF** measures the correlation between the time series and its lagged values, capturing both direct and indirect effects (i.e., effects from intermediate lags).
-- The **PACF** removes the influence of the intermediate lags, isolating the direct effect of each lag on the time series.
+The ACF captures both direct and indirect linear dependence across lags, whereas the PACF removes the linear contribution of intermediate lags. This distinction leads to the familiar identification patterns:
 
-In practice:
+- for an AR($p$) process, the ACF tails off while the PACF cuts off after lag $p$;
+- for an MA($q$) process, the ACF cuts off after lag $q$ while the PACF tails off;
+- for an ARMA process, both functions usually tail off.
 
-- The **ACF** of an AR(p) process decays gradually, but the **PACF** cuts off after lag $p$.
-- The **ACF** of an MA(q) process cuts off after lag $q$, while the **PACF** decays gradually.
+The following figure summarizes these identification patterns visually.
+
+![ACF and PACF identification](../../assets/time_series/dependence/02_acf_pacf_identification.png)
 
 ### Example: ACF and PACF for AR(1) Process
 
@@ -378,7 +388,7 @@ $$
 X_t = \phi X_{t-1} + \epsilon_t
 $$
 
-Where $\epsilon_t$ is white noise.
+where $\epsilon_t$ is white noise.
 
 #### ACF for AR(1)
 
@@ -388,86 +398,76 @@ $$
 \rho_k = \phi^k
 $$
 
-This implies that the autocorrelation decays exponentially with increasing lag $k$, showing a **gradual decay** in the ACF plot.
+For $|\phi|<1$, the autocorrelation decays geometrically with the lag, producing a gradual tail-off in the ACF plot. If $\phi<0$, the signs alternate while the magnitude still decays.
 
 #### PACF for AR(1)
 
-The partial autocorrelation function for an AR(1) process shows a **significant spike at lag 1**, followed by zeros at higher lags. This is because, for an AR(1) process, only the first lag has a direct effect, while higher lags are indirectly related to the series.
+For an AR(1) process, the population PACF equals $\phi$ at lag 1 and is zero at higher lags. Higher-order associations are mediated through the first lag, so they disappear after that lag is controlled for.
 
 ### Visualization of ACF and PACF
 
-The following is using mock data for time series with **short-term dependencies**, specifically one that could be modeled as an **AR(1) process**. Common data types that show this behavior include **financial data** (such as stock prices or returns), **economic indicators**, or **meteorological data** (like temperature series).
+The following mock series illustrates short-term dependence consistent with an AR-type process. The point of the figure is the contrast between a gradually decaying ACF and a PACF that is concentrated at the first lag.
 
 ![c20f0056-8024-4e6d-a91b-3202c158da64](https://github.com/djeada/Statistics-Notes/assets/37275728/1154a4f5-6105-452a-a5fa-30399f43094b)
 
 #### Left Plot: Autocorrelation Function (ACF)
 
-- The ACF plot starts at 1 for lag 0, which is expected because the series is perfectly correlated with itself at lag 0.
-- The ACF **decays gradually** but remains positive for a number of lags (up to lag ~20), which is typical of an **autoregressive (AR)** process, specifically an **AR(1)** or **AR(2)** model. In an AR process, past values have a direct influence on future values, leading to a slow decay in autocorrelation.
-- The shaded area represents the **confidence intervals**. If any spikes go outside these bounds, it indicates significant autocorrelation at those lags. In this case, we see that most lags within the confidence bounds are not statistically significant, but the gradual decay suggests a trend.
+- The ACF equals 1 at lag 0 because the series is perfectly correlated with itself.
+- The ACF then decays gradually while remaining positive over several lags, which is consistent with autoregressive persistence.
+- The shaded region is a reference band for sampling uncertainty. Spikes outside it indicate evidence of nonzero autocorrelation at those lags, but the overall decay pattern is more informative than any single crossing.
 
 #### Right Plot: Partial Autocorrelation Function (PACF)
 
-- The PACF plot shows a **sharp cutoff** after lag 1. This is characteristic of an **AR(1) process**, where only the first lag has a significant direct effect on the current value, and the influence of higher-order lags is negligible once the first lag's effect is accounted for.
-- The significant spike at lag 1 suggests that this time series can be modeled as an **autoregressive process of order 1 (AR(1))**.
+- The PACF shows a sharp drop after lag 1, which is the characteristic population pattern of an AR(1) process.
+- Taken together with the tailing ACF, the dominant first-lag PACF suggests AR(1) as a candidate model to estimate and validate.
 
 ### Auto-Regressive (AR) and Moving Average (MA) Models with ACF and PACF
 
-In time series analysis, **Auto-Regressive (AR)** and **Moving Average (MA)** models are widely used for modeling and forecasting. Identifying the correct order of these models relies on interpreting the **Autocorrelation Function (ACF)** and the **Partial Autocorrelation Function (PACF)**.
+In time series analysis, **Auto-Regressive (AR)** and Moving Average (MA) models are widely used for modeling and forecasting. Identifying the correct order of these models relies on interpreting the Autocorrelation Function (ACF) and the Partial Autocorrelation Function (PACF).
 
-#### **Auto-Regressive (AR) Model**
-The AR model assumes that the current value of a time series (\(y_t\)) is a linear combination of its past values:
+#### Auto-Regressive (AR) Model
+An AR($p$) model expresses the current value as a linear function of its own previous values plus a new innovation:
 
-\[
-\hat{y_t} = \alpha_1 y_{t-1} + \alpha_2 y_{t-2} + \dots + \alpha_p y_{t-p}
-\]
+$$
+y_t=c+\alpha_1y_{t-1}+\alpha_2y_{t-2}+\dots+\alpha_py_{t-p}+\varepsilon_t.
+$$
 
-- **Key Assumption:** The present value depends on its own prior values (\(y_{t-1}, y_{t-2}, \dots, y_{t-p}\)).
-- **ACF and PACF Interpretation:**
-  - **PACF:** Helps determine the order (\(p\)) of the AR model. The PACF will show significant spikes up to lag \(p\), after which it drops off.
-  - **ACF:** May decay gradually, showing a tail-off pattern, which is less helpful for directly identifying \(p\).
+The order $p$ is the number of lagged values included. In the ideal stationary population, the PACF is zero after lag $p$, while the ACF tails off. This makes the PACF especially useful for proposing an AR order, although estimation and diagnostics are still required.
 
 
-#### **Moving Average (MA) Model**
-The MA model assumes that the current value (\(y_t\)) is influenced by past error terms (\(\epsilon_t\)):
+#### Moving Average (MA) Model
+An MA($q$) model expresses the current value in terms of the current innovation and a finite number of previous innovations:
 
-\[
-\hat{y_t} = \epsilon_t + \beta_1 \epsilon_{t-1} + \beta_2 \epsilon_{t-2} + \dots + \beta_q \epsilon_{t-q}
-\]
+$$
+y_t=\mu+\varepsilon_t+\beta_1\varepsilon_{t-1}+\beta_2\varepsilon_{t-2}+\dots+\beta_q\varepsilon_{t-q}.
+$$
 
-- **Key Assumption:** The present value is driven by current and past random shocks (\(\epsilon_t, \epsilon_{t-1}, \dots, \epsilon_{t-q}\)).
-- **ACF and PACF Interpretation:**
-  - **ACF:** Helps determine the order (\(q\)) of the MA model. The ACF will show significant spikes up to lag \(q\), after which it drops off.
-  - **PACF:** Typically decreases gradually and does not provide a clear cutoff for \(q\).
+The order $q$ is the number of past shocks retained in the model. In the ideal population, the ACF is zero after lag $q$, while the PACF tails off. The following figure illustrates that finite shock duration in the MA representation.
+
+![MA shock duration](../../assets/time_series/dependence/04_ma_shock_duration.png)
 
 
 ### Comparison
 
-acf and pacf plots for
-    AR(1): Autoregressive process of order 1.
-    AR(2): Autoregressive process of order 2.
-    MA(1): Moving average process of order 1.
-    MA(2): Moving average process of order 2.
-    Linear Growing: A simple deterministic increasing trend.
-    Constant: A flat series with a constant value.
-    Sine with Noise: A sinusoidal series with added noise.
-    White Noise: A purely random series.
+The following comparison places several common patterns side by side: AR(1), AR(2), MA(1), MA(2), a deterministic linear trend, a constant series, a noisy sine wave, and white noise.
 
 ![acf_pacf_cheat_sheet](https://github.com/user-attachments/assets/8271d59f-a3a1-42bf-8472-3565f2a04c99)
 
+Use the chart as a visual reference rather than a lookup rule. In particular, the ordinary ACF is not defined for an exactly constant series because its variance is zero, and non-stationary trend or seasonal examples should not be interpreted with stationary ARMA cutoff rules.
+
 ## Student guide: calculate and interpret ACF/PACF
 
-The ACF and PACF are summaries of dependence after a mean specification has been chosen. A trend, seasonal pattern, or break can create a slow ACF decay even when there is no stationary AR mechanism.
+The ACF and PACF are most informative after the mean structure of the series has been addressed. A trend, seasonal pattern, or structural break can produce slow ACF decay even when no stationary AR mechanism is present, so interpretation should begin with the series itself and then move to lag dependence.
 
 ### Sample ACF calculation
 
-For observations $(1,2,4,3)$, $\bar x=2.5$ and
+For observations $(1,2,4,3)$, the sample mean is $\bar x=2.5$, giving centered values
 
 $$
 z=(-1.5,-0.5,1.5,0.5).
 $$
 
-Using denominator $n$:
+Using $n$ as the denominator for this autocovariance convention,
 
 $$
 \hat\gamma(0)=\frac{2.25+0.25+2.25+0.25}{4}=1.25,
@@ -486,7 +486,7 @@ $$
 \hat\rho(1)=\frac{0.1875}{1.25}=0.15.
 $$
 
-The numerator contains fewer pairs at larger lags. Software may use a different finite-sample denominator, so compare conventions when reproducing values.
+This gives a lag-1 sample autocorrelation of $0.15$, indicating only weak positive linear association in this small example. At larger lags, fewer observation pairs enter the numerator. Software may also use different finite-sample denominator conventions, so check the definition when reproducing reported values.
 
 ### AR(1) pattern
 
@@ -502,7 +502,11 @@ $$
 \rho(h)=0.7^{|h|}.
 $$
 
-The first values are $1$, $0.7$, $0.49$, $0.343$, and so on. The PACF is $0.7$ at lag 1 and zero at later lags in the population. A finite sample will show nonzero later values, so use uncertainty bands and model checks.
+The first values are $1$, $0.7$, $0.49$, $0.343$, and so on. The PACF is $0.7$ at lag 1 and zero at later lags in the population. The following figure shows how this persistence appears as a decaying lag pattern.
+
+![AR persistence](../../assets/time_series/dependence/03_ar_persistence.png)
+
+A finite sample will show nonzero later values, so use uncertainty bands and model checks rather than expecting an exact theoretical cutoff.
 
 ### PACF as a conditional relationship
 
@@ -514,21 +518,25 @@ $$
 X_t=\phi_1X_{t-1}+\phi_2X_{t-2}+\varepsilon_t,
 $$
 
-the PACF can remain notable through lag 2 and then cut off in the ideal stationary population. For an MA process, the ACF has a cutoff while the PACF generally tails off.
+the population PACF is zero after lag 2. The worked AR(2) figure below shows the contrast between a tailing ACF and a PACF whose direct dependence is concentrated in the first two lags.
+
+![ACF and PACF for a worked AR(2) example](../../assets/time_series/student/11_acf_pacf_ar2.png)
+
+For an MA process, the pattern is reversed: the ACF has a finite cutoff while the PACF generally tails off.
 
 ### Approximate significance bands
 
-Under a simple white-noise approximation, an individual sample ACF is often compared with
+Under a white-noise approximation, an individual sample autocorrelation is often compared with
 
 $$
 \pm\frac{1.96}{\sqrt n}.
 $$
 
-With $n=100$, the approximate band is $\pm0.196$. These bands are not exact for fitted models, high lags, multiple comparisons, or strong non-white processes. A single crossing should not drive model choice.
+With $n=100$, the approximate band is $\pm0.196$. These are reference bands, not simultaneous confidence intervals for the entire correlogram. They are also imperfect for fitted models, large lags, and strongly dependent processes, so a single crossing should not determine model choice.
 
 ### Identification is iterative
 
-Use the following loop:
+A practical identification loop is:
 
 1. remove or model trend and seasonality;
 2. calculate ACF/PACF of the transformed series;
@@ -537,11 +545,11 @@ Use the following loop:
 5. inspect residual ACF/PACF and squared residuals;
 6. backtest the candidates.
 
-Do not treat ACF/PACF cutoff rules as a proof. Near-unit roots, small samples, outliers, missing values, and structural changes can mimic familiar patterns.
+The cutoff rules are therefore a starting point rather than a proof. Near-unit roots, small samples, outliers, missing values, and structural changes can all mimic familiar patterns.
 
 ### Seasonal autocorrelation
 
-For period $s$, inspect lags $s,2s,3s$. A spike at lag 12 in monthly data can arise from:
+For a seasonal period $s$, inspect lags $s,2s,3s$ and the neighboring lags. A spike at lag 12 in monthly data can arise from several different mechanisms:
 
 - deterministic seasonal means;
 - seasonal AR dependence;
@@ -549,7 +557,7 @@ For period $s$, inspect lags $s,2s,3s$. A spike at lag 12 in monthly data can ar
 - calendar aggregation;
 - an unmodeled annual predictor.
 
-The remedy depends on the source. Seasonal differencing is not always preferable to explicit seasonal terms or a seasonal-naive baseline.
+The appropriate treatment depends on the source of the dependence. Seasonal differencing is not automatically preferable to explicit seasonal terms, calendar predictors, or a seasonal-naive benchmark.
 
 ### Numerical identification table
 
@@ -561,16 +569,4 @@ The remedy depends on the source. Seasonal differencing is not always preferable
 | MA(2) | cuts off after 2 | tails off |
 | ARMA | tails off | tails off |
 
-These patterns describe ideal population behavior. Use them to propose candidates, not to skip estimation and validation.
-
-### Visual companions
-
-Run [dependence_visualizations.py](../../scripts/time_series/dependence_visualizations.py):
-
-![Autocovariance geometry](../../assets/time_series/dependence/01_autocovariance_geometry.png)
-
-![ACF and PACF identification](../../assets/time_series/dependence/02_acf_pacf_identification.png)
-
-![AR persistence](../../assets/time_series/dependence/03_ar_persistence.png)
-
-![MA shock duration](../../assets/time_series/dependence/04_ma_shock_duration.png)
+These patterns describe ideal population behavior. Use them to propose a small set of candidates, then confirm the choice through estimation, residual diagnostics, and forecast validation.
