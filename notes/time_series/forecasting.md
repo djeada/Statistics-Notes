@@ -672,7 +672,3 @@ A useful forecast report includes:
 6. recent error history;
 7. known future events or predictor assumptions;
 8. limitations and update schedule.
-
-### Visual companions
-
-The forecasting figures are placed beside the concepts they support: baselines beside the first benchmark decision, exponential smoothing beside recursive level updates, horizon-specific errors beside model evaluation, and prediction intervals beside uncertainty. This progression mirrors the forecasting workflow from constructing a point forecast to testing and communicating its reliability.
