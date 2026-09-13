@@ -1,121 +1,221 @@
 # Chi-Square Tests and Categorical Data Analysis
 
-The **chi-square ($\chi^2$) test** is a statistical method used to determine if there is a significant difference between expected and observed frequencies in one or more categories. It helps assess whether any observed deviations could be due to chance.
+The **chi-square ($\chi^2$) test** is a family of statistical tests for categorical count data. These tests compare observed frequencies with the frequencies expected under a null hypothesis.
+
+A large difference between observed and expected counts provides evidence that the null hypothesis may not adequately explain the data.
 
 Types of Chi-Square Tests:
 
-1. The **goodness-of-fit test** determines whether an observed frequency distribution aligns with an expected distribution.
-2. The **test of homogeneity** assesses if different populations share the same distribution of a single categorical variable.
-3. The **test of independence** evaluates whether two categorical variables are independent within a single population.
+1. The **goodness-of-fit test** determines whether the distribution of one categorical variable follows a specified distribution.
+2. The **test of homogeneity** assesses whether several populations or groups have the same distribution of a categorical variable.
+3. The **test of independence** evaluates whether two categorical variables are associated within a population.
+
+Although these tests address different questions, they use the same basic idea:
+
+```math
+\chi^2
+=
+\sum
+\frac{(\text{Observed}-\text{Expected})^2}
+{\text{Expected}}.
+```
 
 ### Categorical Data
 
-**Categorical data** involves variables that represent groupings or categories rather than numerical values. These categories are usually qualitative and can be nominal (no inherent order) or ordinal (with a logical order). Each data point falls into one and only one category.
+**Categorical data** consist of observations classified into groups or categories rather than measured on a numerical scale.
 
-- An **example** would be the survival status of passengers on the Titanic, categorized by ticket class.
-- The **survival status** could be classified as "Survived" or "Died."
-- The **ticket class** includes categories such as First, Second, Third, and Crew.
+Categorical variables may be:
+
+* **nominal**, where categories have no natural ordering, or
+* **ordinal**, where categories have a meaningful ordering.
+
+For a single categorical variable, each observation belongs to one category. When several categorical variables are recorded, each observation belongs to one category for each variable.
+
+For example, consider Titanic passengers classified by survival status and ticket class:
+
+* **Survival status**: Survived or Died.
+* **Ticket class**: First Class, Second Class, Third Class, or Crew.
+
+Each passenger has one survival status and one ticket-class category.
 
 ### Contingency Tables
 
-A **contingency table** (also known as a cross-tabulation or crosstab) is a matrix used to display the frequency distribution of variables. It allows us to analyze the relationship between two or more categorical variables.
+A **contingency table**, also called a cross-tabulation or crosstab, summarizes counts for combinations of categorical variables.
 
-**Example**: The Titanic survival data organized into a 2×4 contingency table:
+For example, Titanic survival data can be represented in a $2\times4$ contingency table:
 
-|               | First Class | Second Class | Third Class | Crew | **Total** |
-|---------------|-------------|--------------|-------------|------|-----------|
-| **Survived**  |      a      |       b      |      c      |  d   |     S     |
-| **Died**      |      e      |       f      |      g      |  h   |     D     |
-| **Total**     |     325     |      285     |     706     | 885  |   2,201   |
+|              | First Class | Second Class | Third Class | Crew | **Total** |
+| ------------ | ----------: | -----------: | ----------: | ---: | --------: |
+| **Survived** |         $a$ |          $b$ |         $c$ |  $d$ |       $S$ |
+| **Died**     |         $e$ |          $f$ |         $g$ |  $h$ |       $D$ |
+| **Total**    |         325 |          285 |         706 |  885 |     2,201 |
 
-Here, $a$ to $h$ represent the observed counts in each category.
+Here, $a$ through $h$ represent the observed counts in each cell.
+
+The row and column totals are called **marginal totals**. They are used to calculate expected counts in tests of homogeneity and independence.
 
 ### 1. Testing Goodness-of-Fit
 
+A chi-square goodness-of-fit test compares observed counts for one categorical variable with the counts expected under a specified distribution.
+
 #### Hypotheses
 
-- The **null hypothesis ($H_0$)** states that the observed frequencies match the expected frequencies, indicating no significant difference between the observed and expected distributions.
-- The **alternative hypothesis ($H_A$)** claims that the observed frequencies do not match the expected frequencies.
+* The **null hypothesis ($H_0$)** states that the population follows the specified categorical distribution.
+* The **alternative hypothesis ($H_A$)** states that the population distribution differs from the specified distribution in at least one category.
+
+The observed and expected counts do not need to match exactly under $H_0$; some difference is expected because of sampling variation.
 
 #### Example: M&M Color Distribution
 
-Suppose we want to test if the color distribution of M&Ms has changed since 2008.
+Suppose we want to test whether the color distribution of M&Ms is consistent with a distribution reported for 2008.
 
 **2008 Expected Color Distribution**:
 
-| Color   | Percentage (%) |
-|---------|----------------|
-| Blue    |       24       |
-| Orange  |       20       |
-| Green   |       16       |
-| Yellow  |       14       |
-| Red     |       13       |
-| Brown   |       13       |
+| Color  | Percentage (%) |
+| ------ | -------------: |
+| Blue   |             24 |
+| Orange |             20 |
+| Green  |             16 |
+| Yellow |             14 |
+| Red    |             13 |
+| Brown  |             13 |
 
-**Observed Counts**: From a sample of 410 M&Ms, we record the number of each color.
+**Observed Counts**: From a sample of 410 M&Ms:
 
-| Color   | Count |
-|---------|-------|
-| Blue    | 105   |
-| Orange  | 91    |
-| Green   | 70    |
-| Yellow  | 50    |
-| Red     | 45    |
-| Brown   | 49    |
+| Color  | Count |
+| ------ | ----: |
+| Blue   |   105 |
+| Orange |    91 |
+| Green  |    70 |
+| Yellow |    50 |
+| Red    |    45 |
+| Brown  |    49 |
+
+The hypotheses are:
+
+```math
+H_0:
+(p_{\text{blue}},p_{\text{orange}},p_{\text{green}},
+p_{\text{yellow}},p_{\text{red}},p_{\text{brown}})
+=
+(0.24,0.20,0.16,0.14,0.13,0.13)
+```
+
+versus the alternative that at least one population proportion differs.
 
 #### Calculating Expected Counts
 
-For each color, calculate the expected count ($E_i$):
+For each category, the expected count is:
 
-$$
-E_i = N \times P_i
-$$
+```math
+E_i=Np_i
+```
 
-- $N$: Total sample size (410).
-- $P_i$: Expected proportion for color $i$ (e.g., 24% for blue).
+where:
 
-**Example for Blue M&Ms**:
+* $N$ is the total sample size,
+* $p_i$ is the expected proportion for category $i$.
 
-$$
-E_{\text{blue}} = 410 \times 0.24 = 98.4
-$$
+For blue M&Ms:
+
+```math
+E_{\text{blue}}
+=
+410(0.24)
+=
+98.4.
+```
+
+The complete expected counts are:
+
+| Color  | Observed $O_i$ | Expected $E_i$ |
+| ------ | -------------: | -------------: |
+| Blue   |            105 |           98.4 |
+| Orange |             91 |           82.0 |
+| Green  |             70 |           65.6 |
+| Yellow |             50 |           57.4 |
+| Red    |             45 |           53.3 |
+| Brown  |             49 |           53.3 |
+
+The expected counts also sum to 410.
 
 #### Computing the Chi-Square Statistic
 
-The chi-square statistic is:
+The goodness-of-fit statistic is:
 
-$$
-\chi^2 = \sum_{i=1}^{k} \frac{(O_i - E_i)^2}{E_i}
-$$
+```math
+\chi^2
+=
+\sum_{i=1}^{k}
+\frac{(O_i-E_i)^2}{E_i}
+```
 
-- $O_i$: Observed frequency for category $i$.
-- $E_i$: Expected frequency for category $i$.
-- $k$: Number of categories (6 colors).
+where:
 
-**Calculate** $\chi^2$ by summing over all colors.
+* $O_i$ is the observed count,
+* $E_i$ is the expected count,
+* $k$ is the number of categories.
+
+For these data:
+
+```math
+\chi^2\approx4.32.
+```
+
+Each term measures the difference between an observed count and its expected value. Larger differences contribute more to the total statistic.
 
 #### Degrees of Freedom
 
-$$
-\text{Degrees of Freedom (df)} = k - 1
-$$
+When all expected proportions are specified in advance:
 
-- For 6 colors:
+```math
+df=k-1.
+```
 
-$$
-df = 6 - 1 = 5
-$$
+For 6 colors:
+
+```math
+df=6-1=5.
+```
 
 #### Decision Rule
 
-- The **significance level ($\alpha$)** is commonly set at 0.05.
-- The **critical value** is obtained from the chi-square distribution table with $df = 5$.
-- **Compare** the calculated $\chi^2$ with the critical value: if $\chi^2_{\text{calculated}}$ exceeds $\chi^2_{\text{critical}}$, reject $H_0$; otherwise, fail to reject $H_0$.
+Suppose the significance level is:
+
+```math
+\alpha=0.05.
+```
+
+Using the chi-square distribution with $df=5$, the critical value is approximately:
+
+```math
+\chi^2_{0.95,5}\approx11.07.
+```
+
+Reject $H_0$ if:
+
+```math
+\chi^2_{\text{observed}}>11.07.
+```
+
+Equivalently, using a p-value, reject $H_0$ when:
+
+```math
+p<\alpha.
+```
 
 #### Interpretation
 
-- **Rejecting $H_0$** suggests that the color distribution has changed since 2008.
-- **Failing to Reject $H_0$** indicates no significant change in the color distribution.
+For this example:
+
+* **Chi-square statistic**: 4.32
+* **p-value**: approximately 0.5045
+* **Critical value**: approximately 11.07
+* **Decision**: Fail to reject $H_0$
+
+Because the p-value is greater than 0.05, the sample does not provide sufficient evidence that the color distribution differs from the specified 2008 proportions.
+
+Failing to reject $H_0$ does not prove that the distribution is unchanged. It means that the observed differences are not large enough to provide evidence against the specified distribution at the chosen significance level.
 
 #### Visualization
 
@@ -123,81 +223,138 @@ $$
 
 Analysis Results:
 
-- **Chi-square statistic**: 4.32
-- **p-value**: 0.5045
-- **Critical value**: 11.07
-- **Decision**: Fail to reject the null hypothesis. There is no significant change in the color distribution of M&Ms since 2008.
+* **Chi-square statistic**: 4.32
+* **p-value**: 0.5045
+* **Critical value**: 11.07
+* **Decision**: Fail to reject the null hypothesis.
 
-This suggests that based on the sample of 410 M&Ms, the observed color distribution does not significantly differ from the expected 2008 distribution.
+Based on this sample, there is insufficient evidence to conclude that the M&M color distribution differs from the specified 2008 distribution.
 
 ### 2. Testing Homogeneity
 
+A chi-square test of homogeneity compares the distribution of a categorical variable across several populations or groups.
+
 #### Hypotheses
 
-- **Null Hypothesis ($H_0$)**: Different populations have the same distribution of the categorical variable.
-- **Alternative Hypothesis ($H_A$)**: At least one population has a different distribution.
+* **Null Hypothesis ($H_0$)**: The categorical variable has the same distribution in all populations or groups.
+* **Alternative Hypothesis ($H_A$)**: At least one population or group has a different distribution.
 
 #### Example: Titanic Survival by Ticket Class
 
-We want to test whether survival rates are the same across ticket classes.
+Suppose we want to test whether survival rates are the same across Titanic ticket classes.
 
 **Data Summary**:
 
-|               | Survived | Died | **Total** |
-|---------------|----------|------|-----------|
-| First Class   |    203   | 122  |    325    |
-| Second Class  |    118   | 167  |    285    |
-| Third Class   |    178   | 528  |    706    |
-| Crew          |    212   | 673  |    885    |
-| **Total**     |    711   | 1,490 |   2,201  |
+|              | Survived |  Died | **Total** |
+| ------------ | -------: | ----: | --------: |
+| First Class  |      203 |   122 |       325 |
+| Second Class |      118 |   167 |       285 |
+| Third Class  |      178 |   528 |       706 |
+| Crew         |      212 |   673 |       885 |
+| **Total**    |      711 | 1,490 |     2,201 |
+
+The null hypothesis is that the survival distribution is the same across all four groups.
 
 #### Calculating Expected Counts
 
-Expected count for each cell:
+If the survival distribution were the same across groups, the expected count in cell $(i,j)$ would be:
 
-$$
-E_{ij} = \frac{(\text{Row Total}_i \times \text{Column Total}_j)}{\text{Grand Total}}
-$$
+```math
+E_{ij}
+=
+\frac{
+(\text{Row Total}_i)
+(\text{Column Total}_j)
+}{
+\text{Grand Total}
+}.
+```
 
-**Example for First Class Survivors**:
+For First Class survivors:
 
-$$
-E_{11} = \frac{(325 \times 711)}{2,201} \approx 105.0
-$$
+```math
+E_{11}
+=
+\frac{325(711)}{2201}
+\approx104.99.
+```
+
+The observed number of First Class survivors is 203, which is much larger than this expected count.
 
 #### Computing the Chi-Square Statistic
 
-$$
-\chi^2 = \sum_{i=1}^{r} \sum_{j=1}^{c} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}
-$$
+The statistic is:
 
-- $r$: Number of rows (4 ticket classes).
-- $c$: Number of columns (2 survival statuses).
+```math
+\chi^2
+=
+\sum_{i=1}^{r}
+\sum_{j=1}^{c}
+\frac{(O_{ij}-E_{ij})^2}{E_{ij}}.
+```
 
-**Calculate** $\chi^2$ by summing over all 8 cells.
+Here:
+
+* $r=4$ groups,
+* $c=2$ survival outcomes.
+
+Summing across all eight cells gives:
+
+```math
+\chi^2\approx190.40.
+```
 
 #### Degrees of Freedom
 
-$$
-df = (r - 1) \times (c - 1)
-$$
+For a contingency table:
 
-- For 4 ticket classes and 2 survival statuses:
+```math
+df=(r-1)(c-1).
+```
 
-$$
-df = (4 - 1) \times (2 - 1) = 3 \times 1 = 3
-$$
+Therefore:
+
+```math
+df
+=
+(4-1)(2-1)
+=
+3.
+```
 
 #### Decision Rule
 
-- The **significance level ($\alpha$)** is usually set at 0.05.
-- The **critical value** is determined from the chi-square table with $df = 3$.
-- **Compare** $\chi^2_{\text{calculated}}$ to $\chi^2_{\text{critical}}$: if $\chi^2_{\text{calculated}}$ exceeds $\chi^2_{\text{critical}}$, reject $H_0$; otherwise, fail to reject $H_0$.
+At:
+
+```math
+\alpha=0.05,
+```
+
+the critical value for $df=3$ is approximately:
+
+```math
+\chi^2_{0.95,3}=7.81.
+```
+
+Because:
+
+```math
+190.40>7.81,
+```
+
+we reject the null hypothesis.
+
+The p-value is also extremely small:
+
+```math
+p\approx5.0\times10^{-41}.
+```
 
 #### Interpretation
 
-- **Rejecting $H_0$** indicates that survival rates differ across ticket classes.
-- **Failing to Reject $H_0$** suggests no significant difference in survival rates among classes.
+The data provide very strong evidence that survival rates were not the same across the four Titanic groups.
+
+In other words, survival and ticket-class group are associated in these data. The chi-square test does not explain why the groups differ.
 
 #### Visualization
 
@@ -205,76 +362,159 @@ $$
 
 Analysis Results:
 
-- **Chi-square statistic**: 190.40
-- **p-value**: 4.9999e-41
-- **Critical value**: 7.81
-- **Decision**: Reject the null hypothesis. Survival rates differ across ticket classes.
+* **Chi-square statistic**: 190.40
+* **p-value**: approximately $5.0\times10^{-41}$
+* **Critical value**: 7.81
+* **Decision**: Reject the null hypothesis.
 
-This suggests that there is a significant difference in survival rates among the different ticket classes (First Class, Second Class, Third Class, and Crew) on the Titanic. The plot compares observed and expected counts for survival and death in each class, highlighting the differences between them.
+The data provide strong evidence that survival rates differed among First Class, Second Class, Third Class, and Crew.
 
 ### 3. Testing Independence
 
+A chi-square test of independence examines whether two categorical variables are associated within a population.
+
 #### Hypotheses
 
-- The **null hypothesis ($H_0$)** states that the two categorical variables are independent.
-- The **alternative hypothesis ($H_A$)** asserts that the variables are associated, meaning they are not independent.
+* The **null hypothesis ($H_0$)** states that the two categorical variables are independent.
+* The **alternative hypothesis ($H_A$)** states that the variables are associated.
+
+If two variables are independent, knowing the value of one does not change the distribution of the other.
 
 #### Example: Gender and Voting Preference
 
-Suppose we survey individuals to see if gender is associated with voting preference.
+Suppose we survey individuals to investigate whether gender is associated with voting preference.
 
 **Data Summary**:
 
-|                 | Liberal | Conservative | **Total** |
-|-----------------|---------|--------------|-----------|
-| Male            |   40    |      60      |    100    |
-| Female          |   70    |      30      |    100    |
-| **Total**       |   110   |      90      |    200    |
+|           | Liberal | Conservative | **Total** |
+| --------- | ------: | -----------: | --------: |
+| Male      |      40 |           60 |       100 |
+| Female    |      70 |           30 |       100 |
+| **Total** |     110 |           90 |       200 |
+
+If the variables were independent, both gender groups would have the same voting-preference distribution apart from sampling variation.
 
 #### Calculating Expected Counts
 
-$$
-E_{ij} = \frac{(\text{Row Total}_i \times \text{Column Total}_j)}{\text{Grand Total}}
-$$
+Under independence:
 
-**Example for Male Liberals**:
+```math
+E_{ij}
+=
+\frac{
+(\text{Row Total}_i)
+(\text{Column Total}_j)
+}{
+\text{Grand Total}
+}.
+```
 
-$$
-E_{11} = \frac{(100 \times 110)}{200} = 55
-$$
+For Male/Liberal:
+
+```math
+E_{11}
+=
+\frac{100(110)}{200}
+=
+55.
+```
+
+The expected counts are therefore:
+
+|        | Liberal | Conservative |
+| ------ | ------: | -----------: |
+| Male   |      55 |           45 |
+| Female |      55 |           45 |
 
 #### Computing the Chi-Square Statistic
 
-$$
-\chi^2 = \sum_{i=1}^{2} \sum_{j=1}^{2} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}
-$$
+The Pearson chi-square statistic is:
 
-**Calculate** $\chi^2$ by summing over all 4 cells.
+```math
+\chi^2
+=
+\sum_{i=1}^{2}
+\sum_{j=1}^{2}
+\frac{(O_{ij}-E_{ij})^2}{E_{ij}}.
+```
+
+For these data:
+
+```math
+\chi^2\approx18.18.
+```
 
 #### Degrees of Freedom
 
-$$
-df = (2 - 1) \times (2 - 1) = 1 \times 1 = 1
-$$
+```math
+df
+=
+(2-1)(2-1)
+=
+1.
+```
 
 #### Yates' Correction for Continuity (Optional)
 
-For a 2×2 table, apply Yates' correction to adjust for continuity:
+For a $2\times2$ table, Yates' continuity correction may be applied:
 
-$$
-\chi^2 = \sum \frac{(|O_{ij} - E_{ij}| - 0.5)^2}{E_{ij}}
-$$
+```math
+\chi^2_{\text{Yates}}
+=
+\sum
+\frac{(|O_{ij}-E_{ij}|-0.5)^2}{E_{ij}}.
+```
+
+For these data:
+
+```math
+\chi^2_{\text{Yates}}
+\approx16.99.
+```
+
+with:
+
+```math
+p\approx3.76\times10^{-5}.
+```
+
+Without the correction, the Pearson test gives:
+
+```math
+\chi^2\approx18.18,
+\qquad
+p\approx2.01\times10^{-5}.
+```
+
+Both lead to the same conclusion.
 
 #### Decision Rule
 
-- The **significance level ($\alpha$)** is commonly set at 0.05.
-- The **critical value** is obtained from the chi-square table with $df = 1$.
-- **Compare** $\chi^2_{\text{calculated}}$ to $\chi^2_{\text{critical}}$: if $\chi^2_{\text{calculated}}$ is greater than $\chi^2_{\text{critical}}$, reject $H_0$; otherwise, fail to reject $H_0$.
+At:
+
+```math
+\alpha=0.05,
+```
+
+the chi-square critical value with one degree of freedom is approximately:
+
+```math
+3.84.
+```
+
+Using either statistic:
+
+```math
+\chi^2>3.84,
+```
+
+so we reject $H_0$.
 
 #### Interpretation
 
-- **Rejecting $H_0$** suggests a significant association between gender and voting preference.
-- **Failing to Reject $H_0$** indicates no significant association.
+The data provide strong evidence of an association between gender and voting preference in the sampled population.
+
+This indicates association, not necessarily causation.
 
 #### Visualization
 
@@ -282,57 +522,78 @@ $$
 
 Analysis Results:
 
-- **Chi-square statistic**: 16.99
-- **p-value**: 3.76e-05
-- **Critical value**: 3.84
-- **Decision**: Reject the null hypothesis. There is a significant association between gender and voting preference.
+Using Yates' continuity correction:
 
-This result suggests that gender is indeed significantly associated with voting preference based on the observed data. The plot provides a clear comparison between observed and expected counts for "Liberal" and "Conservative" preferences across genders, using a minimalistic and professional color scheme for clarity and readability.
+* **Chi-square statistic**: 16.99
+* **p-value**: $3.76\times10^{-5}$
+* **Critical value**: 3.84
+* **Decision**: Reject the null hypothesis.
+
+There is strong evidence of an association between gender and voting preference in the observed data.
 
 ### Comparing Homogeneity and Independence Tests
 
-Although both tests use the chi-square statistic and similar computations, they differ in their applications and interpretations.
+The chi-square tests of homogeneity and independence use the same test statistic and expected-count formula. Their main difference lies in the research question and how the data are collected.
 
 #### Chi-Square Test of Homogeneity
 
-- The **objective** is to determine whether multiple populations share the same distribution of a single categorical variable.
-- The **data structure** involves separate random samples drawn from different populations.
-- An **example** would be comparing the distribution of M&M colors across different product lines, such as milk chocolate, peanut, and caramel.
+* The **objective** is to determine whether several populations or groups have the same distribution of a categorical variable.
+* The **data structure** typically involves separate samples or predefined groups.
+* An **example** is comparing the distribution of M&M colors across different product types, such as milk chocolate, peanut, and caramel.
 
 #### Chi-Square Test of Independence
 
-- The **objective** is to evaluate whether two categorical variables are independent within a single population.
-- The **data structure** consists of one random sample where observations are categorized by two variables.
-- An **example** would be examining the relationship between gender and voting preference in a survey.
+* The **objective** is to determine whether two categorical variables are associated within a population.
+* The **data structure** typically consists of one sample in which each observation is classified by both variables.
+* An **example** is examining the relationship between gender and voting preference in a survey.
 
 #### Key Differences
 
-The **population** focus differs:
+The **population structure** differs:
 
-- In a **homogeneity test**, there are multiple populations being compared.
-- In an **independence test**, we look at a single population.
+* In a **homogeneity test**, distributions are compared across populations or groups.
+* In an **independence test**, two variables are studied within one population.
 
-Regarding the **research question**:
+The **research question** also differs:
 
-- In a **homogeneity test**, we ask whether distributions are the same across different populations.
-- In an **independence test**, we explore whether variables are associated within the population.
+* A **homogeneity test** asks whether the distribution of a categorical variable is the same across groups.
+* An **independence test** asks whether two categorical variables are associated.
+
+The calculations are otherwise essentially the same once the contingency table has been constructed.
 
 ### Assumptions and Conditions
 
-For chi-square tests to be valid, several conditions must be met:
+For chi-square tests to be valid, several conditions should be checked:
 
-1. **Random sampling** ensures that the data is collected appropriately through random methods.
-2. The **expected frequency** in each cell should be at least 5.
-3. **Independence** of observations must be maintained.
-4. The data used should involve **categorical variables**.
+1. **The data are counts.** The test is applied to observed frequencies in categories.
+
+2. **Categories are mutually exclusive.** Each observation contributes to one relevant category or table cell.
+
+3. **Observations are independent.** One observation should not determine or duplicate another.
+
+4. **The sampling design should support the intended inference.**
+
+5. **Expected counts should not be too small.** A common rule of thumb is that expected counts should generally be at least 5.
+
+These conditions help ensure that the chi-square distribution provides a reasonable approximation to the sampling distribution of the test statistic.
 
 ### Practical Application Steps
 
-1. **State the hypotheses** by defining $H_0$ and $H_A$.
-2. **Collect data** and organize observed frequencies into a contingency table.
-3. **Calculate expected counts** using the appropriate formulas based on the test.
-4. **Compute the chi-square statistic** by applying the chi-square formula.
-5. **Determine degrees of freedom** based on the dimensions of the table.
-6. **Find the critical value or p-value** using chi-square distribution tables or statistical software.
-7. **Make a decision** by comparing $\chi^2_{\text{calculated}}$ with $\chi^2_{\text{critical}}$.
-8. **Interpret the results** and draw conclusions in the context of the research question.
+1. **State the hypotheses** and identify the appropriate chi-square test.
+2. **Organize the observed counts** into a frequency table or contingency table.
+3. **Calculate the expected counts** under the null hypothesis.
+4. **Check the assumptions**, especially independence and expected counts.
+5. **Compute the chi-square statistic**:
+
+```math
+\chi^2
+=
+\sum\frac{(O-E)^2}{E}.
+```
+
+6. **Determine the degrees of freedom**.
+7. **Find the p-value or critical value** using the appropriate chi-square distribution.
+8. **Make a decision** by comparing the p-value with $\alpha$, or the test statistic with the critical value.
+9. **Interpret the result** in the context of the research question.
+
+A chi-square test tells us whether the observed differences are larger than would reasonably be expected under the null hypothesis. It does not, by itself, explain why an association exists or establish causation.
