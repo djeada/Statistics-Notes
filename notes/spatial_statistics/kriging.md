@@ -1,4 +1,4 @@
-# Kriging: A Student Guide to Spatial Prediction
+# Kriging
 
 Kriging is a method for predicting a spatial variable at unsampled locations using a model of spatial dependence.
 
