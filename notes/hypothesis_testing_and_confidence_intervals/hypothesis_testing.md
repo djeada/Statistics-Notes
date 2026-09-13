@@ -301,7 +301,7 @@ $$
 
 Common benchmarks for interpreting $|d|$ are:
 
-| $|d|$ | Interpretation |
+| $d$ | Interpretation |
 |---|---|
 | 0.2 | Small effect |
 | 0.5 | Medium effect |
