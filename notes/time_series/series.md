@@ -1,5 +1,9 @@
 # Sequences and Series
 
+Sequences and series provide the convergence language behind many time-series representations. A sequence describes an ordered set of terms, while a series asks whether the cumulative effect of those terms approaches a finite limit.
+
+This becomes important when a dynamic model is expanded into an infinite history of shocks or observations. Conditions such as geometric decay, absolute summability, and mean-square convergence determine whether those infinite representations are mathematically stable and can be approximated accurately with a finite number of terms.
+
 ## Worked calculation: a geometric series
 
 Consider the terms
