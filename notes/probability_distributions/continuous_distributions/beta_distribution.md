@@ -1,6 +1,6 @@
-## Beta Distribution (Continuous)
+# Beta Distribution (Continuous)
 
-A continuous random variable X follows a beta distribution if it is used to model the behavior of random variables that are constrained to intervals of finite length, often [0,1]. The beta distribution is characterized by two shape parameters, $\alpha$ and $\beta$, and is denoted as $X \sim \text{Beta}(\alpha, \beta)$.
+A continuous random variable $X$ follows a beta distribution when its support is the interval $[0,1]$ and its shape is governed by two positive parameters. The beta distribution is denoted as $X \sim \text{Beta}(\alpha, \beta)$, where $\alpha$ and $\beta$ are shape parameters. A shifted and scaled beta distribution can be used for variables constrained to other finite intervals.
 
 ### Probability Density Function (PDF)
 
@@ -49,8 +49,8 @@ II. What is the variance of this proportion?
 
 Variance of the proportion:
 
-$$\text{Var}(X) = \frac{2 \times 5}{(2 + 5)^2(2 + 5 + 1)} \approx 0.0408$$
+$$\text{Var}(X) = \frac{2 \times 5}{(2 + 5)^2(2 + 5 + 1)} \approx 0.0255$$
 
 ### Applications
 
-Beta distributions are widely used in Bayesian statistics, project management for modeling the completion time of tasks, and in reliability engineering to model the failure rate of systems. It is also used in genetics and ecology to model variability in proportions and rates.
+Beta distributions are widely used in Bayesian statistics and to model probabilities, proportions, and rates on $[0,1]$. Shifted and scaled beta families are also used in project-management models such as PERT. Other applications include reliability engineering, genetics, and ecology.

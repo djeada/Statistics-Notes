@@ -1,6 +1,6 @@
-## Normal/Gaussian Distribution (Continuous)
+# Normal (Gaussian) Distribution (Continuous)
 
-A continuous random variable X follows a normal distribution, denoted as $X \sim \mathcal{N}(\mu,\,\sigma^{2})$. The normal distribution is characterized by its bell shape and symmetry. The majority of the values are concentrated around the mean, and there are no extreme values. It can be viewed as a generalization of the binomial distribution as $n \to \infty$.
+A continuous random variable $X$ follows a normal distribution, denoted as $X \sim \mathcal{N}(\mu,\,\sigma^{2})$, when it has the familiar symmetric bell-shaped density. Its support is the entire real line, so extreme values are possible but receive increasingly small probability in the tails. The normal distribution also appears as an important approximation to standardized sums and sampling distributions through the Central Limit Theorem; under suitable conditions it can approximate distributions such as the binomial.
 
 ### Probability Density Function (PDF)
 
@@ -28,21 +28,23 @@ The expected value (mean) of a normal distribution is given by:
 
 $$E[X] = \mu$$
 
-To derive the expected value, we integrate the product of the PDF and the variable x over the entire range:
+To derive the expected value, we integrate the product of the PDF and the variable $x$ over the entire range:
 
 $$E[X] = \int_{-\infty}^{\infty} x \cdot f(x) dx$$
 
-$$E[x] = \int_{-\infty}^{\infty} x \cdot \frac{1}{{\sigma \sqrt {2\pi } }}e^{\frac{- (x - \mu)^2}{2\sigma^2}} dx$$
+$$E[X] = \int_{-\infty}^{\infty} x \cdot \frac{1}{\sigma \sqrt {2\pi}}e^{-\frac{(x - \mu)^2}{2\sigma^2}} dx$$
 
-Let $u = \frac{x - \mu}{\sqrt{2} \sigma}$, then $x = \mu + \sqrt{2} \sigma u$. The integral becomes:
+Let $u = \frac{x - \mu}{\sqrt{2} \sigma}$, so $x = \mu + \sqrt{2} \sigma u$ and $dx = \sqrt{2}\sigma\,du$. The integral becomes:
 
-$$E[X] = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{\infty} (\mu + \sqrt{2} \sigma u) e^{-u^2} du$$
+$$E[X] = \frac{1}{\sqrt{\pi}} \int_{-\infty}^{\infty} (\mu + \sqrt{2} \sigma u) e^{-u^2} du$$
 
 This integral can be split into two parts:
 
-$$E[X] = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{\infty} \mu e^{-u^2} du + \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{\infty} \sqrt{2} \sigma u e^{-u^2} du$$
+$$E[X] = \frac{\mu}{\sqrt{\pi}} \int_{-\infty}^{\infty} e^{-u^2} du + \frac{\sqrt{2}\sigma}{\sqrt{\pi}} \int_{-\infty}^{\infty} u e^{-u^2} du$$
 
-The first integral evaluates to $\mu$, and the second integral evaluates to 0 (since it is an odd function integrated over a symmetric interval). Therefore, the expected value is $\mu$.
+The first integral is $\sqrt{\pi}$, and the second is zero because the integrand is odd over a symmetric interval. Therefore,
+
+$$E[X] = \mu.$$
 
 ### Variance and Standard Deviation
 
@@ -90,7 +92,7 @@ The z-score formula:
 
 $$ z = \frac{(X - \mu)}{\sigma} $$
 
-where $X$ is the score, $\mu$ is the mean, and $\sigma$ is the standard deviation. 
+where $X$ is the score, $\mu$ is the mean, and $\sigma$ is the standard deviation.
 
 For the student's score:
 
@@ -100,8 +102,6 @@ II. Identifying the Corresponding Percentile:
 
 To convert a z-score to a percentile, use a standard normal distribution table or a calculator. A z-score of 1.5 typically aligns with the 93rd percentile, meaning this student's score is higher than approximately 93% of the class.
 
-### Application
+### Applications
 
-The Normal distribution, also known as the Gaussian distribution, is a fundamental distribution in statistics. It's used in a wide range of applications, including hypothesis testing, creating confidence intervals, and in fields such as social sciences, natural sciences, and engineering to represent real-valued random variables whose distributions are not known.
-
-
+The normal distribution is a fundamental model in statistics. It is used both as a direct model for approximately symmetric continuous measurements and as an approximation to sampling distributions and other probability models. It underlies many common confidence intervals, hypothesis tests, and regression procedures, but its appropriateness should be justified by the assumptions of the method rather than assumed for every real-valued variable.

@@ -1,6 +1,6 @@
-## Uniform Distribution
+# Uniform Distribution (Continuous)
 
-A continuous random variable X follows a uniform distribution over an interval [a, b] if it has a constant probability density over that interval. The uniform distribution is denoted as $X \sim \text{Uniform}(a, b)$.
+A continuous random variable X follows a uniform distribution over an interval $[a, b]$ if it has a constant probability density over that interval. The uniform distribution is denoted as $X \sim \text{Uniform}(a, b)$.
 
 ### Probability Density Function (PDF)
 
@@ -31,7 +31,7 @@ $$
 
 ### Expected Value and Variance
 
-The expected value (mean) of a uniform distribution is the midpoint of the interval [a, b]:
+The expected value (mean) of a uniform distribution is the midpoint of the interval $[a, b]$:
 
 $$E[X] = \frac{a+b}{2}$$
 
@@ -41,9 +41,11 @@ $$\text{Var}(X) = \frac{(b-a)^2}{12}$$
 
 ### Moment Generating Functions and Moments
 
-The moment generating function (MGF) of a uniform distribution is:
+For $t \neq 0$, the moment generating function (MGF) of a uniform distribution is:
 
 $$M_X(t) = E[e^{tX}] = \frac{e^{tb} - e^{ta}}{t(b-a)}$$
+
+and $M_X(0)=1$ by continuity.
 
 To find the n-th moment, we take the n-th derivative of the MGF with respect to t and then evaluate it at t=0:
 
@@ -81,15 +83,15 @@ II. Expected Value and Variance of the Event Timing:
 The expected value $E[X]$ and variance $\text{Var}(X)$ for a continuous uniform distribution are calculated as:
 
 - Expected value (mean time):
-  
+
 $$ E[X] = \frac{a + b}{2} = \frac{2 + 4}{2} = 3 \text{ seconds} $$
 
 - Variance:
-  
+
 $$ \text{Var}(X) = \frac{(b - a)^2}{12} = \frac{(4 - 2)^2}{12} = \frac{1}{3} \text{ seconds}^2 $$
 
 These calculations help the developer understand the timing dynamics of the event in the simulation game.
 
 ### Applications
 
-Uniform distributions are often used as a simple model when all possible outcomes are equally likely, such as in random number generators or when sampling from a finite set of values.
+Continuous uniform distributions are often used when every equal-length subinterval within a bounded interval should receive equal probability density, for example in simulation and random-number generation. A discrete uniform distribution is the analogous model for a finite set of equally likely values.
