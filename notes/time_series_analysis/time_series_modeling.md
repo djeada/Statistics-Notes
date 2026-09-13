@@ -1,464 +1,176 @@
 # Time Series Modeling
 
-Time series modeling involves analyzing data points collected or recorded at specific time intervals to understand underlying structures and make forecasts. Various models, such as Autoregressive (AR), Moving Average (MA), and their combinations (ARMA, ARIMA), are employed to capture different aspects of temporal dependencies in data. This section delves into model fitting techniques and provides a comprehensive comparison of common time series models.
+Time series modeling combines model specification, parameter estimation, model selection, and diagnostics. The aim is not simply to minimize in-sample error, but to find a parsimonious model whose residuals behave approximately like white noise and whose forecasts generalize to future observations.
 
 ### Model Fitting
 
-Fitting a time series model involves estimating the model's coefficients to best capture the underlying patterns in the data. For models like **AR**, **MA**, or **ARMA**, coefficients are typically estimated using **Maximum Likelihood Estimation (MLE)** or **Least Squares Estimation (LSE)**. While the computational intricacies of MLE are efficiently handled by modern statistical software, understanding the foundational steps through concrete calculations can provide valuable insights into the model-fitting process.
+For autoregressive models, ordinary or conditional least squares can often be used because the lagged observations are observed. For MA and ARMA models, the innovations are unobserved, so estimation is typically performed with maximum likelihood or related numerical methods.
 
-The primary objective in model fitting is to determine the coefficients that minimize the cumulative squared errors (white noise terms), formally expressed as:
+### Worked Example: Fitting an AR(2) Model
 
-$$\text{Minimize} \quad \sum_{t=1}^{n} w_t^2$$
+Consider the AR(2) model
 
-where $w_t$ represents the residuals or error terms at time $t$.
+$$
+Y_t = \beta_0 + \beta_1 Y_{t-1} + \beta_2 Y_{t-2} + \varepsilon_t.
+$$
 
-Below, we expand on this by providing concrete calculations for fitting an **AR(2)** and an **MA(2)** model using **Least Squares Estimation**. We'll use a small synthetic dataset for illustration purposes.
-
-#### Synthetic Dataset
-
-Consider the following time series data for $Y_t$ over $t = 1$ to $t = 5$:
+To keep the example identifiable, use a short synthetic series that does not make the lag columns perfectly collinear:
 
 | $t$ | $Y_t$ |
-|---------|-----------|
-| 1       | 2.0       |
-| 2       | 2.5       |
-| 3       | 3.0       |
-| 4       | 3.5       |
-| 5       | 4.0       |
+|---:|---:|
+| 1 | 1.0 |
+| 2 | 2.0 |
+| 3 | 1.5 |
+| 4 | 3.0 |
+| 5 | 2.5 |
+| 6 | 4.0 |
 
-For simplicity, we'll assume that the series starts at $t = 1$, and initial lag values ($Y_0$ and $Y_{-1}$) are known or set to zero.
-
-### Fitting an AR(2) Model
-
-An **Autoregressive model of order 2 (AR(2))** is defined as:
+Using observations $t=3,\dots,6$ gives
 
 $$
-Y_t = B_0 + B_1 Y_{t-1} + B_2 Y_{t-2} + w_t
-$$
-
-- **$Y_t$**: Observation at time $t$.
-- **$B_0$**: Intercept term.
-- **$B_1, B_2$**: Autoregressive coefficients for lags 1 and 2, respectively.
-- **$w_t$**: White noise error term at time $t$.
-
-Our goal is to estimate the coefficients $B_0$, $B_1$, and $B_2$ that minimize the sum of squared residuals:
-
-$$
-\text{Minimize} \quad \sum_{t=1}^{5} w_t^2 = \sum_{t=1}^{5} \left(Y_t - B_0 - B_1 Y_{t-1} - B_2 Y_{t-2}\right)^2
-$$
-
-#### Step-by-Step Calculation
-
-I. **Construct the Equations:**
-
-Since $Y_t$ depends on its two previous values, we can start constructing equations from $t = 3$ to $t = 5$:
-
-**For $t = 3$:**
-
-$$
-3.0 = B_0 + B_1 \cdot 2.5 + B_2 \cdot 2.0 + w_3
-$$
-
-**For $t = 4$:**
-
-$$
-3.5 = B_0 + B_1 \cdot 3.0 + B_2 \cdot 2.5 + w_4
-$$
-
-**For $t = 5$:**
-
-$$
-4.0 = B_0 + B_1 \cdot 3.5 + B_2 \cdot 3.0 + w_5
-$$
-
-II. **Set Up the System of Equations:**
-
-Ignoring the error terms for the purpose of least squares estimation, we have:
-
-$$3.0 = B_0 + 2.5B_1 + 2.0B_2$$
-
-$$3.5 = B_0 + 3.0B_1 + 2.5B_2$$
-
-$$4.0 = B_0 + 3.5B_1 + 3.0B_2$$
-
-III. **Matrix Representation:**
-
-Represent the system in matrix form $\mathbf{Y} = \mathbf{X}\mathbf{B} + \mathbf{w}$:
-
-$$
-Y =
+\mathbf y =
 \begin{bmatrix}
-3.0 \\
-3.5 \\
-4.0 \\
-\end{bmatrix}
-$$
-
-$$
+1.5\\
+3.0\\
+2.5\\
+4.0
+\end{bmatrix},
+\qquad
+\mathbf X =
 \begin{bmatrix}
-1 & 2.5 & 2.0 \\
-1 & 3.0 & 2.5 \\
-1 & 3.5 & 3.0 \\
-\end{bmatrix}
+1 & 2.0 & 1.0\\
+1 & 1.5 & 2.0\\
+1 & 3.0 & 1.5\\
+1 & 2.5 & 3.0
+\end{bmatrix}.
+$$
+
+The least-squares estimator is
+
+$$
+\hat{\boldsymbol\beta}
+=
+(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\mathbf y,
+$$
+
+provided $\mathbf X$ has full column rank. For this dataset,
+
+$$
+\mathbf X^\top\mathbf X
+=
 \begin{bmatrix}
-B_0 \\
-B_1 \\
-B_2 \\
-\end{bmatrix}
-+
+4 & 9 & 7.5\\
+9 & 21.5 & 17\\
+7.5 & 17 & 16.25
+\end{bmatrix},
+$$
+
+and
+
+$$
+\mathbf X^\top\mathbf y
+=
 \begin{bmatrix}
-w_3 \\
-w_4 \\
-w_5 \\
-\end{bmatrix}
+11\\
+25\\
+23.25
+\end{bmatrix}.
 $$
 
-IV. **Apply Least Squares Estimation:**
-
-The least squares solution is given by:
-
-$$\mathbf{B} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{Y}$$
-
-Let's compute each component step by step.
-
-**Compute $\mathbf{X}^\top \mathbf{X}$:**
-
-$$\mathbf{X}^\top \mathbf{X} =$$
+Solving the normal equations gives approximately
 
 $$
-\begin{bmatrix}
-1 & 1 & 1 \\
-2.5 & 3.0 & 3.5 \\
-2.0 & 2.5 & 3.0 \\
-\end{bmatrix}
-\begin{bmatrix}
-1 & 2.5 & 2.0 \\
-1 & 3.0 & 2.5 \\
-1 & 3.5 & 3.0 \\
-\end{bmatrix}
+\hat\beta_0 = 0.328,\qquad
+\hat\beta_1 = 0.080,\qquad
+\hat\beta_2 = 1.195.
 $$
 
-$$
-=\begin{bmatrix}
-3 & 9 & 7.5 \\
-9 & 28.25 & 23.75 \\
-7.5 & 23.75 & 19.25 \\
-\end{bmatrix}
-$$
-
-**Compute $\mathbf{X}^\top \mathbf{Y}$:**
-
-$$\mathbf{X}^\top \mathbf{Y} = $$
+so the fitted conditional-mean equation is approximately
 
 $$
-\begin{bmatrix}
-1 & 1 & 1 \\
-2.5 & 3.0 & 3.5 \\
-2.0 & 2.5 & 3.0 \\
-\end{bmatrix}
-\begin{bmatrix}
-3.0 \\
-3.5 \\
-4.0 \\
-\end{bmatrix}
+\hat Y_t = 0.328 + 0.080Y_{t-1} + 1.195Y_{t-2}.
 $$
 
-$$
-\begin{bmatrix}
-10.5 \\
-33.25 \\
-27.5 \\
-\end{bmatrix}
-$$
+This small example is only meant to demonstrate the mechanics of regression-style estimation for an AR model. In real time-series work, the next steps matter as much as the coefficient calculation: check stationarity assumptions, inspect residual autocorrelation, compare plausible model orders, and evaluate forecasts out of sample.
 
-**Compute $(\mathbf{X}^\top \mathbf{X})^{-1}$:**
+### Why the Previous Toy Dataset Was Problematic
 
-Calculating the inverse of a $3 \times 3$ matrix can be involved. For brevity, we'll provide the inverse matrix directly:
+If the observations increase by a constant amount, adjacent lag columns can become linearly dependent once an intercept is included. In that case $\mathbf X^\top\mathbf X$ is singular, so the inverse in the ordinary least-squares formula does not exist and the coefficients are not uniquely identified. Always check that the design matrix has full column rank before presenting an inverse-based calculation.
 
-$$(\mathbf{X}^\top \mathbf{X})^{-1} \approx$$
+### Fitting MA and ARMA Models
+
+An MA(2) model has the form
 
 $$
-\begin{bmatrix}
-4.25 & -1.8 & -0.35 \\
--1.8 & 0.7 & 0.1 \\
--0.35 & 0.1 & 0.3 \\
-\end{bmatrix}$$
-
-**Compute $\mathbf{B}$:**
-
-$$\mathbf{B} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{Y} \approx$$
-
-$$
-\begin{bmatrix}
-4.25 & -1.8 & -0.35 \\
--1.8 & 0.7 & 0.1 \\
--0.35 & 0.1 & 0.3 \\
-\end{bmatrix}
-\begin{bmatrix}
-10.5 \\
-33.25 \\
-27.5 \\
-\end{bmatrix}
+Y_t = \mu + \varepsilon_t + \theta_1\varepsilon_{t-1}+\theta_2\varepsilon_{t-2}.
 $$
 
-$$
-\begin{bmatrix}
-1.0 \\
-0.5 \\
-0.2 \\
-\end{bmatrix}
-$$
-
-V. **Estimated Coefficients:**
-
-$$B_0 \approx 1.0, \quad B_1 \approx 0.5, \quad B_2 \approx 0.2$$
-
-VI. **Model Interpretation:**
-
-The fitted AR(2) model is:
-
-$$
-Y_t = 1.0 + 0.5 Y_{t-1} + 0.2 Y_{t-2} + w_t
-$$
-
-VII. **Validation:**
-
-To validate, plug the estimated coefficients back into the equations and compute residuals $w_t$:
-
-**For $t = 3$:**
-
-$$
-3.0 = 1.0 + 0.5 \cdot 2.5 + 0.2 \cdot 2.0 + w_3$$
-
-$$3.0 = 1.0 + 1.25 + 0.4 + w_3 $$
-
-$$w_3 = 3.0 - 2.65 = 0.35$$
-
-**For $t = 4$:**
-
-$$3.5 = 1.0 + 0.5 \cdot 3.0 + 0.2 \cdot 2.5 + w_4$$
-
-$$3.5 = 1.0 + 1.5 + 0.5 + w_4$$
-
-$$w_4 = 3.5 - 3.0 = 0.5$$
-
-**For $t = 5$:**
-
-$$4.0 = 1.0 + 0.5 \cdot 3.5 + 0.2 \cdot 3.0 + w_5$$
-
-$$4.0 = 1.0 + 1.75 + 0.6 + w_5$$
-
-$$w_5 = 4.0 - 3.35 = 0.65$$
-
-The residuals $w_3 = 0.35$, $w_4 = 0.5$, and $w_5 = 0.65$ represent the errors between the observed and fitted values.
-
-### Fitting an MA(2) Model
-
-A **Moving Average model of order 2 (MA(2))** is defined as:
-
-$$
-Y_t = \mu + w_t + \theta_1 w_{t-1} + \theta_2 w_{t-2}
-$$
-
-- **$Y_t$**: Observation at time $t$.
-- **$\mu$**: Mean of the series.
-- **$w_t$**: White noise error term at time $t$.
-- **$\theta_1, \theta_2$**: Moving average coefficients for lags 1 and 2, respectively.
-
-Fitting an MA model is inherently more complex than fitting an AR model because the error terms $w_t$ are part of the model equations. Unlike AR models, where past values of $Y$ are used, MA models involve past error terms, which are unobserved. Therefore, estimating the coefficients typically requires iterative methods such as **Maximum Likelihood Estimation (MLE)** or the **Method of Moments**.
-
-However, for illustrative purposes, let's attempt a simplified approach using a small dataset and assuming initial error terms are zero.
-
-#### Step-by-Step Calculation
-
-I. **Assumptions:**
-
-- Initial error terms: $w_0 = w_{-1} = 0$.
-- Mean of the series $\mu$ is estimated as the average of $Y_t$.
-
-II. **Calculate $\mu$:**
-
-$$\mu = \frac{2.0 + 2.5 + 3.0 + 3.5 + 4.0}{5} = \frac{15.0}{5} = 3.0$$
-
-III. **Construct the Equations:**
-
-The MA(2) model can be rewritten for each time point as:
-
-$$Y_t - \mu = w_t + \theta_1 w_{t-1} + \theta_2 w_{t-2}$$
-
-Substituting the known values and assumptions:
-
-**For $t = 1$:**
-
-$$2.0 - 3.0 = w_1 + \theta_1 \cdot 0 + \theta_2 \cdot 0$$
-
-$$-1.0 = w_1$$
-
-**For $t = 2$:**
-
-$$2.5 - 3.0 = w_2 + \theta_1 w_1 + \theta_2 \cdot 0$$
-
-$$-0.5 = w_2 + \theta_1 (-1.0)$$
-
-**For $t = 3$:**
-
-$$3.0 - 3.0 = w_3 + \theta_1 w_2 + \theta_2 w_1$$
-
-$$0.0 = w_3 + \theta_1 w_2 + \theta_2 (-1.0)$$
-
-**For $t = 4$:**
-
-$$3.5 - 3.0 = w_4 + \theta_1 w_3 + \theta_2 w_2$$
-
-$$0.5 = w_4 + \theta_1 w_3 + \theta_2 w_2$$
-
-**For $t = 5$:**
-
-$$4.0 - 3.0 = w_5 + \theta_1 w_4 + \theta_2 w_3$$
-
-$$1.0 = w_5 + \theta_1 w_4 + \theta_2 w_3$$
-
-IV. **Solving the Equations:**
-
-The system involves both the coefficients $\theta_1, \theta_2$ and the error terms $w_t$. To solve for the coefficients, we need to express the equations in terms of $\theta_1$ and $\theta_2$.
-
-From $t = 1$:
-
-$$w_1 = -1.0$$
-
-From $t = 2$:
-
-$$-0.5 = w_2 - \theta_1 \quad \Rightarrow \quad w_2 = -0.5 + \theta_1$$
-
-From $t = 3$:
-
-$$0 = w_3 + \theta_1 w_2 - \theta_2 \quad \Rightarrow \quad w_3 = -\theta_1 w_2 + \theta_2$$
-
-Substituting $w_2$:
-
-$$w_3 = -\theta_1 (-0.5 + \theta_1) + \theta_2 = 0.5\theta_1 - \theta_1^2 + \theta_2$$
-
-From $t = 4$:
-
-$$0.5 = w_4 + \theta_1 w_3 + \theta_2 w_2$$
-
-Substitute $w_3$ and $w_2$:
-
-$$0.5 = w_4 + \theta_1 (0.5\theta_1 - \theta_1^2 + \theta_2) + \theta_2 (-0.5 + \theta_1)$$
-
-From $t = 5$:
-
-$$1.0 = w_5 + \theta_1 w_4 + \theta_2 w_3$$
-
-This system is nonlinear and interdependent, making it challenging to solve analytically. Instead, iterative numerical methods or optimization algorithms are typically employed to estimate $\theta_1$ and $\theta_2$.
-
-V. **Simplified Approach:**
-
-Given the complexity, we'll adopt a simplified approach by making initial guesses for $\theta_1$ and $\theta_2$ and iteratively refine them to minimize the sum of squared residuals.
-
-**Initial Guesses:**
-
-$$\theta_1 = 0.0, \quad \theta_2 = 0.0$$
-
-**Iteration 1:**
-
-$$w_1 = -1.0$$
-
-$$w_2 = -0.5 + 0.0 = -0.5$$
-
-$$w_3 = 0.5 \cdot 0.0 - 0.0^2 + 0.0 = 0.0$$
-
-$$0.5 = w_4 + 0.0 \cdot 0.0 + 0.0 \cdot (-0.5) \quad \Rightarrow \quad w_4 = 0.5$$
-
-$$1.0 = w_5 + 0.0 \cdot 0.5 + 0.0 \cdot 0.0 \quad \Rightarrow \quad w_5 = 1.0$$
-
-**Sum of Squared Residuals (SSR):**
-
-$$\text{SSR} = (-1.0)^2 + (-0.5)^2 + 0.0^2 + 0.5^2 + 1.0^2 = 1.0 + 0.25 + 0.0 + 0.25 + 1.0 = 2.5$$
-
-**Iteration 2:**
-
-Suppose we adjust $\theta_1$ and $\theta_2$ to reduce SSR. For instance, set $\theta_1 = 0.1$, $\theta_2 = 0.05$.
-
-Recompute residuals with new coefficients:
-
-$$w_2 = -0.5 + 0.1 = -0.4$$
-
-$$w_3 = 0.5 \cdot 0.1 - (0.1)^2 + 0.05 = 0.05 - 0.01 + 0.05 = 0.09$$
-
-$$0.5 = w_4 + 0.1 \cdot 0.09 + 0.05 \cdot (-0.4)$$
-
-$$0.5 = w_4 + 0.009 - 0.02$$
-
-$$w_4 = 0.5 - 0.009 + 0.02 = 0.511$$
-
-$$1.0 = w_5 + 0.1 \cdot 0.511 + 0.05 \cdot 0.09$$
-
-$$1.0 = w_5 + 0.0511 + 0.0045$$
-
-$$w_5 = 1.0 - 0.0556 = 0.9444$$
-
-**New SSR:**
-
-$$\text{SSR} = (-1.0)^2 + (-0.4)^2 + 0.09^2 + 0.511^2 + 0.9444^2 \approx 1.0 + 0.16 + 0.0081 + 0.2612 + 0.8911 = 3.3204$$
-
-The SSR has increased, indicating that the initial adjustment did not improve the fit. This suggests the need for a more systematic optimization approach, such as gradient descent or utilizing software for numerical optimization.
-
-The above example illustrates that fitting an MA(2) model manually involves solving a system of nonlinear equations, which is not straightforward. In practice, statistical software packages (e.g., R's `stats` package, Python's `statsmodels`) implement sophisticated algorithms to estimate MA model parameters efficiently using MLE or other optimization techniques.
+Unlike the AR case, the lagged innovations are not observed. Treating them as if they were ordinary regressors is therefore not valid. Practical estimation generally uses maximum likelihood, innovations algorithms, or state-space methods implemented by statistical software. Methods such as Hannan-Rissanen can also provide useful starting estimates for ARMA models.
 
 ### Comparison of Common Models
 
-Selecting the appropriate time series model is pivotal for accurate forecasting and analysis. Below is a **summary table** comparing commonly used time series models, highlighting their components, use cases, assumptions, strengths, and limitations.
+| Model | Main idea | Typical use | Important assumptions / cautions |
+|---|---|---|---|
+| **AR($p$)** | Current value depends on past values | Short-memory stationary dependence | Usually modeled as stationary after any required transformation/differencing |
+| **MA($q$)** | Current value depends on current/past innovations | Short-lived shock effects | Innovations are unobserved; invertibility is important for identification |
+| **ARMA($p,q$)** | Combines AR and MA terms | Stationary linear series | Requires parsimonious order selection and residual diagnostics |
+| **ARIMA($p,d,q$)** | ARMA after differencing | Integrated/non-stationary series | Avoid unnecessary differencing; diagnose the differenced model |
+| **SARIMA** | ARIMA plus seasonal AR/MA/differencing | Regular seasonal structure | Seasonal period and seasonal differencing must be chosen carefully |
+| **SES / Holt / Holt-Winters / ETS** | Recursive level/trend/seasonal smoothing | Forecasting level, trend, and seasonal patterns | Different ETS structures imply different error/trend/seasonal behavior |
+| **VAR** | Several series depend on their joint lags | Multivariate linear dynamics | Stationarity/cointegration and lag-order choices matter; predictive precedence is not automatically causal |
+| **ARCH/GARCH** | Conditional variance evolves over time | Volatility clustering | Models the variance dynamics, often after specifying a conditional mean model |
 
-| **Model**                        | **Components**                                      | **Use Case**                                                                                     | **Key Assumptions**                                                                                                     | **Strengths**                                                      | **Limitations**                                                  |
-|----------------------------------|------------------------------------------------------|--------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|-------------------------------------------------------------------|
-| **AR (Autoregressive)**          | Past values of the series $(Y_{t-1}, Y_{t-2}, \dots)$ | Captures relationships between past values of the series.                                        | Stationarity (constant mean/variance over time).                                                                        | Simple to interpret; effective for stationary data.               | Ineffective for non-stationary data or irregular patterns.        |
-| **MA (Moving Average)**          | Past forecast errors $(\varepsilon_{t-1}, \varepsilon_{t-2}, \dots)$ | Models influence of random shocks (errors) on the series.                                       | Stationarity; residuals are white noise.                                                                                 | Captures short-term dependencies caused by noise.                  | Requires accurate identification of significant error lags.        |
-| **ARMA (AR + MA)**               | Combines AR and MA components $(p, q)$              | Models both past values and past forecast errors.                                                | Stationarity; linear relationships in data.                                                                              | Balances modeling of past values and shocks.                       | Struggles with data exhibiting trends or seasonality.              |
-| **ARIMA (Autoregressive Integrated Moving Average)** | AR + MA + differencing $(p, d, q)$               | Handles non-stationary data by differencing.                                                    | Differencing converts the data to stationary.                                                                             | Versatile; applicable to a wide range of stationary and non-stationary series. | Selecting appropriate $p, d, q$ can be challenging.             |
-| **SARIMA (Seasonal ARIMA)**       | ARIMA + seasonal terms $(P, D, Q, m)$              | Models seasonal patterns in addition to trends and noise.                                       | Seasonality is stable and periodic (fixed frequency).                                                                     | Ideal for seasonal data with trends.                               | Computationally intensive; requires specification of seasonal terms.|
-| **SES (Simple Exponential Smoothing)** | Weighted average of past observations                   | Forecasts data without trends or seasonality (level only).                                       | Data has no trend or seasonality; relies on exponential weighting.                                                       | Easy to use; effective for flat, stationary series.                 | Ineffective for data with trends or seasonality.                   |
-| **Holt's Linear**                 | SES + trend component                               | Models level and trend for forecasting.                                                         | Additive linear trend (no seasonality).                                                                                   | Suitable for data with trends but no seasonality.                   | Fails if seasonality is present.                                   |
-| **Holt-Winters**                  | SES + trend + seasonality components               | Models level, trend, and seasonality.                                                           | Additive or multiplicative seasonality; periodic patterns are consistent over time.                                       | Captures complex patterns in data.                                 | Requires stable seasonal structure.                                |
-| **ETS (Error-Trend-Seasonality)** | Exponential smoothing framework                      | Flexible model for level, trend, and seasonality.                                               | Error, trend, and seasonality are modeled explicitly.                                                                      | Automatically selects the best smoothing model.                    | Less interpretable than ARIMA-type models.                         |
-| **VAR (Vector Autoregression)**   | Multivariate time series $(\text{relationships between multiple series})$ | Models relationships between two or more time series.                                            | All series must be stationary; interdependence is linear.                                                                 | Handles interdependent series; suitable for causal analysis.        | Complex; requires all series to be stationary and interrelated.    |
-| **ARCH (Autoregressive Conditional Heteroskedasticity)** | Variance of errors depends on past variances.            | Models volatility clustering in financial/economic data.                                         | Errors exhibit changing variance (heteroskedasticity).                                                                    | Excellent for analyzing volatility in returns or prices.           | Assumes specific forms of variance dynamics.                        |
-| **GARCH (Generalized ARCH)**      | Extends ARCH with lagged variance terms.            | Captures long-term and short-term volatility in data.                                           | Errors have heteroskedasticity and correlations in variance.                                                               | Flexible; captures complex volatility patterns.                    | Requires careful parameter tuning.                                  |
-| **TBATS (Exponential Smoothing State Space Model)** | Exponential smoothing + trend + seasonality + Box-Cox transformation | Models complex seasonal patterns (e.g., multiple seasonalities).                                 | Handles irregular and multiple seasonalities.                                                                             | Flexible for advanced forecasting scenarios.                       | Computationally intensive.                                         |
-| **Prophet (Facebook)**            | Trend + seasonality + holidays                       | Forecasts with irregular data and explicit handling of external events.                         | Assumes linear or logistic growth; holidays/events are known and well-defined.                                            | User-friendly; handles missing data and holidays.                  | Less precise for short-term, high-frequency data.                   |
+### A Practical Identification and Validation Workflow
 
-### Model Identification and Selection
+1. **Explore the series.** Plot the data and identify trend, seasonality, outliers, missing values, structural breaks, and changing variance.
+2. **Assess stationarity.** Use plots, ACF behavior, and tests such as ADF/KPSS as supporting evidence rather than relying on a single test.
+3. **Transform when needed.** Apply variance-stabilizing transformations, detrending, ordinary differencing, or seasonal differencing when justified.
+4. **Propose candidate orders.** Use ACF/PACF patterns together with domain knowledge; do not treat cutoff heuristics as infallible rules.
+5. **Estimate parameters.** Use an estimation method appropriate to the model class.
+6. **Compare parsimonious candidates.** AIC, AICc, and BIC are useful for comparing likelihood-based models fit to the same response data.
+7. **Diagnose residuals.** Inspect residual plots and residual ACF/PACF and use tests such as Ljung-Box. Remaining serial dependence indicates model inadequacy.
+8. **Evaluate forecasts temporally.** Preserve time order with a holdout period, expanding-window evaluation, or rolling-origin evaluation. Randomly shuffled cross-validation is generally inappropriate for forecasting because it leaks future information into model training.
 
-A practical workflow for fitting time series models is:
-
-1. **Plot the series** to identify trend, seasonality, and variance changes.  
-2. **Remove trend/seasonality** (detrending, seasonal adjustment, or differencing).  
-3. **Inspect ACF/PACF** to propose AR and MA orders.  
-4. **Estimate parameters** and check residual diagnostics.  
-5. **Forecast** with the selected model.  
-
-Common estimation tools include **Yule-Walker** or **Burg** for pure AR models and **Innovations** or **Hannan-Rissanen** for ARMA models. These estimates are often used to initialize maximum likelihood optimization.
-
-#### ARMA Identification and Estimation Checklist
+### ARMA Identification and Estimation Checklist
 
 For a stationary series, a common ARMA workflow is:
 
-1. **Choose orders $p, q$** using ACF/PACF patterns.  
-2. **Estimate the mean** and work with the mean-centered series $X_t - \bar{X}$.  
-3. **Estimate AR/MA coefficients** (Innovations for MA, Yule-Walker or Burg for AR, Hannan-Rissanen for ARMA).  
-4. **Estimate innovation variance** $\sigma^2$.  
-5. **Select the final model** using diagnostics and information criteria.  
+1. Choose candidate orders $p$ and $q$ using ACF/PACF patterns and domain knowledge.
+2. Decide whether a mean/intercept term is appropriate and center the series when useful.
+3. Estimate AR/MA coefficients with an appropriate numerical method.
+4. Estimate the innovation variance $\sigma^2$.
+5. Compare candidate models using diagnostics and information criteria.
+6. Check that residuals do not retain material serial dependence.
 
-#### Order Selection with AICc
+For pure AR models, Yule-Walker or Burg estimates can be useful. Innovations algorithms are useful for MA structure, while Hannan-Rissanen can provide starting estimates for ARMA models before likelihood optimization.
 
-The **Akaike Information Criterion with correction (AICc)** adjusts AIC for smaller samples:
+### Order Selection with AICc
+
+The **Akaike Information Criterion with correction (AICc)** adjusts AIC for finite samples. One common form is
 
 $$
-\text{AICc} = -2\ln(L) + \frac{2k n}{n - k - 1}
+\operatorname{AICc}
+=
+\operatorname{AIC}
++
+\frac{2k(k+1)}{n-k-1},
 $$
 
-where $k$ is the number of estimated parameters and $n$ is the sample size. For ARMA($p, q$) with mean, a common choice is $k = p + q + 1$ (plus any additional terms if included). Lower AICc values indicate a better balance between fit and complexity.
+where $k$ is the number of estimated parameters used in the likelihood and $n$ is the effective sample size. Lower values indicate a better tradeoff between fit and complexity among models fitted to comparable data. Parameter-count conventions vary by implementation, so the software documentation should be checked when reproducing exact AICc values.
 
-#### Parameter Redundancy
+### Parameter Redundancy
 
-Sometimes an over-parameterized ARMA model can describe a simpler process. For example, a white-noise series can be written in ARMA form with canceling AR and MA polynomials, even though the underlying process is still noise. Checking for **common factors** in the AR and MA polynomials helps avoid redundant parameters.
+An over-parameterized ARMA model can sometimes represent a simpler process if its AR and MA polynomials share common factors. Such cancellations make parameters redundant and can cause identification problems. Prefer reduced representations without common AR/MA factors.
+
+### Model Selection Is Not Only About Fit
+
+A more complex model can always reduce some in-sample error, but that does not guarantee better forecasting. Prefer the simplest model that captures the important dependence structure, passes residual diagnostics reasonably well, and performs competitively on future or pseudo-future observations.
+
+### Connections to Other Notes
+
+- See **[stationarity.md](stationarity.md)** before interpreting AR/MA/ARIMA models.
+- See **[autocorrelation_function.md](autocorrelation_function.md)** for ACF/PACF-based identification.
+- See **[autoregressive_models.md](autoregressive_models.md)** and **[moving_average_models.md](moving_average_models.md)** for model-specific properties.
+- See **[arima_models.md](arima_models.md)** for differencing and seasonal ARIMA models.
+- See **[randomness_tests.md](randomness_tests.md)** for residual checks.
+- See **[forecasting.md](forecasting.md)** for forecast construction and evaluation metrics.
