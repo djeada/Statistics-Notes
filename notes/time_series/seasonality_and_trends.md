@@ -425,7 +425,3 @@ Use seasonal forecast origins and a seasonal-naive benchmark. For period-12 data
 ![Seasonal naive forecast](../../assets/time_series/arima_seasonality/07_seasonal_naive_forecast.png)
 
 The seasonal-naive figure provides the benchmark that any more elaborate seasonal model should beat on future-like data. Repeating the most recent value from the same season is simple, but it can be difficult to improve upon when the seasonal pattern is stable.
-
-### Visual companions
-
-The seasonal visuals are integrated with the decisions they support: additive versus multiplicative scaling, decomposition, smoothing, differencing, and seasonal-naive validation. This ordering follows the modeling progression from identifying the repeating pattern to choosing a representation and finally checking whether that representation improves forecasts.
