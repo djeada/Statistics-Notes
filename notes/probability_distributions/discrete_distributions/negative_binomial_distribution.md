@@ -1,4 +1,4 @@
-## Negative Binomial Distribution (Discrete)
+# Negative Binomial Distribution (Discrete)
 
 A discrete random variable X follows a negative binomial distribution if it represents the number of trials required to achieve a specified number of successes in a sequence of independent Bernoulli trials. The negative binomial distribution is often denoted as $X \sim \text{NegBinomial}(r, p)$, where r is the number of successes required and p is the probability of success on each trial.
 
@@ -65,4 +65,4 @@ $$\text{Var}(X) = \frac{5 \times (1-0.1)}{0.1^2} = 450$$
 
 ### Applications
 
-Negative binomial distributions are commonly used in scenarios where the number of trials until a specified number of failures occurs is of interest, such as in reliability testing, epidemiology, and ecological studies.
+Negative binomial distributions are commonly used when the number of trials required to reach a specified number of successes is of interest. The same model can describe failures by relabeling the event of interest as a "success." Applications include reliability testing, epidemiology, and ecological studies.
