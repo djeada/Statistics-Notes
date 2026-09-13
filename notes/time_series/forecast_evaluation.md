@@ -324,7 +324,3 @@ The time plot can reveal regime-specific failures that disappear in an overall a
 8. Summarize by horizon and inspect errors over time.
 9. Refit the selected procedure on all allowed historical data.
 10. Record how the live forecast will obtain future predictors and update itself.
-
-### Visual companions
-
-The figures are integrated with the evaluation decisions they illustrate: baselines before candidate comparison, rolling origins beside the resampling design, metrics beside their loss functions, interval coverage beside calibration, and leakage beside the information boundary. Together they describe a complete forecasting experiment rather than a collection of disconnected diagnostics.
