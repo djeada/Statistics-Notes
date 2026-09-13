@@ -242,11 +242,7 @@ IV. Apply the Addition Rule
 Substitute the values into the formula:
 
 $$
-P(\text{Heart} \cup \text{Queen}) = \frac{13}{52}
-+
-\frac{4}{52}
--
-\frac{1}{52}
+P(\text{Heart} \cup \text{Queen}) = \frac{13}{52} + \frac{4}{52} - \frac{1}{52}
 $$
 
 Simplifying:
