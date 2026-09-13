@@ -1,5 +1,9 @@
 # Randomness and Trend Tests
 
+Randomness tests look for specific kinds of structure that should not appear under a stated null model. In time-series work, they are most useful as diagnostics: one test may target linear autocorrelation, another unusual turning-point behavior, another monotone trend, and another dependence in squared residuals.
+
+No finite set of tests can prove that a series is truly random. Their role is to identify particular departures from an assumed noise process and to be interpreted alongside plots, model assumptions, residual behavior, and out-of-sample forecasting evidence.
+
 ## Worked calculation: counting turning points
 
 For the short sequence
