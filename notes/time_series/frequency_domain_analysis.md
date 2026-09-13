@@ -244,8 +244,4 @@ Before treating a spectral peak as substantive evidence:
 8. account for the number of frequencies examined;
 9. avoid causal claims based on coherence alone.
 
-### Visual companions
-
-The periodogram, leakage, aliasing, and cross-frequency figures are placed beside the concepts they illustrate above. Together they show the progression from identifying a frequency, to understanding the limits imposed by finite samples and sampling rate, to comparing frequency-specific structure across series.
-
 The related state-space material is covered in the [state-space chapter](state_space_models.md), and the [state-space/frequency notebook](../../notebooks/time_series/state_space_and_frequency.ipynb) provides an additional worked environment.
