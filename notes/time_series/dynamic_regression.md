@@ -32,7 +32,7 @@ $$
 
 For forecasting, that calculation is valid only if the required predictor values would be available at the forecast origin. A realized future temperature, exchange rate, or policy variable may itself need to be forecast.
 
-![Dynamic regression with serially correlated errors](../../assets/time_series/student/16_dynamic_regression.png)
+![Dynamic regression with serially correlated errors](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/16_dynamic_regression.png)
 
 The figure separates two sources of structure: the regression mean follows an external predictor, while serial dependence remains in the errors around that mean. Dynamic regression models both pieces rather than forcing the predictor to explain all temporal dependence.
 
@@ -52,7 +52,7 @@ $$
 
 Under suitable exogeneity assumptions, ignoring residual autocorrelation need not bias the regression coefficients, but it can invalidate ordinary independent-error standard errors and leave forecastable structure unused.
 
-![Dynamic regression errors](../../assets/time_series/dynamic_multivariate/01_dynamic_regression_errors.png)
+![Dynamic regression errors](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/01_dynamic_regression_errors.png)
 
 The residual plot shows why the error model matters. A regression can track the predictor-driven mean while still leaving runs of positive and negative residuals that an ARMA component can model.
 
@@ -66,7 +66,7 @@ $$
 
 Use lagged predictors when the domain suggests a delayed response. Avoid adding many adjacent lags mechanically, because nearby predictor values are often strongly correlated and can make individual lag coefficients unstable.
 
-![Distributed lag](../../assets/time_series/dynamic_multivariate/02_distributed_lag.png)
+![Distributed lag](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/02_distributed_lag.png)
 
 The figure illustrates how one change in $x_t$ can influence the response across several later periods. The lag coefficients describe the shape and duration of that response.
 
@@ -74,7 +74,7 @@ The figure illustrates how one change in $x_t$ can influence the response across
 
 Future predictor values must be known or forecast separately. Calendar variables and scheduled promotions may be available in advance; future weather and macroeconomic quantities usually are not. Evaluating a model with realized future predictors that would not have been available creates information leakage.
 
-![Future predictor availability](../../assets/time_series/dynamic_multivariate/03_future_predictor_availability.png)
+![Future predictor availability](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/03_future_predictor_availability.png)
 
 The visual distinguishes predictors that are known at the forecast origin from those that must themselves be forecast. This distinction determines whether a reported forecast is operationally reproducible.
 
@@ -207,27 +207,27 @@ A regression coefficient describes a conditional association within the specifie
 
 Granger predictability asks whether past values of one series improve prediction of another after conditioning on the included information. It is a predictive concept, not a guarantee that intervening on the predictor would change the target.
 
-![Granger predictability](../../assets/time_series/dynamic_multivariate/05_granger_predictability.png)
+![Granger predictability](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/05_granger_predictability.png)
 
 The figure illustrates the predictive question: does adding the past of one series improve forecasts beyond the target's own history and other included variables?
 
 Feedback between several endogenous series requires a multivariate model rather than a single-equation dynamic regression.
 
-![VAR feedback](../../assets/time_series/dynamic_multivariate/04_var_feedback.png)
+![VAR feedback](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/04_var_feedback.png)
 
 The VAR figure shows reciprocal lagged dependence, where each series can respond to the history of the others. This is different from treating one predictor as externally determined.
 
 Related multivariate models also handle shared stochastic trends and dynamic responses to system-wide shocks.
 
-![Cointegrating spread](../../assets/time_series/dynamic_multivariate/06_cointegrating_spread.png)
+![Cointegrating spread](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/06_cointegrating_spread.png)
 
 A cointegrating spread can remain stable even when the component series are individually non-stationary.
 
-![VECM adjustment](../../assets/time_series/dynamic_multivariate/07_vecm_adjustment.png)
+![VECM adjustment](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/07_vecm_adjustment.png)
 
 The VECM figure shows how deviations from a long-run equilibrium can feed into subsequent changes.
 
-![Impulse response](../../assets/time_series/dynamic_multivariate/08_impulse_response.png)
+![Impulse response](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/08_impulse_response.png)
 
 An impulse-response plot traces the model-implied effect of a specified system shock over future periods. Its interpretation depends on the multivariate identification assumptions, not only on temporal ordering.
 

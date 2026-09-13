@@ -34,9 +34,9 @@ The calculation requires $|0.8|<1$. At $\phi=1$, the process is on the unit-root
 
 The figure below contrasts these cases. A stationary AR(1) fluctuates around a stable level, a unit-root process wanders as shocks accumulate, and an explosive process moves increasingly far from its starting region.
 
-![Stationary, unit-root, and explosive AR(1) behavior](../../assets/time_series/student/10_stationarity_cases.png)
+![Stationary, unit-root, and explosive AR(1) behavior](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/10_stationarity_cases.png)
 
-![Stationarity cases](../../assets/time_series/foundations/06_stationarity_cases.png)
+![Stationarity cases](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/06_stationarity_cases.png)
 
 Stationarity describes which probabilistic features of a time series remain stable as time shifts. For weak stationarity, the mean and variance are constant and autocovariance depends only on lag. This condition matters because ARMA models are formulated for stationary series, while ARIMA models handle certain non-stationary series by differencing them before applying an ARMA structure.
 
@@ -65,9 +65,9 @@ The next figure shows this progression: the upper panel contains the original se
 
 The following examples provide two additional views of detrending and its effect on the series.
 
-![detrending example](../../assets/time_series/detrending_example.png)
+![detrending example](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/detrending_example.png)
 
-![Detrending](../../assets/time_series/diagnostics/01_detrending.png)
+![Detrending](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/01_detrending.png)
 
 ### Intuition for Stationary Time Series
 
@@ -121,7 +121,7 @@ Weak stationarity implies $\mu(t) = \mu$ and $\gamma(r, s)$ depends only on the 
 
 The figure below illustrates the contrast between stable moments and moments that change over time. Changes in the local mean or variance are visual evidence against global weak stationarity.
 
-![Moments changing over time](../../assets/time_series/foundations/04_moments_change_over_time.png)
+![Moments changing over time](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/04_moments_change_over_time.png)
 
 #### Autocorrelation and Bounds
 

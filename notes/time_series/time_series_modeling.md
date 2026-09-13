@@ -29,7 +29,7 @@ $$
 
 Model B wins this narrow in-sample comparison, but it should not be accepted automatically. If B leaves a residual lag-12 spike while A has approximately white-noise residuals, A may be the more useful forecasting model. Compare candidates on the same observations, inspect residuals, and use temporal backtesting before treating a small information-criterion difference as meaningful.
 
-![Conditional mean and residual diagnostics for an AR model](../../assets/time_series/student/13_modeling_residual_diagnostics.png)
+![Conditional mean and residual diagnostics for an AR model](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/13_modeling_residual_diagnostics.png)
 
 The figure shows the two parts of model assessment together: the fitted conditional mean should capture the systematic structure, and the residuals should no longer contain obvious predictable dependence.
 
@@ -171,7 +171,7 @@ The table is a model map, not a ranking. The appropriate class depends on what i
 7. **Diagnose residuals.** Check residual time plots, ACF/PACF, squared residuals, and relevant tests such as Ljung-Box.
 8. **Evaluate forecasts temporally.** Preserve chronology with holdouts or rolling/expanding origins.
 
-![Temporal validation split](../../assets/time_series/diagnostics/08_temporal_validation_split.png)
+![Temporal validation split](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/08_temporal_validation_split.png)
 
 The figure emphasizes the final step: model selection is incomplete until the complete procedure is tested on future-like observations without information leakage.
 
@@ -244,7 +244,7 @@ For example, a monthly sales forecast issued on the last day of March may use co
 
 Inspect the level series, relevant transformations, first and seasonal differences, rolling mean and variance, missingness and outliers, ACF/PACF, known calendar effects, and possible structural breaks.
 
-![Detrending](../../assets/time_series/diagnostics/01_detrending.png)
+![Detrending](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/01_detrending.png)
 
 The detrending figure shows why preprocessing should follow the mechanism. Removing a deterministic trend can reveal stationary residual structure, while differencing answers a different question by modeling changes rather than deviations around a fitted trend.
 
@@ -316,7 +316,7 @@ $$
 {\sum_{t=1}^{T}(\hat\varepsilon_t-\bar\varepsilon)^2}.
 $$
 
-![Residual ACF](../../assets/time_series/diagnostics/02_residual_acf.png)
+![Residual ACF](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/02_residual_acf.png)
 
 The residual ACF shows whether linear dependence remains after fitting. A visible spike suggests a missing dynamic term, seasonal feature, predictor, or structural component, but the plot alone does not tell which one.
 
@@ -326,7 +326,7 @@ $$
 Q(m)=T(T+2)\sum_{h=1}^{m}\frac{\hat\rho(h)^2}{T-h}.
 $$
 
-![Ljung-Box shape](../../assets/time_series/diagnostics/06_ljung_box_shape.png)
+![Ljung-Box shape](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/06_ljung_box_shape.png)
 
 The figure reinforces that the test aggregates evidence across several lags. A small p-value says the residuals retain linear dependence at one or more tested lags; it does not prescribe the replacement model.
 
@@ -334,15 +334,15 @@ The figure reinforces that the test aggregates evidence across several lags. A s
 
 A residual ACF near zero does not establish independent, homoskedastic residuals. Inspect squared residuals and their dependence as well.
 
-![Residual variance](../../assets/time_series/diagnostics/03_residual_variance.png)
+![Residual variance](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/03_residual_variance.png)
 
 Changing residual spread indicates that the conditional variance may need separate modeling.
 
-![Residual nonlinearity](../../assets/time_series/diagnostics/04_residual_nonlinearity.png)
+![Residual nonlinearity](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/04_residual_nonlinearity.png)
 
 A residual plot can also reveal nonlinear patterns that a linear mean model cannot capture even when ordinary autocorrelation is small.
 
-![Residual distribution](../../assets/time_series/diagnostics/05_residual_distribution.png)
+![Residual distribution](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/05_residual_distribution.png)
 
 Heavy tails or skewness can make Gaussian prediction intervals poorly calibrated even when the conditional mean is adequate. The relevant distributional assumption should match the forecast objective, especially when tail probabilities matter.
 
@@ -350,7 +350,7 @@ Heavy tails or skewness can make Gaussian prediction intervals poorly calibrated
 
 A single stable parameter set can average over multiple regimes. After a break, residuals may show a level shift, a change in persistence, a variance jump, or a change in seasonal amplitude.
 
-![Structural break](../../assets/time_series/diagnostics/07_structural_break.png)
+![Structural break](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/07_structural_break.png)
 
 The break figure shows why an isolated global fit can be misleading: parameters that describe the pre-break period may no longer represent the post-break process.
 

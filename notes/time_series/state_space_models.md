@@ -30,7 +30,7 @@ $$
 
 The estimate moves partway toward the observation because both the prior state estimate and the measurement are uncertain. A larger measurement variance would reduce the gain and make the filter rely more heavily on the prior prediction.
 
-![Filtering a noisy local level](../../assets/time_series/student/18_state_space_filter.png)
+![Filtering a noisy local level](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/18_state_space_filter.png)
 
 The figure shows the role of the latent state: the observed series is noisy, while the filter updates an estimate of the underlying level as each new observation arrives.
 
@@ -60,7 +60,7 @@ $$
 
 The latent level $\mu_t$ follows a random walk, while the observed value contains additional measurement noise. Separating these two sources of variation lets the model distinguish movement in the underlying signal from noise in the observation.
 
-![Local-level filter](../../assets/time_series/state_space_frequency/01_local_level_filter.png)
+![Local-level filter](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/01_local_level_filter.png)
 
 The local-level figure shows the observed series together with the filtered latent level. The filter follows sustained changes in the signal while avoiding a full reaction to every noisy observation.
 
@@ -102,13 +102,13 @@ a_{t|t}=a_{t|t-1}+K_tv_t,
 P_{t|t}=(1-K_t)P_{t|t-1}.
 $$
 
-![Kalman gain](../../assets/time_series/state_space_frequency/02_kalman_gain.png)
+![Kalman gain](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/02_kalman_gain.png)
 
 The gain figure makes the weighting rule explicit: precise measurements receive more weight, while noisy measurements move the state estimate less.
 
 **Filtering** estimates the current state using observations available through the current time. **Forecasting** propagates that filtered state into the future. **Smoothing** revises historical states using later observations as well, so a smoothed state is a retrospective estimate rather than a real-time forecast.
 
-![Filtering and smoothing](../../assets/time_series/state_space_frequency/04_filtering_vs_smoothing.png)
+![Filtering and smoothing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/04_filtering_vs_smoothing.png)
 
 The figure shows why the distinction matters. The smoothed path can use future observations to revise a past state and will often appear cleaner than the real-time filtered path. Using it to evaluate a real-time procedure would leak future information.
 
@@ -258,7 +258,7 @@ P_{t+1|t}=T_{t+1}P_{t|t}T_{t+1}^{\top}
 +R_{t+1}Q_{t+1}R_{t+1}^{\top}.
 $$
 
-![Missing observations](../../assets/time_series/state_space_frequency/03_missing_observations.png)
+![Missing observations](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/03_missing_observations.png)
 
 The figure shows that the filter does not fabricate missing measurements. It propagates the state using the transition model, while uncertainty grows until new observations provide another update.
 

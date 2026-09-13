@@ -26,7 +26,7 @@ $$
 
 The notation is compact, but the calculation is still ordinary subtraction. It becomes especially useful when ordinary and seasonal differences are combined in ARIMA models.
 
-![Backshift and first differences](../../assets/time_series/student/07_backward_shift_difference.png)
+![Backshift and first differences](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/07_backward_shift_difference.png)
 
 The **backward shift operator**, denoted by $B$, is a compact way to refer to earlier observations in a time series. It shifts the time index back by one period and simplifies the notation used in autoregressive, moving average, and mixed models.
 
@@ -270,7 +270,7 @@ $$
 
 This four-term expression makes the two comparisons explicit and helps prevent indexing errors when implementing seasonal ARIMA models.
 
-![Backshift differences](../../assets/time_series/dependence/05_backshift_differences.png)
+![Backshift differences](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/05_backshift_differences.png)
 
 The figure shows the same idea geometrically: each operator selects lagged observations, and differencing combines those shifted values with positive and negative weights.
 

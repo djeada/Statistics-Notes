@@ -76,7 +76,7 @@ Examples include:
 
 A random split can sometimes approximate this situation because held-out observations remain close to training data.
 
-![Random versus spatial holdout geometry](../../assets/spatial_statistics/spatial_validation/01_random_vs_spatial_split.png)
+![Random versus spatial holdout geometry](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/01_random_vs_spatial_split.png)
 
 ## Spatial transfer
 
@@ -175,7 +175,7 @@ Then summarize:
 
 A validation design is more representative of transfer when these distances resemble those expected at deployment.
 
-![Nearest train-test distance](../../assets/spatial_statistics/spatial_validation/02_nearest_training_distance.png)
+![Nearest train-test distance](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/02_nearest_training_distance.png)
 
 ## Numerical distance example
 
@@ -256,7 +256,7 @@ The block size should reflect:
 - the spatial support of predictions;
 - practical sample-size constraints.
 
-![Block size sensitivity](../../assets/spatial_statistics/spatial_validation/04_block_size_sensitivity.png)
+![Block size sensitivity](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/04_block_size_sensitivity.png)
 
 ## Relationship to correlation range
 
@@ -298,7 +298,7 @@ of the test region.
 
 The parameter $b$ is the buffer width.
 
-![Buffered validation geometry](../../assets/spatial_statistics/spatial_validation/05_buffer_geometry.png)
+![Buffered validation geometry](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/05_buffer_geometry.png)
 
 ## What the buffer is doing
 
@@ -484,7 +484,7 @@ It is:
 
 > Which validation geometry resembles deployment?
 
-![Validation RMSE comparison](../../assets/spatial_statistics/spatial_validation/03_validation_rmse.png)
+![Validation RMSE comparison](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/03_validation_rmse.png)
 
 ## A toy spatial predictor
 
@@ -577,7 +577,7 @@ The correct procedure is:
 3. fit the model;
 4. calculate test features using only information that would be available at deployment.
 
-![Spatial leakage](../../assets/spatial_statistics/spatial_validation/06_spatial_leakage.png)
+![Spatial leakage](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/06_spatial_leakage.png)
 
 ## Preprocessing must be fold-specific
 
@@ -767,7 +767,7 @@ can hide substantial geographic heterogeneity.
 
 Two regions are substantially harder than the others.
 
-![Fold-level variability](../../assets/spatial_statistics/spatial_validation/08_fold_level_variability.png)
+![Fold-level variability](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/08_fold_level_variability.png)
 
 ## Why spatial folds are not independent replicates
 

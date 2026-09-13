@@ -99,7 +99,7 @@ Kriging also accounts for redundancy among nearby observations. Two points almos
 
 This is one reason kriging differs from simple distance-based weighting.
 
-![Kriging geometry](../../assets/spatial_statistics/kriging/01_kriging_geometry.png)
+![Kriging geometry](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/kriging/01_kriging_geometry.png)
 
 ## Ordinary kriging
 
@@ -508,7 +508,7 @@ This prediction is conditional on the assumed model.
 
 A different variogram, trend model, or nugget interpretation could produce different weights and a different prediction.
 
-![Ordinary kriging weights](../../assets/spatial_statistics/kriging/02_ordinary_kriging_weights.png)
+![Ordinary kriging weights](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/kriging/02_ordinary_kriging_weights.png)
 
 ## Calculate the ordinary-kriging variance
 
@@ -602,7 +602,7 @@ Kriging recognizes that the two nearly coincident observations contain highly re
 
 The weights depend on the full covariance geometry, not only on distance to the target.
 
-![Redundancy and weights](../../assets/spatial_statistics/kriging/03_redundancy_and_weights.png)
+![Redundancy and weights](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/kriging/03_redundancy_and_weights.png)
 
 ### Important consequence
 
@@ -630,7 +630,7 @@ For every grid location $s_0$:
 
 Repeating this process creates a prediction surface.
 
-![Kriging prediction surface](../../assets/spatial_statistics/kriging/04_prediction_surface.png)
+![Kriging prediction surface](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/kriging/04_prediction_surface.png)
 
 The resulting surface is not merely a visual smoothing of the data. It comes from repeatedly solving the model-based prediction problem.
 
@@ -644,7 +644,7 @@ Uncertainty is usually lower inside a dense cluster of observations than in a la
 
 Outside the convex region covered by data, uncertainty often increases.
 
-![Kriging variance surface](../../assets/spatial_statistics/kriging/05_variance_surface.png)
+![Kriging variance surface](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/kriging/05_variance_surface.png)
 
 ### A common misconception
 
@@ -831,7 +831,7 @@ Simple kriging therefore returns toward the known mean as the target moves far f
 
 This is an important conceptual difference between simple and ordinary kriging.
 
-![Simple versus ordinary behavior](../../assets/spatial_statistics/kriging/06_simple_vs_ordinary.png)
+![Simple versus ordinary behavior](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/kriging/06_simple_vs_ordinary.png)
 
 ## Simple-kriging variance
 
@@ -1075,7 +1075,7 @@ The prediction of the latent $X(s)$ can combine:
 
 The resulting prediction therefore need not equal exactly 12.0.
 
-![Nugget and interpolation](../../assets/spatial_statistics/kriging/07_nugget_interpolation.png)
+![Nugget and interpolation](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/kriging/07_nugget_interpolation.png)
 
 #### Main lesson
 
@@ -1240,7 +1240,7 @@ A spread much larger than 1 suggests that the model may be too confident.
 
 A spread much smaller than 1 suggests that the reported uncertainty may be too large.
 
-![Cross-validation diagnostics](../../assets/spatial_statistics/kriging/08_cross_validation.png)
+![Cross-validation diagnostics](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/kriging/08_cross_validation.png)
 
 ## Why leave-one-out validation can be optimistic
 

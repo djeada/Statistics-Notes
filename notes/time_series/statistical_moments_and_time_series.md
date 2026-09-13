@@ -34,7 +34,7 @@ $$
 
 Thus this small sample has lag-1 covariance zero, even though zero sample covariance does not imply independence. In a time series, moments must be considered together with their time and lag structure, so a single overall mean or variance can be misleading when those quantities change over time.
 
-![Series with different sample variances](../../assets/time_series/student/03_moments_mean_and_variance.png)
+![Series with different sample variances](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/03_moments_mean_and_variance.png)
 
 The figure illustrates why the mean alone is not enough to describe a series: two sequences can be centered at similar levels while differing substantially in their spread.
 
@@ -66,7 +66,7 @@ Here the central level is comparatively stable, but the amplitude of the fluctua
 
 The two figures demonstrate why stationarity involves more than checking whether a plot has an obvious trend. Both the level and the variance structure matter.
 
-![Changing moments](../../assets/time_series/foundations/04_moments_change_over_time.png)
+![Changing moments](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/04_moments_change_over_time.png)
 
 This companion figure places the cases side by side so that changes in the mean and changes in the variance can be distinguished directly.
 

@@ -58,7 +58,7 @@ The region itself is part of what is observed.
 
 A county unemployment rate is not a point measurement taken at the county centroid. It summarizes people or households distributed across the county.
 
-![Three spatial data objects](../../assets/spatial_statistics/data_support_distance/01_spatial_data_objects.png)
+![Three spatial data objects](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/data_support_distance/01_spatial_data_objects.png)
 
 ## Point-referenced measurements
 
@@ -211,7 +211,7 @@ $$
 
 So one degree of longitude near $60^\circ$ latitude is roughly half the east-west distance of one degree at the equator.
 
-![Longitude distortion](../../assets/spatial_statistics/data_support_distance/02_longitude_distance_by_latitude.png)
+![Longitude distortion](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/data_support_distance/02_longitude_distance_by_latitude.png)
 
 ## Numerical example: one degree of longitude
 
@@ -484,7 +484,7 @@ Examples:
 
 Support describes what a single observed value represents spatially.
 
-![Different supports](../../assets/spatial_statistics/data_support_distance/03_spatial_support.png)
+![Different supports](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/data_support_distance/03_spatial_support.png)
 
 ## Point support versus area support
 
@@ -538,7 +538,7 @@ If many small-scale fluctuations occur inside regions and only region averages a
 
 This is called a **change-of-support** effect.
 
-![Aggregation smooths variability](../../assets/spatial_statistics/data_support_distance/04_support_and_aggregation.png)
+![Aggregation smooths variability](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/data_support_distance/04_support_and_aggregation.png)
 
 ## Numerical aggregation example
 
@@ -691,7 +691,7 @@ The same underlying spatial field can produce different:
 
 at different aggregation levels.
 
-![MAUP scale effect](../../assets/spatial_statistics/data_support_distance/05_maup_scale.png)
+![MAUP scale effect](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/data_support_distance/05_maup_scale.png)
 
 ## Numerical scale-effect example
 
@@ -777,7 +777,7 @@ $$
 
 The same fine-scale data can therefore produce very different apparent regional contrasts.
 
-![MAUP zoning effect](../../assets/spatial_statistics/data_support_distance/06_maup_zoning.png)
+![MAUP zoning effect](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/data_support_distance/06_maup_zoning.png)
 
 ## Why MAUP is not just a plotting issue
 
@@ -921,7 +921,7 @@ $$
 d_{\text{network}}=9.
 $$
 
-![Euclidean versus network distance](../../assets/spatial_statistics/data_support_distance/07_distance_metrics.png)
+![Euclidean versus network distance](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/data_support_distance/07_distance_metrics.png)
 
 The appropriate distance depends on the process being modeled.
 
@@ -1014,7 +1014,7 @@ For a point process, it is the region in which events could have been observed.
 
 The boundary is part of both the data-generating process and the observation process.
 
-![Boundary effect](../../assets/spatial_statistics/data_support_distance/08_boundary_effect.png)
+![Boundary effect](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/data_support_distance/08_boundary_effect.png)
 
 ## Why boundaries matter
 

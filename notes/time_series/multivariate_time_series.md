@@ -33,7 +33,7 @@ $$
 
 The sign and size of $\alpha$ describe how this equation responds after the system moves away from the long-run relation.
 
-![Two levels with a stable cointegrating spread](../../assets/time_series/student/17_multivariate_cointegration.png)
+![Two levels with a stable cointegrating spread](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/17_multivariate_cointegration.png)
 
 The figure shows two non-stationary levels moving together while their spread remains bounded. Cointegration is about this stable combination, not about the individual levels being stationary.
 
@@ -49,7 +49,7 @@ $$
 
 Every variable can depend on lagged values of every variable in the system. This flexibility is useful when the variables interact, but the number of coefficients grows quickly, so lag order and system size must remain parsimonious.
 
-![VAR feedback](../../assets/time_series/dynamic_multivariate/04_var_feedback.png)
+![VAR feedback](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/04_var_feedback.png)
 
 The figure illustrates the defining VAR idea: lagged values can feed across equations in both directions. A joint system is appropriate when neither series is naturally treated as fully external to the other.
 
@@ -59,13 +59,13 @@ Lag order can be compared with AIC, BIC, or HQIC, but residual diagnostics, stab
 
 Variable $x$ **Granger-predicts** $y$ when past values of $x$ improve prediction of $y$ after conditioning on the other included past information. The historical term "Granger-causes" is common, but the result is about incremental predictive content rather than intervention or structural causality.
 
-![Granger predictability](../../assets/time_series/dynamic_multivariate/05_granger_predictability.png)
+![Granger predictability](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/05_granger_predictability.png)
 
 The visual compares prediction with and without the additional lagged series. The relevant question is whether including the history of $x$ improves the conditional forecast of $y$ beyond the information already in the model.
 
 Impulse-response functions trace how shocks propagate through a VAR. Their interpretation depends on how contemporaneous innovations are identified; orthogonalized responses can depend on variable ordering.
 
-![Impulse response](../../assets/time_series/dynamic_multivariate/08_impulse_response.png)
+![Impulse response](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/08_impulse_response.png)
 
 The impulse-response figure connects a one-time identified shock to its model-implied effects across future horizons. Those responses are not uniquely structural until the shock-identification assumptions are specified.
 
@@ -92,11 +92,11 @@ $$
 
 the columns of $\beta$ describe cointegrating relations and $\alpha$ describes how each equation adjusts to deviations from those relations.
 
-![Cointegrating spread](../../assets/time_series/dynamic_multivariate/06_cointegrating_spread.png)
+![Cointegrating spread](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/06_cointegrating_spread.png)
 
 The spread figure shows the stationary combination that is preserved by the VECM rather than discarded through differencing.
 
-![VECM adjustment](../../assets/time_series/dynamic_multivariate/07_vecm_adjustment.png)
+![VECM adjustment](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/07_vecm_adjustment.png)
 
 The adjustment figure shows how disequilibrium at one time point can feed into later changes. The direction of adjustment depends on both the definition of the spread and the signs of the loading coefficients.
 

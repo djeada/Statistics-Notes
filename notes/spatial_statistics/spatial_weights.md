@@ -87,7 +87,7 @@ $$
 
 The matrix is the numerical representation of the neighborhood graph.
 
-![A spatial weights graph and matrix](../../assets/spatial_statistics/spatial_weights/01_weights_graph.png)
+![A spatial weights graph and matrix](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/01_weights_graph.png)
 
 ## The diagonal is usually zero
 
@@ -199,7 +199,7 @@ W_Q=
 \end{bmatrix}.
 $$
 
-![Rook versus queen contiguity](../../assets/spatial_statistics/spatial_weights/02_rook_vs_queen.png)
+![Rook versus queen contiguity](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/02_rook_vs_queen.png)
 
 ### Why does this matter?
 
@@ -435,7 +435,7 @@ These two forms encode different ideas.
 
 Neither is automatically appropriate in every application.
 
-![Neighbor sum versus neighbor average](../../assets/spatial_statistics/spatial_weights/03_binary_vs_row_standardized.png)
+![Neighbor sum versus neighbor average](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/03_binary_vs_row_standardized.png)
 
 ## Distance-band weights
 
@@ -606,7 +606,7 @@ $$
 W\neq W^\top.
 $$
 
-![Directed k-nearest neighbors](../../assets/spatial_statistics/spatial_weights/04_knn_asymmetry.png)
+![Directed k-nearest neighbors](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/04_knn_asymmetry.png)
 
 This asymmetry is not an error.
 
@@ -936,7 +936,7 @@ Common options include:
 - use a scientifically motivated special link;
 - exclude the observation only with clear justification.
 
-![Island created by a small distance band](../../assets/spatial_statistics/spatial_weights/05_islands_and_components.png)
+![Island created by a small distance band](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/05_islands_and_components.png)
 
 ## What happens if an island row remains zero?
 
@@ -1073,7 +1073,7 @@ Very low degree can indicate:
 - sparse sampling;
 - disconnected regions.
 
-![Neighbor count under different constructions](../../assets/spatial_statistics/spatial_weights/06_neighbor_count.png)
+![Neighbor count under different constructions](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/06_neighbor_count.png)
 
 ## Distance thresholds and graph connectivity
 
@@ -1171,7 +1171,7 @@ Then compare:
 - model coefficients;
 - predictions.
 
-![Sensitivity of spatial lag to W](../../assets/spatial_statistics/spatial_weights/07_weights_sensitivity.png)
+![Sensitivity of spatial lag to W](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/07_weights_sensitivity.png)
 
 ## Numerical sensitivity example
 

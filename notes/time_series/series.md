@@ -32,7 +32,7 @@ $$
 
 This is why a stable linear time-series representation can be approximated by finitely many terms: when the weights decay geometrically, the discarded tail has a known bound.
 
-![Partial sums of a geometric series](../../assets/time_series/student/01_series_partial_sums.png)
+![Partial sums of a geometric series](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/01_series_partial_sums.png)
 
 The figure shows the partial sums approaching 2. Each added term improves the approximation, but the size of the improvement shrinks because the geometric weights decay.
 

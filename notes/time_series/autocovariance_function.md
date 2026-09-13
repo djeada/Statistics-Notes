@@ -26,7 +26,7 @@ $$
 
 Some software divides the lag-1 estimate by $n-1$ instead. Because different conventions produce different numerical values, state the denominator before comparing estimates. Autocovariance retains squared units, while autocorrelation divides by $\hat\gamma(0)$ and is therefore unit-free.
 
-![Autocovariance of a simulated AR(1)](../../assets/time_series/student/05_autocovariance_ar1.png)
+![Autocovariance of a simulated AR(1)](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/05_autocovariance_ar1.png)
 
 The figure shows how autocovariance changes with lag for a simulated autoregressive series. Autocovariance describes how values of a time series vary jointly with lagged values of the same series. It is useful for identifying dependence across time, but its magnitude depends on the scale of the data and should not be interpreted as a direct measure of causal influence. In autoregressive models, coefficients describe how past values enter the model, while the autocovariance function summarizes the dependence pattern implied by those coefficients.
 
@@ -72,7 +72,7 @@ The sign of covariance describes the direction of a linear relationship:
 
 The following figure gives a geometric view of lagged covariance by showing how paired observations contribute positively or negatively depending on their positions relative to the mean.
 
-![Autocovariance geometry](../../assets/time_series/dependence/01_autocovariance_geometry.png)
+![Autocovariance geometry](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/01_autocovariance_geometry.png)
 
 #### Estimation of Covariance
 
@@ -236,7 +236,7 @@ $$
 
 The autocovariance therefore decays geometrically with lag, just like the ACF, but it retains the variance scale of the original series. The following figure illustrates that decay for a simulated AR(1) process.
 
-![AR(1) autocovariance](../../assets/time_series/student/05_autocovariance_ar1.png)
+![AR(1) autocovariance](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/05_autocovariance_ar1.png)
 
 ### Cross-covariance caution
 

@@ -77,7 +77,7 @@ Unlike ordinary regression, there is no fixed set of sites where a response is m
 
 The event locations themselves are the outcome.
 
-![A point pattern inside an observation window](../../assets/spatial_statistics/point_processes/01_point_pattern_basics.png)
+![A point pattern inside an observation window](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/point_processes/01_point_pattern_basics.png)
 
 ### Why the observation window matters
 
@@ -366,7 +366,7 @@ Examples:
 
 These mechanisms have different scientific interpretations.
 
-![Same visual clustering, different mechanisms](../../assets/spatial_statistics/point_processes/02_intensity_vs_interaction.png)
+![Same visual clustering, different mechanisms](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/point_processes/02_intensity_vs_interaction.png)
 
 #### Main lesson
 
@@ -546,7 +546,7 @@ $$
 
 But the count is no longer random.
 
-![Unconditional and conditional CSR](../../assets/spatial_statistics/point_processes/03_poisson_count_vs_fixed_count.png)
+![Unconditional and conditional CSR](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/point_processes/03_poisson_count_vs_fixed_count.png)
 
 ### Why does this distinction matter?
 
@@ -676,7 +676,7 @@ Interpretation:
 
 > Under homogeneous CSR with intensity 0.08, about 63.4% of events are expected to have their nearest neighbor within 2 distance units.
 
-![Nearest-neighbor distribution](../../assets/spatial_statistics/point_processes/04_nearest_neighbor_G.png)
+![Nearest-neighbor distribution](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/point_processes/04_nearest_neighbor_G.png)
 
 ## Boundary effects in nearest-neighbor calculations
 
@@ -915,7 +915,7 @@ If only visible neighbors are counted, possible neighbors in the unobserved part
 
 Ignoring this typically biases estimated pair counts downward.
 
-![Edge effect](../../assets/spatial_statistics/point_processes/05_edge_effect.png)
+![Edge effect](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/point_processes/05_edge_effect.png)
 
 Common corrections include:
 
@@ -1023,7 +1023,7 @@ For each radius, one can calculate lower and upper simulated quantiles.
 
 These bounds form a **pointwise Monte Carlo envelope**.
 
-![Monte Carlo envelope](../../assets/spatial_statistics/point_processes/06_monte_carlo_envelope.png)
+![Monte Carlo envelope](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/point_processes/06_monte_carlo_envelope.png)
 
 ## What is the envelope calculating?
 
@@ -1101,7 +1101,7 @@ One construction is:
 
 The parent points may be latent.
 
-![CSR, clustered, and inhibited patterns](../../assets/spatial_statistics/point_processes/07_process_types.png)
+![CSR, clustered, and inhibited patterns](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/point_processes/07_process_types.png)
 
 ### Scientific interpretation
 
@@ -1276,7 +1276,7 @@ $$
 
 is the mark attached to event $i$.
 
-![Marked point pattern](../../assets/spatial_statistics/point_processes/08_marked_pattern.png)
+![Marked point pattern](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/point_processes/08_marked_pattern.png)
 
 ## Point pattern versus mark dependence
 

@@ -48,7 +48,7 @@ $$
 
 where $\mu$ is the constant mean of the series and $\mathbb{E}$ denotes expectation. The following figure gives a geometric view of how observations separated by a lag contribute to autocovariance.
 
-![Autocovariance geometry](../../assets/time_series/dependence/01_autocovariance_geometry.png)
+![Autocovariance geometry](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/01_autocovariance_geometry.png)
 
 #### Autocorrelation Coefficient
 
@@ -162,11 +162,11 @@ This approximation illustrates why uncertainty can widen when earlier lags are c
 
 The following synthetic AR(1) example shows the gradual ACF decay expected from autoregressive persistence.
 
-![acf ar1 synthetic](../../assets/time_series/acf_ar1_example.png)
+![acf ar1 synthetic](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/acf_ar1_example.png)
 
 For comparison, an ARMA(1,1) process usually has no clean cutoff in either function; both ACF and PACF tend to tail off.
 
-![arma acf pacf synthetic](../../assets/time_series/arma_acf_pacf.png)
+![arma acf pacf synthetic](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arma_acf_pacf.png)
 
 #### Python Example
 
@@ -380,7 +380,7 @@ The ACF captures both direct and indirect linear dependence across lags, whereas
 
 The following figure summarizes these identification patterns visually.
 
-![ACF and PACF identification](../../assets/time_series/dependence/02_acf_pacf_identification.png)
+![ACF and PACF identification](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/02_acf_pacf_identification.png)
 
 ### Example: ACF and PACF for AR(1) Process
 
@@ -446,7 +446,7 @@ $$
 
 The order $q$ is the number of past shocks retained in the model. In the ideal population, the ACF is zero after lag $q$, while the PACF tails off. The following figure illustrates that finite shock duration in the MA representation.
 
-![MA shock duration](../../assets/time_series/dependence/04_ma_shock_duration.png)
+![MA shock duration](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/04_ma_shock_duration.png)
 
 
 ### Comparison
@@ -506,7 +506,7 @@ $$
 
 The first values are $1$, $0.7$, $0.49$, $0.343$, and so on. The PACF is $0.7$ at lag 1 and zero at later lags in the population. The following figure shows how this persistence appears as a decaying lag pattern.
 
-![AR persistence](../../assets/time_series/dependence/03_ar_persistence.png)
+![AR persistence](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/03_ar_persistence.png)
 
 A finite sample will show nonzero later values, so use uncertainty bands and model checks rather than expecting an exact theoretical cutoff.
 
@@ -522,7 +522,7 @@ $$
 
 the population PACF is zero after lag 2. The worked AR(2) figure below shows the contrast between a tailing ACF and a PACF whose direct dependence is concentrated in the first two lags.
 
-![ACF and PACF for a worked AR(2) example](../../assets/time_series/student/11_acf_pacf_ar2.png)
+![ACF and PACF for a worked AR(2) example](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/11_acf_pacf_ar2.png)
 
 For an MA process, the pattern is reversed: the ACF has a finite cutoff while the PACF generally tails off.
 

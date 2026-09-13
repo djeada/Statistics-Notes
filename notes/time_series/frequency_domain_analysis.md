@@ -29,7 +29,7 @@ The Nyquist frequency is $0.5$ cycles per observation. Frequencies above that li
 
 The periodogram peak should therefore be translated back into a period before interpretation. A peak near $0.0833$ means "about 12 observations per cycle," not "frequency 12."
 
-![A period-12 signal and its periodogram](../../assets/time_series/student/19_frequency_periodogram.png)
+![A period-12 signal and its periodogram](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/19_frequency_periodogram.png)
 
 The figure connects the repeated pattern in the time domain to a concentrated peak in the frequency domain. The horizontal location of the peak gives the cycle frequency, while its inverse gives the period in observations.
 
@@ -67,7 +67,7 @@ $$
 
 Exact normalizations vary across software and depend on whether a one-sided or two-sided spectrum and physical sampling units are used.
 
-![Periodogram](../../assets/time_series/state_space_frequency/05_periodogram.png)
+![Periodogram](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/05_periodogram.png)
 
 The periodogram figure shows how dominant cycle lengths appear as peaks. Because a raw periodogram is noisy, interpretation should focus on stable structure rather than treating every local maximum as a distinct physical cycle.
 
@@ -81,7 +81,7 @@ $$
 
 cycle per interval. A higher-frequency signal can produce exactly the same sampled values as a lower-frequency signal, a phenomenon called **aliasing**.
 
-![Aliasing](../../assets/time_series/state_space_frequency/07_aliasing.png)
+![Aliasing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/07_aliasing.png)
 
 The figure demonstrates why the sampling rate must be known before assigning a physical interpretation to a spectral peak. Once a frequency has aliased into the observed band, the sampled data alone cannot recover the original higher frequency.
 
@@ -91,7 +91,7 @@ A finite observation window rarely contains an exact integer number of cycles. T
 
 Tapering or windowing can reduce leakage by softening the sample edges, but it also broadens peaks. The tradeoff is therefore not simply "windowed is better": lower side lobes come at the cost of reduced frequency resolution.
 
-![Spectral leakage and windowing](../../assets/time_series/state_space_frequency/06_spectral_leakage_windowing.png)
+![Spectral leakage and windowing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/06_spectral_leakage_windowing.png)
 
 The figure shows the same underlying frequency under different window treatments. The narrower peak from a rectangular window can have stronger side lobes, while a taper suppresses those side lobes but spreads energy across a wider main peak.
 
@@ -99,7 +99,7 @@ Strong trend also concentrates power near frequency zero. If the goal is to stud
 
 For two stationary series, cross-spectral methods examine shared variation by frequency. **Coherence** is a frequency-specific measure of linear association, but high coherence does not establish direction or causality.
 
-![Frequency relationship](../../assets/time_series/state_space_frequency/08_frequency_relationship.png)
+![Frequency relationship](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/08_frequency_relationship.png)
 
 The frequency-relationship figure illustrates how two series can share a strong cycle even when their time-domain relationship is difficult to see directly.
 

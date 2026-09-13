@@ -26,7 +26,7 @@ $$
 
 The squared previous return contributes the immediate shock effect, while the previous variance carries persistence forward. This is why raw returns can have little autocorrelation even when squared returns remain strongly dependent.
 
-![Synthetic volatility clustering](../../assets/time_series/student/20_financial_volatility.png)
+![Synthetic volatility clustering](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/20_financial_volatility.png)
 
 The figure shows the defining visual feature of many financial return series: quiet periods and volatile periods cluster rather than appearing at a constant scale.
 
@@ -43,7 +43,7 @@ $$
 
 Working with returns rather than price levels often produces a series whose mean is more stable and whose scale is easier to compare over time. That transformation does not guarantee stationarity, independence, or normality.
 
-![Prices and returns](../../assets/time_series/financial/01_prices_and_returns.png)
+![Prices and returns](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/financial/01_prices_and_returns.png)
 
 The figure contrasts a persistent price level with its one-period returns. The price path can drift for long periods, while returns fluctuate around a much more stable level and are therefore the more natural target for many short-horizon financial models.
 
@@ -71,7 +71,7 @@ $$
 \log\left(\frac{P_{t+h}}{P_t}\right)=\sum_{j=1}^{h}r_{t+j}.
 $$
 
-![Price and log price](../../assets/time_series/financial/08_price_and_log_price.png)
+![Price and log price](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/financial/08_price_and_log_price.png)
 
 The price/log-price figure illustrates how the logarithm compresses multiplicative growth. A log transformation changes scale and can make proportional movements easier to interpret, but it does not by itself remove stochastic trends.
 
@@ -109,7 +109,7 @@ With $\alpha_0>0$ and nonnegative ARCH and GARCH coefficients, the recursion is 
 
 The plot below shows a synthetic return series with volatility clustering together with its conditional volatility.
 
-![garch volatility](../../assets/time_series/garch_volatility.png)
+![garch volatility](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/garch_volatility.png)
 
 Large observations tend to occur when the conditional volatility is elevated. The sign of each return remains difficult to predict, but the scale of future fluctuations can be persistent.
 
@@ -174,7 +174,7 @@ $$
 
 A large shock raises next-period variance regardless of its sign in this symmetric ARCH model.
 
-![ARCH variance](../../assets/time_series/financial/02_arch_variance.png)
+![ARCH variance](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/financial/02_arch_variance.png)
 
 The figure shows how isolated large shocks feed into the next variance estimate. Because ARCH uses a finite set of squared shocks, the effect fades as those shocks leave the lag window.
 
@@ -209,7 +209,7 @@ $$
 
 A persistence value close to 1 means volatility shocks decay slowly and can affect risk forecasts far into the future.
 
-![GARCH persistence](../../assets/time_series/financial/03_garch_persistence.png)
+![GARCH persistence](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/financial/03_garch_persistence.png)
 
 The figure compares variance paths with different persistence levels. As $\alpha_1+\beta_1$ approaches 1, the response to a volatility shock lasts longer and the process returns more slowly toward its long-run variance.
 
@@ -229,7 +229,7 @@ $$
 
 The sign of a return can therefore be difficult to predict even when its magnitude is persistent.
 
-![Returns versus squared returns](../../assets/time_series/financial/04_returns_vs_squared_returns.png)
+![Returns versus squared returns](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/financial/04_returns_vs_squared_returns.png)
 
 The return ACF in the figure is comparatively weak, while the squared-return ACF retains visible structure. This is the diagnostic pattern that motivates conditional-variance models.
 
@@ -247,7 +247,7 @@ $$
 
 If $\gamma>0$, a negative innovation of a given magnitude contributes more to the next variance than a positive innovation of the same magnitude.
 
-![Leverage effect](../../assets/time_series/financial/06_leverage_effect.png)
+![Leverage effect](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/financial/06_leverage_effect.png)
 
 The leverage-effect figure makes that asymmetry visible by comparing the variance response to positive and negative shocks.
 
@@ -255,7 +255,7 @@ The leverage-effect figure makes that asymmetry visible by comparing the varianc
 
 Gaussian innovations make likelihood calculations convenient, but financial returns often have heavier tails than a normal distribution. A Student-$t$ innovation can place more probability on extreme standardized residuals.
 
-![Heavy tails](../../assets/time_series/financial/07_heavy_tails.png)
+![Heavy tails](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/financial/07_heavy_tails.png)
 
 The figure emphasizes that matching conditional variance is not enough if the standardized residual distribution still produces more extremes than the assumed normal model. Tail behavior matters directly for interval and risk forecasts.
 
@@ -269,7 +269,7 @@ $$
 
 Value-at-Risk is a quantile-based risk measure, while expected shortfall averages outcomes beyond the selected tail quantile. Both require an explicit sign convention and out-of-sample calibration checks.
 
-![Volatility shock response](../../assets/time_series/financial/05_volatility_shock_response.png)
+![Volatility shock response](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/financial/05_volatility_shock_response.png)
 
 The shock-response figure shows how a single large innovation affects future conditional volatility. The decay rate determines how quickly risk forecasts return toward their long-run level.
 

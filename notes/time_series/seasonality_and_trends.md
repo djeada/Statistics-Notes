@@ -32,7 +32,7 @@ which is the usual normalization for an additive decomposition. If the size of t
 
 The seasonal-differencing figure below shows another way to remove a repeating component: compare each observation with the same position in the previous cycle.
 
-![Worked seasonal and ordinary differences](../../assets/time_series/student/12_arima_and_seasonal_differencing.png)
+![Worked seasonal and ordinary differences](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/12_arima_and_seasonal_differencing.png)
 
 The figure distinguishes ordinary changes from seasonal changes. Ordinary differencing compares adjacent observations, while seasonal differencing compares observations separated by the seasonal period.
 
@@ -82,7 +82,7 @@ $$
 \log X_t=\log T_t+\log S_t+\log R_t.
 $$
 
-![Additive and multiplicative seasonality](../../assets/time_series/arima_seasonality/02_additive_multiplicative_seasonality.png)
+![Additive and multiplicative seasonality](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/02_additive_multiplicative_seasonality.png)
 
 The figure shows the practical distinction: additive seasonal swings remain similar in absolute size, while multiplicative swings widen as the level rises.
 
@@ -131,7 +131,7 @@ $$
 
 one can attenuate or remove frequencies above a chosen cutoff and transform back to the time domain.
 
-![spectral smoothing](../../assets/time_series/spectral_smoothing.png)
+![spectral smoothing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/spectral_smoothing.png)
 
 The spectral-smoothing example shows that trend estimation can be viewed as a frequency-selection problem. The cutoff controls how much short-run variation is treated as noise rather than trend.
 
@@ -145,11 +145,11 @@ When trend and seasonality are both present, a classical additive workflow is:
 4. normalize and remove the seasonal component;
 5. inspect the remainder and, if needed, refine the trend estimate.
 
-![simple decomposition](../../assets/time_series/simple_decomposition.png)
+![simple decomposition](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/simple_decomposition.png)
 
 The decomposition figure shows the intended progression from the observed series to trend, seasonality, and remainder. A useful decomposition leaves the remainder without obvious structure that should have been assigned to the other components.
 
-![Additive decomposition](../../assets/time_series/arima_seasonality/03_additive_decomposition.png)
+![Additive decomposition](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/03_additive_decomposition.png)
 
 This second decomposition view emphasizes that the components should add back to the observed series under an additive model. The seasonal pattern is interpreted relative to the estimated trend rather than as an isolated plot.
 
@@ -176,7 +176,7 @@ $$
 
 For multiplicative decomposition, ratios $X_t/\hat m_t$ can be averaged by season and normalized to have mean 1.
 
-![trend smoothing filters](../../assets/time_series/trend_smoothing_filters.png)
+![trend smoothing filters](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/trend_smoothing_filters.png)
 
 The filter comparison demonstrates that trend estimates depend on the smoothing rule. A smoother that reacts quickly preserves more local movement, while a broader filter produces a smoother trend but can blur turning points and worsen boundary effects.
 
@@ -226,11 +226,11 @@ $$
 
 The seasonal component cancels, while trend changes and differenced remainder remain.
 
-![seasonal differencing](../../assets/time_series/seasonal_differencing.png)
+![seasonal differencing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/seasonal_differencing.png)
 
 The figure shows the before-and-after effect of seasonal differencing. Repeated seasonal level shifts are reduced, but the transformation can leave ordinary trend or induce additional short-run dependence.
 
-![Seasonal differencing](../../assets/time_series/arima_seasonality/01_differencing_orders.png)
+![Seasonal differencing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/01_differencing_orders.png)
 
 This companion view compares differencing orders and reinforces the main caution: use the smallest combination that makes the remaining process suitable for the intended model.
 
@@ -426,6 +426,6 @@ Software may shorten the output, pad boundaries, reflect data, or use asymmetric
 
 Use seasonal forecast origins and a seasonal-naive benchmark. For period-12 data, report errors at horizons such as 1, 3, 6, and 12. A model can perform well one month ahead and poorly one year ahead because the seasonal extrapolation mechanism differs by horizon.
 
-![Seasonal naive forecast](../../assets/time_series/arima_seasonality/07_seasonal_naive_forecast.png)
+![Seasonal naive forecast](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/07_seasonal_naive_forecast.png)
 
 The seasonal-naive figure provides the benchmark that any more elaborate seasonal model should beat on future-like data. Repeating the most recent value from the same season is simple, but it can be difficult to improve upon when the seasonal pattern is stable.

@@ -30,7 +30,7 @@ $$
 \mathrm{Var}(X_{3+h}\mid X_3)=h\sigma^2.
 $$
 
-![A simulated random walk](../../assets/time_series/intro_random_walk.png)
+![A simulated random walk](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/intro_random_walk.png)
 
 The plotted path can wander for long periods in one direction even though the model has no deterministic slope. That distinction between a realized path and the process mean is central to understanding random walks.
 

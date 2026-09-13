@@ -43,7 +43,7 @@ $$
 
 The point forecast moves toward the long-run mean, while the uncertainty increases with horizon.
 
-![Forecast paths and expanding prediction intervals](../../assets/time_series/student/14_forecasting_intervals.png)
+![Forecast paths and expanding prediction intervals](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/14_forecasting_intervals.png)
 
 The figure shows both parts of a forecast. The central path gives the conditional mean, while the widening interval reflects uncertainty from future shocks that have not yet been observed.
 
@@ -97,7 +97,7 @@ $$
 
 It is a strong baseline for persistent non-seasonal series and is the optimal conditional-mean forecast for a zero-drift random walk.
 
-![Baseline forecasts](../../assets/time_series/forecasting/01_baseline_forecasts.png)
+![Baseline forecasts](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/01_baseline_forecasts.png)
 
 The figure compares several simple rules. Naive, seasonal-naive, mean, and drift forecasts correspond to different assumptions about what persists into the future, so the benchmark should match the basic structure of the series.
 
@@ -130,7 +130,7 @@ $$
 
 up to the contribution from the initial state. The observation weights decay geometrically.
 
-![Exponential smoothing](../../assets/time_series/forecasting/06_exponential_smoothing.png)
+![Exponential smoothing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/06_exponential_smoothing.png)
 
 The figure shows how the smoothed level reacts to new observations. Higher responsiveness follows recent movements more closely but can also chase short-lived noise.
 
@@ -537,7 +537,7 @@ $$
 
 Residual tests such as Ljung-Box are diagnostics rather than accuracy scores. They assess whether a fitted model has left linear autocorrelation unexplained.
 
-![Forecast errors by horizon](../../assets/time_series/forecasting/05_error_by_horizon.png)
+![Forecast errors by horizon](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/05_error_by_horizon.png)
 
 The horizon plot shows why a single average metric can be misleading. A method that is strongest one step ahead may lose its advantage at longer horizons, so evaluation should match the operational forecast horizon.
 
@@ -660,7 +660,7 @@ A combination can improve accuracy when the component errors contain complementa
 
 Forecast uncertainty can come from future shocks, parameter estimation, future predictor values, transformation bias, model uncertainty, and regime changes. Classical model intervals may include only a subset of these sources.
 
-![Forecast paths and expanding prediction intervals](../../assets/time_series/student/14_forecasting_intervals.png)
+![Forecast paths and expanding prediction intervals](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/14_forecasting_intervals.png)
 
 The widening intervals reinforce the distinction between point prediction and uncertainty. Evaluate empirical coverage and width on temporal backtests, and state which uncertainty sources the interval construction includes.
 

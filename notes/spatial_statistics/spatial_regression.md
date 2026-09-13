@@ -107,7 +107,7 @@ These mechanisms have different scientific interpretations.
 
 If the mean model is misspecified, a spatial covariance term can absorb variation that should have been explained by the predictors.
 
-![Mean misspecification](../../assets/spatial_statistics/spatial_regression/01_mean_misspecification.png)
+![Mean misspecification](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/01_mean_misspecification.png)
 
 ## Numerical example: omitted spatial trend
 
@@ -270,7 +270,7 @@ Ignoring this redundancy often makes the estimated uncertainty too small.
 
 This parallels the logic of kriging: nearby observations can be informative about the same local process, but they can also be redundant.
 
-![Spatially correlated residuals](../../assets/spatial_statistics/spatial_regression/02_spatially_correlated_errors.png)
+![Spatially correlated residuals](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/02_spatially_correlated_errors.png)
 
 ## A structured covariance model
 
@@ -652,7 +652,7 @@ Under the assumed covariance model, GLS is the efficient linear unbiased estimat
 
 In repeated samples, OLS and GLS may both be centered on the true coefficient, while GLS has smaller sampling variance.
 
-![OLS versus GLS sampling](../../assets/spatial_statistics/spatial_regression/03_ols_vs_gls_sampling.png)
+![OLS versus GLS sampling](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/03_ols_vs_gls_sampling.png)
 
 ## Feasible GLS
 
@@ -724,7 +724,7 @@ This can represent:
 
 It does not imply that neighboring observed outcomes directly cause one another.
 
-![Spatial error propagation](../../assets/spatial_statistics/spatial_regression/04_spatial_error_propagation.png)
+![Spatial error propagation](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/04_spatial_error_propagation.png)
 
 ## Numerical spatial-error example
 
@@ -1002,7 +1002,7 @@ $$
 
 is therefore not, by itself, the total effect at A or across the system.
 
-![SAR direct and indirect effects](../../assets/spatial_statistics/spatial_regression/05_sar_impacts.png)
+![SAR direct and indirect effects](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/05_sar_impacts.png)
 
 ## Mean structure, spatial error, or spatial lag?
 
@@ -1073,7 +1073,7 @@ If $x(s)$ and $u(s)$ have similar spatial scales, the model may struggle to deci
 
 This is called **spatial confounding**.
 
-![Spatial confounding](../../assets/spatial_statistics/spatial_regression/06_spatial_confounding.png)
+![Spatial confounding](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/06_spatial_confounding.png)
 
 ## Why spatial confounding matters
 
@@ -1146,7 +1146,7 @@ $$
 
 If the covariance model is adequate, $e^*$ should be much closer to uncorrelated noise.
 
-![Whitened residuals](../../assets/spatial_statistics/spatial_regression/07_residual_whitening.png)
+![Whitened residuals](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/07_residual_whitening.png)
 
 ## Residual Moran's I after GLS
 
@@ -1235,7 +1235,7 @@ But if the deployment task is to predict in a new geographic region, that valida
 
 Use spatially blocked validation when geographic transfer is the actual prediction goal.
 
-![Prediction versus transfer](../../assets/spatial_statistics/spatial_regression/08_spatial_validation.png)
+![Prediction versus transfer](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/08_spatial_validation.png)
 
 ## Model comparison should use the right target
 

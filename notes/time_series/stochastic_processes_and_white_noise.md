@@ -22,7 +22,7 @@ $$
 
 The individual shocks have constant variance, but the variance of their accumulated sum grows with time. This is the simplest calculation showing why white-noise increments do not make the random-walk level stationary.
 
-![White noise and its accumulated random walk](../../assets/time_series/student/04_white_noise_and_random_walk.png)
+![White noise and its accumulated random walk](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/04_white_noise_and_random_walk.png)
 
 The figure contrasts the stable spread of the shocks with the increasing dispersion of their cumulative sum. The visual distinction mirrors the variance calculation above.
 

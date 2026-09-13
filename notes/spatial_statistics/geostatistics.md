@@ -77,7 +77,7 @@ The data give the field value at five locations, but not at an unsampled locatio
 
 Geostatistics uses the observed spatial pattern to quantify dependence and make predictions at unsampled locations.
 
-![Sampled spatial field](../../assets/spatial_statistics/geostatistics/01_spatial_samples.png)
+![Sampled spatial field](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/geostatistics/01_spatial_samples.png)
 
 #### Why this matters
 
@@ -171,7 +171,7 @@ $$
 
 In this example, the apparent spatial structure is entirely explained by the mean trend.
 
-![Trend and residual idea](../../assets/spatial_statistics/geostatistics/02_trend_and_residuals.png)
+![Trend and residual idea](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/geostatistics/02_trend_and_residuals.png)
 
 #### Main lesson
 
@@ -386,7 +386,7 @@ $$
 
 The greater separation has a larger semivariance because the values are less strongly related.
 
-![Covariance and semivariogram](../../assets/spatial_statistics/geostatistics/03_covariance_and_variogram.png)
+![Covariance and semivariogram](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/geostatistics/03_covariance_and_variogram.png)
 
 ## The empirical semivariogram
 
@@ -575,7 +575,7 @@ One possible set of bins is:
 
 Each point on an empirical variogram summarizes all pairs in one bin.
 
-![Empirical semivariogram](../../assets/spatial_statistics/geostatistics/04_empirical_variogram.png)
+![Empirical semivariogram](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/geostatistics/04_empirical_variogram.png)
 
 ### Why pair count matters
 
@@ -767,7 +767,7 @@ Several valid variogram model families are widely used.
 
 They differ mainly in how quickly spatial dependence changes near the origin and whether the sill is reached at a finite distance.
 
-![Variogram model comparison](../../assets/spatial_statistics/geostatistics/05_variogram_models.png)
+![Variogram model comparison](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/geostatistics/05_variogram_models.png)
 
 ### Exponential model
 
@@ -902,7 +902,7 @@ Two wells also 20 m apart but perpendicular to the flow may be much less related
 
 Their Euclidean distance is identical, but their spatial dependence is different.
 
-![Anisotropic dependence field](../../assets/spatial_statistics/geostatistics/06_anisotropy.png)
+![Anisotropic dependence field](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/geostatistics/06_anisotropy.png)
 
 ### A simple numerical anisotropy calculation
 
@@ -987,7 +987,7 @@ If an unsampled region lies far from every observation, kriging relies more heav
 
 Predictions in that region are usually less certain.
 
-![Sampling designs](../../assets/spatial_statistics/geostatistics/07_sampling_design.png)
+![Sampling designs](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/geostatistics/07_sampling_design.png)
 
 ## Trend models and universal kriging
 

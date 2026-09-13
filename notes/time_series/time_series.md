@@ -30,7 +30,7 @@ so the deterministic part is $100+0.5(3)+10=111.5$.
 
 The same trend can therefore produce very different observations at different seasonal positions. This example separates three questions: is the level changing, is a pattern repeating at a known period, and how large is the unpredictable remainder? Those questions determine whether trend modeling, seasonal adjustment or differencing, and a stochastic dependence model are appropriate.
 
-![Series components](../../assets/time_series/foundations/03_series_components.png)
+![Series components](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/03_series_components.png)
 
 The figure shows these components together. Trend describes slow level movement, seasonality describes regular within-cycle variation, and the remainder captures variation not explained by the chosen decomposition.
 
@@ -56,39 +56,39 @@ The plot should be read together with a description of what each observation rep
 
 The following synthetic examples isolate common patterns.
 
-![synthetic nonlinear trend](../../assets/time_series/intro_nonlinear_trend.png)
+![synthetic nonlinear trend](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/intro_nonlinear_trend.png)
 
 A smooth nonlinear rise suggests that a constant-level stationary model would be inappropriate without a trend component or transformation.
 
-![synthetic seasonal heteroskedastic series](../../assets/time_series/intro_seasonal_heteroskedastic.png)
+![synthetic seasonal heteroskedastic series](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/intro_seasonal_heteroskedastic.png)
 
 Here the seasonal pattern repeats while its amplitude grows. The increasing spread suggests considering a log or other variance-stabilizing transformation before modeling the seasonal structure.
 
-![synthetic structural break](../../assets/time_series/intro_structural_break.png)
+![synthetic structural break](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/intro_structural_break.png)
 
 A structural break changes the data-generating mechanism. Fitting one stable parameter set across both regimes can produce misleading averages.
 
-![synthetic seasonal structural break](../../assets/time_series/intro_seasonal_structural_break.png)
+![synthetic seasonal structural break](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/intro_seasonal_structural_break.png)
 
 This example shows that both the level and seasonal amplitude can change after a break, so simply estimating one seasonal index for the full sample may be inadequate.
 
-![synthetic periodic but nonseasonal signal](../../assets/time_series/intro_periodic_nonseasonal.png)
+![synthetic periodic but nonseasonal signal](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/intro_periodic_nonseasonal.png)
 
 A series can oscillate without having calendar seasonality. Seasonality refers to a fixed repeating period tied to the sampling structure; other periodic or cyclic behavior may have a different mechanism.
 
-![synthetic negative dependence series](../../assets/time_series/intro_negative_dependence.png)
+![synthetic negative dependence series](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/intro_negative_dependence.png)
 
 Negative short-lag dependence tends to produce alternation around the mean.
 
-![synthetic positive dependence series](../../assets/time_series/intro_positive_dependence.png)
+![synthetic positive dependence series](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/intro_positive_dependence.png)
 
 Positive short-lag dependence tends to produce runs of observations on the same side of the mean.
 
-![synthetic white noise](../../assets/time_series/intro_white_noise.png)
+![synthetic white noise](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/intro_white_noise.png)
 
 White noise has a stable mean and variance with no linear autocorrelation at nonzero lags. A finite realization can still show apparent short runs by chance.
 
-![synthetic random walk](../../assets/time_series/intro_random_walk.png)
+![synthetic random walk](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/intro_random_walk.png)
 
 A random walk accumulates shocks, so its level wanders and its variance grows with time. The visual contrast with white noise is a first illustration of stationary versus non-stationary behavior.
 
@@ -111,7 +111,7 @@ $$
 
 In practice, specifying a high-dimensional joint distribution directly is usually impractical. Time-series models instead exploit structure: conditional distributions, state equations, means, variances, autocovariances, or factorized likelihoods.
 
-![Changing moments](../../assets/time_series/foundations/04_moments_change_over_time.png)
+![Changing moments](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/04_moments_change_over_time.png)
 
 The changing-moments figure illustrates why one global mean and variance can be misleading when the process evolves. Stationarity assumptions should be checked against the time variation visible in the data.
 
@@ -179,7 +179,7 @@ A **rolling moving average** is a descriptive smoother computed from observed va
 
 Exponential smoothing recursively updates latent level, trend, or seasonal states. ARIMA combines differencing with AR and MA dependence. Neither method is universally preferable; each encodes a different representation of evolving structure.
 
-![Linear filter](../../assets/time_series/foundations/08_linear_filter.png)
+![Linear filter](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/08_linear_filter.png)
 
 The linear-filter figure connects many time-domain operations. Smoothing, differencing, and ARMA representations can all be expressed as weighted combinations of lagged observations or shocks, with different weight patterns serving different purposes.
 
@@ -361,7 +361,7 @@ A trend is not necessarily a unit root, a seasonal pattern is not necessarily a 
 
 Sampling determines which frequencies can be distinguished. With one observation per interval, the Nyquist frequency is $0.5$ cycles per observation. A higher-frequency signal can appear as a lower-frequency alias when the sampling rate is too low.
 
-![Regular and irregular sampling](../../assets/time_series/foundations/07_regular_and_irregular_sampling.png)
+![Regular and irregular sampling](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/07_regular_and_irregular_sampling.png)
 
 The figure also contrasts regular and irregular timestamps. Standard ACF and Fourier formulas assume a regular grid. Interpolating irregular observations onto such a grid can be useful, but it creates synthetic values and can alter dependence, so it should be treated as a modeling decision.
 
@@ -399,7 +399,7 @@ $$
 
 The filtered level can also be used as a forecast. The smoothing parameter controls responsiveness; it is not by itself a measure of model quality.
 
-![Geometric series](../../assets/time_series/foundations/01_geometric_series.png)
+![Geometric series](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/01_geometric_series.png)
 
 The geometric-series figure explains why exponential weighting has a long but decaying memory: recursively applied weights shrink geometrically as observations become older.
 
@@ -413,17 +413,17 @@ This includes scaling, imputation, seasonal adjustment, feature selection, predi
 
 Many time-series models are recursions. Their stability depends on whether the effect of an initial condition or shock decays.
 
-![Difference-equation stability](../../assets/time_series/foundations/02_difference_equation_stability.png)
+![Difference-equation stability](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/02_difference_equation_stability.png)
 
 The figure shows stable and unstable recursions. In a stable system, deviations shrink over time; in an unstable system, they grow.
 
 ### White noise, random walks, and stationarity
 
-![White noise and random walk](../../assets/time_series/foundations/05_white_noise_random_walk.png)
+![White noise and random walk](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/05_white_noise_random_walk.png)
 
 White noise has stable second-order properties, while a random walk accumulates shocks and develops increasing level uncertainty.
 
-![Stationarity cases](../../assets/time_series/foundations/06_stationarity_cases.png)
+![Stationarity cases](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/06_stationarity_cases.png)
 
 The stationarity figure places stable, unit-root, and explosive behavior side by side. These cases can look similar in short samples, which is why plots, root conditions, transformations, and formal tests should be interpreted together.
 

@@ -26,7 +26,7 @@ $$
 
 The shock moves the realized value away from that mean. The AR polynomial is $1-0.6B+0.2B^2$; the location of its roots determines whether the usual causal AR recursion is stationary.
 
-![AR and MA identification patterns](../../assets/time_series/student/06_ar_ma_identification.png)
+![AR and MA identification patterns](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/06_ar_ma_identification.png)
 
 Autoregressive (AR) models describe serial dependence by expressing the current value of a time series as a linear function of its own past values plus a new innovation. The order $p$ in AR($p$) specifies how many lags appear directly in the model.
 
@@ -124,7 +124,7 @@ Several methods are commonly used to estimate $c$ and the AR coefficients.
 
 **Yule-Walker estimation** uses the relationship between the AR coefficients and the autocovariances of a stationary process. It is transparent and computationally convenient, especially when the theoretical moment relationships are of interest.
 
-![Yule-Walker recursion](../../assets/time_series/dependence/07_yule_walker_recursion.png)
+![Yule-Walker recursion](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/07_yule_walker_recursion.png)
 
 The recursion makes that moment relationship concrete: once the AR coefficients are fixed, the autocorrelations satisfy a corresponding lag recursion. Yule-Walker estimation reverses this relationship, using sample autocovariances to estimate the AR coefficients.
 
@@ -164,7 +164,7 @@ The following plots illustrate the typical ACF and PACF behavior of an AR(2):
 
 ![ACF and PACF Plots](https://github.com/user-attachments/assets/0dd03e98-070e-47db-abad-32dd61c41f31)
 
-![ACF/PACF identification](../../assets/time_series/dependence/02_acf_pacf_identification.png)
+![ACF/PACF identification](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/02_acf_pacf_identification.png)
 
 The key pattern is that the ACF tails off while the PACF concentrates its population signal in the first two lags. These are identification heuristics, not a substitute for fitting and checking candidate models.
 
@@ -236,7 +236,7 @@ For a stationary causal AR model, the ACF tails off with lag. The exact pattern 
 
 For an ideal population AR($p$), the PACF cuts off after lag $p$. This is why the PACF is useful for proposing AR orders, especially when the series is stationary and the sample is reasonably long.
 
-![AR persistence](../../assets/time_series/dependence/03_ar_persistence.png)
+![AR persistence](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/03_ar_persistence.png)
 
 The persistence figure shows how coefficients closer to the unit-root boundary make shocks decay more slowly. That same persistence appears as a slower ACF decay and slower mean reversion in forecasts.
 

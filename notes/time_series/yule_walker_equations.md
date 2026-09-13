@@ -29,7 +29,7 @@ $$
 
 For example, $\rho_3=0.6(0.1)-0.2(0.5)=-0.04$. The equations turn AR coefficients into restrictions on the autocorrelation pattern that can be compared with a sample ACF.
 
-![Yule-Walker recursion for an AR(2)](../../assets/time_series/student/09_yule_walker_ar2.png)
+![Yule-Walker recursion for an AR(2)](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/09_yule_walker_ar2.png)
 
 The **Yule-Walker equations** are linear relationships connecting the autocovariances or autocorrelations of a stationary autoregressive process to its AR coefficients. They provide a direct link between a model written in terms of lagged values and the second-order dependence visible in its ACF.
 
@@ -390,7 +390,7 @@ $$
 
 The recursion then continues. A sample ACF will not equal these population values exactly, but its pattern should be broadly compatible with the fitted AR coefficients.
 
-![Yule-Walker recursion](../../assets/time_series/dependence/07_yule_walker_recursion.png)
+![Yule-Walker recursion](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/07_yule_walker_recursion.png)
 
 The figure shows how each new autocorrelation is generated from earlier lags. For a stable AR model, the recursion produces a sequence that decays rather than growing without bound.
 

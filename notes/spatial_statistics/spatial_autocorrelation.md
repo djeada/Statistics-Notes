@@ -105,7 +105,7 @@ $$
 
 because a location is not treated as its own neighbor.
 
-![Spatial weights network](../../assets/spatial_statistics/spatial_autocorrelation/01_spatial_weights.png)
+![Spatial weights network](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/01_spatial_weights.png)
 
 ## Common ways to define spatial weights
 
@@ -569,7 +569,7 @@ For every permutation, calculate Moran's $I$.
 
 The collection of permuted statistics forms the reference distribution under exchangeability.
 
-![Permutation reference distribution](../../assets/spatial_statistics/spatial_autocorrelation/04_permutation_distribution.png)
+![Permutation reference distribution](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/04_permutation_distribution.png)
 
 ## Monte Carlo permutation inference
 
@@ -792,7 +792,7 @@ Geary's $C$ can be more sensitive to local neighbor-to-neighbor differences.
 
 Neither statistic is universally better.
 
-![Moran and Geary comparison](../../assets/spatial_statistics/spatial_autocorrelation/05_moran_geary_sensitivity.png)
+![Moran and Geary comparison](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/05_moran_geary_sensitivity.png)
 
 ## The spatial lag
 
@@ -871,7 +871,7 @@ $$
 
 A low-valued location is surrounded by high-valued neighbors.
 
-![Moran scatterplot](../../assets/spatial_statistics/spatial_autocorrelation/03_moran_scatterplot.png)
+![Moran scatterplot](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/03_moran_scatterplot.png)
 
 With row-standardized $W$ and compatible standardization, the slope through the origin is closely related to global Moran's $I$.
 
@@ -1014,7 +1014,7 @@ A local map can display categories such as:
 - HL: high surrounded by low;
 - LH: low surrounded by high.
 
-![Local Moran categories](../../assets/spatial_statistics/spatial_autocorrelation/06_local_moran_categories.png)
+![Local Moran categories](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/06_local_moran_categories.png)
 
 HH and LL are often called local clusters.
 
@@ -1088,7 +1088,7 @@ is spatially independent.
 
 This is analogous to trend confounding in geostatistics.
 
-![Trend-induced spatial autocorrelation](../../assets/spatial_statistics/spatial_autocorrelation/07_trend_vs_residual.png)
+![Trend-induced spatial autocorrelation](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/07_trend_vs_residual.png)
 
 ## Numerical trend example
 
@@ -1150,7 +1150,7 @@ A weights matrix connecting everything within 10 km may dilute it.
 
 Moran's $I$ is therefore partly scale-dependent through $W$.
 
-![Weights-scale sensitivity](../../assets/spatial_statistics/spatial_autocorrelation/08_weights_scale_sensitivity.png)
+![Weights-scale sensitivity](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/08_weights_scale_sensitivity.png)
 
 A good analysis should justify the spatial scale scientifically or examine sensitivity across plausible choices.
 

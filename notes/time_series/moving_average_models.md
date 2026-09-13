@@ -32,7 +32,7 @@ $$
 
 The theoretical ACF of this MA(1) cuts off after lag 1. In a finite sample, later sample autocorrelations will usually not be exactly zero.
 
-![AR and MA identification patterns](../../assets/time_series/student/06_ar_ma_identification.png)
+![AR and MA identification patterns](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/06_ar_ma_identification.png)
 
 Moving Average (MA) models are a class of univariate time-series models in which the current value is a finite linear combination of current and past innovations. Unlike autoregressive models, they do not use past observed values directly in the model equation.
 
@@ -150,7 +150,7 @@ Typical identification patterns are therefore:
 
 The PACF usually tails off rather than cutting off sharply. These are ideal population patterns and should be treated as heuristics in finite samples.
 
-![MA shock duration](../../assets/time_series/dependence/04_ma_shock_duration.png)
+![MA shock duration](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/04_ma_shock_duration.png)
 
 The figure shows the mechanism behind the cutoff: a single innovation has a finite sequence of direct effects and then disappears from the model equation.
 
@@ -368,7 +368,7 @@ $$
 
 the usual invertibility condition is $|\theta|<1$.
 
-![Invertibility](../../assets/time_series/dependence/06_invertibility.png)
+![Invertibility](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/06_invertibility.png)
 
 The figure illustrates why invertibility matters for identification: the observable covariance pattern can correspond to more than one coefficient representation unless a root convention is imposed.
 

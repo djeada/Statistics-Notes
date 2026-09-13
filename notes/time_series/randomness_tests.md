@@ -16,7 +16,7 @@ the interior observations at positions 2, 3, and 4 are turning points: the seque
 
 For a fitted model, the more important question is whether residuals still contain predictable structure. A residual ACF, a Ljung-Box test, and a plot of squared residuals address different kinds of remaining dependence and should be interpreted together.
 
-![Turning points in a synthetic series](../../assets/time_series/turning_points_example.png)
+![Turning points in a synthetic series](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/turning_points_example.png)
 
 The figure marks local peaks and troughs directly. A sequence with unusually few turning points tends to move persistently in one direction, while unusually many turning points indicate excessive alternation.
 
@@ -46,7 +46,7 @@ $$
 
 Autocorrelation in the squared series indicates dependence in the magnitude of fluctuations even when the original residuals have little linear autocorrelation. This pattern is consistent with conditional heteroskedasticity and motivates checking models such as ARCH or GARCH, but the test alone does not establish a specific variance model.
 
-![Randomness and residual diagnostics](../../assets/time_series/dependence/08_randomness_residual_diagnostics.png)
+![Randomness and residual diagnostics](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/08_randomness_residual_diagnostics.png)
 
 The figure places mean-dependence and variance-dependence diagnostics side by side. Residual autocorrelation points to structure left in the conditional mean, while autocorrelation in squared residuals points to time-varying conditional variance.
 

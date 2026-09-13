@@ -20,7 +20,7 @@ $$
 
 The weights shrink, so the inverse representation is stable. If $\theta=2$, the first inverse weights are $1,-2,4,-8,\ldots$ and grow in magnitude. Because reciprocal MA parameters can generate the same autocorrelation structure after rescaling the innovation variance, the usual invertibility convention selects the representation with $|\theta|<1$.
 
-![Inverse-filter weights for invertible and non-invertible MA(1) parameters](../../assets/time_series/student/08_invertibility_inverse_weights.png)
+![Inverse-filter weights for invertible and non-invertible MA(1) parameters](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/08_invertibility_inverse_weights.png)
 
 In time-series modeling, **invertibility** means that the innovation sequence can be recovered as a stable function of the observed series and its past values. The concept is especially important for moving average models, whose equations are written in terms of unobserved current and lagged shocks.
 
@@ -245,7 +245,7 @@ With $|\beta|<1$, the weights decay as the lag increases. The recovered innovati
 
 The figure below visualizes this contrast between decaying and expanding inverse-filter weights.
 
-![Stable and unstable inverse weights](../../assets/time_series/dependence/06_invertibility.png)
+![Stable and unstable inverse weights](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/06_invertibility.png)
 
 ## Student guide: why roots and inverse filters matter
 

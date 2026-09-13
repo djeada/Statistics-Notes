@@ -39,7 +39,7 @@ $$
 
 Because $|0.7|<1$, the effect of the starting value shrinks over time. If the coefficient had absolute value greater than 1, the same recursion would amplify deviations instead.
 
-![A stable first-order difference equation](../../assets/time_series/student/02_difference_equation.png)
+![A stable first-order difference equation](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/02_difference_equation.png)
 
 A **difference equation**, also called a recurrence relation, defines each term of a sequence from one or more earlier terms. An explicit formula such as $a_n=3n+2$ gives $a_n$ directly. A difference equation instead describes how the sequence evolves from its previous values.
 
@@ -274,6 +274,6 @@ $$
 
 Difference equations therefore connect directly to moving-average representations and forecast uncertainty: the same powers of $\phi$ that govern stability also determine how quickly the effect of a shock fades.
 
-![Stable and unstable recursions](../../assets/time_series/foundations/02_difference_equation_stability.png)
+![Stable and unstable recursions](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/02_difference_equation_stability.png)
 
 The figure contrasts decaying and expanding paths, making the root-based stability condition visible in the time domain.

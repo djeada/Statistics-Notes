@@ -34,7 +34,7 @@ Use the smallest differencing order that makes the remaining series reasonably s
 
 The following figure contrasts ordinary and seasonal differencing. The main point is that ordinary differencing compares adjacent observations, whereas seasonal differencing compares observations one full seasonal cycle apart.
 
-![Ordinary and seasonal differencing](../../assets/time_series/student/12_arima_and_seasonal_differencing.png)
+![Ordinary and seasonal differencing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/12_arima_and_seasonal_differencing.png)
 
 This distinction is central to ARMA, ARIMA, and SARIMA models. ARMA (AutoRegressive Moving Average) combines dependence on past values with dependence on current and past innovations. ARIMA (AutoRegressive Integrated Moving Average) extends ARMA by differencing a non-stationary series before modeling its dependence structure. SARIMA (Seasonal ARIMA) adds seasonal differencing and seasonal AR and MA terms for repeating patterns. Together, these models provide a flexible framework for time series with serial dependence, stochastic trends, and seasonality.
 
@@ -251,7 +251,7 @@ Several pieces of evidence should be considered together:
 
 The following synthetic example shows the effect visually. Compare the original sequence with its differenced version: differencing removes persistent level movement so that the remaining changes are easier to model.
 
-![arima differencing](../../assets/time_series/arima_differencing.png)
+![arima differencing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_differencing.png)
 
 #### Fitting ARIMA Models: Numerical Example
 
@@ -540,11 +540,11 @@ Ordinary and seasonal differences can interact. Each difference also removes usa
 
 Seasonality can also behave differently depending on the scale of the series. The next figure contrasts additive seasonality, whose amplitude stays roughly constant, with multiplicative seasonality, whose amplitude grows or shrinks with the series level. This distinction can guide whether a transformation such as a logarithm is useful before fitting a seasonal model.
 
-![Additive and multiplicative seasonality](../../assets/time_series/arima_seasonality/02_additive_multiplicative_seasonality.png)
+![Additive and multiplicative seasonality](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/02_additive_multiplicative_seasonality.png)
 
 A decomposition view makes the same idea more concrete by separating an observed series into level or trend, seasonal structure, and remainder. The figure below is useful for seeing which features should be handled by transformation, differencing, or explicit seasonal terms rather than being left for the residual process.
 
-![Additive decomposition](../../assets/time_series/arima_seasonality/03_additive_decomposition.png)
+![Additive decomposition](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/03_additive_decomposition.png)
 
 ### Choosing the differencing order
 
@@ -559,11 +559,11 @@ Use several kinds of evidence together:
 
 The purpose of differencing is to remove persistent stochastic level behavior, not simply to make the plot look flatter. The following figure compares different differencing orders and shows why the smallest adequate order is usually preferred.
 
-![Differencing orders](../../assets/time_series/arima_seasonality/01_differencing_orders.png)
+![Differencing orders](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/01_differencing_orders.png)
 
 Under-differencing often leaves a slowly decaying ACF and unstable long-horizon forecasts. After an appropriate difference, the ACF should usually look more like that of a short-memory process. The next figure shows this change directly by comparing the ACF before and after differencing.
 
-![ACF before and after differencing](../../assets/time_series/arima_seasonality/04_acf_before_after_differencing.png)
+![ACF before and after differencing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/04_acf_before_after_differencing.png)
 
 Over-differencing creates a different problem: it can introduce a strong negative lag-1 correlation and make the series noisier than necessary. For a random walk,
 
@@ -573,7 +573,7 @@ $$
 
 one difference gives $\nabla y_t=\varepsilon_t$. Differencing again gives $\varepsilon_t-\varepsilon_{t-1}$, an MA(1)-like process with negative lag dependence. The figure below illustrates the visual and autocorrelation consequences of taking this extra, unnecessary difference.
 
-![Over-differencing](../../assets/time_series/arima_seasonality/05_over_differencing.png)
+![Over-differencing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/05_over_differencing.png)
 
 This is why removing visible trend is not, by itself, evidence that additional differencing is better.
 
@@ -606,7 +606,7 @@ The ARIMA$(1,1,1)$ candidate has the lower AIC, so it is preferred by this crite
 
 The following model-order figure illustrates this role of information criteria: they help compare a candidate set, but they do not replace the diagnostics used to determine whether the selected model has captured the relevant dependence.
 
-![Model order selection](../../assets/time_series/arima_seasonality/08_model_order_selection.png)
+![Model order selection](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/08_model_order_selection.png)
 
 ### Forecasting from differences
 
@@ -620,7 +620,7 @@ The second level forecast starts from the first forecasted level, so uncertainty
 
 The next figure shows this inverse transformation visually. The model works on a transformed series internally, but the reported forecast is reconstructed on the level scale so it can be compared directly with the observed data.
 
-![ARIMA level forecast](../../assets/time_series/arima_seasonality/06_arima_level_forecast.png)
+![ARIMA level forecast](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/06_arima_level_forecast.png)
 
 ### Seasonal model diagnostics
 
@@ -634,7 +634,7 @@ For monthly data, inspect
 
 A seasonal-naive forecast is especially useful because it provides a simple benchmark: each forecast repeats the most recent observation from the same season. The figure below shows how that benchmark behaves, making it easier to judge whether a fitted seasonal model is adding genuine forecasting value.
 
-![Seasonal naive forecast](../../assets/time_series/arima_seasonality/07_seasonal_naive_forecast.png)
+![Seasonal naive forecast](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/07_seasonal_naive_forecast.png)
 
 An apparent seasonal AR or MA term can sometimes be a proxy for omitted deterministic calendar structure. When known calendar variables directly describe the mechanism, include them rather than forcing stochastic seasonal terms to absorb the effect.
 

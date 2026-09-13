@@ -22,7 +22,7 @@ $$
 
 The scale must be calculated using only the training portion available at each forecast origin. Reusing a scale computed from the full series introduces leakage. A rolling-origin evaluation repeats this calculation through time so that every forecast is produced using past information only.
 
-![Rolling-origin forecasts and forecast errors](../../assets/time_series/student/15_forecast_backtesting.png)
+![Rolling-origin forecasts and forecast errors](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/15_forecast_backtesting.png)
 
 The figure makes the evaluation design explicit: the forecast origin moves forward, the model is refit or updated using the information available at that date, and the later observation is used only to score the forecast.
 
@@ -32,7 +32,7 @@ Forecast evaluation asks a different question from in-sample fit: **How well wou
 
 Randomly shuffling observations destroys the information structure of a forecasting problem. A valid evaluation keeps training observations earlier than validation or test observations. Validation periods can be used for model or hyperparameter selection, while the final test period should remain untouched until the procedure has been selected.
 
-![Temporal leakage](../../assets/time_series/forecasting/07_temporal_leakage.png)
+![Temporal leakage](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/07_temporal_leakage.png)
 
 The figure contrasts a valid chronological split with a leaked evaluation. The issue is not only where the target rows are split: preprocessing, feature construction, imputation, and predictor forecasts must also respect the same information boundary.
 
@@ -46,7 +46,7 @@ $$
 e_{t,h}=y_{t+h}-\hat y_{t+h\mid t}.
 $$
 
-![Rolling origins](../../assets/time_series/forecasting/02_rolling_origins.png)
+![Rolling origins](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/02_rolling_origins.png)
 
 The rolling-origin figure shows how the training window, origin, and forecast horizon move together. Accuracy should be reported by horizon whenever short- and long-horizon decisions have different importance.
 
@@ -54,7 +54,7 @@ The rolling-origin figure shows how the training window, origin, and forecast ho
 
 Useful baselines include naive, seasonal-naive, drift, and historical-mean forecasts. A complicated method that cannot improve on a sensible baseline on the same evaluation origins has not demonstrated additional forecasting value.
 
-![Forecast baselines](../../assets/time_series/forecasting/01_baseline_forecasts.png)
+![Forecast baselines](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/01_baseline_forecasts.png)
 
 The baseline figure shows that different simple rules encode different assumptions: persistence, repeating seasonality, linear drift, or reversion to a stable historical mean. Choose the baseline that reflects the simplest plausible structure in the problem.
 
@@ -78,7 +78,7 @@ $$
 
 MAPE can be useful when values are strictly positive and comfortably away from zero, but it is undefined at zero and unstable near zero.
 
-![Point metrics](../../assets/time_series/forecasting/03_point_metrics.png)
+![Point metrics](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/03_point_metrics.png)
 
 The point-metrics figure illustrates that MAE and RMSE can rank the same errors differently because RMSE gives more weight to large misses. Metric choice should reflect the loss that matters in deployment rather than habit.
 
@@ -86,7 +86,7 @@ The point-metrics figure illustrates that MAE and RMSE can rank the same errors 
 
 Prediction intervals should be evaluated for both calibration and sharpness. Coverage measures how often observations fall inside the stated interval, while width measures how informative the interval is. Coverage should also be inspected by forecast horizon and regime.
 
-![Interval coverage](../../assets/time_series/forecasting/04_interval_coverage.png)
+![Interval coverage](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/04_interval_coverage.png)
 
 The figure shows why nominal coverage alone is not enough: intervals can achieve high coverage simply by being too wide. A useful interval is both appropriately calibrated and reasonably narrow.
 
@@ -300,19 +300,19 @@ Evaluate all candidates on identical origins, horizons, transformations, and tar
 | ARIMA |  |  |  |  |
 | dynamic regression |  |  |  |  |
 
-![Error by horizon](../../assets/time_series/forecasting/05_error_by_horizon.png)
+![Error by horizon](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/05_error_by_horizon.png)
 
 The horizon plot shows why one average score can hide important differences. A model can be best at one-step prediction and lose that advantage at longer horizons.
 
 Model classes also differ in how they adapt as new observations arrive. Exponential smoothing, for example, updates a latent level recursively rather than refitting a large parameter set at each step.
 
-![Exponential smoothing](../../assets/time_series/forecasting/06_exponential_smoothing.png)
+![Exponential smoothing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/06_exponential_smoothing.png)
 
 This figure is useful in evaluation because the update rule itself is part of the forecasting procedure. A fair backtest must reproduce that update chronologically rather than estimate the smoothed state using future observations.
 
 Plot errors over calendar time as well as by horizon.
 
-![Forecast errors over time](../../assets/time_series/forecasting/08_forecast_errors_over_time.png)
+![Forecast errors over time](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/08_forecast_errors_over_time.png)
 
 The time plot can reveal regime-specific failures that disappear in an overall average. Statistical tests comparing forecast errors also require care because errors from adjacent origins can overlap, especially for multi-step horizons.
 
