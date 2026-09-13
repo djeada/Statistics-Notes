@@ -253,7 +253,3 @@ Treating a deterministic trend as stochastic integration, or omitting a needed d
 8. Use Granger tests and impulse responses only with assumptions stated.
 9. Backtest joint forecasts using temporal origins.
 10. Compare the system against separate univariate baselines.
-
-### Visual companions
-
-The VAR, Granger, cointegration, VECM, and impulse-response figures are integrated with the concepts they illustrate above. Together they show the progression from short-run cross-dependence to long-run equilibrium and then to the propagation of identified shocks through the system.
