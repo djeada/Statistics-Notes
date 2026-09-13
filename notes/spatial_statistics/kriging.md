@@ -1,15 +1,15 @@
 # Kriging: A Student Guide to Spatial Prediction
 
-Kriging is a method for predicting a spatial variable at unsampled locations when we have a model for spatial dependence.
+Kriging is a method for predicting a spatial variable at unsampled locations using a model of spatial dependence.
 
-It is often introduced with the phrase **best linear unbiased predictor (BLUP)**. That phrase is useful, but only if each word is understood carefully:
+Kriging is often introduced as the **best linear unbiased predictor (BLUP)**. The phrase is useful when each part is interpreted carefully:
 
 - **linear**: the prediction is a weighted sum of observed values;
 - **unbiased**: the weights satisfy constraints implied by the assumed mean model;
-- **best**: among predictors satisfying those assumptions, kriging minimizes prediction variance;
+- **best**: among predictors that satisfy those assumptions, kriging minimizes prediction variance;
 - **predictor**: it predicts an unknown spatial quantity.
 
-Kriging is therefore **not simply a generic smoother** and it is not just "take a distance-weighted average."
+Kriging is therefore not simply a generic smoother or a distance-weighted average.
 
 The result depends on:
 
@@ -17,19 +17,6 @@ The result depends on:
 2. the covariance or variogram model;
 3. the geometry of the sample locations;
 4. the prediction target.
-
-The companion script [`kriging_visualizations.py`](../../scripts/spatial_statistics/kriging_visualizations.py) reproduces the numerical examples and generates the figures in this chapter.
-
-Run it with:
-
-```bash
-python scripts/spatial_statistics/kriging_visualizations.py
-```
-
-The script creates a `assets/spatial_statistics/kriging/` folder automatically.
-
----
-
 ## Learning objectives
 
 After this chapter, you should be able to:
@@ -46,9 +33,7 @@ After this chapter, you should be able to:
 10. perform and interpret leave-one-out cross-validation;
 11. explain why low kriging variance does not prove that the model is correct.
 
----
-
-## 1. The prediction problem
+## The prediction problem
 
 Suppose we have observations
 
@@ -71,9 +56,7 @@ $$
 Kriging uses a linear predictor
 
 $$
-\hat Z(s_0)
-=
-\sum_{i=1}^n\lambda_i Z(s_i).
+\hat Z(s_0) = \sum_{i=1}^n\lambda_i Z(s_i).
 $$
 
 The numbers
@@ -86,7 +69,7 @@ are the **kriging weights**.
 
 ### What is being calculated?
 
-Kriging calculates the weights that make the prediction satisfy the mean-model constraint while minimizing the variance of the prediction error.
+Kriging calculates weights that satisfy the mean-model constraints while minimizing the variance of the prediction error.
 
 The prediction error is
 
@@ -94,32 +77,30 @@ $$
 Z(s_0)-\hat Z(s_0).
 $$
 
-Kriging chooses the weights so that the variance
+Kriging chooses the weights to minimize
 
 $$
-\operatorname{Var}
+\mathrm{Var}
 \left[
 Z(s_0)-\hat Z(s_0)
 \right]
 $$
 
-is as small as possible under the assumed spatial model.
+under the assumed spatial model.
 
 ### Why not just use the nearest observation?
 
-The nearest point may be useful, but it is not necessarily sufficient.
+The nearest observation may be informative, but it is not necessarily sufficient.
 
 Several observations may jointly contain information about the target.
 
-However, kriging also recognizes that nearby observations can be redundant with one another. Two points almost on top of each other do not provide twice as much independent information as one point.
+Kriging also accounts for redundancy among nearby observations. Two points almost on top of each other do not provide twice as much independent information as one point.
 
-This is one reason kriging differs from simple distance weighting.
+This is one reason kriging differs from simple distance-based weighting.
 
 ![Kriging geometry](../../assets/spatial_statistics/kriging/01_kriging_geometry.png)
 
----
-
-## 2. Ordinary kriging
+## Ordinary kriging
 
 Ordinary kriging assumes that the mean is:
 
@@ -137,9 +118,7 @@ where the constant $m$ is unknown.
 The ordinary-kriging predictor is
 
 $$
-\hat Z(s_0)
-=
-\sum_{i=1}^n\lambda_i Z(s_i).
+\hat Z(s_0) = \sum_{i=1}^n\lambda_i Z(s_i).
 $$
 
 For this predictor to be unbiased for any unknown constant mean, the weights must satisfy
@@ -153,11 +132,7 @@ $$
 Take expectations:
 
 $$
-E[\hat Z(s_0)]
-=
-E\left[
-\sum_i\lambda_i Z(s_i)
-\right].
+E[\hat Z(s_0)] = E\left[ \sum_i\lambda_i Z(s_i) \right].
 $$
 
 Because expectation is linear,
@@ -177,9 +152,7 @@ $$
 Therefore
 
 $$
-E[\hat Z(s_0)]
-=
-m\sum_i\lambda_i.
+E[\hat Z(s_0)] = m\sum_i\lambda_i.
 $$
 
 For the predictor to have expected value $m$,
@@ -196,11 +169,8 @@ $$
 }.
 $$
 
-The sum-to-one constraint is therefore not an arbitrary convention. It is what preserves an unknown constant mean.
-
----
-
-## 3. Ordinary kriging with a semivariogram
+The sum-to-one constraint is therefore not arbitrary. It preserves an unknown constant mean.
+## Ordinary kriging with a semivariogram
 
 Using a valid semivariogram $\gamma$, the ordinary-kriging system is
 
@@ -212,8 +182,7 @@ $$
 \begin{bmatrix}
 \lambda\\
 \mu
-\end{bmatrix}
-=
+\end{bmatrix} =
 \begin{bmatrix}
 \gamma_0\\
 1
@@ -223,39 +192,31 @@ $$
 where
 
 $$
-\Gamma_{ij}
-=
-\gamma(s_i-s_j)
+\Gamma_{ij} = \gamma(s_i-s_j)
 $$
 
 and
 
 $$
-(\gamma_0)_i
-=
-\gamma(s_i-s_0).
+(\gamma_0)_i = \gamma(s_i-s_0).
 $$
 
 Here:
 
-- $\Gamma$ describes spatial dissimilarity among the observations;
-- $\gamma_0$ describes spatial dissimilarity between each observation and the target;
+- $\Gamma$ contains semivariogram values among the observations;
+- $\gamma_0$ contains semivariogram values between each observation and the target;
 - $\lambda$ contains the unknown kriging weights;
 - $\mu$ is a Lagrange multiplier that enforces the sum-to-one constraint.
 
 With this sign convention,
 
 $$
-\sigma_K^2(s_0)
-=
-\lambda^\top\gamma_0+\mu.
+\sigma_K^2(s_0) = \lambda^\top\gamma_0+\mu.
 $$
 
-Some books use the opposite sign for the multiplier. That is fine as long as the system and variance formula use the same convention.
+Some texts use the opposite sign for the multiplier. Either convention is valid as long as the kriging system and variance formula are consistent.
 
----
-
-## 4. Fully worked ordinary-kriging example
+## Fully worked ordinary-kriging example
 
 Consider three sampled points:
 
@@ -274,12 +235,7 @@ $$
 Use the exponential semivariogram
 
 $$
-\gamma(h)
-=
-0.2
-+
-2.8\left(1-e^{-h/1.5}\right),
-\qquad h>0,
+\gamma(h) = 0.2 + 2.8\left(1-e^{-h/1.5}\right), \qquad h>0,
 $$
 
 with
@@ -288,11 +244,9 @@ $$
 \gamma(0)=0.
 $$
 
-This example is small enough to calculate by hand.
+This example is small enough to work through by hand.
 
----
-
-### 4.1 Step 1: calculate distances among observations
+### calculate distances among observations
 
 The observation coordinates are
 
@@ -307,55 +261,33 @@ $$
 Distance A-B:
 
 $$
-d_{AB}
-=
-\sqrt{(1-0)^2+(0-0)^2}
-=
-1.
+d_{AB} = \sqrt{(1-0)^2+(0-0)^2} = 1.
 $$
 
 Distance A-C:
 
 $$
-d_{AC}
-=
-\sqrt{(0-0)^2+(1-0)^2}
-=
-1.
+d_{AC} = \sqrt{(0-0)^2+(1-0)^2} = 1.
 $$
 
 Distance B-C:
 
 $$
-d_{BC}
-=
-\sqrt{(1-0)^2+(0-1)^2}
-=
-\sqrt{2}
-\approx1.4142.
+d_{BC} = \sqrt{(1-0)^2+(0-1)^2} = \sqrt{2} \approx1.4142.
 $$
 
----
-
-### 4.2 Step 2: calculate semivariogram values among observations
+### calculate semivariogram values among observations
 
 For distance 1,
 
 $$
-\gamma(1)
-=
-0.2
-+
-2.8\left(1-e^{-1/1.5}\right).
+\gamma(1) = 0.2 + 2.8\left(1-e^{-1/1.5}\right).
 $$
 
 Because
 
 $$
-e^{-1/1.5}
-=
-e^{-0.6667}
-\approx0.5134,
+e^{-1/1.5} = e^{-0.6667} \approx0.5134,
 $$
 
 we obtain
@@ -383,14 +315,7 @@ $$
 For distance $\sqrt{2}$,
 
 $$
-\gamma(\sqrt{2})
-=
-0.2
-+
-2.8
-\left(
-1-e^{-\sqrt{2}/1.5}
-\right).
+\gamma(\sqrt{2}) = 0.2 + 2.8 \left( 1-e^{-\sqrt{2}/1.5} \right).
 $$
 
 Numerically,
@@ -418,9 +343,7 @@ $$
 \gamma(0)=0.
 $$
 
----
-
-### 4.3 Step 3: calculate distances from observations to the target
+### calculate distances from observations to the target
 
 The target is
 
@@ -431,23 +354,11 @@ $$
 Distance from A:
 
 $$
-d_{A0}
-=
-\sqrt{(0.5-0)^2+(0.5-0)^2}
+d_{A0} = \sqrt{(0.5-0)^2+(0.5-0)^2}
 $$
 
 $$
-=
-\sqrt{0.25+0.25}
-$$
-
-$$
-=
-\sqrt{0.5}
-$$
-
-$$
-\approx0.7071.
+= \sqrt{0.25+0.25} = \sqrt{0.5} \approx0.7071.
 $$
 
 The same distance occurs from B and C:
@@ -459,13 +370,7 @@ $$
 Now calculate the semivariogram:
 
 $$
-\gamma(0.7071)
-=
-0.2
-+
-2.8\left(
-1-e^{-0.7071/1.5}
-\right).
+\gamma(0.7071) = 0.2 + 2.8\left( 1-e^{-0.7071/1.5} \right).
 $$
 
 Numerically,
@@ -485,10 +390,7 @@ $$
 1.2524
 \end{bmatrix}.
 $$
-
----
-
-### 4.4 Step 4: assemble the augmented kriging system
+### assemble the augmented kriging system
 
 The ordinary-kriging system becomes
 
@@ -504,8 +406,7 @@ $$
 \lambda_B\\
 \lambda_C\\
 \mu
-\end{bmatrix}
-=
+\end{bmatrix} =
 \begin{bmatrix}
 1.2524\\
 1.2524\\
@@ -541,11 +442,9 @@ $$
 \approx1.
 $$
 
-So the ordinary-kriging unbiasedness condition is satisfied.
+So the ordinary-kriging unbiasedness constraint is satisfied.
 
----
-
-## 5. Calculate the ordinary-kriging prediction
+## Calculate the ordinary-kriging prediction
 
 The observations are
 
@@ -561,21 +460,13 @@ $$
 The prediction is
 
 $$
-\hat Z(s_0)
-=
-\lambda^\top z.
+\hat Z(s_0) = \lambda^\top z.
 $$
 
 Substitute the numbers:
 
 $$
-\hat Z(s_0)
-=
-0.2801(10)
-+
-0.3600(12)
-+
-0.3600(11).
+\hat Z(s_0) = 0.2801(10) + 0.3600(12) + 0.3600(11).
 $$
 
 Calculate each contribution:
@@ -610,43 +501,33 @@ $$
 
 ### What does this mean?
 
-Under the assumed constant-mean model and exponential semivariogram, the best linear unbiased prediction at $(0.5,0.5)$ is approximately 11.08.
+Under the assumed constant-mean model and exponential semivariogram, the kriging prediction at $(0.5,0.5)$ is approximately 11.08.
 
-This prediction is conditional on the model.
+This prediction is conditional on the assumed model.
 
 A different variogram, trend model, or nugget interpretation could produce different weights and a different prediction.
 
 ![Ordinary kriging weights](../../assets/spatial_statistics/kriging/02_ordinary_kriging_weights.png)
 
----
-
-## 6. Calculate the ordinary-kriging variance
+## Calculate the ordinary-kriging variance
 
 With the sign convention used above,
 
 $$
-\sigma_K^2(s_0)
-=
-\lambda^\top\gamma_0+\mu.
+\sigma_K^2(s_0)  = \lambda^\top\gamma_0+\mu.
 $$
 
 We have
 
 $$
-\lambda
-=
-\begin{bmatrix}
-0.2801\\
-0.3600\\
-0.3600
+\lambda = \begin{bmatrix} 0.2801\\ 0.3600\\ 0.3600
 \end{bmatrix}
 $$
 
 and
 
 $$
-\gamma_0
-=
+\gamma_0 =
 \begin{bmatrix}
 1.2524\\
 1.2524\\
@@ -657,8 +538,7 @@ $$
 Therefore
 
 $$
-\lambda^\top\gamma_0
-=
+\lambda^\top\gamma_0 =
 0.2801(1.2524)
 +
 0.3600(1.2524)
@@ -676,8 +556,7 @@ $$
 Then
 
 $$
-\sigma_K^2(s_0)
-=
+\sigma_K^2(s_0) =
 1.2524+0.1276
 $$
 
@@ -690,15 +569,14 @@ $$
 The kriging standard deviation is
 
 $$
-\sigma_K(s_0)
-=
+\sigma_K(s_0) =
 \sqrt{1.3800}
 \approx1.175.
 $$
 
 ### What is this uncertainty measuring?
 
-The kriging variance measures prediction uncertainty caused by the spatial configuration and the assumed stochastic model.
+The kriging variance measures prediction uncertainty implied by the sampling geometry and the assumed stochastic model.
 
 It reflects:
 
@@ -707,23 +585,21 @@ It reflects:
 - the covariance or variogram parameters;
 - the mean-model constraints.
 
-After the covariance parameters are treated as fixed, the kriging variance does **not directly depend on whether the observed values are 10, 20, or 100**.
+Once the covariance parameters are treated as fixed, the kriging variance does not directly depend on whether the observed values are 10, 20, or 100.
 
-That fact often surprises students.
+This often surprises students.
 
----
-
-## 7. Why kriging weights are not just inverse-distance weights
+## Why kriging weights are not just inverse-distance weights
 
 Suppose a target is near three observations.
 
 Two observations are nearly on top of one another, while a third observation is at a similar target distance but lies in another direction.
 
-A distance-only method may give all three points similar importance.
+A distance-only method may give all three observations similar importance.
 
-Kriging recognizes that the two almost-duplicate observations contain highly redundant information.
+Kriging recognizes that the two nearly coincident observations contain highly redundant information.
 
-The weights are chosen from the whole covariance geometry, not from target distance alone.
+The weights depend on the full covariance geometry, not only on distance to the target.
 
 ![Redundancy and weights](../../assets/spatial_statistics/kriging/03_redundancy_and_weights.png)
 
@@ -737,13 +613,11 @@ Kriging weights depend on:
 2. each observation's relation to every other observation;
 3. the mean constraint.
 
-This is why the full matrix $\Gamma$ or covariance matrix $C$ is necessary.
+This is why kriging needs the full matrix $\Gamma$, or equivalently the full covariance matrix $C$.
 
----
+## Kriging as a spatial prediction surface
 
-## 8. Kriging as a spatial prediction surface
-
-In practice we usually predict at many grid locations.
+In practice, predictions are usually made at many grid locations.
 
 For every grid location $s_0$:
 
@@ -757,17 +631,15 @@ Repeating this process creates a prediction surface.
 
 ![Kriging prediction surface](../../assets/spatial_statistics/kriging/04_prediction_surface.png)
 
-The surface is not merely a visual smoothing of the data. It is the result of repeatedly solving the model-based prediction problem.
+The resulting surface is not merely a visual smoothing of the data. It comes from repeatedly solving the model-based prediction problem.
 
----
-
-## 9. Kriging variance across space
+## Kriging variance across space
 
 Prediction uncertainty changes with sampling geometry.
 
-Near sampled locations, uncertainty is often smaller.
+Uncertainty is often smaller near sampled locations.
 
-Inside a dense cluster of observations, uncertainty is usually lower than in a large unsampled gap.
+Uncertainty is usually lower inside a dense cluster of observations than in a large unsampled gap.
 
 Outside the convex region covered by data, uncertainty often increases.
 
@@ -775,18 +647,15 @@ Outside the convex region covered by data, uncertainty often increases.
 
 ### A common misconception
 
-A smooth prediction surface does **not** imply low uncertainty everywhere.
+A smooth prediction surface does not imply low uncertainty everywhere.
 
 The prediction map and the uncertainty map answer different questions:
 
 - prediction map: "What value does the model predict?"
 - variance map: "How uncertain is that prediction under the model?"
 
-Both should be examined.
-
----
-
-## 10. Simple kriging
+Both maps should be examined together.
+## Simple kriging
 
 Simple kriging assumes the mean is known.
 
@@ -801,11 +670,7 @@ and $m$ is known exactly.
 The simple-kriging predictor is
 
 $$
-\hat Z(s_0)
-=
-m
-+
-c_0^\top C^{-1}(z-m\mathbf{1}),
+\hat Z(s_0) = m + c_0^\top C^{-1}(z-m\mathbf{1}),
 $$
 
 where
@@ -820,11 +685,11 @@ $$
 \lambda=C^{-1}c_0.
 $$
 
-They do **not** have to sum to 1.
+They do not have to sum to 1.
 
 ### Why is there no sum-to-one constraint?
 
-Because the known mean is already inserted explicitly:
+Because the known mean is included explicitly:
 
 $$
 m
@@ -834,9 +699,7 @@ $$
 
 The model only needs to predict deviations from the known mean.
 
----
-
-## 11. Simple-kriging numerical example
+## Simple-kriging numerical example
 
 Suppose the known mean is
 
@@ -857,10 +720,7 @@ $$
 Their deviations from the mean are
 
 $$
-z-m\mathbf{1}
-=
-\begin{bmatrix}
-2\\
+z-m\mathbf{1} = \begin{bmatrix} 2\\
 -1
 \end{bmatrix}.
 $$
@@ -905,8 +765,7 @@ $$
 Thus
 
 $$
-\lambda
-=
+\lambda =
 C^{-1}c_0
 \approx
 \begin{bmatrix}
@@ -918,13 +777,8 @@ $$
 The simple-kriging prediction is
 
 $$
-\hat Z(s_0)
-=
-10
-+
-0.618(2)
-+
-0.018(-1).
+\hat Z(s_0) =
+10 + 0.618(2) + 0.018(-1).
 $$
 
 Therefore
@@ -949,11 +803,9 @@ $$
 
 not 1.
 
-That is allowed because the known mean handles the remaining contribution.
+That is valid because the known mean accounts for the remaining contribution.
 
----
-
-## 12. What happens far from all data in simple kriging?
+## What happens far from all data in simple kriging?
 
 As the target moves far away from every observation,
 
@@ -974,15 +826,13 @@ $$
 \hat Z(s_0)\rightarrow m.
 $$
 
-So simple kriging naturally returns toward the known mean far from the observations.
+Simple kriging therefore returns toward the known mean as the target moves far from the observations.
 
-This is an important conceptual difference from ordinary kriging.
+This is an important conceptual difference between simple and ordinary kriging.
 
 ![Simple versus ordinary behavior](../../assets/spatial_statistics/kriging/06_simple_vs_ordinary.png)
 
----
-
-## 13. Simple-kriging variance
+## Simple-kriging variance
 
 For a latent process with target variance
 
@@ -993,14 +843,13 @@ $$
 the simple-kriging prediction variance is
 
 $$
-\sigma_K^2(s_0)
-=
+\sigma_K^2(s_0) =
 C(0)-c_0^\top C^{-1}c_0.
 $$
 
 ### What is being calculated?
 
-The starting uncertainty at the target is $C(0)$.
+The baseline variance at the target is $C(0)$.
 
 The observations reduce that uncertainty by the amount
 
@@ -1008,17 +857,15 @@ $$
 c_0^\top C^{-1}c_0.
 $$
 
-If the target is strongly correlated with informative observations, the reduction is large.
+If the target is strongly correlated with informative observations, this reduction is large.
 
 If the target is far from all observations, $c_0$ is close to zero and the prediction variance approaches $C(0)$.
 
----
-
-## 14. Universal kriging
+## Universal kriging
 
 Ordinary kriging assumes a constant but unknown mean.
 
-That may be inappropriate if the mean changes systematically over space.
+That assumption may be inappropriate when the mean changes systematically over space.
 
 Universal kriging models the mean as
 
@@ -1029,16 +876,14 @@ $$
 For example,
 
 $$
-m(x,y)
-=
+m(x,y) =
 \beta_0+\beta_1x+\beta_2y.
 $$
 
 The vector of basis functions is
 
 $$
-f(s)
-=
+f(s) =
 \begin{bmatrix}
 1\\
 x\\
@@ -1046,19 +891,16 @@ y
 \end{bmatrix}.
 $$
 
-Universal kriging predicts while preserving this trend structure.
+Universal kriging incorporates this trend structure into the prediction.
 
----
-
-## 15. Universal-kriging constraints
+## Universal-kriging constraints
 
 Let $F$ be the design matrix of trend basis values at the sampled locations.
 
 For a linear coordinate trend,
 
 $$
-F
-=
+F =
 \begin{bmatrix}
 1 & x_1 & y_1\\
 1 & x_2 & y_2\\
@@ -1070,8 +912,7 @@ $$
 At the target,
 
 $$
-f_0
-=
+f_0 =
 \begin{bmatrix}
 1\\
 x_0\\
@@ -1095,8 +936,7 @@ F^\top & 0
 \begin{bmatrix}
 \lambda\\
 \nu
-\end{bmatrix}
-=
+\end{bmatrix} =
 \begin{bmatrix}
 c_0\\
 f_0
@@ -1115,18 +955,14 @@ Universal kriging may need to preserve:
 - elevation effects;
 - other covariate-based mean terms.
 
-The additional constraints ensure that the prediction respects the modeled trend.
+These additional constraints ensure that the predictor preserves the modeled trend.
 
----
-
-## 16. Universal-kriging trend example
+## Universal-kriging trend example
 
 Suppose the mean is
 
 $$
-m(x,y)
-=
-5+0.8x-0.3y.
+m(x,y) = 5+0.8x-0.3y.
 $$
 
 At target
@@ -1138,22 +974,16 @@ $$
 the mean component is
 
 $$
-m(4,2)
-=
-5+0.8(4)-0.3(2).
+m(4,2) = 5+0.8(4)-0.3(2).
 $$
 
 Therefore
 
 $$
-m(4,2)
-=
-5+3.2-0.6
-=
-7.6.
+m(4,2) = 5+3.2-0.6 = 7.6.
 $$
 
-Universal kriging does not simply return 7.6.
+Universal kriging does not simply return the trend value 7.6.
 
 Instead, it combines:
 
@@ -1163,22 +993,16 @@ Instead, it combines:
 Conceptually,
 
 $$
-\text{prediction}
-=
-\text{trend contribution}
-+
-\text{kriged residual contribution}.
+\text{prediction} = \text{trend contribution} + \text{kriged residual contribution}.
 $$
 
-This is closely related to regression kriging.
+This decomposition is closely related to regression kriging.
 
----
-
-## 17. Ordinary versus universal kriging
+## Ordinary versus universal kriging
 
 Suppose the true field increases strongly from west to east.
 
-If ordinary kriging is used over a large region, the covariance model may be forced to imitate the trend.
+If ordinary kriging is applied over a large region, the covariance model may be forced to absorb part of the trend.
 
 This can produce:
 
@@ -1187,21 +1011,19 @@ This can produce:
 - biased predictions near boundaries;
 - misleading uncertainty.
 
-Universal kriging instead assigns the broad trend to the mean model and reserves the covariance model for residual spatial dependence.
+Universal kriging instead assigns the broad trend to the mean model and uses the covariance model for residual spatial dependence.
 
 A useful modeling principle is:
 
 > Explain broad deterministic structure with the mean model when possible, and use the covariance model for the remaining spatial dependence.
 
----
-
-## 18. Does kriging interpolate exactly?
+## Does kriging interpolate exactly?
 
 Students often hear:
 
 > "Kriging is an exact interpolator."
 
-That statement needs qualification.
+That statement needs qualification because exact interpolation depends on the target and on how the nugget is interpreted.
 
 Whether prediction at a sampled location exactly reproduces the observed value depends on:
 
@@ -1209,19 +1031,15 @@ Whether prediction at a sampled location exactly reproduces the observed value d
 2. whether the prediction target is the noisy observation or the latent process;
 3. how the covariance model is constructed.
 
----
-
-## 19. Nugget as microscale process variation
+## Nugget as microscale process variation
 
 Suppose the nugget represents real process variation occurring at scales smaller than the sampling spacing.
 
-If we ask for the process value at an already observed location, an exact-interpolation convention may be reasonable.
+If the target is the process value at an already observed location, an exact-interpolation convention may be reasonable.
 
 The observed process value is treated as known at that location.
 
----
-
-## 20. Nugget as measurement error
+## Nugget as measurement error
 
 Suppose instead
 
@@ -1248,33 +1066,31 @@ $$
 
 but the measurement-error standard deviation is known to be substantial.
 
-The best estimate of the latent $X(s)$ can combine:
+The prediction of the latent $X(s)$ can combine:
 
 - the measurement at $s$;
 - neighboring measurements;
 - the spatial covariance model.
 
-The resulting prediction need not equal exactly 12.0.
+The resulting prediction therefore need not equal exactly 12.0.
 
 ![Nugget and interpolation](../../assets/spatial_statistics/kriging/07_nugget_interpolation.png)
 
 #### Main lesson
 
-The question is not simply:
+The key question is not simply:
 
 > "Does kriging interpolate?"
 
-The better question is:
+A more useful question is:
 
 > "What random quantity are we predicting, and how is the nugget interpreted?"
 
----
-
-## 21. Kriging uncertainty versus model uncertainty
+## Kriging uncertainty versus model uncertainty
 
 The kriging variance is calculated **conditional on the assumed model**.
 
-That distinction is critical.
+This distinction is important.
 
 A small kriging variance does not guarantee an accurate prediction if the model is wrong.
 
@@ -1288,7 +1104,7 @@ Possible model failures include:
 - unmodeled boundaries;
 - incorrect nugget interpretation.
 
-So there are at least two different uncertainty questions:
+It is therefore useful to separate two uncertainty questions:
 
 #### Conditional kriging uncertainty
 
@@ -1298,11 +1114,8 @@ So there are at least two different uncertainty questions:
 
 > How uncertain are we because the fitted model itself may be wrong or poorly estimated?
 
-The standard kriging variance primarily addresses the first question.
-
----
-
-## 22. Why the kriging variance does not directly depend on observed values
+The standard kriging variance primarily addresses the first of these questions.
+## Why the kriging variance does not directly depend on observed values
 
 After covariance parameters are fixed, ordinary-kriging weights are obtained from:
 
@@ -1331,32 +1144,28 @@ Therefore two datasets measured at the same coordinates with the same covariance
 - the same kriging variance;
 - different predicted values.
 
-This is a powerful way to understand what kriging variance represents.
+This distinction helps clarify what kriging variance represents.
 
----
-
-## 23. Negative kriging weights
+## Negative kriging weights
 
 Kriging weights are not required to lie between 0 and 1.
 
 They can sometimes be negative.
 
-Negative weights may occur because the predictor is balancing:
+Negative weights can occur because the predictor must balance:
 
 - redundancy among observations;
 - mean constraints;
 - covariance geometry;
 - extrapolation.
 
-A negative weight is not automatically an error.
+A negative weight is not automatically a sign of error.
 
-However, very large positive and negative weights can indicate difficult geometry or an unstable model and deserve investigation.
+However, very large positive and negative weights can indicate difficult sampling geometry or model instability and should be investigated.
 
----
+## Cross-validation
 
-## 24. Cross-validation
-
-A fitted kriging model should be evaluated.
+A fitted kriging model should be validated.
 
 A common diagnostic is leave-one-out cross-validation.
 
@@ -1369,16 +1178,13 @@ For each observation $i$:
 The error is
 
 $$
-e_i
-=
-Z(s_i)-\hat Z_{-i}(s_i).
+e_i = Z(s_i)-\hat Z_{-i}(s_i).
 $$
 
 The standardized error is
 
 $$
-e_i^*
-=
+e_i^* =
 \frac{
 e_i
 }{
@@ -1394,80 +1200,68 @@ $$
 
 is the kriging standard deviation from the leave-one-out prediction.
 
----
+## Cross-validation summaries
 
-## 25. Cross-validation summaries
-
-Useful summaries include the following.
+Useful validation summaries include the following.
 
 ### Mean error
 
 $$
-\operatorname{ME}
-=
-\frac{1}{n}\sum_i e_i.
+\mathrm{ME} = \frac{1}{n}\sum_i e_i.
 $$
 
-A value near zero suggests little overall bias.
+A value near zero suggests little average bias.
 
 ### Root mean squared error
 
 $$
-\operatorname{RMSE}
-=
-\sqrt{
+\mathrm{RMSE} = \sqrt{
 \frac{1}{n}
 \sum_i e_i^2
 }.
 $$
 
-Smaller values indicate better predictive accuracy on the scale of the response.
+Smaller values indicate better predictive accuracy on the response scale.
 
 ### Mean standardized error
 
 $$
-\operatorname{MSE}_{\text{std}}
-=
-\frac{1}{n}\sum_i e_i^*.
+\mathrm{MSE}_{\text{std}} = \frac{1}{n}\sum_i e_i^*.
 $$
 
-This should be near zero if standardized errors are centered.
+This should be near zero when the standardized errors are centered.
 
 ### Standardized-error spread
 
 If the uncertainty model is well calibrated, standardized errors should have a spread near 1.
 
-A spread much larger than 1 suggests the model may be too confident.
+A spread much larger than 1 suggests that the model may be too confident.
 
-A spread much smaller than 1 suggests the reported uncertainty may be too large.
+A spread much smaller than 1 suggests that the reported uncertainty may be too large.
 
 ![Cross-validation diagnostics](../../assets/spatial_statistics/kriging/08_cross_validation.png)
 
----
-
-## 26. Why leave-one-out validation can be optimistic
+## Why leave-one-out validation can be optimistic
 
 Leave-one-out prediction usually removes only one observation while leaving its neighbors in place.
 
-That is useful when the real task is:
+This is useful when the intended task is:
 
 > predict missing values inside a well-sampled region.
 
-But it can be misleading when the actual task is:
+It can be misleading, however, when the intended task is:
 
 > predict in a geographically distant unsampled region.
 
 A left-out point may still have nearby observations only a few meters away, while a true deployment location may be kilometers from the nearest sample.
 
-For geographic transfer problems, use spatially blocked or geographically structured validation.
+For geographic transfer or extrapolation, spatially blocked or geographically structured validation is usually more appropriate.
 
----
+## A complete ordinary-kriging workflow
 
-## 27. A complete ordinary-kriging workflow
+A practical workflow is:
 
-A defensible workflow is:
-
-### Step 1: inspect the data map
+### inspect the data map
 
 Look for:
 
@@ -1477,7 +1271,7 @@ Look for:
 - outliers;
 - boundaries.
 
-### Step 2: choose the mean structure
+### choose the mean structure
 
 Decide whether the mean is:
 
@@ -1487,7 +1281,7 @@ Decide whether the mean is:
 
 This determines whether simple, ordinary, or universal kriging is appropriate.
 
-### Step 3: estimate residual dependence
+### estimate residual dependence
 
 Calculate and inspect:
 
@@ -1495,7 +1289,7 @@ Calculate and inspect:
 - directional variograms;
 - candidate covariance models.
 
-### Step 4: fit a valid covariance or variogram model
+### fit a valid covariance or variogram model
 
 Estimate:
 
@@ -1504,7 +1298,7 @@ Estimate:
 - range/scale;
 - anisotropy if needed.
 
-### Step 5: solve the kriging system
+### solve the kriging system
 
 For every prediction target:
 
@@ -1513,7 +1307,7 @@ For every prediction target:
 - add mean constraints;
 - solve for weights.
 
-### Step 6: calculate prediction and variance
+### calculate prediction and variance
 
 Calculate
 
@@ -1527,53 +1321,49 @@ $$
 \sigma_K^2(s_0).
 $$
 
-### Step 7: validate
+### validate
 
 Use a validation strategy that matches the intended prediction task.
 
-### Step 8: inspect maps of predictions and uncertainty
+### inspect maps of predictions and uncertainty
 
-Do not interpret the prediction map without the uncertainty map.
+Interpret the prediction and uncertainty maps together.
 
----
+## Common mistakes
 
-## 28. Common mistakes
+### calling kriging "just a smoother"
 
-### Mistake 1: calling kriging "just a smoother"
+Kriging is a model-based linear prediction method.
 
-Kriging is model-based linear prediction.
+### thinking the nearest observation must have the largest weight
 
-### Mistake 2: thinking the nearest observation must have the largest weight
+Weights depend on the full covariance geometry.
 
-Weights depend on the whole covariance geometry.
-
-### Mistake 3: forgetting the ordinary-kriging sum-to-one constraint
+### forgetting the ordinary-kriging sum-to-one constraint
 
 Without the constraint, the predictor does not preserve an unknown constant mean.
 
-### Mistake 4: mixing sign conventions for the Lagrange multiplier
+### mixing sign conventions for the Lagrange multiplier
 
 If the kriging system changes the sign of the multiplier, the variance formula must change consistently.
 
-### Mistake 5: using ordinary kriging when a strong trend is present
+### using ordinary kriging when a strong trend is present
 
-The covariance model can then absorb trend that belongs in the mean.
+The covariance model can then absorb variation that belongs in the mean structure.
 
-### Mistake 6: interpreting low kriging variance as proof of correctness
+### interpreting low kriging variance as proof of correctness
 
-Kriging variance assumes the fitted model is correct.
+Kriging variance is conditional on the fitted model.
 
-### Mistake 7: treating all nugget effects as measurement error
+### treating all nugget effects as measurement error
 
 A nugget may represent measurement error, microscale process variation, or both.
 
-### Mistake 8: assuming leave-one-out validation tests geographic extrapolation
+### assuming leave-one-out validation tests geographic extrapolation
 
 It usually does not.
 
----
-
-## 29. Computational scaling
+## Computational scaling
 
 For $n$ observations, dense kriging uses an $n\times n$ covariance or semivariogram matrix.
 
@@ -1591,7 +1381,7 @@ $$
 
 memory.
 
-For a few hundred or a few thousand observations, this may be manageable.
+For a few hundred to a few thousand observations, this may be manageable.
 
 For very large spatial datasets, dense kriging can become expensive.
 
@@ -1604,15 +1394,13 @@ Common large-data strategies include:
 - nearest-neighbor Gaussian processes;
 - multi-resolution approximations.
 
----
+## Local-neighborhood kriging
 
-## 30. Local-neighborhood kriging
-
-One simple scaling strategy is to use only the nearest $k$ observations for each target.
+A simple scaling strategy is to use only the nearest $k$ observations for each target.
 
 Instead of solving one system involving all $n$ observations, solve a much smaller local system.
 
-This can be computationally efficient, but $k$ should not be chosen blindly.
+This can be computationally efficient, but the neighborhood size $k$ should be chosen carefully.
 
 Too small a neighborhood can:
 
@@ -1620,11 +1408,9 @@ Too small a neighborhood can:
 - create discontinuities in predictions;
 - underestimate uncertainty if implemented carelessly.
 
-Local kriging works best when the covariance range is short relative to the entire study region.
+Local kriging is most effective when the covariance range is short relative to the full study region.
 
----
-
-## 31. How kriging connects to the variogram chapter
+## How kriging connects to the variogram chapter
 
 The variogram chapter answered:
 
@@ -1634,7 +1420,7 @@ Kriging answers:
 
 > Given that dependence model, how should observed values be combined to predict an unsampled location?
 
-The logical chain is
+The logical chain is:
 
 $$
 \text{sampled spatial data}
@@ -1680,9 +1466,7 @@ $$
 \text{prediction + uncertainty}.
 $$
 
----
-
-## 32. Questions students should be able to answer
+## Questions students should be able to answer
 
 1. What exactly is minimized when kriging chooses its weights?
 2. Why must ordinary-kriging weights sum to one?
@@ -1696,9 +1480,3 @@ $$
 10. Why does the kriging variance not directly depend on the observed values after model parameters are fixed?
 11. When can kriging smooth rather than exactly interpolate?
 12. Why can leave-one-out validation be optimistic for geographic transfer?
-
-## Practice
-
-Use the companion [kriging exercises](../../exercises/spatial_statistics/kriging.md).
-
----
