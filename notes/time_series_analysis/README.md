@@ -11,6 +11,7 @@ This section is organized as a dependency-first learning path. The goal is to mo
 ## 2. Foundations
 
 - **[time_series.md](time_series.md)** introduces time-series data, dependence, trend, seasonality, exploratory plots, and the basic modeling workflow.
+- **[stochastic_processes_and_white_noise.md](stochastic_processes_and_white_noise.md)** introduces stochastic processes, innovations, weak and Gaussian white noise, and why white-noise residuals are a modeling target.
 - **[stationarity.md](stationarity.md)** defines strict and weak stationarity and covers common stationarity and unit-root checks such as ADF and KPSS.
 - **[random_walk.md](random_walk.md)** gives a central example of a non-stationary process and motivates differencing.
 - **[seasonality_and_trends.md](seasonality_and_trends.md)** covers trend, seasonality, decomposition, smoothing, and detrending.
@@ -39,22 +40,38 @@ A useful workflow is:
 2. Handle trend, seasonality, changing variance, missing values, and structural breaks.
 3. Assess stationarity and difference/transform when appropriate.
 4. Use ACF/PACF and domain knowledge to propose candidate models.
-5. Estimate parameters and compare parsimonious candidates with criteria such as AIC/BIC.
+5. Estimate parameters and compare parsimonious candidates with criteria such as AIC/AICc/BIC.
 6. Diagnose residuals; they should behave approximately like white noise.
-7. Only then evaluate forecasts on data not used to fit the model.
+7. Evaluate forecasts on pseudo-future data that was not used for fitting or tuning.
 
-## 5. Forecasting
+## 5. Forecasting and Evaluation
 
 - **[forecasting.md](forecasting.md)** covers forecast construction, baselines, exponential smoothing, forecast errors, and practical prediction workflows.
+- **[forecast_evaluation.md](forecast_evaluation.md)** covers temporal train/validation/test design, rolling-origin evaluation, horizon-specific accuracy, leakage, point and interval metrics, and benchmark comparisons.
 
-When evaluating forecasting methods, preserve temporal order. Prefer holdout periods, expanding-window evaluation, or rolling-origin evaluation instead of randomly shuffled train/test splits.
+Randomly shuffled train/test splits are generally inappropriate for forecasting because they allow future observations to influence model selection or training.
 
 ## 6. Extensions
 
-- **[regression_with_arma_errors.md](regression_with_arma_errors.md)** combines regression with autocorrelated errors.
+- **[dynamic_regression.md](dynamic_regression.md)** combines predictors with dynamic error models and discusses future predictor availability and distributed-lag effects.
+- **[regression_with_arma_errors.md](regression_with_arma_errors.md)** gives a compact treatment of regression with autocorrelated errors.
+- **[multivariate_time_series.md](multivariate_time_series.md)** introduces VAR models, Granger predictability, impulse responses, cointegration, and VECM models.
+- **[state_space_models.md](state_space_models.md)** introduces latent-state models, Kalman filtering/smoothing, and their relationship to ARIMA and exponential smoothing.
+- **[frequency_domain_analysis.md](frequency_domain_analysis.md)** introduces Fourier ideas, periodograms, spectral density, aliasing, leakage, and coherence.
 - **[financial_time_series_models.md](financial_time_series_models.md)** introduces volatility models such as ARCH/GARCH.
 
-Future extensions that would fit naturally here include multivariate time series (VAR/cointegration), dynamic regression, and state-space/Kalman-filter models.
+## 7. Practice
+
+The conceptual notes are paired with runnable examples and exercises:
+
+- **[Forecast backtesting script](../../scripts/time_series_analysis/forecast_backtesting.py)**
+- **[Dynamic regression script](../../scripts/time_series_analysis/dynamic_regression.py)**
+- **[VAR and cointegration script](../../scripts/time_series_analysis/var_and_cointegration.py)**
+- **[Kalman filter script](../../scripts/time_series_analysis/kalman_filter.py)**
+- **[Frequency-domain script](../../scripts/time_series_analysis/frequency_domain.py)**
+- **[Time-series exercises](../../exercises/time_series_analysis/README.md)**
+- **[Extension flashcards](../../flashcards/time_series_extensions.md)**
+- **[Extension quiz](../../quizzes/time_series_extensions.md)**
 
 ## Terminology Note
 
