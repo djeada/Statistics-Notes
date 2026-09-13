@@ -194,7 +194,3 @@ Time-series diagnostics are usually dependent, so this is not an exact family-wi
 5. Use turning-point or runs tests as complementary ordering checks.
 6. Investigate breaks, outliers, and changes in variance.
 7. Validate the resulting model with temporal forecast evaluation.
-
-### Visual companion
-
-The residual-diagnostics figure above summarizes the main principle of this chapter: different tests target different departures from randomness, so the plots and statistics should be interpreted as a coordinated diagnostic set rather than as interchangeable tests.
