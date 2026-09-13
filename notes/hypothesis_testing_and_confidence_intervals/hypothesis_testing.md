@@ -1,195 +1,293 @@
 # Hypothesis Testing
 
-Hypothesis testing is a tool in statistics that drives much of scientific research. It lets us draw conclusions about entire populations based on the information we collect from samples. You'll find it applied in many areas—from evaluating how well a new drug works in clinical trials to unraveling the mysteries of customer behavior in business analytics.
+Hypothesis testing is a statistical tool used to draw conclusions about populations based on sample data. It is widely applied in scientific research, from evaluating new treatments in clinical trials to studying customer behavior in business analytics.
 
-A hypothesis is a statement that might be true.
+A hypothesis is a statement about a population or statistical model that can be evaluated using data.
 
 ### Inputs and Outputs of Hypothesis Testing
 
 **Inputs**:
 
-1. The **null hypothesis ($H_0$)** represents the default assumption or the status quo, indicating no effect or no difference. Hypothesis testing aims to challenge this statement.
-2. The **alternative hypothesis ($H_1$ or $H_a$)** is the claim that the test seeks to support, indicating the presence of an effect or difference.
-3. The **significance level ($\alpha$)** is a pre-determined threshold, usually set at 0.05, which defines the risk of rejecting the null hypothesis when it is actually true (Type I error).
-4. **Sample data** refers to the collected data from observations, experiments, or surveys, providing the basis for calculating the test statistic and the p-value.
+1. The **null hypothesis ($H_0$)** represents the default claim being tested, often stating that there is no effect or no difference.
+2. The **alternative hypothesis ($H_1$ or $H_a$)** represents the competing claim, such as the presence of an effect or difference.
+3. The **significance level ($\alpha$)** is a pre-determined threshold, commonly 0.05, that sets the probability of a Type I error: rejecting $H_0$ when it is true.
+4. **Sample data** provide the observations used to calculate the test statistic and p-value.
 
 **Output**:
 
-The **p-value** is the probability of observing data as extreme as, or more extreme than, the sample data, assuming the null hypothesis is true. A small p-value (typically ≤ $\alpha$) provides strong evidence against the null hypothesis.
+The **p-value** is the probability, assuming the null hypothesis is true, of obtaining a test statistic at least as extreme as the one observed. A small p-value, typically $p \leq \alpha$, provides evidence against the null hypothesis.
 
 ### Overview of Hypothesis Testing Steps
 
-Hypothesis testing is a structured process involving several steps:
+Hypothesis testing follows a structured process:
 
-1. The process begins by **formulating hypotheses**, where the null and alternative hypotheses are defined based on the research question.
-2. Next, a **significance level ($\alpha$)** is chosen, often set at 0.05, but it can be adjusted depending on the study's requirements or field norms.
-3. **Data collection** is conducted systematically to ensure the data is representative and free from bias.
-4. After collecting the data, the **test statistic** is calculated using an appropriate formula to convert the sample data into a value suitable for hypothesis testing.
-5. The **p-value** is then determined, representing the probability of obtaining the observed or more extreme test statistic under the null hypothesis.
-6. In **decision making**, $H_0$ is rejected if the p-value is less than $\alpha$; otherwise, you fail to reject $H_0$.
-7. Finally, **interpreting results** involves understanding the decision in the context of the research question. Failing to reject $H_0$ does not prove it is true, only that there isn’t strong evidence against it.
+1. **Formulate the hypotheses** by defining the null and alternative hypotheses based on the research question.
+2. Choose a **significance level ($\alpha$)**, often 0.05, before examining the results.
+3. **Collect data** using a design appropriate for the research question.
+4. Calculate the **test statistic** using a statistical test suited to the data and assumptions.
+5. Determine the **p-value**, which measures how unusual the observed test statistic would be if $H_0$ were true.
+6. **Make a decision**: reject $H_0$ if the p-value is less than or equal to $\alpha$; otherwise, fail to reject $H_0$.
+7. **Interpret the result** in the context of the research question. Failing to reject $H_0$ does not prove that it is true; it means the data do not provide sufficient evidence against it.
 
 ### Example: Marble Bags
-Imagine two bags: Bag A with a mix of 5 white and 5 black marbles, and Bag B with only black marbles.
 
-```
+Imagine two bags: Bag A contains 5 white and 5 black marbles, while Bag B contains only black marbles.
+
+```text
   Bag A            Bag B
   _____            _____
  / • •  \         / O O  \
-|  • •  |        |  O O  |    O = White Marble
-|  O O  |        |  O O  |    • = Black Marble
-|  O O  |        |  O O  |    
+|  • •  |        |  O O  |    O = Black Marble
+|  O O  |        |  O O  |    • = White Marble
+|  O O  |        |  O O  |
 |  • O  |        |  O O  |
  \_____/          \_____/
 ```
 
+Suppose you want to test whether the bag is Bag B:
 
-Suspecting you have Bag B, you decide to test this hypothesis:
+* The **null hypothesis ($H_0$)** states that the bag is Bag A.
+* The **alternative hypothesis ($H_a$)** states that the bag is Bag B.
 
-- The **null hypothesis ($H_0$)** states that the bag in question is Bag A.
-- The **alternative hypothesis ($H_a$)** asserts that the bag in question is Bag B.
+If we draw `n` marbles independently with replacement and they are all black, we can evaluate how likely this result would be under $H_0$.
 
-Drawing `n` marbles and finding them all black leads to calculating p-values to test these hypotheses. For Bag A, the chance of drawing a black marble is 0.5. Hence, drawing `n` black marbles consecutively from Bag A has a probability of $(0.5)^n$.
+For Bag A, the probability of drawing a black marble is 0.5. Therefore, the probability of drawing `n` black marbles in a row is:
 
-- For n=2, p-value = $(0.5)^2 = 0.25$
-- For n=3, p-value = $(0.5)^3 = 0.125$
-- For n=5, p-value = $(0.5)^5 = 0.03125$
+$$
+(0.5)^n
+$$
 
-A smaller p-value indicates stronger evidence against $H_0$. As `n` increases, the likelihood that you have Bag B (only black marbles) increases.
+* For $n=2$, p-value $=(0.5)^2=0.25$
+* For $n=3$, p-value $=(0.5)^3=0.125$
+* For $n=5$, p-value $=(0.5)^5=0.03125$
+
+A smaller p-value provides stronger evidence against $H_0$. As `n` increases, observing only black marbles becomes increasingly difficult to explain if the bag is Bag A.
 
 ## Null and Alternative Hypotheses for a Mean
 
-When testing the population mean, hypothesis testing considers three possibilities, each with distinct null and alternative hypotheses:
+When testing a population mean, three common forms of hypotheses are used.
 
 ### Types of Tests
 
 **I. Left-Tailed Test**
 
-- The **null hypothesis ($H_0$)** states that the population mean $\mu$ is equal to a specific value $\mu_0$ ($\mu = \mu_0$).
-- The **alternative hypothesis ($H_a$)** claims that $\mu$ is less than $\mu_0$ ($\mu < \mu_0$).
+* The **null hypothesis ($H_0$)** states that the population mean $\mu$ equals a specified value $\mu_0$:
+
+$$
+\mu=\mu_0
+$$
+
+* The **alternative hypothesis ($H_a$)** states that:
+
+$$
+\mu<\mu_0
+$$
 
 **II. Right-Tailed Test**
 
-- The **null hypothesis ($H_0$)** suggests that $\mu$ is equal to $\mu_0$ ($\mu = \mu_0$).
-- The **alternative hypothesis ($H_a$)** asserts that $\mu$ is greater than $\mu_0$ ($\mu > \mu_0$).
+* The **null hypothesis ($H_0$)** states that:
+
+$$
+\mu=\mu_0
+$$
+
+* The **alternative hypothesis ($H_a$)** states that:
+
+$$
+\mu>\mu_0
+$$
 
 **III. Two-Tailed Test**
 
-- The **null hypothesis ($H_0$)** states that $\mu$ is equal to $\mu_0$ ($\mu = \mu_0$).
-- The **alternative hypothesis ($H_a$)** proposes that $\mu$ is not equal to $\mu_0$ ($\mu \neq \mu_0$).
+* The **null hypothesis ($H_0$)** states that:
 
-The null hypothesis always assumes that the population mean $\mu$ equals a predetermined value $\mu_0$. The alternative hypothesis presents a contrary statement: the population mean $\mu$ is less than, greater than, or not equal to $\mu_0$.
+$$
+\mu=\mu_0
+$$
 
-**Important Note:** Left-tailed and right-tailed tests are typically used when the effect is expected to occur in only one direction or when only one-directional effects are relevant. In most research scenarios, a two-tailed test is preferred unless there's strong justification for a one-tailed test.
+* The **alternative hypothesis ($H_a$)** states that:
+
+$$
+\mu\neq\mu_0
+$$
+
+The alternative hypothesis determines whether the test examines values below, above, or on either side of $\mu_0$.
+
+**Important Note:** Left-tailed and right-tailed tests are appropriate when the research question specifies a meaningful direction in advance. A two-tailed test is used when departures in either direction are relevant.
 
 ### Examples
 
 **I. Testing the Effectiveness of a New Diet (Two-Tailed Test)**
 
-- The **null hypothesis ($H_0$)** is that the average daily energy expenditure $\mu$ equals the standard diet average $\mu_0$.
-- The **alternative hypothesis ($H_a$)** is that the average daily energy expenditure $\mu$ differs from the standard diet average $\mu_0$ ($\mu \neq \mu_0$).
+* The **null hypothesis ($H_0$)** is that the average daily energy expenditure $\mu$ equals the standard-diet average $\mu_0$.
+* The **alternative hypothesis ($H_a$)** is that the average daily energy expenditure differs from the standard-diet average:
+
+$$
+\mu\neq\mu_0
+$$
 
 **II. Evaluating Customer Service Efficiency (Left-Tailed Test)**
 
-- The **null hypothesis ($H_0$)** states that the average resolution time $\mu$ equals the industry standard of 10 minutes.
-- The **alternative hypothesis ($H_a$)** is that the average resolution time $\mu$ is less than 10 minutes ($\mu < 10$).
+* The **null hypothesis ($H_0$)** states that the average resolution time is 10 minutes:
+
+$$
+\mu=10
+$$
+
+* The **alternative hypothesis ($H_a$)** states that the average resolution time is less than 10 minutes:
+
+$$
+\mu<10
+$$
 
 **III. Assessing the Impact of a New Teaching Method (Right-Tailed Test)**
 
-- The **null hypothesis ($H_0$)** suggests that the average test score $\mu$ equals the district average of 75%.
-- The **alternative hypothesis ($H_a$)** asserts that the average test score $\mu$ exceeds the district average of 75% ($\mu > 75$).
+* The **null hypothesis ($H_0$)** states that the average test score equals the district average of 75%:
+
+$$
+\mu=75
+$$
+
+* The **alternative hypothesis ($H_a$)** states that the average test score exceeds 75%:
+
+$$
+\mu>75
+$$
 
 ## The P-value
 
-Once the data is collected and the sample statistic computed, the researcher computes the P-value.
+After collecting the data and calculating the test statistic, the researcher computes the p-value.
 
-The P-value is the probability of obtaining a measurement at least as extreme as the one we measured, under the assumption that the null hypothesis is true.
+The p-value is the probability, assuming the null hypothesis is true, of obtaining a test statistic at least as extreme as the one observed.
 
 ![79292b56-d3c7-4eec-b30d-0c64a11d58ac](https://github.com/djeada/Statistics-Notes/assets/37275728/67c8823a-e0b8-479c-84f2-7d2908c9a482)
 
-- In a **left-tailed test**, the shaded area represents the **p-value**, which is the area under the curve to the left of the sample statistic.
-- In a **right-tailed test**, the shaded area represents the **p-value**, which is the area under the curve to the right of the sample statistic.
+* In a **left-tailed test**, the p-value is the area in the left tail beyond the observed test statistic.
+* In a **right-tailed test**, the p-value is the area in the right tail beyond the observed test statistic.
 
-By at least as extreme, we mean a value at least as far to the left or right of the measured value.
+For a two-tailed test, extreme values in both directions are considered.
+
+Here, "at least as extreme" means values at least as inconsistent with $H_0$ as the observed result, according to the alternative hypothesis.
 
 ## Choosing the Right Statistical Test
 
-Selecting a suitable statistical test is critical in hypothesis testing, and several factors determine the appropriate choice:
+Selecting an appropriate statistical test depends on the type of data, research question, study design, and assumptions.
 
 ### Factors to Consider
 
-1. The **type of data** (categorical, ordinal, interval, or ratio) significantly influences the choice of statistical test, as different types of data require different methods.
-2. The **number of variables** under analysis determines the test type, with specific tests designed for univariate (one variable), bivariate (two variables), and multivariate (more than two variables) analyses.
-3. The **distribution of the data** is crucial, as parametric tests assume a normal distribution. If the data does not meet this assumption, a non-parametric test is more appropriate.
-4. The **study design**, such as comparing groups or measuring changes over time within a group, also plays a role in selecting the correct statistical test.
+1. The **type of data** influences which statistical methods are appropriate. Numerical, categorical, and ordinal variables are analyzed differently.
+2. The **number of variables or groups** affects the choice of test.
+3. The **distribution and assumptions** of the statistical model must be considered. Some parametric methods rely on assumptions such as approximate normality, while non-parametric methods generally make fewer distributional assumptions.
+4. The **study design**, such as whether groups are independent or measurements are paired, also determines which test is appropriate.
 
 ### Examples of Statistical Tests
 
-- A **t-test** is ideal for comparing the means of two groups with interval or ratio data that is normally distributed. For non-normally distributed data or ordinal data, consider a non-parametric alternative like the **Mann-Whitney U test**.
-- To compare means across more than two groups, an **Analysis of Variance (ANOVA)** is appropriate. 
-- For categorical data, a **chi-square test** is often used to examine differences in proportions.
-- **Left-tailed** and **right-tailed tests** are specific to the direction of the hypothesis. A left-tailed test is used when the research hypothesis suggests a decrease or lower value, while a right-tailed test is for an increase or higher value.
-- **Two-tailed tests** are applied when the research question does not specify a direction of effect. These tests are more conservative and broadly applicable.
-- **Parametric tests** assume underlying statistical distributions and typically require interval or ratio data. In contrast, **non-parametric tests** do not assume a specific distribution and are often used with ordinal data or when the assumptions of parametric tests are not met.
-  
+* An **independent-samples t-test** compares the means of two independent groups. When its assumptions are inappropriate, an alternative such as the **Mann-Whitney U test** may be considered.
+* To compare means across more than two groups, **Analysis of Variance (ANOVA)** is commonly used.
+* For categorical count data, a **chi-square test** can be used to examine distributions or associations.
+* **Left-tailed** and **right-tailed tests** correspond to directional alternative hypotheses.
+* **Two-tailed tests** are used when departures in either direction are relevant.
+* **Parametric tests** rely on a specified statistical model, while **non-parametric tests** generally require fewer distributional assumptions.
+
 The following table summarizes some common statistical tests and their applications:
 
-| Test                         | Data Type           | Number of Groups | Assumptions                                      |
-|------------------------------|---------------------|------------------|--------------------------------------------------|
-| **T-Test**                   | Interval/Ratio      | Two              | Normally distributed, independent samples        |
-| **Paired T-Test**            | Interval/Ratio      | Two              | Normally distributed, dependent samples          |
-| **One-way ANOVA**            | Interval/Ratio      | More than Two    | Normally distributed, independent samples        |
-| **Two-way ANOVA**            | Interval/Ratio      | More than Two    | Normally distributed, independent samples        |
-| **Chi-Square Test**          | Categorical         | Two or more      | Independence between variables                   |
-| **Pearson Correlation**      | Interval/Ratio      | Two              | Normally distributed, linear relationship        |
-| **Spearman Correlation**     | Ordinal             | Two              | Non-parametric, monotonic relationship           |
-| **Mann-Whitney U Test**      | Ordinal/Continuous  | Two              | Non-parametric, independent samples              |
-| **Kruskal-Wallis H Test**    | Ordinal/Continuous  | More than Two    | Non-parametric, independent samples              |
-| **Wilcoxon Signed-Rank Test**| Ordinal/Continuous  | Two              | Non-parametric, dependent samples                |
-| **Friedman Test**            | Ordinal/Continuous  | More than Two    | Non-parametric, dependent samples                |
-
+| Test                          | Data Type          | Number of Groups                       | Assumptions                                                                     |
+| ----------------------------- | ------------------ | -------------------------------------- | ------------------------------------------------------------------------------- |
+| **T-Test**                    | Interval/Ratio     | Two                                    | Independent groups; approximate normality within groups                         |
+| **Paired T-Test**             | Interval/Ratio     | Two                                    | Paired observations; approximate normality of differences                       |
+| **One-way ANOVA**             | Interval/Ratio     | More than Two                          | Independent observations; approximate normality; similar group variances        |
+| **Two-way ANOVA**             | Interval/Ratio     | Multiple groups defined by two factors | Independent observations; approximate normality; similar group variances        |
+| **Chi-Square Test**           | Categorical        | Two or more categories                 | Independent observations; sufficiently large expected counts                    |
+| **Pearson Correlation**       | Interval/Ratio     | Two variables                          | Linear relationship; inference commonly assumes approximate bivariate normality |
+| **Spearman Correlation**      | Ordinal/Continuous | Two variables                          | Monotonic relationship                                                          |
+| **Mann-Whitney U Test**       | Ordinal/Continuous | Two                                    | Independent samples                                                             |
+| **Kruskal-Wallis H Test**     | Ordinal/Continuous | More than Two                          | Independent samples                                                             |
+| **Wilcoxon Signed-Rank Test** | Ordinal/Continuous | Two                                    | Paired samples; symmetric distribution of differences                           |
+| **Friedman Test**             | Ordinal/Continuous | More than Two                          | Repeated or matched samples                                                     |
 
 ### Example: Hypothesis Test for the Mean
 
-An agronomist suggests that a new fertilizer increases the average yield of a particular crop to more than 2 tons per hectare. To test this claim, a study is conducted where the new fertilizer is applied to randomly selected plots. The yield of 25 plots is measured, resulting in a mean yield of 2.1 tons per hectare and a standard deviation of 0.3 tons per hectare. Is the new fertilizer effective at increasing the average yield at a significance level of $\alpha = 0.05$?
+An agronomist suggests that a new fertilizer increases the average yield of a particular crop to more than 2 tons per hectare. To test this claim, the fertilizer is applied to randomly selected plots.
+
+The yield of 25 plots is measured, giving:
+
+* Sample mean: $\bar{x}=2.1$ tons per hectare
+* Sample standard deviation: $s=0.3$ tons per hectare
+* Sample size: $n=25$
+* Significance level: $\alpha=0.05$
 
 **Hypothesis Setup**:
 
-- Null Hypothesis ($H_0$): $\mu = 2$ tons per hectare (The fertilizer does not increase yield)
-- Alternative Hypothesis ($H_a$): $\mu > 2$ tons per hectare (The fertilizer increases yield)
+* Null Hypothesis ($H_0$):
+
+$$
+\mu=2
+$$
+
+* Alternative Hypothesis ($H_a$):
+
+$$
+\mu>2
+$$
 
 **Test Statistic**:
 
-For the test statistic, we use the one-sample z-test since the sample size is greater than 30:
+Because the population standard deviation is unknown and is estimated using the sample standard deviation, we use a one-sample t-test:
 
-$$z = \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}}$$
+$$
+t=\frac{\bar{x}-\mu_0}{s/\sqrt{n}}
+$$
 
 where:
 
-- $\bar{x}$ is the sample mean,
-- $\mu_0$ is the hypothesized population mean,
-- $\sigma$ is the population standard deviation (approximated here by the sample standard deviation),
-- $n$ is the sample size.
+* $\bar{x}$ is the sample mean,
+* $\mu_0$ is the hypothesized population mean,
+* $s$ is the sample standard deviation,
+* $n$ is the sample size.
 
 **Plugging in the values**:
 
-$$z = \frac{2.1 - 2}{0.3/\sqrt{25}}$$
+$$
+t=\frac{2.1-2}{0.3/\sqrt{25}}
+$$
 
-$$z = \frac{0.1}{0.06}$$
+$$
+t=\frac{0.1}{0.06}
+$$
 
-$$z \approx 1.667$$
+$$
+t\approx1.667
+$$
 
-We look up the critical z-value for a right-tailed test at $\alpha = 0.05$, which is approximately 1.645. Since our calculated z-value of 1.667 is greater than 1.645, we reject the null hypothesis.
+The test has:
 
-There is sufficient evidence at the $\alpha = 0.05$ significance level to support the claim that the new fertilizer increases the average yield of the crop to more than 2 tons per hectare.
+$$
+df=n-1=24
+$$
+
+For a right-tailed test with $\alpha=0.05$ and 24 degrees of freedom, the critical value is approximately:
+
+$$
+t^*\approx1.711
+$$
+
+Since:
+
+$$
+1.667<1.711
+$$
+
+we fail to reject the null hypothesis.
+
+There is not sufficient evidence at the $\alpha=0.05$ significance level to conclude that the fertilizer increases the average yield above 2 tons per hectare.
 
 ### Effect Size and Practical Significance
 
-A statistically significant result does not necessarily imply a practically meaningful one. **Effect size** quantifies the magnitude of the difference or relationship, independent of sample size, and helps researchers assess whether an observed effect is large enough to matter in practice.
+A statistically significant result does not necessarily imply a practically meaningful one. **Effect size** describes the magnitude of a difference or relationship and helps assess whether an observed effect is large enough to matter in practice.
 
 #### Cohen's d
 
-Cohen's d is the most widely used effect size measure for comparing two means. It expresses the difference in units of the pooled standard deviation:
+Cohen's $d$ is a commonly used effect-size measure for comparing two means. It expresses the difference between the means in units of the pooled standard deviation:
 
 $$
 d = \frac{\bar{x}_1 - \bar{x}_2}{s_p}
@@ -201,12 +299,14 @@ $$
 s_p = \sqrt{\frac{(n_1 - 1) s_1^2 + (n_2 - 1) s_2^2}{n_1 + n_2 - 2}}
 $$
 
-Conventional benchmarks for interpreting Cohen's d are:
+Common benchmarks for interpreting $|d|$ are:
 
-| $|d|$     | Interpretation |
-|-----------|----------------|
-| 0.2       | Small effect   |
-| 0.5       | Medium effect  |
-| 0.8       | Large effect   |
+| $|d|$ | Interpretation |
+|---|---|
+| 0.2 | Small effect |
+| 0.5 | Medium effect |
+| 0.8 | Large effect |
 
-Because the p-value depends on both the effect size and the sample size, a very large sample can produce a statistically significant p-value even when the effect is trivially small. Reporting the effect size alongside the p-value provides a more complete picture of the findings.
+These values are rough conventions rather than universal thresholds.
+
+Because the p-value depends on both the size of the effect and the amount of data, a large sample can produce a statistically significant result even when the effect is small. Reporting an effect size alongside the p-value gives a more complete picture of the findings.
