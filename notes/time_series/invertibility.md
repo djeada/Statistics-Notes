@@ -1,5 +1,9 @@
 # Invertibility in Time Series Models
 
+Invertibility is the condition that lets a moving-average or ARMA model recover its unobserved innovations from the observed series in a stable way. It turns the shock representation of the model into a usable past-based filter whose coefficients decay rather than grow without bound.
+
+The condition also resolves an identification problem: different MA parameter values can generate the same second-order behavior. Requiring the roots of the MA polynomial to lie outside the unit circle selects a canonical representation that is stable for estimation, residual analysis, and forecasting.
+
 ## Worked calculation: two MA(1) inverse filters
 
 For an MA(1),

@@ -1,5 +1,9 @@
 # Yule-Walker Equations
 
+The Yule-Walker equations connect an autoregressive model's coefficients to its autocovariances and autocorrelations. They translate a recursion written in terms of lagged observations into a set of moment relationships that can be studied theoretically or estimated from data.
+
+For a stationary AR process, this link works in both directions: known coefficients determine the ACF recursion, while estimated autocovariances can be used to solve for the coefficients. The equations are therefore useful for understanding AR dependence, estimating parameters, and checking whether an implied correlation pattern is compatible with stationarity.
+
 ## Worked calculation: AR(2) autocorrelations
 
 For an AR(2) with $\phi_1=0.6$ and $\phi_2=-0.2$, the first two Yule-Walker equations give

@@ -1,5 +1,9 @@
 # Dynamic Regression
 
+Dynamic regression combines external predictors with time-series structure so that the conditional mean can respond to explanatory variables without assuming the remaining errors are independent. Lagged predictors can represent delayed effects, while ARMA or ARIMA errors capture serial dependence left after the regression relationship is specified.
+
+For forecasting, the timing of the predictors is as important as their statistical relationship with the target. A predictor is operationally useful only when its future value is known, scheduled, or itself forecastable at the forecast origin, so alignment, information availability, and residual dynamics must be handled together.
+
 ## Worked calculation: an external predictor and a lag
 
 Suppose

@@ -1,5 +1,9 @@
 # Random Walk Model
 
+A random walk models a level that changes by accumulating new shocks over time. Each innovation is temporary as an increment but permanent in the level, so the process can drift far from its starting point even when the expected one-step change is zero.
+
+This accumulation makes the level fundamentally non-stationary: uncertainty grows with the forecast horizon, while first differences recover the underlying increments. Random walks are therefore both a basic model of stochastic trends and an important benchmark for deciding whether a more elaborate forecasting model adds value.
+
 ## Worked calculation: one path and one forecast
 
 Let $X_0=5$ and let the first three shocks be $1,-2,$ and $0.5$. Then

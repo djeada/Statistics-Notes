@@ -1,5 +1,9 @@
 # Regression with ARMA Errors
 
+Regression with ARMA errors separates two kinds of structure that often appear together in time series. The regression explains how observed predictors shift the conditional mean, while the ARMA component models serial dependence that remains in the unexplained part.
+
+This distinction matters for both inference and forecasting. Autocorrelated errors change the uncertainty around regression coefficients and can contain additional predictive information, so a good model must handle the mean relationship and the temporal error process as parts of one coherent specification.
+
 ## Worked calculation: a regression mean plus serial error
 
 Consider

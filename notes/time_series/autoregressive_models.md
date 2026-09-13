@@ -1,5 +1,9 @@
 # Autoregressive (AR) Models in Time Series Analysis
 
+Autoregressive models describe a time series whose current value depends linearly on its own recent history plus a new innovation. The lag coefficients determine how strongly past observations persist into the present and whether the process tends to decay smoothly, alternate, or oscillate.
+
+The same coefficients also control stationarity, the shape of the ACF and PACF, and the way forecasts return toward a long-run mean. AR modeling therefore connects a simple regression-like equation on lagged values with root conditions, dependence diagnostics, and recursive prediction.
+
 ## Worked calculation: one AR(2) update
 
 Take

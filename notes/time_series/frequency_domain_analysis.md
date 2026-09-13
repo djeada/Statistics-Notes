@@ -1,5 +1,9 @@
 # Frequency-Domain Analysis
 
+Frequency-domain analysis describes a time series by the cycle lengths that contribute to its variation rather than by relationships at individual lags. The periodogram and spectral density provide a complementary view to the ACF, translating repeated temporal structure into peaks at corresponding frequencies.
+
+The interpretation depends critically on how the series was sampled and observed. Nyquist limits, aliasing, finite-record resolution, spectral leakage, trend treatment, and windowing can all create or distort apparent peaks, so frequencies should be translated back into periods and checked against the time-domain behavior before they are given a substantive meaning.
+
 ## Worked calculation: frequency, period, and resolution
 
 For a seasonal signal that repeats every 12 observations,

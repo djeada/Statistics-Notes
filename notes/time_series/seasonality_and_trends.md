@@ -1,5 +1,9 @@
 # Seasonality and Trends
 
+Trend and seasonality are systematic forms of time structure that operate on different scales. A trend is a persistent long-run movement in level or slope, while seasonality is a pattern that repeats at a fixed and known period such as day of week, month of year, or quarter.
+
+Decomposition, smoothing, differencing, SARIMA, and exponential-smoothing models handle these structures in different ways. The useful choice depends on whether the pattern is deterministic, evolving, stochastic, or multiplicative, and should be validated on future-like data rather than selected only because it makes a plot look cleaner.
+
 ## Worked calculation: an additive seasonal effect
 
 Suppose a quarterly series is

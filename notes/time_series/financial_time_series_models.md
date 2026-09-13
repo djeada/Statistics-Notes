@@ -1,5 +1,9 @@
 # Financial Time Series Models
 
+Financial time series often separate naturally into a price level, a return process, and a time-varying scale of uncertainty. Returns may show little predictable movement in their conditional mean while their magnitude clusters over time, producing periods of calm and periods of elevated volatility.
+
+Models such as ARCH and GARCH focus on that conditional variance rather than only on the expected return. A coherent financial model therefore distinguishes the mean, the variance dynamics, and the innovation distribution, because each contributes differently to interval forecasts, tail risk, and the persistence of market shocks.
+
 ## Worked calculation: returns and conditional variance
 
 If a price rises from $P_{t-1}=100$ to $P_t=102$, the log return is
