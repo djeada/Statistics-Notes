@@ -1,5 +1,42 @@
 # Difference Equation
 
+## Worked calculation: a stable recursion
+
+Take
+
+$$
+x_t=0.7x_{t-1}+2,\qquad x_0=10.
+$$
+
+Substitution gives
+
+$$
+x_1=0.7(10)+2=9,\qquad
+x_2=0.7(9)+2=8.3.
+$$
+
+The equilibrium level $x^\star$ solves $x^\star=0.7x^\star+2$, so
+
+$$
+x^\star=\frac{2}{1-0.7}=6.\overline{6}.
+$$
+
+Subtracting the equilibrium from both sides gives
+
+$$
+x_t-x^\star=0.7(x_{t-1}-x^\star),
+$$
+
+and therefore
+
+$$
+x_t=x^\star+0.7^t(x_0-x^\star).
+$$
+
+The coefficient $0.7$ makes the effect of the starting value shrink. If its absolute value were greater than 1, the same recursion would amplify deviations instead.
+
+![A stable first-order difference equation](../../assets/time_series/student/02_difference_equation.png)
+
 A **difference equation** (also known as a recurrence relation) defines each term of a sequence based on previous terms. In some cases, the general term of a sequence is given explicitly (e.g., $a_n = 3n + 2$, resulting in the sequence $5, 8, 11, \dots$). However, more commonly, a difference equation provides a relationship between terms.
 
 For example:

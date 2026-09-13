@@ -15,6 +15,8 @@ This unit comes after covariance, regression, and model assessment because spati
 7. **[Point Processes](point_processes.md)** — intensity and interaction when the event locations themselves are random.
 8. **[Spatial Validation](spatial_validation.md)** — random folds, spatial blocks, buffers, interpolation, extrapolation, and leakage.
 
+Each chapter has a linked practice set in the spatial statistics exercises directory.
+
 ## Choose the Model by the Spatial Object
 
 | Data object | Example | Main representation | Typical tools |
@@ -34,6 +36,23 @@ A point-referenced measurement and a point pattern are not the same object. In t
 - **Weights vs covariance:** a spatial weights matrix encodes a neighborhood graph; a covariance function models stochastic dependence as a function of separation.
 - **Interpolation vs extrapolation:** predicting inside a sampled region is easier than transferring to a geographically separated region.
 - **Association vs causation:** spatial clustering or spatial regression coefficients do not by themselves identify causal effects.
+
+## Visualization Companions
+
+The teaching visualizations for the chapters are also runnable from the repository root. They save their figures in assets/spatial_statistics/ so the notes can display the same outputs without requiring a GIS environment.
+
+## Practice Sets
+
+| Chapter | Exercises |
+|---|---|
+| Spatial Data, Support, and Distance | [practice](../../exercises/spatial_statistics/spatial_data_and_distance.md) |
+| Spatial Weights and Spatial Lags | [practice](../../exercises/spatial_statistics/spatial_weights.md) |
+| Spatial Autocorrelation | [practice](../../exercises/spatial_statistics/spatial_autocorrelation.md) |
+| Geostatistics | [practice](../../exercises/spatial_statistics/geostatistics.md) |
+| Kriging | [practice](../../exercises/spatial_statistics/kriging.md) |
+| Spatial Regression | [practice](../../exercises/spatial_statistics/spatial_regression.md) |
+| Point Processes | [practice](../../exercises/spatial_statistics/point_processes.md) |
+| Spatial Validation | [practice](../../exercises/spatial_statistics/spatial_validation.md) |
 
 ## Code Companions
 

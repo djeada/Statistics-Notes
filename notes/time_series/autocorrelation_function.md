@@ -1,5 +1,23 @@
 # Autocorrelation Function (ACF) and Partial Autocorrelation Function (PACF)
 
+## Worked calculation: AR(1) dependence
+
+For a stationary AR(1),
+
+$$
+X_t=0.7X_{t-1}+\varepsilon_t,
+$$
+
+the theoretical autocorrelation is
+
+$$
+\rho(h)=0.7^{|h|}.
+$$
+
+Therefore $\rho(1)=0.7$, $\rho(2)=0.49$, and $\rho(3)=0.343$. The ACF tails off geometrically rather than becoming exactly zero. The PACF at lag 1 is $0.7$ and the theoretical PACF is zero after lag 1, which is the ideal identification pattern for an AR(1). Finite samples only approximate these values.
+
+![ACF and PACF for a worked AR(2) example](../../assets/time_series/student/11_acf_pacf_ar2.png)
+
 In time series analysis, understanding the relationships between observations at different time lags is crucial for model identification and forecasting. Two essential tools for analyzing these relationships are the **Autocorrelation Function (ACF)** and the **Partial Autocorrelation Function (PACF)**.
 
 - The **ACF** measures the correlation between observations at different time lags.

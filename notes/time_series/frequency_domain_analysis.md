@@ -1,5 +1,20 @@
 # Frequency-Domain Analysis
 
+## Worked calculation: frequency, period, and resolution
+
+For a seasonal signal that repeats every 12 observations,
+
+$$
+f=\frac{1}{12}\approx0.08333
+\quad\text{cycles per observation}.
+$$
+
+With $N=240$ observations, the Fourier frequency spacing is $1/N=0.004167$, so the period-12 component lies near Fourier bin $240/12=20$. The Nyquist frequency is $0.5$ cycles per observation; a signal above that limit cannot be distinguished from an aliased lower frequency.
+
+The periodogram peak should therefore be translated back into a period before interpretation. A peak near $0.0833$ means “about twelve observations per cycle,” not “frequency 12.”
+
+![A period-12 signal and its periodogram](../../assets/time_series/student/19_frequency_periodogram.png)
+
 Time-domain methods describe dependence through lags. Frequency-domain methods describe how variability is distributed across cycles of different frequencies. The views are complementary.
 
 A sinusoidal component can be written as

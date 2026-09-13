@@ -1,5 +1,33 @@
 # Forecasting with Time Series
 
+## Worked calculation: a forecast and its uncertainty
+
+For a centered AR(1),
+
+$$
+X_t=0.8X_{t-1}+\varepsilon_t,
+\qquad \operatorname{Var}(\varepsilon_t)=1,
+$$
+
+if the latest observation is $X_T=5$, then
+
+$$
+\hat X_{T+1|T}=0.8(5)=4,
+\qquad
+\hat X_{T+5|T}=0.8^5(5)=1.6384.
+$$
+
+The $h$-step forecast variance is
+
+$$
+\operatorname{Var}(X_{T+h}-\hat X_{T+h|T})
+=\sum_{j=0}^{h-1}0.8^{2j}.
+$$
+
+At $h=2$ this is $1+0.8^2=1.64$, so an approximate 95% interval around the two-step forecast uses $3.2\pm1.96\sqrt{1.64}$. Point forecasts move toward the long-run mean, while interval width grows with the horizon.
+
+![Forecast paths and expanding prediction intervals](../../assets/time_series/student/14_forecasting_intervals.png)
+
 Time series forecasting is a technique used to predict future values based on historical data. It is widely used in various fields, such as finance, economics, and meteorology. In this section, we will discuss the basics of time series forecasting.
 
 ### Components of a Time Series

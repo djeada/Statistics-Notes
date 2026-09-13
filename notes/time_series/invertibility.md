@@ -1,5 +1,23 @@
 # Invertibility in Time Series Models
 
+## Worked calculation: two MA(1) inverse filters
+
+For an MA(1),
+
+$$
+X_t=(1+\theta B)\varepsilon_t.
+$$
+
+If $\theta=0.5$, the inverse is
+
+$$
+\varepsilon_t=(1-0.5B+0.25B^2-0.125B^3+\cdots)X_t.
+$$
+
+The weights shrink, so the representation is stable and invertible. If $\theta=2$, the first inverse weights are $1,-2,4,-8,\ldots$ and grow in magnitude. The same observed autocovariance can be represented by reciprocal MA parameters, so the invertibility convention chooses the stable representation $|\theta|<1$.
+
+![Inverse-filter weights for invertible and non-invertible MA(1) parameters](../../assets/time_series/student/08_invertibility_inverse_weights.png)
+
 In time series modeling, **invertibility** is the property of a model that allows the innovation process (also called the noise or disturbance process) to be expressed as a function of the observed series and its past values. This is particularly relevant for **Moving Average (MA)** models.
 
 ### Intuition Behind Invertibility

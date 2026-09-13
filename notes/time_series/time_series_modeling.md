@@ -1,5 +1,26 @@
 # Time Series Modeling
 
+## Worked calculation: fit, complexity, and diagnostics
+
+Suppose two likelihood-based candidates have the following summaries:
+
+| Model | log-likelihood | number of parameters |
+|---|---:|---:|
+| A | $-100$ | 3 |
+| B | $-96$ | 6 |
+
+Using $\operatorname{AIC}=-2\ell+2k$, their AIC values are
+
+$$
+\operatorname{AIC}_A=200+6=206,
+\qquad
+\operatorname{AIC}_B=192+12=204.
+$$
+
+Model B wins this narrow in-sample comparison, but it should not be accepted automatically. If B leaves a residual lag-12 spike while A has approximately white-noise residuals, A may be the more useful forecasting model. Compare candidates on the same observations, inspect residuals, and use temporal backtesting before treating a small information-criterion difference as meaningful.
+
+![Conditional mean and residual diagnostics for an AR model](../../assets/time_series/student/13_modeling_residual_diagnostics.png)
+
 Time series modeling combines model specification, parameter estimation, model selection, and diagnostics. The aim is not simply to minimize in-sample error, but to find a parsimonious model whose residuals behave approximately like white noise and whose forecasts generalize to future observations.
 
 ### Model Fitting

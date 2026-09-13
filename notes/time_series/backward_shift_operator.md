@@ -1,5 +1,29 @@
 # Backward Shift Operator
 
+## Worked calculation: differencing with the lag operator
+
+For
+
+$$
+y_1,\ldots,y_5=8,\ 10,\ 13,\ 12,\ 15,
+$$
+
+the backward shift gives $By_5=y_4=12$. Therefore
+
+$$
+(1-B)y_5=y_5-y_4=15-12=3.
+$$
+
+Applying the difference twice gives
+
+$$
+(1-B)^2y_5=y_5-2y_4+y_3=15-24+13=4.
+$$
+
+The operator notation is compact, but the calculation is still ordinary subtraction. It becomes useful when several ordinary and seasonal differences are combined in ARIMA models.
+
+![Backshift and first differences](../../assets/time_series/student/07_backward_shift_difference.png)
+
 The **backward shift operator** (denoted by $B$) is a powerful tool in time series analysis, used to simplify the notation and manipulation of time series models. The operator shifts the time index of a time series back by one period, making it useful in autoregressive, moving average, and mixed models.
 
 For a time series $\{X_t\}$, the backward shift operator is defined as:

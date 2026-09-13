@@ -1,5 +1,34 @@
 # Moving Average (MA) Models
 
+## Worked calculation: an MA(1)
+
+Let
+
+$$
+X_t=\varepsilon_t+0.5\varepsilon_{t-1},
+\qquad \operatorname{Var}(\varepsilon_t)=1.
+$$
+
+Because the shocks are uncorrelated,
+
+$$
+\gamma(0)=1+0.5^2=1.25,
+\qquad
+\gamma(1)=0.5,
+\qquad
+\gamma(h)=0\quad(h>1).
+$$
+
+Consequently,
+
+$$
+\rho(1)=\frac{0.5}{1.25}=0.4.
+$$
+
+The MA autocorrelation cuts off after lag 1 in the theoretical model. In a finite sample, later sample ACF values will usually not be exactly zero.
+
+![AR and MA identification patterns](../../assets/time_series/student/06_ar_ma_identification.png)
+
 Moving Average (MA) models are a fundamental class of univariate time series models used for forecasting and understanding temporal data. Unlike Autoregressive (AR) models, which rely on past values of the series itself, MA models utilize past forecast errors to model the current value of the series. This approach is particularly effective for capturing short-term dependencies and abrupt changes in the data.
 
 ### Overview of Moving Average Models

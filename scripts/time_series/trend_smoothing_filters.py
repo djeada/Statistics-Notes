@@ -36,7 +36,6 @@ def main() -> None:
 
     output_path = (
         Path(__file__).resolve().parents[2]
-        / "notes"
         / "assets"
         / "time_series"
         / "trend_smoothing_filters.png"

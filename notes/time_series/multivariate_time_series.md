@@ -1,5 +1,29 @@
 # Multivariate Time Series
 
+## Worked calculation: a cointegrating spread
+
+Let $x_t=10$ and suppose the long-run relation is $y_t=1.4x_t+u_t$. If the current deviation is $u_t=0.5$, then
+
+$$
+y_t=1.4(10)+0.5=14.5.
+$$
+
+The levels can wander while the spread
+
+$$
+y_t-1.4x_t=u_t
+$$
+
+remains stable. Differencing both series would model short-run changes but would discard this level relationship. A VECM keeps both:
+
+$$
+\Delta y_t=\alpha\left(y_{t-1}-1.4x_{t-1}\right)+\text{short-run terms}+\varepsilon_t.
+$$
+
+The sign and size of $\alpha$ describe how the system responds after the spread moves away from equilibrium.
+
+![Two levels with a stable cointegrating spread](../../assets/time_series/student/17_multivariate_cointegration.png)
+
 Multivariate time-series methods model several variables jointly to represent feedback, shared dynamics, and long-run relationships.
 
 ## Vector Autoregression

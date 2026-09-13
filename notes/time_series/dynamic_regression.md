@@ -1,5 +1,29 @@
 # Dynamic Regression
 
+## Worked calculation: an external predictor and a lag
+
+Suppose
+
+$$
+y_t=2+1.5x_t+n_t.
+$$
+
+For $x_t=4$ and $n_t=0.3$, the observed value is
+
+$$
+y_t=2+1.5(4)+0.3=8.3.
+$$
+
+If the response takes time to react, use a distributed lag such as
+
+$$
+y_t=2+1.0x_t+0.5x_{t-1}+n_t.
+$$
+
+When $x_t=4$ and $x_{t-1}=2$, the regression mean is $2+4+1=7$. For forecasting, that calculation is valid only if both predictor values would be available at the forecast origin. A realized future temperature, exchange rate, or policy variable may need its own forecast.
+
+![Dynamic regression with serially correlated errors](../../assets/time_series/student/16_dynamic_regression.png)
+
 Dynamic regression combines explanatory variables with time-series structure. It is useful when the target depends on external predictors but ordinary regression leaves autocorrelated residuals.
 
 A basic model is

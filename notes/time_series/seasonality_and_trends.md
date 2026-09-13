@@ -1,5 +1,27 @@
 # Seasonality and Trends
 
+## Worked calculation: an additive seasonal effect
+
+Suppose a quarterly series is
+
+$$
+y_t=50+2t+s_t+\varepsilon_t,
+\qquad
+s_t=(-3,1,4,-2)
+$$
+
+with the seasonal pattern repeated every four observations. At $t=5$, the trend part is $50+2(5)=60$ and the first seasonal position contributes $-3$, so the deterministic value is $57$ before the noise term. The seasonal indices sum to
+
+$$
+-3+1+4-2=0,
+$$
+
+which is the usual normalization for an additive decomposition. If the size of the seasonal swing grows with the level, a log transformation or multiplicative decomposition may be more suitable.
+
+The existing decomposition figures show moving-average, spectral, and linear-filter approaches; the new worked comparison below shows how a seasonal difference removes a period-12 component.
+
+![Worked seasonal and ordinary differences](../../assets/time_series/student/12_arima_and_seasonal_differencing.png)
+
 **Seasonality** and **trends** are fundamental components in time series data that significantly impact analysis and forecasting. Understanding and correctly modeling these elements are useful for accurate predictions and effective time series modeling.
 
 - Identifying **seasonality** is useful for adjusting forecasting models to account for predictable fluctuations.

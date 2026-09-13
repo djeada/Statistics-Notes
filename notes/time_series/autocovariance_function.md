@@ -1,5 +1,30 @@
 # Autocovariance functions and coefficients
 
+## Worked calculation: a lagged covariance
+
+For $x=(1,2,4,3)$, the mean is $\bar x=2.5$ and the centered values are
+
+$$
+z=(-1.5,-0.5,1.5,0.5).
+$$
+
+Using the convention that divides by $n$, the lag-0 autocovariance is
+
+$$
+\hat\gamma(0)=\frac{1}{4}(2.25+0.25+2.25+0.25)=1.25.
+$$
+
+At lag 1,
+
+$$
+\hat\gamma(1)=\frac{1}{4}\{(-1.5)(-0.5)+(-0.5)(1.5)+(1.5)(0.5)\}
+=0.1875.
+$$
+
+Some software divides the lag-1 estimate by $n-1$ instead. State the convention before comparing numerical values. Autocovariance keeps the units squared; autocorrelation divides by $\hat\gamma(0)$ and is therefore unit-free.
+
+![Autocovariance of a simulated AR(1)](../../assets/time_series/student/05_autocovariance_ar1.png)
+
 Autocovariance functions describe how values of a time series relate to their lagged counterparts, measuring the joint variability between a series at time $t$ and its value at a previous time $t-k$ (where $k$ is the lag). In autoregressive models, these relationships are expressed through **coefficients**, which quantify the influence of past values on future values. The autocovariance function helps in estimating these coefficients by analyzing the strength and pattern of correlations at different lags. Higher autocovariance at a specific lag suggests a stronger influence of past values on the present, aiding in model selection and parameter estimation for time series models like AR, MA, and ARIMA.
 
 ### Random Variables (r.v.)

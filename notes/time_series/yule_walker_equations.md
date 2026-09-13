@@ -1,5 +1,32 @@
 # Yule-Walker Equations
 
+## Worked calculation: AR(2) autocorrelations
+
+For an AR(2) with $\phi_1=0.6$ and $\phi_2=-0.2$, the first two Yule-Walker equations give
+
+$$
+\rho_1=\phi_1+\phi_2\rho_1
+\quad\Longrightarrow\quad
+\rho_1=\frac{0.6}{1-(-0.2)}=0.5,
+$$
+
+and
+
+$$
+\rho_2=\phi_1\rho_1+\phi_2
+=0.6(0.5)-0.2=0.1.
+$$
+
+For later lags, use the recursion
+
+$$
+\rho_h=0.6\rho_{h-1}-0.2\rho_{h-2}.
+$$
+
+For example, $\rho_3=0.6(0.1)-0.2(0.5)=-0.04$. The equations turn AR coefficients into moment restrictions that can be checked against a sample ACF.
+
+![Yule-Walker recursion for an AR(2)](../../assets/time_series/student/09_yule_walker_ar2.png)
+
 The **Yule-Walker equations** are a set of linear relationships that tie the **autocovariances/autocorrelations** of a *stationary* **autoregressive (AR $p$) process** to its parameters. They are the work-horse for parameter estimation, diagnostic checking, and theoretical analysis of AR models.
 
 ### Definition
