@@ -1,5 +1,9 @@
 # Moving Average (MA) Models
 
+A moving-average model represents the current observation as a finite weighted combination of the current innovation and a fixed number of past innovations. Because each shock enters the model for only a limited number of periods, an MA($q$) process has a finite direct shock response and a theoretical ACF that cuts off after lag $q$.
+
+The innovations are latent rather than observed regressors, so estimation and identification require more care than a simple regression on lags. Invertibility selects a stable canonical representation, and the stochastic MA model should be kept distinct from rolling moving averages or exponential smoothers, which are transformations of observed data.
+
 ## Worked calculation: an MA(1)
 
 Let
