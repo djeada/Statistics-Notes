@@ -120,6 +120,10 @@ Several methods are commonly used to estimate $c$ and the AR coefficients.
 
 **Yule-Walker estimation** uses the relationship between the AR coefficients and the autocovariances of a stationary process. It is transparent and computationally convenient, especially when the theoretical moment relationships are of interest.
 
+![Yule-Walker recursion](../../assets/time_series/dependence/07_yule_walker_recursion.png)
+
+The recursion makes that moment relationship concrete: once the AR coefficients are fixed, the autocorrelations satisfy a corresponding lag recursion. Yule-Walker estimation reverses this relationship, using sample autocovariances to estimate the AR coefficients.
+
 **Maximum likelihood estimation (MLE)** chooses parameters that maximize the likelihood under a specified innovation distribution. For Gaussian AR models, likelihood methods provide a natural framework for estimating the coefficients and innovation variance together.
 
 Different implementations can handle initialization and finite samples differently, so estimates need not be identical even when they target the same AR specification.
@@ -417,11 +421,3 @@ When $|\phi|<1$, the point forecast converges toward the mean while the forecast
 Increasing $p$ can reduce in-sample error while making coefficient estimates and forecasts unstable. Check root location, coefficient uncertainty, residual autocorrelation, parameter stability over time, and temporal forecast performance.
 
 A model can be technically stationary yet practically very persistent when a root lies close to the unit-circle boundary. In that case, finite-sample estimates and long-horizon forecast intervals deserve extra scrutiny.
-
-### Visual companions
-
-The AR persistence and ACF/PACF figures above connect the two main ideas in this chapter: the roots determine how shocks decay, and that decay appears in the correlation structure used for model identification.
-
-![Yule-Walker recursion](../../assets/time_series/dependence/07_yule_walker_recursion.png)
-
-The Yule-Walker figure shows the same dependence from a moment perspective: AR coefficients generate a recursion for the autocorrelations, linking the fitted equation directly to the ACF.
