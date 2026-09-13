@@ -2,7 +2,7 @@
 
 ## Worked calculation: a lagged covariance
 
-For $x=(1,2,4,3)$, the mean is $\bar x=2.5$ and the centered values are
+For $x=(1,2,4,3)$, the mean is $\bar x=2.5$, so the centered values are
 
 $$
 z=(-1.5,-0.5,1.5,0.5).
@@ -17,257 +17,223 @@ $$
 At lag 1,
 
 $$
-\hat\gamma(1)=\frac{1}{4}\{(-1.5)(-0.5)+(-0.5)(1.5)+(1.5)(0.5)\}
-=0.1875.
+\hat\gamma(1)=\frac{1}{4}\{(-1.5)(-0.5)+(-0.5)(1.5)+(1.5)(0.5)\}=0.1875.
 $$
 
-Some software divides the lag-1 estimate by $n-1$ instead. State the convention before comparing numerical values. Autocovariance keeps the units squared; autocorrelation divides by $\hat\gamma(0)$ and is therefore unit-free.
+Some software divides the lag-1 estimate by $n-1$ instead. Because different conventions produce different numerical values, state the denominator before comparing estimates. Autocovariance retains squared units, while autocorrelation divides by $\hat\gamma(0)$ and is therefore unit-free.
 
 ![Autocovariance of a simulated AR(1)](../../assets/time_series/student/05_autocovariance_ar1.png)
 
-Autocovariance functions describe how values of a time series relate to their lagged counterparts, measuring the joint variability between a series at time $t$ and its value at a previous time $t-k$ (where $k$ is the lag). In autoregressive models, these relationships are expressed through **coefficients**, which quantify the influence of past values on future values. The autocovariance function helps in estimating these coefficients by analyzing the strength and pattern of correlations at different lags. Higher autocovariance at a specific lag suggests a stronger influence of past values on the present, aiding in model selection and parameter estimation for time series models like AR, MA, and ARIMA.
+The figure shows how autocovariance changes with lag for a simulated autoregressive series. Autocovariance describes how values of a time series vary jointly with lagged values of the same series. It is useful for identifying dependence across time, but its magnitude depends on the scale of the data and should not be interpreted as a direct measure of causal influence. In autoregressive models, coefficients describe how past values enter the model, while the autocovariance function summarizes the dependence pattern implied by those coefficients.
 
 ### Random Variables (r.v.)
 
-A **random variable (r.v.)** is a mapping from a set of outcomes in a probability space to a set of real numbers. We can distinguish between:
+A random variable (r.v.) maps outcomes in a probability space to real numbers. Random variables may be discrete or continuous.
 
-I. **Discrete random variables** take on countable values. For example, let:
+- A discrete random variable takes values from a countable set. For example, $X$ might take values in $\{45,36,27,\dots\}$.
+- A continuous random variable can take any value in a continuous range. For example, $Y$ might take values in $(10,60)$.
 
-$$
-X = \{45, 36, 27, \dots\}
-$$
-
-II. **Continuous random variables** take on any value in a continuous range. For instance:
-
-$$
-Y \in (10, 60)
-$$
-
-A **realization** is a specific observed value of a random variable. For instance:
-
-$$
-X = 20 \quad \text{and} \quad Y = 30.29
-$$
+A realization is a specific observed value of a random variable. For example, one realization might be $X=20$ and another $Y=30.29$.
 
 ### Covariance
 
-The **covariance** between two random variables $X$ and $Y$ measures the linear relationship between them. It is defined as:
+The covariance between two random variables $X$ and $Y$ measures how they vary together linearly. It is defined as
 
 $$
-\text{Cov}(X, Y) = E\left[(X - \mu_X)(Y - \mu_Y)\right]
+\text{Cov}(X,Y)=E\left[(X-\mu_X)(Y-\mu_Y)\right],
 $$
 
-Where:
+where $\mu_X=E[X]$ is the mean of $X$, $\mu_Y=E[Y]$ is the mean of $Y$, and $E[\cdot]$ denotes expectation.
 
-- $\mu_X = E[X]$ is the mean of $X$.
-- $\mu_Y = E[Y]$ is the mean of $Y$.
-- $E[\cdot]$ denotes the expectation operator.
-
-The covariance is **symmetric**:
+Covariance is symmetric:
 
 $$
-\text{Cov}(X, Y) = \text{Cov}(Y, X)
+\text{Cov}(X,Y)=\text{Cov}(Y,X).
 $$
 
-Useful identities:
+Useful identities include:
 
-- $\text{Var}(X) = \text{Cov}(X, X)$  
-- $\text{Cov}(X, Y) = E[XY] - E[X]E[Y]$  
-- $\text{Var}(X) = E[X^2] - (E[X])^2$  
-- $\text{Var}(a + bX) = b^2 \text{Var}(X)$  
-- $\text{Cov}(aX + bY, cZ + dW) = ac\,\text{Cov}(X, Z) + ad\,\text{Cov}(X, W) + bc\,\text{Cov}(Y, Z) + bd\,\text{Cov}(Y, W)$  
-- $E\left(\sum_i X_i\right) = \sum_i E(X_i)$  
+- $\text{Var}(X)=\text{Cov}(X,X)$
+- $\text{Cov}(X,Y)=E[XY]-E[X]E[Y]$
+- $\text{Var}(X)=E[X^2]-(E[X])^2$
+- $\text{Var}(a+bX)=b^2\text{Var}(X)$
+- $\text{Cov}(aX+bY,cZ+dW)=ac\,\text{Cov}(X,Z)+ad\,\text{Cov}(X,W)+bc\,\text{Cov}(Y,Z)+bd\,\text{Cov}(Y,W)$
+- $E\left(\sum_i X_i\right)=\sum_i E(X_i)$
 
-Interpretation:
+The sign of covariance describes the direction of a linear relationship:
 
-- If $\text{Cov}(X, Y) > 0$, $X$ and $Y$ increase together.
-- If $\text{Cov}(X, Y) < 0$, when $X$ increases, $Y$ tends to decrease.
-- If $\text{Cov}(X, Y) = 0$, there is no linear dependence between $X$ and $Y$.
+- If $\text{Cov}(X,Y)>0$, larger values of $X$ tend to occur with larger values of $Y$.
+- If $\text{Cov}(X,Y)<0$, larger values of $X$ tend to occur with smaller values of $Y$.
+- If $\text{Cov}(X,Y)=0$, there is no linear covariance between $X$ and $Y$, although a nonlinear relationship may still exist.
+
+The following figure gives a geometric view of lagged covariance by showing how paired observations contribute positively or negatively depending on their positions relative to the mean.
+
+![Autocovariance geometry](../../assets/time_series/dependence/01_autocovariance_geometry.png)
 
 #### Estimation of Covariance
 
-To estimate the covariance from a paired dataset $(x_1, y_1), (x_2, y_2), \dots, (x_N, y_N)$, we use the sample covariance formula:
+For paired observations $(x_1,y_1),(x_2,y_2),\dots,(x_N,y_N)$, the usual sample covariance is
 
 $$
-s_{xy} = \frac{1}{N - 1} \sum_{t=1}^{N} (x_t - \bar{x})(y_t - \bar{y})
+s_{xy}=\frac{1}{N-1}\sum_{t=1}^{N}(x_t-\bar x)(y_t-\bar y),
 $$
 
-Where:
+where
 
-- $\bar{x} = \frac{1}{N} \sum_{t=1}^{N} x_t$ is the sample mean of $x$,
-- $\bar{y} = \frac{1}{N} \sum_{t=1}^{N} y_t$ is the sample mean of $y$,
-- $N$ is the number of observations.
+- $\bar x=\frac{1}{N}\sum_{t=1}^{N}x_t$ is the sample mean of $x$,
+- $\bar y=\frac{1}{N}\sum_{t=1}^{N}y_t$ is the sample mean of $y$,
+- $N$ is the number of paired observations.
+
+This estimator concerns two variables observed in pairs. For a time series, the same idea is applied to values separated by a lag, which leads to autocovariance.
 
 ### Stochastic Processes
 
-A **stochastic process** is a collection of random variables indexed by time, denoted as:
+A stochastic process is a collection of random variables indexed by time or another ordered set:
 
 $$
-\{X_t : t \in T\}
+\{X_t:t\in T\}.
 $$
 
-where $T$ is the index set (often time or space).
+Here, $T$ is the index set, often representing time. In general, the distribution, mean, and variance of $X_t$ may depend on $t$. Stationarity introduces conditions under which these properties remain stable over time.
 
-Each $X_t$ follows a certain distribution with a mean $\mu$ and variance $\sigma^2$:
-
-$$
-X_t \sim \text{Distribution}(\mu, \sigma^2)
-$$
-
-**Example**: A time series is a realization of a stochastic process. Consider the following realizations:
+A time series is one realization of a stochastic process. For example, the random variables
 
 $$
-X_1, X_2, X_3, \dots
+X_1,X_2,X_3,\dots
 $$
 
-Realized as:
+might be observed as
 
 $$
-30, 29, 57, \dots
+30,29,57,\dots
 $$
+
+The distinction matters because theoretical quantities such as covariance and autocovariance describe the stochastic process, while sample estimates are calculated from the observed realization.
 
 ### Autocovariance Function
 
-The **autocovariance function** measures the covariance between two values of the time series at different times $s$ and $t$:
+The autocovariance function measures the covariance between two values of the same stochastic process at times $s$ and $t$:
 
 $$
-\gamma(s, t) = \text{Cov}(X_s, X_t) = E\left[(X_s - \mu_s)(X_t - \mu_t)\right]
+\gamma(s,t)=\text{Cov}(X_s,X_t)=E\left[(X_s-\mu_s)(X_t-\mu_t)\right].
 $$
-  
-Where:
 
-- $X_s$ and $X_t$ are the values of the time series at times $s$ and $t$, respectively.
-- $\mu_s$ and $\mu_t$ are the means at times $s$ and $t$.
+Here, $\mu_s=E[X_s]$ and $\mu_t=E[X_t]$ are the means at the two time points.
 
-**Variance** as a special case:
-
-When $s = t$, the autocovariance function simplifies to the variance of the series at time $t$:
+Variance is a special case. When $s=t$,
 
 $$
-\gamma(t, t) = E\left[(X_t - \mu_t)^2\right] = \text{Var}(X_t) = \sigma_t^2
+\gamma(t,t)=E\left[(X_t-\mu_t)^2\right]=\text{Var}(X_t)=\sigma_t^2.
 $$
+
+Thus, autocovariance extends the idea of variance from one time point to pairs of time points.
 
 ### Lagged Autocovariance
 
-The **lagged autocovariance function** measures the covariance between values of the series at times $t$ and $t+k$, where $k$ is the lag:
+For a weakly stationary process, the covariance between $X_t$ and $X_{t+k}$ depends only on the lag $k$, not on the particular time $t$. The lag-$k$ autocovariance is therefore
 
 $$
-\gamma_k = \gamma(t, t+k) = E\left[(X_t - \mu)(X_{t+k} - \mu)\right]
+\gamma_k=\gamma(k)=\text{Cov}(X_t,X_{t+k})=E\left[(X_t-\mu)(X_{t+k}-\mu)\right].
 $$
 
-For a **stationary process**, the autocovariance function depends only on the lag $k$, not the specific times $t$ and $t+k$:
-
-$$
-\gamma_k \approx c_k
-$$
-
-This implies that the autocovariance function remains constant for different time points, provided the lag $k$ is the same.
+This lag-based form makes it possible to summarize dependence across time with one function. Positive values indicate that observations separated by $k$ periods tend to deviate from the mean in the same direction, while negative values indicate opposite deviations.
 
 #### Autocovariance Coefficients
 
-**Autocovariance** measures the covariance of a time series with itself at different time lags. For a time series $\{X_t\}$, the **autocovariance at lag $k$** is defined as:
+For a time series $\{X_t\}$, the population autocovariance at lag $k$ is
 
 $$
-\gamma_k = \text{Cov}(X_t, X_{t+k}) = E\left[(X_t - \mu)(X_{t+k} - \mu)\right]
+\gamma_k=\text{Cov}(X_t,X_{t+k})=E\left[(X_t-\mu)(X_{t+k}-\mu)\right].
 $$
 
-Where:
+For a weakly stationary process, $\mu$ is constant and $\gamma_k$ depends only on $k$.
 
-- $X_t$ is the value of the time series at time $t$,
-- $X_{t+k}$ is the value of the time series at time $t+k$,
-- $\mu$ is the mean of the series (assumed to be constant for weak stationarity).
-
-**Sample Estimation** of the autocovariance coefficient $\gamma_k$ is denoted by $c_k$. For a time series with $N$ observations, the estimator is:
+A common sample estimator, denoted here by $c_k$, is
 
 $$
-c_k = \frac{1}{N} \sum_{t=1}^{N-k} (x_t - \bar{x})(x_{t+k} - \bar{x})
+c_k=\frac{1}{N}\sum_{t=1}^{N-k}(x_t-\bar x)(x_{t+k}-\bar x),
 $$
 
-Where:
+where
 
-- $\bar{x} = \frac{1}{N} \sum_{t=1}^{N} x_t$ is the sample mean of the series.
+$$
+\bar x=\frac{1}{N}\sum_{t=1}^{N}x_t.
+$$
+
+The value $c_k$ estimates the population quantity $\gamma_k$. Because fewer observation pairs are available as $k$ increases, estimates at large lags are generally less stable.
 
 #### Assumption of Weak Stationarity
 
-For weakly stationary processes, the mean $\mu$ is constant, and the autocovariance $\gamma_k$ depends only on the lag $k$, not on the actual time points $t$ and $t+k$. Therefore, the autocovariance function becomes:
+A process is weakly stationary when its mean is constant, its variance is finite and constant, and its autocovariance depends only on the lag. Under these conditions,
 
 $$
-\gamma_k = E\left[(X_t - \mu)(X_{t+k} - \mu)\right] = \text{Cov}(X_t, X_{t+k})
-$$
-  
-Under the assumption of weak stationarity, the sample autocovariance $c_k$ is computed as:
-
-$$
-c_k = \frac{1}{N} \sum_{t=1}^{N-k} (x_t - \bar{x})(x_{t+k} - \bar{x})
+\gamma_k=E\left[(X_t-\mu)(X_{t+k}-\mu)\right]=\text{Cov}(X_t,X_{t+k}).
 $$
 
-This allows us to estimate the strength of the relationship between $X_t$ and $X_{t+k}$ at different lags $k$.
+The sample autocovariance can then be used to estimate this lag-based dependence:
+
+$$
+c_k=\frac{1}{N}\sum_{t=1}^{N-k}(x_t-\bar x)(x_{t+k}-\bar x).
+$$
+
+This estimate summarizes the direction and scale of linear dependence between observations separated by $k$ periods. To compare dependence across series with different units or variances, use autocorrelation instead.
 
 ## Student guide: units, lags, and finite samples
 
 The autocovariance at lag $h$ is
 
 $$
-\gamma(h)=\operatorname{Cov}(X_t,X_{t-h}).
+\gamma(h)=\text{Cov}(X_t,X_{t-h}).
 $$
 
-For a weakly stationary process, it depends on the lag and not on the absolute time. It has squared units. If temperature is measured in degrees Celsius, autocovariance has degrees Celsius squared; autocorrelation is dimensionless.
+For a weakly stationary process, it depends on the lag rather than absolute time. Autocovariance has squared units: if temperature is measured in degrees Celsius, autocovariance is measured in degrees Celsius squared. Autocorrelation divides by the variance and is therefore dimensionless.
 
 ### Sample calculation
 
-For $x=(1,2,4,3)$, $\bar x=2.5$ and $z=(-1.5,-0.5,1.5,0.5)$. Using denominator $n=4$:
+For $x=(1,2,4,3)$, $\bar x=2.5$, and $z=(-1.5,-0.5,1.5,0.5)$. Using denominator $n=4$ gives
 
 $$
-\hat\gamma(0)=1.25,
-\qquad
-\hat\gamma(1)=0.1875.
+\hat\gamma(0)=1.25,\qquad \hat\gamma(1)=0.1875.
 $$
 
 The corresponding autocorrelation is
 
 $$
-\hat\rho(1)=0.1875/1.25=0.15.
+\hat\rho(1)=\frac{0.1875}{1.25}=0.15.
 $$
 
-At larger lags there are fewer pairs. A common convention divides by $n$ for every lag; another divides by $n-h$. Neither should be called “the” sample autocovariance without stating the choice.
+At larger lags, fewer observation pairs are available. One common convention divides by $n$ at every lag, while another divides by $n-h$. Neither should be treated as the unique sample autocovariance definition without stating the convention.
 
 ### AR(1) covariance recursion
 
-For
+For the stationary AR(1) process
 
 $$
-X_t=\phi X_{t-1}+\varepsilon_t,
-\qquad |\phi|<1,
+X_t=\phi X_{t-1}+\varepsilon_t,\qquad |\phi|<1,
 $$
 
-the variance is
+with innovation variance $\sigma_\varepsilon^2$, the process variance is
 
 $$
-\gamma(0)=\frac{\sigma_\varepsilon^2}{1-\phi^2},
+\gamma(0)=\frac{\sigma_\varepsilon^2}{1-\phi^2}.
 $$
 
-and
+Its autocovariance then follows the recursion
 
 $$
-\gamma(h)=\phi^h\gamma(0),\qquad h\ge0.
+\gamma(h)=\phi^h\gamma(0),\qquad h\ge 0.
 $$
 
-With $\phi=0.7$ and $\sigma_\varepsilon^2=1$:
+With $\phi=0.7$ and $\sigma_\varepsilon^2=1$,
 
 $$
-\gamma(0)=1.9608,\quad\gamma(1)=1.3725,\quad\gamma(2)=0.9608.
+\gamma(0)=1.9608,\qquad \gamma(1)=1.3725,\qquad \gamma(2)=0.9608.
 $$
 
-The autocovariance decays in the same geometric pattern as the ACF but retains the variance scale.
+The autocovariance therefore decays geometrically with lag, just like the ACF, but it retains the variance scale of the original series. The following figure illustrates that decay for a simulated AR(1) process.
+
+![AR(1) autocovariance](../../assets/time_series/student/05_autocovariance_ar1.png)
 
 ### Cross-covariance caution
 
-The cross-covariance $\gamma_{XY}(h)$ depends on which series is shifted. A peak at positive $h$ does not automatically mean $X$ causes $Y$; common trend, seasonality, and release timing can create a lead-lag pattern.
-
-### Visual companion
-
-Run [dependence_visualizations.py](../../scripts/time_series/dependence_visualizations.py):
-
-![Autocovariance geometry](../../assets/time_series/dependence/01_autocovariance_geometry.png)
-
-![AR(1) autocovariance](../../assets/time_series/student/05_autocovariance_ar1.png)
+For two series, the cross-covariance $\gamma_{XY}(h)$ depends on which series is shifted and on the sign convention used for the lag. A peak at positive $h$ therefore does not, by itself, establish that $X$ causes $Y$. Common trends, seasonality, delayed measurement, and release timing can all create apparent lead-lag patterns.
