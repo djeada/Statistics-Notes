@@ -1,5 +1,9 @@
 # Multivariate Time Series
 
+Multivariate time-series models describe several evolving variables jointly so that cross-lag feedback, shared shocks, and predictive relationships can be represented within one system. They are useful when separate univariate models would ignore information carried by the histories of related series.
+
+Short-run interactions are commonly modeled with VARs, while cointegration and VECMs preserve stable long-run relationships among non-stationary levels. Granger predictability and impulse responses add useful interpretations, but they remain conditional on the chosen information set and, for structural shocks, on explicit identification assumptions.
+
 ## Worked calculation: a cointegrating spread
 
 Let $x_t=10$ and suppose the long-run relation is
