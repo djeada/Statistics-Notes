@@ -1,5 +1,9 @@
 # Time Series Modeling
 
+Time-series modeling is an iterative process of specifying structure, estimating parameters, diagnosing what remains unexplained, and testing forecasts on future-like data. Choosing an equation is only one step; transformations, initial conditions, residual behavior, and the forecast information set are part of the model as well.
+
+A useful model is parsimonious enough to estimate reliably, flexible enough to capture the important dependence, and transparent enough to diagnose. Information criteria can narrow a candidate set, but residual checks and chronological forecast evaluation determine whether the selected model is actually adequate for its intended use.
+
 ## Worked calculation: fit, complexity, and diagnostics
 
 Suppose two likelihood-based candidates have the following summaries:

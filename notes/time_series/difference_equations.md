@@ -1,5 +1,9 @@
 # Difference Equation
 
+A difference equation describes how a discrete-time quantity evolves from its earlier values. Rather than specifying every term directly, it gives a recursive rule, so the behavior of the sequence is determined by the recursion together with its initial conditions.
+
+For time-series models, the important question is how those recursive effects behave as time passes. Characteristic roots reveal whether deviations decay, oscillate, or grow, which connects difference equations directly to persistence, stability, shock propagation, and autoregressive dynamics.
+
 ## Worked calculation: a stable recursion
 
 Take

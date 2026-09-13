@@ -1,5 +1,9 @@
 # Stochastic Processes and White Noise
 
+A stochastic process is a collection of random variables indexed by time, and an observed time series is one realized path from that process. This viewpoint separates the data we actually see from the probabilistic mechanism used to describe possible paths and future uncertainty.
+
+White noise is the basic reference process for new, unstructured shocks. It has stable second-order behavior and no linear serial correlation, so many time-series models aim to explain the predictable structure in the data and leave behind innovations that behave approximately like white noise.
+
 ## Worked calculation: shocks versus accumulated shocks
 
 Let $\varepsilon_t$ be independent with mean 0 and variance 1. It is white noise because

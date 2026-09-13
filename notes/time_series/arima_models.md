@@ -1,5 +1,9 @@
 # ARMA, ARIMA and SARIMA Models
 
+ARMA models describe stationary linear dependence through a combination of autoregressive terms, which use past observations, and moving-average terms, which use current and past innovations. ARIMA extends that structure by differencing a series with a stochastic trend, while SARIMA adds seasonal differences and seasonal AR or MA effects at a fixed period.
+
+The model orders represent different mechanisms rather than interchangeable tuning knobs. A clean analysis separates the transformation needed to stabilize the series from the dependence that remains afterward, uses the smallest adequate differencing orders, and checks that forecasts are reconstructed and evaluated on the scale that matters.
+
 ## Worked calculation: ordinary and seasonal differencing
 
 For the short series

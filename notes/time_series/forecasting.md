@@ -1,5 +1,9 @@
 # Forecasting with Time Series
 
+A time-series forecast is a conditional statement about a future observation given the information available at a specific forecast origin. The horizon, target functional, and information set are part of the forecast itself, so a point prediction without its timing and uncertainty is an incomplete description.
+
+Forecasting methods differ in the assumptions they make about persistence, trend, seasonality, nonlinear structure, and future predictors. Useful methods are therefore compared chronologically against simple baselines and judged not only by point accuracy but also by uncertainty calibration, stability across horizons, and whether the required information would actually be available in deployment.
+
 ## Worked calculation: a forecast and its uncertainty
 
 For a centered AR(1),

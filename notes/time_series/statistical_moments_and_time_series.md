@@ -1,5 +1,9 @@
 # Statistical Moments and Time Series
 
+Statistical moments summarize features such as the center, spread, and joint variation of a distribution. In time series, those same quantities acquire a time dimension: the mean and variance may change across the record, and covariance becomes a function of lag as well as scale.
+
+This makes moment calculations more than descriptive summaries. Stable moments support stationary modeling, while changing means, variances, or lag relationships point to trend, volatility, structural change, or other dynamics that must be represented before a simple stationary model is appropriate.
+
 ## Worked calculation: mean, variance, and lag covariance
 
 For the four observations
