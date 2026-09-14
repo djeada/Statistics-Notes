@@ -10,14 +10,14 @@ White noise is the basic reference process for new, unstructured shocks. It has 
 |---|---|---|
 | Stochastic process | $\{X_t:t\in T\}$ | A time series $x_1,\ldots,x_n$ is one realized sample path. |
 | Mean function | $\mu_t=E[X_t]$ | Weak stationarity requires $\mu_t$ to be constant. |
-| Covariance function | $\gamma(t,s)=\operatorname{Cov}(X_t,X_s)$ | Under weak stationarity, it depends only on $t-s$. |
+| Covariance function | $\gamma(t,s)=\mathrm{Cov}(X_t,X_s)$ | Under weak stationarity, it depends only on $t-s$. |
 | Innovation | $\varepsilon_t=X_t-E(X_t\mid\mathcal F_{t-1})$ | Then $E(\varepsilon_t\mid\mathcal F_{t-1})=0$. |
-| Weak white noise | $E\varepsilon_t=0$, $\operatorname{Var}(\varepsilon_t)=\sigma^2$, $\operatorname{Cov}(\varepsilon_t,\varepsilon_{t-h})=0$ for $h\ne0$ | Zero serial covariance does not imply independence. |
+| Weak white noise | $E\varepsilon_t=0$, $\mathrm{Var}(\varepsilon_t)=\sigma^2$, $\mathrm{Cov}(\varepsilon_t,\varepsilon_{t-h})=0$ for $h\ne0$ | Zero serial covariance does not imply independence. |
 | Gaussian white noise | $\varepsilon_t\stackrel{iid}{\sim}N(0,\sigma^2)$ | Common stronger assumption used for likelihoods and intervals. |
 | Linear process | $X_t=\mu+\sum_{j=0}^{\infty}\psi_j\varepsilon_{t-j}$ | A broad representation for stationary linear time series. |
-| Linear-process variance | $\operatorname{Var}(X_t)=\sigma_\varepsilon^2\sum_{j=0}^{\infty}\psi_j^2$ | Holds for uncorrelated innovations when the squared weights are summable. |
+| Linear-process variance | $\mathrm{Var}(X_t)=\sigma_\varepsilon^2\sum_{j=0}^{\infty}\psi_j^2$ | Holds for uncorrelated innovations when the squared weights are summable. |
 | Random walk | $X_t=X_{t-1}+\varepsilon_t=X_0+\sum_{j=1}^{t}\varepsilon_j$ | First difference is white noise: $\Delta X_t=\varepsilon_t$. |
-| Random-walk variance | $\operatorname{Var}(X_t\mid X_0)=t\sigma^2$ | Shows why the level is not weakly stationary. |
+| Random-walk variance | $\mathrm{Var}(X_t\mid X_0)=t\sigma^2$ | Shows why the level is not weakly stationary. |
 | Martingale difference | $E(\varepsilon_t\mid\mathcal F_{t-1})=0$ | Rules out predictable conditional-mean structure. |
 
 ## Worked calculation: shocks versus accumulated shocks

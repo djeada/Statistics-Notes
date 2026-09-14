@@ -14,7 +14,7 @@ The same coefficients also control stationarity, the shape of the ACF and PACF, 
 | Stationarity / causality | $\phi(z)=0\Rightarrow\lvert z\rvert>1$ | Standard backshift-root condition. |
 | Stationary mean | $\mu=c/[1-\sum_{j=1}^{p}\phi_j]$ | Requires a stationary model and nonzero denominator. |
 | AR(1) | $X_t=c+\phi X_{t-1}+\varepsilon_t$ | Stationary when $\lvert\phi\rvert<1$; random walk boundary at $\phi=1$. |
-| AR(1) variance | $\operatorname{Var}(X_t)=\sigma_\varepsilon^2/(1-\phi^2)$ | For $\lvert\phi\rvert<1$. |
+| AR(1) variance | $\mathrm{Var}(X_t)=\sigma_\varepsilon^2/(1-\phi^2)$ | For $\lvert\phi\rvert<1$. |
 | AR(1) ACF | $\rho(h)=\phi^{\lvert h\rvert}$ | Geometric decay or alternating decay. |
 | AR($p$) Yule-Walker | $\gamma(h)=\sum_{j=1}^{p}\phi_j\gamma(h-j)$ | Generates the ACF recursion. |
 | Infinite-MA representation | $X_t-\mu=\phi(B)^{-1}\varepsilon_t=\sum_{j=0}^{\infty}\psi_j\varepsilon_{t-j}$ | Exists with summable coefficients for a causal stationary AR model. |

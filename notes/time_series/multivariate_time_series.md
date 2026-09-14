@@ -9,7 +9,7 @@ Short-run interactions are commonly modeled with VARs, while cointegration and V
 | Model / quantity | General formula | Notes / special case |
 |---|---|---|
 | Vector mean | $\mu_t=E[y_t]$ | $y_t$ is a $k\times1$ vector. |
-| Cross-covariance matrix | $\Gamma(h)=\operatorname{Cov}(y_t,y_{t-h})$ | Entries contain own- and cross-lag covariances. |
+| Cross-covariance matrix | $\Gamma(h)=\mathrm{Cov}(y_t,y_{t-h})$ | Entries contain own- and cross-lag covariances. |
 | VAR($p$) | $y_t=c+A_1y_{t-1}+\cdots+A_py_{t-p}+\varepsilon_t$ | Each equation may use lagged values of every series. |
 | VAR lag polynomial | $A(B)=I-A_1B-\cdots-A_pB^p$ | VAR is $A(B)y_t=c+\varepsilon_t$. |
 | VAR stability | $\det A(z)\ne0$ for $\lvert z\rvert\le1$ | For VAR(1), all eigenvalues of $A_1$ must have modulus below 1. |

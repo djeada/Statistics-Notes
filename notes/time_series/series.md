@@ -19,7 +19,7 @@ This becomes important when a dynamic model is expanded into an infinite history
 | Ratio test | $L=\lim\lvert a_{n+1}/a_n\rvert$ | $L<1$: absolute convergence; $L>1$: divergence. |
 | Root test | $L=\limsup\lvert a_n\rvert^{1/n}$ | $L<1$: absolute convergence; $L>1$: divergence. |
 | Mean-square convergence | $E[(X_n-X)^2]\to0$ | Natural convergence notion for stochastic linear filters. |
-| Linear-process variance | $X_t=\sum_{j\ge0}\psi_j\varepsilon_{t-j}$, $\operatorname{Var}(X_t)=\sigma_\varepsilon^2\sum_{j\ge0}\psi_j^2$ | Requires uncorrelated innovations and square-summable coefficients. |
+| Linear-process variance | $X_t=\sum_{j\ge0}\psi_j\varepsilon_{t-j}$, $\mathrm{Var}(X_t)=\sigma_\varepsilon^2\sum_{j\ge0}\psi_j^2$ | Requires uncorrelated innovations and square-summable coefficients. |
 
 ## Worked calculation: a geometric series
 

@@ -8,7 +8,7 @@ Together, ACF and PACF reveal persistence and help propose AR and MA orders, but
 
 | Quantity / model | General formula | Notes / special case |
 |---|---|---|
-| Autocovariance | $\gamma(h)=\operatorname{Cov}(X_t,X_{t-h})$ | For a weakly stationary process, depends only on lag. |
+| Autocovariance | $\gamma(h)=\mathrm{Cov}(X_t,X_{t-h})$ | For a weakly stationary process, depends only on lag. |
 | Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | $\rho(0)=1$, $\rho(-h)=\rho(h)$. |
 | Sample ACF | $\hat\rho(h)=\frac{\sum_{t=1}^{n-h}(x_t-\bar x)(x_{t+h}-\bar x)}{\sum_{t=1}^{n}(x_t-\bar x)^2}$ | Common finite-sample convention. |
 | Rough white-noise band | $\pm z_{1-\alpha/2}/\sqrt n$ | Often $\pm1.96/\sqrt n$ for a 95% reference band. |
@@ -20,7 +20,7 @@ Together, ACF and PACF reveal persistence and help propose AR and MA orders, but
 | MA($q$) identification | ACF $=0$ for $h>q$; PACF tails off | Ideal population pattern. |
 | ARMA($p,q$) identification | Both ACF and PACF usually tail off | Exact shape depends on coefficients. |
 | AR($p$) Yule-Walker | $\gamma(h)=\sum_{j=1}^{p}\phi_j\gamma(h-j)$ | Connects AR coefficients to ACF decay. |
-| Bartlett-style ACF variance | $\operatorname{Var}(\hat\rho_k)\approx n^{-1}[1+2\sum_{j=1}^{k-1}\rho_j^2]$ | Useful short-memory approximation, not a universal confidence formula. |
+| Bartlett-style ACF variance | $\mathrm{Var}(\hat\rho_k)\approx n^{-1}[1+2\sum_{j=1}^{k-1}\rho_j^2]$ | Useful short-memory approximation, not a universal confidence formula. |
 
 ## Worked calculation: AR(1) dependence
 
