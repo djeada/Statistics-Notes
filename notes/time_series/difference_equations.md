@@ -4,6 +4,21 @@ A difference equation describes how a discrete-time quantity evolves from its ea
 
 For time-series models, the important question is how those recursive effects behave as time passes. Characteristic roots reveal whether deviations decay, oscillate, or grow, which connects difference equations directly to persistence, stability, shock propagation, and autoregressive dynamics.
 
+## Formula reference
+
+| Case | General formula | Solution / condition |
+|---|---|---|
+| First-order homogeneous | $x_t=ax_{t-1}$ | $x_t=a^tx_0$; stable when $\lvert a\rvert<1$. |
+| First-order with constant | $x_t=c+ax_{t-1}$ | $x_t=x^\star+a^t(x_0-x^\star)$, $x^\star=c/(1-a)$ for $a\ne1$. |
+| First-order with shocks | $x_t=c+ax_{t-1}+\varepsilon_t$ | For $\lvert a\rvert<1$, $x_t=c/(1-a)+\sum_{j=0}^{\infty}a^j\varepsilon_{t-j}$ after the transient. |
+| Order-$p$ homogeneous | $x_t=\sum_{i=1}^{p}\phi_ix_{t-i}$ | Characteristic equation $r^p-\phi_1r^{p-1}-\cdots-\phi_p=0$. |
+| Distinct roots | $r_1,\ldots,r_p$ | $x_t=\sum_{i=1}^{p}C_ir_i^t$. |
+| Repeated root $r$ of multiplicity $m$ | — | Contribution $(C_0+C_1t+\cdots+C_{m-1}t^{m-1})r^t$. |
+| Complex roots | $r=Re^{\pm i\omega}$ | Real solution has the form $R^t[A\cos(\omega t)+B\sin(\omega t)]$. |
+| Stability | all characteristic roots $r_i$ | Homogeneous deviations decay when $\lvert r_i\rvert<1$ for every $i$. |
+| Forced linear recursion | $x_t=\sum_{i=1}^{p}\phi_ix_{t-i}+u_t$ | Solution = homogeneous transient + particular/forced response. |
+| Lag-polynomial form | $\phi(B)x_t=u_t$, $\phi(B)=1-\sum_{i=1}^{p}\phi_iB^i$ | Links difference equations directly to AR models. |
+
 ## Worked calculation: a stable recursion
 
 Take
