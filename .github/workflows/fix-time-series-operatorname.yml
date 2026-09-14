@@ -47,3 +47,5 @@ jobs:
           git add notes/time_series
           git commit -m "Use GitHub-safe math operators in time-series notes"
           git push origin HEAD:add-time-series-formula-tables
+
+# Trigger cleanup after workflow creation.
