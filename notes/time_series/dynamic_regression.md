@@ -4,6 +4,23 @@ Dynamic regression combines external predictors with time-series structure so th
 
 For forecasting, the timing of the predictors is as important as their statistical relationship with the target. A predictor is operationally useful only when its future value is known, scheduled, or itself forecastable at the forecast origin, so alignment, information availability, and residual dynamics must be handled together.
 
+## Formula reference
+
+| Component / case | General formula | Notes / special case |
+|---|---|---|
+| Static regression mean | $y_t=\beta_0+\beta^\top x_t+n_t$ | $n_t$ may still be serially dependent. |
+| ARMA errors | $\phi(B)n_t=\theta(B)\varepsilon_t$ | Gives regression with ARMA errors. |
+| ARIMA errors | $\phi(B)(1-B)^dn_t=\theta(B)\varepsilon_t$ | Allows an integrated error process before differencing. |
+| Combined dynamic regression | $\phi(B)(1-B)^d[y_t-\beta_0-\beta^\top x_t]=\theta(B)\varepsilon_t$ | One common ARIMAX/regression-with-ARIMA-errors form. |
+| Distributed lag | $y_t=\beta_0+\sum_{j=0}^{r}\beta_j^{(x)}x_{t-j}+n_t$ | Captures delayed predictor effects. |
+| Cumulative lag effect | $\sum_{j=0}^{r}\beta_j^{(x)}$ | Interpretable as a total response only under an appropriate sustained-change scenario. |
+| Transfer-function form | $y_t=\beta_0+\frac{\omega(B)}{\delta(B)}B^b x_t+n_t$ | Generalizes finite distributed lags with delay $b$. |
+| One-step forecast | $\hat y_{t+1\mid t}=\hat\beta_0+\hat\beta^\top x_{t+1}+\hat n_{t+1\mid t}$ | Requires $x_{t+1}$ to be known or separately forecast. |
+| $h$-step forecast | $\hat y_{t+h\mid t}=\hat\beta_0+\hat\beta^\top x_{t+h}+\hat n_{t+h\mid t}$ | Predictor-path uncertainty should be included when future $x$ is forecast. |
+| Intervention pulse | $P_t=I(t=T_0)$ | Models a one-period event. |
+| Intervention step | $S_t=I(t\ge T_0)$ | Models a persistent level shift. |
+| AR(1) dynamic error | $n_t=\rho n_{t-1}+\varepsilon_t$ | Stationary when $\lvert\rho\rvert<1$. |
+
 ## Worked calculation: an external predictor and a lag
 
 Suppose
