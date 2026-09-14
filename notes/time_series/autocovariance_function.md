@@ -4,6 +4,23 @@ Autocovariance measures how a time series varies jointly with lagged versions of
 
 For a weakly stationary process, autocovariance depends only on the lag rather than the absolute time. Normalizing it by the variance produces the unit-free autocorrelation function, while sample estimates require an explicit denominator convention and become noisier as fewer observation pairs remain at larger lags.
 
+## Formula reference
+
+| Quantity / model | General formula | Notes / special case |
+|---|---|---|
+| Covariance | $\operatorname{Cov}(X,Y)=E[(X-E[X])(Y-E[Y])]$ | Also $E[XY]-E[X]E[Y]$. |
+| General autocovariance | $\gamma(s,t)=\operatorname{Cov}(X_s,X_t)$ | May depend on both calendar times for a nonstationary process. |
+| Stationary autocovariance | $\gamma(h)=\operatorname{Cov}(X_t,X_{t-h})$ | Depends only on lag $h$ under weak stationarity. |
+| Variance | $\gamma(0)=\operatorname{Var}(X_t)$ | Lag 0 is the process variance. |
+| Symmetry | $\gamma(-h)=\gamma(h)$ | For a real-valued weakly stationary series. |
+| Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | Unit-free normalization of autocovariance. |
+| Sample autocovariance, biased convention | $\hat\gamma(h)=n^{-1}\sum_{t=1}^{n-h}(x_t-\bar x)(x_{t+h}-\bar x)$ | Uses denominator $n$ at every lag. |
+| Sample autocovariance, pair-count convention | $\tilde\gamma(h)=(n-h)^{-1}\sum_{t=1}^{n-h}(x_t-\bar x)(x_{t+h}-\bar x)$ | Another common finite-sample convention. |
+| AR(1) variance | $\gamma(0)=\sigma_\varepsilon^2/(1-\phi^2)$ | Requires $\lvert\phi\rvert<1$. |
+| AR(1) autocovariance | $\gamma(h)=\phi^{\lvert h\rvert}\gamma(0)$ | Geometric decay. |
+| MA($q$) autocovariance | $\gamma(h)=\sigma_\varepsilon^2\sum_{j=0}^{q-h}\theta_j\theta_{j+h}$ for $0\le h\le q$ | Take $\theta_0=1$; $\gamma(h)=0$ for $\lvert h\rvert>q$. |
+| Cross-covariance | $\gamma_{XY}(h)=\operatorname{Cov}(X_t,Y_{t-h})$ | Lag sign convention must be stated explicitly. |
+
 ## Worked calculation: a lagged covariance
 
 For $x=(1,2,4,3)$, the mean is $\bar x=2.5$, so the centered values are
