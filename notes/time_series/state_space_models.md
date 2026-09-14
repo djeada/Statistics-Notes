@@ -4,6 +4,24 @@ State-space models separate a time series into an unobserved state that evolves 
 
 The Kalman filter is the recursive algorithm that makes linear Gaussian state-space models practical. At each step it predicts the next state, compares that prediction with the new observation, and updates the estimate according to their relative uncertainty, creating a clean distinction among filtering, forecasting, and retrospective smoothing.
 
+## Formula reference
+
+| Step / model | General formula | Notes / special case |
+|---|---|---|
+| State equation | $\alpha_t=T_t\alpha_{t-1}+R_t\eta_t$ | $\eta_t\sim N(0,Q_t)$ in the linear Gaussian model. |
+| Observation equation | $y_t=Z_t\alpha_t+d_t+\varepsilon_t$ | $\varepsilon_t\sim N(0,H_t)$. |
+| State prediction | $a_{t\mid t-1}=T_ta_{t-1\mid t-1}$ | Add deterministic state terms if the model contains them. |
+| Prediction covariance | $P_{t\mid t-1}=T_tP_{t-1\mid t-1}T_t^\top+R_tQ_tR_t^\top$ | Propagates previous uncertainty plus state noise. |
+| Innovation | $v_t=y_t-Z_ta_{t\mid t-1}-d_t$ | One-step forecast error. |
+| Innovation covariance | $F_t=Z_tP_{t\mid t-1}Z_t^\top+H_t$ | Uncertainty of the one-step observation forecast. |
+| Kalman gain | $K_t=P_{t\mid t-1}Z_t^\top F_t^{-1}$ | Determines the weight placed on the new observation. |
+| State update | $a_{t\mid t}=a_{t\mid t-1}+K_tv_t$ | Filtering step. |
+| Covariance update | $P_{t\mid t}=P_{t\mid t-1}-K_tF_tK_t^\top$ | Equivalent stable forms are also used numerically. |
+| Local-level model | $\mu_t=\mu_{t-1}+\eta_t$, $y_t=\mu_t+\varepsilon_t$ | Scalar special case with latent random-walk level. |
+| $h$-step state forecast | $a_{t+h\mid t}=T_{t+h}\cdots T_{t+1}a_{t\mid t}$ | For constant $T$, this is $T^ha_{t\mid t}$. |
+| Gaussian log-likelihood contribution | $\ell_t=-\tfrac12[\log(2\pi)+\log\lvert F_t\rvert+v_t^\top F_t^{-1}v_t]$ | Sum over $t$ for likelihood estimation. |
+| Standardized innovation | $\tilde v_t=F_t^{-1/2}v_t$ | Should resemble white noise under an adequate model. |
+
 ## Worked calculation: one local-level Kalman update
 
 Suppose the predicted level is $a_{t|t-1}=10$, its predicted variance is $P_{t|t-1}=1.25$, and the observation is $y_t=12$ with measurement variance $R=1$. The innovation is
