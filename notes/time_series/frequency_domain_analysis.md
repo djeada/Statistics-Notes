@@ -4,6 +4,25 @@ Frequency-domain analysis describes a time series by the cycle lengths that cont
 
 The interpretation depends critically on how the series was sampled and observed. Nyquist limits, aliasing, finite-record resolution, spectral leakage, trend treatment, and windowing can all create or distort apparent peaks, so frequencies should be translated back into periods and checked against the time-domain behavior before they are given a substantive meaning.
 
+## Formula reference
+
+| Quantity | General formula | Notes / special case |
+|---|---|---|
+| Sinusoid | $x_t=A\cos(2\pi ft+\phi)$ | Period $P=1/f$ in sampling intervals. |
+| Fourier frequencies | $f_k=k/N$ | $k=0,\ldots,\lfloor N/2\rfloor$ for nonnegative frequencies. |
+| Angular frequency | $\omega_k=2\pi k/N$ | $f=\omega/(2\pi)$. |
+| DFT | $X_k=\sum_{t=0}^{N-1}x_te^{-i2\pi kt/N}$ | Converts the observed sequence into Fourier coefficients. |
+| Inverse DFT | $x_t=N^{-1}\sum_{k=0}^{N-1}X_ke^{i2\pi kt/N}$ | Reconstructs the sequence under this normalization. |
+| Periodogram | $I(f_k)=N^{-1}\lvert X_k\rvert^2$ | Overall scale varies by convention and sampling units. |
+| Frequency resolution | $\Delta f=1/N$ | In cycles per observation for unit sampling interval. |
+| Nyquist frequency | $f_N=f_s/2$ | With one observation per interval, $f_N=0.5$. |
+| Spectral density | $f_X(\omega)=(2\pi)^{-1}\sum_{h=-\infty}^{\infty}\gamma(h)e^{-i\omega h}$ | Fourier transform of the autocovariance sequence. |
+| Inverse spectral relation | $\gamma(h)=\int_{-\pi}^{\pi}e^{i\omega h}f_X(\omega)\,d\omega$ | Spectrum and ACF encode the same second-order information. |
+| Linear-filter spectrum | $Y_t=H(B)X_t\Rightarrow f_Y(\omega)=\lvert H(e^{-i\omega})\rvert^2f_X(\omega)$ | Shows how differencing or smoothing reweights frequencies. |
+| First-difference response | $H(e^{-i\omega})=1-e^{-i\omega}$ | Power multiplier $\lvert H\rvert^2=4\sin^2(\omega/2)$. |
+| Cross-spectrum | $S_{xy}(\omega)$ | Fourier transform of cross-covariance; sample analogue uses $X(\omega)\overline{Y(\omega)}$. |
+| Squared coherence | $C_{xy}^2(\omega)=\lvert S_{xy}(\omega)\rvert^2/[S_{xx}(\omega)S_{yy}(\omega)]$ | Between 0 and 1; high coherence does not establish causality. |
+
 ## Worked calculation: frequency, period, and resolution
 
 For a seasonal signal that repeats every 12 observations,
