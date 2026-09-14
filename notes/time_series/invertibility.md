@@ -4,6 +4,21 @@ Invertibility is the condition that lets a moving-average or ARMA model recover 
 
 The condition also resolves an identification problem: different MA parameter values can generate the same second-order behavior. Requiring the roots of the MA polynomial to lie outside the unit circle selects a canonical representation that is stable for estimation, residual analysis, and forecasting.
 
+## Formula reference
+
+| Concept | General formula | Condition / interpretation |
+|---|---|---|
+| MA polynomial | $X_t=\theta(B)\varepsilon_t$, $\theta(B)=1+\theta_1B+\cdots+\theta_qB^q$ | Maps current and past innovations into observations. |
+| Inverse representation | $\varepsilon_t=\theta(B)^{-1}X_t=\sum_{k=0}^{\infty}\pi_kX_{t-k}$ | Invertibility requires a stable past-based inverse filter. |
+| Root condition | $\theta(z)=0\Rightarrow \lvert z\rvert>1$ | Every zero of the MA polynomial must lie outside the unit circle. |
+| MA(1) | $X_t=(1+\theta B)\varepsilon_t$ | Invertible iff $\lvert\theta\rvert<1$. |
+| MA(1) inverse | $(1+\theta B)^{-1}=\sum_{k=0}^{\infty}(-\theta)^kB^k$ | Geometric expansion converges when $\lvert\theta\rvert<1$. |
+| General inverse recursion | $\pi_0=1$, $\pi_k=-\sum_{j=1}^{\min(k,q)}\theta_j\pi_{k-j}$ | Generates the coefficients of $\theta(B)^{-1}$. |
+| ARMA($p,q$) | $\phi(B)X_t=\theta(B)\varepsilon_t$ | Invertibility is controlled by MA roots; causality/stationarity by AR roots. |
+| Seasonal MA part | $\Theta(B^s)=1+\Theta_1B^s+\cdots+\Theta_QB^{Qs}$ | Seasonal MA roots must also satisfy the invertibility root condition. |
+| Absolute-summability criterion | $\sum_{k=0}^{\infty}\lvert\pi_k\rvert<\infty$ | A strong sufficient condition for a stable inverse filter. |
+| Canonical MA(1) choice | $(\theta,\sigma^2)$ versus $(1/\theta,\theta^2\sigma^2)$ | These can have the same autocovariances; choose the invertible representation. |
+
 ## Worked calculation: two MA(1) inverse filters
 
 For an MA(1),
