@@ -4,6 +4,23 @@ Sequences and series provide the convergence language behind many time-series re
 
 This becomes important when a dynamic model is expanded into an infinite history of shocks or observations. Conditions such as geometric decay, absolute summability, and mean-square convergence determine whether those infinite representations are mathematically stable and can be approximated accurately with a finite number of terms.
 
+## Formula reference
+
+| Concept | General formula | Condition / interpretation |
+|---|---|---|
+| Sequence limit | $\lim_{n\to\infty}a_n=a$ | For every $\epsilon>0$, eventually $\lvert a_n-a\rvert<\epsilon$. |
+| Partial sum | $S_n=\sum_{k=1}^{n}a_k$ | A series converges when $S_n$ has a finite limit. |
+| Infinite series | $\sum_{k=1}^{\infty}a_k=\lim_{n\to\infty}S_n$ | Necessarily $a_n\to0$, but this alone is not sufficient. |
+| Finite geometric sum | $\sum_{k=0}^{n}r^k=(1-r^{n+1})/(1-r)$ | Valid for $r\ne1$. |
+| Infinite geometric sum | $\sum_{k=0}^{\infty}r^k=1/(1-r)$ | Converges exactly when $\lvert r\rvert<1$. |
+| Geometric tail | $\sum_{k=m+1}^{\infty}r^k=r^{m+1}/(1-r)$ | For $\lvert r\rvert<1$; absolute tail is bounded by $\lvert r\rvert^{m+1}/(1-\lvert r\rvert)$. |
+| $p$-series | $\sum_{n=1}^{\infty}n^{-p}$ | Converges iff $p>1$. |
+| Absolute convergence | $\sum_{n=1}^{\infty}\lvert a_n\rvert<\infty$ | Implies ordinary convergence. |
+| Ratio test | $L=\lim\lvert a_{n+1}/a_n\rvert$ | $L<1$: absolute convergence; $L>1$: divergence. |
+| Root test | $L=\limsup\lvert a_n\rvert^{1/n}$ | $L<1$: absolute convergence; $L>1$: divergence. |
+| Mean-square convergence | $E[(X_n-X)^2]\to0$ | Natural convergence notion for stochastic linear filters. |
+| Linear-process variance | $X_t=\sum_{j\ge0}\psi_j\varepsilon_{t-j}$, $\operatorname{Var}(X_t)=\sigma_\varepsilon^2\sum_{j\ge0}\psi_j^2$ | Requires uncorrelated innovations and square-summable coefficients. |
+
 ## Worked calculation: a geometric series
 
 Consider the terms
