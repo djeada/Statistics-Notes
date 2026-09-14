@@ -23,7 +23,7 @@ Forecasting methods differ in the assumptions they make about persistence, trend
 | Holt-Winters multiplicative forecast | $\hat y_{t+h\mid t}=(\ell_t+hb_t)s_{t+h-L\lceil h/L\rceil}$ | Seasonal amplitude scales with the level. |
 | AR(1) $h$-step forecast | $\hat X_{t+h\mid t}=\mu+\phi^h(X_t-\mu)$ | Mean reversion for $|\phi|<1$. |
 | AR(1) forecast-error variance | $\sigma_h^2=\sigma_\varepsilon^2\sum_{j=0}^{h-1}\phi^{2j}$ | Equals $\sigma_\varepsilon^2(1-\phi^{2h})/(1-\phi^2)$ when $|\phi|\ne1$. |
-| Random-walk forecast variance | $\operatorname{Var}(e_{t,h})=h\sigma_\varepsilon^2$ | Uncertainty grows without bound with horizon. |
+| Random-walk forecast variance | $\mathrm{Var}(e_{t,h})=h\sigma_\varepsilon^2$ | Uncertainty grows without bound with horizon. |
 | Linear stationary predictor | $\hat X_{n+h}=\mu+a^\top(X_n-\mu,\ldots,X_1-\mu)^\top$ | Coefficients solve $\Gamma_na=\gamma_n(h)$. |
 | Gaussian prediction interval | $\hat y_{t+h\mid t}\pm z_{1-\alpha/2}\sigma_h$ | Requires an estimated or model-implied forecast-error standard deviation. |
 | Forecast combination | $\hat y=w\hat y^{(1)}+(1-w)\hat y^{(2)}$ | Choose weights using training/validation origins, not the final test period. |

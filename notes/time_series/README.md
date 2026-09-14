@@ -7,7 +7,7 @@ Time-series methods extend the core statistics curriculum to observations indexe
 | Topic | General formula | Notes / common special case |
 |---|---|---|
 | Mean | $\mu_t=E[X_t]$ | Weak stationarity requires $\mu_t=\mu$ for all $t$. |
-| Autocovariance | $\gamma(t,s)=\operatorname{Cov}(X_t,X_s)$ | For a weakly stationary process, $\gamma(t,s)=\gamma(t-s)$. |
+| Autocovariance | $\gamma(t,s)=\mathrm{Cov}(X_t,X_s)$ | For a weakly stationary process, $\gamma(t,s)=\gamma(t-s)$. |
 | Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | $\rho(0)=1$ and $\rho(-h)=\rho(h)$. |
 | Backshift | $B^kX_t=X_{t-k}$ | $\nabla X_t=(1-B)X_t$ and $\nabla_sX_t=(1-B^s)X_t$. |
 | AR($p$) | $X_t=c+\sum_{i=1}^{p}\phi_iX_{t-i}+\varepsilon_t$ | AR(1): $X_t=c+\phi X_{t-1}+\varepsilon_t$. |

@@ -12,12 +12,12 @@ This accumulation makes the level fundamentally non-stationary: uncertainty grow
 | Cumulative form | $X_t=X_0+\sum_{j=1}^{t}\varepsilon_j$ | Every shock has a permanent effect on the level. |
 | First difference | $\Delta X_t=(1-B)X_t=\varepsilon_t$ | The increments are stationary white noise in the basic model. |
 | Mean, no drift | $E[X_t\mid X_0]=X_0$ | Individual paths still wander. |
-| Variance, no drift | $\operatorname{Var}(X_t\mid X_0)=t\sigma^2$ | Increasing variance makes the level nonstationary. |
-| Covariance | $\operatorname{Cov}(X_s,X_t\mid X_0)=\min(s,t)\sigma^2$ | For independent increments. |
+| Variance, no drift | $\mathrm{Var}(X_t\mid X_0)=t\sigma^2$ | Increasing variance makes the level nonstationary. |
+| Covariance | $\mathrm{Cov}(X_s,X_t\mid X_0)=\min(s,t)\sigma^2$ | For independent increments. |
 | Random walk with drift | $X_t=\delta+X_{t-1}+\varepsilon_t$ | ARIMA$(0,1,0)$ with drift under the usual parameterization. |
 | Drift cumulative form | $X_t=X_0+\delta t+\sum_{j=1}^{t}\varepsilon_j$ | $E[X_t\mid X_0]=X_0+\delta t$. |
 | $h$-step forecast | $\hat X_{T+h\mid T}=X_T+h\delta$ | Set $\delta=0$ for the zero-drift random walk. |
-| Forecast-error variance | $\operatorname{Var}(X_{T+h}-\hat X_{T+h\mid T}\mid\mathcal F_T)=h\sigma^2$ | Forecast uncertainty grows linearly in horizon. |
+| Forecast-error variance | $\mathrm{Var}(X_{T+h}-\hat X_{T+h\mid T}\mid\mathcal F_T)=h\sigma^2$ | Forecast uncertainty grows linearly in horizon. |
 | Gaussian forecast interval | $\hat X_{T+h\mid T}\pm z_{1-\alpha/2}\sigma\sqrt h$ | Requires Gaussian or approximate Gaussian innovations. |
 | Geometric random walk | $P_t=P_{t-1}e^{\mu+\varepsilon_t}$ | In logs: $\log P_t=\log P_{t-1}+\mu+\varepsilon_t$. |
 

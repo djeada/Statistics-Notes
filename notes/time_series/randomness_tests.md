@@ -15,9 +15,9 @@ No finite set of tests can prove that a series is truly random. Their role is to
 | McLeod-Li | $Q_{\mathrm{ML}}=n(n+2)\sum_{h=1}^{m}\hat\rho_{e^2}(h)^2/(n-h)$ | Applies Ljung-Box logic to squared residuals to detect variance dependence. |
 | Turning-point count | $T=\sum_{t=2}^{n-1}I[(x_{t-1}<x_t>x_{t+1})\lor(x_{t-1}>x_t<x_{t+1})]$ | Under a continuous IID null, checks excessive persistence or alternation. |
 | Turning-point mean | $E[T]=2(n-2)/3$ | Continuous IID reference. |
-| Turning-point variance | $\operatorname{Var}(T)=(16n-29)/90$ | Continuous IID reference. |
-| Turning-point z-score | $Z=(T-E[T])/\sqrt{\operatorname{Var}(T)}$ | Normal approximation for sufficiently large $n$. |
-| Difference-sign changes | $C=\sum_{t=3}^{n}I[\operatorname{sign}(d_t)\ne\operatorname{sign}(d_{t-1})]$ | With no ties, equivalent to the turning-point count. |
+| Turning-point variance | $\mathrm{Var}(T)=(16n-29)/90$ | Continuous IID reference. |
+| Turning-point z-score | $Z=(T-E[T])/\sqrt{\mathrm{Var}(T)}$ | Normal approximation for sufficiently large $n$. |
+| Difference-sign changes | $C=\sum_{t=3}^{n}I[\mathrm{sign}(d_t)\ne\mathrm{sign}(d_{t-1})]$ | With no ties, equivalent to the turning-point count. |
 | Spearman trend statistic | $\rho_s=1-6\sum_{t=1}^{n}(r_t-t)^2/[n(n^2-1)]$ | Detects monotone association between time and ranked values when there are no ties. |
 | Multiple-test illustration | $P(\text{at least one false rejection})=1-(1-\alpha)^K$ | Exact only for $K$ independent tests. |
 

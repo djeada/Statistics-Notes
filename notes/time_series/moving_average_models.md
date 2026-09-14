@@ -19,7 +19,7 @@ The innovations are latent rather than observed regressors, so estimation and id
 | MA(1) lag-1 ACF | $\rho(1)=\theta/(1+\theta^2)$ | $\rho(h)=0$ for $\lvert h\rvert\ge2$. |
 | Invertibility | roots of $\theta(z)=0$ satisfy $\lvert z\rvert>1$ | For MA(1), equivalent to $\lvert\theta\rvert<1$. |
 | MA(1) inverse | $\varepsilon_t=(1+\theta B)^{-1}(Y_t-\mu)=\sum_{j=0}^{\infty}(-\theta)^j(Y_{t-j}-\mu)$ | Stable for $\lvert\theta\rvert<1$. |
-| Simple moving-average smoother | $\operatorname{SMA}_t=k^{-1}\sum_{j=0}^{k-1}y_{t-j}$ | Descriptive smoother, not an MA($q$) stochastic model. |
+| Simple moving-average smoother | $\mathrm{SMA}_t=k^{-1}\sum_{j=0}^{k-1}y_{t-j}$ | Descriptive smoother, not an MA($q$) stochastic model. |
 | Exponential smoother | $S_t=\alpha y_t+(1-\alpha)S_{t-1}$ | Another smoother; not an MA($q$) model. |
 
 ## Worked calculation: an MA(1)
