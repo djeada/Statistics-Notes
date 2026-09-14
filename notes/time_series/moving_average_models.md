@@ -4,6 +4,24 @@ A moving-average model represents the current observation as a finite weighted c
 
 The innovations are latent rather than observed regressors, so estimation and identification require more care than a simple regression on lags. Invertibility selects a stable canonical representation, and the stochastic MA model should be kept distinct from rolling moving averages or exponential smoothers, which are transformations of observed data.
 
+## Formula reference
+
+| Quantity / case | General formula | Notes / special case |
+|---|---|---|
+| MA($q$) | $Y_t=\mu+\varepsilon_t+\sum_{j=1}^{q}\theta_j\varepsilon_{t-j}$ | Set $\theta_0=1$ for compact summation. |
+| Lag-polynomial form | $Y_t-\mu=\theta(B)\varepsilon_t$, $\theta(B)=1+\theta_1B+\cdots+\theta_qB^q$ | Useful for invertibility and ARMA notation. |
+| Mean | $E[Y_t]=\mu$ | Assuming zero-mean innovations. |
+| Variance | $\gamma(0)=\sigma_\varepsilon^2\sum_{j=0}^{q}\theta_j^2$ | With $\theta_0=1$. |
+| Autocovariance | $\gamma(h)=\sigma_\varepsilon^2\sum_{j=0}^{q-h}\theta_j\theta_{j+h}$, $0\le h\le q$ | $\gamma(h)=0$ for $\lvert h\rvert>q$. |
+| ACF | $\rho(h)=\gamma(h)/\gamma(0)$ | The theoretical ACF cuts off after lag $q$. |
+| MA(1) | $Y_t=\mu+\varepsilon_t+\theta\varepsilon_{t-1}$ | Simplest nontrivial MA model. |
+| MA(1) variance | $\gamma(0)=\sigma_\varepsilon^2(1+\theta^2)$ | — |
+| MA(1) lag-1 ACF | $\rho(1)=\theta/(1+\theta^2)$ | $\rho(h)=0$ for $\lvert h\rvert\ge2$. |
+| Invertibility | roots of $\theta(z)=0$ satisfy $\lvert z\rvert>1$ | For MA(1), equivalent to $\lvert\theta\rvert<1$. |
+| MA(1) inverse | $\varepsilon_t=(1+\theta B)^{-1}(Y_t-\mu)=\sum_{j=0}^{\infty}(-\theta)^j(Y_{t-j}-\mu)$ | Stable for $\lvert\theta\rvert<1$. |
+| Simple moving-average smoother | $\operatorname{SMA}_t=k^{-1}\sum_{j=0}^{k-1}y_{t-j}$ | Descriptive smoother, not an MA($q$) stochastic model. |
+| Exponential smoother | $S_t=\alpha y_t+(1-\alpha)S_{t-1}$ | Another smoother; not an MA($q$) model. |
+
 ## Worked calculation: an MA(1)
 
 Let
