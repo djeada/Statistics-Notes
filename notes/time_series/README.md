@@ -2,6 +2,22 @@
 
 Time-series methods extend the core statistics curriculum to observations indexed by time, where serial dependence, trend, seasonality, and changing variance make independent-sample methods inadequate.
 
+## Formula reference
+
+| Topic | General formula | Notes / common special case |
+|---|---|---|
+| Mean | $\mu_t=E[X_t]$ | Weak stationarity requires $\mu_t=\mu$ for all $t$. |
+| Autocovariance | $\gamma(t,s)=\operatorname{Cov}(X_t,X_s)$ | For a weakly stationary process, $\gamma(t,s)=\gamma(t-s)$. |
+| Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | $\rho(0)=1$ and $\rho(-h)=\rho(h)$. |
+| Backshift | $B^kX_t=X_{t-k}$ | $\nabla X_t=(1-B)X_t$ and $\nabla_sX_t=(1-B^s)X_t$. |
+| AR($p$) | $X_t=c+\sum_{i=1}^{p}\phi_iX_{t-i}+\varepsilon_t$ | AR(1): $X_t=c+\phi X_{t-1}+\varepsilon_t$. |
+| MA($q$) | $X_t=\mu+\varepsilon_t+\sum_{j=1}^{q}\theta_j\varepsilon_{t-j}$ | MA(1): $X_t=\mu+\varepsilon_t+\theta\varepsilon_{t-1}$. |
+| ARMA($p,q$) | $\phi(B)(X_t-\mu)=\theta(B)\varepsilon_t$ | AR and MA are obtained by setting $q=0$ or $p=0$. |
+| ARIMA($p,d,q$) | $\phi(B)(1-B)^dX_t=c+\theta(B)\varepsilon_t$ | Random walk: ARIMA$(0,1,0)$; ARMA: ARIMA$(p,0,q)$. |
+| SARIMA | $\Phi(B^s)\phi(B)(1-B^s)^D(1-B)^dX_t=\Theta(B^s)\theta(B)\varepsilon_t$ | Seasonal period is $s$; setting $P=D=Q=0$ gives non-seasonal ARIMA. |
+| Forecast error | $e_{t+h\mid t}=X_{t+h}-\hat X_{t+h\mid t}$ | MSE $=n^{-1}\sum e_t^2$; RMSE $=\sqrt{\mathrm{MSE}}$. |
+| State space | $\alpha_t=T_t\alpha_{t-1}+R_t\eta_t$, $\;X_t=Z_t\alpha_t+\varepsilon_t$ | Kalman filtering recursively updates the latent state. |
+
 ## Prerequisites
 
 Before starting this unit, be comfortable with:
