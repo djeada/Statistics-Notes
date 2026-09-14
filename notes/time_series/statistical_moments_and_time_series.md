@@ -4,6 +4,25 @@ Statistical moments summarize features such as the center, spread, and joint var
 
 This makes moment calculations more than descriptive summaries. Stable moments support stationary modeling, while changing means, variances, or lag relationships point to trend, volatility, structural change, or other dynamics that must be represented before a simple stationary model is appropriate.
 
+## Formula reference
+
+| Moment / summary | General formula | Time-series interpretation |
+|---|---|---|
+| Raw $k$th moment | $m_k=E[X^k]$ | Describes the marginal distribution at a fixed time. |
+| Central $k$th moment | $\mu_k=E[(X-E[X])^k]$ | $\mu_2$ is variance; higher moments describe shape. |
+| Mean function | $\mu_t=E[X_t]$ | Constant in $t$ under weak stationarity. |
+| Variance | $\operatorname{Var}(X_t)=E[(X_t-\mu_t)^2]$ | Constant in $t$ under weak stationarity. |
+| Standard deviation | $\sigma_t=\sqrt{\operatorname{Var}(X_t)}$ | Expresses spread in the original units. |
+| Skewness | $\gamma_1=E[(X-\mu)^3]/\sigma^3$ | Measures asymmetry of the marginal distribution. |
+| Kurtosis | $\gamma_2=E[(X-\mu)^4]/\sigma^4$ | Normal distribution has kurtosis $3$; excess kurtosis subtracts $3$. |
+| Autocovariance | $\gamma_t(h)=\operatorname{Cov}(X_t,X_{t-h})$ | Under weak stationarity, write $\gamma(h)$ because it depends only on lag. |
+| Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | Scale-free lag dependence. |
+| Cross-covariance | $\gamma_{XY}(h)=\operatorname{Cov}(X_t,Y_{t-h})$ | Describes lead-lag linear association between two series. |
+| Sample mean | $\bar x=n^{-1}\sum_{t=1}^{n}x_t$ | Global level estimate when one mean is meaningful. |
+| Unbiased sample variance | $s^2=(n-1)^{-1}\sum_{t=1}^{n}(x_t-\bar x)^2$ | Estimates marginal variance under standard conditions. |
+| Rolling mean | $\hat\mu_t^{(w)}=w^{-1}\sum_{j=0}^{w-1}x_{t-j}$ | Local level over a window of width $w$. |
+| Rolling variance | $\hat v_t^{(w)}=(w-1)^{-1}\sum_{j=0}^{w-1}(x_{t-j}-\hat\mu_t^{(w)})^2$ | Local spread over the same window. |
+
 ## Worked calculation: mean, variance, and lag covariance
 
 For the four observations
