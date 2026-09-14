@@ -4,6 +4,28 @@ Time-series modeling is an iterative process of specifying structure, estimating
 
 A useful model is parsimonious enough to estimate reliably, flexible enough to capture the important dependence, and transparent enough to diagnose. Information criteria can narrow a candidate set, but residual checks and chronological forecast evaluation determine whether the selected model is actually adequate for its intended use.
 
+## Formula reference
+
+| Topic / model | General formula | Use / special case |
+|---|---|---|
+| AR($p$) | $Y_t=c+\sum_{i=1}^{p}\phi_iY_{t-i}+\varepsilon_t$ | Lagged observations are observed regressors. |
+| MA($q$) | $Y_t=\mu+\varepsilon_t+\sum_{j=1}^{q}\theta_j\varepsilon_{t-j}$ | Lagged innovations are latent. |
+| ARMA($p,q$) | $\phi(B)(Y_t-\mu)=\theta(B)\varepsilon_t$ | Stationary short-memory linear model. |
+| ARIMA($p,d,q$) | $\phi(B)(1-B)^dY_t=c+\theta(B)\varepsilon_t$ | Adds ordinary differencing. |
+| SARIMA | $\Phi(B^s)\phi(B)(1-B^s)^D(1-B)^dY_t=\Theta(B^s)\theta(B)\varepsilon_t$ | Adds seasonal dynamics and differencing. |
+| OLS for AR design | $\hat\beta=(X^\top X)^{-1}X^\top y$ | Requires full column rank; numerical solvers are preferred to explicit inversion. |
+| Gaussian innovation log-likelihood | $\ell_t=-\tfrac12[\log(2\pi)+\log F_t+v_t^2/F_t]$ | State-space/innovations form; sum over $t$. |
+| Residual | $\hat\varepsilon_t=y_t-\hat y_{t\mid t-1}$ | One-step unexplained component. |
+| Residual ACF | $\hat\rho(h)=\frac{\sum_{t=h+1}^{T}(\hat\varepsilon_t-\bar\varepsilon)(\hat\varepsilon_{t-h}-\bar\varepsilon)}{\sum_{t=1}^{T}(\hat\varepsilon_t-\bar\varepsilon)^2}$ | Checks remaining linear dependence. |
+| Ljung-Box | $Q(m)=T(T+2)\sum_{h=1}^{m}\hat\rho(h)^2/(T-h)$ | Joint residual-autocorrelation diagnostic. |
+| AIC | $\mathrm{AIC}=-2\ell+2k$ | Lower is preferred within comparable likelihood fits. |
+| AICc | $\mathrm{AICc}=\mathrm{AIC}+2k(k+1)/(n-k-1)$ | Small-sample correction to AIC. |
+| BIC | $\mathrm{BIC}=-2\ell+k\log n$ | Penalizes complexity more strongly as $n$ grows. |
+| AR stationarity/causality | $\phi(z)=0\Rightarrow|z|>1$ | Standard backshift-root condition. |
+| MA invertibility | $\theta(z)=0\Rightarrow|z|>1$ | Selects the stable innovation representation. |
+| Forecast error | $e_{t,h}=y_{t+h}-\hat y_{t+h\mid t}$ | Evaluate on chronological future-like origins. |
+| MAE / RMSE | $\mathrm{MAE}=n^{-1}\sum|e_i|$, $\mathrm{RMSE}=\sqrt{n^{-1}\sum e_i^2}$ | Complement likelihood criteria with out-of-sample loss. |
+
 ## Worked calculation: fit, complexity, and diagnostics
 
 Suppose two likelihood-based candidates have the following summaries:
