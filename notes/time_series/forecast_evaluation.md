@@ -4,6 +4,28 @@ Forecast evaluation measures how an entire forecasting procedure performs on obs
 
 A useful backtest preserves chronological order, compares against sensible baselines, and reports accuracy by the horizons and loss functions that matter in deployment. Point metrics, interval calibration, and error behavior over time answer different questions, while leakage at any stage can make all of them look better than the live forecasting process would actually be.
 
+## Formula reference
+
+| Metric / benchmark | General formula | Interpretation / special case |
+|---|---|---|
+| Forecast error | $e_{t,h}=y_{t+h}-\hat y_{t+h\mid t}$ | State the sign convention explicitly. |
+| Mean error | $\mathrm{ME}=n^{-1}\sum_i e_i$ | Directional bias; positive under this convention means underforecasting on average. |
+| MAE | $\mathrm{MAE}=n^{-1}\sum_i\lvert e_i\rvert$ | Linear penalty on absolute error. |
+| MSE | $\mathrm{MSE}=n^{-1}\sum_i e_i^2$ | Squared-error loss. |
+| RMSE | $\mathrm{RMSE}=\sqrt{n^{-1}\sum_i e_i^2}$ | Gives larger misses more weight than MAE. |
+| MAPE | $\mathrm{MAPE}=100n^{-1}\sum_i\lvert e_i/y_i\rvert$ | Undefined at zero and unstable near zero. |
+| sMAPE | $\mathrm{sMAPE}=100n^{-1}\sum_i\frac{2\lvert y_i-\hat y_i\rvert}{\lvert y_i\rvert+\lvert\hat y_i\rvert}$ | One common symmetric-percentage convention; software definitions can differ. |
+| MASE scale | $Q_m=(T-m)^{-1}\sum_{t=m+1}^{T}\lvert y_t-y_{t-m}\rvert$ | Use $m=1$ for nonseasonal naive scaling or seasonal period $m$. |
+| MASE | $\mathrm{MASE}=[n^{-1}\sum_i\lvert e_i\rvert]/Q_m$ | Values below 1 beat the corresponding in-sample naive scale. |
+| RMSSE | $\mathrm{RMSSE}=\sqrt{[n^{-1}\sum_i e_i^2]/[(T-m)^{-1}\sum_{t=m+1}^{T}(y_t-y_{t-m})^2]}$ | Squared-error scaled analogue of MASE. |
+| Naive forecast | $\hat y_{t+h\mid t}=y_t$ | Random-walk benchmark. |
+| Seasonal naive | $\hat y_{t+h\mid t}=y_{t+h-s\lceil h/s\rceil}$ | Repeats the most recent observation from the same season. |
+| Drift forecast | $\hat y_{t+h\mid t}=y_t+h(y_t-y_1)/(t-1)$ | Linear extrapolation of average historical change. |
+| Empirical interval coverage | $n^{-1}\sum_i I(L_i\le y_i\le U_i)$ | Compare with nominal coverage $1-\alpha$. |
+| Average interval width | $n^{-1}\sum_i(U_i-L_i)$ | Sharpness measure; narrower is better only when calibration is adequate. |
+| Interval score | $(U-L)+\frac{2}{\alpha}(L-y)I(y<L)+\frac{2}{\alpha}(y-U)I(y>U)$ | Proper score balancing width and misses for a central $(1-\alpha)$ interval. |
+| Pinball loss | $L_\tau(y,q)=(\tau-I(y<q))(y-q)$ | Proper loss for a forecast quantile $q$ at level $\tau$. |
+
 ## Worked calculation: three errors and one scale
 
 Suppose the actual values are $(10,12,9)$ and forecasts are $(9,11,10)$. Using the convention $e=y-\hat y$, the errors are $(1,1,-1)$, so
