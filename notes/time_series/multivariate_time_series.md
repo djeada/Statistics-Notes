@@ -4,6 +4,24 @@ Multivariate time-series models describe several evolving variables jointly so t
 
 Short-run interactions are commonly modeled with VARs, while cointegration and VECMs preserve stable long-run relationships among non-stationary levels. Granger predictability and impulse responses add useful interpretations, but they remain conditional on the chosen information set and, for structural shocks, on explicit identification assumptions.
 
+## Formula reference
+
+| Model / quantity | General formula | Notes / special case |
+|---|---|---|
+| Vector mean | $\mu_t=E[y_t]$ | $y_t$ is a $k\times1$ vector. |
+| Cross-covariance matrix | $\Gamma(h)=\operatorname{Cov}(y_t,y_{t-h})$ | Entries contain own- and cross-lag covariances. |
+| VAR($p$) | $y_t=c+A_1y_{t-1}+\cdots+A_py_{t-p}+\varepsilon_t$ | Each equation may use lagged values of every series. |
+| VAR lag polynomial | $A(B)=I-A_1B-\cdots-A_pB^p$ | VAR is $A(B)y_t=c+\varepsilon_t$. |
+| VAR stability | $\det A(z)\ne0$ for $\lvert z\rvert\le1$ | For VAR(1), all eigenvalues of $A_1$ must have modulus below 1. |
+| VAR(1) long-run mean | $\mu=(I-A_1)^{-1}c$ | Requires a stable VAR(1). |
+| VMA representation | $y_t=\mu+\sum_{h=0}^{\infty}\Psi_h\varepsilon_{t-h}$ | For VAR(1), $\Psi_h=A_1^h$. |
+| Impulse response | $\Psi_h$ | Column $j$ gives the response at horizon $h$ to a specified innovation/shock $j$. |
+| Granger restriction | $H_0:A_{1,yx}=\cdots=A_{p,yx}=0$ | Tests whether past $x$ adds predictive information for $y$. |
+| Cointegration | $\beta^\top y_t\sim I(0)$ while components of $y_t$ are $I(1)$ | $\beta$ contains long-run equilibrium relations. |
+| VECM | $\Delta y_t=\Pi y_{t-1}+\sum_{j=1}^{p-1}\Gamma_j\Delta y_{t-j}+\varepsilon_t$ | Reparameterization of a cointegrated VAR. |
+| Cointegration factorization | $\Pi=\alpha\beta^\top$ | $\beta$: long-run relations; $\alpha$: adjustment speeds. |
+| Forecast recursion | $\hat y_{t+h\mid t}=c+\sum_{j=1}^{p}A_j\hat y_{t+h-j\mid t}$ | Use observed values when the lag index is at or before $t$. |
+
 ## Worked calculation: a cointegrating spread
 
 Let $x_t=10$ and suppose the long-run relation is
