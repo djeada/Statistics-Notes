@@ -4,6 +4,24 @@ The autocorrelation function measures the unit-free linear association between a
 
 Together, ACF and PACF reveal persistence and help propose AR and MA orders, but their sample patterns are noisy and can also be distorted by trend, seasonality, or structural change. They are most useful as identification tools when interpreted with stationarity, sampling uncertainty, residual diagnostics, and fitted-model comparisons.
 
+## Formula reference
+
+| Quantity / model | General formula | Notes / special case |
+|---|---|---|
+| Autocovariance | $\gamma(h)=\operatorname{Cov}(X_t,X_{t-h})$ | For a weakly stationary process, depends only on lag. |
+| Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | $\rho(0)=1$, $\rho(-h)=\rho(h)$. |
+| Sample ACF | $\hat\rho(h)=\frac{\sum_{t=1}^{n-h}(x_t-\bar x)(x_{t+h}-\bar x)}{\sum_{t=1}^{n}(x_t-\bar x)^2}$ | Common finite-sample convention. |
+| Rough white-noise band | $\pm z_{1-\alpha/2}/\sqrt n$ | Often $\pm1.96/\sqrt n$ for a 95% reference band. |
+| PACF at lag $k$ | $\alpha(k)=\phi_{kk}$ | Final coefficient in the linear projection of $X_t$ on lags $1,\ldots,k$. |
+| Durbin-Levinson PACF | $\phi_{kk}=\frac{\rho_k-\sum_{j=1}^{k-1}\phi_{k-1,j}\rho_{k-j}}{1-\sum_{j=1}^{k-1}\phi_{k-1,j}\rho_j}$ | Recursive computation from the ACF. |
+| AR(1) ACF | $\rho(h)=\phi^{\lvert h\rvert}$ | PACF cuts off after lag 1. |
+| AR($p$) identification | ACF tails off; PACF $=0$ for $h>p$ | Ideal population pattern. |
+| MA(1) ACF | $\rho(1)=\theta/(1+\theta^2)$, $\rho(h)=0$ for $\lvert h\rvert>1$ | PACF tails off. |
+| MA($q$) identification | ACF $=0$ for $h>q$; PACF tails off | Ideal population pattern. |
+| ARMA($p,q$) identification | Both ACF and PACF usually tail off | Exact shape depends on coefficients. |
+| AR($p$) Yule-Walker | $\gamma(h)=\sum_{j=1}^{p}\phi_j\gamma(h-j)$ | Connects AR coefficients to ACF decay. |
+| Bartlett-style ACF variance | $\operatorname{Var}(\hat\rho_k)\approx n^{-1}[1+2\sum_{j=1}^{k-1}\rho_j^2]$ | Useful short-memory approximation, not a universal confidence formula. |
+
 ## Worked calculation: AR(1) dependence
 
 For a stationary AR(1),
