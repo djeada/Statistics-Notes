@@ -4,6 +4,23 @@ The backward shift operator is a compact notation for referring to earlier obser
 
 This notation matters because the algebra of those polynomials mirrors the structure of AR, MA, ARIMA, and seasonal models. Expanding an operator always returns to ordinary lagged observations, while factoring and combining operators make stability, differencing, and model structure easier to see.
 
+## Formula reference
+
+| Operation / model | Formula | Interpretation / special case |
+|---|---|---|
+| One-period shift | $BX_t=X_{t-1}$ | $B$ moves the index back by one observation. |
+| $k$-period shift | $B^kX_t=X_{t-k}$ | Repeated application of the lag operator. |
+| First difference | $\nabla X_t=(1-B)X_t=X_t-X_{t-1}$ | Removes one stochastic level component. |
+| $d$th difference | $\nabla^dX_t=(1-B)^dX_t$ | ARIMA uses this with integration order $d$. |
+| Seasonal difference | $\nabla_sX_t=(1-B^s)X_t=X_t-X_{t-s}$ | $s$ is the seasonal period. |
+| Combined differences | $(1-B)^d(1-B^s)^DX_t$ | Used in SARIMA with ordinary order $d$ and seasonal order $D$. |
+| AR polynomial | $\phi(B)=1-\phi_1B-\cdots-\phi_pB^p$ | AR($p$): $\phi(B)X_t=\varepsilon_t$. |
+| MA polynomial | $\theta(B)=1+\theta_1B+\cdots+\theta_qB^q$ | MA($q$): $X_t=\theta(B)\varepsilon_t$. |
+| ARMA | $\phi(B)X_t=\theta(B)\varepsilon_t$ | AR($p$) if $q=0$; MA($q$) if $p=0$. |
+| ARIMA | $\phi(B)(1-B)^dX_t=c+\theta(B)\varepsilon_t$ | ARMA is the special case $d=0$. |
+| SARIMA | $\Phi(B^s)\phi(B)(1-B^s)^D(1-B)^dX_t=\Theta(B^s)\theta(B)\varepsilon_t$ | Adds seasonal AR, differencing, and MA polynomials. |
+| Stable inverse example | $(1-\phi B)^{-1}=\sum_{j=0}^{\infty}\phi^jB^j$ | Valid when $\lvert\phi\rvert<1$. |
+
 ## Worked calculation: differencing with the lag operator
 
 For

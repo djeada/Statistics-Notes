@@ -4,6 +4,22 @@ The Yule-Walker equations connect an autoregressive model's coefficients to its 
 
 For a stationary AR process, this link works in both directions: known coefficients determine the ACF recursion, while estimated autocovariances can be used to solve for the coefficients. The equations are therefore useful for understanding AR dependence, estimating parameters, and checking whether an implied correlation pattern is compatible with stationarity.
 
+## Formula reference
+
+| Quantity / case | General formula | Notes / special case |
+|---|---|---|
+| AR($p$) | $X_t-\mu=\sum_{j=1}^{p}\phi_j(X_{t-j}-\mu)+\varepsilon_t$ | Yule-Walker applies to a stationary AR process. |
+| Covariance recursion | $\gamma(k)=\sum_{j=1}^{p}\phi_j\gamma(k-j)$ | For $k\ge1$, using $\gamma(-h)=\gamma(h)$. |
+| Correlation recursion | $\rho(k)=\sum_{j=1}^{p}\phi_j\rho(k-j)$ | Divide the covariance equations by $\gamma(0)$. |
+| Zero-lag equation | $\gamma(0)=\sum_{j=1}^{p}\phi_j\gamma(j)+\sigma_\varepsilon^2$ | Determines innovation variance once the AR coefficients are known. |
+| Matrix form | $\Gamma_p\boldsymbol\phi=\boldsymbol\gamma_p$ | $\Gamma_p$ is the Toeplitz matrix with entries $\gamma(\lvert i-j\rvert)$. |
+| Correlation matrix form | $R_p\boldsymbol\phi=\mathbf r_p$ | $R_{ij}=\rho(\lvert i-j\rvert)$ and $\mathbf r_p=(\rho_1,\ldots,\rho_p)^\top$. |
+| Yule-Walker estimate | $\hat{\boldsymbol\phi}=\hat\Gamma_p^{-1}\hat{\boldsymbol\gamma}_p$ | In practice solve the Toeplitz system rather than explicitly inverting. |
+| Innovation variance | $\hat\sigma_\varepsilon^2=\hat\gamma(0)-\sum_{j=1}^{p}\hat\phi_j\hat\gamma(j)$ | Equivalent to $\hat\gamma(0)(1-\hat{\boldsymbol\phi}^{\top}\hat{\mathbf r}_p)$. |
+| AR(1) | $\rho(k)=\phi^{\lvert k\rvert}$ | Hence $\phi=\rho(1)$ and $\sigma_\varepsilon^2=\gamma(0)(1-\phi^2)$. |
+| AR(2), lag 1 | $\rho_1=\phi_1+\phi_2\rho_1$ | Thus $\rho_1=\phi_1/(1-\phi_2)$. |
+| AR(2), later lags | $\rho_k=\phi_1\rho_{k-1}+\phi_2\rho_{k-2}$ | Produces geometric or damped-oscillatory decay for a stable model. |
+
 ## Worked calculation: AR(2) autocorrelations
 
 For an AR(2) with $\phi_1=0.6$ and $\phi_2=-0.2$, the first two Yule-Walker equations give

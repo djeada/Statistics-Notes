@@ -4,6 +4,24 @@ Autoregressive models describe a time series whose current value depends linearl
 
 The same coefficients also control stationarity, the shape of the ACF and PACF, and the way forecasts return toward a long-run mean. AR modeling therefore connects a simple regression-like equation on lagged values with root conditions, dependence diagnostics, and recursive prediction.
 
+## Formula reference
+
+| Quantity / case | General formula | Notes / special case |
+|---|---|---|
+| AR($p$) | $X_t=c+\sum_{j=1}^{p}\phi_jX_{t-j}+\varepsilon_t$ | Equivalent to ARIMA$(p,0,0)$. |
+| Centered AR($p$) | $X_t-\mu=\sum_{j=1}^{p}\phi_j(X_{t-j}-\mu)+\varepsilon_t$ | Convenient for moment and forecast formulas. |
+| AR polynomial | $\phi(B)=1-\phi_1B-\cdots-\phi_pB^p$ | Model: $\phi(B)(X_t-\mu)=\varepsilon_t$. |
+| Stationarity / causality | $\phi(z)=0\Rightarrow\lvert z\rvert>1$ | Standard backshift-root condition. |
+| Stationary mean | $\mu=c/[1-\sum_{j=1}^{p}\phi_j]$ | Requires a stationary model and nonzero denominator. |
+| AR(1) | $X_t=c+\phi X_{t-1}+\varepsilon_t$ | Stationary when $\lvert\phi\rvert<1$; random walk boundary at $\phi=1$. |
+| AR(1) variance | $\operatorname{Var}(X_t)=\sigma_\varepsilon^2/(1-\phi^2)$ | For $\lvert\phi\rvert<1$. |
+| AR(1) ACF | $\rho(h)=\phi^{\lvert h\rvert}$ | Geometric decay or alternating decay. |
+| AR($p$) Yule-Walker | $\gamma(h)=\sum_{j=1}^{p}\phi_j\gamma(h-j)$ | Generates the ACF recursion. |
+| Infinite-MA representation | $X_t-\mu=\phi(B)^{-1}\varepsilon_t=\sum_{j=0}^{\infty}\psi_j\varepsilon_{t-j}$ | Exists with summable coefficients for a causal stationary AR model. |
+| AR(1) $h$-step forecast | $\hat X_{T+h\mid T}=\mu+\phi^h(X_T-\mu)$ | Forecast mean reverts to $\mu$. |
+| AR(1) forecast-error variance | $\sigma_\varepsilon^2\sum_{j=0}^{h-1}\phi^{2j}$ | Approaches the unconditional variance as $h\to\infty$. |
+| Population PACF | $\alpha(h)=0$ for $h>p$ | Ideal AR($p$) PACF cutoff property. |
+
 ## Worked calculation: one AR(2) update
 
 Take

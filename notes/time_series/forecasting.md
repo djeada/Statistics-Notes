@@ -4,6 +4,31 @@ A time-series forecast is a conditional statement about a future observation giv
 
 Forecasting methods differ in the assumptions they make about persistence, trend, seasonality, nonlinear structure, and future predictors. Useful methods are therefore compared chronologically against simple baselines and judged not only by point accuracy but also by uncertainty calibration, stability across horizons, and whether the required information would actually be available in deployment.
 
+## Formula reference
+
+| Forecast / method | General formula | Notes / special case |
+|---|---|---|
+| Conditional-mean forecast | $\hat y_{t+h\mid t}=E(y_{t+h}\mid\mathcal F_t)$ | Optimal under squared-error loss. |
+| Forecast error | $e_{t,h}=y_{t+h}-\hat y_{t+h\mid t}$ | Future shocks make this random at the forecast origin. |
+| Naive forecast | $\hat y_{t+h\mid t}=y_t$ | Optimal conditional mean for a zero-drift random walk. |
+| Seasonal naive | $\hat y_{t+h\mid t}=y_{t+h-s\lceil h/s\rceil}$ | Repeats the latest observation from the corresponding season. |
+| Drift forecast | $\hat y_{t+h\mid t}=y_t+h(y_t-y_1)/(t-1)$ | Extrapolates the average historical change. |
+| Historical-mean forecast | $\hat y_{t+h\mid t}=t^{-1}\sum_{j=1}^{t}y_j$ | Natural baseline for a stable level with little persistence. |
+| SES level update | $\ell_t=\alpha y_t+(1-\alpha)\ell_{t-1}$ | $0<\alpha\le1$. |
+| SES forecast | $\hat y_{t+h\mid t}=\ell_t$ | Same point forecast at every horizon in the level-only model. |
+| Holt level | $\ell_t=\alpha y_t+(1-\alpha)(\ell_{t-1}+b_{t-1})$ | Adds a local trend state. |
+| Holt trend | $b_t=\beta(\ell_t-\ell_{t-1})+(1-\beta)b_{t-1}$ | $0<\beta\le1$. |
+| Holt forecast | $\hat y_{t+h\mid t}=\ell_t+hb_t$ | Damped-trend variants shrink the long-run trend contribution. |
+| Holt-Winters additive forecast | $\hat y_{t+h\mid t}=\ell_t+hb_t+s_{t+h-L\lceil h/L\rceil}$ | Seasonal effects are additive and measured in response units. |
+| Holt-Winters multiplicative forecast | $\hat y_{t+h\mid t}=(\ell_t+hb_t)s_{t+h-L\lceil h/L\rceil}$ | Seasonal amplitude scales with the level. |
+| AR(1) $h$-step forecast | $\hat X_{t+h\mid t}=\mu+\phi^h(X_t-\mu)$ | Mean reversion for $|\phi|<1$. |
+| AR(1) forecast-error variance | $\sigma_h^2=\sigma_\varepsilon^2\sum_{j=0}^{h-1}\phi^{2j}$ | Equals $\sigma_\varepsilon^2(1-\phi^{2h})/(1-\phi^2)$ when $|\phi|\ne1$. |
+| Random-walk forecast variance | $\operatorname{Var}(e_{t,h})=h\sigma_\varepsilon^2$ | Uncertainty grows without bound with horizon. |
+| Linear stationary predictor | $\hat X_{n+h}=\mu+a^\top(X_n-\mu,\ldots,X_1-\mu)^\top$ | Coefficients solve $\Gamma_na=\gamma_n(h)$. |
+| Gaussian prediction interval | $\hat y_{t+h\mid t}\pm z_{1-\alpha/2}\sigma_h$ | Requires an estimated or model-implied forecast-error standard deviation. |
+| Forecast combination | $\hat y=w\hat y^{(1)}+(1-w)\hat y^{(2)}$ | Choose weights using training/validation origins, not the final test period. |
+| Lognormal mean correction | $E(Y\mid\mathcal F)=\exp(\mu_Z+\tfrac12\sigma_Z^2)$ for $Z=\log Y$ Gaussian | Plain exponentiation of the log mean gives the median, not the mean. |
+
 ## Worked calculation: a forecast and its uncertainty
 
 For a centered AR(1),

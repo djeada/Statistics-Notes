@@ -4,6 +4,24 @@ Financial time series often separate naturally into a price level, a return proc
 
 Models such as ARCH and GARCH focus on that conditional variance rather than only on the expected return. A coherent financial model therefore distinguishes the mean, the variance dynamics, and the innovation distribution, because each contributes differently to interval forecasts, tail risk, and the persistence of market shocks.
 
+## Formula reference
+
+| Quantity / model | General formula | Notes / special case |
+|---|---|---|
+| Simple return | $R_t=P_t/P_{t-1}-1$ | Gross return is $1+R_t=P_t/P_{t-1}$. |
+| Log return | $r_t=\log(P_t/P_{t-1})$ | Log returns add across time: $\sum_{j=1}^{h}r_{t+j}=\log(P_{t+h}/P_t)$. |
+| Small-return approximation | $\log(1+R_t)\approx R_t$ | Accurate when $\lvert R_t\rvert$ is small. |
+| Mean-variance decomposition | $r_t=\mu_t+\sqrt{h_t}\,z_t$ | $E[z_t]=0$, $\operatorname{Var}(z_t)=1$. |
+| ARCH($q$) | $h_t=\omega+\sum_{i=1}^{q}\alpha_i\varepsilon_{t-i}^2$ | Standard constraints: $\omega>0$, $\alpha_i\ge0$. |
+| GARCH($p,q$) | $h_t=\omega+\sum_{i=1}^{q}\alpha_i\varepsilon_{t-i}^2+\sum_{j=1}^{p}\beta_jh_{t-j}$ | Captures both shock effects and variance persistence. |
+| GARCH(1,1) | $h_t=\omega+\alpha\varepsilon_{t-1}^2+\beta h_{t-1}$ | Most common basic GARCH specification. |
+| GARCH(1,1) long-run variance | $\bar h=\omega/(1-\alpha-\beta)$ | Requires $\alpha+\beta<1$ under the usual covariance-stationary conditions. |
+| GARCH persistence | $\alpha+\beta$ | Values near 1 imply slowly decaying volatility shocks. |
+| EWMA variance | $h_t=(1-\lambda)\varepsilon_{t-1}^2+\lambda h_{t-1}$ | GARCH-like special case with zero intercept and weights summing to 1. |
+| Threshold / GJR-GARCH | $h_t=\omega+\alpha\varepsilon_{t-1}^2+\gamma I(\varepsilon_{t-1}<0)\varepsilon_{t-1}^2+\beta h_{t-1}$ | Allows asymmetric volatility response. |
+| Gaussian conditional quantile | $q_{\alpha,t}=\mu_t+z_\alpha\sqrt{h_t}$ | Used in one-step parametric tail-risk calculations. |
+| VaR loss convention | $\operatorname{VaR}_{\alpha,t}=-q_{\alpha,t}$ | Only under the convention that positive VaR denotes loss magnitude. |
+
 ## Worked calculation: returns and conditional variance
 
 If a price rises from $P_{t-1}=100$ to $P_t=102$, the log return is

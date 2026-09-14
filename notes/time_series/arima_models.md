@@ -4,6 +4,32 @@ ARMA models describe stationary linear dependence through a combination of autor
 
 The model orders represent different mechanisms rather than interchangeable tuning knobs. A clean analysis separates the transformation needed to stabilize the series from the dependence that remains afterward, uses the smallest adequate differencing orders, and checks that forecasts are reconstructed and evaluated on the scale that matters.
 
+## Formula reference
+
+| Model / quantity | General formula | Important special case / condition |
+|---|---|---|
+| White noise | $X_t=\varepsilon_t$ | ARIMA$(0,0,0)$. |
+| AR($p$) | $\phi(B)X_t=c+\varepsilon_t$ | ARIMA$(p,0,0)$. |
+| MA($q$) | $X_t=\mu+\theta(B)\varepsilon_t$ | ARIMA$(0,0,q)$. |
+| ARMA($p,q$) | $\phi(B)X_t=c+\theta(B)\varepsilon_t$ | ARIMA$(p,0,q)$. |
+| Pure integration $I(d)$ | $(1-B)^dX_t=\varepsilon_t$ | ARIMA$(0,d,0)$. |
+| Random walk | $(1-B)X_t=\varepsilon_t$ | ARIMA$(0,1,0)$. |
+| Random walk with drift | $(1-B)X_t=\delta+\varepsilon_t$ | ARIMA$(0,1,0)$ with drift under the usual parameterization. |
+| ARIMA$(p,d,q)$ | $\phi(B)(1-B)^dX_t=c+\theta(B)\varepsilon_t$ | Fit ARMA dynamics to the $d$th-differenced series. |
+| ARIMA$(1,1,1)$ | $(1-\phi B)(1-B)X_t=c+(1+\theta B)\varepsilon_t$ | Common low-order mixed model for first differences. |
+| Ordinary difference | $\nabla^dX_t=(1-B)^dX_t$ | $d=1$: $X_t-X_{t-1}$; $d=2$: $X_t-2X_{t-1}+X_{t-2}$. |
+| Seasonal difference | $\nabla_s^DX_t=(1-B^s)^DX_t$ | $D=1$: $X_t-X_{t-s}$. |
+| SARIMA$(p,d,q)(P,D,Q)_s$ | $\Phi(B^s)\phi(B)(1-B^s)^D(1-B)^dX_t=c+\Theta(B^s)\theta(B)\varepsilon_t$ | General seasonal ARIMA form. |
+| Seasonal random walk | $(1-B^s)X_t=\varepsilon_t$ | SARIMA$(0,0,0)(0,1,0)_s$; seasonal-naive benchmark has the same conditional-mean recursion. |
+| Seasonal AR(1) | $(1-\Phi B^s)X_t=\varepsilon_t$ | SARIMA$(0,0,0)(1,0,0)_s$. |
+| Seasonal MA(1) | $X_t=(1+\Theta B^s)\varepsilon_t$ | SARIMA$(0,0,0)(0,0,1)_s$. |
+| Combined ordinary + seasonal difference | $(1-B)(1-B^s)X_t=X_t-X_{t-1}-X_{t-s}+X_{t-s-1}$ | Frequently used with $d=D=1$. |
+| AR stationarity/causality | $\phi(z)=0\Rightarrow\lvert z\rvert>1$ and $\Phi(z^s)=0\Rightarrow\lvert z\rvert>1$ | Applied after differencing; excludes unit roots from the stationary AR component. |
+| MA invertibility | $\theta(z)=0\Rightarrow\lvert z\rvert>1$ and seasonal MA roots likewise | Gives a stable innovation representation. |
+| ARMA MA($\infty$) form | $X_t=\sum_{j=0}^{\infty}\psi_j\varepsilon_{t-j}$ | Exists for a causal ARMA model. |
+| Invertible AR($\infty$) form | $X_t=\sum_{j=1}^{\infty}\pi_jX_{t-j}+\varepsilon_t$ | Exists for an invertible MA/ARMA representation. |
+| Forecast reintegration, $d=1$ | $\hat X_{T+h\mid T}=\hat X_{T+h-1\mid T}+\widehat{\Delta X}_{T+h\mid T}$ | Cumulate forecasted changes back to the level scale. |
+
 ## Worked calculation: ordinary and seasonal differencing
 
 For the short series

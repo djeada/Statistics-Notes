@@ -4,6 +4,29 @@ Trend and seasonality are systematic forms of time structure that operate on dif
 
 Decomposition, smoothing, differencing, SARIMA, and exponential-smoothing models handle these structures in different ways. The useful choice depends on whether the pattern is deterministic, evolving, stochastic, or multiplicative, and should be validated on future-like data rather than selected only because it makes a plot look cleaner.
 
+## Formula reference
+
+| Structure / method | General formula | Notes / special case |
+|---|---|---|
+| Additive decomposition | $X_t=T_t+S_t+R_t$ | Seasonal amplitude is measured in the original units. |
+| Multiplicative decomposition | $X_t=T_tS_tR_t$ | Useful when seasonal amplitude scales with the level. |
+| Log-additive form | $\log X_t=\log T_t+\log S_t+\log R_t$ | Converts a multiplicative decomposition to an additive one for positive data. |
+| Linear trend | $X_t=\beta_0+\beta_1t+\varepsilon_t$ | Constant slope. |
+| Polynomial trend | $X_t=\sum_{j=0}^{k}\beta_jt^j+\varepsilon_t$ | Flexible but often unstable for long-range extrapolation. |
+| Additive seasonal regression | $X_t=\beta_0+\beta_1t+\sum_{j=1}^{s-1}\delta_jD_{j,t}+\varepsilon_t$ | One seasonal category is omitted as the reference level. |
+| Fourier seasonality | $S_t=\sum_{k=1}^{K}[a_k\cos(2\pi kt/s)+b_k\sin(2\pi kt/s)]$ | Compact deterministic seasonality, especially for large $s$. |
+| Centered moving average, odd span | $\hat m_t=d^{-1}\sum_{j=-q}^{q}X_{t+j}$, $d=2q+1$ | Historical smoother; uses future observations relative to $t$. |
+| Generic linear smoother | $\hat m_t=\sum_j a_jX_{t-j}$ | Filter weights determine smoothness and phase behavior. |
+| First difference | $\nabla X_t=(1-B)X_t=X_t-X_{t-1}$ | Removes one unit-root factor; reduces a deterministic polynomial degree by one. |
+| $d$th difference | $\nabla^dX_t=(1-B)^dX_t$ | Use the smallest order justified by the model. |
+| Seasonal difference | $\nabla_sX_t=(1-B^s)X_t=X_t-X_{t-s}$ | Removes exactly repeating seasonal level behavior. |
+| Combined difference | $(1-B)(1-B^s)X_t=X_t-X_{t-1}-X_{t-s}+X_{t-s-1}$ | Common when ordinary and seasonal integration are both present. |
+| Additive seasonal normalization | $\sum_{j=1}^{s}S_j=0$ | Identification convention for seasonal effects. |
+| Multiplicative seasonal normalization | $s^{-1}\sum_{j=1}^{s}S_j=1$ | Identification convention for seasonal factors. |
+| Seasonal naive forecast | $\hat y_{t+h\mid t}=y_{t+h-s\lceil h/s\rceil}$ | Strong benchmark for stable fixed-period seasonality. |
+| SARIMA | $\Phi(B^s)\phi(B)(1-B^s)^D(1-B)^dX_t=\Theta(B^s)\theta(B)\varepsilon_t$ | Stochastic seasonal dependence plus ordinary ARIMA structure. |
+| Box-Cox transform | $g_\lambda(x)=(x^\lambda-1)/\lambda$ for $\lambda\ne0$; $g_0(x)=\log x$ | Often used to stabilize level-dependent variance before decomposition/modeling. |
+
 ## Worked calculation: an additive seasonal effect
 
 Suppose a quarterly series is
