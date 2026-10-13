@@ -35,7 +35,7 @@ Leakage occurs when information unavailable at prediction time influences model 
 - selecting features using the complete dataset before cross-validation;
 - imputing missing values using statistics computed from future or held-out observations;
 - tuning thresholds using the final test set;
-- randomly shuffling time-series observations when future values contain information about the past split.
+- randomly shuffling time-series observations so that the model is trained on the future and evaluated on the past.
 
 Preprocessing should be fitted inside the same training partition as the model.
 
@@ -45,7 +45,7 @@ No metric is universally best. The choice depends on the task and error costs.
 
 For regression, common metrics include MAE, MSE/RMSE, and $R^2$. For classification, common choices include accuracy, precision, recall, F-scores, ROC-AUC, log loss, and calibration measures.
 
-The detailed formulas and examples are collected in **[Metrics](metrics.md)**.
+The detailed formulas and examples are collected in **[Metrics](metrics.md)**. Bootstrap-based assessment is covered in **[Resampling](resampling.md)**.
 
 ## Baselines
 

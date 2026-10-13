@@ -28,53 +28,54 @@ def bayesian_mean_ci(data, prior_mean, prior_var, likelihood_var, confidence=0.9
     return posterior_mean, ci
 
 
-# Generating synthetic data
-np.random.seed(42)
-data = np.random.normal(5, 2, 100)
+def main():
+    # Generating synthetic data (seeded for reproducibility)
+    np.random.seed(42)
+    data = np.random.normal(5, 2, 100)
 
-# Frequentist Analysis
-freq_mean, freq_ci = frequentist_mean_ci(data)
+    # Frequentist analysis
+    freq_mean, freq_ci = frequentist_mean_ci(data)
 
-# Bayesian Analysis with an informative prior
-bayes_mean, bayes_ci = bayesian_mean_ci(
-    data, prior_mean=5, prior_var=1, likelihood_var=4
-)
+    # Bayesian analysis with an informative prior (known data variance = 4)
+    bayes_mean, bayes_ci = bayesian_mean_ci(
+        data, prior_mean=5, prior_var=1, likelihood_var=4
+    )
 
-# Visualization
-plt.figure(figsize=(12, 6))
+    # Visualization
+    plt.figure(figsize=(12, 6))
 
-# Formatting the yerr for Frequentist results
-freq_yerr = np.array([[freq_mean - freq_ci[0]], [freq_ci[1] - freq_mean]])
+    freq_yerr = np.array([[freq_mean - freq_ci[0]], [freq_ci[1] - freq_mean]])
+    plt.errorbar(
+        1,
+        freq_mean,
+        yerr=freq_yerr,
+        fmt="o",
+        color="blue",
+        label="Frequentist mean and 95% confidence interval",
+    )
 
-# Plotting Frequentist Results
-plt.errorbar(
-    1,
-    freq_mean,
-    yerr=freq_yerr,
-    fmt="o",
-    color="blue",
-    label="Frequentist Mean and 95% CI",
-)
+    bayes_yerr = np.array([[bayes_mean - bayes_ci[0]], [bayes_ci[1] - bayes_mean]])
+    plt.errorbar(
+        2,
+        bayes_mean,
+        yerr=bayes_yerr,
+        fmt="o",
+        color="green",
+        label="Bayesian posterior mean and 95% credible interval",
+    )
 
-# Formatting the yerr for Bayesian results
-bayes_yerr = np.array([[bayes_mean - bayes_ci[0]], [bayes_ci[1] - bayes_mean]])
+    plt.xticks([1, 2], ["Frequentist", "Bayesian"])
+    plt.ylabel("Mean Estimate")
+    plt.title("Comparison of Bayesian and Frequentist Inference")
+    plt.legend()
+    plt.show()
 
-# Plotting Bayesian Results
-plt.errorbar(
-    2,
-    bayes_mean,
-    yerr=bayes_yerr,
-    fmt="o",
-    color="green",
-    label="Bayesian Mean and 95% CI",
-)
+    print(f"Frequentist mean: {freq_mean:.3f}, 95% CI: ({freq_ci[0]:.3f}, {freq_ci[1]:.3f})")
+    print(
+        f"Bayesian mean (informative prior): {bayes_mean:.3f}, "
+        f"95% credible interval: ({bayes_ci[0]:.3f}, {bayes_ci[1]:.3f})"
+    )
 
-plt.xticks([1, 2], ["Frequentist", "Bayesian"])
-plt.ylabel("Mean Estimate")
-plt.title("Comparison of Bayesian and Frequentist Inference")
-plt.legend()
-plt.show()
 
-# Analysis
-print(f"Frequentist mean: {freq_mean}, 95% CI: {freq_ci}")
-print(f"Bayesian mean (with informative prior): {bayes_mean}, 95% CI: {bayes_ci}")
+if __name__ == "__main__":
+    main()

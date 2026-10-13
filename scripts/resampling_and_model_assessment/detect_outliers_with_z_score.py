@@ -27,7 +27,7 @@ def find_outliers_using_z_score(data: List[float], threshold: float = 1.0) -> Tu
 
     return outliers.tolist(), z_scores
 
-def plot_data_with_outliers(data: List[float], outliers: List[float], z_scores: np.ndarray) -> None:
+def plot_data_with_outliers(data: List[float], outliers: List[float], z_scores: np.ndarray, threshold: float = 1.0) -> None:
     """
     Plots the data, highlighting outliers.
 
@@ -35,11 +35,12 @@ def plot_data_with_outliers(data: List[float], outliers: List[float], z_scores: 
     data (List[float]): The original dataset.
     outliers (List[float]): List of detected outliers.
     z_scores (np.ndarray): The computed z-scores for the data.
+    threshold (float, optional): The z-score threshold drawn on the z-score plot. Defaults to 1.0.
     """
     plt.figure(figsize=(10, 6))
     plt.scatter(range(len(data)), data, label='Data Points', color='blue')
     outlier_indices = [i for i, point in enumerate(data) if point in outliers]
-    plt.scatter(outlier_indices, outliers, label='Outliers', color='red')
+    plt.scatter(outlier_indices, [data[i] for i in outlier_indices], label='Outliers', color='red')
     plt.axhline(y=np.mean(data), color='green', linestyle='--', label='Mean')
     plt.title('Data Points and Detected Outliers')
     plt.xlabel('Index')
@@ -58,11 +59,18 @@ def plot_data_with_outliers(data: List[float], outliers: List[float], z_scores: 
     plt.legend()
     plt.show()
 
-# Example usage
-data = [12, 15, 18, 20, 24, 28, 30, 110, 130]
-try:
-    outliers, z_scores = find_outliers_using_z_score(data)
-    print("Outliers:", outliers)
-    plot_data_with_outliers(data, outliers, z_scores)
-except ValueError as e:
-    print("Error:", e)
+def main() -> None:
+    data = [12, 15, 18, 20, 24, 28, 30, 110, 130]
+    # With n = 9 the largest possible |z| is (n - 1) / sqrt(n) = 2.67, so the
+    # conventional cutoff of 3 could never flag anything here; use a lower one.
+    threshold = 1.0
+    try:
+        outliers, z_scores = find_outliers_using_z_score(data, threshold)
+        print("Outliers:", outliers)
+        plot_data_with_outliers(data, outliers, z_scores, threshold)
+    except ValueError as e:
+        print("Error:", e)
+
+
+if __name__ == "__main__":
+    main()

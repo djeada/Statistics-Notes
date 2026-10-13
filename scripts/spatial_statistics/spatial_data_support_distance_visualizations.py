@@ -88,7 +88,7 @@ def figure_01_spatial_data_objects():
     offset = 5.0
     xy = rng.uniform([offset, 0.2], [offset + 3.0, 2.8], size=(10, 2))
     vals = 5 + 0.6 * xy[:, 0] + rng.normal(0, 0.3, len(xy))
-    sc = plt.scatter(xy[:, 0], xy[:, 1], c=vals, s=90)
+    plt.scatter(xy[:, 0], xy[:, 1], c=vals, s=90)
     plt.text(offset + 0.2, 3.25, "Point-referenced values")
 
     # Point pattern.
@@ -247,7 +247,6 @@ def figure_06_maup_zoning():
 def figure_07_distance_metrics():
     A = np.array([0.0, 0.0])
     B = np.array([3.0, 4.0])
-    C1 = np.array([0.0, 4.0])
     C2 = np.array([0.0, 5.0])
 
     # Euclidean direct path A-B = 5.

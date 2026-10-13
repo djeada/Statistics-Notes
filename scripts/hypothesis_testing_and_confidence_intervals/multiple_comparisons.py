@@ -1,60 +1,60 @@
-import numpy as np
+"""Holm-Bonferroni and Benjamini-Hochberg procedures on a small set of p-values."""
+
 import matplotlib.pyplot as plt
+import numpy as np
 
-# Given p-values from the hypothesis tests
-p_values = np.array([0.001, 0.008, 0.039, 0.041, 0.042, 0.06])
-alpha = 0.05
-n_tests = len(p_values)
 
-# Step 1: Order p-values in ascending order
-ordered_p_values = np.sort(p_values)
+def holm(p_values: np.ndarray, alpha: float = 0.05):
+    """Return (thresholds, reject) for the Holm step-down procedure on sorted p-values."""
+    m = len(p_values)
+    thresholds = alpha / (m - np.arange(m))  # alpha/m, alpha/(m-1), ..., alpha/1
+    passes = p_values <= thresholds
+    reject = np.zeros(m, dtype=bool)
+    for i in range(m):
+        if not passes[i]:
+            break  # step-down procedure stops at the first non-rejection
+        reject[i] = True
+    return thresholds, reject
 
-# Step 2: Compute adjusted significance levels (alpha_i)
-adjusted_alpha = [alpha / (n_tests - i) for i in range(n_tests)]
 
-# Step 3: Compare each ordered p-value to its adjusted alpha
-reject_null = ordered_p_values < adjusted_alpha
+def benjamini_hochberg(p_values: np.ndarray, alpha: float = 0.05):
+    """Return (thresholds, reject) for the BH step-up procedure on sorted p-values."""
+    m = len(p_values)
+    thresholds = alpha * np.arange(1, m + 1) / m
+    below = np.where(p_values <= thresholds)[0]
+    reject = np.zeros(m, dtype=bool)
+    if below.size:
+        reject[: below.max() + 1] = True
+    return thresholds, reject
 
-# Step 4: Determine where we stop rejecting null hypotheses
-# Bonferroni-Holm stops at the first non-rejection
-for i, reject in enumerate(reject_null):
-    if not reject:
-        break
-significant_tests = i  # Number of significant tests
 
-# Plot the results
-fig, ax = plt.subplots(figsize=(10, 6))
+def main() -> None:
+    p_values = np.sort(np.array([0.001, 0.008, 0.039, 0.041, 0.042, 0.06]))
+    alpha = 0.05
+    m = len(p_values)
 
-# Plot the ordered p-values
-ax.plot(np.arange(1, n_tests + 1), ordered_p_values, marker='o', label='Ordered p-values', color='blue')
+    holm_thr, holm_reject = holm(p_values, alpha)
+    bh_thr, bh_reject = benjamini_hochberg(p_values, alpha)
 
-# Plot the adjusted significance levels
-ax.plot(np.arange(1, n_tests + 1), adjusted_alpha, marker='x', linestyle='--', label='Adjusted alpha', color='red')
+    print(f"Bonferroni threshold: {alpha / m:.5f}")
+    for i, p in enumerate(p_values):
+        print(f"Test {i + 1}: p = {p:.3f} | Holm thr = {holm_thr[i]:.5f} "
+              f"({'reject' if holm_reject[i] else 'keep'}) | BH thr = {bh_thr[i]:.5f} "
+              f"({'reject' if bh_reject[i] else 'keep'})")
+    print(f"Holm rejects {holm_reject.sum()} hypotheses; BH rejects {bh_reject.sum()}.")
 
-# Mark significant results
-ax.axvline(x=significant_tests, color='green', linestyle=':', label='Significance Threshold')
+    ranks = np.arange(1, m + 1)
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.plot(ranks, p_values, marker="o", label="Ordered p-values", color="blue")
+    ax.plot(ranks, holm_thr, marker="x", linestyle="--", label="Holm thresholds", color="red")
+    ax.plot(ranks, bh_thr, marker="s", linestyle=":", label="BH thresholds", color="green")
+    ax.set_title("Holm-Bonferroni and Benjamini-Hochberg thresholds")
+    ax.set_xlabel("Rank of p-value")
+    ax.set_ylabel("p-value / threshold")
+    ax.legend()
+    ax.grid(True)
+    plt.show()
 
-# Annotations and aesthetics
-ax.set_title('Bonferroni-Holm Correction for Multiple Hypothesis Testing', fontsize=14)
-ax.set_xlabel('Test Index', fontsize=12)
-ax.set_ylabel('p-value / Adjusted Alpha', fontsize=12)
-ax.legend()
-ax.grid(True)
 
-# Show the plot
-plt.show()
-
-# Analysis Results
-analysis_results = []
-for i, p_val in enumerate(ordered_p_values):
-    result = f"Test {i+1}: p-value = {p_val}, adjusted alpha = {adjusted_alpha[i]:.5f}, {'Reject H0' if reject_null[i] else 'Fail to Reject H0'}"
-    analysis_results.append(result)
-
-analysis_summary = (f"\nConclusion: Reject the null hypothesis for the first {significant_tests} tests."
-                    if significant_tests > 0 else
-                    "\nConclusion: None of the tests are significant at the 0.05 level using Bonferroni-Holm correction.")
-
-analysis_results.append(analysis_summary)
-
-# Display the analysis results
-print(analysis_results)
+if __name__ == "__main__":
+    main()

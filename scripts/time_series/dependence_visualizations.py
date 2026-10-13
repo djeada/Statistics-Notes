@@ -9,7 +9,6 @@ from student_plot_utils import (
     pacf_from_acf,
     simulate_ar1,
     simulate_ar2,
-    simulate_ma1,
     save_figure,
     stem,
 )

@@ -29,7 +29,7 @@ def solve_difference_equation(initial_conditions, coefficients, n_terms):
 def plot_sequence(sequence, title):
     n = np.arange(len(sequence))
     plt.figure(figsize=(8, 5))
-    plt.stem(n, sequence, use_line_collection=True)
+    plt.stem(n, sequence)
     plt.title(title)
     plt.xlabel("n (term index)")
     plt.ylabel("a_n (sequence value)")
@@ -67,32 +67,34 @@ def general_solution(coefficients, initial_conditions, n_terms):
     # Generate the terms using the general solution
     n = np.arange(n_terms)
     sequence = c1 * (λ1 ** n) + c2 * (λ2 ** n)
-    return sequence
+    return np.real_if_close(sequence)
 
-# Main function
 def main():
     print("Difference Equation Demonstration")
-
-    # Example 1: Solve a second-order difference equation
-    print("Example 1: Solving a_n = 4 * a_(n-1) - 5 * a_(n-2)")
-    initial_conditions = (4, 10)
-    coefficients = (4, -5)
     n_terms = 10
 
-    sequence = solve_difference_equation(initial_conditions, coefficients, n_terms)
-    plot_sequence(sequence, title="Second-Order Difference Equation Solution")
+    # Example 1: distinct real roots (the worked example in the notes)
+    print("Example 1: a_n = 5 a_(n-1) - 6 a_(n-2), a_0 = 4, a_1 = 10")
+    recursive = solve_difference_equation((4, 10), (5, -6), n_terms)
+    closed = general_solution((5, -6), (4, 10), n_terms)
+    print("recursion:    ", recursive)
+    print("closed form:  ", np.real(closed))
+    print("2*2^n + 2*3^n:", 2 * 2.0 ** np.arange(n_terms) + 2 * 3.0 ** np.arange(n_terms))
+    plot_sequence(recursive, title="a_n = 5a_(n-1) - 6a_(n-2): roots 2 and 3")
 
-    # Example 2: General solution for the same equation
-    print("Example 2: General solution with a_0 = 4, a_1 = 10")
-    general_sol = general_solution(coefficients, initial_conditions, n_terms)
-    plot_sequence(general_sol, title="General Solution for Difference Equation")
+    # Example 2: complex roots (oscillating, growing since |root| = sqrt(5) > 1)
+    print("Example 2: a_n = 4 a_(n-1) - 5 a_(n-2), a_0 = 4, a_1 = 10")
+    recursive = solve_difference_equation((4, 10), (4, -5), n_terms)
+    closed = general_solution((4, -5), (4, 10), n_terms)
+    print("max |recursion - closed form| =", np.max(np.abs(recursive - closed)))
+    plot_sequence(recursive, title="a_n = 4a_(n-1) - 5a_(n-2): complex roots 2 +/- i")
 
-    # Example 3: Fibonacci sequence
-    print("Example 3: Fibonacci Sequence")
-    fibonacci_initial_conditions = (2, 3)
-    fibonacci_coefficients = (1, 1)
-    fibonacci_sequence = solve_difference_equation(fibonacci_initial_conditions, fibonacci_coefficients, n_terms)
-    plot_sequence(fibonacci_sequence, title="Fibonacci Sequence")
+    # Example 3: Fibonacci-type recurrence
+    print("Example 3: a_n = a_(n-1) + a_(n-2), a_0 = 2, a_1 = 3")
+    fib = solve_difference_equation((2, 3), (1, 1), n_terms)
+    print(fib)
+    plot_sequence(fib, title="Fibonacci-type sequence (2, 3, 5, 8, ...)")
+
 
 if __name__ == "__main__":
     main()

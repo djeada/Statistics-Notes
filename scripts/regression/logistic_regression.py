@@ -3,117 +3,87 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.special import expit  # Sigmoid function
 
-# Step 1: Input data for hours studied (x1), practice exams (x2), and pass/fail outcomes (y)
+
 def create_data():
-    """
-    Create a DataFrame containing the data for hours studied, practice exams, and pass/fail outcomes.
-    
-    Returns:
-        pd.DataFrame: The input dataset for logistic regression.
-    """
-    data = {'Hours Studied (x1)': [2, 4, 5, 6, 8],
-            'Practice Exams (x2)': [1, 2, 2, 3, 4],
-            'Pass (y)': [0, 0, 1, 1, 1]}
+    """Return the hours studied, practice exams and pass/fail data used in the note."""
+    data = {
+        "Hours Studied (x1)": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "Practice Exams (x2)": [0, 1, 2, 3, 0, 2, 3, 1, 4, 2],
+        "Pass (y)": [0, 0, 0, 1, 0, 1, 0, 1, 1, 1],
+    }
     return pd.DataFrame(data)
 
-# Step 2: Design matrix X and response vector y
-def prepare_data(df):
-    """
-    Prepare the design matrix X and response vector y from the DataFrame.
 
-    Args:
-        df (pd.DataFrame): DataFrame containing the input data.
-    
-    Returns:
-        tuple: Design matrix X and response vector y.
-    """
-    X = np.column_stack((np.ones(df.shape[0]), df['Hours Studied (x1)'], df['Practice Exams (x2)']))
-    y = df['Pass (y)'].values
+def prepare_data(df):
+    """Return the design matrix X (with intercept column) and response vector y."""
+    X = np.column_stack((np.ones(df.shape[0]), df["Hours Studied (x1)"], df["Practice Exams (x2)"]))
+    y = df["Pass (y)"].to_numpy(dtype=float)
     return X, y
 
-# Step 3: Logistic function for predicted probabilities
+
 def logistic_function(X, beta):
-    """
-    Apply the logistic function (sigmoid) to compute probabilities.
-    
-    Args:
-        X (np.ndarray): Design matrix.
-        beta (np.ndarray): Coefficients of the logistic regression model.
-    
-    Returns:
-        np.ndarray: Predicted probabilities.
-    """
-    return expit(np.dot(X, beta))
+    """Predicted probabilities expit(X @ beta)."""
+    return expit(X @ beta)
 
-# Step 4: Create decision boundary grid
-def create_decision_boundary(X1_range, X2_range, beta):
-    """
-    Create the decision boundary by calculating the logistic regression predictions over a grid.
 
-    Args:
-        X1_range (np.ndarray): Range of values for x1 (hours studied).
-        X2_range (np.ndarray): Range of values for x2 (practice exams).
-        beta (np.ndarray): Coefficients of the logistic regression model.
-    
-    Returns:
-        tuple: Mesh grid (X1, X2) and decision boundary (Z).
-    """
-    X1, X2 = np.meshgrid(X1_range, X2_range)
-    Z = logistic_function(np.column_stack((np.ones(X1.ravel().shape[0]), X1.ravel(), X2.ravel())), beta)
-    Z = Z.reshape(X1.shape)
+def fit_logistic_newton(X, y, n_iter=25, tol=1e-10):
+    """Maximum likelihood fit by Newton-Raphson. Requires non-separable data."""
+    beta = np.zeros(X.shape[1])
+    for _ in range(n_iter):
+        p = logistic_function(X, beta)
+        gradient = X.T @ (y - p)
+        hessian = -(X.T * (p * (1 - p))) @ X
+        step = np.linalg.solve(hessian, gradient)
+        beta = beta - step
+        if np.max(np.abs(step)) < tol:
+            break
+    return beta
+
+
+def create_decision_boundary(x1_range, x2_range, beta):
+    """Evaluate fitted probabilities on a grid."""
+    X1, X2 = np.meshgrid(x1_range, x2_range)
+    grid = np.column_stack((np.ones(X1.size), X1.ravel(), X2.ravel()))
+    Z = logistic_function(grid, beta).reshape(X1.shape)
     return X1, X2, Z
 
-# Step 5: Plot the data and decision boundary
+
 def plot_data_and_boundary(df, X1, X2, Z):
-    """
-    Plot the dataset and decision boundary for logistic regression.
-
-    Args:
-        df (pd.DataFrame): Input dataset.
-        X1 (np.ndarray): Mesh grid for x1 (hours studied).
-        X2 (np.ndarray): Mesh grid for x2 (practice exams).
-        Z (np.ndarray): Decision boundary values for the mesh grid.
-    """
+    """Plot the data with shaded predicted-class regions (0.5 boundary)."""
     plt.figure(figsize=(10, 6))
+    plt.contourf(X1, X2, Z, levels=[0, 0.5, 1], alpha=0.2, colors=["red", "green"])
 
-    # Contour plot for the decision boundary (probability = 0.5 line)
-    plt.contourf(X1, X2, Z, levels=[0, 0.5, 1], alpha=0.2, colors=['red', 'green'])
+    failed = df[df["Pass (y)"] == 0]
+    passed = df[df["Pass (y)"] == 1]
+    plt.scatter(failed["Hours Studied (x1)"], failed["Practice Exams (x2)"],
+                color="red", label="Fail (y=0)", s=100)
+    plt.scatter(passed["Hours Studied (x1)"], passed["Practice Exams (x2)"],
+                color="green", label="Pass (y=1)", s=100)
 
-    # Students who failed
-    plt.scatter(df[df['Pass (y)'] == 0]['Hours Studied (x1)'],
-                df[df['Pass (y)'] == 0]['Practice Exams (x2)'], 
-                color='red', label='Fail (y=0)', s=100)
-    # Students who passed
-    plt.scatter(df[df['Pass (y)'] == 1]['Hours Studied (x1)'],
-                df[df['Pass (y)'] == 1]['Practice Exams (x2)'], 
-                color='green', label='Pass (y=1)', s=100)
-
-    # Labels, title, and legend
     plt.title("Logistic Regression: Hours Studied vs Practice Exams\nwith Decision Boundary", fontsize=14)
     plt.xlabel("Hours Studied (x1)", fontsize=12)
     plt.ylabel("Practice Exams (x2)", fontsize=12)
     plt.legend()
     plt.show()
 
-# Main function to execute the steps
+
 def main():
-    # Step 1: Create the data
-    df_logistic = create_data()
+    df = create_data()
+    X, y = prepare_data(df)
 
-    # Step 2: Prepare the design matrix and response vector
-    X, y = prepare_data(df_logistic)
+    beta_hat = fit_logistic_newton(X, y)
+    p_hat = logistic_function(X, beta_hat)
+    pred = (p_hat >= 0.5).astype(int)
+    print("beta_hat:", np.round(beta_hat, 3))
+    print("odds ratios:", np.round(np.exp(beta_hat[1:]), 2))
+    print("fitted probabilities:", np.round(p_hat, 3))
+    print("accuracy:", np.mean(pred == y))
 
-    # Step 3: Coefficients for logistic regression (precomputed)
-    beta_hat = np.array([-9.28, 1.23, 0.98])
-
-    # Step 4: Generate decision boundary grid
-    x1_range = np.linspace(df_logistic['Hours Studied (x1)'].min() - 1, df_logistic['Hours Studied (x1)'].max() + 1, 200)
-    x2_range = np.linspace(df_logistic['Practice Exams (x2)'].min() - 1, df_logistic['Practice Exams (x2)'].max() + 1, 200)
+    x1_range = np.linspace(df["Hours Studied (x1)"].min() - 1, df["Hours Studied (x1)"].max() + 1, 200)
+    x2_range = np.linspace(df["Practice Exams (x2)"].min() - 1, df["Practice Exams (x2)"].max() + 1, 200)
     X1, X2, Z = create_decision_boundary(x1_range, x2_range, beta_hat)
+    plot_data_and_boundary(df, X1, X2, Z)
 
-    # Step 5: Plot the data and decision boundary
-    plot_data_and_boundary(df_logistic, X1, X2, Z)
 
-# Execute the main function
 if __name__ == "__main__":
     main()

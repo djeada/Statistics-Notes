@@ -52,6 +52,16 @@ Its standard error is the standard deviation of its sampling distribution:
 
 In practice, the true standard error often depends on unknown population parameters. We therefore estimate it from the observed data, producing an **estimated standard error**.
 
+Two standard cases are
+
+```math
+\mathrm{SE}(\bar X)=\frac{\sigma}{\sqrt n},
+\qquad
+\mathrm{SE}(\hat p)=\sqrt{\frac{p(1-p)}{n}},
+```
+
+with $\sigma$ and $p$ replaced by sample estimates to get the estimated standard error.
+
 A smaller standard error generally indicates a more precise estimator.
 
 ## Mean-Squared Error
@@ -171,6 +181,55 @@ Maximizing this expression gives
 ```
 
 Thus, for Bernoulli data, the maximum-likelihood estimate of $p$ is simply the observed proportion of successes.
+
+### Normal Example and the Variance Divisor
+
+Suppose $X_1,\ldots,X_n$ are independent $N(\mu,\sigma^2)$ observations. Maximizing the log-likelihood
+
+```math
+\ell(\mu,\sigma^2)
+=
+-\frac{n}{2}\log(2\pi\sigma^2)
+-\frac{1}{2\sigma^2}\sum_{i=1}^n (x_i-\mu)^2
+```
+
+gives
+
+```math
+\hat\mu_{\mathrm{MLE}}=\bar X,
+\qquad
+\hat\sigma^2_{\mathrm{MLE}}=\frac{1}{n}\sum_{i=1}^n (X_i-\bar X)^2.
+```
+
+The MLE of $\sigma^2$ divides by $n$ and is **biased**:
+
+```math
+E[\hat\sigma^2_{\mathrm{MLE}}]=\frac{n-1}{n}\sigma^2.
+```
+
+The usual sample variance divides by $n-1$,
+
+```math
+S^2=\frac{1}{n-1}\sum_{i=1}^n (X_i-\bar X)^2,
+```
+
+and satisfies $E[S^2]=\sigma^2$. The $n-1$ reflects that $\bar X$ was estimated from the same data, which uses up one degree of freedom. For normal data the biased MLE actually has the smaller MSE of the two, which illustrates that unbiasedness is not the only goal.
+
+### Exponential Example: Estimators Can Be Biased
+
+If $X_i\sim\mathrm{Exponential}(\lambda)$ with rate $\lambda$, then $E[X]=1/\lambda$. The method of moments sets $\bar X=1/\hat\lambda$, so
+
+```math
+\hat\lambda_{\mathrm{MoM}}=\frac{1}{\bar X}.
+```
+
+The log-likelihood is $\ell(\lambda)=n\log\lambda-\lambda\sum_i x_i$, whose maximizer is the same value, $\hat\lambda_{\mathrm{MLE}}=1/\bar X$. Although $\bar X$ is unbiased for $1/\lambda$, its reciprocal is not unbiased for $\lambda$:
+
+```math
+E\left[\frac{1}{\bar X}\right]=\frac{n}{n-1}\lambda.
+```
+
+The bias, $\lambda/(n-1)$, shrinks as $n$ grows, so $1/\bar X$ is biased but consistent. The corrected estimator $\frac{n-1}{n\bar X}$ is unbiased.
 
 ## Estimation Is Not Yet Inference
 

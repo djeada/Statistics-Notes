@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
-from mpl_toolkits.mplot3d import Axes3D
 
 # Step 1: Input data for hours studied (x1), attendance rate (x2), and test scores (y)
 def create_data():
@@ -100,7 +99,7 @@ def main():
     df = create_data()
 
     # Step 2: Fit the regression model
-    model, X, y, intercept, coefficients = fit_regression_model(df)
+    model, _, _, intercept, coefficients = fit_regression_model(df)
 
     # Step 3: Plot the data and the regression plane
     plot_regression_plane(df, model)

@@ -1,12 +1,13 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 
-def calculate_variance_and_std_dev(data):
+def calculate_variance_and_std_dev(data, ddof=0):
     """
     Calculates the variance and standard deviation of the given data.
+    ddof=0 gives the population formulas, ddof=1 the sample formulas.
     """
-    variance = np.var(data)
+    variance = np.var(data, ddof=ddof)
     std_dev = np.sqrt(variance)
     return variance, std_dev
 
@@ -52,8 +53,19 @@ def plot_data_with_statistics(data, arithmetic_mean, std_dev):
     plt.show()
 
 
-# Example usage
-data = np.random.normal(0, 1, 1000)  # Example data
-arithmetic_mean = np.mean(data)
-variance, std_dev = calculate_variance_and_std_dev(data)
-plot_data_with_statistics(data, arithmetic_mean, std_dev)
+def main():
+    rng = np.random.default_rng(0)
+    data = rng.normal(0, 1, 1000)
+    arithmetic_mean = np.mean(data)
+
+    pop_var, pop_std = calculate_variance_and_std_dev(data, ddof=0)
+    samp_var, samp_std = calculate_variance_and_std_dev(data, ddof=1)
+    print(f"Mean: {arithmetic_mean:.4f}")
+    print(f"Population variance / std: {pop_var:.4f} / {pop_std:.4f}")
+    print(f"Sample variance / std:     {samp_var:.4f} / {samp_std:.4f}")
+
+    plot_data_with_statistics(data, arithmetic_mean, samp_std)
+
+
+if __name__ == "__main__":
+    main()

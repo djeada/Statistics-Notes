@@ -6,7 +6,7 @@ Logistic regression is a statistical method used for modeling the probability of
 
 ### Binary Outcomes
 
-In logistic regression, the dependent variable $y $ takes on binary values:
+In logistic regression, the dependent variable $y$ takes on binary values:
 
 $$
 y_i = \begin{cases}
@@ -17,7 +17,7 @@ $$
 
 ### Logistic Function (Sigmoid Function)
 
-The logistic function models the probability that $y = 1$ given the predictor variables $x_1, x_2, \dots, x_p $:
+The logistic function models the probability that $y = 1$ given the predictor variables $x_1, x_2, \dots, x_p$:
 
 $$
 p(x) = P(y = 1 \mid x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_p x_p)}}
@@ -52,7 +52,7 @@ $$
 \text{Odds Ratio for } x_j = e^{\beta_j}
 $$
 
-An odds ratio greater than 1 indicates that as $x_j $ increases, the odds of the outcome occurring increase.
+An odds ratio greater than 1 indicates that as $x_j$ increases, the odds of the outcome occurring increase.
 
 ## Estimation of Coefficients
 
@@ -60,7 +60,7 @@ Unlike linear regression, logistic regression does not have a closed-form soluti
 
 ### Likelihood Function
 
-Given $n $ independent observations, the likelihood function $L(\boldsymbol{\beta})$ is the product of the probabilities of observing the data:
+Given $n$ independent observations, the likelihood function $L(\boldsymbol{\beta})$ is the product of the probabilities of observing the data:
 
 $$
 L(\boldsymbol{\beta}) = \prod_{i=1}^{n} [p(x_i)]^{y_i} [1 - p(x_i)]^{1 - y_i}
@@ -100,33 +100,41 @@ Where:
 1. The **binary outcome** indicates that the dependent variable has two possible values.
 2. **Independent observations** ensure that each data point is independent of the others.
 3. **Linearity in log-odds** means that the logit of the outcome is a linear function of the predictor variables.
-4. **No multicollinearity** ensures that the predictor variables are not highly correlated with each other.
-5. A **large sample size** is preferred, as maximum likelihood estimation (MLE) performs better with more data.
+4. **No perfect (and little severe) multicollinearity** among the predictors; otherwise coefficients are unstable.
+5. **No complete separation**: if a linear combination of predictors perfectly splits the classes, the MLE does not exist.
+6. A **large sample size** is preferred, as maximum likelihood estimation (MLE) performs better with more data.
 
 ## Example
 
 ### Problem Statement
 
-We aim to predict whether a student will pass a test ($y = 1$) or fail ($y = 0 $) based on:
+We aim to predict whether a student will pass a test ($y = 1$) or fail ($y = 0$) based on:
 
 - $x_1$: Number of hours studied
 - $x_2$: Number of practice exams taken
 
 ### Data
 
-| Student ($i $) | Hours Studied ($x_{1i}$) | Practice Exams ($x_{2i}$) | Pass ($y_i $) |
-|-------------------|-------------------------------|-------------------------------|------------------|
-| 1                 | 2                             | 1                             | 0                |
-| 2                 | 4                             | 2                             | 0                |
-| 3                 | 5                             | 2                             | 1                |
-| 4                 | 6                             | 3                             | 1                |
-| 5                 | 8                             | 4                             | 1                |
+| Student ($i$) | Hours Studied ($x_{1i}$) | Practice Exams ($x_{2i}$) | Pass ($y_i$) |
+|---|---|---|---|
+| 1  | 1  | 0 | 0 |
+| 2  | 2  | 1 | 0 |
+| 3  | 3  | 2 | 0 |
+| 4  | 4  | 3 | 1 |
+| 5  | 5  | 0 | 0 |
+| 6  | 6  | 2 | 1 |
+| 7  | 7  | 3 | 0 |
+| 8  | 8  | 1 | 1 |
+| 9  | 9  | 4 | 1 |
+| 10 | 10 | 2 | 1 |
+
+The classes overlap (student 4 passes with 4 hours, student 7 fails with 7 hours), so a finite maximum likelihood estimate exists. If one class could be separated perfectly from the other by a hyperplane (complete separation), the likelihood would increase forever as the coefficients grow and the MLE would not exist; software then reports huge coefficients or a convergence warning.
 
 ### Step-by-Step Estimation
 
 #### 1. Initial Setup
 
-We need to estimate $\beta_0 $, $\beta_1$, and $\beta_2$ in the logistic regression model:
+We need to estimate $\beta_0$, $\beta_1$, and $\beta_2$ in the logistic regression model:
 
 $$
 p(x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2)}}
@@ -134,177 +142,154 @@ $$
 
 #### 2. Construct the Design Matrix and Response Vector
 
-Let $\mathbf{X}$ be the design matrix including the intercept term:
+Let $\mathbf{X}$ be the $10 \times 3$ design matrix whose first column is the intercept, and $\mathbf{y}$ the response vector:
 
 $$
 \mathbf{X} = \begin{bmatrix}
-1 & x_{11} & x_{21} \\
-1 & x_{12} & x_{22} \\
-1 & x_{13} & x_{23} \\
-1 & x_{14} & x_{24} \\
-1 & x_{15} & x_{25} \\
-\end{bmatrix} = \begin{bmatrix}
+1 & 1 & 0 \\
 1 & 2 & 1 \\
-1 & 4 & 2 \\
-1 & 5 & 2 \\
-1 & 6 & 3 \\
-1 & 8 & 4 \\
-\end{bmatrix}
-$$
-
-Response vector $\mathbf{y}$:
-
-$$
-\mathbf{y} = \begin{bmatrix}
-0 \\
-0 \\
-1 \\
-1 \\
-1 \\
-\end{bmatrix}
+1 & 3 & 2 \\
+1 & 4 & 3 \\
+1 & 5 & 0 \\
+1 & 6 & 2 \\
+1 & 7 & 3 \\
+1 & 8 & 1 \\
+1 & 9 & 4 \\
+1 & 10 & 2
+\end{bmatrix}, \qquad
+\mathbf{y} = (0,0,0,1,0,1,0,1,1,1)^\top
 $$
 
 #### 3. Initialize Coefficients
 
-Start with initial guesses for $\boldsymbol{\beta}$, say:
+Start with $\boldsymbol{\beta}^{(0)} = (0, 0, 0)^\top$. Then every $p_i^{(0)} = 1/2$.
+
+#### 4. One Newton-Raphson Step by Hand
+
+The gradient and Hessian of the log-likelihood are
 
 $$
-\boldsymbol{\beta}^{(0)} = \begin{bmatrix}
-\beta_0^{(0)} \\
-\beta_1^{(0)} \\
-\beta_2^{(0)} \\
-\end{bmatrix} = \begin{bmatrix}
-0 \\
-0 \\
-0 \\
-\end{bmatrix}
+\mathbf{g}(\boldsymbol{\beta}) = \mathbf{X}^\top(\mathbf{y} - \mathbf{p}), \qquad
+\mathbf{H}(\boldsymbol{\beta}) = -\mathbf{X}^\top \mathbf{W} \mathbf{X}, \quad \mathbf{W} = \operatorname{diag}\big(p_i(1-p_i)\big).
 $$
 
-#### 4. Iterative Optimization (Simplified Explanation)
+At $\boldsymbol{\beta}^{(0)}$, $\mathbf{y}-\mathbf{p} = \pm 0.5$ and $\mathbf{W} = 0.25\,\mathbf{I}$, so
 
-Due to the complexity of MLE calculations, we will provide a simplified explanation. In practice, statistical software performs these calculations.
-
-**Iteration Steps**:
-
-- Compute predicted probabilities $p_i^{(k)}$ using current coefficients.
-  
 $$
-p_i^{(k)} = \frac{1}{1 + e^{-(\beta_0^{(k)} + \beta_1^{(k)} x_{1i} + \beta_2^{(k)} x_{2i})}}
+\mathbf{g} = \begin{bmatrix} 0 \\ 9.5 \\ 3 \end{bmatrix}, \qquad
+\mathbf{H} = -0.25 \begin{bmatrix} 10 & 55 & 18 \\ 55 & 385 & 117 \\ 18 & 117 & 48 \end{bmatrix}.
 $$
 
-- Compute the gradient $\mathbf{g}(\boldsymbol{\beta}^{(k)})$ and Hessian $\mathbf{H}(\boldsymbol{\beta}^{(k)})$.
-- Update coefficients using the Newton-Raphson formula.
-- The process continues until the change in the log-likelihood or coefficients is below a predefined threshold.
+The update $\boldsymbol{\beta}^{(1)} = -\mathbf{H}^{-1}\mathbf{g}$ gives $\boldsymbol{\beta}^{(1)} \approx (-2.724,\ 0.391,\ 0.318)^\top$. Repeating the step, the iterates are $(-3.961, 0.549, 0.515)$, $(-4.463, 0.610, 0.601)$, $(-4.529, 0.618, 0.613)$, and $(-4.530, 0.618, 0.613)$; the estimates have converged after about five iterations.
 
 #### 5. Estimated Coefficients
 
-Assuming the optimization converges, we obtain estimated coefficients (using statistical software):
+$$
+\hat{\beta}_0 = -4.530, \quad \hat{\beta}_1 = 0.618, \quad \hat{\beta}_2 = 0.613
+$$
 
-$$
-\hat{\beta}_0 = -9.28, \quad \hat{\beta}_1 = 1.23, \quad \hat{\beta}_2 = 0.98
-$$
+with standard errors $\approx 2.90,\ 0.42,\ 0.84$ (from $\sqrt{\operatorname{diag}(\mathbf{X}^\top\mathbf{W}\mathbf{X})^{-1}}$ at the solution). With only 10 observations neither slope is individually significant (Wald $z \approx 1.47$ and $0.73$); the example is meant to show the mechanics, not a strong effect. The maximized log-likelihood is $\ell(\hat{\boldsymbol\beta}) \approx -4.034$, compared with $10 \ln 0.5 \approx -6.931$ for the intercept-only model.
 
 #### 6. Logistic Regression Equation
 
 $$
-p(x) = \frac{1}{1 + e^{-(-9.28 + 1.23 x_1 + 0.98 x_2)}}
+\hat p(x) = \frac{1}{1 + e^{-(-4.530 + 0.618 x_1 + 0.613 x_2)}}
 $$
 
 ### Interpretation of Coefficients
 
-**Intercept ($\beta_0 = -9.28$)**: The log-odds of passing when $x_1 = 0 $ and $x_2 = 0 $.
+**Intercept ($\hat\beta_0 = -4.530$)**: The log-odds of passing when $x_1 = 0$ and $x_2 = 0$ (an extrapolation, since no student studied 0 hours).
 
-**Coefficient for Hours Studied ($\beta_1 = 1.23$)**: For each additional hour studied, the log-odds of passing increase by 1.23 units, holding $x_2$ constant.
-
-**Odds Ratio**:
+**Coefficient for Hours Studied ($\hat\beta_1 = 0.618$)**: For each additional hour studied, the log-odds of passing increase by 0.618, holding $x_2$ constant.
 
 $$
-e^{1.23} \approx 3.42
+e^{0.618} \approx 1.86
 $$
 
-The odds of passing are approximately 3.42 times higher for each additional hour studied.
+The odds of passing are multiplied by about 1.86 for each additional hour studied.
 
-**Coefficient for Practice Exams ($\beta_2 = 0.98$)**: For each additional practice exam taken, the log-odds of passing increase by 0.98 units, holding $x_1$ constant.
-
-**Odds Ratio**:
+**Coefficient for Practice Exams ($\hat\beta_2 = 0.613$)**: For each additional practice exam, the log-odds of passing increase by 0.613, holding $x_1$ constant.
 
 $$
-e^{0.98} \approx 2.66
+e^{0.613} \approx 1.85
 $$
 
-The odds of passing are approximately 2.66 times higher for each additional practice exam taken.
+The odds of passing are multiplied by about 1.85 for each additional practice exam.
+
+Note that an odds ratio is a multiplicative change in the odds, not in the probability; the change in probability depends on where on the curve the student sits.
 
 ### Predicting Probabilities
 
-#### Predict for a Student Who Studied 5 Hours and Took 2 Practice Exams
-
-Compute the probability of passing:
+#### A Student Who Studied 5 Hours and Took 2 Practice Exams
 
 $$
-p = \frac{1}{1 + e^{-(-9.28 + 1.23 \times 5 + 0.98 \times 2)}} = \frac{1}{1 + e^{-(-9.28 + 6.15 + 1.96)}} = \frac{1}{1 + e^{-(-1.17)}} = \frac{1}{1 + e^{1.17}} \approx 0.24
+\hat p = \frac{1}{1 + e^{-(-4.530 + 0.618 \times 5 + 0.613 \times 2)}} = \frac{1}{1 + e^{-(-0.214)}} = \frac{1}{1 + e^{0.214}} \approx 0.447
 $$
 
-The probability of passing is approximately 24%.
+The estimated probability of passing is about 44.7%.
 
-#### Predict for a Student Who Studied 7 Hours and Took 3 Practice Exams
+#### A Student Who Studied 7 Hours and Took 3 Practice Exams
 
 $$
-p = \frac{1}{1 + e^{-(-9.28 + 1.23 \times 7 + 0.98 \times 3)}} = \frac{1}{1 + e^{-(-9.28 + 8.61 + 2.94)}} = \frac{1}{1 + e^{-2.27}} = \frac{1}{1 + e^{-2.27}} \approx 0.906
+\hat p = \frac{1}{1 + e^{-(-4.530 + 0.618 \times 7 + 0.613 \times 3)}} = \frac{1}{1 + e^{-1.635}} \approx 0.837
 $$
 
-The probability of passing is approximately 90.6%.
+The estimated probability of passing is about 83.7%.
 
-Plot:
-
-![output(14)](https://github.com/user-attachments/assets/5b72e473-e273-408a-a1db-d71e2a8f924b)
+A plot of the fitted probability surface and the 0.5 decision boundary is produced by [logistic_regression.py](../../scripts/regression/logistic_regression.py).
 
 ### Model Evaluation
 
 #### Confusion Matrix
 
-Using a threshold of 0.5 to classify predictions:
+Using a threshold of 0.5 to classify predictions (training data, so these numbers are optimistic):
 
-| Student ($i $) | $y_i $ | Predicted $p_i $ | Predicted Class ($\hat{y}_i $) |
-|-------------------|-----------|---------------------|------------------------------------|
-| 1                 | 0         | $p_1 \approx 0.005 $   | 0                                  |
-| 2                 | 0         | $p_2 \approx 0.046 $   | 0                                  |
-| 3                 | 1         | $p_3 \approx 0.24 $    | 0                                  |
-| 4                 | 1         | $p_4 \approx 0.82$    | 1                                  |
-| 5                 | 1         | $p_5 \approx 0.99 $    | 1                                  |
+| Student ($i$) | $y_i$ | Predicted $\hat p_i$ | Predicted Class ($\hat{y}_i$) |
+|---|---|---|---|
+| 1  | 0 | 0.020 | 0 |
+| 2  | 0 | 0.064 | 0 |
+| 3  | 0 | 0.190 | 0 |
+| 4  | 1 | 0.445 | 0 |
+| 5  | 0 | 0.192 | 0 |
+| 6  | 1 | 0.600 | 1 |
+| 7  | 0 | 0.837 | 1 |
+| 8  | 1 | 0.736 | 1 |
+| 9  | 1 | 0.970 | 1 |
+| 10 | 1 | 0.947 | 1 |
 
-- **True Positives (TP)**: 2 (Students 4 and 5)
-- **True Negatives (TN)**: 2 (Students 1 and 2)
-- **False Negatives (FN)**: 1 (Student 3)
-- **False Positives (FP)**: 0
+- **True Positives (TP)**: 4 (Students 6, 8, 9, 10)
+- **True Negatives (TN)**: 4 (Students 1, 2, 3, 5)
+- **False Negatives (FN)**: 1 (Student 4)
+- **False Positives (FP)**: 1 (Student 7)
 
 #### Accuracy
 
 $$
-\text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{Total}} = \frac{2 + 2}{5} = 0.8
+\text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{Total}} = \frac{4 + 4}{10} = 0.8
 $$
 
 #### Precision
 
 $$
-\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}} = \frac{2}{2 + 0} = 1.0
+\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}} = \frac{4}{4 + 1} = 0.8
 $$
 
 #### Recall (Sensitivity)
 
 $$
-\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}} = \frac{2}{2 + 1} = \frac{2}{3} \approx 0.667
+\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}} = \frac{4}{4 + 1} = 0.8
 $$
 
 #### F1 Score
 
 $$
-\text{F1 Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}} = 2 \times \frac{1.0 \times 0.667}{1.0 + 0.667} \approx 0.8
+\text{F1} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}} = 2 \times \frac{0.8 \times 0.8}{0.8 + 0.8} = 0.8
 $$
 
 ### Receiver Operating Characteristic (ROC) Curve
 
 - Plotting True Positive Rate (Recall) vs. False Positive Rate at various thresholds.
-- Calculate Area Under the ROC Curve (AUC) to assess model performance.
+- Calculate Area Under the ROC Curve (AUC) to assess model performance. AUC equals the probability that a randomly chosen positive case receives a higher predicted probability than a randomly chosen negative case; 0.5 is chance and 1 is perfect ranking. For the example above, AUC $= 22/25 = 0.88$ (22 of the 25 pass/fail pairs are ranked correctly).
 
 ### Extensions to Multiple Classes
 

@@ -1,6 +1,6 @@
 # Negative Binomial Distribution (Discrete)
 
-A discrete random variable X follows a negative binomial distribution if it represents the number of trials required to achieve a specified number of successes in a sequence of independent Bernoulli trials. The negative binomial distribution is often denoted as $X \sim \text{NegBinomial}(r, p)$, where r is the number of successes required and p is the probability of success on each trial.
+A discrete random variable X follows a negative binomial distribution if it represents the number of trials required to achieve a specified number of successes in a sequence of independent Bernoulli trials. The negative binomial distribution is often denoted as $X \sim \text{NegBinomial}(r, p)$, where $r$ is the number of successes required and $p$ is the probability of success on each trial. Here $X$ counts the *total number of trials* (including the $r$ successes), so $X \ge r$. Software such as `scipy.stats.nbinom` instead counts the number of *failures* $Y = X - r$ before the $r$-th success, with support starting at $0$.
 
 ### Probability Mass Function (PMF)
 
@@ -34,7 +34,7 @@ $$\text{Var}(X) = \frac{r(1-p)}{p^2}$$
 
 The moment generating function (MGF) of a negative binomial distribution is:
 
-$$M_X(t) = \left(\frac{pe^t}{1 - (1 - p)e^t}\right)^r$$
+$$M_X(t) = \left(\frac{pe^t}{1 - (1 - p)e^t}\right)^r, \quad t < -\ln(1-p)$$
 
 ### Example: Quality Control Testing
 
@@ -49,7 +49,7 @@ I. What is the probability that exactly 20 products need to be tested?
 
 For exactly 20 products tested:
 
-$$P(X = 20) = \binom{19}{4} (0.1)^5 (0.9)^{15} ≈ 0.031$$
+$$P(X = 20) = \binom{19}{4} (0.1)^5 (0.9)^{15} ≈ 0.0080$$
 
 II. What is the expected number of products to be tested?
 
@@ -66,3 +66,7 @@ $$\text{Var}(X) = \frac{5 \times (1-0.1)}{0.1^2} = 450$$
 ### Applications
 
 Negative binomial distributions are commonly used when the number of trials required to reach a specified number of successes is of interest. The same model can describe failures by relabeling the event of interest as a "success." Applications include reliability testing, epidemiology, and ecological studies.
+
+---
+
+**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/negative_binomial_distribution.md)

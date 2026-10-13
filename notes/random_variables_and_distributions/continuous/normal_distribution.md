@@ -100,8 +100,12 @@ $$ z = \frac{(85 - 70)}{10} = 1.5 $$
 
 II. Identifying the Corresponding Percentile:
 
-To convert a z-score to a percentile, use a standard normal distribution table or a calculator. A z-score of 1.5 typically aligns with the 93rd percentile, meaning this student's score is higher than approximately 93% of the class.
+To convert a z-score to a percentile, use a standard normal distribution table or a calculator. A z-score of 1.5 gives $\Phi(1.5) \approx 0.9332$, i.e. roughly the 93rd percentile, meaning this student's score is higher than approximately 93% of the class.
 
 ### Applications
 
 The normal distribution is a fundamental model in statistics. It is used both as a direct model for approximately symmetric continuous measurements and as an approximation to sampling distributions and other probability models. It underlies many common confidence intervals, hypothesis tests, and regression procedures, but its appropriateness should be justified by the assumptions of the method rather than assumed for every real-valued variable.
+
+---
+
+**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/normal_distribution.md)

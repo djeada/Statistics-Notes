@@ -167,7 +167,7 @@ def figure_white_noise_and_random_walk() -> None:
     walk = np.cumsum(noise)
     print(
         "white noise/random walk: theoretical Var(e_t) = 1; "
-        f"Var(sum of first 100 shocks) = 100"
+        "Var(sum of first 100 shocks) = 100"
     )
 
     fig, axes = plt.subplots(2, 1, figsize=(8, 6), sharex=True)

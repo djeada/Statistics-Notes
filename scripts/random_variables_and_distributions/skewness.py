@@ -1,31 +1,29 @@
+"""Sample skewness: right-skewed gamma data versus symmetric normal data."""
+import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import skew
-import matplotlib.pyplot as plt
 
-# Generate random data with a skewed distribution
-data1 = np.random.gamma(4, 1, 1000)
-data2 = np.random.normal(6, 2, 1000)
 
-# Calculate the skewness of the data
-skewness1 = skew(data1)
-skewness2 = skew(data2)
+def main():
+    rng = np.random.default_rng(42)
+    data1 = rng.gamma(4, 1, 1000)   # theoretical skewness 2 / sqrt(4) = 1
+    data2 = rng.normal(6, 2, 1000)  # theoretical skewness 0
 
-# Plot a histogram of the data
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+    skewness1, skewness2 = skew(data1), skew(data2)
+    print(f"gamma(4, 1): skewness = {skewness1:.3f} (theory 1.0)")
+    print(f"normal(6, 2): skewness = {skewness2:.3f} (theory 0.0)")
 
-ax1.hist(data1, bins=30, alpha=0.5, color="blue")
-ax1.axvline(np.mean(data1), color="red", linestyle="dashed", linewidth=1)
-ax1.axvline(np.median(data1), color="green", linestyle="dashed", linewidth=1)
-ax1.set_title(f"Skewness: {skewness1:.2f}", fontsize=16)
-ax1.set_xlabel("Data Values")
-ax1.set_ylabel("Frequency")
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+    for ax, data, color, sk in [(ax1, data1, "blue", skewness1), (ax2, data2, "orange", skewness2)]:
+        ax.hist(data, bins=30, alpha=0.5, color=color)
+        ax.axvline(np.mean(data), color="red", linestyle="dashed", linewidth=1, label="mean")
+        ax.axvline(np.median(data), color="green", linestyle="dashed", linewidth=1, label="median")
+        ax.set_title(f"Skewness: {sk:.2f}", fontsize=16)
+        ax.set_xlabel("Data Values")
+        ax.set_ylabel("Frequency")
+        ax.legend()
+    plt.show()
 
-ax2.hist(data2, bins=30, alpha=0.5, color="orange")
-ax2.axvline(np.mean(data2), color="red", linestyle="dashed", linewidth=1)
-ax2.axvline(np.median(data2), color="green", linestyle="dashed", linewidth=1)
-ax2.set_title(f"Skewness: {skewness2:.2f}", fontsize=16)
-ax2.set_xlabel("Data Values")
-ax2.set_ylabel("Frequency")
 
-# Show the plot
-plt.show()
+if __name__ == "__main__":
+    main()

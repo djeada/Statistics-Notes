@@ -292,3 +292,5 @@ Difference equations therefore connect directly to moving-average representation
 ![Stable and unstable recursions](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/02_difference_equation_stability.png)
 
 The figure contrasts decaying and expanding paths, making the root-based stability condition visible in the time domain.
+
+A runnable companion is the [difference equations notebook](../../notebooks/time_series/difference_equations.ipynb).

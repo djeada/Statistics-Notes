@@ -1,34 +1,40 @@
-# Heights for the example
-x1 = 71.9  # father's height 71.9 inches
-x2 = 67.4  # father's height 67.4 inches
+"""Standard normal curve with the z-scores of two fathers' heights."""
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import norm
 
-# Calculate the z-scores for these heights
-z1 = (x1 - mu_height) / sigma_height  # z-score for 71.9 inches
-z2 = (x2 - mu_height) / sigma_height  # z-score for 67.4 inches
+MU_HEIGHT = 68.3     # inches
+SIGMA_HEIGHT = 1.8   # inches
 
-# Generate x values for standard normal distribution
-x_standard = np.linspace(-4, 4, 1000)
 
-# Calculate PDF for the standard normal distribution
-pdf_standard = (1 / np.sqrt(2 * np.pi)) * np.exp(-0.5 * x_standard**2)
+def z_score(x, mu, sigma):
+    return (x - mu) / sigma
 
-# Plot the standard normal distribution
-plt.figure(figsize=(10, 6))
-plt.plot(x_standard, pdf_standard, label='Standard Normal Distribution', color='green')
 
-# Mark z-scores on the plot
-plt.axvline(z1, color='blue', linestyle='--', label=f'z-score for 71.9 inches: z = {z1:.1f}')
-plt.axvline(z2, color='red', linestyle='--', label=f'z-score for 67.4 inches: z = {z2:.1f}')
+def main():
+    x1, x2 = 71.9, 67.4
+    z1 = z_score(x1, MU_HEIGHT, SIGMA_HEIGHT)
+    z2 = z_score(x2, MU_HEIGHT, SIGMA_HEIGHT)
+    area = norm.cdf(z1) - norm.cdf(z2)
+    print(f"z(71.9) = {z1:.2f}, z(67.4) = {z2:.2f}")
+    print(f"P(67.4 <= height <= 71.9) = {area:.4f}")
 
-# Shade the area between z1 and z2
-plt.fill_between(x_standard, 0, pdf_standard, where=((x_standard >= z2) & (x_standard <= z1)), color='orange', alpha=0.3, label='Area between z-scores')
+    x = np.linspace(-4, 4, 1000)
+    pdf = norm.pdf(x)
 
-# Highlight important points
-plt.title('Standard Normal Distribution and Z-Scores')
-plt.xlabel('z')
-plt.ylabel('Probability Density Function (PDF)')
-plt.legend()
+    plt.figure(figsize=(10, 6))
+    plt.plot(x, pdf, label="Standard Normal Distribution", color="green")
+    plt.axvline(z1, color="blue", linestyle="--", label=f"z for 71.9 in: {z1:.1f}")
+    plt.axvline(z2, color="red", linestyle="--", label=f"z for 67.4 in: {z2:.1f}")
+    plt.fill_between(x, 0, pdf, where=(x >= z2) & (x <= z1), color="orange", alpha=0.3,
+                     label=f"Area between z-scores = {area:.4f}")
+    plt.title("Standard Normal Distribution and Z-Scores")
+    plt.xlabel("z")
+    plt.ylabel("Probability density")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
-# Show the plot
-plt.grid(True)
-plt.show()
+
+if __name__ == "__main__":
+    main()

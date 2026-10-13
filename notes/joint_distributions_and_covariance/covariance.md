@@ -63,14 +63,14 @@ $$
 
 ### Interpretation
 
-- **Positive Covariance ($\text{Cov}(X, Y) > 0 $)**: Indicates that $X$ and $Y$ tend to increase or decrease together.
-- **Negative Covariance ($\text{Cov}(X, Y) < 0 $)**: Indicates that when $X$ increases, $Y$ tends to decrease, and vice versa.
-- **Zero Covariance ($\text{Cov}(X, Y) = 0 $)**: Suggests no linear relationship between $X$ and $Y$.
+- **Positive Covariance ($\text{Cov}(X, Y) > 0$)**: Indicates that $X$ and $Y$ tend to increase or decrease together.
+- **Negative Covariance ($\text{Cov}(X, Y) < 0$)**: Indicates that when $X$ increases, $Y$ tends to decrease, and vice versa.
+- **Zero Covariance ($\text{Cov}(X, Y) = 0$)**: Suggests no linear relationship between $X$ and $Y$.
 
 **Important Note**:
 
-- If $X$ and $Y$ are **independent**, then $\text{Cov}(X, Y) = 0 $.
-- However, a covariance of zero does **not** necessarily imply independence. Variables can be uncorrelated (zero covariance) but still dependent in a non-linear way.
+- If $X$ and $Y$ are **independent** (with finite second moments), then $\text{Cov}(X, Y) = 0$.
+- However, a covariance of zero does **not** necessarily imply independence. Variables can be uncorrelated (zero covariance) but still dependent in a non-linear way. For example, if $X$ is symmetric about $0$ and $Y=X^2$, then $\text{Cov}(X,Y)=E[X^3]-E[X]E[X^2]=0$ although $Y$ is determined by $X$.
 
 ## Properties of Covariance
 
@@ -96,7 +96,7 @@ $$
 \text{Cov}(X, X) = \text{Var}(X)
 $$
 
-IV. **Scaling**:
+IV. **Scaling** (a special case of property II, applied in both arguments):
 
 If $a$ and $b$ are constants:
 
@@ -112,7 +112,13 @@ $$
 \text{Cov}(X + c, Y) = \text{Cov}(X, Y)
 $$
 
-VI. **Relationship with Correlation**:
+VI. **Variance of a Sum**:
+
+$$
+\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y) + 2\,\text{Cov}(X, Y)
+$$
+
+VII. **Relationship with Correlation**:
 
 Covariance is related to the correlation coefficient $\rho_{XY}$:
 
@@ -120,7 +126,7 @@ $$
 \rho_{XY} = \frac{\text{Cov}(X, Y)}{\sigma_X \sigma_Y}
 $$
 
-Where $\sigma_X$ and $\sigma_Y$ are the standard deviations of $X$ and $Y$, respectively.
+Where $\sigma_X$ and $\sigma_Y$ are the standard deviations of $X$ and $Y$, respectively. Consequently $|\text{Cov}(X,Y)|\le\sigma_X\sigma_Y$ (Cauchy-Schwarz inequality).
 
 ## Sample Covariance
 
@@ -136,7 +142,7 @@ Where:
 - $X_i$ and $Y_i$ are the $i$-th observations of variables $X$ and $Y$.
 - $\bar{X}$ and $\bar{Y}$ are the sample means of $X$ and $Y$.
 
-**Note**: The denominator $n - 1$ (Bessel's correction) provides an unbiased estimate of the population covariance when working with a sample. Using $n$ in the denominator would systematically underestimate the true population covariance.
+**Note**: The denominator $n - 1$ (Bessel's correction) provides an unbiased estimate of the population covariance when working with a sample. Using $n$ in the denominator would underestimate the population covariance by the factor $(n-1)/n$ on average.
 
 ### Population vs. Sample Covariance
 
@@ -145,7 +151,7 @@ Where:
 | **Formula** | $\sigma_{XY} = \frac{1}{N} \sum_{i=1}^{N} (X_i - \mu_X)(Y_i - \mu_Y)$ | $s_{XY} = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})$ |
 | **Denominator** | $N$ (population size) | $n - 1$ (degrees of freedom) |
 | **Parameters** | Uses population means $\mu_X$, $\mu_Y$ | Uses sample means $\bar{X}$, $\bar{Y}$ |
-| **Usage** | When data for the entire population is available | When working with a sample drawn from a larger population |
+| **Usage** | When data for the entire (finite) population is available | When working with a sample drawn from a larger population |
 
 In practice, population parameters are rarely known, so the sample covariance with $n - 1$ in the denominator is the standard choice.
 
@@ -177,9 +183,9 @@ Calculate $(X_i - \bar{X})$ and $(Y_i - \bar{Y})$:
 
 | $i$ | $X_i$ | $Y_i$ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ |
 |---------|-----------|-----------|----------------------|----------------------|
-| 1       | 1         | 2         | $1 - 2 = -1$     | $2 - 4 = -2 $     |
-| 2       | 2         | 4         | $2 - 2 = 0 $      | $4 - 4 = 0 $      |
-| 3       | 3         | 6         | $3 - 2 = 1$      | $6 - 4 = 2 $      |
+| 1       | 1         | 2         | $1 - 2 = -1$     | $2 - 4 = -2$     |
+| 2       | 2         | 4         | $2 - 2 = 0$      | $4 - 4 = 0$      |
+| 3       | 3         | 6         | $3 - 2 = 1$      | $6 - 4 = 2$      |
 
 ### Step 3: Calculate the Product of Deviations
 
@@ -187,9 +193,9 @@ Compute $(X_i - \bar{X})(Y_i - \bar{Y})$:
 
 | $i$ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ | $(X_i - \bar{X})(Y_i - \bar{Y})$ |
 |---------|----------------------|----------------------|---------------------------------------|
-| 1       | -1                   | -2                   | $(-1)(-2) = 2 $                    |
-| 2       | 0                    | 0                    | $(0)(0) = 0 $                      |
-| 3       | 1                    | 2                    | $(1)(2) = 2 $                      |
+| 1       | -1                   | -2                   | $(-1)(-2) = 2$                    |
+| 2       | 0                    | 0                    | $(0)(0) = 0$                      |
+| 3       | 1                    | 2                    | $(1)(2) = 2$                      |
 
 ### Step 4: Sum the Products of Deviations
 
@@ -207,7 +213,7 @@ $$
 s_{XY} = \text{Cov}(X, Y) = \frac{1}{n - 1} \sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})
 $$
 
-Since $n = 3 $:
+Since $n = 3$:
 
 $$
 s_{XY} = \frac{1}{3 - 1} \times 4 = \frac{1}{2} \times 4 = 2
@@ -215,7 +221,7 @@ $$
 
 Interpretation:
 
-- The positive covariance of $2 $ indicates that $X$ and $Y$ tend to increase together.
+- The positive covariance of $2$ indicates that $X$ and $Y$ tend to increase together.
 - Since the data points lie perfectly on a straight line ($Y = 2X$), the covariance reflects a perfect positive linear relationship.
 
 ### Step 6: Calculate the Variances (Optional)
@@ -228,12 +234,12 @@ $$
 s_{XX} = \text{Var}(X) = \frac{1}{n - 1} \sum_{i=1}^{n} (X_i - \bar{X})^2
 $$
 
-Compute $(X_i - \bar{X})^2 $:
+Compute $(X_i - \bar{X})^2$:
 
-| $i$ | $X_i - \bar{X}$ | $(X_i - \bar{X})^2 $ |
+| $i$ | $X_i - \bar{X}$ | $(X_i - \bar{X})^2$ |
 |---------|----------------------|-------------------------|
 | 1       | -1                   | $(-1)^2 = 1$        |
-| 2       | 0                    | $(0)^2 = 0 $         |
+| 2       | 0                    | $(0)^2 = 0$         |
 | 3       | 1                    | $(1)^2 = 1$         |
 
 Sum:
@@ -250,13 +256,13 @@ $$
 
 #### Variance of $Y$
 
-Similarly, compute $(Y_i - \bar{Y})^2 $:
+Similarly, compute $(Y_i - \bar{Y})^2$:
 
-| $i$ | $Y_i - \bar{Y}$ | $(Y_i - \bar{Y})^2 $ |
+| $i$ | $Y_i - \bar{Y}$ | $(Y_i - \bar{Y})^2$ |
 |---------|----------------------|-------------------------|
-| 1       | -2                   | $(-2)^2 = 4 $        |
-| 2       | 0                    | $(0)^2 = 0 $         |
-| 3       | 2                    | $(2)^2 = 4 $         |
+| 1       | -2                   | $(-2)^2 = 4$        |
+| 2       | 0                    | $(0)^2 = 0$         |
+| 3       | 2                    | $(2)^2 = 4$         |
 
 Sum:
 
@@ -303,6 +309,7 @@ III. **Not a Measure of Strength**:
 
 - The magnitude of covariance does not directly indicate the strength of the relationship.
 - A large covariance could be due to large variances rather than a strong relationship.
+- Covariance values are not bounded by a universal constant; only $|\text{Cov}(X,Y)|\le\sigma_X\sigma_Y$ holds.
 
 IV. **Linear Relationships Only**:
 

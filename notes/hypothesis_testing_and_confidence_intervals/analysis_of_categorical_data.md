@@ -156,7 +156,7 @@ where:
 * $E_i$ is the expected count,
 * $k$ is the number of categories.
 
-For these data:
+For these data the six terms are $0.44,\,0.99,\,0.30,\,0.95,\,1.29,\,0.35$, so:
 
 ```math
 \chi^2\approx4.32.
@@ -166,13 +166,13 @@ Each term measures the difference between an observed count and its expected val
 
 #### Degrees of Freedom
 
-When all expected proportions are specified in advance:
+When all expected proportions are specified in advance (none are estimated from the data):
 
 ```math
 df=k-1.
 ```
 
-For 6 colors:
+If $m$ parameters of the null distribution are estimated from the data, the degrees of freedom drop to $k-1-m$. For 6 colors:
 
 ```math
 df=6-1=5.
@@ -192,7 +192,7 @@ Using the chi-square distribution with $df=5$, the critical value is approximate
 \chi^2_{0.95,5}\approx11.07.
 ```
 
-Reject $H_0$ if:
+Large values of $\chi^2$ indicate poor agreement with $H_0$, so the test is right-tailed. Reject $H_0$ if:
 
 ```math
 \chi^2_{\text{observed}}>11.07.
@@ -201,7 +201,7 @@ Reject $H_0$ if:
 Equivalently, using a p-value, reject $H_0$ when:
 
 ```math
-p<\alpha.
+p\le\alpha.
 ```
 
 #### Interpretation

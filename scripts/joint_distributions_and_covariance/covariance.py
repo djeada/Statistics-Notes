@@ -1,3 +1,5 @@
+"""Sample covariance and correlation for the Y = 2X example, computed step by step."""
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -65,7 +67,7 @@ def plot_data(df, covariance, correlation_coefficient):
 
     plt.figure(figsize=(8, 6))
     plt.scatter(df['X'], df['Y'], color='blue', label='Data points')
-    plt.plot(df['X'], df['Y'], color='red', label=f'Y = 2X')
+    plt.plot(df['X'], df['Y'], color='red', label='Y = 2X')
 
     # Adding labels and title
     plt.title('Scatter Plot of X and Y with Covariance Calculation', fontsize=14)

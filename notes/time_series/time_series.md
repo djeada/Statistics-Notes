@@ -260,24 +260,24 @@ Consider monthly sales:
 
 ### Plotting the Time Series Data
 
-An ASCII plot makes the upward movement visible:
+An ASCII plot makes the upward movement, and the dips at months 3 and 9, visible:
 
 ```text
 Sales
-210 |                                   x
-200 |                                x
-190 |                             x
-180 |                         x
-170 |                      x
-160 |                   x
-150 |                x
-140 |             x
-130 |          x
-120 |       x
-110 |    x
-100 | x
-    -------------------------------------
-      1  2  3  4  5  6  7  8  9  10 11 12
+210 |                                 x
+200 |                              x
+190 |                           x
+180 |                     x
+170 |                        x
+160 |                  x
+150 |               x
+140 |            x
+130 |         x
+120 |   x
+110 |      x
+100 |x
+    +-------------------------------------
+     1  2  3  4  5  6  7  8  9  10 11 12
                    Month
 ```
 

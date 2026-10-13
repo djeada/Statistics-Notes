@@ -37,9 +37,11 @@ The variance of a chi-square distribution is given by:
 
 $$\text{Var}(X) = 2k$$
 
+In normal sampling, if $X_1,\ldots,X_n$ are i.i.d. $N(\mu,\sigma^2)$ and $S^2$ is the sample variance, then $(n-1)S^2/\sigma^2\sim\chi^2(n-1)$. This is the link to confidence intervals for a variance.
+
 ### Moment Generating Functions and Moments
 
-The moment generating function (MGF) of a chi-square distribution is:
+The moment generating function (MGF) of a chi-square distribution, defined for $t<1/2$, is:
 
 $$M_X(t) = E[e^{tX}] = (1-2t)^{-\frac{k}{2}}$$
 
@@ -51,7 +53,7 @@ $$E[X^n] = \frac{d^n M_X(t)}{dt^n}\Bigg|_{t=0}$$
 
 $$E[X] = k$$
 
-* **Second Moment (Variance + Mean^2):**
+* **Second Moment ($\text{Var}(X) + (E[X])^2 = 2k + k^2$):**
 
 $$E[X^2] = k^2 + 2k$$
 
@@ -82,11 +84,15 @@ where $O_i$ is the observed frequency and $E$ is the expected frequency.
 
 I. Calculate the chi-square statistic:
 
-$$ \chi^2 = \frac{(8-10)^2}{10} + \frac{(9-10)^2}{10} + \frac{(13-10)^2}{10} + \frac{(7-10)^2}{10} + \frac{(12-10)^2}{10} + \frac{(11-10)^2}{10} = 3.6 $$
+$$ \chi^2 = \frac{(8-10)^2}{10} + \frac{(9-10)^2}{10} + \frac{(13-10)^2}{10} + \frac{(7-10)^2}{10} + \frac{(12-10)^2}{10} + \frac{(11-10)^2}{10} = \frac{4+1+9+9+4+1}{10} = 2.8 $$
 
 II. Determine the degrees of freedom:
 
 Degrees of freedom for chi-square test: `Number of categories - 1 = 6 - 1 = 5`
+
+III. Decide:
+
+The 5% critical value of $\chi^2(5)$ is $11.07$ and the p-value is $P(\chi^2(5)\ge 2.8)\approx 0.73$. Since $2.8<11.07$, there is no evidence that the die is unfair.
 
 ### Applications
 

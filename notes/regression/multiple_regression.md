@@ -13,10 +13,10 @@ $$
 Where:
 
 - $y$ is the dependent variable (response variable).
-- $x_1, x_2, \dots, x_p $ are the independent variables (predictor variables).
-- $\beta_0 $ is the intercept term (the expected value of $y$ when all $x_j = 0 $).
-- $\beta_1, \beta_2, \dots, \beta_p $ are the coefficients representing the change in $y$ for a one-unit change in $x_j $, holding all other variables constant.
-- $\varepsilon $ is the random error term, accounting for the variability in $y$ not explained by the linear relationship.
+- $x_1, x_2, \dots, x_p$ are the independent variables (predictor variables).
+- $\beta_0$ is the intercept term (the expected value of $y$ when all $x_j = 0$).
+- $\beta_1, \beta_2, \dots, \beta_p$ are the coefficients representing the change in $y$ for a one-unit change in $x_j$, holding all other variables constant.
+- $\varepsilon$ is the random error term, accounting for the variability in $y$ not explained by the linear relationship.
 
 ### Matrix Representation
 
@@ -40,8 +40,9 @@ For the multiple linear regression model to provide valid results, several key a
 1. **Linearity** means that the relationship between the dependent variable and each independent variable is linear.
 2. **Independence** assumes that the observations are independent of one another.
 3. **Homoscedasticity** ensures that the variance of the error terms remains constant across all levels of the independent variables.
-4. **Normality** requires that the error terms are normally distributed with a mean of zero.
-5. Finally, **no multicollinearity** ensures that the independent variables are not perfectly correlated with each other.
+4. **Zero-mean errors** requires $E[\varepsilon_i \mid \mathbf{x}_i] = 0$, i.e. the errors are uncorrelated with the predictors.
+5. **Normality** requires that the error terms are normally distributed; it is needed only for exact small-sample $t$ and $F$ inference, not for unbiasedness of OLS.
+6. Finally, **no perfect multicollinearity** ensures that no predictor is an exact linear combination of the others (strong but imperfect collinearity is allowed, but inflates standard errors).
 
 ## Estimation of Coefficients
 
@@ -84,47 +85,49 @@ $$
 ### Coefficient of Determination ($R^2$)
 
 $$
-R^2 = 1 - \frac{\text{SSR}}{\text{SST}}
+R^2 = 1 - \frac{\text{SSE}}{\text{SST}}
 $$
 
-- **SSR (Sum of Squared Residuals)** measures the unexplained variation in the model, representing the error.
-- **SST (Total Sum of Squares)** captures the total variation in $y$, showing the overall variability in the dependent variable.
+- **SSE (Sum of Squared Errors, i.e. residuals)** $=\sum_i (y_i - \hat{y}_i)^2$ measures the unexplained variation in the model. (The simple linear regression note uses SSR for the *regression* sum of squares, so SSE is used here to avoid ambiguity.)
+- **SST (Total Sum of Squares)** $=\sum_i (y_i - \bar{y})^2$ captures the total variation in $y$.
 
-An $R^2$ value close to 1 indicates a good fit.
+An $R^2$ value close to 1 indicates that the model captures most of the sample variability. Note that $R^2$ never decreases when a predictor is added, even a useless one, so it cannot be used alone to compare models with different numbers of predictors.
 
 ### Adjusted $R^2$
 
 Adjusts $R^2$ for the number of predictors in the model:
 
 $$
-\text{Adjusted } R^2 = 1 - \left( \frac{\text{SSR} / (n - p - 1)}{\text{SST} / (n - 1)} \right)
+\text{Adjusted } R^2 = 1 - \frac{\text{SSE} / (n - p - 1)}{\text{SST} / (n - 1)}
 $$
 
 ## Hypothesis Testing
 
 ### Testing Individual Coefficients
 
-- **Null Hypothesis ($H_0 $)**: $\beta_j = 0 $
-- **Alternative Hypothesis ($H_a $)**: $\beta_j \neq 0 $
+- **Null Hypothesis ($H_0$)**: $\beta_j = 0$
+- **Alternative Hypothesis ($H_a$)**: $\beta_j \neq 0$
 - **Test Statistic**:
 
 $$
 t_j = \frac{\hat{\beta}_j}{\text{SE}(\hat{\beta}_j)}
 $$
 
-- **Degrees of Freedom**: $n - p - 1$
+- **Degrees of Freedom**: $n - p - 1$ (the statistic follows a $t_{n-p-1}$ distribution under $H_0$)
+- **Standard error**: $\text{SE}(\hat{\beta}_j) = s\sqrt{[(\mathbf{X}^\top\mathbf{X})^{-1}]_{jj}}$ with $s^2 = \text{SSE}/(n-p-1)$.
 
 ### Testing Overall Model Significance
 
-- **Null Hypothesis ($H_0 $)**: All $\beta_j = 0 $
-- **Alternative Hypothesis ($H_a $)**: At least one $\beta_j \neq 0 $
+- **Null Hypothesis ($H_0$)**: All $\beta_j = 0$
+- **Alternative Hypothesis ($H_a$)**: At least one $\beta_j \neq 0$
 - **F-Statistic**:
 
 $$
-F = \frac{(\text{SST} - \text{SSR}) / p}{\text{SSR} / (n - p - 1)}
+F = \frac{(\text{SST} - \text{SSE}) / p}{\text{SSE} / (n - p - 1)}
 $$
 
-- **Degrees of Freedom**: $p $ and $n - p - 1$
+- **Degrees of Freedom**: $p$ and $n - p - 1$
+- Equivalent form: $F = \dfrac{R^2/p}{(1-R^2)/(n-p-1)}$
 
 ## Diagnosing Multicollinearity
 
@@ -136,8 +139,8 @@ $$
 \text{VIF}_j = \frac{1}{1 - R_j^2}
 $$
 
-- $R_j^2$ is the $R^2$ from regressing $x_j $ on the other predictors.
-- A VIF value greater than 5 or 10 indicates high multicollinearity.
+- $R_j^2$ is the $R^2$ from regressing $x_j$ on the other predictors.
+- A VIF value greater than 5 or 10 is a common rule of thumb for problematic multicollinearity. With exactly two predictors, $R_j^2 = r_{x_1x_2}^2$.
 
 ### Remedies
 
@@ -160,7 +163,7 @@ $$
 D = \frac{\sum_{i=2}^n (e_i - e_{i-1})^2}{\sum_{i=1}^n e_i^2}
 $$
 
-Values close to 2 indicate no autocorrelation.
+Values close to 2 indicate no first-order autocorrelation ($D \approx 2(1-\hat\rho_1)$); values near 0 suggest positive and values near 4 negative autocorrelation.
 
 ## Extensions
 
@@ -182,13 +185,13 @@ $$
 
 ### Regularization Techniques
 
-**Ridge Regression**: Adds penalty for large coefficients.
+**Ridge Regression**: Adds an $L_2$ penalty $\lambda\sum_j \beta_j^2$ on large coefficients. The closed form below assumes centered (and typically standardized) predictors, a centered response, and no intercept column, since the intercept is not penalized.
 
 $$
 \hat{\boldsymbol{\beta}}_{\text{ridge}} = (\mathbf{X}^\top \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^\top \mathbf{y}
 $$
 
-**Lasso Regression**: Encourages sparsity in coefficients.
+**Lasso Regression**: Adds an $L_1$ penalty that encourages sparsity (some coefficients become exactly zero); there is no closed form.
 
 $$
 \text{Minimize } \sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^p |\beta_j|
@@ -217,7 +220,7 @@ This means that there is perfect multicollinearity between $x_1$ and $x_2$. In m
 
 ### Implications of Multicollinearity
 
-When independent variables are perfectly correlated, the matrix $X^\top X $ (where $X $ is the design matrix) becomes singular (non-invertible). This prevents us from calculating the coefficients using the normal equation:
+When independent variables are perfectly correlated, the matrix $X^\top X$ (where $X$ is the design matrix) becomes singular (non-invertible). This prevents us from calculating the coefficients using the normal equation:
 
 $$
 \hat{\boldsymbol{\beta}} = (X^\top X)^{-1} X^\top \boldsymbol{y}
@@ -271,7 +274,7 @@ $$
 
 #### 3. Calculate the Regression Coefficients
 
-Compute the slope ($\hat{\gamma}$) and intercept ($\hat{\beta}_0 $):
+Compute the slope ($\hat{\gamma}$) and intercept ($\hat{\beta}_0$):
 
 $$
 \hat{\gamma} = \frac{SS_{x_1 y}}{SS_{x_1 x_1}} = \frac{100}{20} = 5
@@ -299,19 +302,19 @@ $$
 \hat{y} = 40 + 5(2) = 50
 $$
 
-For $x_1 = 4 $:
+For $x_1 = 4$:
 
 $$
 \hat{y} = 40 + 5(4) = 60
 $$
 
-For $x_1 = 6 $:
+For $x_1 = 6$:
 
 $$
 \hat{y} = 40 + 5(6) = 70
 $$
 
-For $x_1 = 8 $:
+For $x_1 = 8$:
 
 $$
 \hat{y} = 40 + 5(8) = 80
@@ -327,7 +330,7 @@ Plot:
 
 Suppose we have the following data on the number of hours studied ($x_1$), attendance rate ($x_2$) as a percentage, and test scores ($y$):
 
-| Student ($i $) | Hours Studied ($x_{1i}$) | Attendance Rate ($x_{2i}$) | Test Score ($y_i$) |
+| Student ($i$) | Hours Studied ($x_{1i}$) | Attendance Rate ($x_{2i}$) | Test Score ($y_i$) |
 |-------------------|-------------------------------|---------------------------------|-------------------------|
 | 1                 | 2                             | 70                              | 65                      |
 | 2                 | 3                             | 80                              | 70                      |
@@ -348,7 +351,7 @@ where:
 - $y$ is the dependent variable (test score),
 - $x_1$ is the number of hours studied,
 - $x_2$ is the attendance rate,
-- $\varepsilon $ is the error term.
+- $\varepsilon$ is the error term.
 
 ### Step-by-Step Calculation
 
@@ -356,7 +359,7 @@ where:
 
 First, compute the necessary sums and products:
 
-| $i $ | $x_{1i}$ | $x_{2i}$ | $y_i$ | $x_{1i}^2$ | $x_{2i}^2$ | $x_{1i} x_{2i}$ | $x_{1i} y_i$ | $x_{2i} y_i$ |
+| $i$ | $x_{1i}$ | $x_{2i}$ | $y_i$ | $x_{1i}^2$ | $x_{2i}^2$ | $x_{1i} x_{2i}$ | $x_{1i} y_i$ | $x_{2i} y_i$ |
 |---------|--------------|--------------|-----------|----------------|----------------|---------------------|------------------|------------------|
 | 1       | 2            | 70           | 65        | 4              | 4,900          | 140                 | 130              | 4,550            |
 | 2       | 3            | 80           | 70        | 9              | 6,400          | 240                 | 210              | 5,600            |
@@ -428,7 +431,7 @@ $$
 $$
 
 $$
-\hat{\beta}_1 = \frac{(137)(820) - (111)(515)}{14{,}575} = \frac{112{,}340 - 57{,}165}{14{,}575} = \frac{55{,}175}{14{,}575} \approx 3.785
+\hat{\beta}_1 = \frac{(137)(820) - (111)(515)}{14{,}575} = \frac{112{,}340 - 57{,}165}{14{,}575} = \frac{55{,}175}{14{,}575} \approx 3.786
 $$
 
 **Coefficient $\hat{\beta}_2$:**
@@ -441,14 +444,14 @@ $$
 \hat{\beta}_2 = \frac{(515)(32.8) - (111)(137)}{14{,}575} = \frac{16{,}892 - 15{,}207}{14{,}575} = \frac{1{,}685}{14{,}575} \approx 0.116
 $$
 
-**Intercept $\hat{\beta}_0 $:**
+**Intercept $\hat{\beta}_0$:**
 
 $$
 \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}_1 - \hat{\beta}_2 \bar{x}_2
 $$
 
 $$
-\hat{\beta}_0 = 78 - (3.785)(5.2) - (0.116)(79) = 78 - 19.642 - 9.164 \approx 49.194
+\hat{\beta}_0 = 78 - (3.7856)(5.2) - (0.1156)(79) = 78 - 19.685 - 9.133 \approx 49.182
 $$
 
 #### 5. Write the Regression Equation
@@ -456,14 +459,14 @@ $$
 The estimated multiple linear regression model is:
 
 $$
-\hat{y} = 49.194 + 3.785 x_1 + 0.116 x_2
+\hat{y} = 49.182 + 3.7856 x_1 + 0.1156 x_2
 $$
 
 #### 6. Interpret the Coefficients
 
-- The **intercept ($\beta_0 = 49.194$)** represents the estimated test score when both hours studied and attendance rate are zero. While this value may not have practical significance, it is necessary for constructing the mathematical model.
-- The **coefficient of $x_1$ ($\beta_1 = 3.785$)** suggests that for each additional hour studied, the test score increases by approximately 3.785 points, assuming the attendance rate remains constant.
-- The **coefficient of $x_2$ ($\beta_2 = 0.116$)** indicates that for each 1% increase in attendance rate, the test score rises by approximately 0.116 points, holding hours studied constant.
+- The **intercept ($\hat\beta_0 = 49.182$)** represents the estimated test score when both hours studied and attendance rate are zero. While this value may not have practical significance, it is necessary for constructing the mathematical model.
+- The **coefficient of $x_1$ ($\hat\beta_1 = 3.786$)** suggests that for each additional hour studied, the test score increases by approximately 3.786 points, assuming the attendance rate remains constant.
+- The **coefficient of $x_2$ ($\hat\beta_2 = 0.116$)** indicates that for each 1% increase in attendance rate, the test score rises by approximately 0.116 points, holding hours studied constant.
 
 #### 7. Verify the Model with the Data
 
@@ -472,54 +475,58 @@ Compute the predicted test scores ($\hat{y}_i$) and residuals ($e_i = y_i - \hat
 **For Student 1:**
 
 $$
-\hat{y}_1 = 49.194 + 3.785 (2) + 0.116 (70) = 49.194 + 7.570 + 8.120 = 64.884
+\hat{y}_1 = 49.182 + 3.7856 (2) + 0.1156 (70) = 49.182 + 7.571 + 8.092 = 64.845
 $$
 
 $$
-e_1 = y_1 - \hat{y}_1 = 65 - 64.884 = 0.116
+e_1 = y_1 - \hat{y}_1 = 65 - 64.845 = 0.155
 $$
 
 **For Student 2:**
 
 $$
-\hat{y}_2 = 49.194 + 3.785 (3) + 0.116 (80) = 49.194 + 11.355 + 9.280 = 69.829
+\hat{y}_2 = 49.182 + 3.7856 (3) + 0.1156 (80) = 49.182 + 11.357 + 9.248 = 69.787
 $$
 
 $$
-e_2 = 70 - 69.829 = 0.171
+e_2 = y_2 - \hat{y}_2 = 70 - 69.787 = 0.213
 $$
 
 **For Student 3:**
 
 $$
-\hat{y}_3 = 49.194 + 3.785 (5) + 0.116 (60) = 49.194 + 18.925 + 6.960 = 75.079
+\hat{y}_3 = 49.182 + 3.7856 (5) + 0.1156 (60) = 49.182 + 18.928 + 6.936 = 75.046
 $$
 
 $$
-e_3 = 75 - 75.079 = -0.079
+e_3 = y_3 - \hat{y}_3 = 75 - 75.046 = -0.046
 $$
 
 **For Student 4:**
 
 $$
-\hat{y}_4 = 49.194 + 3.785 (7) + 0.116 (90) = 49.194 + 26.495 + 10.440 = 86.129
+\hat{y}_4 = 49.182 + 3.7856 (7) + 0.1156 (90) = 49.182 + 26.499 + 10.404 = 86.085
 $$
 
 $$
-e_4 = 85 - 86.129 = -1.129
+e_4 = y_4 - \hat{y}_4 = 85 - 86.085 = -1.085
 $$
 
 **For Student 5:**
 
 $$
-\hat{y}_5 = 49.194 + 3.785 (9) + 0.116 (95) = 49.194 + 34.065 + 11.020 = 94.279
+\hat{y}_5 = 49.182 + 3.7856 (9) + 0.1156 (95) = 49.182 + 34.070 + 10.982 = 94.234
 $$
 
 $$
-e_5 = 95 - 94.279 = 0.721
+e_5 = y_5 - \hat{y}_5 = 95 - 94.234 = 0.766
 $$
 
-The residuals are small, indicating a good fit of the model to the data.
+The residuals are small, indicating a good fit of the model to the data. Their sum is zero (up to rounding), as it must be when the model has an intercept. Quantitatively, $\text{SSE} \approx 1.835$ and $\text{SST} = 580$, so
+
+$$
+R^2 = 1 - \frac{1.835}{580} \approx 0.997, \qquad \text{Adjusted } R^2 = 1 - \frac{1.835/2}{580/4} \approx 0.994.
+$$
 
 Plot:
 
@@ -538,4 +545,4 @@ $$
 r_{x_1 x_2} = \frac{111}{\sqrt{32.8 \times 820}} = \frac{111}{\sqrt{26{,}896}} = \frac{111}{164} \approx 0.677
 $$
 
-A correlation coefficient of approximately 0.677 indicates a moderate correlation, not perfect multicollinearity.
+A correlation coefficient of approximately 0.677 indicates a moderate correlation, not perfect multicollinearity. The corresponding variance inflation factor is $\text{VIF} = 1/(1-0.677^2) \approx 1.85$, well below the usual thresholds of 5 or 10.

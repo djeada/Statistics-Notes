@@ -229,9 +229,9 @@ def figure_02_nearest_training_distance():
     plt.figure(figsize=(8, 5))
     plt.boxplot(
         data,
-        labels=["Random", "Spatial blocks", "Buffered blocks"],
         showfliers=False,
     )
+    plt.xticks([1, 2, 3], ["Random", "Spatial blocks", "Buffered blocks"])
     plt.ylabel("Nearest training distance")
     plt.title("Validation schemes create very different train-test separation")
     save_and_close("02_nearest_training_distance.png")
@@ -320,7 +320,6 @@ def figure_05_buffer_geometry():
     buffer_distance = 1.7
     train = buffered_train_indices(coords, test, buffer_distance)
 
-    all_idx = np.arange(len(coords))
     is_test = np.zeros(len(coords), dtype=bool)
     is_test[test] = True
     is_train = np.zeros(len(coords), dtype=bool)
@@ -444,9 +443,9 @@ def figure_07_loo_vs_region_transfer():
     plt.figure(figsize=(8, 5))
     plt.boxplot(
         [loo_errors, region_errors],
-        labels=["Leave-one-out-like", "Held-out region"],
         showfliers=False,
     )
+    plt.xticks([1, 2], ["Leave-one-out-like", "Held-out region"])
     plt.ylabel("Absolute prediction error")
     plt.title("Local interpolation can look much easier than geographic transfer")
     save_and_close("07_loo_vs_region_transfer.png")

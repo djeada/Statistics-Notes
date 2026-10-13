@@ -21,8 +21,8 @@ Forecasting methods differ in the assumptions they make about persistence, trend
 | Holt forecast | $\hat y_{t+h\mid t}=\ell_t+hb_t$ | Damped-trend variants shrink the long-run trend contribution. |
 | Holt-Winters additive forecast | $\hat y_{t+h\mid t}=\ell_t+hb_t+s_{t+h-L\lceil h/L\rceil}$ | Seasonal effects are additive and measured in response units. |
 | Holt-Winters multiplicative forecast | $\hat y_{t+h\mid t}=(\ell_t+hb_t)s_{t+h-L\lceil h/L\rceil}$ | Seasonal amplitude scales with the level. |
-| AR(1) $h$-step forecast | $\hat X_{t+h\mid t}=\mu+\phi^h(X_t-\mu)$ | Mean reversion for $|\phi|<1$. |
-| AR(1) forecast-error variance | $\sigma_h^2=\sigma_\varepsilon^2\sum_{j=0}^{h-1}\phi^{2j}$ | Equals $\sigma_\varepsilon^2(1-\phi^{2h})/(1-\phi^2)$ when $|\phi|\ne1$. |
+| AR(1) $h$-step forecast | $\hat X_{t+h\mid t}=\mu+\phi^h(X_t-\mu)$ | Mean reversion for $\lvert\phi\rvert<1$. |
+| AR(1) forecast-error variance | $\sigma_h^2=\sigma_\varepsilon^2\sum_{j=0}^{h-1}\phi^{2j}$ | Equals $\sigma_\varepsilon^2(1-\phi^{2h})/(1-\phi^2)$ when $\lvert\phi\rvert\ne1$. |
 | Random-walk forecast variance | $\mathrm{Var}(e_{t,h})=h\sigma_\varepsilon^2$ | Uncertainty grows without bound with horizon. |
 | Linear stationary predictor | $\hat X_{n+h}=\mu+a^\top(X_n-\mu,\ldots,X_1-\mu)^\top$ | Coefficients solve $\Gamma_na=\gamma_n(h)$. |
 | Gaussian prediction interval | $\hat y_{t+h\mid t}\pm z_{1-\alpha/2}\sigma_h$ | Requires an estimated or model-implied forecast-error standard deviation. |
@@ -60,11 +60,13 @@ $$
 \mathrm{Var}(e_{T+2})=1+0.8^2=1.64,
 $$
 
-so an approximate Gaussian 95% prediction interval around the two-step forecast uses
+so an approximate Gaussian 95% prediction interval around the two-step forecast $0.8^2(5)=3.2$ uses
 
 $$
-3.2\pm1.96\sqrt{1.64}.
+3.2\pm1.96\sqrt{1.64}\approx3.2\pm2.51,
 $$
+
+that is, roughly $(0.69,\,5.71)$.
 
 The point forecast moves toward the long-run mean, while the uncertainty increases with horizon.
 
@@ -544,11 +546,11 @@ Forecast accuracy must be evaluated out of sample with temporal order preserved.
 
 | Metric | Formula | Interpretation |
 |---|---|---|
-| **MAE** | $\mathrm{MAE}=\frac{1}{n}\sum_{t=1}^{n}|y_t-\hat y_t|$ | Average absolute error in the response units. |
+| **MAE** | $\mathrm{MAE}=\frac{1}{n}\sum_{t=1}^{n}\lvert y_t-\hat y_t\rvert$ | Average absolute error in the response units. |
 | **MSE** | $\mathrm{MSE}=\frac{1}{n}\sum_{t=1}^{n}(y_t-\hat y_t)^2$ | Squared-error loss; gives large misses more influence. |
 | **RMSE** | $\mathrm{RMSE}=\sqrt{\frac{1}{n}\sum_{t=1}^{n}(y_t-\hat y_t)^2}$ | Square-root of MSE, returned to response units. |
-| **MAPE** | $\mathrm{MAPE}=\frac{100}{n}\sum_{t=1}^{n}\left|\frac{y_t-\hat y_t}{y_t}\right|$ | Percentage error; undefined at zero and unstable near zero. |
-| **sMAPE** | $\mathrm{sMAPE}=\frac{100}{n}\sum_{t=1}^{n}\frac{|y_t-\hat y_t|}{(|y_t|+|\hat y_t|)/2}$ | Symmetric scaling, but still problematic when both actual and forecast are near zero. |
+| **MAPE** | $\mathrm{MAPE}=\frac{100}{n}\sum_{t=1}^{n}\left\lvert\frac{y_t-\hat y_t}{y_t}\right\rvert$ | Percentage error; undefined at zero and unstable near zero. |
+| **sMAPE** | $\mathrm{sMAPE}=\frac{100}{n}\sum_{t=1}^{n}\frac{\lvert y_t-\hat y_t\rvert}{(\lvert y_t\rvert+\lvert\hat y_t\rvert)/2}$ | Symmetric scaling, but still problematic when both actual and forecast are near zero. |
 
 AIC and BIC are not forecast-error metrics. They compare likelihood-based candidate models fitted to the same response data:
 

@@ -443,13 +443,13 @@ The following mock series illustrates short-term dependence consistent with an A
 
 ### Auto-Regressive (AR) and Moving Average (MA) Models with ACF and PACF
 
-In time series analysis, **Auto-Regressive (AR)** and Moving Average (MA) models are widely used for modeling and forecasting. Identifying the correct order of these models relies on interpreting the Autocorrelation Function (ACF) and the Partial Autocorrelation Function (PACF).
+In time series analysis, Auto-Regressive (AR) and Moving Average (MA) models are widely used for modeling and forecasting. Identifying the correct order of these models relies on interpreting the Autocorrelation Function (ACF) and the Partial Autocorrelation Function (PACF).
 
 #### Auto-Regressive (AR) Model
 An AR($p$) model expresses the current value as a linear function of its own previous values plus a new innovation:
 
 $$
-y_t=c+\alpha_1y_{t-1}+\alpha_2y_{t-2}+\dots+\alpha_py_{t-p}+\varepsilon_t.
+y_t=c+\phi_1y_{t-1}+\phi_2y_{t-2}+\dots+\phi_py_{t-p}+\varepsilon_t.
 $$
 
 The order $p$ is the number of lagged values included. In the ideal stationary population, the PACF is zero after lag $p$, while the ACF tails off. This makes the PACF especially useful for proposing an AR order, although estimation and diagnostics are still required.
@@ -459,7 +459,7 @@ The order $p$ is the number of lagged values included. In the ideal stationary p
 An MA($q$) model expresses the current value in terms of the current innovation and a finite number of previous innovations:
 
 $$
-y_t=\mu+\varepsilon_t+\beta_1\varepsilon_{t-1}+\beta_2\varepsilon_{t-2}+\dots+\beta_q\varepsilon_{t-q}.
+y_t=\mu+\varepsilon_t+\theta_1\varepsilon_{t-1}+\theta_2\varepsilon_{t-2}+\dots+\theta_q\varepsilon_{t-q}.
 $$
 
 The order $q$ is the number of past shocks retained in the model. In the ideal population, the ACF is zero after lag $q$, while the PACF tails off. The following figure illustrates that finite shock duration in the MA representation.
@@ -579,7 +579,7 @@ For a seasonal period $s$, inspect lags $s,2s,3s$ and the neighboring lags. A sp
 
 The appropriate treatment depends on the source of the dependence. Seasonal differencing is not automatically preferable to explicit seasonal terms, calendar predictors, or a seasonal-naive benchmark.
 
-### Numerical identification table
+### Identification table
 
 | model | typical ACF | typical PACF |
 |---|---|---|
@@ -590,3 +590,5 @@ The appropriate treatment depends on the source of the dependence. Seasonal diff
 | ARMA | tails off | tails off |
 
 These patterns describe ideal population behavior. Use them to propose a small set of candidates, then confirm the choice through estimation, residual diagnostics, and forecast validation.
+
+A runnable companion is the [ACF and PACF notebook](../../notebooks/time_series/autocorrelation_function.ipynb).

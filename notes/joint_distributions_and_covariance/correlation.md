@@ -12,7 +12,7 @@
 
 ## Pearson Correlation Coefficient ($r$)
 
-The **Pearson correlation coefficient** measures the strength and direction of the linear relationship between two continuous variables. It is sensitive to outliers and assumes that the relationship is linear and that both variables are normally distributed.
+The **Pearson correlation coefficient** measures the strength and direction of the linear relationship between two continuous variables. It is sensitive to outliers and summarizes only linear association. It can be computed for any data with positive variances; normality is needed only for exact small-sample inference (confidence intervals and tests) about the population correlation.
 
 ### Definition
 
@@ -27,6 +27,8 @@ Where:
 - $\text{Cov}(X, Y)$ is the covariance between variables $X$ and $Y$.
 - $\sigma_X$ and $\sigma_Y$ are the standard deviations of $X$ and $Y$, respectively.
 
+The same formula is used for the population correlation (with population moments) and for the sample correlation (with sample moments; the factors $1/(n-1)$ cancel between numerator and denominator).
+
 **Alternative Formula**:
 
 $$
@@ -36,14 +38,14 @@ $$
 Where:
 
 - $n$ is the number of observations.
-- $X_i$ and $Y_i$ are the $i $-th observations of $X$ and $Y$.
+- $X_i$ and $Y_i$ are the $i$-th observations of $X$ and $Y$.
 - $\bar{X}$ and $\bar{Y}$ are the sample means of $X$ and $Y$.
 
 ### Interpretation
 
-- $r = 1 $: Perfect positive linear correlation.
-- $r = -1 $: Perfect negative linear correlation.
-- $r = 0 $: No linear correlation.
+- $r = 1$: Perfect positive linear correlation (all points on a line with positive slope).
+- $r = -1$: Perfect negative linear correlation.
+- $r = 0$: No linear correlation.
 
 General Guidelines:
 
@@ -57,13 +59,15 @@ General Guidelines:
 | Moderate Negative Correlation       | -0.7 < r ≤ -0.3  |
 | Strong Negative Correlation         | -1.0 ≤ r ≤ -0.7  |
 
+These cut-offs are conventional rules of thumb, not universal; what counts as "strong" depends on the field.
+
 ### Example: Calculating Pearson's $r$
 
 #### Dataset
 
 Consider the following data on the number of hours studied ($X$) and test scores ($Y$):
 
-| Observation ($i $) | Hours Studied ($X_i$) | Test Score ($Y_i$) |
+| Observation ($i$) | Hours Studied ($X_i$) | Test Score ($Y_i$) |
 |-----------------------|---------------------------|-------------------------|
 | 1                     | 1                         | 50                      |
 | 2                     | 2                         | 60                      |
@@ -85,7 +89,7 @@ $$
 
 Compute $(X_i - \bar{X})$, $(Y_i - \bar{Y})$, and their products:
 
-| $i $ | $X_i$ | $Y_i$ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ | $(X_i - \bar{X})(Y_i - \bar{Y})$ | $(X_i - \bar{X})^2 $ | $(Y_i - \bar{Y})^2 $ |
+| $i$ | $X_i$ | $Y_i$ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ | $(X_i - \bar{X})(Y_i - \bar{Y})$ | $(X_i - \bar{X})^2$ | $(Y_i - \bar{Y})^2$ |
 |---------|-----------|-----------|----------------------|----------------------|---------------------------------------|-------------------------|-------------------------|
 | 1       | 1         | 50        | -2                   | -20                  | 40                                    | 4                       | 400                     |
 | 2       | 2         | 60        | -1                   | -10                  | 10                                    | 1                       | 100                     |
@@ -116,38 +120,40 @@ $$
 
 ![output(12)](https://github.com/user-attachments/assets/36a1926f-d285-4a2f-b025-6b2dfa2f1a5e)
 
-**Pearson's $r = 1 $** indicates a perfect positive linear relationship between hours studied and test scores. As the number of hours studied increases, the test score increases proportionally.
+**Pearson's $r = 1$** indicates a perfect positive linear relationship between hours studied and test scores. As the number of hours studied increases, the test score increases proportionally.
 
-## Spearman Rank Correlation Coefficient ($\rho$)
+## Spearman Rank Correlation Coefficient ($r_s$)
 
-The **Spearman rank correlation coefficient** measures the strength and direction of the monotonic relationship between two ranked variables. It is a non-parametric measure, meaning it does not assume a specific distribution for the variables and is less sensitive to outliers.
+The **Spearman rank correlation coefficient** measures the strength and direction of the monotonic relationship between two variables. It is the Pearson correlation computed on the ranks of the data. It is a non-parametric measure, meaning it does not assume a specific distribution for the variables and is less sensitive to outliers.
 
 ### Definition
 
-The Spearman correlation coefficient $\rho$ is defined as:
+The Spearman correlation coefficient $r_s$ is defined as:
 
 $$
-\rho = 1 - \frac{6 \sum_{i=1}^{n} d_i^2}{n(n^2 - 1)}
+r_s = 1 - \frac{6 \sum_{i=1}^{n} d_i^2}{n(n^2 - 1)}
 $$
 
 Where:
 
 - $d_i = R(X_i) - R(Y_i)$ is the difference between the ranks of $X_i$ and $Y_i$.
 - $R(X_i)$ and $R(Y_i)$ are the ranks of $X_i$ and $Y_i$, respectively.
-- $n $ is the number of observations.
+- $n$ is the number of observations.
+
+This shortcut formula is exact only when there are no ties. With ties, assign average ranks and compute the Pearson correlation of the ranks instead.
 
 ### Calculation Steps
 
 1. **Assign Ranks** to the data points in $X$ and $Y$ separately.
 2. **Compute the Differences of Ranks** $d_i$.
-3. **Square the Differences** $d_i^2 $.
-4. **Compute $\rho$** using the formula.
+3. **Square the Differences** $d_i^2$.
+4. **Compute $r_s$** using the formula.
 
-### Example: Calculating Spearman's $\rho$
+### Example: Calculating Spearman's $r_s$
 
 Using the same dataset:
 
-| Observation ($i $) | Hours Studied ($X_i$) | Test Score ($Y_i$) |
+| Observation ($i$) | Hours Studied ($X_i$) | Test Score ($Y_i$) |
 |-----------------------|---------------------------|-------------------------|
 | 1                     | 1                         | 50                      |
 | 2                     | 2                         | 60                      |
@@ -159,7 +165,7 @@ Using the same dataset:
 
 Since the data is already ordered, the ranks correspond to the order of observations.
 
-| $i $ | $X_i$ | Rank $R(X_i)$ | $Y_i$ | Rank $R(Y_i)$ |
+| $i$ | $X_i$ | Rank $R(X_i)$ | $Y_i$ | Rank $R(Y_i)$ |
 |---------|-----------|--------------------|-----------|--------------------|
 | 1       | 1         | 1                  | 50        | 1                  |
 | 2       | 2         | 2                  | 60        | 2                  |
@@ -171,7 +177,7 @@ Since the data is already ordered, the ranks correspond to the order of observat
 
 Calculate $d_i = R(X_i) - R(Y_i)$:
 
-| $i $ | Rank $R(X_i)$ | Rank $R(Y_i)$ | $d_i$ | $d_i^2 $ |
+| $i$ | Rank $R(X_i)$ | Rank $R(Y_i)$ | $d_i$ | $d_i^2$ |
 |---------|--------------------|--------------------|-----------|-------------|
 | 1       | 1                  | 1                  | 0         | 0           |
 | 2       | 2                  | 2                  | 0         | 0           |
@@ -180,29 +186,30 @@ Calculate $d_i = R(X_i) - R(Y_i)$:
 | 5       | 5                  | 5                  | 0         | 0           |
 | **Sum** |                    |                    |           | **0**       |
 
-#### Step 3: Compute Spearman's $\rho$
+#### Step 3: Compute Spearman's $r_s$
 
 $$
-\rho = 1 - \frac{6 \times 0}{5(5^2 - 1)} = 1 - 0 = 1
+r_s = 1 - \frac{6 \times 0}{5(5^2 - 1)} = 1 - 0 = 1
 $$
 
 #### Interpretation
 
-**Spearman's $\rho = 1 $** indicates a perfect positive monotonic relationship between hours studied and test scores.
+**Spearman's $r_s = 1$** indicates a perfect positive monotonic relationship between hours studied and test scores.
 
-### When to Use Spearman's $\rho$
+### When to Use Spearman's $r_s$
 
 - When data is ordinal.
 - When the relationship between variables is monotonic but not necessarily linear.
 - When there are outliers that might affect Pearson's $r$.
 - When the variables are not normally distributed.
 
-## Comparison of Pearson's $r$ and Spearman's $\rho$
+## Comparison of Pearson's $r$ and Spearman's $r_s$
 
 - **Pearson's $r$** measures the strength of a linear relationship.
-- **Spearman's $\rho$** measures the strength of a monotonic relationship.
+- **Spearman's $r_s$** measures the strength of a monotonic relationship.
 - Both coefficients range from -1 to 1.
-- Spearman's $\rho$ is less sensitive to outliers and does not require the assumption of normality.
+- $r_s = \pm 1$ whenever the relationship is perfectly monotonic, whereas $r = \pm 1$ requires an exact linear relationship.
+- Spearman's $r_s$ is less sensitive to outliers and does not require the assumption of normality.
 
 ## Correlation of Two Random Variables
 
@@ -224,14 +231,14 @@ Where:
 | **Range**          | $-1 \leq \rho_{XY} \leq 1$                                                      |
 | **Symmetry**       | $\rho_{XY} = \rho_{YX}$                                                         |
 | **Dimensionless**  | The correlation coefficient is unitless.                                        |
-| **Linearity**      | If $\rho_{XY} = \pm 1 $, $Y$ is a perfect linear function of $X$.               |
+| **Linearity**      | If $\rho_{XY} = \pm 1$, then $Y=a+bX$ with probability 1 (and $b$ has the sign of $\rho_{XY}$). |
 | **Independence**   | If $X$ and $Y$ are independent, $\rho_{XY} = 0$. However, $\rho_{XY} = 0$ does not imply independence unless the variables are jointly normally distributed. |
 
 ### Interpretation
 
-- **$\rho_{XY} > 0 $**: Positive linear relationship.
-- **$\rho_{XY} < 0 $**: Negative linear relationship.
-- **$\rho_{XY} = 0 $**: No linear relationship.
+- **$\rho_{XY} > 0$**: Positive linear relationship.
+- **$\rho_{XY} < 0$**: Negative linear relationship.
+- **$\rho_{XY} = 0$**: No linear relationship.
 
 ### Example with Random Variables
 
@@ -251,7 +258,8 @@ $$
 
 Interpretation:
 
-- A correlation coefficient of $0.75$ indicates a strong positive linear relationship between $X$ and $Y$.
+- A correlation coefficient of $0.75$ indicates a strong positive linear relationship between $X$ and $Y$ by the conventional guidelines above.
+- The covariance is consistent with the bound $|\text{Cov}(X,Y)|\le\sigma_X\sigma_Y=8$.
 
 ## Important Considerations
 
@@ -264,17 +272,19 @@ Interpretation:
 ### Outliers
 
 - **Pearson's $r$** is sensitive to outliers, which can distort the correlation coefficient.
-- **Spearman's $\rho$** is more robust to outliers due to ranking.
+- **Spearman's $r_s$** is more robust to outliers due to ranking.
 
 ### Non-linear Relationships
 
 - Variables can have a strong non-linear relationship but a low Pearson correlation coefficient.
-- In such cases, Spearman's $\rho$ may detect the monotonic relationship.
+- If the relationship is monotonic (for example $Y=e^X$), Spearman's $r_s$ will detect it.
+- If the relationship is non-monotonic (for example $Y=X^2$ with $X$ symmetric about zero), both coefficients can be near zero even though $Y$ is a function of $X$.
 
 ### Assumptions of Pearson's $r$
 
-1. **Linearity** means that the relationship between $X$ and $Y$ is straight and follows a linear pattern.
-2. **Normality** refers to the condition where both $X$ and $Y$ are normally distributed.
-3. Lastly, **homoscedasticity** implies that the variance of $Y$ remains consistent across all values of $X$.
+1. **Linearity**: the relationship between $X$ and $Y$ should be approximately straight, because $r$ measures only linear association.
+2. **No extreme outliers or leverage points**, which can dominate $r$.
+3. **Approximate bivariate normality** (and independent observations) is needed for the usual $t$-test and Fisher-$z$ confidence interval for $\rho_{XY}$, but not for computing $r$ itself.
+4. **Constant spread** (homoscedasticity) is not required for $r$ to be defined, but a funnel-shaped scatter means a single $r$ summarizes the relationship poorly.
 
-If these assumptions are violated, Pearson's $r$ may not be an appropriate measure of correlation.
+If these conditions are violated, Pearson's $r$ may not be an appropriate summary, and a rank-based or other measure may be preferable.

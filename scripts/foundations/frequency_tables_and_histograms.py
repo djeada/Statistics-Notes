@@ -1,30 +1,27 @@
-import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 
 def create_frequency_table(data):
     """
-    This function takes a list of data points and returns a frequency table as a Pandas DataFrame.
+    Takes a list of data points and returns a frequency table with relative
+    and cumulative relative frequencies as a pandas DataFrame.
     """
-    # Convert the list to a Pandas Series for convenience
-    data_series = pd.Series(data)
+    frequency = pd.Series(data).value_counts().sort_index()
 
-    # Calculate frequency
-    frequency = data_series.value_counts().sort_index()
-
-    # Convert to DataFrame for better formatting and readability
-    frequency_table = frequency.reset_index()
-    frequency_table.columns = ["Value", "Frequency"]
-
-    return frequency_table
+    table = frequency.reset_index()
+    table.columns = ["Value", "Frequency"]
+    table["Relative Frequency"] = table["Frequency"] / table["Frequency"].sum()
+    table["Cumulative Relative Frequency"] = table["Relative Frequency"].cumsum()
+    return table
 
 
 def plot_bar_chart(frequency_table):
     """
-    This function takes a frequency table and plots a bar chart.
+    Plots a bar chart of a frequency table.
     """
-    # Plotting
+    plt.figure()
     plt.bar(frequency_table["Value"], frequency_table["Frequency"])
     plt.xlabel("Value")
     plt.ylabel("Frequency")
@@ -34,9 +31,9 @@ def plot_bar_chart(frequency_table):
 
 def plot_histogram(data, bins):
     """
-    This function plots a histogram for continuous data.
+    Plots a histogram for continuous data with the given bin edges.
     """
-    # Plotting
+    plt.figure()
     plt.hist(data, bins=bins, edgecolor="black")
     plt.xlabel("Value")
     plt.ylabel("Frequency")
@@ -44,21 +41,23 @@ def plot_histogram(data, bins):
     plt.show()
 
 
-# Example Data
-data = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
+def main():
+    # Discrete data
+    data = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
+    freq_table = create_frequency_table(data)
+    print("Frequency Table:")
+    print(freq_table)
+    plot_bar_chart(freq_table)
 
-# Create Frequency Table
-freq_table = create_frequency_table(data)
+    # Continuous data grouped into half-open bins [a, b) as in the note.
+    # np.histogram treats all bins except the last as half-open; the last
+    # bin is closed, which does not matter here (no value equals 177).
+    heights = [170.2, 165.5, 172.3, 168.7, 171.6, 167.4, 169.5, 174.2, 166.1, 173.5]
+    bin_edges = [165, 168, 171, 174, 177]
+    counts, _ = np.histogram(heights, bins=bin_edges)
+    print("\nHeight bin counts:", dict(zip(bin_edges[:-1], counts.tolist())))
+    plot_histogram(heights, bins=bin_edges)
 
-# Display Frequency Table
-print("Frequency Table:")
-print(freq_table)
 
-# Plot Bar Chart
-plot_bar_chart(freq_table)
-
-# For Histogram Example: Continuous Data
-heights = [170.2, 165.5, 172.3, 168.7, 171.6, 167.4, 169.5, 174.2, 166.1, 173.5]
-
-# Plot Histogram for Height Data
-plot_histogram(heights, bins=5)
+if __name__ == "__main__":
+    main()

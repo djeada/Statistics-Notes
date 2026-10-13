@@ -19,7 +19,7 @@ For forecasting, the timing of the predictors is as important as their statistic
 | $h$-step forecast | $\hat y_{t+h\mid t}=\hat\beta_0+\hat\beta^\top x_{t+h}+\hat n_{t+h\mid t}$ | Predictor-path uncertainty should be included when future $x$ is forecast. |
 | Intervention pulse | $P_t=I(t=T_0)$ | Models a one-period event. |
 | Intervention step | $S_t=I(t\ge T_0)$ | Models a persistent level shift. |
-| AR(1) dynamic error | $n_t=\rho n_{t-1}+\varepsilon_t$ | Stationary when $\lvert\rho\rvert<1$. |
+| AR(1) dynamic error | $n_t=\phi n_{t-1}+\varepsilon_t$ | Stationary when $\lvert\phi\rvert<1$. |
 
 ## Worked calculation: an external predictor and a lag
 

@@ -1,4 +1,5 @@
 # Spatial Data, Support, and Distance
+
 Spatial analysis begins before any spatial statistic is calculated.
 
 Before using Moran's $I$, fitting a variogram, running kriging, or analyzing a point pattern, we first need to decide what the spatial observations actually represent.
@@ -325,6 +326,8 @@ d=Rc
 }.
 $$
 
+This treats the Earth as a sphere of radius $R$. Geodesic distance on an ellipsoid (such as WGS84) can differ from the spherical value by a few tenths of a percent, which matters only for high-accuracy work.
+
 ## Worked great-circle example
 
 Consider two locations on the equator:
@@ -631,7 +634,15 @@ $$
 29.
 $$
 
-This small example shows some smoothing, although the amount depends on how the values are arranged.
+The total variance splits into the variance of the block means plus the average within-block variance:
+
+$$
+30 = 29 + 1,
+$$
+
+because each pair has within-block variance $1$. Aggregation removes only the within-block part.
+
+This small example shows some smoothing, although the amount depends on how the values are arranged. Here neighboring values are very similar, so little variance is lost.
 
 In spatial fields with strong high-frequency variation, aggregation can reduce variance much more dramatically.
 

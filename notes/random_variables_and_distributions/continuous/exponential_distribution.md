@@ -1,4 +1,4 @@
-## Exponential Distribution (Continuous)
+# Exponential Distribution (Continuous)
 
 The exponential distribution is a continuous probability distribution that models the time between events in a Poisson point process. The exponential distribution is denoted as $X \sim \text{Exp}(\lambda)$, where $\lambda$ is the rate parameter.
 
@@ -80,3 +80,7 @@ $$ P(X > 10) = e^{-\frac{10}{5}} = e^{-2} \approx 0.1353 $$
 ### Applications
 
 Exponential distributions are used in various fields such as reliability theory, queuing theory, and survival analysis. They model waiting times, lifetimes of electronic components, and the time between consecutive events in a Poisson process.
+
+---
+
+**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/exponential_distribution.md)

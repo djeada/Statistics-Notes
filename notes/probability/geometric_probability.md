@@ -13,7 +13,7 @@ Calculate the probability that a randomly chosen point inside a unit square is a
 - Consider a unit square in the first quadrant of the Cartesian coordinate system, with vertices at $(0,0)$, $(1,0)$, $(0,1)$, and $(1,1)$.
 - Let $O$ denote the origin $(0,0)$.
 - Let $D$ be the distance from a point $(X, Y)$ inside the square to $O$.
-- We aim to find $P(D < r)$, the probability that $D < r$, where $0 \leq r \leq \sqrt{2}$.
+- We aim to find $P(D < r)$, the probability that $D < r$, where $0 \leq r \leq \sqrt{2}$ (for larger $r$ the probability is simply 1).
 
 ![5536c72b-ce5f-4e20-8683-3ede2d2a8a94](https://github.com/djeada/Statistics-Notes/assets/37275728/79a9a1dc-4716-46a1-8c6b-4d0a2da6f47c)
 
@@ -146,7 +146,7 @@ $$P(D < r) = A_E = r^2 \left( \arcsin \left( \frac{1}{r} \right) + \frac{\sqrt{r
 
 I. Compute $\arcsin \left( \frac{1}{1.2} \right)$:
 
-$$\arcsin \left( \frac{1}{1.2} \right) \approx \arcsin(0.8333) \approx 0.9865.$$
+$$\arcsin \left( \frac{1}{1.2} \right) \approx \arcsin(0.8333) \approx 0.9851.$$
 
 II. Compute $\sqrt{(1.2)^2 - 1}$:
 
@@ -156,21 +156,21 @@ III. Compute $A_E$:
 
 $$\begin{aligned}
 
-A_E &\approx (1.2)^2 \left( 0.9865 + \frac{0.6633}{(1.2)^2} - \frac{\pi}{4} \right) \\
+A_E &\approx (1.2)^2 \left( 0.9851 + \frac{0.6633}{(1.2)^2} - \frac{\pi}{4} \right) \\
 
-&= 1.44 \left( 0.9865 + \frac{0.6633}{1.44} - 0.7854 \right) \\
+&= 1.44 \left( 0.9851 + \frac{0.6633}{1.44} - 0.7854 \right) \\
 
-&= 1.44 \left( 0.9865 + 0.4607 - 0.7854 \right) \\
+&= 1.44 \left( 0.9851 + 0.4606 - 0.7854 \right) \\
 
-&= 1.44 \times 0.6618 \approx 0.9521.
+&= 1.44 \times 0.6603 \approx 0.9509.
 
 \end{aligned}$$
 
-So, $P(D < 1.2) \approx 95.21\%$.
+So, $P(D < 1.2) \approx 95.1\%$.
 
 #### Case 3: $r > \sqrt{2}$
 
-For $r \geq \sqrt{2}$, the entire square lies within the circle of radius $r$ centered at the origin. Thus, every point in the square satisfies $D < r$.
+For $r > \sqrt{2}$, the entire square lies within the circle of radius $r$ centered at the origin. Thus, every point in the square satisfies $D < r$.
 
 ##### Probability
 
@@ -192,11 +192,11 @@ The problem is known as Bertrand's Paradox, which arises because the probability
 
 | Method                      | Description                                                                             |
 |-----------------------------|-----------------------------------------------------------------------------------------|
-| **Random Endpoints Method**  | Choose two random points on the circumference and draw the chord between them.          |
-| **Random Radial Point Method** | Fix one endpoint and select the chord's direction uniformly at random.                 |
-| **Random Midpoint Method**   | Choose a random point inside the circle as the midpoint of the chord.                   |
+| **Random Endpoints Method**  | Choose two independent uniform random points on the circumference and draw the chord between them. |
+| **Random Radial Point Method** | Choose a radius at random, choose a point uniformly along it, and draw the chord perpendicular to the radius through that point. |
+| **Random Midpoint Method**   | Choose a point uniformly at random inside the disk as the midpoint of the chord.        |
 
-Each method yields a different probability. We'll use the **Random Midpoint Method** for this example, which provides a well-defined and uniform probability distribution over all possible chords.
+Each method is well defined, but they yield different probabilities for $P(L > R)$: $\frac{2}{3}$ for random endpoints, $\frac{\sqrt{3}}{2}\approx 0.866$ for the random radial point, and $\frac{3}{4}$ for the random midpoint. Which one is "correct" depends on the physical mechanism that is meant by "at random". We'll use the **Random Midpoint Method** for this example.
 
 | Term                           | Description                                                                                                  |
 |---------------------------------|--------------------------------------------------------------------------------------------------------------|
@@ -213,7 +213,7 @@ For the chord to have $L > R$:
 
 $$2 \sqrt{R^2 - d^2} > R \implies \sqrt{R^2 - d^2} > \frac{R}{2} \implies R^2 - d^2 > \left( \frac{R}{2} \right)^2 \implies d^2 < \left( \frac{R\sqrt{3}}{2} \right)^2.$$
 
-Thus, the event $E$ corresponds to all midpoints within a circle of radius $\frac{R}{2}$.
+Thus, the event $E$ corresponds to all midpoints within a circle of radius $\frac{R\sqrt{3}}{2}$ centered at the origin.
 
 #### Probability Calculation
 

@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from student_plot_utils import (
-    acf,
     kalman_filter,
     output_dir,
     save_figure,

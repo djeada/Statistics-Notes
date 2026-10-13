@@ -6,7 +6,7 @@ $$
 P(A) = \sum_{i=1}^{n} P(A|B_i) \times P(B_i)
 $$
 
-where $B_1, B_2, ..., B_n$ are the partitions of the sample space and $P(A|B_i)$ is the conditional probability of A given $B_i$.
+where $B_1, B_2, \ldots, B_n$ is a partition of the sample space (each with $P(B_i)>0$) and $P(A|B_i)$ is the conditional probability of A given $B_i$.
 
 ### Conditions for Applying the Law
 

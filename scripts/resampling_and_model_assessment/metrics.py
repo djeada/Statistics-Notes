@@ -73,6 +73,8 @@ def plot_results_with_error_lines(X: np.ndarray, y: np.ndarray, model: LinearReg
 
 # Main execution function to bring everything together
 def main():
+    np.random.seed(42)
+
     # Step 1: Generate data
     X, y = generate_sine_data(100, 0.15)
 

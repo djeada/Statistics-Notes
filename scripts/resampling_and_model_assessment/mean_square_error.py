@@ -50,15 +50,22 @@ def plot_data_with_mse(x: np.ndarray, y: np.ndarray, true_slope: float, true_int
     ax.legend()
     ax.set_title(title)
 
-# Generating two sets of data
-x1, y1 = generate_data(3, 1, 1, 100, (0, 10))  # Data with small noise
-x2, y2 = generate_data(3, 1, 5, 100, (0, 10))  # Data with larger noise
+def main() -> None:
+    np.random.seed(42)
 
-# Creating two subplots
-fig, ax = plt.subplots(1, 2, figsize=(12, 6))
+    # Generating two sets of data
+    x1, y1 = generate_data(3, 1, 1, 100, (0, 10))  # Data with small noise
+    x2, y2 = generate_data(3, 1, 5, 100, (0, 10))  # Data with larger noise
 
-# Plotting the data sets
-plot_data_with_mse(x1, y1, 3, 1, ax[0], "Data with Small MSE")
-plot_data_with_mse(x2, y2, 3, 1, ax[1], "Data with Large MSE")
+    # Creating two subplots
+    _, ax = plt.subplots(1, 2, figsize=(12, 6))
 
-plt.show()
+    # Plotting the data sets
+    plot_data_with_mse(x1, y1, 3, 1, ax[0], "Data with Small MSE")
+    plot_data_with_mse(x2, y2, 3, 1, ax[1], "Data with Large MSE")
+
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()

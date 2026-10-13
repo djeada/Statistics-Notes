@@ -154,8 +154,6 @@ jupyter notebook
 
 New simulation examples use explicit random-number generators and deterministic seeds where practical. Model-assessment examples keep preprocessing and model selection inside the training/development process and reserve final test data for final evaluation.
 
-Shared notation and writing conventions for the conceptual material are documented in [`notes/CONVENTIONS.md`](notes/CONVENTIONS.md).
-
 ## Contributing
 
 When adding a new topic:

@@ -180,7 +180,7 @@ $$
 P(\text{even} \text{ or } 4) = \frac{1}{2} = \frac{3}{6}
 $$
 
-This also makes sense directly: because every 4 is already an even number, the event "even or 4" is simply the event "even. "
+This also makes sense directly: because every 4 is already an even number, the event "even or 4" is simply the event "even."
 
 Thus, the probability is $\frac{1}{2}$.
 

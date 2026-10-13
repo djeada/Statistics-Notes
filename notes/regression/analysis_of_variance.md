@@ -17,7 +17,7 @@
 
 To statistically assess the impact of the different treatments, we set up the following hypotheses:
 
-I. **Null Hypothesis ($H_0$)**: All group means are equal. That is, there is no significant difference in final exam scores between the three treatment groups.
+I. **Null Hypothesis ($H_0$)**: All group means are equal. That is, the population mean final exam scores are the same under all three treatments.
   
 $$
 H_0: \mu_1 = \mu_2 = \mu_3
@@ -56,13 +56,15 @@ $$
 
 where:
 
-- $s^2$: Pooled sample variance.
+- $s^2 = \dfrac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1+n_2-2}$: Pooled sample variance.
 - $n_1, n_2$: Sample sizes of groups 1 and 2.
+
+Under $H_0$ the statistic follows a $t$ distribution with $n_1 + n_2 - 2$ degrees of freedom. With exactly two groups, the ANOVA F-statistic equals $t^2$ and gives the same p-value.
 
 III. **Limitations**
 
 - The t-test is limited to comparing **two** groups.
-- When dealing with more than two groups, the risk of Type I error increases with multiple t-tests.
+- When dealing with more than two groups, running all pairwise t-tests inflates the family-wise Type I error rate (with 3 groups and $\alpha = 0.05$ per test, it is about $1-0.95^3 \approx 0.14$ if the tests were independent).
 
 ### ANOVA: Analysis of Variance for Multiple Groups
 
@@ -70,7 +72,7 @@ To compare **three or more groups**, we use **Analysis of Variance (ANOVA)**. AN
 
 Key Concepts:
 
-- **Between-groups variance** refers to the variability caused by the interaction between different treatment groups.
+- **Between-groups variance** refers to the variability of the group means around the overall mean (treatment differences plus chance variation).
 - **Within-groups variance** refers to the variability within each group that arises from individual differences.
 
 ANOVA Hypotheses:
@@ -95,6 +97,8 @@ where:
 - $y_i$: Individual observations.
 - $\bar{y}$: Overall mean of all observations.
 - $N$: Total number of observations.
+
+Note that in this note $SST$ denotes the *treatment* sum of squares (some textbooks use SST for the total). The partition is $SSTotal = SST + SSE$.
 
 #### 1. Treatment Variance (Between-Groups Variability)
 
@@ -183,7 +187,7 @@ Suppose we have the following data:
 
 | Source      | df  | Sum of Squares | Mean Square | F     |
 |-------------|-----|----------------|-------------|-------|
-| Treatment   | 2   | 98.4           | 49.2        | 2.57  |
+| Treatment   | 2   | 98.4           | 49.2        | 2.58  |
 | Error       | 38  | 723.8          | 19.05       |       |
 | Total       | 40  | 822.2          |             |       |
 
@@ -215,11 +219,11 @@ $$
 **P-Value**:
 
 - Using F-distribution tables or software, with $df_1 = 2$ and $df_2 = 38$, we find:
-- **p-value** ≈ 0.087
+- **p-value** ≈ 0.089
 
 #### Decision
 
-- At a significance level of **$\alpha = 0.05$**, since **$p = 0.087 > 0.05$**, we **fail to reject $H_0$**.
+- At a significance level of **$\alpha = 0.05$**, since **$p = 0.089 > 0.05$**, we **fail to reject $H_0$**.
 - There is not enough evidence to conclude that the **treatments** have different effects on student learning.
 
 ### Interpretation of ANOVA Results
@@ -236,8 +240,8 @@ $$
 
 #### Conclusion for the Example
 
-- With a **p-value of 0.087**, there is not sufficient evidence at the 5% significance level to claim that peer assessment improves student learning over other methods.
-- However, the **p-value is close** to 0.05, suggesting a potential trend that might reach significance with a larger sample size.
+- With a **p-value of 0.089**, there is not sufficient evidence at the 5% significance level to claim that peer assessment improves student learning over other methods.
+- Failing to reject $H_0$ is not evidence that the means are equal; the study may simply lack power. A p-value near 0.05 should not be read as a trend, and a larger sample would be needed to say more.
 
 ### The One-Way ANOVA Model
 
@@ -268,7 +272,9 @@ $$
 where:
 
 - $\mu$: Overall mean.
-- $\tau_j = \mu_j - \mu$: Effect of treatment $j$.
+- $\tau_j = \mu_j - \mu$: Effect of treatment $j$, with the constraint $\sum_j n_j \tau_j = 0$ (so $\mu$ is the weighted mean of the group means).
+
+Under this form, $H_0$ is equivalent to $\tau_1 = \tau_2 = \tau_3 = 0$.
 
 #### Assumptions of the Model
 
@@ -312,11 +318,11 @@ $$
 \alpha' = \frac{\alpha}{\text{Number of Comparisons}}
 $$
   
-Example: For 3 groups, there are $\frac{3 \times 2}{2} = 3$ comparisons.
+Example: For 3 groups, there are $\frac{3 \times 2}{2} = 3$ comparisons, so each is tested at $\alpha' = 0.05/3 \approx 0.0167$.
 
 #### 2. Tukey's Honest Significant Difference (HSD) Test
 
-- Controls the family-wise error rate.
+- Controls the family-wise error rate for all pairwise comparisons, using the studentized range distribution.
 - Computes confidence intervals for all pairwise differences.
 
 #### Steps for Pairwise Comparisons
@@ -327,7 +333,7 @@ $$
 SE_{\bar{y}_i - \bar{y}_j} = \sqrt{MSE \left( \frac{1}{n_i} + \frac{1}{n_j} \right)}
 $$
 
-II. **Compute the t-Statistic for Each Pair**:
+II. **Compute the t-Statistic for Each Pair** (compared with a $t$ distribution with $N-k$ degrees of freedom, since $MSE$ pools all groups):
 
 $$
 t = \frac{\bar{y}_i - \bar{y}_j}{SE_{\bar{y}_i - \bar{y}_j}}

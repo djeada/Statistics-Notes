@@ -249,13 +249,13 @@ $$
 Given that a red marble is drawn first, the probability of drawing a green marble second is:
 
 $$
-P(\text{G second | R first}) = \frac{4}{9}
+P(\text{G second} \mid \text{R first}) = \frac{4}{9}
 $$
 
 Therefore, the probability of drawing a red marble followed by a green marble is:
 
 $$
-P(\text{R then G}) = P(\text{R first}) \times P(\text{G second | R first}) = \frac{6}{10} \times \frac{4}{9} = \frac{24}{90} \approx 0.267
+P(\text{R then G}) = P(\text{R first}) \times P(\text{G second} \mid \text{R first}) = \frac{6}{10} \times \frac{4}{9} = \frac{24}{90} \approx 0.267
 $$
 
 II. **P(G then R)** (Green marble followed by a Red marble):  
@@ -269,13 +269,13 @@ $$
 Given that a green marble is drawn first, the probability of drawing a red marble second is:
 
 $$
-P(\text{R second | G first}) = \frac{6}{9}
+P(\text{R second} \mid \text{G first}) = \frac{6}{9}
 $$
 
 Therefore, the probability of drawing a green marble followed by a red marble is:
 
 $$
-P(\text{G then R}) = P(\text{G first}) \times P(\text{R second | G first}) = \frac{4}{10} \times \frac{6}{9} = \frac{24}{90} \approx 0.267
+P(\text{G then R}) = P(\text{G first}) \times P(\text{R second} \mid \text{G first}) = \frac{4}{10} \times \frac{6}{9} = \frac{24}{90} \approx 0.267
 $$
 
 III. **P(both R)** (Both marbles are red):  
@@ -289,13 +289,13 @@ $$
 After drawing one red marble, there are 5 red marbles left out of 9, so the probability of drawing a second red marble is:
 
 $$
-P(\text{R second | R first}) = \frac{5}{9}
+P(\text{R second} \mid \text{R first}) = \frac{5}{9}
 $$
 
 Therefore, the probability of drawing two red marbles is:
 
 $$
-P(\text{both R}) = P(\text{R first}) \times P(\text{R second | R first}) = \frac{6}{10} \times \frac{5}{9} = \frac{30}{90} = 0.333
+P(\text{both R}) = P(\text{R first}) \times P(\text{R second} \mid \text{R first}) = \frac{6}{10} \times \frac{5}{9} = \frac{30}{90} = 0.333
 $$
 
 IV. **P(both G)** (Both marbles are green):  
@@ -309,11 +309,17 @@ $$
 After drawing one green marble, there are 3 green marbles left out of 9, so the probability of drawing a second green marble is:
 
 $$
-P(\text{G second | G first}) = \frac{3}{9}
+P(\text{G second} \mid \text{G first}) = \frac{3}{9}
 $$
 
 Therefore, the probability of drawing two green marbles is:
 
 $$
-P(\text{both G}) = P(\text{G first}) \times P(\text{G second | G first}) = \frac{4}{10} \times \frac{3}{9} = \frac{12}{90} \approx 0.133
+P(\text{both G}) = P(\text{G first}) \times P(\text{G second} \mid \text{G first}) = \frac{4}{10} \times \frac{3}{9} = \frac{12}{90} \approx 0.133
+$$
+
+As a check, the four path probabilities cover every possible outcome of the two draws and sum to 1:
+
+$$
+\frac{24}{90} + \frac{24}{90} + \frac{30}{90} + \frac{12}{90} = \frac{90}{90} = 1.
 $$

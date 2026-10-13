@@ -1,8 +1,10 @@
-import numpy as np
+"""PDFs: a univariate normal density and a bivariate normal joint density."""
 import matplotlib.pyplot as plt
-from scipy.stats import norm, multivariate_normal
+import numpy as np
+from scipy.integrate import trapezoid
+from scipy.stats import multivariate_normal, norm
 
-# Function to plot the PDF of a single variable
+
 def plot_single_variable_pdf(x, y, title, xlabel, ylabel):
     plt.figure(figsize=(8, 4))
     plt.plot(x, y)
@@ -12,7 +14,7 @@ def plot_single_variable_pdf(x, y, title, xlabel, ylabel):
     plt.grid(True)
     plt.show()
 
-# Function to plot the joint PDF of two variables
+
 def plot_joint_variable_pdf(x, y, z, title, xlabel, ylabel):
     plt.figure(figsize=(8, 6))
     plt.contourf(x, y, z)
@@ -23,22 +25,25 @@ def plot_joint_variable_pdf(x, y, z, title, xlabel, ylabel):
     plt.grid(True)
     plt.show()
 
-# Data generation for single variable PDF (e.g., normal distribution)
-x_single = np.linspace(-5, 5, 100)
-y_single = norm.pdf(x_single, 0, 1)  # Normal distribution with mean=0 and std=1
 
-# Data generation for joint variable PDF (e.g., bivariate normal distribution)
-x_joint, y_joint = np.mgrid[-5:5:.1, -5:5:.1]
-pos_joint = np.dstack((x_joint, y_joint))
-rv_joint = multivariate_normal([0, 0], [[1, 0], [0, 1]])  # Mean=[0,0], Covariance=[[1, 0], [0, 1]]
-z_joint = rv_joint.pdf(pos_joint)
+def main():
+    x_single = np.linspace(-5, 5, 100)
+    y_single = norm.pdf(x_single, 0, 1)
 
-# Plotting the single variable PDF
-plot_single_variable_pdf(x_single, y_single, 
-                         title='Probability Density Function of a Normal Distribution', 
-                         xlabel='x', ylabel='PDF')
+    x_joint, y_joint = np.mgrid[-5:5:0.1, -5:5:0.1]
+    pos_joint = np.dstack((x_joint, y_joint))
+    rv_joint = multivariate_normal([0, 0], [[1, 0], [0, 1]])
+    z_joint = rv_joint.pdf(pos_joint)
 
-# Plotting the joint variable PDF
-plot_joint_variable_pdf(x_joint, y_joint, z_joint, 
-                        title='Joint Probability Density Function of Two Normal Distributions', 
-                        xlabel='x', ylabel='y')
+    # A density integrates to 1 (Riemann sum on the grid)
+    print(f"Area under univariate pdf  ~ {trapezoid(y_single, x_single):.4f}")
+    print(f"Volume under joint pdf     ~ {z_joint.sum() * 0.1 * 0.1:.4f}")
+
+    plot_single_variable_pdf(x_single, y_single,
+                             "Probability Density Function of a Normal Distribution", "x", "PDF")
+    plot_joint_variable_pdf(x_joint, y_joint, z_joint,
+                            "Joint Probability Density Function of Two Normal Distributions", "x", "y")
+
+
+if __name__ == "__main__":
+    main()

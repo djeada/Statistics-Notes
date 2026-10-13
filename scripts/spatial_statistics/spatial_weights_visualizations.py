@@ -204,7 +204,6 @@ def figure_04_knn_asymmetry():
         [10.0, 0.0],
     ])
     names = ["A", "B", "C"]
-    W = knn_weights(coords, k=1)
 
     plt.figure(figsize=(9, 3.5))
     plt.scatter(coords[:, 0], coords[:, 1], s=150)

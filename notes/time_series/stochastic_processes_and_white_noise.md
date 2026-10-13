@@ -110,13 +110,13 @@ These concepts overlap, but they are not interchangeable. State which assumption
 
 ### A dependence counterexample
 
-Let $Z_t$ be independent and symmetric around zero, and define
+Let $Z_t$ be independent with mean zero and finite variance, and define
 
 $$
 X_t=Z_tZ_{t-1}.
 $$
 
-For many symmetric distributions, adjacent $X_t$ values can have zero linear correlation even though they share an underlying random variable and are not independent. This illustrates why an ACF close to zero does not by itself establish independence.
+Then $\mathrm{Cov}(X_t,X_{t-1})=E[Z_tZ_{t-1}^2Z_{t-2}]=0$ and every other lag is uncorrelated as well, so $X_t$ is white noise, yet adjacent values share $Z_{t-1}$ and are not independent (for instance, $X_t^2$ and $X_{t-1}^2$ are positively correlated when $Z_t$ is non-degenerate). This illustrates why an ACF close to zero does not by itself establish independence.
 
 ### White noise and random walk
 

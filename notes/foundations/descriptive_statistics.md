@@ -525,7 +525,7 @@ Unlike the range, they provide information about how values are distributed thro
 
 ### Percentiles
 
-The $P$-th percentile is a value below which approximately $P%$ of the observations lie.
+The $P$-th percentile is a value at or below which approximately $P\%$ of the observations lie.
 
 For example:
 
@@ -772,7 +772,7 @@ For this dataset:
 * The minimum observed value is 15.
 * The maximum observed value is 40.
 
-A common boxplot convention extends the whiskers to the most extreme observations still within $1.5,\mathrm{IQR}$ of the quartiles and plots observations beyond those limits individually as potential outliers.
+A common boxplot convention extends the whiskers to the most extreme observations still within $1.5\,\mathrm{IQR}$ of the quartiles and plots observations beyond those limits individually as potential outliers.
 
 For this dataset:
 
@@ -794,6 +794,6 @@ Q_3+1.5\,\mathrm{IQR}
 49.75.
 ```
 
-All observations lie within these limits, so there are no observations flagged as outliers under the usual $1.5,\mathrm{IQR}$ rule.
+All observations lie within these limits, so there are no observations flagged as outliers under the usual $1.5\,\mathrm{IQR}$ rule.
 
 The upper half of the data is somewhat more spread out than the lower half, but with only seven observations it is better not to make a strong claim about the distribution's skewness from the boxplot alone.

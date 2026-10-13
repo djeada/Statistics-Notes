@@ -1,4 +1,4 @@
-## Central Limit Theorem (CLT)
+# Central Limit Theorem (CLT)
 
 The Central Limit Theorem (CLT) is a fundamental result in statistics. It explains why the distribution of sample means often approaches a normal distribution as the sample size increases, even when the population itself is not normally distributed.
 
@@ -8,7 +8,7 @@ Suppose a population has mean $\mu$ and standard deviation $\sigma$. If we repea
 
 The sampling distribution of the mean has:
 
-I. Mean approximately equal to the population mean:
+I. Mean equal to the population mean (this holds exactly for every $n$, not only approximately):
 
 $$
 E[\bar{X}] = \mu
@@ -61,7 +61,7 @@ For example, suppose an online game has a 20% probability of awarding a small pr
 The CLT is useful because:
 
 - It applies to many population distributions when the sample size is sufficiently large.
-- It allows population parameters to be estimated from sample statistics.
+- It gives approximate probabilities and error margins for estimates computed from sample statistics.
 - It supports confidence intervals and hypothesis tests.
 - It makes many otherwise difficult probability calculations manageable.
 - It underlies a large number of statistical methods used in science, engineering, economics, and data analysis.
@@ -86,8 +86,8 @@ In this example:
 
 - The population is generated from a non-normal exponential distribution.
 - The exponential distribution has scale parameter $1.0$.
-- The population contains 10, 000 observations.
-- We draw 1, 000 samples.
+- The population contains 10,000 observations.
+- We draw 1,000 samples.
 - Each sample contains 50 observations.
 
 The plot below shows the original exponential population, which is strongly right-skewed.
@@ -96,7 +96,7 @@ The plot below shows the original exponential population, which is strongly righ
 
 #### Distribution of Sample Means
 
-For each of the 1, 000 samples, the sample mean is calculated using
+For each of the 1,000 samples, the sample mean is calculated using
 
 $$
 \bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i
@@ -116,10 +116,10 @@ Results from the simulation:
 
 - Population mean: approximately $0.9775$.
 - Mean of the sample means: approximately $0.9843$.
-- Standard error: approximately $0.1378$.
+- Standard deviation of the sample means (empirical standard error): approximately $0.1378$, versus the theoretical $1/\sqrt{50}\approx0.1414$.
 - The sample means form an approximately normal distribution.
 
-The mean of the sample means is close to the population mean, as predicted by the CLT. The observed spread is also consistent with the standard-error formula
+The mean of the sample means is close to the population mean, as expected from $E[\bar X]=\mu$ (this part does not need the CLT). The bell shape of the histogram is the CLT's contribution. The observed spread is also consistent with the standard-error formula
 
 $$
 SE(\bar{X}) = \frac{\sigma}{\sqrt{n}}
@@ -179,7 +179,7 @@ The sample mean is approximately $0.79$ standard errors above the population mea
 
 ### Example: Applying the CLT
 
-Suppose the heights of a plant species are normally distributed with:
+Suppose the heights of a plant species are normally distributed with (so $\bar X$ is exactly normal for every $n$; the CLT is needed only in the unknown-distribution case at the end):
 
 - Population mean: $\mu = 15$ cm.
 - Population standard deviation: $\sigma = 3$ cm.
@@ -247,7 +247,7 @@ $$
 P(14 \leq \bar{X} \leq 16) = 0.9082 - 0.0918 = 0.8164
 $$
 
-The probability is approximately 81. 64%.
+The probability is approximately 81.64% (using the rounded $z=\pm1.33$; the unrounded $z=\pm1.3333$ gives 81.76%).
 
 #### Sample Size of 64 Plants
 
@@ -291,7 +291,7 @@ $$
 P(14 \leq \bar{X} \leq 16) = 0.9962 - 0.0038 = 0.9924
 $$
 
-The probability is approximately 99. 24%.
+The probability is approximately 99.24%.
 
 #### Sample Size of 144 Plants
 
@@ -331,7 +331,7 @@ $$
 P(14 \leq \bar{X} \leq 16) = 0.99997 - 0.00003 = 0.99994
 $$
 
-The probability is approximately 99. 99%.
+The probability is approximately 99.99%.
 
 As the sample size increases, the standard error decreases. This makes the sample mean more concentrated around the population mean.
 
@@ -341,4 +341,4 @@ Suppose the distribution of plant heights is unknown.
 
 The CLT still allows the sampling distribution of the mean to be approximated by a normal distribution when the sample size is sufficiently large and the observations satisfy the theorem's assumptions.
 
-For $n=64$, the calculations above may still be used as an approximation. The estimated probability remains approximately 99. 24%, although the quality of the approximation depends on the actual shape of the population distribution.
+For $n=64$, the calculations above may still be used as an approximation. The estimated probability remains approximately 99.24%, although the quality of the approximation depends on the actual shape of the population distribution.

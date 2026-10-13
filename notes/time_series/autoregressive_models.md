@@ -226,9 +226,9 @@ For example, suppose candidate models give
 
 | Model | AIC | BIC |
 |---|---:|---:|
-| AR(1) | 150 | 155 |
-| AR(2) | 140 | 145 |
-| AR(3) | 142 | 150 |
+| AR(1) | 150 | 156 |
+| AR(2) | 140 | 148 |
+| AR(3) | 142 | 152 |
 
 Both criteria favor AR(2) among these candidates. That result supports AR(2), but it should still be checked against residual behavior and out-of-sample forecasts.
 

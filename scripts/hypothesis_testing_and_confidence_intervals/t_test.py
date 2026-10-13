@@ -1,35 +1,35 @@
+"""Two-sample t-test comparing simulated apple weights from two farms."""
+
 import numpy as np
 import scipy.stats as stats
 
-# Set the seed for reproducibility
-np.random.seed(42)
 
-# Generating random weight data for apples from Farm A and Farm B
-farm_a_apple_weights = np.random.normal(loc=150, scale=10, size=50)
-farm_b_apple_weights = np.random.normal(loc=155, scale=10, size=50)
+def main() -> None:
+    rng = np.random.default_rng(42)
 
-# Calculate the means of the apple weights
-mean_farm_a = np.mean(farm_a_apple_weights)
-mean_farm_b = np.mean(farm_b_apple_weights)
+    farm_a = rng.normal(loc=150, scale=10, size=50)
+    farm_b = rng.normal(loc=155, scale=10, size=50)
 
-print(f"Mean weight of apples from Farm A: {mean_farm_a:.2f} g")
-print(f"Mean weight of apples from Farm B: {mean_farm_b:.2f} g")
+    print(f"Mean weight of apples from Farm A: {farm_a.mean():.2f} g")
+    print(f"Mean weight of apples from Farm B: {farm_b.mean():.2f} g")
 
-# Perform a two-sample t-test
-t_stat, p_value = stats.ttest_ind(farm_a_apple_weights, farm_b_apple_weights)
+    # Pooled two-sample t-test (equal variances assumed).
+    t_stat, p_value = stats.ttest_ind(farm_a, farm_b)
+    df = len(farm_a) + len(farm_b) - 2
 
-print(f"t-statistic: {t_stat:.2f}")
-print(f"p-value: {p_value:.4f}")
+    pooled_sd = np.sqrt((farm_a.var(ddof=1) + farm_b.var(ddof=1)) / 2)  # equal group sizes
+    cohens_d = (farm_a.mean() - farm_b.mean()) / pooled_sd
 
-# Set significance level
-alpha = 0.05
+    print(f"t-statistic: {t_stat:.2f} (df = {df})")
+    print(f"p-value: {p_value:.4f}")
+    print(f"Cohen's d: {cohens_d:.2f}")
 
-# Interpret the results
-if p_value < alpha:
-    print(
-        "We reject the null hypothesis. There is a significant difference in the average apple weights between the two farms."
-    )
-else:
-    print(
-        "We fail to reject the null hypothesis. There is no significant difference in the average apple weights between the two farms."
-    )
+    alpha = 0.05
+    if p_value <= alpha:
+        print("Reject H0: the average apple weights differ between the two farms.")
+    else:
+        print("Fail to reject H0: no evidence that the average apple weights differ.")
+
+
+if __name__ == "__main__":
+    main()

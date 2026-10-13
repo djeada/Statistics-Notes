@@ -1,92 +1,70 @@
-import numpy as np
+"""Geometric distribution (trial of first success): hand-rolled PMF/CDF vs scipy.stats."""
 import matplotlib.pyplot as plt
-from scipy.stats import nbinom
+import numpy as np
+from scipy.stats import geom
+
 
 class GeometricDistribution:
+    """Number of trials X in {1, 2, ...} up to and including the first success."""
+
     def __init__(self, p):
         self.p = p
 
     def pmf(self, k):
+        k = np.asarray(k)
         return (1 - self.p) ** (k - 1) * self.p
 
-    def cdf(self, x):
-        return np.array([self._cdf_single(val) for val in x])
-
-    def _cdf_single(self, k):
+    def cdf(self, k):
+        k = np.asarray(k)
         return 1 - (1 - self.p) ** k
 
-def plot_pmf(x_values, pmf1, pmf2, label1, label2, title):
+
+def plot_pmf(x, y1, y2, label1, label2, title):
     plt.figure(figsize=(10, 6))
-    plt.stem(x_values, pmf1, basefmt=" ", linefmt="blue", markerfmt="bo", label=label1)
-    plt.stem(x_values, pmf2, basefmt=" ", linefmt="red", markerfmt="ro", label=label2)
+    plt.stem(x, y1, basefmt=" ", linefmt="blue", markerfmt="bo", label=label1)
+    plt.stem(x, y2, basefmt=" ", linefmt="red", markerfmt="ro", label=label2)
     plt.title(title)
-    plt.xlabel('Number of Trials (k)')
-    plt.ylabel('PMF')
+    plt.xlabel("Number of trials (k)")
+    plt.ylabel("PMF")
     plt.legend()
     plt.grid(True)
     plt.show()
 
-def plot_cdf(x_values, cdf1, cdf2, label1, label2, title):
+
+def plot_cdf(x, y1, y2, label1, label2, title):
     plt.figure(figsize=(10, 6))
-    plt.step(x_values, cdf1, where="mid", label=label1, color='blue')
-    plt.step(x_values, cdf2, where="mid", label=label2, color='red')
+    plt.step(x, y1, where="post", label=label1, color="blue")
+    plt.step(x, y2, where="post", label=label2, color="red")
     plt.title(title)
-    plt.xlabel('Number of Trials (k)')
-    plt.ylabel('CDF')
+    plt.xlabel("Number of trials (k)")
+    plt.ylabel("CDF")
     plt.legend()
     plt.grid(True)
     plt.show()
 
-def plot_comparison(x_values, pmf_scipy, pmf_custom, label1, label2, title):
-    plt.figure(figsize=(10, 6))
-    plt.stem(x_values, pmf_scipy, basefmt=" ", linefmt="blue", markerfmt="bo", label=label1)
-    plt.stem(x_values, pmf_custom, basefmt=" ", linefmt="orange", markerfmt="go", label=label2)
-    plt.title(title)
-    plt.xlabel('Number of Trials (k)')
-    plt.ylabel('PMF')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
 
-# Parameters for two geometric distributions
-p1 = 0.3
-p2 = 0.5
+def main():
+    p1, p2 = 0.3, 0.5
+    k = np.arange(1, 20)
 
-# Generate x values (number of trials until first success)
-x_geom_1 = np.arange(1, 20)
-x_geom_2 = np.arange(1, 20)
+    custom1, custom2 = GeometricDistribution(p1), GeometricDistribution(p2)
+    # scipy.stats.geom uses the same trial-count convention (support starts at 1).
+    pmf1_scipy, pmf2_scipy = geom.pmf(k, p1), geom.pmf(k, p2)
+    cdf1_scipy, cdf2_scipy = geom.cdf(k, p1), geom.cdf(k, p2)
 
-# Calculate PMF and CDF using scipy
-pmf_geom_1_scipy = nbinom.pmf(x_geom_1 - 1, 1, p1)
-pmf_geom_2_scipy = nbinom.pmf(x_geom_2 - 1, 1, p2)
-cdf_geom_1_scipy = nbinom.cdf(x_geom_1 - 1, 1, p1)
-cdf_geom_2_scipy = nbinom.cdf(x_geom_2 - 1, 1, p2)
+    assert np.allclose(custom1.pmf(k), pmf1_scipy) and np.allclose(custom2.pmf(k), pmf2_scipy)
+    assert np.allclose(custom1.cdf(k), cdf1_scipy) and np.allclose(custom2.cdf(k), cdf2_scipy)
+    print("Custom PMF/CDF match scipy.stats.geom")
+    for p in (p1, p2):
+        print(f"Geometric({p}): mean={1 / p:.3f}, var={(1 - p) / p**2:.3f}")
 
-# Create instances of GeometricDistribution
-geom_dist_1 = GeometricDistribution(p1)
-geom_dist_2 = GeometricDistribution(p2)
+    plot_pmf(k, pmf1_scipy, pmf2_scipy, f"Geometric(p={p1})", f"Geometric(p={p2})",
+             "Probability Mass Function (PMF) of Geometric Distributions")
+    plot_cdf(k, cdf1_scipy, cdf2_scipy, f"Geometric(p={p1})", f"Geometric(p={p2})",
+             "Cumulative Distribution Function (CDF) of Geometric Distributions")
+    plot_pmf(k, pmf1_scipy, custom1.pmf(k), "scipy.stats", "hand-rolled",
+             f"scipy vs hand-rolled PMF, Geometric(p={p1})")
 
-# Calculate PMF and CDF using custom class
-pmf_geom_1_custom = np.array([geom_dist_1.pmf(k) for k in x_geom_1])
-pmf_geom_2_custom = np.array([geom_dist_2.pmf(k) for k in x_geom_2])
 
-cdf_geom_1_custom = geom_dist_1.cdf(x_geom_1)
-cdf_geom_2_custom = geom_dist_2.cdf(x_geom_2)
-
-# Plot 1: PMF of Geometric Distributions (Original)
-plot_pmf(x_geom_1, pmf_geom_1_scipy, pmf_geom_2_scipy,
-         label1=f'Geometric(p={p1}) PMF', 
-         label2=f'Geometric(p={p2}) PMF',
-         title='Probability Mass Function (PMF) of Geometric Distributions')
-
-# Plot 2: CDF of Geometric Distributions (Original)
-plot_cdf(x_geom_1, cdf_geom_1_scipy, cdf_geom_2_scipy, 
-         label1=f'Geometric(p={p1}) CDF', 
-         label2=f'Geometric(p={p2}) CDF', 
-         title='Cumulative Distribution Function (CDF) of Geometric Distributions')
-
-# Plot 3: Comparison of Theoretical and Custom PMFs
-plot_comparison(x_geom_1, pmf_geom_1_scipy, pmf_geom_1_custom, 
-                label1=f'Theoretical Geometric(p={p1}) PMF', 
-                label2=f'Custom Geometric(p={p1}) PMF', 
-                title='Comparison of Theoretical and Custom PMF for Geometric Distribution')
+if __name__ == "__main__":
+    main()

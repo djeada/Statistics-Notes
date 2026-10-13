@@ -14,5 +14,10 @@ ipykernel==6.26.0
 seaborn==0.12.2     # Optional for statistical data visualization
 scikit-learn==1.5.0  # Optional for statistical machine learning tasks
 
+# Used by individual scripts/notebooks
+yfinance             # Stock-return examples (hypothesis testing)
+pandas-datareader    # Inflation examples (time series)
+matplotlib-venn      # Bayes' theorem Venn diagram
+
 # Miscellaneous
 sympy==1.13          # For symbolic mathematics

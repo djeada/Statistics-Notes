@@ -1,57 +1,50 @@
-import numpy as np
+"""Confidence interval for a mean, plus a repeated-sampling coverage check."""
+
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.stats import sem, t
 
-# Function to calculate confidence interval
-def calculate_confidence_interval(data, confidence=0.95):
-    """
-    Calculate the confidence interval for a given data sample.
-    
-    Parameters:
-    - data: array-like, sample data
-    - confidence: float, confidence level for the interval (default is 0.95)
-    
-    Returns:
-    - lower_bound: float, lower bound of the confidence interval
-    - mean: float, sample mean
-    - upper_bound: float, upper bound of the confidence interval
-    """
+
+def calculate_confidence_interval(data, confidence: float = 0.95):
+    """Return (lower, mean, upper) for a t-based interval for the mean."""
     n = len(data)
     mean = np.mean(data)
-    std_err = sem(data)
-    margin_of_error = std_err * t.ppf((1 + confidence) / 2, n - 1)
-    
-    lower_bound = mean - margin_of_error
-    upper_bound = mean + margin_of_error
-    
-    return lower_bound, mean, upper_bound
+    margin_of_error = sem(data) * t.ppf((1 + confidence) / 2, n - 1)
+    return mean - margin_of_error, mean, mean + margin_of_error
 
-# Parameters for data generation
-sample_size = 100
-true_mean = 50
-std_dev = 5
 
-# Generate random sample data
-np.random.seed(0)
-data = np.random.normal(true_mean, std_dev, sample_size)
+def coverage(rng: np.random.Generator, true_mean: float, std_dev: float,
+             n: int, confidence: float, replications: int) -> float:
+    """Fraction of simulated intervals that contain the true mean."""
+    hits = 0
+    for _ in range(replications):
+        lower, _, upper = calculate_confidence_interval(rng.normal(true_mean, std_dev, n), confidence)
+        hits += lower <= true_mean <= upper
+    return hits / replications
 
-# Calculate the confidence interval
-lower_bound, sample_mean, upper_bound = calculate_confidence_interval(data)
 
-# Plotting the data and confidence interval
-plt.figure(figsize=(10, 4))
-plt.hist(data, bins=15, alpha=0.7, label='Sample Data')
+def main() -> None:
+    rng = np.random.default_rng(0)
+    sample_size, true_mean, std_dev = 100, 50, 5
 
-# Plot the sample mean and confidence interval bounds
-plt.axvline(sample_mean, color='red', linestyle='dashed', linewidth=2, label='Sample Mean')
-plt.axvline(lower_bound, color='green', linestyle='dashed', linewidth=2, label='Lower Bound of CI')
-plt.axvline(upper_bound, color='blue', linestyle='dashed', linewidth=2, label='Upper Bound of CI')
+    data = rng.normal(true_mean, std_dev, sample_size)
+    lower, sample_mean, upper = calculate_confidence_interval(data)
+    print(f"Sample mean: {sample_mean:.3f}")
+    print(f"95% CI: ({lower:.3f}, {upper:.3f})")
+    print(f"Empirical coverage over 2000 samples: "
+          f"{coverage(rng, true_mean, std_dev, sample_size, 0.95, 2000):.3f}")
 
-# Add labels and title
-plt.title("Confidence Interval for Mean (95%)")
-plt.xlabel('Value')
-plt.ylabel('Frequency')
-plt.legend()
+    plt.figure(figsize=(10, 4))
+    plt.hist(data, bins=15, alpha=0.7, label="Sample data")
+    plt.axvline(sample_mean, color="red", linestyle="dashed", linewidth=2, label="Sample mean")
+    plt.axvline(lower, color="green", linestyle="dashed", linewidth=2, label="Lower bound of CI")
+    plt.axvline(upper, color="blue", linestyle="dashed", linewidth=2, label="Upper bound of CI")
+    plt.title("Confidence interval for the mean (95%)")
+    plt.xlabel("Value")
+    plt.ylabel("Frequency")
+    plt.legend()
+    plt.show()
 
-# Show the plot
-plt.show()
+
+if __name__ == "__main__":
+    main()

@@ -75,7 +75,6 @@ def decomposition() -> None:
     series = trend + seasonal + remainder
     window = 12
     smooth = np.convolve(series, np.ones(window) / window, mode="same")
-    centered = series - smooth
     print(
         f"decomposition: t=24 trend={trend[24]:.3f}, seasonal={seasonal[24]:.3f}, "
         f"remainder={remainder[24]:.3f}, series={series[24]:.3f}"

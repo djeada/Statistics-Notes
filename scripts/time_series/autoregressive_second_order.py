@@ -1,40 +1,36 @@
+"""Simulate an AR(2) series, fit it with AutoReg, and plot fitted values."""
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from statsmodels.tsa.ar_model import AutoReg
 
-# 1. AR(2) Model Parameters
-alpha = 3        # Constant term
-beta1 = 0.6      # Coefficient for X_{t-1}
-beta2 = -0.2     # Coefficient for X_{t-2}
 
-# 2. Generate Mock Time Series Data
-np.random.seed(42)  # Ensure reproducibility
-n = 100  # Number of data points
+def simulate_ar2(n=100, alpha=3.0, beta1=0.6, beta2=-0.2, seed=42):
+    rng = np.random.default_rng(seed)
+    x = [10.0, 5.0]  # X_0 and X_1
+    for t in range(2, n):
+        x.append(alpha + beta1 * x[t - 1] + beta2 * x[t - 2] + rng.normal())
+    return pd.Series(x)
 
-# Start with initial values
-X = [10, 5]  # Initial values: X_{t-1} = 10, X_{t-2} = 5
 
-# Generate time series using the AR(2) equation
-for t in range(2, n):
-    epsilon_t = np.random.normal()  # Random noise (white noise)
-    X_t = alpha + beta1 * X[t-1] + beta2 * X[t-2] + epsilon_t  # AR(2) equation
-    X.append(X_t)
+def main():
+    n = 100
+    series = simulate_ar2(n=n)
 
-# Convert to pandas Series for convenience
-time_series = pd.Series(X)
+    fit = AutoReg(series, lags=2).fit()
+    print(fit.params)
+    predictions = fit.predict(start=2, end=n - 1)
 
-# 3. Fit AR(2) Model to the Generated Data
-model = AutoReg(time_series, lags=2)
-model_fit = model.fit()
-predictions = model_fit.predict(start=2, end=n-1)
+    plt.figure(figsize=(12, 6))
+    plt.plot(series, label="Generated Data", color="blue")
+    plt.plot(predictions, label="AR(2) Predictions", color="red", linestyle="dashed")
+    plt.title("Generated Time Series and AR(2) Model Predictions")
+    plt.xlabel("Time Point")
+    plt.ylabel("Value")
+    plt.legend()
+    plt.show()
 
-# 4. Plot the Generated Data and AR(2) Predictions
-plt.figure(figsize=(12, 6))
-plt.plot(time_series, label='Generated Data', color='blue')
-plt.plot(predictions, label='AR(2) Predictions', color='red', linestyle='dashed')
-plt.title('Generated Time Series and AR(2) Model Predictions')
-plt.xlabel('Time Point')
-plt.ylabel('Value')
-plt.legend()
-plt.show()
+
+if __name__ == "__main__":
+    main()

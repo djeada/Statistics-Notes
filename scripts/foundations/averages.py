@@ -7,12 +7,13 @@ def calculate_averages(data, weights):
     """
     Calculates various types of averages for the given data.
     """
+    mode_result = stats.mode(data, keepdims=False)
     averages = {
         "arithmetic_mean": np.mean(data),
         "weighted_mean": np.average(data, weights=weights),
         "geometric_mean": stats.gmean(data),
         "median": np.median(data),
-        "mode": stats.mode(data)[0],
+        "mode": mode_result.mode,
     }
     return averages
 
@@ -40,8 +41,16 @@ def plot_averages(data, averages):
     plt.show()
 
 
-# Example usage
-data = np.array([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
-weights = np.array([1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2])  # arbitrary weights
-averages = calculate_averages(data, weights)
-plot_averages(data, averages)
+def main():
+    # Positive data (needed for the geometric mean) with a repeated value
+    # so that the mode is meaningful.
+    data = np.array([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12])
+    weights = np.array([1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2])  # arbitrary weights
+    averages = calculate_averages(data, weights)
+    for name, value in averages.items():
+        print(f"{name}: {value:.3f}")
+    plot_averages(data, averages)
+
+
+if __name__ == "__main__":
+    main()

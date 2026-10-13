@@ -1,6 +1,6 @@
 # Conditional Probability and Multiplication Rule
 
-**Conditional Probability** is the likelihood of an event occurring given that another event has already occurred. It is denoted as $P(A|B)$, representing the probability of event $A$ happening, assuming event $B$ has already taken place. This concept is crucial in understanding dependent events in probability theory. The **Multiplication Rule** uses conditional probability to calculate the probability of the intersection of two events. For dependent events, it is written as $P(A \cap B) = P(A|B) \times P(B)$. If the events are independent, it simplifies to $P(A \cap B) = P(A) \times P(B)$, as $P(A|B) = P(A)$ in this case. This rule helps in determining joint probabilities of multiple events.
+**Conditional Probability** is the likelihood of an event occurring given that another event has already occurred. It is denoted as $P(A|B)$, representing the probability of event $A$ happening, assuming event $B$ has already taken place. This concept is crucial in understanding dependent events in probability theory. The **Multiplication Rule** uses conditional probability to calculate the probability of the intersection of two events. In general it is written as $P(A \cap B) = P(A|B) \times P(B)$ (provided $P(B)>0$). If the events are independent, it simplifies to $P(A \cap B) = P(A) \times P(B)$, as $P(A|B) = P(A)$ in this case. This rule helps in determining joint probabilities of multiple events.
 
 ### Conditional Probability
 
@@ -107,7 +107,7 @@ Now let’s apply conditional probability to a standard deck of 52 playing cards
 
 **I. Probability of drawing a king**:
 
-The probability of drawing any specific card (such as a king) is:
+The probability of drawing a king is:
 
 $$
 P(\text{King}) = \frac{4}{52} = \frac{1}{13}
@@ -143,7 +143,7 @@ Thus, the probability of drawing a king given that the card drawn is a heart is 
 
 ### Multiplication Rule for Dependent Events
 
-If the occurrence of event A in some way influences the occurrence of event B, these events are considered dependent. For dependent events, the probability of both events occurring is given by:
+If the occurrence of event A in some way influences the occurrence of event B, these events are considered dependent. The general multiplication rule, which holds for any events (and is essential for dependent ones), gives the probability of both events occurring as:
 
 $$
 P(A \cap B) = P(A|B) \times P(B)
@@ -153,7 +153,7 @@ Here, $P(A|B)$ is the conditional probability of event A given that event B has 
 
 #### Example: Drawing Two Cards Consecutively from a Deck
 
-We will compute the probability of two different card-drawing scenarios from a standard deck of 52 playing cards. Throughout the process, we will refer to the **three axioms of probability** where applicable.
+We will compute the probability of two different card-drawing scenarios from a standard deck of 52 playing cards. The multiplication rule follows directly from the definition of conditional probability.
 
 ##### Scenario 1: Probability of Drawing Two Diamonds Consecutively
 
@@ -165,24 +165,20 @@ $$
 P(\text{first card Diamond}) = \frac{13}{52} = \frac{1}{4}
 $$
 
-This satisfies **Axiom 1 (Non-Negativity)** because the probability is a non-negative number.
-
 II. **Second Draw (Probability of Drawing a Diamond Given the First was a Diamond)**:  
 
 If the first card drawn was a diamond, only 12 diamonds remain in the deck, and the total number of remaining cards is 51. So, the conditional probability of drawing a diamond on the second draw, given that the first card was a diamond, is:
 
 $$
-P(\text{second card Diamond | first card Diamond}) = \frac{12}{51}
+P(\text{second card Diamond} \mid \text{first card Diamond}) = \frac{12}{51}
 $$
-
-This also satisfies **Axiom 1 (Non-Negativity)** as the probability is non-negative.
 
 III. **Joint Probability of Both Events**: 
 
 To find the probability of drawing two diamonds consecutively, we use the **Multiplication Rule** for dependent events:
 
 $$
-P(\text{first card Diamond} \cap \text{second card Diamond}) = P(\text{first card Diamond}) \times P(\text{second card Diamond | first card Diamond})
+P(\text{first card Diamond} \cap \text{second card Diamond}) = P(\text{first card Diamond}) \times P(\text{second card Diamond} \mid \text{first card Diamond})
 $$
 
 Substituting the values:
@@ -190,8 +186,6 @@ Substituting the values:
 $$
 P(\text{first card Diamond} \cap \text{second card Diamond}) = \frac{13}{52} \times \frac{12}{51} = \frac{13 \times 12}{52 \times 51} = \frac{156}{2652} \approx 0.0588
 $$
-
-This probability satisfies **Axiom 3 (Additivity)**, since we are correctly combining probabilities of two dependent events, and we ensure that no probabilities exceed 1.
 
 ![40ae7df7-57fc-413d-8054-d592e9256bc8](https://github.com/djeada/Statistics-Notes/assets/37275728/dc0b84d6-ff74-4681-b329-f67a53512282)
 
@@ -205,24 +199,20 @@ $$
 P(\text{first card Ace}) = \frac{4}{52} = \frac{1}{13}
 $$
 
-This satisfies **Axiom 1 (Non-Negativity)**, as the probability is non-negative.
-
 II. **Second Draw (Probability of Drawing a King Given the First was an Ace)**:  
 
 If an Ace is drawn on the first draw, the remaining deck has 51 cards, and there are still 4 Kings available. Therefore, the probability of drawing a King on the second draw, given that the first card was an Ace, is:
 
 $$
-P(\text{second card King | first card Ace}) = \frac{4}{51}
+P(\text{second card King} \mid \text{first card Ace}) = \frac{4}{51}
 $$
-
-This also satisfies **Axiom 1 (Non-Negativity)**.
 
 III. **Joint Probability of Both Events**:
 
 The probability of drawing an Ace followed by a King is calculated using the **Multiplication Rule**:
 
 $$
-P(\text{first card Ace} \cap \text{second card King}) = P(\text{first card Ace}) \times P(\text{second card King | first card Ace})
+P(\text{first card Ace} \cap \text{second card King}) = P(\text{first card Ace}) \times P(\text{second card King} \mid \text{first card Ace})
 $$
 
 Substituting the values:
@@ -230,8 +220,6 @@ Substituting the values:
 $$
 P(\text{first card Ace} \cap \text{second card King}) = \frac{4}{52} \times \frac{4}{51} = \frac{4 \times 4}{52 \times 51} = \frac{16}{2652} \approx 0.0060
 $$
-
-Again, this satisfies **Axiom 3 (Additivity)**, since we are combining the probabilities of two dependent events properly.
 
 ![20c6bf41-f037-46fa-b741-94f20aa0966f](https://github.com/djeada/Statistics-Notes/assets/37275728/e01bbe6f-a2d3-4109-a290-e9c619b7aa3c)
 
@@ -266,8 +254,6 @@ Now let’s examine an example where two events might be independent, based on t
 $$
 P(A) = \frac{33}{100}
 $$
-
-This satisfies **Axiom 1 (Non-Negativity)**, as $\frac{33}{100} \geq 0$.
 
 **Step 2: Calculate $P(B)$** (Probability that a number is divisible by 7):
 
@@ -365,7 +351,7 @@ $$
 P(A^c \cap B^c \cap C^c) = P(A^c) \times P(B^c) \times P(C^c)
 $$
 
-This step is based on the **Multiplication Rule** for independent events and satisfies **Axiom 1 (Non-Negativity)**, ensuring that each term in the product is non-negative.
+This step is based on the **Multiplication Rule** for independent events (the complements of independent events are also independent).
 
 **Step 2: Complement Rule**
 
@@ -374,8 +360,6 @@ The probability that **at least one** event occurs is the complement of the prob
 $$
 P(A \cup B \cup C) = 1 - P(A^c \cap B^c \cap C^c)
 $$
-
-This satisfies **Axiom 2 (Normalization)**, which ensures that the total probability across all possible outcomes sums to 1.
 
 **Example Calculation:**
 
@@ -418,7 +402,7 @@ $$
 P(A_1 \cup A_2 \cup \cdots \cup A_n) = 1 - P(A_1^c) \times P(A_2^c) \times \cdots \times P(A_n^c)
 $$
 
-This applies **Axiom 2 (Normalization)**, ensuring that the probability of the entire sample space (i.e., at least one event occurring) equals 1.
+This is the complement rule again, which relies on $P(S)=1$.
 
 #### Dice Example: At Least One Six in Three Rolls
 
@@ -444,7 +428,7 @@ $$
 
 Thus, the probability of rolling at least one six in three rolls is approximately $0.4213$.
 
-This example demonstrates the use of the **Multiplication Rule** for independent events, **Axiom 2 (Normalization)** to ensure the total probability is 1, and **Axiom 1 (Non-Negativity)** to ensure all probabilities are non-negative.
+This example combines the **Multiplication Rule** for independent events with the complement rule.
 
 ![3d0579b3-0e10-41ce-b77d-5fc5528908ee](https://github.com/djeada/Statistics-Notes/assets/37275728/813b1539-531f-4a1f-8248-757aca88bf8c)
 

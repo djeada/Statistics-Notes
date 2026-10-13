@@ -54,3 +54,7 @@ $$\text{Var}(X) = \frac{2 \times 5}{(2 + 5)^2(2 + 5 + 1)} \approx 0.0255$$
 ### Applications
 
 Beta distributions are widely used in Bayesian statistics and to model probabilities, proportions, and rates on $[0,1]$. Shifted and scaled beta families are also used in project-management models such as PERT. Other applications include reliability engineering, genetics, and ecology.
+
+---
+
+**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/beta_distribution.md)
