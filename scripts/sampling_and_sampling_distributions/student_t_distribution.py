@@ -1,92 +1,64 @@
+"""Student's t density and CDF: hand-built formulas checked against scipy.stats."""
+
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import t
+from scipy import stats
+from scipy.special import betainc, gammaln
+
 
 class TDistribution:
+    """Student's t distribution built from its closed-form density and the
+    regularized incomplete beta function."""
+
     def __init__(self, df):
         self.df = df
 
     def pdf(self, x):
-        coef = np.math.gamma((self.df + 1) / 2) / (np.sqrt(self.df * np.pi) * np.math.gamma(self.df / 2))
-        return coef * (1 + (x ** 2) / self.df) ** (-(self.df + 1) / 2)
+        x = np.asarray(x, dtype=float)
+        v = self.df
+        log_coef = gammaln((v + 1) / 2) - gammaln(v / 2) - 0.5 * np.log(v * np.pi)
+        return np.exp(log_coef - (v + 1) / 2 * np.log1p(x ** 2 / v))
 
     def cdf(self, x):
-        return np.array([self._cdf_single(val) for val in x])
+        x = np.asarray(x, dtype=float)
+        v = self.df
+        tail = 0.5 * betainc(v / 2, 0.5, v / (v + x ** 2))  # P(T > |x|)
+        return np.where(x > 0, 1 - tail, tail)
 
-    def _cdf_single(self, x):
-        return 0.5 * (1 + np.math.erf(x / np.sqrt(2)))
 
-def plot_pdf(x_values, pdf1, pdf2, label1, label2, title):
+def plot_curves(x, curves, ylabel, title):
+    """Plot several (values, label, style) curves against ``x``."""
     plt.figure(figsize=(10, 6))
-    plt.plot(x_values, pdf1, label=label1, color='blue')
-    plt.plot(x_values, pdf2, label=label2, color='red')
+    for values, label, style in curves:
+        plt.plot(x, values, style, label=label)
     plt.title(title)
-    plt.xlabel('x')
-    plt.ylabel('PDF')
+    plt.xlabel("x")
+    plt.ylabel(ylabel)
     plt.legend()
     plt.grid(True)
     plt.show()
 
-def plot_cdf(x_values, cdf1, cdf2, label1, label2, title):
-    plt.figure(figsize=(10, 6))
-    plt.plot(x_values, cdf1, label=label1, color='blue')
-    plt.plot(x_values, cdf2, label=label2, color='red')
-    plt.title(title)
-    plt.xlabel('x')
-    plt.ylabel('CDF')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
 
-def plot_comparison(x_values, pdf_scipy, pdf_custom, label1, label2, title):
-    plt.figure(figsize=(10, 6))
-    plt.plot(x_values, pdf_scipy, label=label1, color='blue', linestyle='--')
-    plt.plot(x_values, pdf_custom, label=label2, color='orange')
-    plt.title(title)
-    plt.xlabel('x')
-    plt.ylabel('PDF')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+def main() -> None:
+    df1, df2 = 5, 10
+    x = np.linspace(-5, 5, 1000)
+    t1, t2 = TDistribution(df1), TDistribution(df2)
 
-# Parameters for two t-distributions (degrees of freedom ν)
-df1 = 5
-df2 = 10
+    assert np.allclose(t1.pdf(x), stats.t.pdf(x, df1))
+    assert np.allclose(t2.cdf(x), stats.t.cdf(x, df2))
+    print(f"t({df2}): variance={stats.t.var(df2):.3f} (nu/(nu-2) = {df2 / (df2 - 2):.3f})")
 
-# Generate x values
-x_t = np.linspace(-5, 5, 1000)
+    plot_curves(x, [(stats.t.pdf(x, df1), f"t(nu={df1}) PDF", "b-"),
+                    (stats.t.pdf(x, df2), f"t(nu={df2}) PDF", "r-"),
+                    (stats.norm.pdf(x), "N(0,1) PDF", "k:")],
+                "PDF", "PDF of t Distributions")
+    plot_curves(x, [(stats.t.cdf(x, df1), f"t(nu={df1}) CDF", "b-"),
+                    (stats.t.cdf(x, df2), f"t(nu={df2}) CDF", "r-")],
+                "CDF", "CDF of t Distributions")
+    plot_curves(x, [(stats.t.pdf(x, df1), "scipy.stats", "b--"),
+                    (t1.pdf(x), "hand-built formula", "orange")],
+                "PDF", f"Theoretical vs Custom PDF, t(nu={df1})")
 
-# Calculate PDF and CDF using scipy
-pdf_t_1_scipy = t.pdf(x_t, df1)
-pdf_t_2_scipy = t.pdf(x_t, df2)
-cdf_t_1_scipy = t.cdf(x_t, df1)
-cdf_t_2_scipy = t.cdf(x_t, df2)
 
-# Create instances of TDistribution
-t_dist_1 = TDistribution(df1)
-t_dist_2 = TDistribution(df2)
-
-# Calculate PDF and CDF using custom class
-pdf_t_1_custom = np.array([t_dist_1.pdf(x) for x in x_t])
-pdf_t_2_custom = np.array([t_dist_2.pdf(x) for x in x_t])
-
-cdf_t_1_custom = t_dist_1.cdf(x_t)
-cdf_t_2_custom = t_dist_2.cdf(x_t)
-
-# Plot 1: PDF of t-Distributions (Original)
-plot_pdf(x_t, pdf_t_1_scipy, pdf_t_2_scipy,
-         label1=f"t-distribution(ν={df1}) PDF", 
-         label2=f"t-distribution(ν={df2}) PDF",
-         title="Probability Density Function (PDF) of t-Distributions")
-
-# Plot 2: CDF of t-Distributions (Original)
-plot_cdf(x_t, cdf_t_1_scipy, cdf_t_2_scipy, 
-         label1=f"t-distribution(ν={df1}) CDF", 
-         label2=f"t-distribution(ν={df2}) CDF", 
-         title="Cumulative Distribution Function (CDF) of t-Distributions")
-
-# Plot 3: Comparison of Theoretical and Custom PDFs
-plot_comparison(x_t, pdf_t_1_scipy, pdf_t_1_custom, 
-                label1=f'Theoretical t-distribution(ν={df1}) PDF', 
-                label2=f'Custom t-distribution(ν={df1}) PDF', 
-                title='Comparison of Theoretical and Custom PDF for t-Distribution')
+if __name__ == "__main__":
+    main()

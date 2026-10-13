@@ -478,7 +478,7 @@ $$
 \gamma_{12}=\sigma^2\Theta_1\left(1+\theta_1^2\right).
 $$
 
-At lag 13, only the lag-13 interaction term overlaps with the current innovation, so
+At lag 11 only the cross term $\Theta_1\epsilon_{t-12}$ in $X_t$ overlaps with $\theta_1\epsilon_{t-12}$ in $X_{t-11}$, so $\gamma_{11}=\sigma^2\theta_1\Theta_1$. At lag 13, only the lag-13 interaction term overlaps with the current innovation, so
 
 $$
 \gamma_{13}=\sigma^2\theta_1\Theta_1.

@@ -46,5 +46,3 @@ Student's t, chi-square, and F live with sampling distributions because that is 
 ## Navigation Rules
 
 Section READMEs are the canonical entry points. Individual chapters should focus on their topic rather than repeat the whole prerequisite chain. Cross-links should point backward to prerequisites and forward to the most natural next unit.
-
-Shared notation, terminology, and document conventions are in **[CONVENTIONS.md](CONVENTIONS.md)**.

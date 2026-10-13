@@ -12,14 +12,14 @@ Models such as ARCH and GARCH focus on that conditional variance rather than onl
 | Log return | $r_t=\log(P_t/P_{t-1})$ | Log returns add across time: $\sum_{j=1}^{h}r_{t+j}=\log(P_{t+h}/P_t)$. |
 | Small-return approximation | $\log(1+R_t)\approx R_t$ | Accurate when $\lvert R_t\rvert$ is small. |
 | Mean-variance decomposition | $r_t=\mu_t+\sqrt{h_t}\,z_t$ | $E[z_t]=0$, $\mathrm{Var}(z_t)=1$. |
-| ARCH($q$) | $h_t=\omega+\sum_{i=1}^{q}\alpha_i\varepsilon_{t-i}^2$ | Standard constraints: $\omega>0$, $\alpha_i\ge0$. |
-| GARCH($p,q$) | $h_t=\omega+\sum_{i=1}^{q}\alpha_i\varepsilon_{t-i}^2+\sum_{j=1}^{p}\beta_jh_{t-j}$ | Captures both shock effects and variance persistence. |
-| GARCH(1,1) | $h_t=\omega+\alpha\varepsilon_{t-1}^2+\beta h_{t-1}$ | Most common basic GARCH specification. |
-| GARCH(1,1) long-run variance | $\bar h=\omega/(1-\alpha-\beta)$ | Requires $\alpha+\beta<1$ under the usual covariance-stationary conditions. |
-| GARCH persistence | $\alpha+\beta$ | Values near 1 imply slowly decaying volatility shocks. |
+| ARCH($q$) | $h_t=\alpha_0+\sum_{i=1}^{q}\alpha_i\varepsilon_{t-i}^2$ | Standard constraints: $\alpha_0>0$, $\alpha_i\ge0$; $\varepsilon_t=r_t-\mu_t$. |
+| GARCH($p,q$) | $h_t=\alpha_0+\sum_{i=1}^{q}\alpha_i\varepsilon_{t-i}^2+\sum_{j=1}^{p}\beta_jh_{t-j}$ | $q$ ARCH terms, $p$ lagged-variance terms. Captures both shock effects and variance persistence. |
+| GARCH(1,1) | $h_t=\alpha_0+\alpha_1\varepsilon_{t-1}^2+\beta_1h_{t-1}$ | Most common basic GARCH specification. |
+| GARCH(1,1) long-run variance | $\bar h=\alpha_0/(1-\alpha_1-\beta_1)$ | Requires $\alpha_1+\beta_1<1$ under the usual covariance-stationary conditions. |
+| GARCH persistence | $\alpha_1+\beta_1$ | Values near 1 imply slowly decaying volatility shocks. |
 | EWMA variance | $h_t=(1-\lambda)\varepsilon_{t-1}^2+\lambda h_{t-1}$ | GARCH-like special case with zero intercept and weights summing to 1. |
-| Threshold / GJR-GARCH | $h_t=\omega+\alpha\varepsilon_{t-1}^2+\gamma I(\varepsilon_{t-1}<0)\varepsilon_{t-1}^2+\beta h_{t-1}$ | Allows asymmetric volatility response. |
-| Gaussian conditional quantile | $q_{\alpha,t}=\mu_t+z_\alpha\sqrt{h_t}$ | Used in one-step parametric tail-risk calculations. |
+| Threshold / GJR-GARCH | $h_t=\alpha_0+\alpha_1\varepsilon_{t-1}^2+\gamma I(\varepsilon_{t-1}<0)\varepsilon_{t-1}^2+\beta_1h_{t-1}$ | Allows asymmetric volatility response. |
+| Gaussian conditional quantile | $q_{\alpha,t}=\mu_t+z_\alpha\sqrt{h_t}$ | $z_\alpha$ is the standard-normal $\alpha$-quantile (negative for small $\alpha$). |
 | VaR loss convention | $\mathrm{VaR}_{\alpha,t}=-q_{\alpha,t}$ | Only under the convention that positive VaR denotes loss magnitude. |
 
 ## Worked calculation: returns and conditional variance
@@ -30,7 +30,7 @@ $$
 r_t=\log(102)-\log(100)=\log(1.02)\approx0.01980.
 $$
 
-For a GARCH-style variance recursion with $\alpha_0=0.01$, $\alpha_1=0.10$, $\beta_1=0.85$, previous return $r_{t-1}=0.2$, and previous variance $h_{t-1}=0.04$,
+For a GARCH-style variance recursion with $\alpha_0=0.01$, $\alpha_1=0.10$, $\beta_1=0.85$, previous shock $\varepsilon_{t-1}=r_{t-1}-\mu_{t-1}=0.2$, and previous variance $h_{t-1}=0.04$,
 
 $$
 h_t=0.01+0.10(0.2^2)+0.85(0.04)=0.048.
@@ -107,21 +107,21 @@ $$
 
 The conditional mean $\mu_t$ describes expected return given the available information, while $h_t$ describes the variance of the unpredictable component. These two pieces can behave very differently.
 
-An ARCH($p$) model uses recent squared shocks or residuals:
+where $\varepsilon_t=r_t-\mu_t=\sqrt{h_t}\,z_t$ is the unpredictable shock. An ARCH($q$) model uses recent squared shocks:
 
 $$
-h_t=\alpha_0+\sum_{i=1}^{p}\alpha_i\varepsilon_{t-i}^2.
+h_t=\alpha_0+\sum_{i=1}^{q}\alpha_i\varepsilon_{t-i}^2.
 $$
 
-A GARCH($p,q$) model adds lagged conditional variances:
+A GARCH($p,q$) model adds $p$ lagged conditional variances to the $q$ squared-shock terms:
 
 $$
 h_t=\alpha_0
-+\sum_{i=1}^{p}\alpha_i\varepsilon_{t-i}^2
-+\sum_{j=1}^{q}\beta_jh_{t-j}.
++\sum_{i=1}^{q}\alpha_i\varepsilon_{t-i}^2
++\sum_{j=1}^{p}\beta_jh_{t-j}.
 $$
 
-With $\alpha_0>0$ and nonnegative ARCH and GARCH coefficients, the recursion is nonnegative under the standard specification.
+With $\alpha_0>0$ and nonnegative ARCH and GARCH coefficients, the variance recursion stays positive under the standard specification.
 
 ### Synthetic Volatility Example
 

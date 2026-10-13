@@ -31,7 +31,7 @@ The plot illustrates the distribution of a test statistic under the assumption t
 
 ### The Language of Hypothesis Testing
 
-* If the evidence is strong enough, typically when $p < \alpha$, we **reject $H_0$**, indicating statistically significant evidence in favor of the alternative hypothesis.
+* If the evidence is strong enough, typically when $p \le \alpha$, we **reject $H_0$**, indicating statistically significant evidence in favor of the alternative hypothesis.
 * When the evidence is insufficient, we **fail to reject $H_0$**. This does not mean that $H_0$ has been shown to be true; it means that the data do not provide enough evidence against it.
 * We generally avoid saying that we **accept $H_0$**, because a hypothesis test is designed to assess evidence against $H_0$, not to prove it.
 * A **Type I error** occurs when we reject $H_0$ even though it is true.
@@ -59,8 +59,8 @@ The **p-value** is the probability of obtaining a test statistic at least as ext
 
 * The **p-value** does not represent the probability that $H_0$ is true or false.
 * A **large p-value** means that the observed result is reasonably compatible with $H_0$, but it does not prove that $H_0$ is true.
-* A **small p-value** ($p < \alpha$) provides evidence against $H_0$, leading us to reject the null hypothesis.
-* A **large p-value** ($p \geq \alpha$) indicates insufficient evidence to reject $H_0$, so we fail to reject it.
+* A **small p-value** ($p \le \alpha$) provides evidence against $H_0$, leading us to reject the null hypothesis.
+* A **large p-value** ($p > \alpha$) indicates insufficient evidence to reject $H_0$, so we fail to reject it.
 
 ### Example: Coin Toss Experiment
 
@@ -91,7 +91,7 @@ $$
 
 II. **Compute the probabilities of outcomes at least as extreme as the observed result**.
 
-Because this is a two-tailed test with a fair coin, outcomes of 0 to 4 heads and 6 to 10 heads are equally or more extreme than the observed result.
+Because this is a two-tailed test with a fair coin, outcomes of 0 to 4 heads and 6 to 10 heads are equally or more extreme than the observed result (that is, they have probability no larger than $P(X=4)$). The outcome 5 heads is more probable than 4 heads, so it is not included.
 
 III. **Total P-value**:
 
@@ -110,20 +110,20 @@ P(X = 1) &= 0.00977 \\
 P(X = 2) &= 0.04395 \\
 P(X = 3) &= 0.11719 \\
 P(X = 4) &= 0.20508 \\
-\sum_{k=0}^{4} P(X = k) &= 0.37697
+\sum_{k=0}^{4} P(X = k) &= 0.37695
 \end{align*}
 $$
 
 V. **Compute P-value**:
 
 $$
-\text{p-value} = 2(0.37697) = 0.75394
+\text{p-value} = 2(0.37695) \approx 0.7539
 $$
 
 #### Decision
 
 * The **significance level ($\alpha$)** is set at 0.05.
-* The p-value is $0.75394$, which is greater than $0.05$.
+* The p-value is about $0.754$, which is greater than $0.05$.
 * Therefore, we **fail to reject $H_0$**.
 * The data do not provide sufficient evidence to conclude that the coin is unfair.
 

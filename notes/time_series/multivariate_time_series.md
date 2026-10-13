@@ -185,12 +185,12 @@ Do not infer stability from a fitted plot alone. Inspect the model roots or eige
 Candidate lag orders can be compared with information criteria such as
 
 $$
-\mathrm{AIC}=-2\ell+2k,
+\mathrm{AIC}=-2\ell+2m,
 \qquad
-\mathrm{BIC}=-2\ell+k\log n.
+\mathrm{BIC}=-2\ell+m\log n.
 $$
 
-Here $k$ is the number of estimated parameters under the software's convention. In a multivariate system that count rises quickly, so AIC can favor substantially larger systems than BIC.
+Here $\ell$ is the maximized log-likelihood and $m$ is the number of estimated parameters under the software's convention. In a multivariate system that count rises quickly, so AIC can favor substantially larger systems than BIC.
 
 Use information criteria to narrow the candidate set, then inspect residual cross-correlation, stability, parameter plausibility, and forecast performance. The lag range should also reflect the sampling frequency and relevant response horizon.
 

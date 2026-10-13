@@ -562,7 +562,7 @@ every location sends connections to its two nearest neighbors.
 
 This is useful when sampling density varies across space.
 
-Unlike a fixed distance band, $k$-NN avoids islands as long as there are at least $k+1$ observations.
+Unlike a fixed distance band, $k$-NN gives every location at least $k$ neighbors as long as there are at least $k+1$ observations, so it creates no islands. (It can still produce disconnected components.)
 
 ## Directed $k$-NN weights can be asymmetric
 
@@ -846,13 +846,13 @@ $$
 Wz.
 $$
 
-A positive value
+When the weights are row-standardized, a positive value
 
 $$
 (Wz)_i>0
 $$
 
-means that the neighborhood is above the global mean on average when row-standardized weights are used.
+means that the neighborhood average is above the global mean.
 
 A negative value means the neighborhood is below the global mean.
 
@@ -1053,7 +1053,7 @@ The binary graph is symmetric, but the standardized numerical matrix is not.
 For a binary graph, the degree of location $i$ is
 
 $$
-k_i =
+\deg_i =
 \sum_jw_{ij}.
 $$
 
@@ -1112,7 +1112,7 @@ $$
 
 away.
 
-Thus, $k$-NN fixes graph degree at the cost of allowing the physical scale to vary.
+Thus, $k$-NN fixes each location's number of selected neighbors (its out-degree; in-degree can still vary) at the cost of allowing the physical scale to vary.
 
 This tradeoff should be considered in light of the scientific process.
 

@@ -70,7 +70,7 @@ $$
 \text{F1 Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
 $$
 
-The F1 Score is particularly useful when dealing with imbalanced classes.
+The F1 Score ignores true negatives, so it is often preferred to accuracy when the positive class is rare. Equivalently, $\text{F1} = \frac{2\,\text{TP}}{2\,\text{TP} + \text{FP} + \text{FN}}$; in the example below this gives $140/190 \approx 0.737$.
 
 ### Intuitive Explanation of Precision and Recall
 
@@ -125,7 +125,7 @@ $$
 **F1 Score**:
 
 $$
-\text{F1 Score} = 2 \times \frac{0.778 \times 0.7}{0.778 + 0.7} \approx 2 \times \frac{0.5446}{1.478} \approx 0.736 \text{ or } 73.6\%
+\text{F1 Score} = 2 \times \frac{0.778 \times 0.7}{0.778 + 0.7} \approx 2 \times \frac{0.5446}{1.478} \approx 0.737 \text{ or } 73.7\%
 $$
 
 ### Receiver Operating Characteristic (ROC) Curve and AUC
@@ -148,7 +148,7 @@ The **Area Under the ROC Curve (AUC-ROC)** is a single scalar value summarizing 
 
 - **1.0**: Perfect classifier.
 - **0.5**: No discriminative ability (equivalent to random guessing).
-- **Less than 0.5**: Worse than random guessing (model may be inverted).
+- **Less than 0.5**: Worse than random guessing (the scores may be inverted).
 
 #### Interpretation
 
@@ -159,7 +159,7 @@ The **Area Under the ROC Curve (AUC-ROC)** is a single scalar value summarizing 
 
 In cases of imbalanced datasets, the **Precision-Recall (PR) curve** is more informative than the ROC curve. It plots Precision against Recall for different thresholds.
 
-- The **Area Under the PR Curve (AUC-PR)** provides a summary metric that is sensitive to class imbalance.
+- The **Area Under the PR Curve (AUC-PR)** provides a summary metric that is sensitive to class imbalance. A no-skill classifier has an AUC-PR equal to the positive-class prevalence (not 0.5).
 - A higher area under the PR curve indicates better performance in identifying the positive class.
 
 ## Regression Metrics
@@ -168,7 +168,7 @@ Evaluation metrics are crucial in assessing the performance of regression models
 
 ### Evaluating Regression Models
 
-In regression analysis, the goal is to build a model that accurately predicts the dependent variable $y$ from one or more independent variables $x $. After fitting a regression model, it is essential to assess its performance using appropriate evaluation metrics. The most commonly used regression metrics include:
+In regression analysis, the goal is to build a model that accurately predicts the dependent variable $y$ from one or more independent variables $x$. After fitting a regression model, it is essential to assess its performance using appropriate evaluation metrics. The most commonly used regression metrics include:
 
 - **Mean Absolute Error (MAE)**
 - **Mean Squared Error (MSE)**
@@ -179,7 +179,7 @@ These metrics provide different perspectives on the model's predictive capabilit
 
 ### Visualizing Regression Performance
 
-Consider a dataset where we have generated data points from a sine wave with added noise. We fit a linear regression model to this data to predict $y$ based on $x $. The following plot illustrates the data and the fitted regression line:
+Consider a dataset where we have generated data points from a sine wave with added noise. We fit a linear regression model to this data to predict $y$ based on $x$. The following plot illustrates the data and the fitted regression line:
 
 ![Linear Regression on Sine Wave with Noise](https://github.com/djeada/Statistics-Notes/assets/37275728/aaf787b6-9b17-41cc-b1a6-54400b410e1b)
 
@@ -206,8 +206,8 @@ $$
 Where:
 
 - $n$ is the number of observations
-- $y_i$ is the actual value of the dependent variable for the $i $-th observation
-- $\hat{y}_i$ is the predicted value for the $i $-th observation
+- $y_i$ is the actual value of the dependent variable for the $i$-th observation
+- $\hat{y}_i$ is the predicted value for the $i$-th observation
 
 **Interpretation**:
 
@@ -255,8 +255,8 @@ $$
 
 **Interpretation**:
 
-- RMSE represents the standard deviation of the residuals (prediction errors).
-- It indicates how concentrated the data is around the line of best fit.
+- RMSE is the root-mean-square of the prediction errors; it equals the standard deviation of the residuals when the mean residual is zero (up to the $n$ versus $n-p-1$ divisor).
+- It indicates how concentrated the observations are around the fitted values.
 
 **Properties**:
 
@@ -287,14 +287,14 @@ Where:
 
 **Interpretation**:
 
-- $R^2$ values range from 0 to 1.
+- For an ordinary least squares fit with an intercept, evaluated on the training data, $R^2$ lies between 0 and 1.
 - An $R^2$ of 1 indicates that the regression predictions perfectly fit the data.
 - An $R^2$ of 0 indicates that the model does not explain any of the variability of the response data around its mean.
 
 **Properties**:
 
-- $R^2$ can also be negative in cases where the model fits the data worse than a horizontal line (mean of the data).
-- Higher $R^2$ values indicate a better fit to the data.
+- $R^2$ can be negative, for example when computed on new data or for a model fitted without an intercept, if the predictions are worse than a horizontal line at the mean.
+- Higher $R^2$ values indicate a better fit to the data on which it is computed; training $R^2$ never decreases when predictors are added.
 
 **Note**:
 
@@ -321,7 +321,8 @@ Where:
 
 **Interpretation**:
 
-- Adjusted $R^2$ increases only if the new predictor improves the model more than would be expected by chance.
+- Adjusted $R^2$ increases only if adding a predictor raises $R^2$ by more than would be expected from a pure-noise predictor (equivalently, if the new term has $|t|>1$).
+- It can be negative and is not a substitute for out-of-sample validation.
 - It can be used for model selection, especially when comparing models with different numbers of predictors.
 
 ### Comparing Regression Metrics
@@ -338,7 +339,7 @@ Where:
 
 #### Usage in Model Evaluation
 
-- The **MAE** is ideal when all errors are considered equally important, and outliers are not a significant concern.
+- The **MAE** is a natural choice when all errors are considered equally important, and outliers are not a significant concern.
 - The **MSE/RMSE** are preferable when large errors are highly undesirable, as they penalize these more severely.
 - The **$R^2$** value provides insight into how well the model replicates the observed outcomes compared to the mean of the dependent variable.
 
@@ -346,7 +347,7 @@ Where:
 
 Let's consider a small dataset:
 
-| $i $ | $x_i$ | $y_i$ | $\hat{y}_i$ |
+| $i$ | $x_i$ | $y_i$ | $\hat{y}_i$ |
 |---------|-----------|-----------|----------------|
 | 1       | 1.0       | 2.0       | 2.5            |
 | 2       | 2.0       | 4.0       | 3.8            |
@@ -404,12 +405,12 @@ $$
 
 **Interpretation**:
 
-- The model explains approximately 99.125% of the variance in the dependent variable.
+- The predictions account for approximately 99.1% of the variation of $y$ around its mean.
 - The high $R^2$ value indicates a strong fit to the data.
 
 ### Negative $R^2$ Values
 
-Although $R^2$ typically ranges from 0 to 1, it can be negative when the model is worse than simply predicting the mean of the observed data. This can happen if the residual sum of squares is greater than the total sum of squares.
+Although in-sample $R^2$ for OLS with an intercept lies between 0 and 1, $R^2$ can be negative when the predictions are worse than simply predicting the mean of the observed data (for instance on held-out data). This can happen if the residual sum of squares is greater than the total sum of squares.
 
 **Example**:
 

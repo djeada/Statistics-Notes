@@ -50,7 +50,13 @@ The family-wise error rate (FWER) is the probability of making at least one Type
 
 #### Bonferroni Correction
 
-The Bonferroni correction is a common method for controlling the FWER. If the desired family-wise significance level is $\alpha$ and $m$ tests are performed, each individual test uses:
+If $m$ independent tests are each run at level $\alpha$ and all null hypotheses are true, the probability of at least one false rejection is
+
+$$
+1-(1-\alpha)^m.
+$$
+
+For $m=20$ and $\alpha=0.05$ this is $1-0.95^{20}\approx0.64$. The Bonferroni correction is a common method for controlling the FWER. If the desired family-wise significance level is $\alpha$ and $m$ tests are performed, each individual test uses:
 
 $$
 \alpha_{\text{adjusted}} = \frac{\alpha}{m}
@@ -167,6 +173,8 @@ $$
 $$
 
 The Holm-Bonferroni procedure stops at the first hypothesis that is not rejected. Therefore, the remaining hypotheses are also not rejected.
+
+For comparison, the Benjamini-Hochberg thresholds $\frac{i}{6}(0.05)$ are $0.0083,\,0.0167,\,0.025,\,0.0333,\,0.0417,\,0.05$. The largest $i$ with $p_{(i)}\le\frac{i}{6}(0.05)$ is $i=2$ (since $0.039>0.025$, $0.041>0.0333$, $0.042>0.0417$, and $0.06>0.05$), so BH also rejects the first two hypotheses here. BH can reject more hypotheses than Holm in other settings, because its FDR guarantee is weaker than FWER control.
 
 ![output(29)](https://github.com/user-attachments/assets/e1dfbabc-e720-448d-a8b3-228f91d665eb)
 

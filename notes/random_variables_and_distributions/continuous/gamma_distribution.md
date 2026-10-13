@@ -1,6 +1,6 @@
-## Gamma Distribution (Continuous)
+# Gamma Distribution (Continuous)
 
-A continuous random variable X follows a gamma distribution if it is used to model the time until an event occurs a specific number of times. The gamma distribution is a two-parameter family of continuous probability distributions and is often denoted as $X \sim \text{Gamma}(\alpha, \beta)$, where $\alpha$ (shape parameter) and $\beta$ (rate parameter) are positive real numbers.
+A continuous random variable $X$ follows a gamma distribution when it is a positive, right-skewed quantity with the density below. For integer shape $\alpha = k$ it is the waiting time until the $k$-th event of a Poisson process with rate $\beta$ (a sum of $k$ independent exponential waiting times). The gamma distribution is a two-parameter family of continuous probability distributions and is often denoted as $X \sim \text{Gamma}(\alpha, \beta)$, where $\alpha$ (shape parameter) and $\beta$ (rate parameter) are positive real numbers.
 
 ### Probability Density Function (PDF)
 
@@ -32,11 +32,11 @@ $$\text{Var}(X) = \frac{\alpha}{\beta^2}$$
 
 The moment generating function (MGF) of a gamma distribution is:
 
-$$M_X(t) = (1 - \frac{t}{\beta})^{-\alpha}, \text{ for } t < \beta$$
+$$M_X(t) = \left(1 - \frac{t}{\beta}\right)^{-\alpha}, \text{ for } t < \beta$$
 
 ### Example: Flood Frequency Study
 
-A hydrologist is analyzing flood intervals in a specific area. The intervals, measured in years, follow a gamma distribution characterized by a shape parameter (α) and a rate parameter (β).
+A hydrologist is analyzing flood intervals in a specific area. The intervals, measured in years, follow a gamma distribution characterized by a shape parameter ($\alpha$) and a rate parameter ($\beta$).
 
 - Shape parameter, $\alpha = 2$
 - Rate parameter, $\beta = \frac{1}{3}$ per year
@@ -58,3 +58,7 @@ $$ \text{Var}(X) = \frac{2}{\left(\frac{1}{3}\right)^2} = 18 \text{ years}^2 $$
 ### Applications
 
 Gamma distributions are used in various fields such as hydrology for modeling flood events, in finance for modeling the time until default, and in health sciences for modeling the time until death or failure of a biological organ or system.
+
+---
+
+**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/gamma_distribution.md)

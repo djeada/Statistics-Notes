@@ -149,7 +149,7 @@ $$
 
 If observations arrive every 15 minutes, the same numerical frequency is initially expressed in cycles per 15-minute interval. Convert to cycles per hour, day, or another physical unit only after recording the sampling interval.
 
-The Nyquist frequency is half the sampling rate. With one observation per unit interval it is $0.5$ cycles per observation. A signal at $0.65$ cycles per observation is therefore observed as a lower-frequency alias.
+The Nyquist frequency is half the sampling rate. With one observation per unit interval it is $0.5$ cycles per observation. A signal at $0.65$ cycles per observation is therefore observed as an alias at $|0.65-1|=0.35$ cycles per observation.
 
 ### DFT and frequency resolution
 
@@ -268,3 +268,5 @@ Before treating a spectral peak as substantive evidence:
 9. avoid causal claims based on coherence alone.
 
 The related state-space material is covered in the [state-space chapter](state_space_models.md), and the [state-space/frequency notebook](../../notebooks/time_series/state_space_and_frequency.ipynb) provides an additional worked environment.
+
+A notebook focused on the periodogram, leakage, and aliasing is [frequency_domain_analysis.ipynb](../../notebooks/time_series/frequency_domain_analysis.ipynb).

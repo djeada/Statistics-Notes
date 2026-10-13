@@ -54,27 +54,27 @@ def plot_regression_results(ax: plt.Axes, x: np.ndarray, y: np.ndarray, model: L
     ax.set_ylim((0, 4))
     ax.set_title(title)
 
-# Set random seed for reproducibility
-np.random.seed(42)
+def main() -> None:
+    np.random.seed(42)
 
-# Constants
-NUM_SAMPLES = 100
-X_MIN, X_MAX = 0, 1
-TRUE_SLOPE, TRUE_INTERCEPT = 2.0, 1.0
-NOISE_SCALE_LOW, NOISE_SCALE_HIGH = 0.1, 0.5
+    num_samples = 100
+    x_min, x_max = 0, 1
+    true_slope, true_intercept = 2.0, 1.0
+    noise_scale_low, noise_scale_high = 0.1, 0.5
 
-# Generate synthetic data and fit models
-x, y_low_noise = generate_data(NUM_SAMPLES, X_MIN, X_MAX, TRUE_SLOPE, TRUE_INTERCEPT, NOISE_SCALE_LOW)
-_, y_high_noise = generate_data(NUM_SAMPLES, X_MIN, X_MAX, TRUE_SLOPE, TRUE_INTERCEPT, NOISE_SCALE_HIGH)
-model_low_noise, r_squared_low = fit_and_score(x, y_low_noise)
-model_high_noise, r_squared_high = fit_and_score(x, y_high_noise)
+    # Generate synthetic data and fit models
+    x, y_low_noise = generate_data(num_samples, x_min, x_max, true_slope, true_intercept, noise_scale_low)
+    _, y_high_noise = generate_data(num_samples, x_min, x_max, true_slope, true_intercept, noise_scale_high)
+    model_low_noise, r_squared_low = fit_and_score(x, y_low_noise)
+    model_high_noise, r_squared_high = fit_and_score(x, y_high_noise)
 
-# Create subplots
-fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(12, 6))
+    fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(12, 6))
+    plot_regression_results(ax1, x, y_low_noise, model_low_noise, f"Low Noise (R² = {r_squared_low:.2f})")
+    plot_regression_results(ax2, x, y_high_noise, model_high_noise, f"High Noise (R² = {r_squared_high:.2f})")
 
-# Plot results
-plot_regression_results(ax1, x, y_low_noise, model_low_noise, f"Low Noise (R² = {r_squared_low:.2f})")
-plot_regression_results(ax2, x, y_high_noise, model_high_noise, f"High Noise (R² = {r_squared_high:.2f})")
+    fig.suptitle("Linear Regression: Impact of Noise on R-squared")
+    plt.show()
 
-fig.suptitle("Linear Regression: Impact of Noise on R-squared")
-plt.show()
+
+if __name__ == "__main__":
+    main()

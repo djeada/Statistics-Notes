@@ -112,7 +112,7 @@ def main():
     df = create_data()
 
     # Step 2: Fit the regression model and make predictions
-    model, y_pred, slope, intercept = fit_regression_model(df)
+    _, y_pred, slope, intercept = fit_regression_model(df)
 
     # Step 3: Calculate sums of squares and R-squared
     stats = calculate_sums_of_squares(df['Test_Score (y)'].values, y_pred)
@@ -120,11 +120,10 @@ def main():
     # Step 4: Plot the regression line, actual data, and key results
     plot_regression(df, y_pred, slope, intercept, stats)
 
-    # Return key results for reference
-    return slope, intercept, stats['R_squared'], stats['SST'], stats['SSR'], stats['SSE']
+    print(f"Slope: {slope:.2f}, Intercept: {intercept:.2f}, R²: {stats['R_squared']:.2f}, "
+          f"SST: {stats['SST']:.2f}, SSR: {stats['SSR']:.2f}, SSE: {stats['SSE']:.2f}")
+
 
 # Execute the main function
 if __name__ == "__main__":
-    slope, intercept, R_squared, SST, SSR, SSE = main()
-    print(f"Slope: {slope:.2f}, Intercept: {intercept:.2f}, R²: {R_squared:.2f}, "
-          f"SST: {SST:.2f}, SSR: {SSR:.2f}, SSE: {SSE:.2f}")
+    main()

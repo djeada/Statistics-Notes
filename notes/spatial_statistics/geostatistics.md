@@ -395,13 +395,13 @@ With real data, the true semivariogram is unknown, so we estimate it from observ
 For a lag bin around distance $h$,
 
 $$
-\hat{\gamma}(h) = \frac{1}{2N(h)} \sum_{(i,j)\in N(h)} \left[Z(s_i)-Z(s_j)\right]^2,
+\hat{\gamma}(h) = \frac{1}{2|N(h)|} \sum_{(i,j)\in N(h)} \left[Z(s_i)-Z(s_j)\right]^2,
 $$
 
 where
 
 - $N(h)$ is the set of observation pairs assigned to the lag bin;
-- $N(h)$ also denotes the number of pairs in that bin;
+- $|N(h)|$ is the number of pairs in that bin;
 - $Z(s_i)-Z(s_j)$ is the difference between the two observed values.
 
 ### What is being calculated?
@@ -514,7 +514,7 @@ $$
 4+1+4+1+9=19.
 $$
 
-### Divide by $2N(h)$
+### Divide by $2|N(h)|$
 
 Because
 
@@ -842,7 +842,7 @@ For example:
 
 - in the spherical model, $a$ is the exact finite range;
 - in the exponential model, $a$ is a scale parameter and the practical range is about $3a$;
-- in the Gaussian model, the practical range is related to $a$ differently.
+- in the Gaussian model, the practical range (95% of the sill) is about $\sqrt{3}\,a\approx1.73a$, because $1-e^{-3}\approx0.95$ when $(h/a)^2=3$.
 
 Compare models using their implied curves or a consistently defined practical range rather than the raw parameter symbol alone.
 

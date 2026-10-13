@@ -1,10 +1,10 @@
-## Moments, Moment‐Generating Functions, and Their Connections
+# Moments, Moment‐Generating Functions, and Their Connections
 
 In both statistics and mechanics the word *moment* measures how much "leverage" the values of a quantity exert about a chosen reference point.  In statistics the leverage is exerted by probability mass, in mechanics by physical mass, but the mathematics is identical: take a distance from the reference point, square or otherwise power it, weight it, and sum or integrate.
 
 ### Statistical moments
 
-For a real‐valued random variable $X$ with mean $\mu = E[X]$, the **nth raw moment** is $\mu'_n = E[X^{n}]$.  The **$n$th central moment** shifts the origin to the mean so that only the *shape* of the distribution enters:
+For a real‐valued random variable $X$ with mean $\mu = E[X]$, the **$n$th raw moment** is $\mu'_n = E[X^{n}]$.  The **$n$th central moment** shifts the origin to the mean so that only the *shape* of the distribution enters:
 
 $$
 \mu_n = E[(X-\mu)^{n}].
@@ -51,7 +51,7 @@ Because differentiation is often easier than direct integration, the MGF is a po
 * **Solid curve** – the exact MGF $M_X(t)=\lambda/(\lambda-t)$ for an exponential with rate $\lambda=1$ (valid for $t<\lambda=1$).
 * **Dots** – Monte-Carlo estimates $\hat M(t)=\frac1N\sum_{i=1}^N e^{tX_i}$ from $N=10{,}000$ simulated draws.
 
-Because $\hat M(t)$ is an unbiased estimator of $M_X(t)$, the scatter hugs the curve; sampling noise widens a bit as $t\uparrow1$ where the variance of $e^{tX}$ blows up.  Zooming near $t=0$ (not shown) the slope of the curve equals the mean $E[X]=1$, its curvature gives $E[X^2]=2$, and so on—illustrating how successive derivatives at $t=0$ generate the raw moments.
+Because $\hat M(t)$ is an unbiased estimator of $M_X(t)$, the scatter hugs the curve; sampling noise widens as $t\uparrow1$. In fact $\operatorname{Var}(e^{tX})$ is finite only for $t<\lambda/2=0.5$, so for larger $t$ the estimates converge very slowly (and the estimator has infinite variance as $t\to1$).  Zooming near $t=0$ (not shown) the slope of the curve equals the mean $E[X]=1$, its curvature gives $E[X^2]=2$, and so on—illustrating how successive derivatives at $t=0$ generate the raw moments.
 
 ### Mechanical moments: the moment of inertia
 
@@ -65,7 +65,7 @@ where $r$ is the perpendicular distance from the axis.  For a system of point ma
 
 ### Variance and moment of inertia: a shared formula
 
-Both variance and moment of inertia are weighted sums of squared distances.  Replace mass $m_i$ with probability weight $1/N$ and the distance to the axis with the deviation from the mean, and the formulas coincide.  This is why early statisticians, led by Karl Pearson, borrowed the mechanical term *moment* to describe sums of powered deviations in probability theory.
+Both variance and moment of inertia are weighted sums of squared distances.  Replace mass $m_i$ with probability weight $p_i$ (or $1/N$ for $N$ equally weighted observations) and the distance to the axis with the deviation from the mean, and the formulas coincide.  This is why early statisticians, led by Karl Pearson, borrowed the mechanical term *moment* to describe sums of powered deviations in probability theory.
 
 ![output(1)](https://github.com/user-attachments/assets/43ebb827-73a6-42af-bb6f-070143c5db6f)
 
@@ -77,9 +77,11 @@ $$
 \sigma_r = \sqrt{\tfrac1n\sum_{i=1}^n\|X_i-\hat\mu\|^2}
 $$
 
+(For isotropic unit variance in two dimensions, $\sigma_r\approx\sqrt2$, because the squared radius adds the variances of both coordinates; about $1-e^{-1}\approx63\%$ of points then fall inside the $1\sigma_r$ circle.)
+
 They play the same geometric role that $\sigma$ does on a 1-D number line.
 
-Squaring the radial distances and averaging (then halving in physics) gives the **statistical moment of inertia**—identical in algebra to the physical moment of inertia but with probability mass instead of physical mass.  Visually, you can see that most points fall within the $1\sigma$ circle, and the spread of the cloud determines the circle’s radius.
+Squaring the radial distances and averaging gives the **statistical moment of inertia**—identical in algebra to the physical moment of inertia but with probability mass instead of physical mass.  Visually, you can see that most points fall within the $1\sigma$ circle, and the spread of the cloud determines the circle’s radius.
 
 ### Principal‑component analysis (PCA) as a "rotational" problem
 
@@ -101,4 +103,8 @@ The long arrow shows where variance—and thus the statistical moment of inertia
 
 ### Historical remarks
 
-Pafnuty Chebyshev and his students used powered deviations in probabilistic inequalities during the 1860s–1880s but did not employ the term *moment*.  Karl Pearson introduced that name in an 1893 *Nature* letter and, in 1901, formalised the **method of moments** for parameter estimation by equating sample moments with their theoretical counterparts.  The unifying physics analogy he invoked remains the standard intuition today.
+Pafnuty Chebyshev and his students used powered averages in probabilistic inequalities and limit theorems during the 1860s–1880s, borrowing the mechanical notion of a moment.  Karl Pearson made moments central to his statistical work and introduced the **method of moments** for parameter estimation in 1894 by equating sample moments with their theoretical counterparts.  The physics analogy remains the standard intuition today.
+
+---
+
+**Practice:** [Exercises with worked solutions](../../exercises/random_variables_and_distributions/statistical_moments.md)

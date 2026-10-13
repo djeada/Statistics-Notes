@@ -14,13 +14,13 @@ Many classical ARMA calculations rely on this stability because it lets dependen
 | Weak stationarity: covariance | $\mathrm{Cov}(X_t,X_{t-h})=\gamma(h)$ | Depends only on lag, not calendar time. |
 | ACF | $\rho(h)=\gamma(h)/\gamma(0)$ | For a stationary process, $\rho(-h)=\rho(h)$. |
 | White noise | $E\varepsilon_t=0$, $\mathrm{Var}(\varepsilon_t)=\sigma^2$, $\gamma(h)=0$ for $h\ne0$ | Basic stationary reference process. |
-| MA($q$) covariance | $\gamma(h)=\sigma_\varepsilon^2\sum_{j=0}^{q-|h|}\theta_j\theta_{j+|h|}$ for $|h|\le q$ | Zero for $|h|>q$. |
-| AR(1) | $X_t=c+\phi X_{t-1}+\varepsilon_t$ | Standard causal stationary solution requires $|\phi|<1$. |
+| MA($q$) covariance (with $\theta_0=1$) | $\gamma(h)=\sigma_\varepsilon^2\sum_{j=0}^{q-\lvert h\rvert}\theta_j\theta_{j+\lvert h\rvert}$ for $\lvert h\rvert\le q$ | Zero for $\lvert h\rvert>q$. |
+| AR(1) | $X_t=c+\phi X_{t-1}+\varepsilon_t$ | Standard causal stationary solution requires $\lvert\phi\rvert<1$. |
 | AR(1) mean | $\mu=c/(1-\phi)$ | Valid for the stationary solution. |
-| AR(1) variance | $\gamma(0)=\sigma_\varepsilon^2/(1-\phi^2)$ | Finite only when $|\phi|<1$. |
-| AR(1) ACF | $\rho(h)=\phi^{|h|}$ | Geometric or alternating decay. |
-| AR($p$) stationarity/causality | $\phi(z)=1-\phi_1z-\cdots-\phi_pz^p=0\Rightarrow |z|>1$ | Standard backshift-root condition. |
-| Linear filter | $X_t=\sum_j\psi_jY_{t-j}$ | Absolute summability $\sum_j|\psi_j|<\infty$ is a strong stability condition. |
+| AR(1) variance | $\gamma(0)=\sigma_\varepsilon^2/(1-\phi^2)$ | Finite only when $\lvert\phi\rvert<1$. |
+| AR(1) ACF | $\rho(h)=\phi^{\lvert h\rvert}$ | Geometric or alternating decay. |
+| AR($p$) stationarity/causality | $\phi(z)=1-\phi_1z-\cdots-\phi_pz^p=0\Rightarrow \lvert z\rvert>1$ | Standard backshift-root condition. |
+| Linear filter | $X_t=\sum_j\psi_jY_{t-j}$ | Absolute summability $\sum_j\lvert\psi_j\rvert<\infty$ is a strong stability condition. |
 | Random walk | $X_t=X_{t-1}+\varepsilon_t$ | Unit-root boundary; $\mathrm{Var}(X_t\mid X_0)=t\sigma^2$. |
 | First difference | $\Delta X_t=(1-B)X_t=X_t-X_{t-1}$ | Removes one unit-root factor; a random walk becomes white noise. |
 | Seasonal difference | $\Delta_sX_t=(1-B^s)X_t=X_t-X_{t-s}$ | Removes one seasonal unit-root factor at period $s$. |
@@ -111,7 +111,7 @@ In simple terms, the process has the same probabilistic behavior after any commo
 
 ### Weak (Second-Order) Stationarity
 
-Weak stationarity, also known as **second-order stationarity**, requires only that the **first two moments** (mean and variance) and the **autocovariance** depend solely on the lag between observations, not on time itself.
+Weak stationarity, also known as **second-order stationarity**, requires only a constant **mean**, a constant finite **variance**, and an **autocovariance** that depends solely on the lag between observations, not on time itself.
 
 A time series $\{X_t\}$ is weakly stationary if:
 
@@ -349,7 +349,7 @@ $$
 X_t = X_{t-1} + Z_t
 $$
 
-where $Z_t$ is white noise with mean $\mu_Z$ and variance $\sigma_Z^2$. For a fixed starting value $X_0$, repeated substitution gives $X_t=X_0+\sum_{j=1}^t Z_j$.
+where $Z_t$ is an uncorrelated innovation sequence with mean $\mu_Z$ (zero for strict white noise, nonzero for a random walk with drift) and variance $\sigma_Z^2$. For a fixed starting value $X_0$, repeated substitution gives $X_t=X_0+\sum_{j=1}^t Z_j$.
 
 #### Properties of a Random Walk
 

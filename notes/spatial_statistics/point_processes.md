@@ -230,6 +230,7 @@ $$
 $$
 
 while their long-run average is about 2.4.
+
 ## Estimating a homogeneous intensity
 
 If $n$ events are observed in a window of area $|W|$, the natural estimator is
@@ -334,7 +335,7 @@ $$
 \lambda(8) = \exp(-1+0.15(8)) = \exp(0.2) \approx1.221.
 $$
 
-So the expected local event density is much higher near $x=8$ than near $x=2$.
+So the expected local event density near $x=8$ is about $1.221/0.497\approx2.5$ times that near $x=2$ (the ratio is $e^{0.15\cdot6}=e^{0.9}$).
 
 ## Why intensity must be separated from interaction
 
@@ -568,7 +569,7 @@ Nearest-neighbor distances summarize short-range spacing.
 
 Small nearest-neighbor distances suggest that events often have close companions.
 
-Large nearest-neighbor distances suggest regular spacing or inhibition.
+Large nearest-neighbor distances (relative to the CSR expectation $\frac{1}{2\sqrt\lambda}$) suggest regular spacing or inhibition.
 
 ## The theoretical nearest-neighbor distribution under CSR
 
@@ -883,6 +884,7 @@ $$
 $$
 
 This small difference suggests slightly more nearby pairs than expected under CSR at that scale, but the calculation alone does not establish statistically significant clustering.
+
 ## K is cumulative
 
 A key feature of Ripley's $K$ function is that it is cumulative.
@@ -1062,6 +1064,8 @@ When many radii are examined, an observed curve may leave the envelope somewhere
 Therefore a pointwise envelope is not automatically a 5% global test over the entire curve.
 
 Formal global-envelope methods handle the multiple-distance problem more carefully.
+
+Also, if $\lambda$ is estimated from the data and the simulations use that estimate, the envelope is only approximate (it tends to be conservative).
 
 For introductory analysis, pointwise envelopes remain useful exploratory diagnostics when their limitations are stated clearly.
 
@@ -1396,6 +1400,7 @@ Do not add an interaction component merely because the raw map looks clustered.
 ### validate
 
 Use simulation diagnostics, residual analysis, or held-out spatial information when possible.
+
 ## Common mistakes
 
 ### treating point-process data like geostatistical data

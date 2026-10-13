@@ -1,6 +1,6 @@
 # Student's t-Distribution (Continuous)
 
-Student's t-distribution is a continuous probability distribution that arises when a normally distributed quantity is standardized using an estimated standard deviation rather than a known population standard deviation. It has heavier tails than the normal distribution and approaches the normal distribution as its degrees of freedom increase. The t-distribution is denoted as $X \sim t(\nu)$, where $\nu$ is the number of degrees of freedom.
+Student's t-distribution is a continuous probability distribution that arises when a normally distributed quantity is standardized using an estimated standard deviation rather than a known population standard deviation. Formally, if $Z\sim N(0,1)$ and $V\sim\chi^2(\nu)$ are independent, then $T=Z/\sqrt{V/\nu}\sim t(\nu)$. It has heavier tails than the normal distribution and approaches the normal distribution as its degrees of freedom increase. The t-distribution is denoted as $X \sim t(\nu)$, where $\nu$ is the number of degrees of freedom.
 
 ### Probability Density Function (PDF)
 
@@ -14,7 +14,13 @@ where $\Gamma(\cdot)$ is the gamma function.
 
 ### Cumulative Distribution Function (CDF)
 
-The CDF of a t-distribution can be expressed in terms of the regularized incomplete beta function.
+The CDF of a t-distribution can be expressed in terms of the regularized incomplete beta function $I_x(a,b)$. For $t\ne0$,
+
+$$
+F(t)=1-\tfrac12 I_{\frac{\nu}{t^2+\nu}}\!\left(\tfrac{\nu}{2},\tfrac12\right)\quad (t>0),
+$$
+
+and $F(-t)=1-F(t)$ by symmetry.
 
 ![output(18)](https://github.com/user-attachments/assets/f4cca998-c7fe-43e2-874b-854264a76725)
 
@@ -66,7 +72,7 @@ For the given data:
 
 $$ t = \frac{(120 - 130)}{\sqrt{(8^2/20) + (10^2/25)}} \approx -3.73 $$
 
-This value indicates the sample mean difference in units of its estimated standard error.
+This value indicates the sample mean difference in units of its estimated standard error. With about 43 degrees of freedom the two-sided p-value is about $0.0006$, so the data are strong evidence of a difference in mean blood pressure.
 
 II. Estimation of Degrees of Freedom:
 

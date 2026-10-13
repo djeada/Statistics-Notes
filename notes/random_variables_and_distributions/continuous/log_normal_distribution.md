@@ -1,4 +1,4 @@
-## Log-Normal Distribution (Continuous)
+# Log-Normal Distribution (Continuous)
 
 A continuous random variable X follows a log-normal distribution if its natural logarithm is normally distributed. The log-normal distribution is useful in modeling continuous random variables that are constrained to be positive. It is denoted as $X \sim \text{LogNormal}(\mu, \sigma^2)$, where $\mu$ and $\sigma^2$ are the mean and variance of the variable's natural logarithm.
 
@@ -44,8 +44,12 @@ II. What is the variance of the stock price?
 
 Variance of the stock price:
 
-$$\text{Var}(X) = \left[ \exp(0.1^2) - 1 \right] \exp(2 \times 0 + 0.1^2) \approx 0.0101$$
+$$\text{Var}(X) = \left[ \exp(0.1^2) - 1 \right] \exp(2 \times 0 + 0.1^2) \approx 0.0102$$
 
 ### Applications
 
 The log-normal distribution is widely used in finance for modeling stock prices, in environmental science for modeling concentrations of pollutants, and in survival analysis. It is also applied in economics for income distribution and in reliability engineering for representing lifetimes of systems.
+
+---
+
+**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/log_normal_distribution.md)

@@ -169,7 +169,7 @@ $$
 
 This is the standard operator form of an AR model: the polynomial $\phi(B)$ collects the dependence on past values into a single expression.
 
-### Moving Average (MA) Process with Drift
+### Moving Average (MA) Process with a Constant Mean
 
 An **MA($q$)** process with a constant term can be written as
 

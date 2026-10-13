@@ -1,82 +1,84 @@
-import pandas as pd
-import numpy as np
+"""ARIMA workflow on a seeded synthetic inflation-like price index.
+
+The index is simulated (no live data download): log prices follow a random
+walk with drift whose growth rate is an AR(1) process, mimicking monthly CPI.
+"""
+
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import statsmodels.api as sm
-from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.arima.model import ARIMA
-import pandas_datareader.data as web
-from datetime import datetime
+from statsmodels.tsa.stattools import adfuller
 
-# Step 1: Fetch Inflation Data (from FRED or yfinance)
-# Using CPI (Consumer Price Index) from FRED
-start_date = '1980-01-01'
-end_date = '2023-01-01'
 
-# Fetch CPI data (monthly)
-cpi_data = web.DataReader('CPIAUCSL', 'fred', start_date, end_date)
+def simulate_cpi(n=516, seed=42):
+    """Monthly CPI-like index from 1980-01: log growth is AR(1) around 0.25%."""
+    rng = np.random.default_rng(seed)
+    mu, phi, sigma = 0.0025, 0.6, 0.002
+    growth = np.zeros(n)
+    growth[0] = mu
+    for t in range(1, n):
+        growth[t] = mu + phi * (growth[t - 1] - mu) + rng.normal(scale=sigma)
+    index = pd.date_range("1980-01-01", periods=n, freq="MS")
+    return pd.Series(78.0 * np.exp(np.cumsum(growth)), index=index, name="CPI")
 
-# Step 2: Exploratory Data Analysis
-plt.figure(figsize=(10, 6))
-plt.plot(cpi_data, label="CPI (Inflation Index)")
-plt.title('Consumer Price Index (CPI) Over Time')
-plt.xlabel('Year')
-plt.ylabel('CPI')
-plt.legend()
-plt.show()
 
-# Step 3: Check for Stationarity using ADF Test
-def adf_test(series):
+def adf_test(series, label):
     result = adfuller(series)
-    print('ADF Statistic:', result[0])
-    print('p-value:', result[1])
+    print(f"ADF test for {label}")
+    print("ADF Statistic:", result[0])
+    print("p-value:", result[1])
     for key, value in result[4].items():
-        print(f'Critical Value ({key}): {value}')
+        print(f"Critical Value ({key}): {value}")
 
-adf_test(cpi_data['CPIAUCSL'])
 
-# Step 4: Differencing (if non-stationary)
-# We apply differencing if p-value > 0.05, suggesting non-stationarity
-cpi_diff = cpi_data.diff().dropna()
+def main():
+    cpi = simulate_cpi()
 
-plt.figure(figsize=(10, 6))
-plt.plot(cpi_diff, label="Differenced CPI (Inflation Index)")
-plt.title('Differenced CPI Over Time')
-plt.xlabel('Year')
-plt.ylabel('Differenced CPI')
-plt.legend()
-plt.show()
+    plt.figure(figsize=(10, 6))
+    plt.plot(cpi, label="Synthetic CPI (inflation index)")
+    plt.title("Synthetic Consumer Price Index Over Time")
+    plt.xlabel("Year")
+    plt.ylabel("CPI")
+    plt.legend()
+    plt.show()
 
-adf_test(cpi_diff['CPIAUCSL'])
+    adf_test(cpi, "CPI level")
 
-# Step 5: Fit ARIMA Model
-# Using ARIMA(p, d, q) where p, q are determined based on ACF and PACF plots
+    cpi_diff = cpi.diff().dropna()
+    plt.figure(figsize=(10, 6))
+    plt.plot(cpi_diff, label="Differenced CPI")
+    plt.title("Differenced CPI Over Time")
+    plt.xlabel("Year")
+    plt.ylabel("Differenced CPI")
+    plt.legend()
+    plt.show()
 
-# Plot ACF and PACF
-fig, ax = plt.subplots(1, 2, figsize=(16, 6))
-sm.graphics.tsa.plot_acf(cpi_diff, lags=40, ax=ax[0])
-sm.graphics.tsa.plot_pacf(cpi_diff, lags=40, ax=ax[1])
-plt.show()
+    adf_test(cpi_diff, "differenced CPI")
 
-# Fit ARIMA Model
-# Initial guess based on ACF/PACF plots: ARIMA(1,1,1)
-model = ARIMA(cpi_data, order=(1, 1, 1))
-fitted_model = model.fit()
+    fig, ax = plt.subplots(1, 2, figsize=(16, 6))
+    sm.graphics.tsa.plot_acf(cpi_diff, lags=40, ax=ax[0])
+    sm.graphics.tsa.plot_pacf(cpi_diff, lags=40, ax=ax[1])
+    plt.show()
 
-# Step 6: Evaluate Model
-print(fitted_model.summary())
+    fitted = ARIMA(cpi, order=(1, 1, 1)).fit()
+    print(fitted.summary())
 
-# Step 7: Forecast Future Values
-forecast = fitted_model.get_forecast(steps=12)  # Forecast next 12 months
-forecast_values = forecast.predicted_mean
-forecast_ci = forecast.conf_int()
+    forecast = fitted.get_forecast(steps=12)
+    mean = forecast.predicted_mean
+    ci = forecast.conf_int()
 
-# Plot Forecast
-plt.figure(figsize=(10, 6))
-plt.plot(cpi_data, label='Historical CPI')
-plt.plot(forecast_values.index, forecast_values, label='Forecasted CPI', color='red')
-plt.fill_between(forecast_ci.index, forecast_ci.iloc[:, 0], forecast_ci.iloc[:, 1], color='pink', alpha=0.3)
-plt.title('CPI Forecast for Next 12 Months')
-plt.xlabel('Year')
-plt.ylabel('CPI')
-plt.legend()
-plt.show()
+    plt.figure(figsize=(10, 6))
+    plt.plot(cpi, label="Historical CPI")
+    plt.plot(mean.index, mean, label="Forecasted CPI", color="red")
+    plt.fill_between(ci.index, ci.iloc[:, 0], ci.iloc[:, 1], color="pink", alpha=0.3)
+    plt.title("CPI Forecast for Next 12 Months")
+    plt.xlabel("Year")
+    plt.ylabel("CPI")
+    plt.legend()
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()

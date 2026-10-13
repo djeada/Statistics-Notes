@@ -1,4 +1,5 @@
 # Spatial Validation
+
 Spatial model performance depends not only on which observations are held out, but also on where those observations are located relative to the training data.
 
 This makes spatial validation fundamentally different from ordinary random train/test splitting.
@@ -763,7 +764,7 @@ $$
 \text{mean RMSE}=1.86
 $$
 
-can hide substantial geographic heterogeneity.
+(the unweighted mean of fold RMSEs, which differs from the pooled RMSE when folds have different sizes) can hide substantial geographic heterogeneity.
 
 Two regions are substantially harder than the others.
 
@@ -830,6 +831,8 @@ Examples include:
 Leave-one-region-out validation asks:
 
 > Can the model transfer to a genuinely new region of the same type?
+
+![Leave-one-out versus region transfer](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/07_loo_vs_region_transfer.png)
 
 This is often easier to interpret scientifically than arbitrary geometric blocking.
 

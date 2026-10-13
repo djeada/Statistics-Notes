@@ -41,7 +41,7 @@ $$
 \hat\gamma(1)=\frac{1}{4}\{(-1.5)(-0.5)+(-0.5)(1.5)+(1.5)(0.5)\}=0.1875.
 $$
 
-Some software divides the lag-1 estimate by $n-1$ instead. Because different conventions produce different numerical values, state the denominator before comparing estimates. Autocovariance retains squared units, while autocorrelation divides by $\hat\gamma(0)$ and is therefore unit-free.
+Some software divides each lag-$h$ sum by the pair count $n-h$ instead (here $3$ at lag 1, giving $0.75/3=0.25$). Because different conventions produce different numerical values, state the denominator before comparing estimates. Autocovariance retains squared units, while autocorrelation divides by $\hat\gamma(0)$ and is therefore unit-free.
 
 ![Autocovariance of a simulated AR(1)](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/05_autocovariance_ar1.png)
 
@@ -223,7 +223,7 @@ $$
 \hat\rho(1)=\frac{0.1875}{1.25}=0.15.
 $$
 
-At larger lags, fewer observation pairs are available. One common convention divides by $n$ at every lag, while another divides by $n-h$. Neither should be treated as the unique sample autocovariance definition without stating the convention.
+At larger lags, fewer observation pairs are available. One common convention divides by $n$ at every lag, while another divides by $n-h$. Neither should be treated as the unique sample autocovariance definition without stating the convention; the divisor-$n$ version is the one that guarantees a non-negative-definite autocovariance sequence.
 
 ### AR(1) covariance recursion
 
@@ -258,3 +258,5 @@ The autocovariance therefore decays geometrically with lag, just like the ACF, b
 ### Cross-covariance caution
 
 For two series, the cross-covariance $\gamma_{XY}(h)$ depends on which series is shifted and on the sign convention used for the lag. A peak at positive $h$ therefore does not, by itself, establish that $X$ causes $Y$. Common trends, seasonality, delayed measurement, and release timing can all create apparent lead-lag patterns.
+
+A runnable companion is the [autocovariance notebook](../../notebooks/time_series/autocovariance_function.ipynb).

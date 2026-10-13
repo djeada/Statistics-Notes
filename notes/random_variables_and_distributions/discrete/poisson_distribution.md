@@ -1,4 +1,4 @@
-## Poisson Distribution (Discrete)
+# Poisson Distribution (Discrete)
 
 A discrete random variable X follows a Poisson distribution if the events occur independently and at a constant average rate. The Poisson distribution is denoted as $X \sim \text{Poisson}(\lambda)$, where $\lambda$ is the average rate (or mean) of events occurring in a given interval.
 
@@ -50,7 +50,7 @@ A hospital's emergency room experiences an average of 5 visits per hour due to a
 
 Given:
 
-- Average rate of success (visits per hour) $\lambda = 5$
+- Average rate of events (visits per hour) $\lambda = 5$
 
 I. What is the probability exactly 3 accidents occur in an hour?
 
@@ -72,6 +72,10 @@ $$ P(X \leq 2) = \sum_{k=0}^{2} \frac{e^{-5} \cdot 5^k}{k!} = 0.1247 $$
 
 ### Poisson Approximation to the Binomial Distribution
 
-If the number of trials in a binomial distribution is large (n) and the probability of success (p) is small, then the binomial distribution can be approximated by a Poisson distribution with parameter $\lambda = np$:
+If the number of trials in a binomial distribution is large and the probability of success $p$ is small (with $np$ moderate), then the binomial distribution can be approximated by a Poisson distribution with parameter $\lambda = np$:
 
 $$\text{Binomial}(n, p) \approx \text{Poisson}(np)$$
+
+---
+
+**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/poisson_distribution.md)

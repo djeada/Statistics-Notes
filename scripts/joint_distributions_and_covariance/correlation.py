@@ -1,3 +1,5 @@
+"""Pearson correlation for the hours-studied example, computed step by step."""
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -55,7 +57,7 @@ def plot_data(df, pearson_r):
 
     plt.figure(figsize=(8, 6))
     plt.scatter(df['Hours Studied (X)'], df['Test Score (Y)'], color='blue', label='Data points')
-    plt.plot(df['Hours Studied (X)'], df['Test Score (Y)'], color='red', label=f'Y = 10X + 40')
+    plt.plot(df['Hours Studied (X)'], df['Test Score (Y)'], color='red', label='Y = 10X + 40')
 
     # Adding labels and title
     plt.title('Scatter Plot of Hours Studied and Test Scores', fontsize=14)

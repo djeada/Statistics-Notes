@@ -21,10 +21,10 @@ A useful model is parsimonious enough to estimate reliably, flexible enough to c
 | AIC | $\mathrm{AIC}=-2\ell+2k$ | Lower is preferred within comparable likelihood fits. |
 | AICc | $\mathrm{AICc}=\mathrm{AIC}+2k(k+1)/(n-k-1)$ | Small-sample correction to AIC. |
 | BIC | $\mathrm{BIC}=-2\ell+k\log n$ | Penalizes complexity more strongly as $n$ grows. |
-| AR stationarity/causality | $\phi(z)=0\Rightarrow|z|>1$ | Standard backshift-root condition. |
-| MA invertibility | $\theta(z)=0\Rightarrow|z|>1$ | Selects the stable innovation representation. |
+| AR stationarity/causality | $\phi(z)=0\Rightarrow\lvert z\rvert>1$ | Standard backshift-root condition. |
+| MA invertibility | $\theta(z)=0\Rightarrow\lvert z\rvert>1$ | Selects the stable innovation representation. |
 | Forecast error | $e_{t,h}=y_{t+h}-\hat y_{t+h\mid t}$ | Evaluate on chronological future-like origins. |
-| MAE / RMSE | $\mathrm{MAE}=n^{-1}\sum|e_i|$, $\mathrm{RMSE}=\sqrt{n^{-1}\sum e_i^2}$ | Complement likelihood criteria with out-of-sample loss. |
+| MAE / RMSE | $\mathrm{MAE}=n^{-1}\sum\lvert e_i\rvert$, $\mathrm{RMSE}=\sqrt{n^{-1}\sum e_i^2}$ | Complement likelihood criteria with out-of-sample loss. |
 
 ## Worked calculation: fit, complexity, and diagnostics
 
@@ -149,11 +149,11 @@ $$
 \hat Y_t=0.328+0.080Y_{t-1}+1.195Y_{t-2}.
 $$
 
-This example demonstrates only the mechanics of regression-style AR estimation. The fitted coefficients are not the end of the analysis: check the implied stability, residual dependence, competing orders, and out-of-sample performance before using the model.
+Here $\hat\beta_1+\hat\beta_2\approx1.275>1$ and both roots of $1-0.080z-1.195z^2$ have modulus below 1, so the fitted recursion is explosive: with only four equations and three parameters the fit is essentially interpolation. This example demonstrates only the mechanics of regression-style AR estimation. The fitted coefficients are not the end of the analysis: check the implied stability, residual dependence, competing orders, and out-of-sample performance before using the model.
 
-### Why the Previous Toy Dataset Was Problematic
+### Why the Design Matrix Needs Variation
 
-If observations increase by a constant amount, adjacent lag columns can become linearly dependent once an intercept is included. Then $\mathbf X^\top\mathbf X$ is singular, the inverse in the ordinary least-squares expression does not exist, and the coefficients are not uniquely identified.
+If observations increase by a constant amount (for example $1,2,3,\ldots$), adjacent lag columns can become linearly dependent once an intercept is included. Then $\mathbf X^\top\mathbf X$ is singular, the inverse in the ordinary least-squares expression does not exist, and the coefficients are not uniquely identified.
 
 This is a general lesson rather than a quirk of one example: inspect the design matrix and data variation before presenting or interpreting an inverse-based estimate.
 

@@ -1,4 +1,4 @@
-## Confidence Intervals
+# Confidence Intervals
 
 A **confidence interval (CI)** is a range of plausible values for a population parameter, such as a mean or proportion, calculated from sample data. It supplements a point estimate by showing the uncertainty around that estimate.
 
@@ -72,7 +72,7 @@ A single interval either contains the true population mean or it does not. The 9
 
 ![confidence\_interval\_stock\_returns](https://github.com/user-attachments/assets/6ef55b49-6c87-4c69-985c-8c6703f6e554)
 
-The plot shows confidence intervals for simulated stock returns at 90%, 95%, and 99% confidence levels.
+The plot shows confidence intervals for the mean of 252 synthetic (seeded, simulated) daily returns at 90%, 95%, and 99% confidence levels. The accompanying script generates the returns itself and does not download market data.
 
 * The **lower bound** decreases as the confidence level increases.
 * The **upper bound** increases as the confidence level increases.
@@ -141,7 +141,7 @@ Therefore:
 
 $$
 0.60 \pm 1.96(0.0141)
-\approx 0.60 \pm 0.0276
+\approx 0.60 \pm 0.0277
 $$
 
 or approximately:
@@ -178,7 +178,13 @@ $$
 
 where the estimate is a sample statistic and $SE$ is its standard error.
 
-For a confidence interval for a mean, the $t$-distribution is generally used instead of the standard normal distribution when the population standard deviation is unknown, especially for small samples.
+For a confidence interval for a mean, the $t$-distribution is used instead of the standard normal distribution when the population standard deviation is unknown and estimated by $s$:
+
+$$
+\bar{x} \pm t^*_{n-1}\,\frac{s}{\sqrt{n}}
+$$
+
+where $t^*_{n-1}$ is the critical value with $n-1$ degrees of freedom. It is larger than $z^*$ (for example, $t^*_{29}=2.045$ at 95% confidence versus $z^*=1.960$) and approaches $z^*$ as $n$ grows. This interval is exact when the data are normal and approximate otherwise.
 
 ### Estimating the Standard Error
 
@@ -281,41 +287,31 @@ Thus, the estimated population mean weight is between approximately 3.096 kg and
 
 Suppose a digital thermometer is tested repeatedly at a known reference temperature. A confidence interval can be used to estimate the thermometer's **mean reading** at that reference temperature. It does not, by itself, describe the accuracy of every individual future reading.
 
-A 95% confidence interval for the mean reading $T$ can be written as:
+A 95% confidence interval for the mean reading has the form:
 
 $$
-CI = T \pm \text{Critical Value} \times SE
+CI = \bar{x} \pm \text{Critical Value} \times SE
 $$
 
-where:
-
-* $T$ is the sample mean temperature reading.
-* The critical value depends on whether the population standard deviation is known or estimated.
-* $SE$ is the standard error of the sample mean.
-
-If the population standard deviation $\sigma$ is known:
-
-$$
-SE = \frac{\sigma}{\sqrt{n}}
-$$
-
-where $n$ is the number of trials.
+where $\bar{x}$ is the sample mean reading and $SE$ is the standard error of the sample mean. If the population standard deviation $\sigma$ were known, $SE=\sigma/\sqrt{n}$ and the critical value would be $z^*$. Here $\sigma$ is unknown, so we use $SE=s/\sqrt{n}$ and a $t$ critical value.
 
 Suppose 30 trials produce a mean reading of 37.0°C and a sample standard deviation of 0.5°C:
 
 $$
-SE = \frac{0.5}{\sqrt{30}} \approx 0.091
+SE = \frac{0.5}{\sqrt{30}} \approx 0.0913
 $$
 
-Using the normal critical value as an approximation, the 95% confidence interval is:
+With $df=29$, $t^*=2.045$, so:
 
 $$
-CI = 37.0 \pm 1.96(0.091)
-\approx 37.0 \pm 0.178
-= (36.822,\ 37.178)
+CI = 37.0 \pm 2.045(0.0913)
+\approx 37.0 \pm 0.187
+= (36.81,\ 37.19)
 $$
 
-This interval estimates the thermometer's mean reading under the test conditions. Because the standard deviation was estimated from the sample, a $t$ critical value would be more appropriate for the usual small-sample calculation.
+Using the normal critical value $1.96$ instead would give the slightly narrower interval $37.0 \pm 0.179$, which understates the uncertainty a little for $n=30$.
+
+This interval estimates the thermometer's mean reading under the test conditions.
 
 ### Common Misconceptions
 

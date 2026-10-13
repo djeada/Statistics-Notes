@@ -2,79 +2,74 @@ import numpy as np
 import scipy.stats as stats
 import matplotlib.pyplot as plt
 
-# Set seed for reproducibility
-np.random.seed(42)
+SEED = 42
 
-# Function to generate apple weight data for different farms
-def generate_apple_weights(mean, std_dev, size, farm_name):
-    """
-    Generate random apple weights for a farm using normal distribution.
-    
-    Parameters:
-    - mean: float, mean apple weight
-    - std_dev: float, standard deviation of apple weights
-    - size: int, number of apples
-    - farm_name: str, name of the farm for labeling
-    
-    Returns:
-    - weights: array of apple weights
-    """
-    return np.random.normal(loc=mean, scale=std_dev, size=size)
 
-# Generating random apple weight data for three farms
-farm_a_apple_weights = generate_apple_weights(148, 10, 50, "Farm A")
-farm_b_apple_weights = generate_apple_weights(150, 10, 50, "Farm B")
-farm_c_apple_weights = generate_apple_weights(152, 10, 50, "Farm C")
+def generate_apple_weights(rng, mean, std_dev, size):
+    """Generate random apple weights (grams) for one farm from a normal distribution."""
+    return rng.normal(loc=mean, scale=std_dev, size=size)
 
-# Combine data into one array for potential future use
-apple_weights = np.concatenate((farm_a_apple_weights, farm_b_apple_weights, farm_c_apple_weights))
 
-# Group labels for potential use in future visualizations or stats
-groups = np.concatenate((
-    np.full_like(farm_a_apple_weights, 0),
-    np.full_like(farm_b_apple_weights, 1),
-    np.full_like(farm_c_apple_weights, 2)
-))
+def anova_table(*groups):
+    """Return SST (treatment), SSE, SSTotal, MST, MSE, F and p-value computed by hand."""
+    all_y = np.concatenate(groups)
+    grand_mean = all_y.mean()
+    k, n_total = len(groups), all_y.size
+    sst = sum(g.size * (g.mean() - grand_mean) ** 2 for g in groups)
+    sse = sum(((g - g.mean()) ** 2).sum() for g in groups)
+    mst, mse = sst / (k - 1), sse / (n_total - k)
+    f_stat = mst / mse
+    p_value = stats.f.sf(f_stat, k - 1, n_total - k)
+    return sst, sse, sst + sse, mst, mse, f_stat, p_value
 
-# Perform one-way ANOVA to test for significant differences between the groups
-f_stat, p_value = stats.f_oneway(farm_a_apple_weights, farm_b_apple_weights, farm_c_apple_weights)
 
-# Display the results of the ANOVA test
-print(f"F-statistic: {f_stat:.2f}")
-print(f"p-value: {p_value:.4f}")
+def main():
+    rng = np.random.default_rng(SEED)
 
-# Set significance level for the hypothesis test
-alpha = 0.05
+    farm_a = generate_apple_weights(rng, 148, 10, 50)
+    farm_b = generate_apple_weights(rng, 150, 10, 50)
+    farm_c = generate_apple_weights(rng, 152, 10, 50)
 
-# Interpret the results
-if p_value < alpha:
-    print("Result: Reject the null hypothesis.")
-    print("There is a significant difference in the average apple weights between the farms.")
-else:
-    print("Result: Fail to reject the null hypothesis.")
-    print("There is no significant difference in the average apple weights between the farms.")
+    # One-way ANOVA with scipy, cross-checked against the sums-of-squares table
+    f_stat, p_value = stats.f_oneway(farm_a, farm_b, farm_c)
+    sst, sse, sstotal, mst, mse, f_hand, p_hand = anova_table(farm_a, farm_b, farm_c)
+    assert np.isclose(f_stat, f_hand) and np.isclose(p_value, p_hand)
 
-# Visualization: Boxplot of apple weights for the three farms
-plt.figure(figsize=(8, 6))
-plt.boxplot(
-    [farm_a_apple_weights, farm_b_apple_weights, farm_c_apple_weights],
-    labels=["Farm A", "Farm B", "Farm C"],
-    patch_artist=True,
-    boxprops=dict(facecolor='skyblue')
-)
-plt.title("Boxplots of Apple Weights for Three Farms", fontsize=14)
-plt.ylabel("Weight (g)", fontsize=12)
-plt.grid(True, axis='y', linestyle='--', alpha=0.7)
-plt.show()
+    print(f"SST = {sst:.1f}, SSE = {sse:.1f}, SSTotal = {sstotal:.1f}")
+    print(f"MST = {mst:.1f}, MSE = {mse:.1f}")
+    print(f"F-statistic: {f_stat:.2f}")
+    print(f"p-value: {p_value:.4f}")
 
-# Expanded Visualization: Distribution of Apple Weights
-plt.figure(figsize=(10, 6))
-plt.hist(farm_a_apple_weights, bins=10, alpha=0.5, label='Farm A', color='blue')
-plt.hist(farm_b_apple_weights, bins=10, alpha=0.5, label='Farm B', color='green')
-plt.hist(farm_c_apple_weights, bins=10, alpha=0.5, label='Farm C', color='red')
-plt.title('Histogram of Apple Weights by Farm', fontsize=14)
-plt.xlabel('Weight (g)', fontsize=12)
-plt.ylabel('Frequency', fontsize=12)
-plt.legend(loc='upper right')
-plt.grid(True, linestyle='--', alpha=0.7)
-plt.show()
+    alpha = 0.05
+    if p_value < alpha:
+        print("Result: Reject the null hypothesis.")
+        print("There is a significant difference in the average apple weights between the farms.")
+    else:
+        print("Result: Fail to reject the null hypothesis.")
+        print("There is no significant difference in the average apple weights between the farms.")
+
+    # Boxplot
+    plt.figure(figsize=(8, 6))
+    plt.boxplot([farm_a, farm_b, farm_c], patch_artist=True,
+                boxprops=dict(facecolor="skyblue"))
+    plt.xticks([1, 2, 3], ["Farm A", "Farm B", "Farm C"])
+    plt.title("Boxplots of Apple Weights for Three Farms", fontsize=14)
+    plt.ylabel("Weight (g)", fontsize=12)
+    plt.grid(True, axis="y", linestyle="--", alpha=0.7)
+    plt.show()
+
+    # Histograms
+    plt.figure(figsize=(10, 6))
+    plt.hist(farm_a, bins=10, alpha=0.5, label="Farm A", color="blue")
+    plt.hist(farm_b, bins=10, alpha=0.5, label="Farm B", color="green")
+    plt.hist(farm_c, bins=10, alpha=0.5, label="Farm C", color="red")
+    plt.title("Histogram of Apple Weights by Farm", fontsize=14)
+    plt.xlabel("Weight (g)", fontsize=12)
+    plt.ylabel("Frequency", fontsize=12)
+    plt.legend(loc="upper right")
+    plt.grid(True, linestyle="--", alpha=0.7)
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()

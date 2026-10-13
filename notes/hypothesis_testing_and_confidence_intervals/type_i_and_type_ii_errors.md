@@ -38,8 +38,8 @@ The following diagram illustrates the idea. The bell-shaped curve represents the
          _______________
         /               \
        /                 \
-      |   True Null      |   ← Distribution under $H_0$
-      |    ($\mu_0$)     |
+      |   True Null      |   ← Distribution under H0
+      |      (mu_0)      |
        \                 /
         \_______________/
 ```
@@ -66,23 +66,23 @@ The following diagram illustrates the idea. One distribution represents the test
 
 ```text
               H0 Distribution              H1 Distribution
-             (Centered at $\mu_0$)        (Centered at $\mu_1$)
+             (Centered at mu_0)           (Centered at mu_1)
                     ____                         ____
                    /    \                       /    \
                   /      \                     /      \
-                 | $\mu_0$|                   | $\mu_1$|
+                 | mu_0   |                   | mu_1   |
                   \      /                     \      /
                    \____/                       \____/
                        │
                        ▼  (Critical Threshold)
-          Failure to reject $H_0$ can produce a Type II error
+          Failure to reject H0 can produce a Type II error
 ```
 
 If the true effect is not large enough relative to the variability in the data, the observed test statistic may remain outside the rejection region even though $H_0$ is false.
 
 ![type\_ii\_error](https://github.com/djeada/Statistics-Notes/assets/37275728/f511bccb-4126-484f-9e44-143e3e4cad1a)
 
-In this plot, the experimental-group mean is shifted to 110 while the control-group mean remains at 100, representing a real difference. If the statistical test fails to detect that difference and we fail to reject $H_0$, a Type II error occurs. The probability of this happening depends on factors such as sample size, effect size, variability, and the chosen significance level.
+In this plot, the experimental-group mean is shifted to 110 while the control-group mean remains at 100, representing a real difference. If the statistical test fails to detect that difference and we fail to reject $H_0$, a Type II error occurs. Whether a particular sample produces a Type II error depends on chance; the probability of this happening depends on factors such as sample size, effect size, variability, and the chosen significance level. With a large enough sample, a shift of 10 units against a standard deviation of 10 would be detected almost every time.
 
 ### Balancing Type I and Type II Errors
 
@@ -136,7 +136,7 @@ n
 }
 $$
 
-where $\Delta=\mu_1-\mu_0$ is the smallest meaningful difference to detect and $\sigma$ is the common standard deviation.
+where $\Delta=\mu_1-\mu_2$ is the smallest meaningful difference between the two group means and $\sigma$ is the common standard deviation.
 
 For example, suppose:
 
@@ -168,6 +168,8 @@ n
 \approx62.72
 $$
 
-so each group would need about 63 observations.
+so each group would need about 63 observations (rounding up).
+
+For a one-sample z-test of $H_0:\mu=\mu_0$ with true mean $\mu_1$, the corresponding formula is $n\approx(z_{1-\alpha/2}+z_{1-\beta})^2\sigma^2/\Delta^2$, without the factor of 2. For a one-sided test, replace $z_{1-\alpha/2}$ by $z_{1-\alpha}$. When $\sigma$ is estimated, the $t$ distribution makes the true required $n$ slightly larger.
 
 Conducting a power analysis before data collection helps ensure that the study is large enough to detect an effect of practical interest while controlling the risks of Type I and Type II errors.

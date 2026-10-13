@@ -1,6 +1,6 @@
 # Uniform Distribution (Continuous)
 
-A continuous random variable X follows a uniform distribution over an interval $[a, b]$ if it has a constant probability density over that interval. The uniform distribution is denoted as $X \sim \text{Uniform}(a, b)$.
+A continuous random variable $X$ follows a uniform distribution over an interval $[a, b]$ if it has a constant probability density over that interval. The uniform distribution is denoted as $X \sim \text{Uniform}(a, b)$.
 
 ### Probability Density Function (PDF)
 
@@ -95,3 +95,7 @@ These calculations help the developer understand the timing dynamics of the even
 ### Applications
 
 Continuous uniform distributions are often used when every equal-length subinterval within a bounded interval should receive equal probability density, for example in simulation and random-number generation. A discrete uniform distribution is the analogous model for a finite set of equally likely values.
+
+---
+
+**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/uniform_distribution.md)

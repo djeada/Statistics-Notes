@@ -41,9 +41,9 @@ $$
 The updated estimate and variance are
 
 $$
-a_{t|t}=10+0.5556(2)=11.1112,
+a_{t|t}=10+0.5556(2)\approx11.1111,
 \qquad
-P_{t|t}=(1-0.5556)(1.25)\approx0.5555.
+P_{t|t}=(1-0.5556)(1.25)\approx0.5556.
 $$
 
 The estimate moves partway toward the observation because both the prior state estimate and the measurement are uncertain. A larger measurement variance would reduce the gain and make the filter rely more heavily on the prior prediction.
@@ -197,13 +197,13 @@ $$
 The state update is
 
 $$
-a_{t|t}=10+0.5556(2)=11.1112,
+a_{t|t}=10+0.5556(2)\approx11.1111,
 $$
 
 while the posterior variance is
 
 $$
-P_{t|t}=(1-0.5556)(1.25)\approx0.5555.
+P_{t|t}=(1-0.5556)(1.25)\approx0.5556.
 $$
 
 The innovation is the part of the observation that was not predicted. The gain determines how strongly that new information changes the state estimate.
@@ -220,7 +220,7 @@ If $R$ is small, the measurement is precise and $K_t$ approaches 1. If $R$ is la
 
 For a prior level of 10 and an observation of 12:
 
-| $P_{t|t-1}$ | $R$ | gain | updated level |
+| $P_{t\mid t-1}$ | $R$ | gain | updated level |
 |---:|---:|---:|---:|
 | 1.25 | 1 | 0.556 | 11.111 |
 | 1.25 | 4 | 0.238 | 10.476 |

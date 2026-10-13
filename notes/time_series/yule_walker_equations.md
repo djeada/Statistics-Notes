@@ -54,15 +54,15 @@ The **Yule-Walker equations** are linear relationships connecting the autocovari
 Consider a zero-mean stationary AR($p$) process
 
 $$
-X_t=\phi_1X_{t-1}+\phi_2X_{t-2}+\dots+\phi_pX_{t-p}+Z_t,
+X_t=\phi_1X_{t-1}+\phi_2X_{t-2}+\dots+\phi_pX_{t-p}+\varepsilon_t,
 $$
 
-where $Z_t$ is white noise with
+where $\varepsilon_t$ is white noise with
 
 $$
-E(Z_t)=0,
+E(\varepsilon_t)=0,
 \qquad
-\mathrm{Var}(Z_t)=\sigma_Z^2,
+\mathrm{Var}(\varepsilon_t)=\sigma_\varepsilon^2,
 $$
 
 and is uncorrelated with past values of the process.
@@ -87,7 +87,7 @@ $$
 with the variance equation
 
 $$
-\gamma(0)=\sum_{j=1}^{p}\phi_j\gamma(j)+\sigma_Z^2.
+\gamma(0)=\sum_{j=1}^{p}\phi_j\gamma(j)+\sigma_\varepsilon^2.
 $$
 
 Dividing the first set of equations by $\gamma(0)$ gives the autocorrelation form
@@ -106,7 +106,7 @@ Because $\rho(0)=1$, these equations relate the AR coefficients directly to the 
 The derivation uses two main conditions:
 
 1. **Second-order stationarity:** the mean and variance are constant, and $\gamma(k)$ depends only on the lag $k$.
-2. **White-noise innovations:** $E(Z_t)=0$, $\mathrm{Var}(Z_t)=\sigma_Z^2$, and $Z_t$ is uncorrelated with $X_{t-k}$ for $k\ge1$.
+2. **White-noise innovations:** $E(\varepsilon_t)=0$, $\mathrm{Var}(\varepsilon_t)=\sigma_\varepsilon^2$, and $\varepsilon_t$ is uncorrelated with $X_{t-k}$ for $k\ge1$.
 
 #### Derivation Steps
 
@@ -114,14 +114,14 @@ For a fixed $k\in\{1,2,\ldots,p\}$, multiply the AR equation by $X_{t-k}$:
 
 $$
 X_tX_{t-k}
-=\sum_{j=1}^{p}\phi_jX_{t-j}X_{t-k}+Z_tX_{t-k}.
+=\sum_{j=1}^{p}\phi_jX_{t-j}X_{t-k}+\varepsilon_tX_{t-k}.
 $$
 
 Taking expectations gives
 
 $$
 E(X_tX_{t-k})
-=\sum_{j=1}^{p}\phi_jE(X_{t-j}X_{t-k})+E(Z_tX_{t-k}).
+=\sum_{j=1}^{p}\phi_jE(X_{t-j}X_{t-k})+E(\varepsilon_tX_{t-k}).
 $$
 
 For the zero-mean process used here, these expectations are covariances. Because the innovation is uncorrelated with past values, the final term is zero for $k\ge1$. Therefore,
@@ -131,10 +131,10 @@ $$
 \qquad k=1,2,\ldots,p.
 $$
 
-At $k=0$, the innovation appears inside $X_t$, so $E(Z_tX_t)=\sigma_Z^2$. This gives
+At $k=0$, the innovation appears inside $X_t$, so $E(\varepsilon_tX_t)=\sigma_\varepsilon^2$. This gives
 
 $$
-\gamma(0)=\sum_{j=1}^{p}\phi_j\gamma(j)+\sigma_Z^2.
+\gamma(0)=\sum_{j=1}^{p}\phi_j\gamma(j)+\sigma_\varepsilon^2.
 $$
 
 Finally, dividing the lag equations by $\gamma(0)$ produces the autocorrelation form.
@@ -186,7 +186,7 @@ $$
 Replacing the theoretical autocorrelations by sample estimates and solving this system gives the Yule-Walker coefficient estimates. The innovation variance can then be estimated from
 
 $$
-\hat\sigma_Z^2
+\hat\sigma_\varepsilon^2
 =\hat\gamma(0)-\sum_{j=1}^{p}\hat\phi_j\hat\gamma(j).
 $$
 
@@ -200,7 +200,7 @@ The two parameter sets are:
 |---|---|---:|---:|
 | $\phi_1$ | AR coefficient on lag 1 | $3$ | $0.3$ |
 | $\phi_2$ | AR coefficient on lag 2 | $2$ | $0.2$ |
-| $\sigma_Z^2$ | Innovation variance | kept symbolic | same |
+| $\sigma_\varepsilon^2$ | Innovation variance | kept symbolic | same |
 
 For a stationary AR(2), the roots of the AR polynomial
 
@@ -215,10 +215,10 @@ must lie outside the unit circle. With $\phi_1=3$ and $\phi_2=2$, one root lies 
 For the non-stationary parameter set,
 
 $$
-X_t=3X_{t-1}+2X_{t-2}+Z_t,
+X_t=3X_{t-1}+2X_{t-2}+\varepsilon_t,
 $$
 
-where $Z_t$ is white noise with variance $\sigma_Z^2$.
+where $\varepsilon_t$ is white noise with variance $\sigma_\varepsilon^2$.
 
 #### Derive the Yule-Walker equations
 
@@ -309,7 +309,7 @@ c_1=\frac{-3-\lambda_2}{\lambda_1-\lambda_2},
 c_2=1-c_1.
 $$
 
-Numerically, $c_1\approx-0.592$ and $c_2\approx1.592$. These constants satisfy the formal recursion, but the term involving $|\lambda_1|>1$ grows rather than decays, so the sequence cannot be a stationary ACF.
+Numerically, $c_1\approx-0.591$ and $c_2\approx1.591$. These constants satisfy the formal recursion, but the term involving $|\lambda_1|>1$ grows rather than decays, so the sequence cannot be a stationary ACF.
 
 #### Quick check: a stationary alternative
 
@@ -369,13 +369,13 @@ In practice, numerical solvers exploit the Toeplitz structure rather than formin
 
 ## Student guide: solve the equations and check the result
 
-For a zero-mean stationary AR($p$), the autocovariances satisfy the AR recursion at sufficiently large lags:
+For a zero-mean stationary AR($p$), the autocovariances satisfy the AR recursion at every lag $k\ge1$:
 
 $$
 \gamma(k)=\phi_1\gamma(k-1)+\cdots+\phi_p\gamma(k-p).
 $$
 
-The first $p$ lags supply the boundary equations needed to determine the coefficients. Dividing by $\gamma(0)$ gives the corresponding relations for autocorrelations.
+The lags $k=1,\ldots,p$ supply $p$ equations that determine the coefficients; higher lags then follow from the recursion. Dividing by $\gamma(0)$ gives the corresponding relations for autocorrelations.
 
 ### AR(2) by hand
 

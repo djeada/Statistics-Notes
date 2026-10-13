@@ -550,7 +550,7 @@ $$
 =\frac{|r|^{m+1}}{|1-r|}
 $$
 
-for positive $r$, and is bounded by
+for any $|r|<1$, and is bounded by
 
 $$
 \frac{|r|^{m+1}}{1-|r|}

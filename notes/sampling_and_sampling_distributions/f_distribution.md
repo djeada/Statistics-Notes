@@ -1,6 +1,6 @@
 ## F-Distribution (Continuous)
 
-The F-distribution, also known as the Fisher-Snedecor distribution, is a continuous probability distribution that arises in hypothesis testing when comparing the variances of two normally distributed populations. The F-distribution is denoted as $X \sim F(d_1, d_2)$, where $d_1$ and $d_2$ are the degrees of freedom for the numerator and denominator, respectively.
+The F-distribution, also known as the Fisher-Snedecor distribution, is a continuous probability distribution of the ratio $F=(U/d_1)/(V/d_2)$ of two independent chi-square variables $U\sim\chi^2(d_1)$ and $V\sim\chi^2(d_2)$, each divided by its degrees of freedom. It arises in hypothesis testing when comparing the variances of two normally distributed populations. The F-distribution is denoted as $X \sim F(d_1, d_2)$, where $d_1$ and $d_2$ are the degrees of freedom for the numerator and denominator, respectively.
 
 ### Probability Density Function (PDF)
 
@@ -30,7 +30,8 @@ The variance of an F-distribution is given by:
 
 $$\text{Var}(X) = \begin{cases}
   \frac{2d_2^2(d_1 + d_2 - 2)}{d_1(d_2 - 2)^2(d_2 - 4)}, & \text{if}\ d_2 > 4 \\
-  \text{undefined}, & \text{if}\ d_2 \le 4
+  \infty, & \text{if}\ 2 < d_2 \le 4 \\
+  \text{undefined}, & \text{if}\ d_2 \le 2
 \end{cases}
 $$
 
@@ -59,6 +60,10 @@ The degrees of freedom for each sample are calculated as the sample size minus o
 
 - Degrees of freedom for Wheat Type 1 (df1): $n1 - 1 = 15 - 1 = 14$
 - Degrees of freedom for Wheat Type 2 (df2): $n2 - 1 = 12 - 1 = 11$
+
+III. Interpret:
+
+Under $H_0:\sigma_1^2=\sigma_2^2$, $F\sim F(14,11)$. Here $P(F\le 2/3)\approx 0.235$, so the two-sided p-value is $2\times0.235\approx 0.47$. The 95% acceptance region is $[0.32, 3.36]$, which contains $0.67$, so there is no evidence that the variances differ.
 
 ### Applications
 

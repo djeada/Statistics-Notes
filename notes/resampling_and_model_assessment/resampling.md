@@ -1,4 +1,4 @@
-#  Simulations in Statistical Inference
+# Simulations in Statistical Inference
 
 Statistical inference often involves estimating population parameters and constructing confidence intervals based on sample data. Traditional methods rely on assumptions about the sampling distribution of estimators, such as normality and known standard errors. However, these assumptions may not hold, especially with small sample sizes or complex estimators. **Simulations**, like the **Monte Carlo method** and **bootstrap techniques**, offer powerful alternatives to traditional inference by using computational methods to approximate sampling distributions and estimate standard errors.
 
@@ -16,7 +16,7 @@ where:
 
 - $\bar{x}$: Sample mean.
 - $z_{\alpha/2}$: Critical value from the standard normal distribution corresponding to the desired confidence level $(1 - \alpha)$.
-- $SE(\bar{x})$: Standard error of the sample mean, typically estimated as $\frac{s}{\sqrt{n}}$ when the population standard deviation $\sigma$ is unknown.
+- $SE(\bar{x})$: Standard error of the sample mean, typically estimated as $\frac{s}{\sqrt{n}}$ when the population standard deviation $\sigma$ is unknown. For small $n$ the critical value $t_{n-1,\alpha/2}$ is used instead of $z_{\alpha/2}$.
 
 #### Limitations of Traditional Methods
 
@@ -59,18 +59,18 @@ where $\bar{\hat{\theta}} = \frac{1}{B} \sum_{b=1}^{B} \hat{\theta}_b$.
 
 ### Example: Estimating Standard Error Using Monte Carlo Simulation
 
-In this example, we estimate the standard error of the sample mean $\hat{\theta}$ using a Monte Carlo approach. This method involves generating multiple independent samples from a population, calculating the mean $\hat{\theta_b}$ for each sample, and using these means to estimate the standard error.
+In this example, we estimate the standard error of the sample mean $\hat{\theta}$ using a Monte Carlo approach. This method involves generating multiple independent samples from a population, calculating the mean $\hat{\theta}_b$ for each sample, and using these means to estimate the standard error.
 
 Steps:
 - Draw $B$ independent samples of size $n$ from a normal population.
-- Calculate the sample mean $\hat{\theta_b}$ for each sample.
+- Calculate the sample mean $\hat{\theta}_b$ for each sample.
 - Estimate the standard error $SE(\hat{\theta})$ using the formula:
 
 $$
-SE(\hat{\theta}) \approx \sqrt{\frac{1}{B - 1} \sum_{b = 1}^{B} (\hat{\theta_b} - \bar{\theta})^2}
+SE(\hat{\theta}) \approx \sqrt{\frac{1}{B - 1} \sum_{b = 1}^{B} (\hat{\theta}_b - \bar{\theta})^2}
 $$
 
-where $\bar{\theta} = \frac{1}{B} \sum_{b = 1}^{B} \hat{\theta_b}$ is the average of all sample means.
+where $\bar{\theta} = \frac{1}{B} \sum_{b = 1}^{B} \hat{\theta}_b$ is the average of all sample means. For a normal population the exact value is $\sigma/\sqrt{n} = 15/\sqrt{30} \approx 2.739$.
 
 Parameters:
 
@@ -82,7 +82,7 @@ Monte Carlo Simulation:
 
 - Generate $B = 1000$ samples from a normal population with mean $100$ and standard deviation $15$.
 - Each sample contains $n = 30$ values.
-- For each sample, calculate the mean $\hat{\theta_b}$, and store these means in an array.
+- For each sample, calculate the mean $\hat{\theta}_b$, and store these means in an array.
 
 Estimate of Standard Error:
 - Calculate the overall mean of the sample means $\bar{\theta}$.
@@ -110,13 +110,13 @@ Estimate of Standard Error:
 4. Finally, estimate the standard error using the formula:
 
 $$
-SE_{boot}(\hat{\theta}) = \sqrt{\frac{1}{B-1}\sum_{b=1}^{B}\left(\hat{\theta}_b - \bar{\hat{\theta}}\right)^2}
+SE_{boot}(\hat{\theta}) = \sqrt{\frac{1}{B-1}\sum_{b=1}^{B}\left(\hat{\theta}^*_b - \bar{\hat{\theta}}^*\right)^2}
 $$
 
 with
 
 $$
-\bar{\hat{\theta}} = \frac{1}{B}\sum_{b=1}^{B}\hat{\theta}_b.
+\bar{\hat{\theta}}^* = \frac{1}{B}\sum_{b=1}^{B}\hat{\theta}^*_b.
 $$
 
 ### Bootstrap Confidence Intervals
@@ -140,20 +140,20 @@ This approach is appropriate for symmetric distributions and large sample sizes.
 - The **interval** is given by:
 
 $$
-[\hat{\theta}_{\alpha/2},\quad \hat{\theta}_{1-\alpha/2}]
+[\hat{\theta}^*_{\alpha/2},\quad \hat{\theta}^*_{1-\alpha/2}]
 $$
 
-- Here, $\hat{\theta}_{(\alpha/2)}$ represents the $100 \times (\alpha/2)$ percentile of $\hat{\theta}*_b$ .
+- Here, $\hat{\theta}^*_{\alpha/2}$ represents the $100 \times (\alpha/2)$ percentile of the bootstrap estimates $\hat{\theta}^*_1,\dots,\hat{\theta}^*_B$.
 - This method does not assume the distribution is normal.
 
 #### 3. Bootstrap Pivotal Interval
 
-- This method **adjusts for bias** by centering the interval around $\hat{\theta}$.
+- This method (also called the basic bootstrap) **reflects the bootstrap percentiles about $\hat{\theta}$**, using the bootstrap distribution of $\hat{\theta}^*-\hat{\theta}$ to approximate that of $\hat{\theta}-\theta$.
 - The **interval** is calculated as:
 
-$$[2\hat{\theta} - \hat{\theta}_{1-\alpha/2},\quad 2\hat{\theta} - \hat{\theta}_{\alpha/2}]$$
+$$[2\hat{\theta} - \hat{\theta}^*_{1-\alpha/2},\quad 2\hat{\theta} - \hat{\theta}^*_{\alpha/2}]$$
 
-This interval is more accurate for skewed distributions.
+Neither this interval nor the percentile interval is uniformly better; for skewed or biased statistics, bias-corrected variants such as BCa are often preferred.
 
 ### Bootstrapping for Regression
 
@@ -189,7 +189,7 @@ $$
 - **Refit the model** using the new responses to compute $\hat{a}^*$ and $\hat{b}^*$.
 - **Repeat this process** for $B$ bootstrap samples to obtain a reliable estimate.
 - Finally, **estimate the variability** by using the distribution of $\hat{b}^*$ to calculate $SE(\hat{b})$.
-- This method assumes that the **error terms** $e_i$ are identically distributed.
+- This method assumes that the **error terms** $e_i$ are independent and identically distributed (in particular homoscedastic) and that the linear model is correctly specified.
 
 #### Case Resampling (Pairs Method)
 
@@ -197,7 +197,7 @@ $$
 - **Refit the model** for each sample to calculate $\hat{a}^*$ and $\hat{b}^*$.
 - **Repeat this process** for $B$ bootstrap samples.
 - **Estimate the variability** by analyzing the distribution of $\hat{b}^*$ from the bootstrap results.
-- An advantage of this method is that it captures the variability in both $X$ and $Y$.
+- An advantage of this method is that it captures the variability in both $X$ and $Y$ (a random-design view) and does not require homoscedastic errors.
 
 #### Wild Bootstrap
 
@@ -236,7 +236,7 @@ Bootstrap Resampling:
 
 - We performed $B = 1000$ bootstrap iterations by resampling the residuals from the original model and refitting the model to compute new slope estimates each time.
 - This process generates a distribution of slope estimates under different bootstrap samples, reflecting the variability in the slope.
-- The standard error of the slope was estimated to be 0.0311, indicating the variability of the slope estimates.
+- The standard error of the slope was estimated to be 0.0312 (the classical OLS standard error is 0.0306), indicating the variability of the slope estimates.
 
 ### Practical Considerations
 

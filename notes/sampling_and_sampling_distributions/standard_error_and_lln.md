@@ -16,7 +16,7 @@ $$
 E(\bar{x}_n) = \mu
 $$
 
-This follows from the property that the sample mean is an unbiased estimator of the population mean.
+This is the statement that the sample mean is an unbiased estimator of the population mean; it follows from linearity of expectation.
 
 ### Standard Error
 
@@ -33,7 +33,7 @@ where:
 - $\sigma$ is the population standard deviation, and
 - $n$ is the sample size.
 
-As $n$ increases, $SE(\bar{x}_n)$ decreases, implying that larger samples yield more precise estimates of the population mean. The relationship between the standard error and the sample size follows an inverse square root law, meaning that quadrupling the sample size halves the standard error. This emphasizes the diminishing returns effect in terms of accuracy gained by increasing the sample size.
+As $n$ increases, $SE(\bar{x}_n)$ decreases, implying that larger samples yield more precise estimates of the population mean. The relationship between the standard error and the sample size follows an inverse square root law, meaning that quadrupling the sample size halves the standard error. This emphasizes the diminishing returns effect in terms of accuracy gained by increasing the sample size. When $\sigma$ is unknown it is replaced by the sample standard deviation $s$, giving the estimated standard error $s/\sqrt{n}$.
 
 #### Standard Error for the Sum and Percentages
 
@@ -123,7 +123,7 @@ $$
 SE(\text{percentage of 1s}) = \frac{0.49}{\sqrt{100}} \times 100\% = \frac{0.49}{10} \times 100\% = 4.9\%
 $$
 
-This means that the percentage of successes will vary by approximately $\pm 4.9\%$ from the expected value of 60%. Therefore, the percentage of successes will typically fall within the range:
+This means that the observed percentage of successes will typically differ from the expected value of 60% by about $4.9\%$ (one standard error). Therefore, the percentage of successes will typically fall within the range:
 
 $$
 \text{Percentage of 1s} \approx 60\% \pm 4.9\%
@@ -157,7 +157,7 @@ $$
 P\left(\lim_{n \to \infty} \bar{x}_n = \mu\right) = 1
 $$
 
-Almost sure convergence means that with probability 1, the sequence of sample means will eventually settle at the population mean and stay there. The SLLN requires slightly stronger conditions (such as finite variance) but provides a definitive statement about the long-run behavior of the sample mean.
+Almost sure convergence means that with probability 1, the sequence of sample means will eventually settle at the population mean and stay there. For independent and identically distributed observations, both laws hold whenever the population mean $\mu$ exists (is finite); finite variance is not required, although it is needed for the standard-error formula below. The SLLN provides a definitive statement about the long-run behavior of the sample mean.
 
 - **Impact on Standard Error**:
 
@@ -240,7 +240,7 @@ The standard error decreases as the sample size increases, indicating that large
 
 III. **Important Note on Sums**:
 
-The Law of Large Numbers **does not apply to sums** in the same way it applies to means and percentages. While the standard error of the sample mean decreases with increasing sample size, the standard error of the sum increases with sample size.
+The Law of Large Numbers is a statement about means and percentages, not sums. The sum $S_n$ does not settle down: its expected value $n\mu$ grows without bound, and its standard error increases with sample size, even though the sum divided by $n$ (the mean) converges to $\mu$.
 
 The standard error for the sum $S_n$ is given by:
 
@@ -248,7 +248,7 @@ $$
 SE(S_n) = \sqrt{n} \sigma
 $$
 
-As $n$ increases, $\sqrt{n}$ increases, which means the variability of the sum increases with sample size. This is because the sum grows proportionally with $n$, and its variability does as well.
+As $n$ increases, $\sqrt{n}$ increases, which means the variability of the sum increases with sample size. The sum's spread grows like $\sqrt{n}$ but its center grows like $n$, so relative to its expected value the sum becomes more stable: $SE(S_n)/E(S_n)=\sigma/(\mu\sqrt{n})$ shrinks.
 
 For example:
 
@@ -271,3 +271,5 @@ SE(S_{400}) = \sqrt{400} \times 10 = 20 \times 10 = 200
 $$
 
 The standard error for the sum increases with the square root of the sample size, which reflects the growing total sum's variability.
+
+**Note**: all formulas above assume independent draws, such as sampling with replacement or from a very large population. When sampling without replacement from a finite population of size $N$, the standard errors are multiplied by the finite population correction $\sqrt{(N-n)/(N-1)}$.

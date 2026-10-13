@@ -402,7 +402,7 @@ $$
 
 ## calculate the Moran numerator
 
-For row-standardized $W$,
+In matrix form (for any $W$),
 
 $$
 \sum_i\sum_jw_{ij}z_i z_j =
@@ -497,6 +497,8 @@ $$
 That is not generally true.
 
 The attainable range of Moran's $I$ depends on the spatial weights structure.
+
+For a symmetric $W$, the attainable values lie between $\frac{n}{S_0}\lambda_{\min}$ and $\frac{n}{S_0}\lambda_{\max}$, where $\lambda_{\min}$ and $\lambda_{\max}$ are the extreme eigenvalues of the doubly centered matrix $MWM$ with $M=I-\frac1n\mathbf 1\mathbf 1^\top$. These limits can lie outside $[-1,1]$.
 
 Moran's $I$ is a spatial quadratic-form statistic, not an ordinary Pearson correlation between two independent variables.
 
@@ -718,7 +720,8 @@ $$
 \sum_i(x_i-\bar x)^2=38.8.
 $$
 
-For the chosen $W$,
+For the chosen $W$, row by row (A to E), the weighted squared differences are
+$1,\ 1,\ 8.5,\ 8.5,\ 1$, so
 
 $$
 \sum_i\sum_jw_{ij}(x_i-x_j)^2 =
@@ -873,7 +876,7 @@ A low-valued location is surrounded by high-valued neighbors.
 
 ![Moran scatterplot](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/03_moran_scatterplot.png)
 
-With row-standardized $W$ and compatible standardization, the slope through the origin is closely related to global Moran's $I$.
+With row-standardized $W$ and centered $z$, the least-squares slope through the origin of $(Wz)_i$ on $z_i$ is $z^\top Wz/z^\top z$, which equals global Moran's $I$ exactly (here $n/S_0=1$).
 
 The scatterplot is a diagnostic display, not a substitute for formal inference.
 
@@ -1123,6 +1126,10 @@ e(x)=X(x)-m(x),
 $$
 
 the residual Moran statistic may be near its null reference.
+
+For example, with the five-point line and weights above, the noise-free values $5,7,9,11,13$ give $z=(-4,-2,0,2,4)$, $Wz=(-2,-2,0,2,2)$, $z^\top Wz=24$, $\sum z_i^2=40$, so $I=0.6$, even though there is no residual dependence at all.
+
+Note that the null expectation $-1/(n-1)$ applies to raw values under exchangeability; for regression residuals the null mean and variance of $I$ depend on the design matrix and $W$.
 
 In this example, the spatial association in the raw values is primarily first-order structure rather than residual dependence.
 

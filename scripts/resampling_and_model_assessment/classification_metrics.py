@@ -80,21 +80,26 @@ def plot_results(X_test, y_test, y_pred) -> None:
     plt.legend()
     plt.show()
 
-# Generate, split and train model on synthetic data
-X, y = generate_data(200, 2, 42)
-X_train, X_test, y_train, y_test = split_data(X, y, 0.25, 42)
-model = fit_model(X_train, y_train)
+def main() -> None:
+    # Generate, split and train model on synthetic data
+    X, y = generate_data(200, 2, 42)
+    X_train, X_test, y_train, y_test = split_data(X, y, 0.25, 42)
+    model = fit_model(X_train, y_train)
 
-# Make predictions and calculate metrics
-y_pred = model.predict(X_test)
-cm, accuracy, precision, recall, f1 = calculate_metrics(y_test, y_pred)
+    # Make predictions and calculate metrics
+    y_pred = model.predict(X_test)
+    cm, accuracy, precision, recall, f1 = calculate_metrics(y_test, y_pred)
 
-# Print the metrics
-print("Confusion Matrix:\n", cm)
-print(f"Accuracy: {accuracy:.2f}")
-print(f"Precision: {precision:.2f}")
-print(f"Recall: {recall:.2f}")
-print(f"F1 Score: {f1:.2f}")
+    # Print the metrics
+    print("Confusion Matrix:\n", cm)
+    print(f"Accuracy: {accuracy:.2f}")
+    print(f"Precision: {precision:.2f}")
+    print(f"Recall: {recall:.2f}")
+    print(f"F1 Score: {f1:.2f}")
 
-# Visualize the results
-plot_results(X_test, y_test, y_pred)
+    # Visualize the results
+    plot_results(X_test, y_test, y_pred)
+
+
+if __name__ == "__main__":
+    main()

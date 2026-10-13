@@ -5,7 +5,6 @@ the chapter explanations.  It writes eight figures to
 assets/time_series/foundations/.
 """
 
-from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np

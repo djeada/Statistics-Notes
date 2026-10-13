@@ -1,4 +1,4 @@
-## The Normal Curve and Z-Scores
+# The Normal Curve and Z-Scores
 
 ### The Normal Curve
 
@@ -30,7 +30,7 @@ This formula describes the shape of the curve mathematically. The mean $\mu$ det
 
 ### The Empirical Rule (68-95-99.7 Rule)
 
-The **Empirical Rule** provides a rough estimate for the spread of data in a normal distribution. It applies to any dataset that approximately follows the normal distribution.
+The **Empirical Rule** provides a rough estimate for the spread of data in a normal distribution. It applies to any dataset that is approximately normal. The exact probabilities are 68.27%, 95.45%, and 99.73%; the central 95% interval is more precisely $\mu \pm 1.96\sigma$.
 
 - **68% of the data** falls within **1 standard deviation** of the mean, i.e., between $\mu - \sigma$ and $\mu + \sigma$.
 - **95% of the data** falls within **2 standard deviations** of the mean, i.e., between $\mu - 2\sigma$ and $\mu + 2\sigma$.
@@ -50,21 +50,11 @@ According to the Empirical Rule:
 
 These intervals can be visualized as follows:
 
-$$
-\text{Interval} \quad \mu \pm n\sigma \quad \text{Proportion of Data Contained}
-$$
-
-$$
-\mu \pm \sigma \quad (66.5 \text{ to } 70.1) \quad \approx 68\%
-$$
-
-$$
-\mu \pm 2\sigma \quad (64.7 \text{ to } 71.9) \quad \approx 95\%
-$$
-
-$$
-\mu \pm 3\sigma \quad (62.9 \text{ to } 73.7) \quad \approx 99.7\%
-$$
+| Interval | Range (inches) | Proportion of data |
+|---|---|---|
+| $\mu \pm \sigma$ | 66.5 to 70.1 | $\approx 68\%$ |
+| $\mu \pm 2\sigma$ | 64.7 to 71.9 | $\approx 95\%$ |
+| $\mu \pm 3\sigma$ | 62.9 to 73.7 | $\approx 99.7\%$ |
 
 ![output(1)](https://github.com/user-attachments/assets/b157d1a4-191d-46f4-b341-7822d4257733)
 
@@ -156,7 +146,7 @@ The **percentile** of a value in a normal distribution tells us the percentage o
 2. Convert the z-score back into the raw data value.
 
 #### Example
-Suppose we want to compute the **30th percentile** of fathers' heights. Using a z-table, we find that the z-score corresponding to the 30th percentile is approximately $z = -0.52$.
+Suppose we want to compute the **30th percentile** of fathers' heights. Using a z-table, we find that the z-score corresponding to the 30th percentile is approximately $z = -0.52$ (more precisely $-0.5244$).
 
 To find the corresponding height, we use the z-score formula in reverse:
 
@@ -167,3 +157,7 @@ $$
 Thus, the 30th percentile corresponds to a height of approximately **67.36 inches**.
 
 This process can be applied to any percentile by finding the appropriate z-score and converting it back to the original scale using the mean and standard deviation of the dataset.
+
+---
+
+**Practice:** [Exercises with worked solutions](../../exercises/random_variables_and_distributions/normal_curve_and_z_score.md)

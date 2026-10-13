@@ -1,61 +1,61 @@
+"""Correlation matrix of four related variables, shown as an annotated heatmap."""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def generate_random_data(seed: int, num_samples: int) -> np.ndarray:
-    """Generates random data for correlation analysis.
+    """Generate four variables where x3 and x4 depend on x1 and x2.
 
     Args:
-        seed (int): Seed for random number generation for reproducibility.
-        num_samples (int): Number of samples to generate.
+        seed: Seed for the random number generator.
+        num_samples: Number of observations per variable.
 
     Returns:
-        np.ndarray: Generated data matrix.
+        Array of shape (4, num_samples); each row is one variable.
     """
-    np.random.seed(seed)
-    x1 = np.random.normal(0, 1, num_samples)
-    x2 = np.random.normal(0, 1, num_samples)
-    x3 = x1 + x2 + np.random.normal(0, 0.5, num_samples)
-    x4 = 2 * x1 - x2 + np.random.normal(0, 0.5, num_samples)
+    rng = np.random.default_rng(seed)
+    x1 = rng.normal(0, 1, num_samples)
+    x2 = rng.normal(0, 1, num_samples)
+    x3 = x1 + x2 + rng.normal(0, 0.5, num_samples)
+    x4 = 2 * x1 - x2 + rng.normal(0, 0.5, num_samples)
     return np.array([x1, x2, x3, x4])
 
+
 def calculate_correlation_matrix(data: np.ndarray) -> np.ndarray:
-    """Calculates the correlation matrix from the data.
-
-    Args:
-        data (np.ndarray): Data matrix.
-
-    Returns:
-        np.ndarray: Correlation matrix.
-    """
+    """Return the sample correlation matrix of the rows of ``data``."""
     return np.corrcoef(data)
 
-def visualize_correlation_matrix(corr_matrix: np.ndarray) -> None:
-    """Visualizes the correlation matrix as a heatmap.
 
-    Args:
-        corr_matrix (np.ndarray): Correlation matrix to visualize.
-    """
+def visualize_correlation_matrix(matrix: np.ndarray) -> None:
+    """Show the correlation matrix as an annotated heatmap."""
     fig, ax = plt.subplots()
-    im = ax.imshow(corr_matrix, cmap="coolwarm")
+    ax.imshow(matrix, cmap="coolwarm")
 
-    # Customize plot
-    num_variables = corr_matrix.shape[0]
+    num_variables = matrix.shape[0]
+    labels = [f"X{i + 1}" for i in range(num_variables)]
     ax.set_xticks(np.arange(num_variables))
     ax.set_yticks(np.arange(num_variables))
-    ax.set_xticklabels([f"X{i+1}" for i in range(num_variables)])
-    ax.set_yticklabels([f"X{i+1}" for i in range(num_variables)])
+    ax.set_xticklabels(labels)
+    ax.set_yticklabels(labels)
     ax.tick_params(top=True, bottom=False, labeltop=True, labelbottom=False)
     plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
     ax.set_title("Correlation Matrix")
 
-    # Add text annotations to heatmap
     for i in range(num_variables):
         for j in range(num_variables):
-            text = ax.text(j, i, f"{corr_matrix[i, j]:.2f}", ha="center", va="center", color="w")
+            ax.text(j, i, f"{matrix[i, j]:.2f}", ha="center", va="center", color="w")
 
+    fig.tight_layout()
     plt.show()
 
-# Generate, calculate, and visualize data
-data = generate_random_data(42, 100)
-corr_matrix = calculate_correlation_matrix(data)
-visualize_correlation_matrix(corr_matrix)
+
+def main() -> None:
+    data = generate_random_data(42, 100)
+    matrix = calculate_correlation_matrix(data)
+    print(np.round(matrix, 3))
+    visualize_correlation_matrix(matrix)
+
+
+if __name__ == "__main__":
+    main()

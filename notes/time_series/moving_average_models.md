@@ -208,9 +208,9 @@ If the fitted models give
 
 | Model | AIC | BIC |
 |---|---:|---:|
-| MA(1) | 200 | 205 |
-| MA(2) | 190 | 195 |
-| MA(3) | 192 | 200 |
+| MA(1) | 200 | 206 |
+| MA(2) | 190 | 198 |
+| MA(3) | 192 | 202 |
 
 then both criteria favor MA(2) among these three models. The remaining step is to verify that its residuals no longer contain systematic dependence and that its forecasts are competitive.
 

@@ -29,7 +29,7 @@ $$
 1,\ 3,\ 2,\ 4,\ 3,
 $$
 
-the interior observations at positions 2, 3, and 4 are turning points: the sequence goes up then down at 3, down then up at 2, and up then down at 4. Thus the count is 3. A turning-point test compares the observed count with the distribution expected under a continuous IID null; it is not a general test of every possible dependence pattern.
+the interior observations at positions 2, 3, and 4 are all turning points: position 2 (value 3) is a peak, position 3 (value 2) is a trough, and position 4 (value 4) is a peak. Thus the count is 3. A turning-point test compares the observed count with the distribution expected under a continuous IID null; it is not a general test of every possible dependence pattern.
 
 For a fitted model, the more important question is whether residuals still contain predictable structure. A residual ACF, a Ljung-Box test, and a plot of squared residuals address different kinds of remaining dependence and should be interpreted together.
 
@@ -49,7 +49,7 @@ $$
 
 where $\hat r_k$ is the sample autocorrelation at lag $k$ and $m$ is the maximum lag included in the test.
 
-For a raw IID series, the reference distribution is commonly approximated by $\chi^2_m$. When the test is applied to residuals from a fitted ARMA model, the degrees of freedom are often reduced to reflect estimated AR and MA parameters, although the exact adjustment depends on the setting and implementation.
+For a raw IID series, the reference distribution is commonly approximated by $\chi^2_m$. When the test is applied to residuals from a fitted ARMA model, the degrees of freedom are typically reduced to $m-p-q$ for a fitted ARMA($p,q$) (when $m>p+q$), although the exact adjustment depends on the setting and implementation.
 
 A rejection means that at least some of the tested linear autocorrelations are inconsistent with the null. It does not identify which new model should be fitted.
 

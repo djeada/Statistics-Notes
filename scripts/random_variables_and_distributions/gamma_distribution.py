@@ -1,93 +1,76 @@
-import numpy as np
+"""Gamma distribution (shape alpha, rate beta): hand-rolled PDF/CDF vs scipy.stats."""
+import math
+
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy.integrate import cumulative_trapezoid
 from scipy.stats import gamma
+
 
 class GammaDistribution:
     def __init__(self, alpha, beta):
-        self.alpha = alpha
-        self.beta = beta
+        self.alpha = alpha  # shape
+        self.beta = beta    # rate (scipy's scale = 1 / beta)
 
     def pdf(self, x):
-        coef = (self.beta ** self.alpha) / np.math.gamma(self.alpha)
-        return coef * (x ** (self.alpha - 1)) * np.exp(-self.beta * x)
+        x = np.asarray(x, dtype=float)
+        coef = self.beta**self.alpha / math.gamma(self.alpha)
+        return np.where(x >= 0, coef * x ** (self.alpha - 1) * np.exp(-self.beta * x), 0.0)
 
     def cdf(self, x):
-        return np.array([self._cdf_single(val) for val in x])
+        """Numerical integral of the PDF (no closed form); x must be a sorted grid from 0."""
+        x = np.asarray(x, dtype=float)
+        return cumulative_trapezoid(self.pdf(x), x, initial=0.0)
 
-    def _cdf_single(self, x):
-        return sum(self.pdf(t) for t in np.linspace(0, x, 1000)) * (x / 1000)
 
-def plot_pdf(x_values, pdf1, pdf2, label1, label2, title):
+def plot_curves(x, y1, y2, label1, label2, title, ylabel):
     plt.figure(figsize=(10, 6))
-    plt.plot(x_values, pdf1, label=label1, color='blue')
-    plt.plot(x_values, pdf2, label=label2, color='red')
+    plt.plot(x, y1, label=label1, color="blue")
+    plt.plot(x, y2, label=label2, color="red")
     plt.title(title)
-    plt.xlabel('x')
-    plt.ylabel('PDF')
+    plt.xlabel("x")
+    plt.ylabel(ylabel)
     plt.legend()
     plt.grid(True)
     plt.show()
 
-def plot_cdf(x_values, cdf1, cdf2, label1, label2, title):
+
+def plot_comparison(x, y_scipy, y_custom, label1, label2, title, ylabel):
     plt.figure(figsize=(10, 6))
-    plt.plot(x_values, cdf1, label=label1, color='blue')
-    plt.plot(x_values, cdf2, label=label2, color='red')
+    plt.plot(x, y_scipy, label=label1, color="blue", linestyle="--")
+    plt.plot(x, y_custom, label=label2, color="orange")
     plt.title(title)
-    plt.xlabel('x')
-    plt.ylabel('CDF')
+    plt.xlabel("x")
+    plt.ylabel(ylabel)
     plt.legend()
     plt.grid(True)
     plt.show()
 
-def plot_comparison(x_values, pdf_scipy, pdf_custom, label1, label2, title):
-    plt.figure(figsize=(10, 6))
-    plt.plot(x_values, pdf_scipy, label=label1, color='blue', linestyle='--')
-    plt.plot(x_values, pdf_custom, label=label2, color='orange')
-    plt.title(title)
-    plt.xlabel('x')
-    plt.ylabel('PDF')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
 
-# Parameters for two gamma distributions (shape α and rate β)
-alpha1, beta1 = 2, 2
-alpha2, beta2 = 5, 1
+def main():
+    alpha1, beta1 = 2, 2
+    alpha2, beta2 = 5, 1
+    x = np.linspace(0, 20, 4001)
 
-# Generate x values
-x_gamma = np.linspace(0, 20, 1000)
+    pdf1_scipy, pdf2_scipy = gamma.pdf(x, alpha1, scale=1 / beta1), gamma.pdf(x, alpha2, scale=1 / beta2)
+    cdf1_scipy, cdf2_scipy = gamma.cdf(x, alpha1, scale=1 / beta1), gamma.cdf(x, alpha2, scale=1 / beta2)
 
-# Calculate PDF and CDF using scipy
-pdf_gamma_1_scipy = gamma.pdf(x_gamma, alpha1, scale=1/beta1)
-pdf_gamma_2_scipy = gamma.pdf(x_gamma, alpha2, scale=1/beta2)
-cdf_gamma_1_scipy = gamma.cdf(x_gamma, alpha1, scale=1/beta1)
-cdf_gamma_2_scipy = gamma.cdf(x_gamma, alpha2, scale=1/beta2)
+    dist1, dist2 = GammaDistribution(alpha1, beta1), GammaDistribution(alpha2, beta2)
+    assert np.allclose(dist1.pdf(x), pdf1_scipy) and np.allclose(dist2.pdf(x), pdf2_scipy)
+    assert np.allclose(dist1.cdf(x), cdf1_scipy, atol=1e-4)
+    assert np.allclose(dist2.cdf(x), cdf2_scipy, atol=1e-4)
+    print("Custom PDF matches scipy.stats.gamma; numerically integrated CDF within 1e-4")
+    print(f"Gamma({alpha1}, rate={beta1}): mean={alpha1 / beta1}, var={alpha1 / beta1**2}")
 
-# Create instances of GammaDistribution
-gamma_dist_1 = GammaDistribution(alpha1, beta1)
-gamma_dist_2 = GammaDistribution(alpha2, beta2)
+    lab1 = f"Gamma(alpha={alpha1}, beta={beta1})"
+    lab2 = f"Gamma(alpha={alpha2}, beta={beta2})"
+    plot_curves(x, pdf1_scipy, pdf2_scipy, lab1, lab2,
+                "Probability Density Function (PDF) of Gamma Distributions", "PDF")
+    plot_curves(x, cdf1_scipy, cdf2_scipy, lab1, lab2,
+                "Cumulative Distribution Function (CDF) of Gamma Distributions", "CDF")
+    plot_comparison(x, pdf1_scipy, dist1.pdf(x), "scipy.stats", "hand-rolled",
+                    f"scipy vs hand-rolled PDF, {lab1}", "PDF")
 
-# Calculate PDF and CDF using custom class
-pdf_gamma_1_custom = np.array([gamma_dist_1.pdf(x) for x in x_gamma])
-pdf_gamma_2_custom = np.array([gamma_dist_2.pdf(x) for x in x_gamma])
 
-cdf_gamma_1_custom = gamma_dist_1.cdf(x_gamma)
-cdf_gamma_2_custom = gamma_dist_2.cdf(x_gamma)
-
-# Plot 1: PDF of Gamma Distributions (Original)
-plot_pdf(x_gamma, pdf_gamma_1_scipy, pdf_gamma_2_scipy,
-         label1=f'Gamma(α={alpha1}, β={beta1}) PDF', 
-         label2=f'Gamma(α={alpha2}, β={beta2}) PDF',
-         title='Probability Density Function (PDF) of Gamma Distributions')
-
-# Plot 2: CDF of Gamma Distributions (Original)
-plot_cdf(x_gamma, cdf_gamma_1_scipy, cdf_gamma_2_scipy, 
-         label1=f'Gamma(α={alpha1}, β={beta1}) CDF', 
-         label2=f'Gamma(α={alpha2}, β={beta2}) CDF', 
-         title='Cumulative Distribution Function (CDF) of Gamma Distributions')
-
-# Plot 3: Comparison of Theoretical and Custom PDFs
-plot_comparison(x_gamma, pdf_gamma_1_scipy, pdf_gamma_1_custom, 
-                label1=f'Theoretical Gamma(α={alpha1}, β={beta1}) PDF', 
-                label2=f'Custom Gamma(α={alpha1}, β={beta1}) PDF', 
-                title='Comparison of Theoretical and Custom PDF for Gamma Distribution')
+if __name__ == "__main__":
+    main()

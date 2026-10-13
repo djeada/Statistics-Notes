@@ -806,6 +806,12 @@ not 1.
 
 That is valid because the known mean accounts for the remaining contribution.
 
+The simple-kriging variance for this example, with $C(0)=4$, is
+
+$$
+\sigma_K^2(s_0)=C(0)-c_0^\top\lambda = 4-(2.5\cdot0.618+1.0\cdot0.018)\approx 2.44.
+$$
+
 ## What happens far from all data in simple kriging?
 
 As the target moves far away from every observation,
@@ -1227,7 +1233,7 @@ Smaller values indicate better predictive accuracy on the response scale.
 ### Mean standardized error
 
 $$
-\mathrm{MSE}_{\text{std}} = \frac{1}{n}\sum_i e_i^*.
+\mathrm{ME}_{\text{std}} = \frac{1}{n}\sum_i e_i^*.
 $$
 
 This should be near zero when the standardized errors are centered.
@@ -1236,9 +1242,17 @@ This should be near zero when the standardized errors are centered.
 
 If the uncertainty model is well calibrated, standardized errors should have a spread near 1.
 
-A spread much larger than 1 suggests that the model may be too confident.
+A common summary is the root mean squared standardized error,
 
-A spread much smaller than 1 suggests that the reported uncertainty may be too large.
+$$
+\mathrm{RMSSE}=\sqrt{\frac{1}{n}\sum_i (e_i^*)^2},
+$$
+
+which should be close to 1.
+
+A value much larger than 1 suggests that the model may be too confident.
+
+A value much smaller than 1 suggests that the reported uncertainty may be too large.
 
 ![Cross-validation diagnostics](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/kriging/08_cross_validation.png)
 

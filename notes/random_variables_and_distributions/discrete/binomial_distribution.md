@@ -1,6 +1,6 @@
-## Binomial Distribution (Discrete)
+# Binomial Distribution (Discrete)
 
-A discrete random variable X follows a binomial distribution if it represents the number of successes in a fixed number of Bernoulli trials with the same probability of success. The binomial distribution is denoted as $X \sim \text{Binomial}(n, p)$, where n is the number of trials and p is the probability of success.
+A discrete random variable $X$ follows a binomial distribution if it represents the number of successes in a fixed number of Bernoulli trials with the same probability of success. The binomial distribution is denoted as $X \sim \text{Binomial}(n, p)$, where $n$ is the number of trials and $p$ is the probability of success.
 
 ### Probability Mass Function (PMF)
 
@@ -73,8 +73,12 @@ III. What is the probability fewer than 5 employees follow the protocols?
 
 For fewer than 5 employees:
 
-$$P(X < 5) = \sum_{k=0}^{4} \binom{10}{k} (0.9)^k (0.1)^{10-k} = 0.0001$$
+$$P(X < 5) = \sum_{k=0}^{4} \binom{10}{k} (0.9)^k (0.1)^{10-k} \approx 0.0001$$
 
 ### Applications
 
 Binomial distributions are used in a variety of applications, such as quality control, risk analysis, and survey sampling, where the probability of success and the number of trials are known or can be estimated.
+
+---
+
+**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/binomial_distribution.md)

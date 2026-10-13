@@ -111,6 +111,8 @@ $$
 \mu\neq\mu_0
 $$
 
+For one-sided alternatives, the null is often written as $\mu\ge\mu_0$ (left-tailed) or $\mu\le\mu_0$ (right-tailed). The test statistic and p-value are computed at the boundary value $\mu=\mu_0$, which is the least favorable case for rejecting $H_0$, so writing $H_0:\mu=\mu_0$ gives the same test.
+
 The alternative hypothesis determines whether the test examines values below, above, or on either side of $\mu_0$.
 
 **Important Note:** Left-tailed and right-tailed tests are appropriate when the research question specifies a meaningful direction in advance. A two-tailed test is used when departures in either direction are relevant.
@@ -165,7 +167,7 @@ The p-value is the probability, assuming the null hypothesis is true, of obtaini
 * In a **left-tailed test**, the p-value is the area in the left tail beyond the observed test statistic.
 * In a **right-tailed test**, the p-value is the area in the right tail beyond the observed test statistic.
 
-For a two-tailed test, extreme values in both directions are considered.
+For a two-tailed test, extreme values in both directions are considered. For a symmetric reference distribution such as the standard normal or $t$, the two-tailed p-value is $2P(T\ge|t_{\mathrm{obs}}|)$.
 
 Here, "at least as extreme" means values at least as inconsistent with $H_0$ as the observed result, according to the alternative hypothesis.
 
@@ -193,7 +195,7 @@ The following table summarizes some common statistical tests and their applicati
 
 | Test                          | Data Type          | Number of Groups                       | Assumptions                                                                     |
 | ----------------------------- | ------------------ | -------------------------------------- | ------------------------------------------------------------------------------- |
-| **T-Test**                    | Interval/Ratio     | Two                                    | Independent groups; approximate normality within groups                         |
+| **Two-sample T-Test**         | Interval/Ratio     | Two                                    | Independent groups; approximate normality within groups                         |
 | **Paired T-Test**             | Interval/Ratio     | Two                                    | Paired observations; approximate normality of differences                       |
 | **One-way ANOVA**             | Interval/Ratio     | More than Two                          | Independent observations; approximate normality; similar group variances        |
 | **Two-way ANOVA**             | Interval/Ratio     | Multiple groups defined by two factors | Independent observations; approximate normality; similar group variances        |
@@ -278,6 +280,8 @@ $$
 $$
 
 we fail to reject the null hypothesis.
+
+The corresponding one-sided p-value is $P(T_{24}\ge1.667)\approx0.054$, which is just above $0.05$, so the conclusion is the same.
 
 There is not sufficient evidence at the $\alpha=0.05$ significance level to conclude that the fertilizer increases the average yield above 2 tons per hectare.
 

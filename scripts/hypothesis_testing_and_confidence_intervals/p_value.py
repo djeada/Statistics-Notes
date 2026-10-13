@@ -55,7 +55,7 @@ def plot_p_value(ax, test_type, sample_statistic, p_value):
     ax.text(sample_statistic, 0.02, f'Statistic\n{sample_statistic:.2f}', horizontalalignment='center', color='black')
     
     # Annotate the p-value on the plot
-    ax.annotate('p-value', xy=(sample_statistic, 0.02), xytext=(sample_statistic - 1 if test_type == 'left-tailed' else sample_statistic + 1, 0.1),
+    ax.annotate(f'p-value = {p_value:.3f}', xy=(sample_statistic, 0.02), xytext=(sample_statistic - 1 if test_type == 'left-tailed' else sample_statistic + 1, 0.1),
                 arrowprops=dict(facecolor='black', shrink=0.05), horizontalalignment='center', color='black')
 
     # Set title and labels

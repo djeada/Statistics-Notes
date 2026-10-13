@@ -4,13 +4,13 @@ Bayesian and frequentist statistics are two major approaches to statistical infe
 
 A useful distinction is:
 
-| AspectFrequentistBayesian |                                                         |                                                                      |
+| Aspect                    | Frequentist                                             | Bayesian                                                             |
 | ------------------------- | ------------------------------------------------------- | -------------------------------------------------------------------- |
 | Unknown parameter         | Fixed but unknown                                       | Represented by a probability distribution                            |
 | Probability               | Long-run behavior of repeated experiments               | Quantifies uncertainty given a model and available information       |
 | Prior information         | Not represented through a prior distribution            | Encoded through a prior distribution                                 |
 | Main inferential output   | Point estimates, confidence intervals, hypothesis tests | Posterior distributions, credible intervals, posterior probabilities |
-| Data                      | Random before observation                               | Observed data are treated as fixed once collected                    |
+| Data                      | Random (varies across hypothetical repeated samples)    | Observed data are treated as fixed once collected                    |
 | Parameter uncertainty     | Described through sampling procedures                   | Described directly by the posterior distribution                     |
 
 Neither framework is universally better. The appropriate choice depends on the problem, the model, the available information, and the type of conclusion we want to make.
@@ -88,12 +88,12 @@ There is an important modeling detail here: if the entire 10-item population sho
 
 For the standard calculations below, we use the usual Bernoulli/binomial approximation. If the target really were a small finite population sampled without replacement, a finite-population or hypergeometric model would be more appropriate.
 
-| StepEquationPlugging the numbers        |                                                           |                                                        |
+| Step                                    | Equation                                                  | Plugging the numbers                                   |
 | --------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------ |
 | **Point estimate**                      | $\hat p=x/n$                                              | $\hat p=2/4=0.50$                                      |
 | **Standard error**                      | $SE(\hat p)=\sqrt{\hat p(1-\hat p)/n}$                    | $\sqrt{0.5(1-0.5)/4}=0.25$                             |
-| **95% Wald confidence interval**        | $\hat p\pm z\_{0.975}SE(\hat p)$, where $z\_{0.975}=1.96$ | $0.50\pm1.96(0.25)\approx[0.01,0.99]$                  |
-| **Null-hypothesis test** $H\_0\:p=p\_0$ | $z=(\hat p-p\_0)/\sqrt{p\_0(1-p\_0)/n}$                   | For $p\_0=0.5$, $z=0$ and the two-sided p-value is $1$ |
+| **95% Wald confidence interval**        | $\hat p\pm z_{0.975}\,SE(\hat p)$, where $z_{0.975}\approx1.96$ | $0.50\pm1.96(0.25)\approx[0.01,0.99]$                  |
+| **Null-hypothesis test** $H_0: p=p_0$ | $z=(\hat p-p_0)/\sqrt{p_0(1-p_0)/n}$                   | For $p_0=0.5$, $z=0$ and the two-sided p-value is $1$ |
 
 The Wald interval is shown because it follows directly from the familiar standard-error formula, but with only four observations it is not a reliable confidence interval. Methods such as the Wilson or exact binomial interval are preferable for such a small sample.
 
@@ -264,7 +264,7 @@ T: 0.2
 
 This is different from saying that the posterior distribution itself consists only of the values $0.8$ and $0.2$.
 
-| StepEquationPlugging the numbers |                                                                  |                                           |
+| Step                             | Equation                                                         | Plugging the numbers                      |
 | -------------------------------- | ---------------------------------------------------------------- | ----------------------------------------- |
 | **Prior density**                | $f(p)=\dfrac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}p^{a-1}(1-p)^{b-1}$ | $a=b=1\Rightarrow f(p)=1$ for $p\in[0,1]$ |
 | **Likelihood**                   | $L(p)\propto p^x(1-p)^{n-x}$                                     | $p^3(1-p)^0=p^3$                          |
@@ -336,6 +336,8 @@ The analysis results are:
 
 - **Frequentist Mean:** 4.79, with a 95% confidence interval of $(4.44,5.15)$.
 - **Bayesian Mean:** 4.80, with a 95% credible interval of $(4.42,5.18)$.
+
+For simplicity, the Bayesian calculation treats the data variance as known ($\sigma^2=4$, the value used to generate the data) and uses a conjugate Normal prior $\mu\sim N(5,1)$, so the posterior is Normal with precision $1/1+100/4=26$ (posterior variance $1/26\approx0.038$, standard deviation $\approx0.196$) and mean $(5/1+100\cdot4.79/4)/26\approx4.80$. The frequentist interval uses the estimated standard error $s/\sqrt n\approx0.182$ with a normal critical value (a $t_{99}$ critical value would give $(4.43,5.15)$). The posterior mean is a precision-weighted average of the prior mean and the sample mean, so it is pulled slightly toward $5$.
 
 The numerical results are similar because the dataset contains enough information for the likelihood to dominate much of the inference. The important difference is therefore not simply the final numbers, but how uncertainty is represented and how each interval should be interpreted.
 

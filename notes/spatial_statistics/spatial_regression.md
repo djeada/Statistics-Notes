@@ -169,13 +169,13 @@ $$
 5+2s,
 $$
 
-the residuals become approximately
+the deviations from the true trend $y_i-m(s_i)$ are
 
 $$
 0.2,\ 0.1,\ 0.0,\ 0.2,\ -0.1.
 $$
 
-Most of the apparent spatial dependence disappears once the mean structure is modeled correctly.
+The residuals are now small and show no clear systematic pattern: most of the apparent spatial dependence disappears once the mean structure is modeled correctly.
 
 ## OLS with spatially correlated errors
 
@@ -286,11 +286,11 @@ $$
 \sigma_n^2 I(i=j),
 $$
 
-where
+where $I(i=j)$ equals 1 when $i=j$ and 0 otherwise, and
 
 - $d_{ij}$ is distance between locations;
 - $\sigma_s^2$ is spatially structured variance;
-- $a$ is a spatial scale;
+- $a$ is a spatial scale (the practical range of this exponential model is about $3a$);
 - $\sigma_n^2$ is nugget or independent noise variance.
 
 For nearby locations, $d_{ij}$ is small, so the spatial covariance is large.
@@ -724,6 +724,14 @@ This can represent:
 
 It does not imply that neighboring observed outcomes directly cause one another.
 
+The implied disturbance covariance is
+
+$$
+\mathrm{Cov}(u)=\sigma^2(I-\lambda W)^{-1}(I-\lambda W^\top)^{-1}
+$$
+
+when $\mathrm{Cov}(\varepsilon)=\sigma^2I$, and the process is well defined when $I-\lambda W$ is invertible (for a row-standardized $W$, $|\lambda|<1$ suffices).
+
 ![Spatial error propagation](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/04_spatial_error_propagation.png)
 
 ## Numerical spatial-error example
@@ -826,9 +834,9 @@ $$
 (I-\rho W)^{-1}
 $$
 
-is called the spatial multiplier.
+is called the spatial multiplier. It exists when $I-\rho W$ is invertible; for a row-standardized $W$, $|\rho|<1$ is sufficient.
 
-## Why OLS on $y$ versus $Wy$ is generally inappropriate
+## Why OLS is generally inappropriate for the SAR lag model
 
 In the SAR model,
 
@@ -1368,7 +1376,7 @@ Nearby training observations can make performance look unrealistically good.
 
 ## Compact worked comparison
 
-Suppose the true data-generating model is
+Suppose (with illustrative numbers) the true data-generating model is
 
 $$
 y_i =

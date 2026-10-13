@@ -116,7 +116,7 @@ Different biases arise at different stages of a study, so no single procedure el
 
 #### Strategies to Counteract Bias
 
-* **Simple random sampling** gives each member of a finite population an equal chance of selection and can reduce systematic sampling bias when implemented correctly.
+* **Simple random sampling** gives every possible sample of a given size the same chance of being selected (so every member has the same chance of selection) and can reduce systematic sampling bias when implemented correctly.
 * **Stratified sampling** divides a population into relevant groups, or strata, and samples within each group. This can improve representation and statistical precision.
 * **Systematic sampling** selects units according to a regular interval after choosing a starting point. It can work well, but hidden periodic patterns in the population may create bias.
 * **Cluster sampling** divides the population into clusters, randomly selects some clusters, and then observes either all units or a sample of units within those clusters. It is often useful when populations are geographically dispersed.
@@ -129,7 +129,7 @@ Sampling determines **who enters the study**; random assignment determines **whi
 
 * A **variable** is a characteristic that can take different values across individuals, objects, or observations. Examples include age, height, income, and blood type.
 * **Data** are the observed values recorded for one or more variables.
-* The **population** is the complete set of units or outcomes about which we want to draw conclusions.
+* The **population** is the complete set of units or outcomes about which we want to draw conclusions (see above).
 * A **parameter** is a numerical quantity describing a population or statistical model.
 * A **sample** is the subset of observations actually collected.
 * A **statistic** is a numerical quantity calculated from sample data.
@@ -181,13 +181,13 @@ The notation helps distinguish population quantities from sample quantities:
 
 #### Example: Application of Parameters and Statistics
 
-1. Researchers want to estimate the average income of all adults in a city. The **population** consists of the adults included in the target population, and the population mean income is the **parameter** of interest.
+1. Researchers want to estimate the average income of all adults in a city. The **population** is all adults in the city, and the population mean income $\mu$ is the **parameter** of interest.
 
 2. Because measuring every adult may be impractical, the researchers collect a sample of 500 adults.
 
 3. They calculate the sample mean income:
 
-```math id="xk2hnc"
+```math
 \bar{x}
 =
 \frac{1}{n}\sum_{i=1}^{n}x_i.

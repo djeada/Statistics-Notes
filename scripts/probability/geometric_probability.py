@@ -1,58 +1,64 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import quad
+import numpy as np
 
 
 def calculate_probability(r):
     """
-    Calculate the probability that a randomly chosen point inside the square
-    is at a distance less than r from the bottom left corner (0,0).
-    """
-    if r < 1:
-        # When the circle is completely within the square
-        probability = (np.pi * r ** 2) / 4
-    elif r == np.sqrt(2):
-        # When the circle exactly covers the square
-        probability = 1
-    else:
-        # When the circle extends outside the square
-        # Integral from 0 to 1 for the area within the square
-        area_within_square, _ = quad(lambda x: np.sqrt(r ** 2 - x ** 2), 0, 1)
-        probability = area_within_square
+    Probability that a point chosen uniformly in the unit square is at a
+    distance less than r from the corner (0, 0).
 
-    return probability
+    The area of {x^2 + y^2 < r^2} intersected with the unit square is
+        pi r^2 / 4                                        for 0 <= r <= 1,
+        r^2 (arcsin(1/r) - pi/4) + sqrt(r^2 - 1)          for 1 < r <= sqrt(2),
+        1                                                 for r > sqrt(2).
+    """
+    if r <= 0:
+        return 0.0
+    if r <= 1:
+        return np.pi * r**2 / 4
+    if r <= np.sqrt(2):
+        return r**2 * (np.arcsin(1 / r) - np.pi / 4) + np.sqrt(r**2 - 1)
+    return 1.0
+
+
+def simulate_probability(r, n=200_000, seed=0):
+    """Monte Carlo estimate of the same probability."""
+    rng = np.random.default_rng(seed)
+    x, y = rng.random(n), rng.random(n)
+    return np.mean(np.hypot(x, y) < r)
 
 
 def plot_square_and_circle(r):
     """
     Plot the square and the quarter circle to visualize the problem.
     """
-    # Create a figure
     fig, ax = plt.subplots()
 
-    # Plot square
     square = plt.Rectangle((0, 0), 1, 1, edgecolor="black", facecolor="none")
     ax.add_patch(square)
 
-    # Plot quarter circle
     theta = np.linspace(0, np.pi / 2, 100)
-    x = r * np.cos(theta)
-    y = r * np.sin(theta)
-    ax.plot(x, y, color="red")
+    ax.plot(r * np.cos(theta), r * np.sin(theta), color="red")
 
-    # Setting the limits of the plot
-    ax.set_xlim(0, max(1.1 * r, 1))
-    ax.set_ylim(0, max(1.1 * r, 1))
+    ax.set_xlim(0, max(1.1 * r, 1.1))
+    ax.set_ylim(0, max(1.1 * r, 1.1))
     ax.set_aspect("equal", adjustable="box")
     ax.set_xlabel("X")
     ax.set_ylabel("Y")
-    ax.set_title(f"Quarter Circle with radius {r} in a Square")
+    ax.set_title(f"Quarter circle with radius {r} in the unit square")
 
     return fig, ax
 
 
-# Example radius
-r = 0.8
-probability = calculate_probability(r)
-plot_square_and_circle(r)
-probability
+def main():
+    for r in (0.8, 1.0, 1.2, np.sqrt(2), 1.5):
+        exact = calculate_probability(r)
+        approx = simulate_probability(r)
+        print(f"r = {r:.4f}: exact = {exact:.4f}, simulated = {approx:.4f}")
+
+    plot_square_and_circle(0.8)
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()

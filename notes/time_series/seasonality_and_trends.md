@@ -238,10 +238,10 @@ $$
 For an additive decomposition
 
 $$
-X_t=m_t+s_t+Y_t
+X_t=m_t+S_t+Y_t
 $$
 
-with exactly repeating seasonal component $s_t=s_{t-s}$,
+with exactly repeating seasonal component $S_t=S_{t-s}$,
 
 $$
 \nabla_sX_t=(m_t-m_{t-s})+(Y_t-Y_{t-s}).

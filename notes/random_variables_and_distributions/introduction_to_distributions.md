@@ -1,4 +1,4 @@
-## Introduction to Distributions
+# Introduction to Distributions
 
 A distribution is a function that describes the probability of a random variable. It helps to understand the underlying patterns and characteristics of a dataset. Distributions are widely used in statistics, data analysis, and machine learning for tasks such as hypothesis testing, confidence intervals, and predictive modeling.
 
@@ -15,7 +15,7 @@ Random variables assign numerical values to outcomes of random processes in prob
 #### Example: Weather Forecast
 
 - **Temperature (Continuous)**: The forecasted temperature in degrees.
-- **Chance of Precipitation (Continuous)**: Probability of rain or snow, expressed in percentage.
+- **Rainfall Amount (Continuous)**: Precipitation depth in millimetres or inches.
 - **Wind Speed (Continuous)**: Speed of the wind in kilometers or miles per hour.
 
 #### Probability Calculations
@@ -86,13 +86,13 @@ Now let's do calculations:
 3. $P(X < 5) = P(1) + P(2) + P(3) + P(4) ≈ 0.1667 + 0.1389 + 0.1157 + 0.0964 ≈ 0.5177$
 4. $P(X \leq 3) = P(1) + P(2) + P(3) ≈ 0.1667 + 0.1389 + 0.1157 ≈ 0.4213$
 5. $P(X > 3) = 1 - P(X \leq 3) ≈ 1 - 0.4213 ≈ 0.5787$
-6. $P(X \geq 3) = P(3) + P(4) + P(5) + P(6) + ... ≈ 0.1157 + 0.0964 + 0.0803 + 0.0669 + ...$
+6. $P(X \geq 3) = 1 - P(1) - P(2) = 1 - 0.1667 - 0.1389 ≈ 0.6944$ (exactly $(5/6)^2$: the first two rolls must both fail, so the first 6 can only appear on roll 3 or later)
 
 #### Example: Number of Pets Owned by Individuals
 
-Consider the following probability distribution for the number of pets $P$ owned by individuals.
+Consider the following probability distribution for the number of pets $N$ owned by individuals.
 
-| $P$ | $P(P)$ |
+| $N$ | $P(N)$ |
 |---------|------------|
 | 0       | 0.28       |
 | 1       | 0.35       |
@@ -106,15 +106,15 @@ Consider the following probability distribution for the number of pets $P$ owned
 Find the probability that an individual owns:
 
 1. Less than 2 pets.
-   $P(P < 2) = P(P = 0) + P(P = 1) = 0.28 + 0.35 = 0.63$
+   $P(N < 2) = P(N = 0) + P(N = 1) = 0.28 + 0.35 = 0.63$
 2. More than 3 pets.
-   $P(P > 3) = P(P = 4) + P(P = 5) = 0.04 + 0.01 = 0.05$
+   $P(N > 3) = P(N = 4) + P(N = 5) = 0.04 + 0.01 = 0.05$
 3. 1 or 4 pets.
-   $P(P = 1 \text{ or } P = 4) = P(P = 1) + P(P = 4) = 0.35 + 0.04 = 0.39$
+   $P(N = 1 \text{ or } N = 4) = P(N = 1) + P(N = 4) = 0.35 + 0.04 = 0.39$
 4. At most 3 pets.
-   $P(P \leq 3) = P(P = 0) + P(P = 1) + P(P = 2) + P(P = 3) = 0.28 + 0.35 + 0.22 + 0.10 = 0.95$
+   $P(N \leq 3) = P(N = 0) + P(N = 1) + P(N = 2) + P(N = 3) = 0.28 + 0.35 + 0.22 + 0.10 = 0.95$
 5. 2 or fewer, or more than 4 pets.
-   $P(P \leq 2 \text{ or } P > 4) = P(P \leq 2) + P(P > 4) = (0.28 + 0.35 + 0.22) + 0.01 = 0.86$
+   $P(N \leq 2 \text{ or } N > 4) = P(N \leq 2) + P(N > 4) = (0.28 + 0.35 + 0.22) + 0.01 = 0.86$
 
 ### Expected Value
 
@@ -127,7 +127,7 @@ Find the probability that an individual owns:
 #### Calculating Expected Value
 
 - For a discrete random variable: $E(X) = \sum [x_i \times P(x_i)]$, where $x_i$ are the possible values and $P(x_i)$ their probabilities.
-- For a continuous random variable, it involves integrating the product of the variable's value and its probability density function.
+- For a continuous random variable, $E(X) = \int_{-\infty}^{\infty} x\, f_X(x)\,dx$, the integral of the value times the density.
 
 #### Example: Expected Value in a Dice Roll
 Consider a fair six-sided dice roll. Each side, numbered from 1 to 6, has an equal probability of appearing on a single roll. The probability for each outcome is $\frac{1}{6}$. 
@@ -160,8 +160,8 @@ $$
 E(X) = (1 \times \frac{1}{6}) + (2 \times \frac{1}{6}) + (3 \times \frac{1}{6}) + (4 \times \frac{1}{6}) + (5 \times \frac{1}{6}) + (6 \times \frac{1}{6})
 $$
 
-$$E
-(X) = \frac{1 + 2 + 3 + 4 + 5 + 6}{6} = \frac{21}{6}
+$$
+E(X) = \frac{1 + 2 + 3 + 4 + 5 + 6}{6} = \frac{21}{6}
 $$
 
 $$
@@ -175,14 +175,14 @@ IV. Interpretation:
 - This concept is a cornerstone in probability theory, providing a predictive measure of the behavior of a random variable over many trials.
 
 ### Probability Density Function (PDF) - Continuous Variables
-For continuous random variables, the PDF provides the probability density at a specific point $x$. The area under the curve between two points on the PDF represents the probability of the variable falling within that range.
+For continuous random variables, the PDF $f_X(x)$ gives the probability *density* at $x$; it is not itself a probability, and it can exceed 1. The area under the curve between two points represents the probability of the variable falling within that range:
 
-$$f_X(x)$$
+$$P(a \le X \le b) = \int_a^b f_X(x)\,dx, \qquad P(X = x) = 0.$$
 
 Properties:
 
 1. Non-negative: $f_X(x) \geq 0$ for all $x$.
-2. Normalization: The total area under the curve of the PDF is 1.
+2. Normalization: The total area under the curve of the PDF is 1, i.e. $\int_{-\infty}^{\infty} f_X(x)\,dx = 1$.
    
 **Joint PDF for Multiple Variables**: For two continuous random variables $X$ and $Y$, the joint PDF $f_{X,Y}(x, y)$ gives the density at a particular point $(x, y)$.
 
@@ -229,3 +229,6 @@ Properties:
 
 ![36f05abf-38ae-49c3-898a-18c34edef19d](https://github.com/djeada/Statistics-Notes/assets/37275728/d1c763a8-1ca8-4e7d-a27e-7bf2ca15cd6c)
 
+---
+
+**Practice:** [Exercises with worked solutions](../../exercises/random_variables_and_distributions/introduction_to_distributions.md)

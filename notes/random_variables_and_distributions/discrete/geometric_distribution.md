@@ -1,6 +1,6 @@
-## Geometric Distribution (Discrete)
+# Geometric Distribution (Discrete)
 
-A discrete random variable X follows a geometric distribution if it represents the number of trials needed to get the first success in a sequence of Bernoulli trials. The geometric distribution is denoted as $X \sim \text{Geometric}(p)$, where p is the probability of success on each trial.
+A discrete random variable X follows a geometric distribution if it represents the number of trials needed to get the first success in a sequence of Bernoulli trials. The geometric distribution is denoted as $X \sim \text{Geometric}(p)$, where $p$ is the probability of success on each trial. The support is $\{1,2,3,\dots\}$ (trials counted including the success); some software counts failures before the first success instead.
 
 ### Probability Mass Function (PMF)
 
@@ -34,7 +34,7 @@ $$\text{Var}(X) = \frac{1-p}{p^2}$$
 
 The moment generating function (MGF) of a geometric distribution is:
 
-$$M_X(t) = \frac{pe^t}{1 - (1 - p)e^t}$$
+$$M_X(t) = \frac{pe^t}{1 - (1 - p)e^t}, \quad t < -\ln(1-p)$$
 
 ### Example: Flipping a Coin
 
@@ -61,3 +61,7 @@ $$\text{Var}(X) = \frac{1-0.5}{0.5^2} = 2$$
 ### Applications
 
 Geometric distributions are useful in scenarios where you are waiting for the first success in a series of independent trials, such as in quality control testing, network packet delivery analysis, and reliability testing in engineering.
+
+---
+
+**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/geometric_distribution.md)

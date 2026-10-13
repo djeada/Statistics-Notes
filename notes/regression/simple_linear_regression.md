@@ -14,11 +14,11 @@ $$
 
 Where:
 
-* $y_i$ is the $i $-th observation of the dependent variable.
-* $x_i$ is the $i $-th observation of the independent variable.
+* $y_i$ is the $i$-th observation of the dependent variable.
+* $x_i$ is the $i$-th observation of the independent variable.
 * $\beta_0$ is the intercept (the expected value of $y$ when $x = 0$).
 * $\beta_1$ is the slope (the average change in $y$ for a one-unit change in $x$).
-* $\varepsilon_i$ is the error term, assumed to be independently and identically distributed with mean zero and constant variance $\sigma^2 $.
+* $\varepsilon_i$ is the error term, assumed to be independent with mean zero and constant variance $\sigma^2$.
 
 Conceptually, $\varepsilon_i$ captures everything about $y_i$ that is **not** explained by $x_i$.  If the model is perfect, $\varepsilon_i$ would always be exactly zero—something that almost never happens with real-world data.
 
@@ -30,7 +30,9 @@ For the simple linear regression model to be valid, several key assumptions must
 2. **Independence** means the residuals (errors) $\varepsilon_i$ are independent of one another.
 3. **Homoscedasticity** suggests that the residuals have a constant variance ($\sigma^2$) across all values of $x$.
 4. **Normality** assumes that the residuals follow a normal distribution.
-5. Finally, **no measurement error in $x$** ensures that the independent variable $x$ is measured without error.
+5. Finally, **no measurement error in $x$** ensures that the independent variable $x$ is measured without error (otherwise $\hat\beta_1$ is biased toward zero).
+
+Normality is only needed for exact small-sample $t$ and $F$ inference; least squares itself needs only linearity, mean-zero errors, and (for the Gauss-Markov result) uncorrelated, equal-variance errors.
 
 A quick way to remember these assumptions is “LINE” plus “no‐error-in-$x$”: **L**inearity, **I**ndependence, **N**ormality, **E**qual variance.  Diagnostic plots such as residual-vs-fit, Q-Q plots, and scale-location plots are routinely used to check whether LINE holds in practice.
 
@@ -51,7 +53,7 @@ The least squares estimates are calculated using the following formulas:
 ##### Slope ($\hat{\beta}_1$)
 
 $$
-\hat{\beta}_1 = \frac{Sxy}{Sxx}
+\hat{\beta}_1 = \frac{S_{xy}}{S_{xx}}
 $$
 
 $$
@@ -62,7 +64,11 @@ $$
 S_{xx} = \sum_{i=1}^n (x_i - \bar{x})^2
 $$
 
-$$\hat{\beta}_1 = \frac{\mathrm{Cov}(x, y)}{\mathrm{Var}(x)}$$
+Equivalently, using sample covariance and variance (both with divisor $n-1$):
+
+$$
+\hat{\beta}_1 = \frac{\widehat{\mathrm{Cov}}(x, y)}{\widehat{\mathrm{Var}}(x)} = r_{xy}\,\frac{s_y}{s_x}
+$$
 
 ##### Intercept ($\hat{\beta}_0$)
 
@@ -116,7 +122,7 @@ $$
 
 By construction, $\text{SST} = \text{SSR} + \text{SSE}$.  Whenever SSE is small relative to SST, our line is doing a good job.
 
-#### Coefficient of Determination ($R^2 $)
+#### Coefficient of Determination ($R^2$)
 
 Indicates the proportion of variance in $y$ explained by $x$:
 
@@ -124,7 +130,7 @@ $$
 R^2 = \frac{\text{SSR}}{\text{SST}} = 1 - \frac{\text{SSE}}{\text{SST}}
 $$
 
-An $R^2 $ value close to 1 suggests a strong linear relationship.
+An $R^2$ value close to 1 suggests that the line captures most of the variability in the sample. In simple linear regression $R^2 = r_{xy}^2$, the squared sample correlation. A high $R^2$ does not by itself prove the relationship is linear or causal; always inspect residual plots.
 
 For example, $R^2 = 0.87$ means “87 % of the variability in the outcome is captured by our one-predictor model,” leaving 13 % to chance, omitted variables, or measurement noise.
 
@@ -133,7 +139,7 @@ For example, $R^2 = 0.87$ means “87 % of the variability in the outcome is cap
 #### Testing the Significance of the Slope
 
 * **Null Hypothesis ($H_0$)**: $\beta_1 = 0$ (no linear relationship)
-* **Alternative Hypothesis ($H_a $)**: $\beta_1 \neq 0$
+* **Alternative Hypothesis ($H_a$)**: $\beta_1 \neq 0$
 
 **Test Statistic**:
 
@@ -148,13 +154,15 @@ $$
 = \frac{s}{\sqrt{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2}}
 $$
 
-And:
+The intercept has standard error $\mathrm{SE}(\hat\beta_0) = s\sqrt{\dfrac{1}{n} + \dfrac{\bar{x}^2}{S_{xx}}}$, and a $(1-\alpha)$ confidence interval for the slope is $\hat\beta_1 \pm t_{1-\alpha/2,\,n-2}\,\mathrm{SE}(\hat\beta_1)$.
+
+And the residual standard error is:
 
 $$
 s = \sqrt{\frac{\text{SSE}}{n - 2}}
 $$
 
-The test statistic follows a T-distribution with $n - 2$ degrees of freedom.
+Under $H_0$ and the model assumptions, the test statistic follows a $t$-distribution with $n - 2$ degrees of freedom.
 
 If the absolute value of $t$ is large (or equivalently, the $p$-value is small), we reject $H_0$ and conclude that the slope is statistically different from zero—i.e., $x$ provides meaningful information about $y$.  In practice, analysts often complement the $t$-test with a confidence interval for $\beta_1$ to see a plausible range of slopes.
 
@@ -189,7 +197,7 @@ The means serve as the “balance points” of the $x$ and $y$ distributions.  C
 
 Create a table to organize calculations:
 
-| $x_i$  | $y_i$ | $x_i - \bar{x} $ | $y_i - \bar{y} $ | $(x_i - \bar{x})(y_i - \bar{y})$ | $(x_i - \bar{x})^2 $ |
+| $x_i$  | $y_i$ | $x_i - \bar{x}$ | $y_i - \bar{y}$ | $(x_i - \bar{x})(y_i - \bar{y})$ | $(x_i - \bar{x})^2$ |
 | --------- | -------- | ------------------- | ------------------- | ------------------------------------ | ----------------------- |
 | 2         | 50       | -3                  | -15                 | 45                                   | 9                       |
 | 4         | 60       | -1                  | -5                  | 5                                    | 1                       |
@@ -270,25 +278,25 @@ $$
 
 Since the regression explains all variability ($SSE = 0$), SSR equals SST, satisfying the identity $SST = SSR + SSE$.
 
-**VIII. Compute the Coefficient of Determination ($R^2 $)**
+**VIII. Compute the Coefficient of Determination ($R^2$)**
 
 $$
 R^2 = \frac{\text{SSR}}{\text{SST}} = \frac{500}{500} = 1
 $$
 
-An $R^2 $ value of 1 indicates that the model perfectly explains the variability in the test scores.
+An $R^2$ value of 1 indicates that the model perfectly explains the variability in the test scores.
 
 ![output(18)](https://github.com/user-attachments/assets/033767fc-d920-4f36-9827-5e8af81e4760)
 
-In practice you should be cautious: a perfect $R^2$ can be a sign of overfitting, data entry errors, or—more benignly—an extremely small, contrived sample like this one.
+In practice you should be cautious: a perfect $R^2$ can be a sign of data entry errors, a derived variable (e.g. $y$ computed from $x$), or—more benignly—an extremely small, contrived sample like this one.
 
-**IX. Calculate the Standard Error of the Estimate ($s $)**
+**IX. Calculate the Standard Error of the Estimate ($s$)**
 
 $$
 s = \sqrt{\frac{\text{SSE}}{n - 2}} = \sqrt{\frac{0}{2}} = 0
 $$
 
-The standard error measures typical residual size.  Here, with all residuals exactly zero, the estimate collapses to zero as well.
+The residual standard error measures typical residual size.  Here, with all residuals exactly zero, the estimate collapses to zero as well.
 
 Consequently,
 
@@ -296,6 +304,6 @@ Consequently,
 
 **X. Hypothesis Testing (Optional)**
 
-In this case, the test statistic for $\hat{\beta}_1$ is undefined due to division by zero in the standard error. However, in practice, with more realistic data where $s > 0$, you would perform a $t $-test to assess the significance of the slope.
+In this case, the test statistic for $\hat{\beta}_1$ is undefined ($5/0$) because the standard error is zero. However, in practice, with more realistic data where $s > 0$, you would perform a $t$-test to assess the significance of the slope.
 
 When $s$ is positive the $t$-test asks, “Is the observed slope big compared with the noise?”  Here there is no noise, so the usual inferential machinery breaks down—which actually reinforces the lesson that **perfect fits are the exception, not the rule**.

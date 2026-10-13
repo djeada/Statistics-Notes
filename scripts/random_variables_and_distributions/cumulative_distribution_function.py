@@ -1,8 +1,9 @@
-import numpy as np
+"""CDFs of a continuous (normal) and a discrete (fair die) random variable."""
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.stats import norm
 
-# Function to plot CDF for a single continuous variable
+
 def plot_single_variable_cdf(x, cdf, title, xlabel, ylabel):
     plt.figure(figsize=(8, 4))
     plt.plot(x, cdf)
@@ -12,33 +13,33 @@ def plot_single_variable_cdf(x, cdf, title, xlabel, ylabel):
     plt.grid(True)
     plt.show()
 
-# Function to plot CDF for a discrete variable
-def plot_discrete_variable_cdf(outcomes, probabilities, title, xlabel, ylabel):
+
+def plot_discrete_variable_cdf(x, cdf, title, xlabel, ylabel):
     plt.figure(figsize=(8, 4))
-    plt.step(outcomes, probabilities, where='post')
+    plt.step(x, cdf, where="post")  # right-continuous: F jumps at each outcome
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
-    plt.xticks(outcomes - 0.5)
-    plt.yticks(np.linspace(0, 1, len(outcomes)))
+    plt.xticks(x)
     plt.grid(True)
     plt.show()
 
-# Data generation for a continuous variable CDF (e.g., normal distribution)
-x_continuous = np.linspace(-5, 5, 1000)
-cdf_continuous = norm.cdf(x_continuous, 0, 1)  # Normal distribution with mean=0 and std=1
 
-# Data generation for a discrete variable CDF (e.g., rolling a six-sided die)
-outcomes_discrete = np.arange(1, 8)  # Outcomes: 1 to 6
-probabilities_discrete = np.cumsum(np.full(6, 1/6))  # Cumulative sum of probabilities
-probabilities_discrete = np.append([0], probabilities_discrete)  # To include CDF starting from 0
+def main():
+    # Continuous: standard normal
+    x_continuous = np.linspace(-5, 5, 1000)
+    cdf_continuous = norm.cdf(x_continuous, 0, 1)
 
-# Plotting the CDF for a single continuous variable
-plot_single_variable_cdf(x_continuous, cdf_continuous, 
-                         title='Cumulative Distribution Function of a Normal Distribution', 
-                         xlabel='x', ylabel='CDF')
+    # Discrete: fair six-sided die, F(x) = floor(x) / 6 clipped to [0, 1]
+    x_discrete = np.arange(0, 8)
+    cdf_discrete = np.clip(np.floor(x_discrete) / 6, 0, 1)
+    assert np.isclose(cdf_discrete[3], 0.5)  # P(X <= 3) = 1/2
 
-# Plotting the CDF for a discrete variable
-plot_discrete_variable_cdf(outcomes_discrete, probabilities_discrete, 
-                           title='Cumulative Distribution Function of a Six-Sided Die', 
-                           xlabel='Outcome', ylabel='CDF')
+    plot_single_variable_cdf(x_continuous, cdf_continuous,
+                             "Cumulative Distribution Function of a Normal Distribution", "x", "CDF")
+    plot_discrete_variable_cdf(x_discrete, cdf_discrete,
+                               "Cumulative Distribution Function of a Six-Sided Die", "Outcome", "CDF")
+
+
+if __name__ == "__main__":
+    main()

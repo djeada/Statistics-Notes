@@ -145,14 +145,14 @@ The **random walk** models a level whose next value equals its current value plu
 For the zero-drift form,
 
 $$
-X_t=X_{t-1}+Z_t,
+X_t=X_{t-1}+\varepsilon_t,
 $$
 
-where $Z_t$ is white noise with mean zero and variance $\sigma^2$.
+where $\varepsilon_t$ is white noise with mean zero and variance $\sigma^2$.
 
 - $X_t$ is the level at time $t$.
 - $X_{t-1}$ is the previous level.
-- $Z_t$ is the new innovation arriving at time $t$.
+- $\varepsilon_t$ is the new innovation arriving at time $t$.
 
 The next increment is unpredictable under the model, but the level is highly persistent because every past shock remains embedded in it.
 
@@ -161,21 +161,21 @@ The next increment is unpredictable under the model, but the level is highly per
 Starting from $X_0$, repeated substitution gives
 
 $$
-X_1=X_0+Z_1,
+X_1=X_0+\varepsilon_1,
 $$
 
 $$
-X_2=X_0+Z_1+Z_2,
+X_2=X_0+\varepsilon_1+\varepsilon_2,
 $$
 
 $$
-X_3=X_0+Z_1+Z_2+Z_3,
+X_3=X_0+\varepsilon_1+\varepsilon_2+\varepsilon_3,
 $$
 
 and, in general,
 
 $$
-X_t=X_0+\sum_{i=1}^{t}Z_i.
+X_t=X_0+\sum_{i=1}^{t}\varepsilon_i.
 $$
 
 This cumulative representation explains both persistence and increasing uncertainty: shocks do not decay away from the level.
@@ -202,7 +202,7 @@ Because the innovations are independent,
 
 $$
 \mathrm{Var}(X_t\mid X_0)
-=\mathrm{Var}\left(\sum_{i=1}^{t}Z_i\right)
+=\mathrm{Var}\left(\sum_{i=1}^{t}\varepsilon_i\right)
 =t\sigma^2.
 $$
 
@@ -213,13 +213,13 @@ The variance therefore grows linearly with time. This time-varying variance is e
 A **random walk with drift** is
 
 $$
-X_t=\delta+X_{t-1}+Z_t,
+X_t=\delta+X_{t-1}+\varepsilon_t,
 $$
 
-with $E(Z_t)=0$. Expanding from $X_0$ gives
+with $E(\varepsilon_t)=0$. Expanding from $X_0$ gives
 
 $$
-X_t=X_0+\delta t+\sum_{i=1}^{t}Z_i.
+X_t=X_0+\delta t+\sum_{i=1}^{t}\varepsilon_i.
 $$
 
 Thus,
@@ -284,7 +284,7 @@ The slow decay is a diagnostic warning that the level series is not behaving lik
 The random walk has a **stochastic trend**: shocks accumulate permanently rather than decaying. Even with zero drift, its variance changes with time. First differencing removes this accumulation:
 
 $$
-\Delta X_t=X_t-X_{t-1}=Z_t.
+\Delta X_t=X_t-X_{t-1}=\varepsilon_t.
 $$
 
 For the model assumed here, the differenced series is white noise. The transformation therefore changes the modeling target from the non-stationary level to stationary one-period changes.

@@ -22,7 +22,7 @@ And the possible events include:
 * Prime Numbers = $\{2, 3, 5\}$
 * Rolling a Number Less Than 4 = $\{1, 2, 3\}$
 
-Each event is a subset of the sample space and represents a particular outcome or set of outcomes that we are interested in observing. The probability of an event is a measure of how likely that event is to occur, calculated by dividing the number of favorable outcomes (the size of event set) by the total number of possible outcomes (the size of sample space).
+Each event is a subset of the sample space and represents a particular outcome or set of outcomes that we are interested in observing. The probability of an event is a measure of how likely that event is to occur, calculated, when all outcomes are equally likely, by dividing the number of favorable outcomes (the size of event set) by the total number of possible outcomes (the size of sample space).
 
 ### Additional Examples
 
@@ -30,8 +30,9 @@ Each event is a subset of the sample space and represents a particular outcome o
 - The **life span of a light bulb** measured in hours has a sample space of any positive number, formally $S = \{t \mid t > 0\}$. In practice, this could be limited to a range such as $S = \{1, 2, 3, \dots, 10000\}$ hours.
 - For an individual's **birth month**, the sample space is $S = \{\text{January}, \text{February}, \dots, \text{December}\}$.
 - In the case of **radioactive decay**, where decay occurs in intervals of 1 second, the sample space consists of sequences of decay (D) and non-decay (N), such as $S = \{\text{D}, \text{ND}, \text{NND}, \text{NNND}, \dots\}$.
-- When **rolling two dice**, the sample space for the sum of the points on the two dice is $S = \{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}$.
-- In the **seating at a square table** scenario, if two people can sit at any of the four corners, the sample space for their seating positions can be represented as pairs of positions.
+- If we record only the **sum of two dice**, the sample space is $S = \{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}$, but these sums are not equally likely (see the example below).
+- In the **seating at a square table** scenario, if two people sit at two different corners of the four corners, the sample space for their seating positions consists of the $4\cdot 3=12$ ordered pairs of distinct positions.
+- When **rolling two dice**, the sample space of ordered pairs (first die, second die) can be laid out in a table:
 
 |   | 1   | 2   | 3   | 4   | 5   | 6   |
 |---|-----|-----|-----|-----|-----|-----|
@@ -46,7 +47,7 @@ For instance, (1,1) means the first die shows 1 and the second die shows 1, and 
 
 ## Probability
 
-Probability is a measure that quantifies the likelihood of a specific event occurring, given a set of possible outcomes. It is a value between 0 and 1, where 0 indicates that the event is impossible, and 1 indicates that the event is certain. Mathematically, the probability of an event A, denoted as P(A), can be expressed as:
+Probability is a measure that quantifies the likelihood of a specific event occurring, given a set of possible outcomes. It is a value between 0 and 1, where 0 indicates that the event is impossible, and 1 indicates that the event is certain. Mathematically, the probability of an event A, denoted as P(A), can be expressed (when all outcomes are equally likely) as:
 
 $$
 P(A) = \frac{\text{Number of favorable outcomes}}{\text{Total number of possible outcomes}}
@@ -160,7 +161,11 @@ $$
 E(X) = \sum_{i=1}^{13} P(i) \cdot i
 $$
 
-Where $P(i)$ is the probability of drawing a card with number $i$, which is $\frac{1}{13}$ for each card number since there is an equal number of each card number in the deck.
+Where $P(i)$ is the probability of drawing a card with number $i$, which is $\frac{1}{13}$ for each card number since there is an equal number of each card number in the deck. Hence
+
+$$
+E(X) = \frac{1}{13}(1 + 2 + \cdots + 13) = \frac{1}{13}\cdot\frac{13\cdot 14}{2} = 7.
+$$
 
 These probabilities and expected values provide the fundamental basis for a wide range of card games and can be used to calculate more complex odds based on game rules and strategies.
 
@@ -220,17 +225,19 @@ P(B) = \frac{\text{Number of favorable outcomes for B}}{\text{Total outcomes}} =
 $$
 
 $$
-P(C) = \frac{\text{Number of favorable outcomes for C}}{\text{Total outcomes}} = \frac{12}{27}
+P(C) = \frac{\text{Number of favorable outcomes for C}}{\text{Total outcomes}} = \frac{13}{27}
 $$
 
 $$
 P(D) = \frac{\text{Number of favorable outcomes for D}}{\text{Total outcomes}} = \frac{27}{27} = 1
 $$
 
+These values are consistent with the addition rule: $P(D) = P(A) + P(B) - P(C) = \frac{21 + 19 - 13}{27} = 1$.
+
 These probabilities can be simplified:
 
 $$
-P(A) = \frac{7}{9}, P(B) = \frac{19}{27}, P(C) = \frac{4}{9}, P(D) = 1
+P(A) = \frac{7}{9}, \quad P(B) = \frac{19}{27}, \quad P(C) = \frac{13}{27}, \quad P(D) = 1
 $$
 
 ### Example: Indistinguishable Balls
@@ -259,7 +266,7 @@ Events of Interest:
 
 #### Probability Calculations
 
-With 10 unique outcomes and each outcome equally likely, the probabilities are:
+If the 10 unique outcomes are treated as equally likely (the Bose-Einstein counting model), the probabilities are:
 
 $$
 P(A) = \frac{\text{Number of favorable outcomes for A}}{\text{Total unique outcomes}} = \frac{9}{10}
@@ -268,3 +275,5 @@ $$
 $$
 P(B) = \frac{\text{Number of favorable outcomes for B}}{\text{Total unique outcomes}} = \frac{6}{10} = \frac{3}{5}
 $$
+
+Note that this equal-likelihood assumption is a modeling choice. If the balls are physically placed independently into cells (the Maxwell-Boltzmann model), the 10 arrangements above are not equally likely: "ooo in cell 1" has probability $\frac{1}{27}$, "oo in one cell and o in another" has probability $\frac{3}{27}$, and "one ball in each cell" has probability $\frac{6}{27}$. Under that model $P(A)=\frac{21}{27}=\frac{7}{9}$ and $P(B)=\frac{19}{27}$, the same values as in the distinguishable-ball example.

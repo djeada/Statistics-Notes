@@ -41,6 +41,34 @@ Write a short model card: target scale, ordinary difference order, seasonal peri
 20. Use a validation period to choose between a seasonal-naive forecast and a SARIMA candidate. Leave a final test period untouched.
 21. Explain how the inverse transformation changes the interpretation of a forecast interval.
 
+## Worked solutions
+
+1. $\Delta y=(123-120,\,126-123,\,130-126)=(3,3,4)$. Differencing removes the level (any additive constant) and turns a linear trend into a constant; one observation is lost.
+2. $\nabla_{12}y_t=y_t-y_{t-12}=100-92=8$, written $(1-B^{12})y_t$.
+3. $(1-B)^2=1-2B+B^2$, so $(1-B)^2y_t=y_t-2y_{t-1}+y_{t-2}=15-2(12)+13=4$. It equals the change in the first difference: $(15-12)-(12-13)=3+1=4$.
+4. The indices sum to $-3+1+4-2=0$, so they are normalized. At $t=5$ (second year, quarter 1) the seasonal value is $-3$ and the level is $50+2(5)=60$, giving $57$ (assuming $t=1$ is the first quarter).
+5. Additive decomposition fits when the seasonal swing has a constant size regardless of the level; multiplicative when the amplitude scales with the level. Check: plot $y_t$ against its yearly range or compare peak-to-trough size in early and late years. Simulated example: `y = 100 + 0.5*t + 10*np.sin(2*np.pi*t/12)` (additive) versus `y = (100 + 0.5*t)*(1 + 0.1*np.sin(2*np.pi*t/12))` (multiplicative; the swing doubles as the level doubles).
+6. (i) Remaining unit root or trend: unit-root test (ADF/KPSS) on the differenced series, or a second difference check; (ii) a strong seasonal component: seasonal ACF spikes at multiples of $s$, so fit seasonal differencing or dummies; (iii) a structural break or level shift: rolling mean plots and break tests. A near-unit AR root (long memory) is a fourth possibility, assessed by comparing AR fits and forecasts.
+7. ARIMA$(1,1,1)$: $(1-\phi B)(1-B)y_t=c+(1+\theta B)\varepsilon_t$. SARIMA$(0,1,1)(0,1,1)_{12}$: $(1-B)(1-B^{12})y_t=(1+\theta B)(1+\Theta B^{12})\varepsilon_t$.
+8. Each difference amplifies high-frequency noise: for white noise, $\operatorname{Var}(\Delta\varepsilon_t)=2\sigma^2$, and for second differences $\operatorname{Var}=6\sigma^2$. It also adds a unit MA root (an over-differenced, noninvertible component), induces a negative lag-1 autocorrelation ($-2/3$ after two differences of white noise), and loses observations. Prefer the smallest difference order that makes the series look stationary.
+9. Model answer: in the script's figures, a slowly decaying ACF/trend remaining after one difference indicates under-differencing; a strongly negative ACF at lag 1 near $-0.5$ (and inflated variance) after differencing a stationary series indicates over-differencing.
+10. Model answer: in the multiplicative series the seasonal swing grows with the level; after `np.log` the swings are roughly constant, which justifies the log. For the additive series the log is not needed and may create an artificial pattern. Check by plotting seasonal range versus yearly mean, or by comparing the residual spread before and after the transform.
+11. Model answer:
+    For each origin $t$, forecast $\hat y_{t+h}=y_{t+h-12}$ for $h\in\{1,3,6,12\}$ and report MAE by horizon for both the seasonal-naive and SARIMA candidate. If the SARIMA model cannot beat seasonal-naive at these horizons, its complexity is not justified.
+12. $(1-B)y_t$ removes a slowly changing level/trend (and kills the stochastic trend), while $(1-B^{12})y_t$ removes a repeating period-12 pattern and the seasonal level. For a series with both, apply both: $(1-B)(1-B^{12})y_t$.
+    ```python
+    d1 = np.diff(y); d12 = y[12:] - y[:-12]; d112 = np.diff(d12)
+    ```
+13. $(1-B)(1-B^{12})=1-B-B^{12}+B^{13}$, so $(1-B)(1-B^{12})y_t=y_t-y_{t-1}-y_{t-12}+y_{t-13}$: four terms. Numerically, for $y=(1,3,2,5,4,7,6,9,8,11,10,13,12,15)$ ($n=14$, $t=14$): $15-12-3+1=1$, and via the two-step route $\nabla_{12}y_{14}-\nabla_{12}y_{13}=(15-3)-(12-1)=1$, matching. Sample loss: $13$ observations.
+14. AIC values are computed from the likelihood of the response, so they are only comparable when every candidate models the same response on the same sample. A log-transformed model has a likelihood of $\log y$; its AIC must be adjusted by the Jacobian ($+2\sum\log y_t$) to compare with a level model, and differencing orders change the effective sample, so AIC comparisons across $d$ are invalid. Use out-of-sample error on the original scale for such cases.
+15. If $\hat\Delta_{T+h}$ are forecast changes, then $\hat y_{T+h}=y_T+\sum_{j=1}^h\hat\Delta_{T+j}$. Error variances add up: for a random walk, $\operatorname{Var}=h\sigma^2$, so a 95% interval is $\hat y_{T+h}\pm1.96\sigma\sqrt h$, widening with the square root of the horizon. With $y_T=130$, $\hat\Delta=3.5$, $\sigma=1$: $\hat y_{T+3}=140.5$, interval $140.5\pm3.4$ (ignoring the correlation of $\Delta$ forecasts).
+16. Random walk: $y_t=y_{t-1}+\varepsilon_t$, so $(1-B)y_t=\varepsilon_t$ is white noise and one ordinary difference suffices. Seasonal random walk: $y_t=y_{t-s}+\varepsilon_t$, so $(1-B^s)y_t=\varepsilon_t$; the ordinary difference gives $y_t-y_{t-1}=\varepsilon_t+\varepsilon_{t-1}$-type terms only if $s=1$, and for $s>1$ it leaves a strong lag-$s$ dependence ($\varepsilon_{t}-\varepsilon_{t-1}$ is not the innovation of a seasonal random walk) behind.
+17. For $y_t=a+bt+\varepsilon_t$: detrending gives residual $\varepsilon_t$ (white, correct). First differencing gives $b+\varepsilon_t-\varepsilon_{t-1}$, an MA(1) with $\theta=-1$ (noninvertible, variance doubled, lag-1 ACF $-0.5$). Detrending is right for a deterministic trend; differencing is right for a stochastic trend.
+18. An outlier of size $A$ in a season-$k$ observation shifts the estimated seasonal index of that season by about $A/m$ ($m$ years), and the normalization subtracts $A/(sm)$ from the others. Seasonal indices computed with the mean are sensitive; use the median or robust (STL) decomposition.
+19. Model answer: additive decomposition leaves a growing seasonal pattern in the remainder; multiplicative decomposition removes it but cannot handle zero/negative values; log-additive gives the same structure as multiplicative with additive residuals and is the easiest for ARIMA. Choose by remainder stability (constant spread).
+20. Model answer: split into train / validation / test in time order. Fit both on train, compare MAE (by horizon) on validation, choose, then refit on train+validation and evaluate once on the untouched test period.
+21. If the interval is built on the log scale, $[\exp(l),\exp(u)]$ is asymmetric, covers the median (not the mean) of $y$, and widens with the level. The point forecast $\exp(\hat\mu)$ estimates the median; the mean needs the correction $\exp(\hat\mu+\sigma^2/2)$.
+
 ## Submission check
 
 Report the exact operators, sample loss from differencing, seasonal period, model-selection evidence, and whether the residuals resemble white noise.

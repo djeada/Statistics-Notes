@@ -41,20 +41,20 @@ The regression mean is $1+2(3)=7$, but the error is serially dependent. Under su
 
 The figure separates the regression mean from the serial error around it. The covariates explain the systematic mean structure, while the ARMA component describes dependence that remains after conditioning on those predictors.
 
-In many applications, the response $Y_t$ depends on observed covariates and still has autocorrelated residual variation. A **regression with ARMA errors** writes
+In many applications, the response $y_t$ depends on observed covariates and still has autocorrelated residual variation. A **regression with ARMA errors** writes
 
 $$
-Y_t=\beta^TX_t+R_t,
+y_t=x_t^\top\beta+n_t,
 $$
 
 where the error process follows an ARMA model such as
 
 $$
-R_t=\phi_1R_{t-1}+\cdots+\phi_pR_{t-p}
-+Z_t-\theta_1Z_{t-1}-\cdots-\theta_qZ_{t-q}.
+n_t=\phi_1n_{t-1}+\cdots+\phi_pn_{t-p}
++\varepsilon_t-\theta_1\varepsilon_{t-1}-\cdots-\theta_q\varepsilon_{t-q}.
 $$
 
-Here $Z_t$ is white noise. The signs on the MA coefficients are a convention; some texts and software use plus signs instead, so compare full model equations rather than parameter labels alone.
+Here $\varepsilon_t$ is white noise. The signs on the MA coefficients are a convention; some texts and software use plus signs instead, so compare full model equations rather than parameter labels alone.
 
 ### Why This Matters
 

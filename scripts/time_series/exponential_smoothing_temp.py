@@ -1,38 +1,47 @@
-import pandas as pd
-import numpy as np
+"""Holt-Winters exponential smoothing on a synthetic monthly temperature series."""
+
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 from statsmodels.tsa.holtwinters import ExponentialSmoothing
 
-# Step 1: Generate Mock Monthly Temperature Data
-np.random.seed(42)
-years = 5
-months_per_year = 12
-total_months = years * months_per_year
 
-# Simulate average monthly temperature (in degrees Celsius) with seasonality and trend
-time_index = pd.date_range(start='2015-01-01', periods=total_months, freq='M')
-temperature = 10 + 0.5 * np.arange(total_months)  # Gradual increase to simulate global warming
-seasonal_effect = np.sin(np.linspace(0, 2 * np.pi, months_per_year)) * 5  # Seasonal variation
-random_noise = np.random.normal(0, 1, total_months)  # Random noise
-temperature = temperature + np.tile(seasonal_effect, years) + random_noise
+def simulate_temperature(years=5, seed=42):
+    """Trend + annual seasonality + noise, indexed by month end."""
+    rng = np.random.default_rng(seed)
+    months_per_year = 12
+    total_months = years * months_per_year
+    index = pd.date_range(start="2015-01-01", periods=total_months, freq="ME")
+    trend = 10 + 0.5 * np.arange(total_months)
+    phase = 2 * np.pi * np.arange(months_per_year) / months_per_year
+    seasonal = np.tile(5 * np.sin(phase), years)
+    noise = rng.normal(0, 1, total_months)
+    return pd.Series(trend + seasonal + noise, index=index)
 
-# Create a pandas Series for the temperature data
-temperature_data = pd.Series(temperature, index=time_index)
 
-# Step 2: Fit an Exponential Smoothing Model (Holt-Winters)
-model = ExponentialSmoothing(temperature_data, trend='additive', seasonal='additive', seasonal_periods=12)
-model_fit = model.fit()
+def main():
+    temperature = simulate_temperature()
 
-# Step 3: Forecast Future Values (next 2 years)
-forecast_length = 24  # Forecast for the next 24 months (2 years)
-forecast = model_fit.forecast(forecast_length)
+    model = ExponentialSmoothing(
+        temperature, trend="additive", seasonal="additive", seasonal_periods=12
+    )
+    fit = model.fit()
+    forecast = fit.forecast(24)
+    print(f"alpha={fit.params['smoothing_level']:.3f}, "
+          f"beta={fit.params['smoothing_trend']:.3f}, "
+          f"gamma={fit.params['smoothing_seasonal']:.3f}")
+    print(f"first forecast values: {np.round(forecast.values[:3], 2)}")
 
-# Step 4: Plot the Results
-plt.figure(figsize=(15, 6))
-plt.plot(temperature_data, label='Actual Temperature', color='blue')
-plt.plot(forecast, label='Forecasted Temperature', color='green', linestyle='dashed')
-plt.title('Temperature Time Series and Forecast (Holt-Winters Exponential Smoothing)')
-plt.xlabel('Year')
-plt.ylabel('Temperature (Celsius)')
-plt.legend()
-plt.show()
+    plt.figure(figsize=(12, 5))
+    plt.plot(temperature, label="Actual temperature", color="blue")
+    plt.plot(forecast, label="Forecast", color="green", linestyle="dashed")
+    plt.title("Temperature series and Holt-Winters forecast")
+    plt.xlabel("Date")
+    plt.ylabel("Temperature (Celsius)")
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()

@@ -79,8 +79,6 @@ In this example, the center of the series increases over time while the dispersi
 
 ![Time Series with Varying Standard Deviation](https://github.com/user-attachments/assets/7216800d-c290-4617-853b-e44e0ef95272)
 
-**Figure 2: Time Series Exhibiting a Varying Standard Deviation**
-
 Here the central level is comparatively stable, but the amplitude of the fluctuations changes over time. This is a changing-variance pattern. Financial returns often show similar volatility clustering, with quiet periods followed by periods of larger movements.
 
 The two figures demonstrate why stationarity involves more than checking whether a plot has an obvious trend. Both the level and the variance structure matter.
@@ -141,7 +139,7 @@ $$
 
 At lag 1, the centered products are $0$, $0$, and $0$ for this ordering, so the lag-1 sample covariance is zero. This small example shows why a single zero covariance is weak evidence about the underlying process.
 
-For the sequence $(1,2,4,3)$, the centered values are $(-1.5,-0.5,1.5,0.5)$ and the lag-1 covariance using denominator $n$ is $0.1875$. The multiset of values can remain unchanged while the lag covariance changes, because temporal order matters.
+For the sequence $(1,2,4,3)$, the centered values are $(-1.5,-0.5,1.5,0.5)$ and the lag-1 covariance using denominator $n$ is $0.1875$. Reordering the same values as $(1,2,3,4)$ gives centered values $(-1.5,-0.5,0.5,1.5)$ and lag-1 covariance $1.25/4=0.3125$, so the marginal summaries are unchanged while the lag covariance differs, because temporal order matters.
 
 ### Cross-moments and dependence
 
