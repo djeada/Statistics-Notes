@@ -13,234 +13,232 @@ This series of quizzes covers essential topics in descriptive statistics, includ
 ## Measures of Central Tendency
 
 <details>
+<summary>What is the mean?</summary>
 
-<summary>What is the mean?</summary><br>
+The **mean** (arithmetic average) is the sum of all data values divided by the number of values. For a sample:
 
-The **mean** is the sum of all data values divided by the number of data points. It is the most commonly used measure of central tendency and represents the average of a dataset. The formula for the mean is:
+$$\bar{x} = \frac{\sum x_i}{n}$$
 
-$$\text{Mean} = \frac{\sum X_i}{n}$$
-
-where $X_i$ are the individual data points, and $n$ is the number of data points.
-
-</details>
-
-<details>
-
-<summary>What are some limitations of using the mean?</summary><br>
-
-The mean can be heavily influenced by outliers, or extremely high or low values, which can distort the representation of the central tendency. Additionally, the mean is not always appropriate for skewed data distributions, where the median may be a better measure.
+where $x_i$ are the data values and $n$ is the number of values. The population mean is written $\mu$ and uses all $N$ members of the population.
 
 </details>
 
 <details>
+<summary>What are some limitations of using the mean?</summary>
 
-<summary>What is the median?</summary><br>
-
-The **median** is the middle value of a dataset when the data is ordered from smallest to largest. If there is an even number of data points, the median is the average of the two middle values. Unlike the mean, the median is less affected by outliers and skewed data.
+The mean uses every value, so it is pulled strongly by outliers and by the long tail of a skewed distribution. For example, the data 2, 3, 3, 4, 48 have mean 12 but median 3. For skewed data such as incomes or house prices, the median usually describes a typical value better.
 
 </details>
 
 <details>
+<summary>What is the median?</summary>
 
-<summary>How do you calculate the mode?</summary><br>
-
-The **mode** is the value that appears most frequently in a dataset. A dataset can have no mode, one mode (unimodal), or multiple modes (bimodal, multimodal) if there are several values that occur with the same highest frequency.
+The **median** is the middle value of the data when sorted from smallest to largest. If there is an even number of values, it is the average of the two middle values. Because it depends only on the order of the data, the median is resistant to outliers and skew.
 
 </details>
 
----
+<details>
+<summary>How do you find the mode?</summary>
+
+The **mode** is the value that occurs most often in a dataset. A dataset can have no mode (all values equally frequent), one mode (unimodal), or several modes (bimodal, multimodal). The mode is the only measure of centre that also works for nominal categorical data.
+
+</details>
 
 ## Measures of Dispersion
 
 <details>
+<summary>What is the range?</summary>
 
-<summary>What is range?</summary><br>
-
-The **range** is the difference between the largest and smallest values in a dataset. It provides a simple measure of data dispersion, though it can be heavily influenced by outliers. The formula for the range is:
+The **range** is the difference between the largest and smallest values in a dataset:
 
 $$\text{Range} = \text{Max} - \text{Min}$$
 
-</details>
-
-<details>
-<summary>How do you calculate variance?</summary><br>
-**Variance** measures the average squared deviation of each data point from the mean. It quantifies how spread out the data points are. The formula for variance is:
-
-$$\text{Variance} (\sigma^2) = \frac{\sum (X_i - \mu)^2}{n}$$
-
-where $X_i$ are the data points, $\mu$ is the mean, and $n$ is the number of data points.
+It is simple to compute but depends only on the two most extreme values, so a single outlier can change it a lot.
 
 </details>
 
 <details>
-<summary>What is standard deviation?</summary><br>
-**Standard deviation** is the square root of the variance. It is a widely used measure of dispersion that provides insight into the average distance of data points from the mean. A smaller standard deviation indicates that data points are clustered close to the mean, while a larger standard deviation suggests greater spread.
+<summary>How do you calculate variance?</summary>
 
-The formula is:
+**Variance** measures the average squared deviation of the data from their mean. For a population of size $N$ with mean $\mu$:
 
-$$\text{Standard Deviation} (\sigma) = \sqrt{\frac{\sum (X_i - \mu)^2}{n}}$$
+$$\sigma^2 = \frac{\sum (x_i - \mu)^2}{N}$$
+
+For a sample of size $n$ with mean $\bar{x}$, divide by $n - 1$ so that the estimate of $\sigma^2$ is unbiased:
+
+$$s^2 = \frac{\sum (x_i - \bar{x})^2}{n - 1}$$
 
 </details>
 
 <details>
+<summary>What is standard deviation?</summary>
 
-<summary>Why is standard deviation preferred over variance?</summary><br>
+The **standard deviation** is the square root of the variance, so it measures the typical distance of the data from the mean in the original units. A small standard deviation means the values cluster near the mean, and a large one means they are more spread out.
 
-Standard deviation is often preferred over variance because it is in the same units as the original data, making it easier to interpret. Variance, on the other hand, is in squared units, which can make the measure less intuitive.
+$$s = \sqrt{\frac{\sum (x_i - \bar{x})^2}{n - 1}}$$
+
+The population version, $\sigma$, divides by $N$ and uses $\mu$.
 
 </details>
 
----
+<details>
+<summary>Why is standard deviation often reported instead of variance?</summary>
+
+The standard deviation is in the same units as the data, which makes it easier to interpret. For example, heights have an SD in cm but a variance in cm². The variance is still central in theory, because variances of independent variables add.
+
+</details>
 
 ## Data Distribution
 
 <details>
+<summary>What is a frequency distribution?</summary>
 
-<summary>What is a frequency distribution?</summary><br>
-
-A **frequency distribution** is a summary of how often different values or categories occur within a dataset. It can be visualized using tables or charts such as histograms, showing the frequency of each data point or category.
-
-</details>
-
-<details>
-
-<summary>What is a histogram?</summary><br>
-
-A **histogram** is a type of bar chart that represents the distribution of numerical data. The data is divided into intervals, or bins, and the height of each bar represents the frequency of data points within that bin. Histograms are useful for identifying the shape of data distributions.
+A **frequency distribution** lists how often each value, category or interval (bin) occurs in a dataset. It can also show relative frequencies (proportions) or cumulative frequencies, and it is usually displayed as a table, a bar chart (for categories) or a histogram (for numerical bins).
 
 </details>
 
 <details>
-<summary>What is skewness in a distribution?</summary><br>
-**Skewness** refers to the asymmetry in the distribution of data. A distribution is said to be:
-- **Positively skewed** (right-skewed) if the tail on the right side is longer, indicating that there are more high outliers.
-- **Negatively skewed** (left-skewed) if the tail on the left side is longer, indicating that there are more low outliers.
+<summary>What is a histogram?</summary>
 
-If the distribution is symmetrical, skewness is zero.
+A **histogram** displays the distribution of a numerical variable. The range of the data is divided into adjacent intervals (bins), and the height of each bar shows how many values fall in that bin, or, if the bins have unequal widths, their density. Histograms reveal the shape, centre, spread, skewness and modality of the data. The choice of bin width can change how the shape looks.
 
 </details>
 
 <details>
-<summary>What is kurtosis?</summary><br>
-**Kurtosis** measures the "tailedness" of a distribution, or the tendency of data points to cluster in the tails or near the mean. Distributions with high kurtosis have more data points in the tails (leptokurtic), while those with low kurtosis have fewer points in the tails (platykurtic). A normal distribution has a kurtosis of 3 (mesokurtic).
+<summary>What is skewness in a distribution?</summary>
+
+**Skewness** measures the asymmetry of a distribution:
+
+- **Positively skewed** (right-skewed): the right tail is longer, and the mean is typically greater than the median.
+- **Negatively skewed** (left-skewed): the left tail is longer, and the mean is typically less than the median.
+
+A symmetric distribution, such as the normal, has skewness zero.
 
 </details>
 
----
+<details>
+<summary>What is kurtosis?</summary>
+
+**Kurtosis** measures the tail weight of a distribution, that is, how prone it is to producing extreme values. It is defined as $E[(X-\mu)^4]/\sigma^4$. A normal distribution has kurtosis 3 (excess kurtosis 0) and is called mesokurtic.
+
+- **Leptokurtic** (excess kurtosis > 0): heavier tails and more outliers, as with financial returns.
+- **Platykurtic** (excess kurtosis < 0): lighter tails, as with the uniform distribution.
+
+</details>
 
 ## Percentiles and Quartiles
 
 <details>
+<summary>What is a percentile?</summary>
 
-<summary>What is a percentile?</summary><br>
-
-A **percentile** is a measure that indicates the value below which a given percentage of data points fall. For example, the 90th percentile is the value below which 90% of the data points lie. Percentiles are useful for comparing individual data points to the overall dataset.
-
-</details>
-
-<details>
-<summary>How do you calculate quartiles?</summary><br>
-**Quartiles** divide a dataset into four equal parts, each containing 25% of the data. The **first quartile (Q1)** is the 25th percentile, the **second quartile (Q2)** is the median or 50th percentile, and the **third quartile (Q3)** is the 75th percentile. Quartiles help in understanding the spread and distribution of data.
+The $p$-th **percentile** is a value at or below which about $p\%$ of the data fall. For example, a score at the 90th percentile is higher than about 90% of the scores. Percentiles show where an individual value stands relative to the rest of the data.
 
 </details>
 
 <details>
+<summary>What are quartiles?</summary>
 
-<summary>What is the interquartile range (IQR)?</summary><br>
+**Quartiles** split sorted data into four parts that each contain about 25% of the observations:
 
-The **interquartile range (IQR)** is the range between the first quartile (Q1) and the third quartile (Q3). It measures the spread of the middle 50% of the data and is a useful measure of dispersion that is not affected by outliers. The formula is:
+- $Q_1$ is the 25th percentile,
+- $Q_2$ is the median (50th percentile),
+- $Q_3$ is the 75th percentile.
 
-$$\text{IQR} = Q3 - Q1$$
+Software and textbooks use slightly different interpolation rules. The notes place the $P$-th percentile at position $1 + (n-1)P/100$ in the sorted data.
 
 </details>
 
----
+<details>
+<summary>What is the interquartile range (IQR)?</summary>
+
+The **interquartile range** is the spread of the middle 50% of the data:
+
+$$\text{IQR} = Q_3 - Q_1$$
+
+Because it ignores the lowest and highest 25% of values, it is resistant to outliers. It is the basis of the $1.5 \times \text{IQR}$ outlier rule used in box plots.
+
+</details>
 
 ## Z-scores
 
 <details>
+<summary>What is a Z-score?</summary>
 
-<summary>What is a Z-score?</summary><br>
-
-A **Z-score** represents how many standard deviations a data point is from the mean of a dataset. It is used to standardize data, allowing for comparisons across different datasets or variables with different units. The formula is:
+A **Z-score** tells you how many standard deviations a value lies from the mean:
 
 $$Z = \frac{X - \mu}{\sigma}$$
 
-where $X$ is the data point, $\mu$ is the mean, and $\sigma$ is the standard deviation.
+where $X$ is the value, $\mu$ is the mean and $\sigma$ is the standard deviation. For example, a score of 85 when the mean is 70 and the SD is 10 has $Z = 1.5$. Standardised values have mean 0 and SD 1.
 
 </details>
 
 <details>
+<summary>Why are Z-scores useful?</summary>
 
-<summary>Why are Z-scores useful?</summary><br>
-
-Z-scores are useful for standardizing data, which allows for comparison between data points from different distributions. For example, you can use Z-scores to compare exam scores across different subjects, even if the exams have different means and standard deviations.
+Z-scores put values on a common, unit-free scale, so you can compare observations from distributions with different means and standard deviations. For example, you can compare exam scores across subjects. If the data are approximately normal, Z-scores can also be converted into percentiles with the standard normal table.
 
 </details>
 
 <details>
+<summary>What does a positive or negative Z-score indicate?</summary>
 
-<summary>What does a positive or negative Z-score indicate?</summary><br>
-
-A **positive Z-score** indicates that the data point is above the mean, while a **negative Z-score** indicates that the data point is below the mean. A Z-score of 0 means that the data point is exactly at the mean.
+A **positive Z-score** means the value is above the mean, and a **negative Z-score** means it is below the mean. A Z-score of 0 means the value equals the mean. The magnitude gives the distance in standard deviations, so $Z = -2$ is two SDs below the mean.
 
 </details>
-
----
 
 ## Outliers
 
 <details>
+<summary>What is an outlier?</summary>
 
-<summary>What is an outlier?</summary><br>
-
-An **outlier** is a data point that differs significantly from the rest of the data. Outliers can be caused by measurement errors, variability in the data, or rare occurrences. They can have a significant impact on statistical measures such as the mean and variance.
-
-</details>
-
-<details>
-
-<summary>How do you identify outliers?</summary><br>
-Outliers can be identified using various methods:
-- **Z-score method**: Data points with Z-scores greater than 3 or less than -3 are often considered outliers.
-- **IQR method**: Data points that are below $Q1 - 1.5 \times \text{IQR}$ or above $Q3 + 1.5 \times \text{IQR}$ are considered outliers.
+An **outlier** is an observation that lies unusually far from the bulk of the data. Outliers can come from measurement or recording errors, from a different population, or from genuine rare events. They can strongly affect the mean, standard deviation, range and regression fits.
 
 </details>
 
 <details>
+<summary>How do you identify outliers?</summary>
 
-<summary>What is the impact
+Common rules of thumb are:
 
- of outliers on data analysis?</summary><br>
+- **IQR rule**: values below $Q_1 - 1.5 \times \text{IQR}$ or above $Q_3 + 1.5 \times \text{IQR}$ are flagged as potential outliers.
+- **Z-score rule**: values with $|Z| > 3$ are flagged, which works best for roughly normal data.
 
-Outliers can skew the results of data analysis by inflating or deflating measures like the mean and standard deviation. It is important to identify and address outliers, as they may represent errors or rare but significant data points.
+Plots such as box plots and scatter plots help too. A flagged point should be investigated, not automatically deleted.
 
 </details>
 
----
+<details>
+<summary>What is the impact of outliers on data analysis?</summary>
+
+Outliers can distort non-resistant statistics: they pull the mean towards themselves, inflate the standard deviation and range, and can change a regression line substantially. Resistant measures such as the median and IQR are much less affected. Investigate each outlier: correct genuine errors, but keep real extreme values and consider robust methods.
+
+</details>
 
 ## Graphical Summaries
 
 <details>
+<summary>What is a bar chart?</summary>
 
-<summary>What is a bar plot?</summary><br>
-
-A **bar plot** is a graphical representation of categorical data where the length of each bar corresponds to the frequency or count of each category. Bar plots are useful for comparing different categories or groups within a dataset.
-
-</details>
-
-<details>
-
-<summary>What is a box plot?</summary><br>
-
-A **box plot** (or box-and-whisker plot) is a graphical summary that shows the distribution of a dataset based on five summary statistics: minimum, first quartile (Q1), median, third quartile (Q3), and maximum. The "whiskers" extend to the smallest and largest values, and any points outside this range may be considered outliers.
+A **bar chart** displays categorical data. Each category gets a separate bar whose length shows its count or proportion. The bars are separated by gaps, and the order of the categories can be changed without losing information. Bar charts are useful for comparing groups.
 
 </details>
 
 <details>
+<summary>What is a box plot?</summary>
 
-<summary>What is the purpose of using a histogram?</summary><br>
+A **box plot** (box-and-whisker plot) summarises a numerical distribution:
 
-A **histogram** helps visualize the distribution of numerical data by showing the frequency of data points within predefined intervals or bins. It provides insight into the shape, center, and spread of the data, as well as whether the data is skewed or symmetric.
+- the box runs from $Q_1$ to $Q_3$, with a line at the median,
+- the whiskers extend to the most extreme observations within $1.5 \times \text{IQR}$ of the quartiles,
+- points beyond the whiskers are plotted individually as potential outliers.
+
+Box plots make it easy to compare the centre, spread and skew of several groups side by side.
+
+</details>
+
+<details>
+<summary>How does a histogram differ from a bar chart?</summary>
+
+A **histogram** shows the distribution of a numerical variable. Its bars cover adjacent intervals of the number line, so they touch, and the bin order is fixed. A **bar chart** shows counts for categories. Its bars are separate and can be reordered. In a histogram the area of a bar represents frequency, so the bin width matters.
 
 </details>

@@ -1,139 +1,230 @@
-#### Q. Which of the following is true for a **uniform distribution**?
+# Probability Distributions Quiz
 
-* [x] Every outcome has an equal probability
-* [ ] Some outcomes are more likely than others
-* [ ] It can only be applied to discrete variables
-* [ ] It is skewed to the right
+Notes: [Introduction to Distributions](../notes/random_variables_and_distributions/introduction_to_distributions.md), [Binomial](../notes/random_variables_and_distributions/discrete/binomial_distribution.md), [Poisson](../notes/random_variables_and_distributions/discrete/poisson_distribution.md), [Geometric](../notes/random_variables_and_distributions/discrete/geometric_distribution.md), [Negative Binomial](../notes/random_variables_and_distributions/discrete/negative_binomial_distribution.md), [Uniform](../notes/random_variables_and_distributions/continuous/uniform_distribution.md), [Normal](../notes/random_variables_and_distributions/continuous/normal_distribution.md), [Exponential](../notes/random_variables_and_distributions/continuous/exponential_distribution.md), [Log-Normal](../notes/random_variables_and_distributions/continuous/log_normal_distribution.md), [Beta](../notes/random_variables_and_distributions/continuous/beta_distribution.md), [Normal Curve and Z-Scores](../notes/random_variables_and_distributions/normal_curve_and_z_score.md), [Central Limit Theorem](../notes/sampling_and_sampling_distributions/central_limit_theorem.md)
 
-#### Q. If the price of a stock is following a **log-normal distribution**, what can we infer?
+Check your understanding of common discrete and continuous distributions, their parameters and when to use them.
 
-* [x] Stock prices cannot go below zero
-* [ ] Stock prices are normally distributed
-* [ ] Stock prices are symmetric around the mean
-* [ ] Stock returns follow a uniform distribution
+#### Q. Which statement describes a **continuous uniform distribution** on the interval $[a, b]$?
 
-#### Q. Which of the following is true for a **Poisson distribution**?
+* [x] Its density is constant on $[a, b]$, so equal-length subintervals are equally likely
+* [ ] Its density peaks at the midpoint $(a+b)/2$ and falls towards the ends
+* [ ] It can only describe variables that take a finite number of values
+* [ ] It is skewed to the right, with a long tail towards $b$
 
-* [x] The mean is always equal to the variance
-* [ ] It only applies to continuous random variables
-* [ ] It assumes that the trials are dependent
-* [ ] The events occur in non-overlapping intervals of time
+> **Explanation:** The uniform density is $1/(b-a)$ everywhere on $[a, b]$, so the probability of a subinterval depends only on its length. It is symmetric, with mean $(a+b)/2$.
 
-#### Q. Which of the following is a property of the **exponential distribution**?
+#### Q. If X follows a **log-normal distribution**, which statement is true?
 
-* [x] It models continuous random variables with constant failure rates
-* [ ] It models categorical variables
-* [ ] It is symmetric
-* [ ] It has two peaks
+* [x] $\ln X$ is normally distributed and X takes only positive values
+* [ ] X is symmetric, so its mean equals its median
+* [ ] X can take negative values in its left tail
+* [ ] $e^X$ is normally distributed and X is bounded above
 
-#### Q. Which of the following distributions is appropriate for modeling the number of events in a fixed interval of time or space?
+> **Explanation:** By definition $X = e^Y$ with $Y$ normal, so $X > 0$. The distribution is right-skewed, so its mean exceeds its median. This is why it is used for prices and incomes.
+
+#### Q. Which property holds for a **Poisson distribution** with parameter $\lambda$?
+
+* [x] Its mean and its variance both equal $\lambda$
+* [ ] Its variance equals $\lambda^2$
+* [ ] It applies to continuous random variables
+* [ ] It counts successes in a fixed number of trials
+
+> **Explanation:** For $X \sim \text{Poisson}(\lambda)$, $E[X] = \text{Var}(X) = \lambda$. Counting successes in a fixed number of trials describes the binomial distribution.
+
+#### Q. Which property characterises the **exponential distribution**?
+
+* [x] It has a constant hazard rate, so it is memoryless
+* [ ] It is symmetric about its mean $1/\lambda$
+* [ ] It is defined for negative as well as positive values
+* [ ] Its variance equals its mean $1/\lambda$
+
+> **Explanation:** The exponential distribution satisfies $P(T > s + t \mid T > s) = P(T > t)$ because its failure rate $\lambda$ is constant. Its variance is $1/\lambda^2$, not $1/\lambda$.
+
+#### Q. A help desk receives calls independently at an average rate of 4 per hour. Which distribution best models the **number of calls in one hour**?
 
 * [ ] Normal distribution
 * [x] Poisson distribution
 * [ ] Exponential distribution
-* [ ] Binomial distribution
+* [ ] Geometric distribution
 
-#### Q. In a **binomial distribution**, if we increase the number of trials, what happens to the shape of the distribution?
+> **Explanation:** Counts of independent events occurring at a constant average rate in a fixed interval follow a Poisson distribution, here with $\lambda = 4$. The exponential would model the waiting time between calls.
 
-* [ ] Becomes more skewed
-* [x] Approaches a normal distribution
-* [ ] Becomes more discrete
-* [ ] Becomes less symmetrical
+#### Q. For $X \sim \text{Binomial}(n, p)$ with fixed $0 < p < 1$, what happens to the shape of the distribution as **n grows large**?
 
-#### Q. In a normally distributed dataset, what percentage of data falls within one standard deviation of the mean?
+* [ ] It becomes more and more skewed
+* [x] It becomes approximately normal
+* [ ] It becomes approximately uniform
+* [ ] It becomes approximately exponential
+
+> **Explanation:** A binomial count is a sum of $n$ independent Bernoulli trials, so by the central limit theorem it approaches $N(np, np(1-p))$. A common rule of thumb is $np \ge 10$ and $n(1-p) \ge 10$.
+
+#### Q. For a normal distribution, approximately what percentage of values lie **within one standard deviation** of the mean?
 
 * [ ] 50%
 * [x] 68%
 * [ ] 95%
-* [ ] 99%
+* [ ] 99.7%
 
-#### Q. What is the relationship between the **mean and the median** in a left-skewed distribution?
+> **Explanation:** The empirical rule gives about 68% within $\pm 1\sigma$, 95% within $\pm 2\sigma$ and 99.7% within $\pm 3\sigma$.
 
-* [ ] The mean is greater than the median
-* [x] The mean is less than the median
-* [ ] The mean is equal to the median
-* [ ] The mean is unaffected by the skewness
+#### Q. If $X \sim \text{Binomial}(10, 0.3)$, what are its **mean and variance**?
+
+* [x] Mean 3, variance 2.1
+* [ ] Mean 3, variance 3
+* [ ] Mean 3, variance 0.21
+* [ ] Mean 0.3, variance 2.1
+
+> **Explanation:** For a binomial, $E[X] = np = 10 \times 0.3 = 3$ and $\text{Var}(X) = np(1-p) = 10 \times 0.3 \times 0.7 = 2.1$.
 
 #### Q. What does the **Central Limit Theorem (CLT)** state?
 
-* [ ] Any sample will have a normal distribution
-* [x] The sample mean will approximate a normal distribution as the sample size increases
-* [ ] The population mean is always normally distributed
-* [ ] Larger samples have more skewed distributions
+* [ ] Any sufficiently large sample of raw data is normally distributed
+* [x] The sampling distribution of the sample mean approaches normal as n grows
+* [ ] The population mean of any variable is normally distributed
+* [ ] Larger samples have sampling distributions that are more skewed
 
-#### Q. What is the **variance** of a standard normal distribution?
+> **Explanation:** For i.i.d. observations with finite variance $\sigma^2$, $\bar{X}$ is approximately $N(\mu, \sigma^2/n)$ for large $n$, whatever the population shape. The raw data themselves keep the population's shape.
 
-* [ ] 0
-* [x] 1
-* [ ] 2
-* [ ] 0.5
+#### Q. Exam scores are normally distributed with mean 70 and standard deviation 10. Approximately what fraction of students score **above 90**?
 
-#### Q. The **binomial distribution** can be used to model:
+* [x] About 2.3%
+* [ ] About 5%
+* [ ] About 16%
+* [ ] About 0.15%
 
-* [ ] The time between two events
-* [x] The number of successes in a fixed number of trials
-* [ ] The rate at which events occur
-* [ ] The average value of a dataset
+> **Explanation:** $z = (90 - 70)/10 = 2$ and $P(Z > 2) \approx 0.0228$. About 5% lie beyond $\pm 2\sigma$ in total, so only half of that is in the upper tail.
 
-#### Q. Which of the following is a **continuous distribution**?
+#### Q. The **binomial distribution** models:
+
+* [ ] The waiting time until the next event in a Poisson process
+* [x] The number of successes in a fixed number of independent trials
+* [ ] The number of events in an interval with no fixed upper limit
+* [ ] The number of trials needed to obtain the first success
+
+> **Explanation:** A binomial count needs a fixed $n$, independent trials and a constant success probability $p$. The number of trials until the first success is geometric.
+
+#### Q. Which of the following is a **continuous** distribution?
 
 * [ ] Poisson distribution
 * [ ] Binomial distribution
 * [x] Normal distribution
 * [ ] Geometric distribution
 
-#### Q. The **cumulative distribution function (CDF)** of a random variable gives:
+> **Explanation:** The normal distribution has a density over the whole real line. Poisson, binomial and geometric variables take only integer values.
 
-* [ ] The probability of all outcomes
-* [x] The probability that a random variable takes a value less than or equal to a certain value
-* [ ] The sum of the probabilities of all possible values
-* [ ] The mean of the distribution
+#### Q. The **cumulative distribution function (CDF)** $F(x)$ of a random variable X gives:
 
-#### Q. Which of the following is true for a **normal distribution**?
+* [ ] $P(X = x)$, the probability of exactly the value x
+* [x] $P(X \le x)$, the probability of a value at most x
+* [ ] $P(X > x)$, the probability of a value above x
+* [ ] $f(x)$, the height of the density at x
+
+> **Explanation:** By definition $F(x) = P(X \le x)$. The survival function is $1 - F(x) = P(X > x)$, and for a continuous variable the density is the derivative of $F$.
+
+#### Q. Which statement is true for every **normal distribution**?
 
 * [ ] It is skewed to the right
-* [x] It is bell-shaped and symmetric
-* [ ] It can model the number of events in an interval
-* [ ] It is only applicable to categorical data
+* [x] It is bell-shaped and symmetric about its mean
+* [ ] It is used to model counts of events in an interval
+* [ ] It is restricted to non-negative values
 
-#### Q. Which of the following distributions is appropriate for modeling the **time between independent events**?
+> **Explanation:** A normal density is symmetric about $\mu$, so its mean, median and mode coincide and its skewness is zero. It is defined on the whole real line.
+
+#### Q. A help desk receives calls independently at an average rate of 4 per hour. Which distribution models the **waiting time until the next call**?
 
 * [ ] Normal distribution
 * [ ] Binomial distribution
 * [x] Exponential distribution
 * [ ] Poisson distribution
 
-#### Q. What is the **skewness** of a normal distribution?
+> **Explanation:** In a Poisson process the time between events is exponential with rate $\lambda = 4$ per hour, so the mean wait is $1/4$ hour. The Poisson distribution models the count, not the time.
 
-* [ ] Positive
-* [ ] Negative
-* [x] Zero
-* [ ] Undefined
+#### Q. If $X \sim \text{Poisson}(2)$, what is $P(X = 0)$?
 
-#### Q. For a **Poisson distribution**, as the rate parameter (λ) increases, the distribution becomes:
+* [x] About 0.135
+* [ ] About 0.271
+* [ ] About 0.500
+* [ ] About 0.018
 
-* [ ] More skewed
-* [x] More symmetric
-* [ ] More discrete
-* [ ] Unaffected
+> **Explanation:** $P(X = k) = e^{-\lambda}\lambda^k/k!$, so $P(X = 0) = e^{-2} \approx 0.135$. The value 0.271 is $P(X = 1) = 2e^{-2}$.
 
-#### Q. In a **geometric distribution**, what does the random variable represent?
+#### Q. For a **Poisson distribution**, as the rate parameter $\lambda$ increases, the distribution becomes:
+
+* [ ] More right-skewed
+* [x] More symmetric and bell-shaped
+* [ ] Concentrated at zero
+* [ ] Narrower, with smaller variance
+
+> **Explanation:** The skewness of a Poisson distribution is $1/\sqrt{\lambda}$, which shrinks as $\lambda$ grows, so it approaches a normal shape. Its variance $\lambda$ grows, so it gets wider.
+
+#### Q. In the notes' convention, what does a **geometric** random variable count?
 
 * [ ] The number of successes in a fixed number of trials
-* [ ] The time between two events
-* [x] The number of trials until the first success
-* [ ] The probability of a specific event
+* [ ] The waiting time between events in continuous time
+* [x] The number of trials up to and including the first success
+* [ ] The number of trials needed to obtain r successes
 
-#### Q. Which of the following is true about the **variance of a binomial distribution**?
+> **Explanation:** The notes define $X \sim \text{Geometric}(p)$ on $\{1, 2, 3, \dots\}$ as the trial on which the first success occurs. Waiting for $r$ successes gives the negative binomial.
 
-* [ ] It is always equal to the number of trials
-* [x] It depends on both the number of trials and the probability of success
-* [ ] It is independent of the probability of success
+#### Q. Each trial succeeds independently with probability 0.2. What is the probability that the **first success occurs on the third trial**?
+
+* [ ] 0.008
+* [x] 0.128
+* [ ] 0.488
+* [ ] 0.200
+
+> **Explanation:** The first two trials must fail and the third succeed: $P(X = 3) = (1-p)^2 p = 0.8^2 \times 0.2 = 0.128$.
+
+#### Q. Which statement about the **variance of a binomial distribution** is true?
+
+* [ ] It always equals the number of trials n
+* [x] It depends on both n and p, through $np(1-p)$
+* [ ] It does not depend on the success probability p
 * [ ] It is always less than 1
 
-#### Q. A **Bernoulli distribution** can only take which two values?
+> **Explanation:** $\text{Var}(X) = np(1-p)$, which for fixed $n$ is largest at $p = 0.5$. For example, $n = 100, p = 0.5$ gives variance 25.
 
-* [ ] -1 and 1
+#### Q. A fair coin is tossed 5 times. What is the probability of getting **exactly 2 heads**?
+
+* [ ] 0.2000
+* [ ] 0.4000
+* [x] 0.3125
+* [ ] 0.0625
+
+> **Explanation:** $P(X = 2) = \binom{5}{2}(0.5)^2(0.5)^3 = 10/32 = 0.3125$.
+
+#### Q. A **Bernoulli** random variable can take which two values?
+
+* [ ] −1 and 1
 * [x] 0 and 1
 * [ ] 0 and any positive integer
-* [ ] Any real number
+* [ ] Any two real numbers
+
+> **Explanation:** A Bernoulli variable records a single trial as 1 for success (probability $p$) and 0 for failure, so its mean is $p$ and its variance is $p(1-p)$.
+
+#### Q. Which distribution counts the **number of trials needed to obtain r successes** in independent Bernoulli trials?
+
+* [ ] Geometric distribution
+* [x] Negative binomial distribution
+* [ ] Binomial distribution
+* [ ] Poisson distribution
+
+> **Explanation:** The negative binomial generalises the geometric (which is the case $r = 1$). The binomial does the opposite: it fixes the number of trials and counts the successes.
+
+#### Q. You want to model a **proportion** that varies between batches, such as the fraction of defective items, which must lie between 0 and 1. Which family is the natural choice?
+
+* [ ] Normal distribution
+* [ ] Exponential distribution
+* [x] Beta distribution
+* [ ] Log-normal distribution
+
+> **Explanation:** The beta distribution is defined on $[0, 1]$ and its two shape parameters can make it flat, skewed or peaked. The other families give positive probability to values above 1.
+
+#### Q. If waiting times are exponential with rate $\lambda = 0.5$ per minute, what is the probability of waiting **more than 3 minutes**?
+
+* [x] About 0.22
+* [ ] About 0.78
+* [ ] About 0.50
+* [ ] About 0.05
+
+> **Explanation:** For an exponential variable $P(T > t) = e^{-\lambda t} = e^{-0.5 \times 3} = e^{-1.5} \approx 0.223$. The value 0.78 is $P(T \le 3)$.

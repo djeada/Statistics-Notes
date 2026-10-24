@@ -14,236 +14,253 @@ This series of quizzes covers essential topics in time series analysis, includin
 ## Time Series Components
 
 <details>
+<summary>What are the main components of a time series?</summary>
 
-<summary>What are the main components of a time series?</summary><br>
-A time series can be decomposed into three main components:
-1. **Trend**: The long-term direction of the series (upward, downward, or flat).
-2. **Seasonality**: Regular, repeating patterns that occur over specific intervals (e.g., quarterly sales increases).
-3. **Residual (Noise)**: Random fluctuations that are not explained by trend or seasonality.
+A time series is commonly decomposed into three components:
 
-</details>
+1. **Trend (or trend-cycle)**: the long-term movement of the level (upward, downward or flat), sometimes including slower non-periodic cycles.
+2. **Seasonality**: patterns that repeat with a fixed, known period, such as every 12 months or every 7 days.
+3. **Remainder (noise)**: irregular fluctuations not explained by the trend or seasonality.
 
-<details>
-
-<summary>What is an example of seasonality in time series data?</summary><br>
-
-An example of seasonality would be retail sales that peak every December due to holiday shopping. This repeating annual pattern in sales data is a typical seasonal component.
+They can combine additively ($y_t = T_t + S_t + R_t$) or multiplicatively ($y_t = T_t \times S_t \times R_t$).
 
 </details>
 
 <details>
+<summary>What is an example of seasonality in time series data?</summary>
 
-<summary>How can a trend affect a time series?</summary><br>
-
-A **trend** represents the long-term movement in the data over time. It can be upward (increasing values), downward (decreasing values), or stationary (no consistent change). For example, a rising trend in stock prices over several years indicates an overall upward movement despite short-term fluctuations.
+Retail sales that peak every December because of holiday shopping are a classic example. The pattern repeats every 12 months, so the seasonal period is $m = 12$ for monthly data. Other examples are higher electricity demand every summer afternoon and weekly cycles in website traffic.
 
 </details>
 
----
+<details>
+<summary>How can a trend affect a time series?</summary>
+
+A **trend** is a persistent long-term change in the level of the series. It can be upward, downward, or absent (a flat level). Because a trend makes the mean change over time, the series is non-stationary. The trend usually has to be removed, by differencing or detrending, or modelled explicitly before fitting a stationary model such as ARMA.
+
+</details>
 
 ## Stationarity
 
 <details>
+<summary>What is a stationary time series?</summary>
 
-<summary>What is a stationary time series?</summary><br>
-
-A **stationary time series** is one where the statistical properties (mean, variance, and autocorrelation) are constant over time. A stationary series does not exhibit trends or seasonality and is essential for many time series models, including ARIMA.
-
-</details>
-
-<details>
-
-<summary>How do you test for stationarity?</summary><br>
-
-The **Augmented Dickey-Fuller (ADF) test** is commonly used to test for stationarity. If the p-value of the test is less than a chosen significance level (e.g., 0.05), the null hypothesis (that the series is non-stationary) can be rejected, indicating that the series is stationary.
+A (weakly) **stationary** time series has a constant mean, a constant variance, and an autocovariance $\text{Cov}(X_t, X_{t+h})$ that depends only on the lag $h$, not on time $t$. Series with trends, seasonality or unit roots are not stationary. ARMA models assume stationarity, while ARIMA handles some non-stationarity by differencing first.
 
 </details>
 
 <details>
+<summary>How do you test for stationarity?</summary>
 
-<summary>How do you make a time series stationary?</summary><br>
-To make a time series stationary, you can:
-1. **Differencing**: Subtracting each observation from the previous one to remove trends.
-2. **De-trending**: Removing the trend component.
-3. **Log transformation**: Reducing variance by applying a logarithmic transformation to the data.
-4. **Seasonal differencing**: Subtracting observations from the corresponding value in the previous season to remove seasonality.
+- The **augmented Dickey–Fuller (ADF) test** has the null hypothesis of a unit root (non-stationarity). A p-value below $\alpha$ (e.g. 0.05) rejects it, which is evidence of stationarity.
+- The **KPSS test** reverses the roles: its null hypothesis is stationarity.
+
+Using both tests together, along with time plots and the ACF, gives a more reliable picture than either test alone.
 
 </details>
 
----
+<details>
+<summary>How do you make a time series stationary?</summary>
+
+Common ways to make a time series stationary are:
+
+1. **Differencing**: replace $y_t$ with $y_t - y_{t-1}$ to remove a stochastic trend or unit root.
+2. **Detrending**: subtract a fitted deterministic trend.
+3. **Log or Box–Cox transformation**: stabilise a variance that grows with the level of the series.
+4. **Seasonal differencing**: replace $y_t$ with $y_t - y_{t-m}$ to remove a stable seasonal pattern of period $m$.
+
+</details>
 
 ## Autocorrelation and Partial Autocorrelation
 
 <details>
-<summary>What is autocorrelation?</summary><br>
-**Autocorrelation** is the correlation of a time series with a lagged version of itself. It measures how current values of the series relate to past values. Positive autocorrelation indicates that high values tend to follow high values, and negative autocorrelation indicates that high values follow low values.
+<summary>What is autocorrelation?</summary>
+
+**Autocorrelation** is the correlation between a time series and a lagged copy of itself:
+
+$$\rho(h) = \frac{\gamma(h)}{\gamma(0)}$$
+
+where $\gamma(h)$ is the autocovariance at lag $h$. Positive autocorrelation means high values tend to follow high values. Negative autocorrelation means high values tend to follow low values, and vice versa.
 
 </details>
 
 <details>
+<summary>What is a partial autocorrelation function (PACF)?</summary>
 
-<summary>What is a partial autocorrelation function (PACF)?</summary><br>
-
-The **partial autocorrelation function (PACF)** measures the correlation between the current time series value and its lagged values, controlling for the values of the time series at shorter lags. PACF helps identify the number of autoregressive (AR) terms needed in an ARIMA model.
+The **partial autocorrelation** at lag $k$ is the correlation between $X_t$ and $X_{t-k}$ after removing the linear effect of the intermediate values $X_{t-1}, \dots, X_{t-k+1}$. For an AR(p) process the PACF cuts off after lag $p$, so it helps choose the number of autoregressive terms.
 
 </details>
 
 <details>
-<summary>What are ACF and PACF plots used for?</summary><br>
-**ACF (Autocorrelation Function) plots** show how the correlation between time series values decreases as the lag increases, while **PACF plots** show the partial correlation at each lag, adjusting for earlier lags. These plots are used to identify the appropriate parameters for ARIMA models.
+<summary>What are ACF and PACF plots used for?</summary>
+
+**ACF plots** show the sample autocorrelation at each lag, and **PACF plots** show the partial autocorrelation at each lag, usually with approximate significance bounds $\pm 1.96/\sqrt{n}$. They help identify ARMA orders:
+
+- **AR(p)**: the ACF tails off and the PACF cuts off after lag $p$.
+- **MA(q)**: the ACF cuts off after lag $q$ and the PACF tails off.
+- **ARMA**: both tail off.
+
+They are also used to check that residuals look like white noise.
 
 </details>
-
----
 
 ## Moving Averages
 
 <details>
+<summary>What is a simple moving average?</summary>
 
-<summary>What is a simple moving average?</summary><br>
-
-A **simple moving average (SMA)** is the unweighted mean of a fixed number of past observations. It smooths out fluctuations in a time series by averaging over a sliding window of previous values, making it easier to identify trends.
-
-The formula is:
+A **simple moving average (SMA)** is the unweighted mean of the most recent $n$ observations. Sliding it along the series smooths short-term fluctuations, which makes trends easier to see:
 
 $$\text{SMA}_t = \frac{1}{n} \sum_{i=t-n+1}^{t} X_i$$
 
-where $n$ is the window size.
+where $n$ is the window size. This smoothing tool is different from an MA(q) model, which is built from past innovations.
 
 </details>
 
 <details>
+<summary>What is an exponential moving average (EMA)?</summary>
 
-<summary>What is an exponential moving average (EMA)?</summary><br>
+An **exponential moving average** weights recent observations more heavily than older ones, so it reacts faster to changes than an SMA. It is computed recursively with a smoothing factor $0 < \alpha \le 1$:
 
-An **exponential moving average (EMA)** gives more weight to recent observations compared to older ones, making it more responsive to changes in the time series. The EMA is calculated recursively, using a smoothing factor that controls how much weight is given to recent data points.
+$$\text{EMA}_t = \alpha X_t + (1 - \alpha)\,\text{EMA}_{t-1}$$
+
+The weight on $X_{t-j}$ is $\alpha(1 - \alpha)^j$, so it decays exponentially with age.
 
 </details>
 
 <details>
-<summary>How are moving averages used in time series forecasting?</summary><br>
-**Moving averages** smooth out short-term fluctuations in time series data, making it easier to identify underlying trends and seasonality. In forecasting, they are often used to estimate future values by extrapolating current trends or to remove noise from the data.
+<summary>How are moving averages used in time series forecasting?</summary>
+
+**Moving averages** are used mainly to smooth noise so the trend and seasonality are easier to see. They are also used to estimate the trend in classical decomposition, for example with a centred 12-month moving average. As a simple forecast, the latest moving average can be used as the next value, which works only for series without a strong trend or seasonality.
 
 </details>
-
----
 
 ## ARIMA Models
 
 <details>
-<summary>What does ARIMA stand for?</summary><br>
+<summary>What does ARIMA stand for?</summary>
+
 **ARIMA** stands for **AutoRegressive Integrated Moving Average**:
-1. **AR (AutoRegressive)**: Uses past values (lags) to predict future values.
-2. **I (Integrated)**: Involves differencing the data to make it stationary.
-3. **MA (Moving Average)**: Uses past forecast errors to improve predictions.
 
-ARIMA models are commonly used for time series forecasting when the data shows no strong seasonal component.
+1. **AR (autoregressive)**: the current value depends linearly on past values.
+2. **I (integrated)**: the series is differenced to make it stationary.
+3. **MA (moving average)**: the current value depends on past forecast errors (innovations).
 
-</details>
-
-<details>
-
-<summary>What are the parameters of an ARIMA model?</summary><br>
-An ARIMA model is defined by three parameters:
-1. **p**: The number of autoregressive (AR) terms.
-2. **d**: The number of differences needed to make the series stationary.
-3. **q**: The number of moving average (MA) terms.
-
-The notation ARIMA(p, d, q) specifies how many terms are included for each component.
+Plain ARIMA is used for non-seasonal series. SARIMA adds seasonal terms.
 
 </details>
 
 <details>
-<summary>What is the difference between ARIMA and SARIMA?</summary><br>
-**SARIMA (Seasonal ARIMA)** extends ARIMA by incorporating seasonality into the model. SARIMA includes additional parameters for seasonal autoregressive, seasonal differencing, and seasonal moving average components, denoted by (P, D, Q, m), where $m$ is the length of the seasonal cycle. The full SARIMA model is expressed as ARIMA(p, d, q)(P, D, Q)_m.
+<summary>What are the parameters of an ARIMA model?</summary>
+
+An ARIMA(p, d, q) model has three orders:
+
+1. **p**: the number of autoregressive (AR) terms.
+2. **d**: the number of differences needed to make the series stationary.
+3. **q**: the number of moving-average (MA) terms.
+
+In backshift notation the model is $\phi(B)(1 - B)^d X_t = c + \theta(B)\varepsilon_t$.
 
 </details>
 
----
+<details>
+<summary>What is the difference between ARIMA and SARIMA?</summary>
+
+**SARIMA (seasonal ARIMA)** extends ARIMA with seasonal autoregressive, seasonal differencing and seasonal moving-average terms of orders (P, D, Q). These act at multiples of the seasonal period $m$. The model is written ARIMA(p, d, q)(P, D, Q)$_m$, for example ARIMA(1,1,1)(1,1,1)$_{12}$ for monthly data with yearly seasonality.
+
+</details>
 
 ## Seasonal Decomposition
 
 <details>
-<summary>What is seasonal decomposition of time series?</summary><br>
-**Seasonal decomposition** breaks down a time series into its main components: **trend**, **seasonality**, and **residuals** (random fluctuations). Methods like **STL (Seasonal-Trend Decomposition using Loess)** are commonly used to separate these components, making it easier to understand and model the series.
+<summary>What is seasonal decomposition of time series?</summary>
+
+**Seasonal decomposition** splits a series into **trend**, **seasonal** and **remainder** components. Classical decomposition estimates the trend with a centred moving average and averages the detrended values by season. **STL** (Seasonal-Trend decomposition using Loess) uses local regression, which lets the seasonal pattern change slowly over time and is more robust to outliers.
 
 </details>
 
 <details>
+<summary>Why is it important to decompose a time series?</summary>
 
-<summary>Why is it important to decompose a time series?</summary><br>
-
-Decomposing a time series allows you to better understand its structure by separating the trend, seasonal, and noise components. This is useful for improving forecasts and identifying underlying patterns, especially when the series has complex seasonal effects.
+Decomposition shows the structure of a series: how strong the trend and seasonality are, and what the remainder looks like. It supports seasonal adjustment (removing $S_t$ to compare periods), helps choose a forecasting model, and makes unusual observations easier to spot in the remainder.
 
 </details>
-
----
 
 ## Forecasting
 
 <details>
-<summary>What is time series forecasting?</summary><br>
-**Time series forecasting** involves predicting future values based on historical time series data. Techniques like **ARIMA**, **SARIMA**, **Exponential Smoothing**, and **Prophet** are commonly used to generate forecasts by modeling the trend, seasonality, and noise in the data.
+<summary>What is time series forecasting?</summary>
+
+**Time series forecasting** predicts future values from past observations of the series and, optionally, related variables. Common methods include simple benchmarks (naive, seasonal naive, drift), exponential smoothing, ARIMA and SARIMA, regression with ARMA errors, and machine-learning models. Good forecasts include prediction intervals, not just point forecasts.
 
 </details>
 
 <details>
-<summary>What is exponential smoothing?</summary><br>
-**Exponential smoothing** is a time series forecasting method that assigns exponentially decreasing weights to past observations. The most common forms are:
-1. **Simple Exponential Smoothing (SES)**: For series with no trend or seasonality.
-2. **Holt’s Linear Trend Model**: For series with a trend but no seasonality.
-3. **Holt-Winters Exponential Smoothing**: For series with both trend and seasonality.
+<summary>What is exponential smoothing?</summary>
+
+**Exponential smoothing** forecasts with weighted averages of past observations, with weights that decrease exponentially with age. The main forms are:
+
+1. **Simple exponential smoothing (SES)**: for series with no trend or seasonality.
+2. **Holt's linear trend method**: adds a trend component.
+3. **Holt–Winters method**: adds both trend and seasonal components, in additive or multiplicative form.
 
 </details>
 
 <details>
-<summary>When should you use ARIMA vs Exponential Smoothing for forecasting?</summary><br>
-- **ARIMA** is preferred for non-seasonal data that requires differencing to achieve stationarity and for data with autocorrelated residuals.
-- **Exponential Smoothing** (especially Holt-Winters) is more suited to data with a clear trend and seasonal components that are not autocorrelated.
+<summary>When should you use ARIMA vs exponential smoothing for forecasting?</summary>
 
-The choice depends on the characteristics of the time series and the goal of the forecasting.
+- **Exponential smoothing (ETS)** describes the level, trend and seasonality explicitly, so it suits series where these components are clear.
+- **ARIMA** describes the autocorrelation structure after differencing, so it suits series with rich short-term dependence and can include covariates through regression with ARMA errors.
+
+Linear exponential smoothing models are special cases of ARIMA. In practice, compare candidates on out-of-sample forecast accuracy.
 
 </details>
-
----
 
 ## Evaluation Metrics
 
 <details>
-<summary>What is Mean Absolute Error (MAE)?</summary><br>
-**Mean Absolute Error (MAE)** is the average of the absolute differences between forecasted and actual values. It gives a linear measure of the magnitude of the errors, without considering their direction. The formula is:
+<summary>What is Mean Absolute Error (MAE)?</summary>
+
+**Mean absolute error** is the average absolute difference between actual and forecast values:
 
 $$\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} | y_i - \hat{y}_i |$$
 
-where $y_i$ are the actual values and $\hat{y}_i$ are the forecasted values.
+where $y_i$ are the actual values and $\hat{y}_i$ the forecasts. It is in the units of the data, ignores the direction of errors, and weights all errors equally.
 
 </details>
 
 <details>
-<summary>What is Root Mean Squared Error (RMSE)?</summary><br>
-**Root Mean Squared Error (RMSE)** is the square root of the average squared differences between forecasted and actual values. RMSE gives more weight to larger errors, making it sensitive to outliers. The formula is:
+<summary>What is Root Mean Squared Error (RMSE)?</summary>
+
+**Root mean squared error** is the square root of the average squared forecast error:
 
 $$\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}$$
 
+Squaring gives large errors more weight, so RMSE is more sensitive to occasional big misses and outliers than MAE. RMSE is always at least as large as MAE.
+
 </details>
 
 <details>
-<summary>What is Mean Absolute Percentage Error (MAPE)?</summary><br>
-**Mean Absolute Percentage Error (MAPE)** expresses the accuracy of a forecast as a percentage, by taking the absolute difference between actual and forecasted values relative to the actual values. The formula is:
+<summary>What is Mean Absolute Percentage Error (MAPE)?</summary>
+
+**Mean absolute percentage error** expresses forecast errors as percentages of the actual values:
 
 $$\text{MAPE} = \frac{100}{n} \sum_{i=1}^{n} \left| \frac{y_i - \hat{y}_i}{y_i} \right|$$
 
-MAPE is useful when comparing forecasting errors across different time series.
+Because it is scale-free, it can compare accuracy across series. However, it is undefined when an actual value is zero and unstable near zero, and it is asymmetric. Scaled measures such as MASE avoid these problems.
 
 </details>
 
 <details>
+<summary>How do you choose the best model for time series forecasting?</summary>
 
-<summary>How do you choose the best model for time series forecasting?</summary><br>
-The best model for time series forecasting is chosen based on several criteria, including:
-1. **Low forecasting error**: Measured using metrics like MAE, RMSE, or MAPE.
-2. **Fit to the data**: Evaluating how well the model captures the trend, seasonality, and residual components.
-3. **Simplicity**: A simpler model with good performance may be preferred over a more complex model.
-4. **Domain knowledge**: Understanding the context and characteristics of the data helps in choosing the right model (e.g., seasonal patterns).
+Choose using several criteria:
+
+1. **Out-of-sample accuracy**: compare MAE, RMSE or MASE on a hold-out period or with rolling-origin evaluation, never with random shuffling.
+2. **Residual diagnostics**: the residuals should resemble white noise, for example by passing a Ljung–Box test.
+3. **Parsimony**: among models that perform similarly, prefer simpler ones, for example by lower AIC or BIC.
+4. **Domain knowledge**: make sure the model captures known features such as seasonality and structural breaks.
+
+Always compare against simple benchmarks such as the naive or seasonal naive forecast.
 
 </details>

@@ -12,181 +12,166 @@ This series of quizzes covers essential topics in probability theory, including:
 ## Bayes' Theorem
 
 <details>
+<summary>What is Bayes' Theorem?</summary>
 
-<summary>What is Bayes' Theorem?</summary><br>
+Bayes' Theorem updates the probability of a hypothesis $A$ after observing evidence $B$ (with $P(B) > 0$):
 
-Bayes' Theorem is a fundamental formula in probability theory that allows you to update the probability of a hypothesis based on new evidence. It is written as:  
+$$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}$$
 
-$$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}$$  
 where:
-- $P(A|B)$ is the **posterior probability** (the probability of event A occurring given that B is true),
-- $P(B|A)$ is the **likelihood** (the probability of event B occurring given that A is true),
-- $P(A)$ is the **prior probability** of A,
-- $P(B)$ is the **marginal probability** of B.
 
-Bayes' Theorem is widely used in fields such as medical testing, where it helps calculate the probability of a disease given a positive test result.
+- $P(A|B)$ is the **posterior probability**, the probability of $A$ given that $B$ occurred,
+- $P(B|A)$ is the **likelihood**, the probability of observing $B$ if $A$ is true,
+- $P(A)$ is the **prior probability** of $A$,
+- $P(B)$ is the **marginal probability** of the evidence, often computed as $P(B|A)P(A) + P(B|A^c)P(A^c)$.
 
-</details>
-
-<details>
-
-<summary>What is an example of applying Bayes' Theorem in medical testing?</summary><br>
-
-Suppose a test for a certain disease has a 99% accuracy rate, meaning the probability of testing positive given the disease is 99% $P(Pos|Disease) = 0.99$. However, if the disease only affects 1% of the population, the **prior probability** of the disease $P(Disease) = 0.01$. If a person tests positive, Bayes' Theorem can be used to update the probability that they actually have the disease, factoring in the false positive rate and the disease prevalence.
-
-Bayes' Theorem in this case would provide a more accurate probability based on available data rather than assuming a positive test always means the presence of the disease.
+It is widely used in medical testing, spam filtering and other diagnostic problems.
 
 </details>
 
 <details>
+<summary>What is an example of applying Bayes' Theorem in medical testing?</summary>
 
-<summary>How does Bayes' Theorem differ from classical probability?</summary><br>
+A disease affects 1% of people, so $P(D) = 0.01$. The test has sensitivity $P(+|D) = 0.99$ and a false-positive rate $P(+|D^c) = 0.05$. For a person who tests positive:
 
-Classical probability often deals with frequencies of events, whereas Bayes' Theorem introduces the concept of **updating** a probability based on new evidence. Classical probability is static and does not consider past events, while Bayes' Theorem evolves with new data and is used to update **beliefs** or **hypotheses** dynamically.
+$$P(D|+) = \frac{0.99 \times 0.01}{0.99 \times 0.01 + 0.05 \times 0.99} = \frac{0.0099}{0.0594} \approx 0.17$$
+
+Even with an accurate test, only about 17% of positives actually have the disease, because the disease is rare and false positives outnumber true positives.
 
 </details>
 
----
+<details>
+<summary>How does the Bayesian use of Bayes' Theorem differ from the frequentist view of probability?</summary>
+
+Bayes' Theorem itself is a valid rule under every interpretation of probability. The difference lies in what probability means:
+
+- **Frequentist**: probability is a long-run relative frequency, so parameters are fixed unknown constants and are not given probability distributions.
+- **Bayesian**: probability expresses a degree of belief, so parameters get a **prior** distribution that Bayes' Theorem updates to a **posterior** as data arrive.
+
+</details>
 
 ## Conditional Probability
 
 <details>
+<summary>What is conditional probability?</summary>
 
-<summary>What is conditional probability?</summary><br>
+Conditional probability is the probability of an event $A$ given that another event $B$ has occurred. Knowing $B$ restricts the sample space to outcomes in $B$. For $P(B) > 0$:
 
-Conditional probability is the probability of an event occurring given that another event has already occurred. It helps in understanding how the probability of one event is affected by the presence or absence of another event. The formula for conditional probability is:  
+$$P(A|B) = \frac{P(A \cap B)}{P(B)}$$
 
-$$P(A|B) = \frac{P(A \cap B)}{P(B)}$$  
-where $P(A|B)$ is the probability of A occurring given that B has occurred, and $P(A \cap B)$ is the joint probability of A and B happening together.
-
-</details>
-
-<details>
-
-<summary>What is an example of conditional probability in everyday life?</summary><br>
-
-Consider the probability of it raining given that the sky is cloudy. The probability of rain (A) is influenced by the presence of clouds (B). The conditional probability $P(A|B)$ will likely be higher than the unconditional probability of rain, as clouds increase the likelihood of rain.
+Here $P(A \cap B)$ is the joint probability that both $A$ and $B$ occur.
 
 </details>
 
 <details>
+<summary>What is an example of conditional probability in everyday life?</summary>
 
-<summary>How does conditional probability relate to independent events?</summary><br>
-
-If two events are **independent**, the occurrence of one does not affect the probability of the other, meaning:
-
-$$P(A|B) = P(A)$$  
-
-For independent events, the conditional probability is the same as the unconditional probability, as there is no relationship between A and B.
+Consider the probability of rain ($A$) given that the sky is cloudy ($B$). Because clouds make rain more likely, $P(A|B)$ is higher than the unconditional probability $P(A)$. For example, rain might happen on 20% of all days but on 50% of cloudy days.
 
 </details>
 
 <details>
+<summary>How does conditional probability relate to independent events?</summary>
 
-<summary>How do you calculate the probability of multiple dependent events?</summary><br>
+If $A$ and $B$ are **independent** and $P(B) > 0$, knowing that $B$ occurred does not change the probability of $A$:
 
-For dependent events, the probability of multiple events occurring in sequence (e.g., A then B) is the product of the first event's probability and the conditional probability of the second event given the first:
+$$P(A|B) = P(A)$$
 
-$$P(A \cap B) = P(A) \times P(B|A)$$  
-
-This formula accounts for the fact that the occurrence of A affects the probability of B.
+This is equivalent to the product rule $P(A \cap B) = P(A)P(B)$.
 
 </details>
 
----
+<details>
+<summary>How do you calculate the probability that two dependent events both occur?</summary>
+
+Use the multiplication rule: multiply the probability of the first event by the conditional probability of the second given the first:
+
+$$P(A \cap B) = P(A) \times P(B|A)$$
+
+For example, drawing two aces without replacement from a 52-card deck has probability $\frac{4}{52} \times \frac{3}{51} = \frac{1}{221}$.
+
+</details>
 
 ## Joint Probability
 
 <details>
+<summary>What is joint probability?</summary>
 
-<summary>What is joint probability?</summary><br>
-
-Joint probability is the probability that two or more events occur together. For two events A and B, the joint probability $P(A \cap B)$ represents the likelihood that both A and B happen. If the events are **independent**, the joint probability is the product of their individual probabilities:
+Joint probability is the probability that two or more events occur together, written $P(A \cap B)$ for two events. In general $P(A \cap B) = P(A)P(B|A)$. If the events are **independent**, this simplifies to the product of their individual probabilities:
 
 $$P(A \cap B) = P(A) \times P(B)$$
 
 </details>
 
 <details>
+<summary>What is an example of joint probability?</summary>
 
-<summary>What is an example of joint probability?</summary><br>
-
-Suppose you are rolling two dice. The probability of rolling a 6 on the first die and a 6 on the second die is the joint probability $P(6 \cap 6)$. Since these events are independent, you can calculate this by multiplying the probabilities:
+When rolling two fair dice, the probability that the first shows a 6 and the second shows a 6 is a joint probability. The dice are independent, so:
 
 $$P(6 \cap 6) = \frac{1}{6} \times \frac{1}{6} = \frac{1}{36}$$
 
 </details>
 
 <details>
+<summary>How does joint probability differ for dependent events?</summary>
 
-<summary>How does joint probability differ for dependent events?</summary><br>
+For dependent events the joint probability is not the product of the individual probabilities. Use the conditional probability instead:
 
-For dependent events, the joint probability is not simply the product of individual probabilities. Instead, you must use the conditional probability formula:
+$$P(A \cap B) = P(A) \times P(B|A)$$
 
-$$P(A \cap B) = P(A) \times P(B|A)$$  
-
-This accounts for the fact that the occurrence of event A influences the probability of event B.
+This accounts for the fact that the occurrence of $A$ changes the probability of $B$.
 
 </details>
-
----
 
 ## Marginal Probability
 
 <details>
+<summary>What is marginal probability?</summary>
 
-<summary>What is marginal probability?</summary><br>
+Marginal probability is the probability of a single event, regardless of the outcomes of other variables. If $B_1, \dots, B_n$ form a partition of the sample space, it is obtained by summing the joint probabilities:
 
-Marginal probability refers to the probability of a single event occurring, without regard to other events. It is derived from the joint probabilities by summing over all possible outcomes for other variables. For example, the marginal probability of A can be written as:
+$$P(A) = \sum_{j} P(A \cap B_j)$$
 
-$$P(A) = \sum_{B} P(A \cap B)$$
+In a contingency table, marginal probabilities are the row or column totals divided by the grand total.
 
 </details>
 
 <details>
+<summary>How does marginal probability relate to joint probability?</summary>
 
-<summary>How does marginal probability relate to joint probability?</summary><br>
-
-Marginal probability is the result of **summing** or **integrating** over the joint probabilities of related events. For example, if A and B are two events, the marginal probability of A is obtained by summing the joint probabilities of A occurring with each possible outcome of B.
+Marginal probabilities are obtained from a joint distribution by **summing** (discrete case) or **integrating** (continuous case) over the other variable. For example, $P(X = x) = \sum_y P(X = x, Y = y)$ and $f_X(x) = \int f_{X,Y}(x, y)\,dy$. The reverse is not possible in general: the marginals alone do not determine the joint distribution unless the variables are independent.
 
 </details>
-
----
 
 ## Independence
 
 <details>
+<summary>What does it mean for two events to be independent?</summary>
 
-<summary>What does it mean for two events to be independent?</summary><br>
+Two events are independent if the occurrence of one does not change the probability of the other. Formally, $A$ and $B$ are independent if:
 
-Two events are independent if the occurrence of one does not affect the probability of the other. Mathematically, events A and B are independent if:
+$$P(A \cap B) = P(A) \times P(B)$$
 
-$$P(A \cap B) = P(A) \times P(B)$$  
-
-In this case, knowing that event B has occurred gives no additional information about the likelihood of A occurring, and vice versa.
+Then knowing that $B$ occurred gives no information about $A$, and vice versa. Independence is different from mutual exclusivity: disjoint events with positive probabilities are always dependent.
 
 </details>
 
 <details>
+<summary>How can you test if two events are independent?</summary>
 
-<summary>How can you test if two events are independent?</summary><br>
-
-To test for independence, check if the joint probability $P(A \cap B)$ equals the product of the individual probabilities $P(A) \times P(B)$. If the equality holds, the events are independent; otherwise, they are dependent.
+Check whether the joint probability equals the product of the individual probabilities, $P(A \cap B) = P(A) \times P(B)$, or equivalently whether $P(A|B) = P(A)$. For example, $P(A) = 0.3$, $P(B) = 0.5$ and $P(A \cap B) = 0.15$ are independent. With sample data the equality holds only approximately, so a chi-square test of independence is used instead.
 
 </details>
-
----
 
 ## Law of Total Probability
 
 <details>
+<summary>What is the Law of Total Probability?</summary>
 
-<summary>What is the Law of Total Probability?</summary><br>
-
-The Law of Total Probability states that if you have a set of mutually exclusive events $B_1, B_2, ..., B_n$ that cover all possible outcomes, the probability of any event A can be expressed as:
+If $B_1, B_2, \dots, B_n$ are mutually exclusive events that together cover the whole sample space (a partition), each with $P(B_i) > 0$, then for any event $A$:
 
 $$P(A) = \sum_{i} P(A|B_i) P(B_i)$$
 
-This law is useful for breaking down complex probability problems by considering all possible conditions.
+For example, if machine 1 makes 60% of parts with a 2% defect rate and machine 2 makes 40% with a 5% defect rate, $P(\text{defect}) = 0.6(0.02) + 0.4(0.05) = 0.032$. The result is also the denominator in Bayes' Theorem.
 
 </details>
