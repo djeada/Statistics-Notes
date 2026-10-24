@@ -1,8 +1,14 @@
 # State-Space Models and the Kalman Filter
 
+[Time series index](README.md)
+
 State-space models separate a time series into an unobserved state that evolves through time and an observation process that measures that state with noise. This framework is flexible enough to represent latent levels, trends, seasonal components, regression effects, missing observations, and many familiar ARIMA or smoothing models.
 
-The Kalman filter is the recursive algorithm that makes linear Gaussian state-space models practical. At each step it predicts the next state, compares that prediction with the new observation, and updates the estimate according to their relative uncertainty, creating a clean distinction among filtering, forecasting, and retrospective smoothing.
+The Kalman filter is the recursive algorithm that makes linear Gaussian state-space models practical. At each step it predicts the next state, compares that prediction with the new observation, and updates the estimate according to their relative uncertainty, while keeping track of which observations are used by filtering, forecasting, and retrospective smoothing. The state estimate and its covariance are updated together, so each step reports both a signal estimate and its remaining uncertainty.
+
+**Reading guide.** Read the state equation and observation equation separately, then follow one prediction and measurement update by hand. Pay particular attention to which observations each estimate uses: filtering, smoothing, and forecasting answer different timing questions. The later calculations show how relative uncertainty controls the gain and how the recursion continues when a measurement is missing.
+
+**Related reading:** [stochastic processes and innovations](stochastic_processes_and_white_noise.md).
 
 ## Formula reference
 
@@ -19,12 +25,12 @@ The Kalman filter is the recursive algorithm that makes linear Gaussian state-sp
 | Covariance update | $P_{t\mid t}=P_{t\mid t-1}-K_tF_tK_t^\top$ | Equivalent stable forms are also used numerically. |
 | Local-level model | $\mu_t=\mu_{t-1}+\eta_t$, $y_t=\mu_t+\varepsilon_t$ | Scalar special case with latent random-walk level. |
 | $h$-step state forecast | $a_{t+h\mid t}=T_{t+h}\cdots T_{t+1}a_{t\mid t}$ | For constant $T$, this is $T^ha_{t\mid t}$. |
-| Gaussian log-likelihood contribution | $\ell_t=-\tfrac12[\log(2\pi)+\log\lvert F_t\rvert+v_t^\top F_t^{-1}v_t]$ | Sum over $t$ for likelihood estimation. |
+| Gaussian log-likelihood contribution | $\ell_t=-\tfrac12[m_t\log(2\pi)+\log\lvert F_t\rvert+v_t^\top F_t^{-1}v_t]$ | $m_t$ is the number of observed components; $m_t=1$ in the scalar examples. |
 | Standardized innovation | $\tilde v_t=F_t^{-1/2}v_t$ | Should resemble white noise under an adequate model. |
 
 ## Worked calculation: one local-level Kalman update
 
-Suppose the predicted level is $a_{t|t-1}=10$, its predicted variance is $P_{t|t-1}=1.25$, and the observation is $y_t=12$ with measurement variance $R=1$. The innovation is
+Suppose the predicted level is $a_{t\mid t-1}=10$, its predicted variance is $P_{t\mid t-1}=1.25$, and the observation is $y_t=12$ with measurement variance $R=1$. The innovation is
 
 $$
 v_t=12-10=2,
@@ -41,16 +47,18 @@ $$
 The updated estimate and variance are
 
 $$
-a_{t|t}=10+0.5556(2)\approx11.1111,
+a_{t\mid t}=10+0.5556(2)\approx11.1111,
 \qquad
-P_{t|t}=(1-0.5556)(1.25)\approx0.5556.
+P_{t\mid t}=(1-0.5556)(1.25)\approx0.5556.
 $$
 
 The estimate moves partway toward the observation because both the prior state estimate and the measurement are uncertain. A larger measurement variance would reduce the gain and make the filter rely more heavily on the prior prediction.
 
-![Filtering a noisy local level](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/18_state_space_filter.png)
+![Filtering a noisy local level](../../assets/time_series/student/18_state_space_filter.png)
 
 The figure shows the role of the latent state: the observed series is noisy, while the filter updates an estimate of the underlying level as each new observation arrives.
+
+## State and observation equations
 
 State-space models distinguish an unobserved **state** from noisy observations. They provide a common framework for latent trends, seasonal components, regression effects, missing observations, and other dynamic structures.
 
@@ -64,7 +72,7 @@ $$
 y_t=Z_t\alpha_t+d_t+\varepsilon_t.
 $$
 
-The first equation describes how the latent state evolves. The second describes how that state produces the observation. The matrices can vary with time, although many familiar models use constant matrices.
+The first equation describes how the latent state evolves. The second describes how that state produces the observation. The matrices can vary with time, although many familiar models use constant matrices. In the standard linear Gaussian specification, state and observation disturbances have mean zero, the stated covariance matrices, and no serial or mutual correlation, and they are independent of the initial state. The familiar Kalman formulas below use that disturbance specification.
 
 ## Local-Level Model
 
@@ -78,7 +86,7 @@ $$
 
 The latent level $\mu_t$ follows a random walk, while the observed value contains additional measurement noise. Separating these two sources of variation lets the model distinguish movement in the underlying signal from noise in the observation.
 
-![Local-level filter](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/01_local_level_filter.png)
+![Local-level filter](../../assets/time_series/state_space_frequency/01_local_level_filter.png)
 
 The local-level figure shows the observed series together with the filtered latent level. The filter follows sustained changes in the signal while avoiding a full reaction to every noisy observation.
 
@@ -87,9 +95,9 @@ The local-level figure shows the observed series together with the filtered late
 For the scalar local-level model, the prediction step is
 
 $$
-a_{t|t-1}=a_{t-1|t-1},
+a_{t\mid t-1}=a_{t-1\mid t-1},
 \qquad
-P_{t|t-1}=P_{t-1|t-1}+Q,
+P_{t\mid t-1}=P_{t-1\mid t-1}+Q,
 $$
 
 where $Q$ is the state-innovation variance.
@@ -97,42 +105,42 @@ where $Q$ is the state-innovation variance.
 The observation produces the innovation
 
 $$
-v_t=y_t-a_{t|t-1},
+v_t=y_t-a_{t\mid t-1},
 $$
 
 with innovation variance
 
 $$
-F_t=P_{t|t-1}+R,
+F_t=P_{t\mid t-1}+R,
 $$
 
 where $R$ is the measurement-error variance in this scalar notation. The Kalman gain is
 
 $$
-K_t=\frac{P_{t|t-1}}{F_t},
+K_t=\frac{P_{t\mid t-1}}{F_t},
 $$
 
 and the update is
 
 $$
-a_{t|t}=a_{t|t-1}+K_tv_t,
+a_{t\mid t}=a_{t\mid t-1}+K_tv_t,
 \qquad
-P_{t|t}=(1-K_t)P_{t|t-1}.
+P_{t\mid t}=(1-K_t)P_{t\mid t-1}.
 $$
 
-![Kalman gain](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/02_kalman_gain.png)
+![Kalman gain](../../assets/time_series/state_space_frequency/02_kalman_gain.png)
 
 The gain figure makes the weighting rule explicit: precise measurements receive more weight, while noisy measurements move the state estimate less.
 
 **Filtering** estimates the current state using observations available through the current time. **Forecasting** propagates that filtered state into the future. **Smoothing** revises historical states using later observations as well, so a smoothed state is a retrospective estimate rather than a real-time forecast.
 
-![Filtering and smoothing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/04_filtering_vs_smoothing.png)
+![Filtering and smoothing](../../assets/time_series/state_space_frequency/04_filtering_vs_smoothing.png)
 
 The figure shows why the distinction matters. The smoothed path can use future observations to revise a past state and will often appear cleaner than the real-time filtered path. Using it to evaluate a real-time procedure would leak future information.
 
 When an observation is missing, the state can still be propagated through the transition equation without a measurement update. Many ARIMA and exponential-smoothing models also admit state-space representations, allowing likelihood estimation, missing-data handling, filtering, smoothing, and forecasting to be treated within one framework.
 
-## Student guide: prediction, update, and uncertainty
+## Worked examples: prediction, update, and uncertainty
 
 State-space notation separates the quantities that are observed from the dynamic process being inferred. This is especially useful when the signal is noisy, data are missing, or the dynamics are more naturally expressed through latent levels, slopes, seasonal states, or time-varying coefficients.
 
@@ -178,14 +186,14 @@ $$
 y_t=\mu_t+\varepsilon_t,
 $$
 
-suppose $a_{t|t-1}=10$, $P_{t|t-1}=1.25$, $y_t=12$, and $R=1$. Then
+suppose $a_{t\mid t-1}=10$, $P_{t\mid t-1}=1.25$, $y_t=12$, and $R=1$. Then
 
 $$
-v_t=y_t-a_{t|t-1}=2,
+v_t=y_t-a_{t\mid t-1}=2,
 $$
 
 $$
-F_t=P_{t|t-1}+R=2.25,
+F_t=P_{t\mid t-1}+R=2.25,
 $$
 
 and
@@ -197,13 +205,13 @@ $$
 The state update is
 
 $$
-a_{t|t}=10+0.5556(2)\approx11.1111,
+a_{t\mid t}=10+0.5556(2)\approx11.1111,
 $$
 
 while the posterior variance is
 
 $$
-P_{t|t}=(1-0.5556)(1.25)\approx0.5556.
+P_{t\mid t}=(1-0.5556)(1.25)\approx0.5556.
 $$
 
 The innovation is the part of the observation that was not predicted. The gain determines how strongly that new information changes the state estimate.
@@ -213,10 +221,10 @@ The innovation is the part of the observation that was not predicted. The gain d
 For the scalar local-level update,
 
 $$
-K_t=\frac{P_{t|t-1}}{P_{t|t-1}+R}.
+K_t=\frac{P_{t\mid t-1}}{P_{t\mid t-1}+R}.
 $$
 
-If $R$ is small, the measurement is precise and $K_t$ approaches 1. If $R$ is large, the measurement is noisy and $K_t$ approaches 0. A larger process variance $Q$ increases future prediction uncertainty $P_{t|t-1}$ and therefore tends to make the filter react more strongly to new observations.
+If $R$ is small, the measurement is precise and $K_t$ approaches 1. If $R$ is large, the measurement is noisy and $K_t$ approaches 0. A larger process variance $Q$ increases future prediction uncertainty $P_{t\mid t-1}$ and therefore tends to make the filter react more strongly to new observations.
 
 For a prior level of 10 and an observation of 12:
 
@@ -250,7 +258,7 @@ It uses later observations to revise a past state. This is useful for historical
 Forecasting propagates the filtered state forward. In a time-varying system,
 
 $$
-a_{t+h|t}=T_{t+h}\cdots T_{t+1}a_{t|t}.
+a_{t+h\mid t}=T_{t+h}\cdots T_{t+1}a_{t\mid t}.
 $$
 
 Forecast uncertainty accumulates state disturbances and, for future observations, measurement uncertainty. A performance evaluation that uses smoothed states at past forecast origins has used future information unless that retrospective procedure is explicitly the target.
@@ -260,25 +268,25 @@ Forecast uncertainty accumulates state disturbances and, for future observations
 If $y_t$ is missing, there is no measurement innovation to use, so the update is skipped:
 
 $$
-a_{t|t}=a_{t|t-1},
+a_{t\mid t}=a_{t\mid t-1},
 \qquad
-P_{t|t}=P_{t|t-1}.
+P_{t\mid t}=P_{t\mid t-1}.
 $$
 
 The next transition still proceeds:
 
 $$
-a_{t+1|t}=T_{t+1}a_{t|t},
+a_{t+1\mid t}=T_{t+1}a_{t\mid t},
 $$
 
 $$
-P_{t+1|t}=T_{t+1}P_{t|t}T_{t+1}^{\top}
+P_{t+1\mid t}=T_{t+1}P_{t\mid t}T_{t+1}^{\top}
 +R_{t+1}Q_{t+1}R_{t+1}^{\top}.
 $$
 
-![Missing observations](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/03_missing_observations.png)
+![Missing observations](../../assets/time_series/state_space_frequency/03_missing_observations.png)
 
-The figure shows that the filter does not fabricate missing measurements. It propagates the state using the transition model, while uncertainty grows until new observations provide another update.
+The figure shows the prediction-only step across a missing measurement. In this local-level model, the state variance increases by $Q$ at each unobserved step until a new measurement supplies an update. In a general state-space model, the covariance follows its transition equation and need not increase monotonically.
 
 ### Innovations and likelihood
 

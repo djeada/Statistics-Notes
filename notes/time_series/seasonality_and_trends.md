@@ -1,8 +1,24 @@
 # Seasonality and Trends
 
+[Time series index](README.md)
+
 Trend and seasonality are systematic forms of time structure that operate on different scales. A trend is a persistent long-run movement in level or slope, while seasonality is a pattern that repeats at a fixed and known period such as day of week, month of year, or quarter.
 
-Decomposition, smoothing, differencing, SARIMA, and exponential-smoothing models handle these structures in different ways. The useful choice depends on whether the pattern is deterministic, evolving, stochastic, or multiplicative, and should be validated on future-like data rather than selected only because it makes a plot look cleaner.
+Decomposition, smoothing, differencing, SARIMA, and exponential-smoothing models handle these structures in different ways. The useful choice depends on whether the pattern is deterministic, evolving, stochastic, or multiplicative, and should be validated on chronologically held-out data rather than selected only because it makes a plot look cleaner.
+
+**Reading guide.** Separate the choice of decomposition from the choice of forecasting model. First decide whether seasonal variation is roughly constant in size or proportional to the level, then examine trend estimation and differencing. The worked examples make seasonal indices, seasonal lags, and boundary effects explicit so that an attractive decomposition is not mistaken for a validated forecast.
+
+**Related reading:** [ARIMA and SARIMA](arima_models.md).
+
+**On this page**
+
+- [Formula reference](#formula-reference)
+- [Worked calculation: an additive seasonal effect](#worked-calculation-an-additive-seasonal-effect)
+- [Separating trend, seasonality, and remainder](#separating-trend-seasonality-and-remainder)
+- [Seasonality](#seasonality)
+- [Trends](#trends)
+- [Modeling Seasonality and Trends](#modeling-seasonality-and-trends)
+- [Worked examples: seasonal effects and trend estimates](#worked-examples-seasonal-effects-and-trend-estimates)
 
 ## Formula reference
 
@@ -55,19 +71,21 @@ which is the usual normalization for an additive decomposition. If the size of t
 
 The seasonal-differencing figure below shows another way to remove a repeating component: compare each observation with the same position in the previous cycle.
 
-![Worked seasonal and ordinary differences](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/12_arima_and_seasonal_differencing.png)
+![Worked seasonal and ordinary differences](../../assets/time_series/student/12_arima_and_seasonal_differencing.png)
 
 The figure distinguishes ordinary changes from seasonal changes. Ordinary differencing compares adjacent observations, while seasonal differencing compares observations separated by the seasonal period.
+
+## Separating trend, seasonality, and remainder
 
 **Seasonality** and **trend** describe systematic structure at different time scales. A trend is a persistent long-run movement in the level. Seasonality is a pattern tied to a fixed and known period, such as hour of day, day of week, or month of year. Cycles can also occur, but unlike seasonality their duration is not fixed.
 
 Random or irregular variation is what remains after the modeled systematic components have been removed. The goal is not to eliminate every fluctuation, but to represent the repeatable structure in a way that supports interpretation and forecasting.
 
-### Seasonality
+## Seasonality
 
-**Seasonality** is a pattern that repeats at a regular interval. Common causes include weather, holidays, work schedules, school calendars, billing cycles, and institutional deadlines.
+**Seasonality** is a pattern that repeats at a regular interval. Common mechanisms include weather, work schedules, school calendars, billing cycles, and institutional deadlines. Some holidays move between dates or months, so their effects may need explicit calendar predictors rather than a fixed observation lag. A series can also contain more than one period, such as daily and weekly structure in hourly demand.
 
-#### Characteristics of Seasonality
+### Characteristics of Seasonality
 
 - **Periodicity:** the pattern repeats at a fixed interval, such as every 24 hours, 7 days, 12 months, or 4 quarters.
 - **Additive seasonality:** the seasonal effect is roughly constant in absolute size as the level changes.
@@ -75,15 +93,15 @@ Random or irregular variation is what remains after the modeled systematic compo
 - **Stability:** a useful seasonal representation assumes that at least part of the pattern is repeatable, although its amplitude or shape may evolve.
 - **External drivers:** holidays, weather, trading calendars, and other recurring mechanisms can create seasonal structure that may be modeled directly rather than only through lag dependence.
 
-#### Examples of Seasonal Patterns
+### Examples of Seasonal Patterns
 
 Electricity consumption can have daily peaks, retail activity can vary systematically by weekday, tourism can follow annual weather cycles, and administrative processes can generate recurring month- or quarter-end effects.
 
-![seasonal_pattern](https://github.com/user-attachments/assets/0b8772f9-2f2f-4bd8-b194-2002e99d810b)
+![Repeating seasonal peaks and troughs around a changing level](https://github.com/user-attachments/assets/0b8772f9-2f2f-4bd8-b194-2002e99d810b)
 
 The figure shows repeated fluctuations around a broader level. The regular spacing of similar peaks and troughs is what distinguishes seasonality from an irregular cycle.
 
-#### Decomposing Seasonality
+### Decomposing Seasonality
 
 A decomposition separates a series into interpretable components. In an additive decomposition,
 
@@ -99,17 +117,17 @@ $$
 X_t=T_tS_tR_t.
 $$
 
-When the seasonal amplitude and residual variation grow with the level, taking logs can turn a multiplicative relationship into an additive one:
+When all components are positive and the seasonal amplitude and residual variation grow with the level, taking logs turns a multiplicative identity into an additive one. This can make proportional seasonal effects easier to model, although the transformed remainder still needs to be checked:
 
 $$
 \log X_t=\log T_t+\log S_t+\log R_t.
 $$
 
-![Additive and multiplicative seasonality](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/02_additive_multiplicative_seasonality.png)
+![Additive and multiplicative seasonality](../../assets/time_series/arima_seasonality/02_additive_multiplicative_seasonality.png)
 
 The figure shows the practical distinction: additive seasonal swings remain similar in absolute size, while multiplicative swings widen as the level rises.
 
-##### Decomposition Methods
+#### Decomposition Methods
 
 **Moving average method.** A centered moving average spanning one seasonal period can estimate a slowly varying trend. For an odd period $d=2q+1$,
 
@@ -154,11 +172,11 @@ $$
 
 one can attenuate or remove frequencies above a chosen cutoff and transform back to the time domain.
 
-![spectral smoothing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/spectral_smoothing.png)
+![spectral smoothing](../../assets/time_series/spectral_smoothing.png)
 
 The spectral-smoothing example shows that trend estimation can be viewed as a frequency-selection problem. The cutoff controls how much short-run variation is treated as noise rather than trend.
 
-#### Practical Decomposition Workflow
+### Practical Decomposition Workflow
 
 When trend and seasonality are both present, a classical additive workflow is:
 
@@ -168,15 +186,15 @@ When trend and seasonality are both present, a classical additive workflow is:
 4. normalize and remove the seasonal component;
 5. inspect the remainder and, if needed, refine the trend estimate.
 
-![simple decomposition](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/simple_decomposition.png)
+![simple decomposition](../../assets/time_series/simple_decomposition.png)
 
-The decomposition figure shows the intended progression from the observed series to trend, seasonality, and remainder. A useful decomposition leaves the remainder without obvious structure that should have been assigned to the other components.
+The decomposition figure shows the progression from the observed series to trend, seasonality, and remainder. A useful decomposition leaves the remainder without obvious trend or repeating seasonality that belongs in the estimated components. The remainder can still contain stationary serial dependence, changing variance, or outliers. Decomposition and residual modeling are separate steps, so a remainder is not assumed to be white noise simply because the trend and seasonal curves look reasonable.
 
-![Additive decomposition](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/03_additive_decomposition.png)
+![Additive decomposition](../../assets/time_series/arima_seasonality/03_additive_decomposition.png)
 
 This second decomposition view emphasizes that the components should add back to the observed series under an additive model. The seasonal pattern is interpreted relative to the estimated trend rather than as an isolated plot.
 
-##### Classical Estimation (Trend + Seasonal)
+#### Classical Estimation (Trend + Seasonal)
 
 Let $d$ be the seasonal period and $\hat m_t$ a centered trend estimate. For additive seasonality, define the detrended values
 
@@ -199,11 +217,11 @@ $$
 
 For multiplicative decomposition, ratios $X_t/\hat m_t$ can be averaged by season and normalized to have mean 1.
 
-![trend smoothing filters](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/trend_smoothing_filters.png)
+![trend smoothing filters](../../assets/time_series/trend_smoothing_filters.png)
 
 The filter comparison demonstrates that trend estimates depend on the smoothing rule. A smoother that reacts quickly preserves more local movement, while a broader filter produces a smoother trend but can blur turning points and worsen boundary effects.
 
-#### Differencing as an Alternative
+### Differencing as an Alternative
 
 Differencing does not estimate a trend or seasonal component explicitly. Instead, it changes the target so that selected forms of persistence cancel algebraically.
 
@@ -249,15 +267,15 @@ $$
 
 The seasonal component cancels, while trend changes and differenced remainder remain.
 
-![seasonal differencing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/seasonal_differencing.png)
+![seasonal differencing](../../assets/time_series/seasonal_differencing.png)
 
 The figure shows the before-and-after effect of seasonal differencing. Repeated seasonal level shifts are reduced, but the transformation can leave ordinary trend or induce additional short-run dependence.
 
-![Seasonal differencing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/01_differencing_orders.png)
+![Seasonal differencing](../../assets/time_series/arima_seasonality/01_differencing_orders.png)
 
 This companion view compares differencing orders and reinforces the main caution: use the smallest combination that makes the remaining process suitable for the intended model.
 
-### Trends
+## Trends
 
 A **trend** is a systematic long-run movement in the level of a series. It can be represented deterministically, such as a linear function of time, or stochastically, such as the accumulated shocks of a random walk.
 
@@ -267,17 +285,17 @@ An upward or downward path in one realization does not by itself identify which 
 
 The figure provides visual examples of different long-run directions. The next step is to determine whether the apparent trend is stable, deterministic, stochastic, or interrupted by breaks.
 
-#### Identifying Trends
+### Identifying Trends
 
 Visual inspection is the starting point, but a slow ACF decay can result from a deterministic trend, unit root, seasonal structure, or break. Trend tests such as Mann-Kendall can detect monotone association under their assumptions, while unit-root and stationarity tests address different null hypotheses.
 
 Use plots, domain knowledge, transformations, repeated forecast behavior, and formal tests together rather than treating any single diagnostic as definitive.
 
-#### Detrending Methods
+### Detrending Methods
 
 Detrending changes the representation so that the remaining series can be modeled more simply. Different methods remove different structures.
 
-##### Differencing
+#### Differencing
 
 First-order differencing is
 
@@ -295,7 +313,7 @@ $$
 
 It removes the constant first difference of a deterministic linear trend and can reduce higher-order polynomial behavior. In stochastic models, repeated differencing can over-difference the series and introduce unnecessary negative autocorrelation, so higher orders should be justified carefully.
 
-##### Transformation
+#### Transformation
 
 A log transformation is
 
@@ -305,7 +323,7 @@ $$
 
 for positive $X_t$. It compresses large values and can stabilize variance when fluctuations scale with the level. It can also turn multiplicative growth and seasonality into additive structure. A log transform does not, by itself, remove a unit root or deterministic time trend.
 
-##### Regression Modeling
+#### Regression Modeling
 
 A deterministic linear trend can be modeled as
 
@@ -321,15 +339,15 @@ $$
 
 Higher-order polynomials can fit flexible curves but extrapolate poorly and can become unstable near the boundaries. Use the simplest trend form that matches the mechanism and validation evidence.
 
-#### Visualization of Trends
+### Visualization of Trends
 
 A level plot reveals the overall movement, while a detrended plot shows what remains after the specified trend has been removed. The comparison is meaningful only when the fitted trend is introduced explicitly and the residual is interpreted relative to that model.
 
-### Modeling Seasonality and Trends
+## Modeling Seasonality and Trends
 
 Forecasting models incorporate trend and seasonality in different ways. The appropriate representation depends on whether the components are deterministic, evolving, stochastic, or better described through dependence at seasonal lags.
 
-#### Seasonal ARIMA (SARIMA)
+### Seasonal ARIMA (SARIMA)
 
 SARIMA combines ordinary and seasonal differencing with AR and MA terms:
 
@@ -340,7 +358,7 @@ $$
 
 Here $p,d,q$ describe the non-seasonal component; $P,D,Q$ describe the seasonal component; and $s$ is the seasonal period. Seasonal differencing targets repeating stochastic level structure, while seasonal AR and MA terms model dependence that remains at seasonal lags.
 
-#### Exponential Smoothing State Space Models (ETS)
+### Exponential Smoothing State Space Models (ETS)
 
 ETS models represent evolving level, trend, and seasonal states with recursive update equations. An additive observation structure can be thought of schematically as
 
@@ -350,7 +368,7 @@ $$
 
 while multiplicative variants allow the size of errors or seasonal effects to scale with the level. Exact ETS equations depend on the selected error, trend, seasonal, and damping components; the model is more than a static decomposition identity.
 
-#### Seasonal Decomposition of Time Series (STL) Forecasting
+### Seasonal Decomposition of Time Series (STL) Forecasting
 
 STL decomposes a transformed or untransformed series additively as
 
@@ -362,15 +380,15 @@ Forecasting after STL requires separate assumptions for extending the trend and 
 
 The following synthetic series contains a rising trend, repeated seasonality, and random noise:
 
-![output(3)](https://github.com/djeada/Statistics-Notes/assets/37275728/b10c0196-3455-4c59-8807-a64d11ebc651)
+![A synthetic series with rising trend, seasonality, and noise](https://github.com/djeada/Statistics-Notes/assets/37275728/b10c0196-3455-4c59-8807-a64d11ebc651)
 
 Its visible structure motivates decomposition before forecasting.
 
-![output(4)](https://github.com/djeada/Statistics-Notes/assets/37275728/6cd784df-8e35-411c-92bd-f94b9529e191)
+![The observed series decomposed into trend, seasonality, and remainder](https://github.com/djeada/Statistics-Notes/assets/37275728/6cd784df-8e35-411c-92bd-f94b9529e191)
 
 The decomposed panels separate the upward trend, repeating seasonal pattern, and remainder. The remainder should be inspected for leftover autocorrelation, changing variance, or outliers rather than assumed to be random simply because it is labeled "residual."
 
-## Student guide: choose the seasonal representation before fitting
+## Worked examples: seasonal effects and trend estimates
 
 Seasonality can be represented through deterministic seasonal indicators, Fourier terms, seasonal differencing, seasonal AR or MA terms, a seasonal state in an exponential-smoothing or state-space model, or a seasonal-naive forecast.
 
@@ -447,8 +465,8 @@ Software may shorten the output, pad boundaries, reflect data, or use asymmetric
 
 ### Seasonal validation
 
-Use seasonal forecast origins and a seasonal-naive benchmark. For period-12 data, report errors at horizons such as 1, 3, 6, and 12. A model can perform well one month ahead and poorly one year ahead because the seasonal extrapolation mechanism differs by horizon.
+Use seasonal forecast origins and a seasonal-naive benchmark. For period-12 data, report errors at horizons such as 1, 3, 6, and 12, and include origins from different months so that the result is not dominated by one seasonal position. A model can perform well one month ahead and poorly one year ahead because the seasonal extrapolation mechanism differs by horizon.
 
-![Seasonal naive forecast](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/arima_seasonality/07_seasonal_naive_forecast.png)
+![Seasonal naive forecast](../../assets/time_series/arima_seasonality/07_seasonal_naive_forecast.png)
 
-The seasonal-naive figure provides the benchmark that any more elaborate seasonal model should beat on future-like data. Repeating the most recent value from the same season is simple, but it can be difficult to improve upon when the seasonal pattern is stable.
+The seasonal-naive figure provides the benchmark that any more elaborate seasonal model should beat on chronologically held-out data. Repeating the most recent value from the same season is simple, but it can be difficult to improve upon when the seasonal pattern is stable.

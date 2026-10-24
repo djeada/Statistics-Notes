@@ -1,8 +1,24 @@
 # Frequency-Domain Analysis
 
-Frequency-domain analysis describes a time series by the cycle lengths that contribute to its variation rather than by relationships at individual lags. The periodogram and spectral density provide a complementary view to the ACF, translating repeated temporal structure into peaks at corresponding frequencies.
+[Time series index](README.md)
+
+Frequency-domain analysis describes a time series by the cycle lengths that contribute to its variation rather than by relationships at individual lags. The periodogram estimates the frequency content of an observed record, while the spectral density describes the corresponding population second-order structure when a density exists. Both complement the ACF by showing how lagged variation relates to oscillations at different frequencies.
 
 The interpretation depends critically on how the series was sampled and observed. Nyquist limits, aliasing, finite-record resolution, spectral leakage, trend treatment, and windowing can all create or distort apparent peaks, so frequencies should be translated back into periods and checked against the time-domain behavior before they are given a substantive meaning.
+
+**Reading guide.** Start by translating every frequency into a period with stated sampling units. Then use the DFT and periodogram sections to connect the observed record to its spectral representation. The worked examples and checklist explain how record length, trend treatment, aliasing, and windowing affect a peak before it is interpreted as evidence for a repeating mechanism.
+
+**Related reading:** [autocovariance](autocovariance_function.md).
+
+**On this page**
+
+- [Formula reference](#formula-reference)
+- [Worked calculation: frequency, period, and resolution](#worked-calculation-frequency-period-and-resolution)
+- [Relating lags, frequencies, and periods](#relating-lags-frequencies-and-periods)
+- [Fourier Transform and Periodogram](#fourier-transform-and-periodogram)
+- [Nyquist Frequency and Aliasing](#nyquist-frequency-and-aliasing)
+- [Spectral Leakage](#spectral-leakage)
+- [Worked examples: interpreting spectral variation](#worked-examples-interpreting-spectral-variation)
 
 ## Formula reference
 
@@ -48,9 +64,11 @@ The Nyquist frequency is $0.5$ cycles per observation. Frequencies above that li
 
 The periodogram peak should therefore be translated back into a period before interpretation. A peak near $0.0833$ means "about 12 observations per cycle," not "frequency 12."
 
-![A period-12 signal and its periodogram](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/19_frequency_periodogram.png)
+![A period-12 signal and its periodogram](../../assets/time_series/student/19_frequency_periodogram.png)
 
 The figure connects the repeated pattern in the time domain to a concentrated peak in the frequency domain. The horizontal location of the peak gives the cycle frequency, while its inverse gives the period in observations.
+
+## Relating lags, frequencies, and periods
 
 Time-domain methods describe dependence through lags. Frequency-domain methods describe how variation is distributed across cycles of different frequencies. These are complementary views of the same second-order structure for a stationary process.
 
@@ -76,7 +94,7 @@ $$
 X_k=\sum_{t=0}^{N-1}x_te^{-i2\pi kt/N}.
 $$
 
-A **periodogram** summarizes the squared magnitude of these Fourier components across frequency. For a weakly stationary process, the theoretical spectral density is the Fourier transform of the autocovariance function, so the ACF and spectrum encode the same second-order information in different coordinates.
+A **periodogram** summarizes the squared magnitude of these Fourier components across frequency. When the autocovariances are absolutely summable, their Fourier transform gives a spectral density, and the inverse transform recovers the autocovariances. The ACF and spectrum then encode the same second-order information in different coordinates. More general weakly stationary processes have a spectral measure, which need not have an ordinary density.
 
 One common periodogram scaling is proportional to
 
@@ -86,7 +104,7 @@ $$
 
 Exact normalizations vary across software and depend on whether a one-sided or two-sided spectrum and physical sampling units are used.
 
-![Periodogram](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/05_periodogram.png)
+![Periodogram](../../assets/time_series/state_space_frequency/05_periodogram.png)
 
 The periodogram figure shows how dominant cycle lengths appear as peaks. Because a raw periodogram is noisy, interpretation should focus on stable structure rather than treating every local maximum as a distinct physical cycle.
 
@@ -100,7 +118,7 @@ $$
 
 cycle per interval. A higher-frequency signal can produce exactly the same sampled values as a lower-frequency signal, a phenomenon called **aliasing**.
 
-![Aliasing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/07_aliasing.png)
+![Aliasing](../../assets/time_series/state_space_frequency/07_aliasing.png)
 
 The figure demonstrates why the sampling rate must be known before assigning a physical interpretation to a spectral peak. Once a frequency has aliased into the observed band, the sampled data alone cannot recover the original higher frequency.
 
@@ -110,7 +128,7 @@ A finite observation window rarely contains an exact integer number of cycles. T
 
 Tapering or windowing can reduce leakage by softening the sample edges, but it also broadens peaks. The tradeoff is therefore not simply "windowed is better": lower side lobes come at the cost of reduced frequency resolution.
 
-![Spectral leakage and windowing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/06_spectral_leakage_windowing.png)
+![Spectral leakage and windowing](../../assets/time_series/state_space_frequency/06_spectral_leakage_windowing.png)
 
 The figure shows the same underlying frequency under different window treatments. The narrower peak from a rectangular window can have stronger side lobes, while a taper suppresses those side lobes but spreads energy across a wider main peak.
 
@@ -118,13 +136,13 @@ Strong trend also concentrates power near frequency zero. If the goal is to stud
 
 For two stationary series, cross-spectral methods examine shared variation by frequency. **Coherence** is a frequency-specific measure of linear association, but high coherence does not establish direction or causality.
 
-![Frequency relationship](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/state_space_frequency/08_frequency_relationship.png)
+![Frequency relationship](../../assets/time_series/state_space_frequency/08_frequency_relationship.png)
 
 The frequency-relationship figure illustrates how two series can share a strong cycle even when their time-domain relationship is difficult to see directly.
 
 A practical workflow is to establish the sampling interval, inspect trend and stationarity, compute a periodogram or smoothed spectrum, translate peaks into periods, and interpret them with aliasing, leakage, and multiple-search concerns in mind.
 
-## Student guide: read a spectrum as a decomposition of variation
+## Worked examples: interpreting spectral variation
 
 Frequency analysis answers a different question from lag-based analysis:
 
@@ -161,7 +179,7 @@ f_k=\frac{k}{N},
 k=0,\ldots,\left\lfloor\frac{N}{2}\right\rfloor.
 $$
 
-The spacing is $1/N$. With $N=240$,
+The Fourier-bin spacing is $1/N$ for a unit sampling interval. This spacing is a property of the grid; the ability to distinguish nearby physical frequencies also depends on the observation window and signal strength. With $N=240$,
 
 $$
 \Delta f=\frac{1}{240}=0.004167.
@@ -225,7 +243,7 @@ $$
 I_{xy}(f)=X(f)\overline{Y(f)}.
 $$
 
-A smoothed squared coherence has the form
+Estimate coherence from smoothed or segment-averaged spectral quantities. Taking the ratio of raw single-record periodograms would give 1 wherever both DFTs are nonzero, so it would not measure the intended relationship. With appropriate spectral estimates, squared coherence has the form
 
 $$
 C_{xy}^2(f)=\frac{|S_{xy}(f)|^2}{S_{xx}(f)S_{yy}(f)}.

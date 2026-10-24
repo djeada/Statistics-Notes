@@ -1,8 +1,14 @@
 # Stochastic Processes and White Noise
 
+[Time series index](README.md)
+
 A stochastic process is a collection of random variables indexed by time, and an observed time series is one realized path from that process. This viewpoint separates the data we actually see from the probabilistic mechanism used to describe possible paths and future uncertainty.
 
 White noise is the basic reference process for new, unstructured shocks. It has stable second-order behavior and no linear serial correlation, so many time-series models aim to explain the predictable structure in the data and leave behind innovations that behave approximately like white noise.
+
+**Reading guide.** First distinguish a random variable from one observed value and a process from one observed path. Next compare white noise, independent shocks, and martingale differences by the assumptions each one adds. The worked examples return to these definitions to show why zero autocorrelation can coexist with dependence and why accumulated white-noise shocks produce a nonstationary level.
+
+**Related reading:** [stationarity](stationarity.md).
 
 ## Formula reference
 
@@ -38,9 +44,11 @@ $$
 
 The individual shocks have constant variance, but the variance of their accumulated sum grows with time. This is the simplest calculation showing why white-noise increments do not make the random-walk level stationary.
 
-![White noise and its accumulated random walk](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/04_white_noise_and_random_walk.png)
+![White noise and its accumulated random walk](../../assets/time_series/student/04_white_noise_and_random_walk.png)
 
 The figure contrasts the stable spread of the shocks with the increasing dispersion of their cumulative sum. The visual distinction mirrors the variance calculation above.
+
+## Processes, random variables, and observed paths
 
 A time series is one observed path from an underlying **stochastic process**: a family of random variables indexed by time,
 
@@ -58,11 +66,48 @@ $$
 X_t=m_t+\varepsilon_t.
 $$
 
-The term $m_t$ summarizes information available before time $t$, while $\varepsilon_t$ represents new information arriving at time $t$. In ARMA-type models, these shocks are often called **innovations**.
+When $m_t=E(X_t\mid\mathcal F_{t-1})$, the predictable term is the conditional mean given the available past, and $\varepsilon_t$ is a **conditional-mean innovation**. In a linear prediction model, an innovation can instead mean the error of the best linear predictor. That error is orthogonal to past linear predictors; a zero conditional mean requires an additional assumption, such as joint Gaussianity or an explicit conditional-mean model.
 
 This distinction matters because a useful model should explain the predictable structure and leave an innovation that cannot be systematically forecast from the past.
 
-## Student guide: random variables, paths, and innovations
+## White Noise
+
+A weak white-noise process $\{\varepsilon_t\}$ satisfies
+
+$$
+E[\varepsilon_t]=0,
+\qquad
+\mathrm{Var}(\varepsilon_t)=\sigma^2,
+\qquad
+\mathrm{Cov}(\varepsilon_t,\varepsilon_{t-h})=0\quad(h\ne0).
+$$
+
+The definition therefore combines a constant mean and variance with the absence of linear serial correlation. It does not require independence. **Independent white noise** adds independence across time, while **Gaussian white noise** is commonly taken to mean independent normal innovations with constant variance.
+
+For a fitted time-series model, residuals that resemble white noise indicate that the model has removed the systematic linear dependence it was designed to explain. That is a necessary diagnostic for many models, but not a guarantee that every aspect of the data-generating process has been captured.
+
+## White Noise vs Random Walk
+
+White noise is weakly stationary, while a random walk accumulates white-noise shocks:
+
+$$
+X_t=X_{t-1}+\varepsilon_t
+=X_0+\sum_{j=1}^{t}\varepsilon_j.
+$$
+
+Because the variance of the level grows with $t$, the random walk is not weakly stationary even though its first differences are white noise. The worked calculation and figure at the start of the chapter show this contrast directly.
+
+## Martingale Differences
+
+If $\mathcal F_{t-1}$ represents the information available before time $t$, a martingale difference satisfies
+
+$$
+E[\varepsilon_t\mid\mathcal F_{t-1}]=0.
+$$
+
+This condition rules out predictable conditional-mean structure. Weak white noise, by contrast, only rules out linear autocorrelation in the unconditional second moments. With finite second moments, a martingale difference is uncorrelated with its own past, but its unconditional variance need not be constant. A martingale difference with constant variance is therefore weak white noise. Weak white noise does not, in the other direction, guarantee a zero conditional mean or independence.
+
+## Worked examples: paths, innovations, and dependence
 
 The notation $X_t$ and $x_t$ keeps two ideas separate:
 
@@ -110,13 +155,15 @@ These concepts overlap, but they are not interchangeable. State which assumption
 
 ### A dependence counterexample
 
-Let $Z_t$ be independent with mean zero and finite variance, and define
+Let $Z_t$ be IID standard-normal random variables, and define
 
 $$
 X_t=Z_tZ_{t-1}.
 $$
 
-Then $\mathrm{Cov}(X_t,X_{t-1})=E[Z_tZ_{t-1}^2Z_{t-2}]=0$ and every other lag is uncorrelated as well, so $X_t$ is white noise, yet adjacent values share $Z_{t-1}$ and are not independent (for instance, $X_t^2$ and $X_{t-1}^2$ are positively correlated when $Z_t$ is non-degenerate). This illustrates why an ACF close to zero does not by itself establish independence.
+The mean is zero and the variance is 1. At lag 1, independence of the $Z$ variables gives $\mathrm{Cov}(X_t,X_{t-1})=E[Z_tZ_{t-1}^2Z_{t-2}]=0$; every other nonzero lag also has zero covariance. Thus $X_t$ is weak white noise.
+
+Adjacent values nevertheless share a random factor. For this normal example, $E(X_t^2X_{t-1}^2)=E(Z_t^2)E(Z_{t-1}^4)E(Z_{t-2}^2)=3$, while $E(X_t^2)E(X_{t-1}^2)=1$. The squared values therefore have covariance 2 and are dependent. Zero autocorrelation of the original series has left this dependence undetected.
 
 ### White noise and random walk
 
@@ -136,45 +183,8 @@ With $\sigma^2=4$, the conditional variance after 25 steps is $100$. The increme
 
 ### Residual use
 
-White-noise residuals are a target for a conditional-mean model. If residuals retain autocorrelation, some predictable mean structure remains. If squared residuals retain autocorrelation, the conditional variance may still be time-varying. Heavy-tailed residuals can also make Gaussian prediction intervals too narrow.
+Innovation residuals that resemble white noise are a useful target when checking a conditional-mean model. Regression errors and fitted innovations need not be the same sequence, so identify the residual type before interpreting a diagnostic. If residuals retain autocorrelation, some predictable mean structure remains. If squared residuals retain autocorrelation, the conditional variance may still be time-varying. Heavy-tailed residuals can also make Gaussian prediction intervals too narrow.
 
 These diagnostics provide evidence rather than proof. A finite sample can look white by chance, and standard autocorrelation tests have limited power against nonlinear or time-varying alternatives.
-
-## White Noise
-
-A weak white-noise process $\{\varepsilon_t\}$ satisfies
-
-$$
-E[\varepsilon_t]=0,
-\qquad
-\mathrm{Var}(\varepsilon_t)=\sigma^2,
-\qquad
-\mathrm{Cov}(\varepsilon_t,\varepsilon_{t-h})=0\quad(h\ne0).
-$$
-
-The definition therefore combines a constant mean and variance with the absence of linear serial correlation. It does not require independence. **Independent white noise** adds independence across time, while **Gaussian white noise** is commonly taken to mean independent normal innovations with constant variance.
-
-For a fitted time-series model, residuals that resemble white noise indicate that the model has removed the systematic linear dependence it was designed to explain. That is a necessary diagnostic for many models, but not a guarantee that every aspect of the data-generating process has been captured.
-
-## White Noise vs Random Walk
-
-White noise is weakly stationary, while a random walk accumulates white-noise shocks:
-
-$$
-X_t=X_{t-1}+\varepsilon_t
-=X_0+\sum_{j=1}^{t}\varepsilon_j.
-$$
-
-Because the variance of the level grows with $t$, the random walk is not weakly stationary even though its first differences are white noise. The worked calculation and figure at the start of the chapter show this contrast directly.
-
-## Martingale Differences
-
-If $\mathcal F_{t-1}$ represents the information available before time $t$, a martingale difference satisfies
-
-$$
-E[\varepsilon_t\mid\mathcal F_{t-1}]=0.
-$$
-
-This condition rules out predictable conditional-mean structure. Weak white noise, by contrast, only rules out linear autocorrelation in the unconditional second moments. A sequence can satisfy one condition without satisfying every stronger notion of independence.
 
 Continue with [stationarity](stationarity.md), [autocovariance](autocovariance_function.md), and [autocorrelation](autocorrelation_function.md) to see how these ideas are used in time-series modeling and diagnostics.

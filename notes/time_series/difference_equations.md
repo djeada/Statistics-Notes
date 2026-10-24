@@ -1,8 +1,14 @@
-# Difference Equation
+# Difference Equations
+
+[Time series index](README.md)
 
 A difference equation describes how a discrete-time quantity evolves from its earlier values. Rather than specifying every term directly, it gives a recursive rule, so the behavior of the sequence is determined by the recursion together with its initial conditions.
 
 For time-series models, the important question is how those recursive effects behave as time passes. Characteristic roots reveal whether deviations decay, oscillate, or grow, which connects difference equations directly to persistence, stability, shock propagation, and autoregressive dynamics.
+
+**Reading guide.** Start with a deterministic recursion and its initial conditions before adding random shocks. In the root calculations, distinguish the roots governing powers of time from roots of a polynomial in the backshift variable: they are reciprocals. This distinction explains why stability is sometimes described using roots inside the unit circle and sometimes using roots outside it.
+
+**Related reading:** [sequences and series](series.md).
 
 ## Formula reference
 
@@ -54,9 +60,11 @@ $$
 
 Because $|0.7|<1$, the effect of the starting value shrinks over time. If the coefficient had absolute value greater than 1, the same recursion would amplify deviations instead.
 
-![A stable first-order difference equation](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/02_difference_equation.png)
+![A stable first-order difference equation](../../assets/time_series/student/02_difference_equation.png)
 
-A **difference equation**, also called a recurrence relation, defines each term of a sequence from one or more earlier terms. An explicit formula such as $a_n=3n+2$ gives $a_n$ directly. A difference equation instead describes how the sequence evolves from its previous values.
+## Recurrence relations and initial conditions
+
+A **difference equation**, also called a recurrence relation, defines each term of a sequence from one or more earlier terms. An order-$p$ recursion ordinarily needs $p$ initial values to select a particular solution from the family allowed by the equation. An explicit formula such as $a_n=3n+2$ gives $a_n$ directly. A difference equation instead describes how the sequence evolves from its previous values.
 
 For example,
 
@@ -66,7 +74,7 @@ $$
 
 is a second-order difference equation because $a_n$ depends on the two preceding terms.
 
-### Solving Difference Equations
+## Solving Difference Equations
 
 For a homogeneous linear difference equation with constant coefficients, we often try a solution of the form
 
@@ -108,7 +116,7 @@ $$
 
 where $c_1$ and $c_2$ are determined by the initial conditions.
 
-### Example: Solving with Initial Conditions
+## Example: Solving with Initial Conditions
 
 Suppose $a_0=4$ and $a_1=10$. Substituting $n=0$ gives
 
@@ -143,9 +151,9 @@ $$
 a_n=2\cdot2^n+2\cdot3^n.
 $$
 
-This example shows the usual progression: derive the characteristic roots first, then use the initial observations to determine the coefficients.
+The calculation has two separate stages. The characteristic equation determines the possible time patterns, here $2^n$ and $3^n$. The initial conditions then determine how much of each pattern appears in this particular sequence. Checking $n=0$ and $n=1$ in the final expression verifies that both starting values are recovered.
 
-### Higher-Order Difference Equations
+## Higher-Order Difference Equations
 
 A $k$th-order homogeneous linear difference equation can be written as
 
@@ -167,7 +175,7 @@ $$
 
 The constants are determined by the initial conditions. Repeated roots require additional polynomial factors in $n$, while complex roots lead naturally to oscillating terms. These root patterns are important in time-series models because they determine whether responses decay, oscillate, or grow.
 
-### Example: Fibonacci Sequence
+## Example: Fibonacci Sequence
 
 Consider the Fibonacci-type recurrence
 
@@ -221,7 +229,7 @@ $$
 
 The recurrence, its characteristic roots, and the closed-form expression all describe the same sequence from different viewpoints.
 
-### Relation to Differential Equations
+## Relation to Differential Equations
 
 Linear difference equations play a role in discrete time that is analogous to linear differential equations in continuous time. For example, a $k$th-order linear ordinary differential equation can be written as
 
@@ -231,9 +239,9 @@ $$
 
 Trying a solution of the form $y(t)=e^{\lambda t}$ produces a characteristic polynomial. Its roots determine the exponential components of the continuous-time solution, just as powers of characteristic roots determine the solution of a difference equation.
 
-The analogy is useful, but the stability conditions are different: discrete-time roots are interpreted relative to the unit circle, whereas continuous-time stability is determined by the real parts of the corresponding exponential rates.
+The analogy is useful, but the stability conditions use different boundaries. In discrete time, powers $r^t$ decay when $|r|<1$. In continuous time, exponentials $e^{\lambda t}$ decay when the real part of $\lambda$ is negative. Keep the solution form in view when applying either condition.
 
-## Student guide: read a recursion through its roots
+## Worked examples: roots, equilibrium, and shocks
 
 For a homogeneous AR(2)-style recursion
 
@@ -289,7 +297,7 @@ $$
 
 Difference equations therefore connect directly to moving-average representations and forecast uncertainty: the same powers of $\phi$ that govern stability also determine how quickly the effect of a shock fades.
 
-![Stable and unstable recursions](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/02_difference_equation_stability.png)
+![Stable and unstable recursions](../../assets/time_series/foundations/02_difference_equation_stability.png)
 
 The figure contrasts decaying and expanding paths, making the root-based stability condition visible in the time domain.
 

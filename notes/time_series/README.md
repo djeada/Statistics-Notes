@@ -2,6 +2,45 @@
 
 Time-series methods extend the core statistics curriculum to observations indexed by time, where serial dependence, trend, seasonality, and changing variance make independent-sample methods inadequate.
 
+**On this page**
+
+- [How to read this unit](#how-to-read-this-unit)
+- [Notation and conventions](#notation-and-conventions)
+- [Formula reference](#formula-reference)
+- [Prerequisites](#prerequisites)
+- [1. Mathematical and Stochastic Foundations](#1-mathematical-and-stochastic-foundations)
+- [2. Dependence and Stationarity](#2-dependence-and-stationarity)
+- [3. Classical Linear Models](#3-classical-linear-models)
+- [4. Fitting and Diagnostics](#4-fitting-and-diagnostics)
+- [5. Forecasting and Evaluation](#5-forecasting-and-evaluation)
+- [6. Extensions](#6-extensions)
+- [Practice](#practice)
+- [Companion Implementations](#companion-implementations)
+- [Model Selection Map](#model-selection-map)
+- [Terminology](#terminology)
+
+## How to read this unit
+
+The six sections below form a learning path from mathematical foundations to model extensions. Start with [Time Series Analysis](time_series.md) if you want an overview of the data and modeling questions, then return to the foundations where an unfamiliar definition or calculation needs more work. Read the numbered topics in order for a full treatment of the unit.
+
+Each chapter opens with a reading guide, a formula reference, and a worked calculation. The conceptual sections develop the definitions and assumptions; the final worked examples revisit them through numerical calculations, interpretation, and practical diagnostics. Repeated examples serve different purposes, such as checking an identity, deriving uncertainty, or validating a forecasting procedure.
+
+Use the [model selection map](#model-selection-map) to connect a data feature to a starting model, and the [companion implementations](#companion-implementations) to move from an explanation to a reproducible experiment. Keep the full estimation and evaluation procedure in view when comparing methods.
+
+## Notation and conventions
+
+| Symbol or term | Meaning in these notes | What to check |
+|---|---|---|
+| $X_t$ and $x_t$ | A random variable and its observed realization at time $t$. | A single observed path does not show every feature of the process distribution. |
+| $\varepsilon_t$, $\epsilon_t$, $Z_t$, or $w_t$ | Shocks or innovations, according to the equation in the chapter. | Weak white noise, independent noise, and conditional-mean innovations impose different assumptions. |
+| $\mu$ and $c$ | Process mean and model intercept. | For an AR model they are generally different quantities. |
+| $B$, $\Delta$, and $\nabla$ | Backshift and differencing operators. | $BX_t=X_{t-1}$; $\Delta X_t=\nabla X_t=X_t-X_{t-1}$. |
+| $\gamma(h)$ and $\rho(h)$ | Population autocovariance and autocorrelation at lag $h$. | Hats or sample coefficients denote estimates; state their denominator convention. |
+| $\mathcal F_t$ and $\hat X_{t+h\mid t}$ | Information available at origin $t$, and a forecast $h$ steps ahead from that origin. | Predictors, transformations, and parameter estimates must respect the same information boundary. |
+| AR and MA roots | Zeros of a lag polynomial in a variable such as $z$. | Stable causal AR and invertible MA polynomials have zeros outside the unit circle; time-recursion roots use the reciprocal convention. |
+
+The usual MA convention here is $\theta(B)=1+\theta_1B+\cdots+\theta_qB^q$, but a few examples explicitly use minus-signed coefficients. Compare expanded equations before comparing coefficient values across chapters or software. The formula tables are references to the assumptions explained in the text, rather than formulas that apply to every series without qualification.
+
 ## Formula reference
 
 | Topic | General formula | Notes / common special case |
@@ -64,7 +103,7 @@ Use the same workflow for every model class:
 3. transform or difference only when the model and question require it;
 4. fit a small set of plausible candidates;
 5. check residual dependence and variance;
-6. evaluate the complete forecasting procedure on future-like origins.
+6. evaluate the complete forecasting procedure at historical forecast origins, using only information available at each date.
 
 ## 5. Forecasting and Evaluation
 

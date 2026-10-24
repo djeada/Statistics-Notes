@@ -1,8 +1,28 @@
 # Forecasting with Time Series
 
-A time-series forecast is a conditional statement about a future observation given the information available at a specific forecast origin. The horizon, target functional, and information set are part of the forecast itself, so a point prediction without its timing and uncertainty is an incomplete description.
+[Time series index](README.md)
+
+A time-series forecast is a conditional statement about a future observation given the information available at a specific forecast origin. State the horizon, the quantity being predicted, and the information available when the forecast is issued. A point forecast may target a conditional mean, median, or quantile; these targets answer different questions and should be accompanied by an appropriate account of uncertainty.
 
 Forecasting methods differ in the assumptions they make about persistence, trend, seasonality, nonlinear structure, and future predictors. Useful methods are therefore compared chronologically against simple baselines and judged not only by point accuracy but also by uncertainty calibration, stability across horizons, and whether the required information would actually be available in deployment.
+
+**Reading guide.** Start with simple baselines and recursive smoothing before comparing linear and machine-learning approaches. For every method, distinguish the point forecast from its uncertainty and state how multiple future steps are produced. The final examples return to numerical forecasts, transformations, and communication so that the method comparison remains tied to a concrete forecasting task.
+
+**Related reading:** [forecast evaluation and backtesting](forecast_evaluation.md).
+
+**On this page**
+
+- [Formula reference](#formula-reference)
+- [Worked calculation: a forecast and its uncertainty](#worked-calculation-a-forecast-and-its-uncertainty)
+- [The forecast target and available information](#the-forecast-target-and-available-information)
+- [Components of a Time Series](#components-of-a-time-series)
+- [Forecasting Methods](#forecasting-methods)
+- [Linear Prediction for Stationary Series](#linear-prediction-for-stationary-series)
+- [ARAR Algorithm](#arar-algorithm)
+- [Machine Learning for Time Series Forecasting](#machine-learning-for-time-series-forecasting)
+- [Comparison of Various Models](#comparison-of-various-models)
+- [Model Evaluation](#model-evaluation)
+- [Worked examples: constructing and communicating forecasts](#worked-examples-constructing-and-communicating-forecasts)
 
 ## Formula reference
 
@@ -50,7 +70,7 @@ $$
 The $h$-step forecast-error variance is
 
 $$
-\mathrm{Var}(X_{T+h}-\hat X_{T+h|T})
+\mathrm{Var}(X_{T+h}-\hat X_{T+h\mid T})
 =\sum_{j=0}^{h-1}0.8^{2j}.
 $$
 
@@ -70,65 +90,67 @@ that is, roughly $(0.69,\,5.71)$.
 
 The point forecast moves toward the long-run mean, while the uncertainty increases with horizon.
 
-![Forecast paths and expanding prediction intervals](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/14_forecasting_intervals.png)
+![Forecast paths and expanding prediction intervals](../../assets/time_series/student/14_forecasting_intervals.png)
 
 The figure shows both parts of a forecast. The central path gives the conditional mean, while the widening interval reflects uncertainty from future shocks that have not yet been observed.
 
+## The forecast target and available information
+
 Time-series forecasting predicts future observations using information available at a specified forecast origin. A forecast is therefore not only a model output; it is a conditional statement tied to a horizon, an information set, and an uncertainty estimate.
 
-### Components of a Time Series
+## Components of a Time Series
 
 Forecasting methods differ in how they represent trend, seasonality, cycles, and irregular variation. Identifying these structures first helps determine which model class and baseline are appropriate.
 
 **Trend** is a persistent long-run movement in level or slope.
 
-![output(3)](https://github.com/user-attachments/assets/e13025a4-6bef-42ed-965e-4ddb3c2145b0)
+![A time series with a changing trend](https://github.com/user-attachments/assets/e13025a4-6bef-42ed-965e-4ddb3c2145b0)
 
 The trend figure shows a systematic change in the level. A level-only forecasting method will lag behind such movement unless a trend component or transformation is included.
 
 **Seasonality** is a pattern that repeats at a fixed period such as day of week, month of year, or quarter.
 
-![output(4)](https://github.com/user-attachments/assets/13340698-294d-41a9-ab0f-95e7e1b9bb82)
+![A time series with repeating seasonal peaks and troughs](https://github.com/user-attachments/assets/13340698-294d-41a9-ab0f-95e7e1b9bb82)
 
 The repeated spacing of peaks and troughs suggests a seasonal model or seasonal baseline rather than an ordinary non-seasonal trend model.
 
 **Cycles** are oscillations whose duration is not tied to one fixed seasonal period.
 
-![output(7)](https://github.com/user-attachments/assets/92f432e5-92af-42fa-bf1e-4bf8c39bd8fc)
+![A time series with cycles of varying duration](https://github.com/user-attachments/assets/92f432e5-92af-42fa-bf1e-4bf8c39bd8fc)
 
 Because cycle length can vary, long-range cyclic behavior is usually harder to extrapolate reliably than fixed calendar seasonality.
 
 The **irregular component** is the variation not explained by the chosen systematic structure.
 
-![output(6)](https://github.com/user-attachments/assets/a96bd328-82b5-4e39-9cba-f008dbaf57dc)
+![Irregular variation remaining after systematic components](https://github.com/user-attachments/assets/a96bd328-82b5-4e39-9cba-f008dbaf57dc)
 
 A remainder should be checked rather than assumed to be random. Residual autocorrelation, changing variance, or heavy tails indicate structure that the forecasting model has not yet captured.
 
-### Forecasting Methods
+## Forecasting Methods
 
-Forecasting methods encode different assumptions about persistence, level, trend, seasonality, and nonlinear dependence. Start with a simple baseline, then add complexity only when it improves future-like predictions or provides necessary probabilistic structure.
+Forecasting methods encode different assumptions about persistence, level, trend, seasonality, and nonlinear dependence. Start with a simple baseline, then add complexity only when it improves predictions made at historical forecast origins or provides necessary probabilistic structure.
 
-#### Naive Forecast
+### Naive Forecast
 
 The naive forecast assumes that the latest observed level persists:
 
 $$
-\hat y_{t+h|t}=y_t.
+\hat y_{t+h\mid t}=y_t.
 $$
 
 For one step ahead this is simply
 
 $$
-\hat y_{t+1|t}=y_t.
+\hat y_{t+1\mid t}=y_t.
 $$
 
 It is a strong baseline for persistent non-seasonal series and is the optimal conditional-mean forecast for a zero-drift random walk.
 
-![Baseline forecasts](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/01_baseline_forecasts.png)
+![Baseline forecasts](../../assets/time_series/forecasting/01_baseline_forecasts.png)
 
 The figure compares several simple rules. Naive, seasonal-naive, mean, and drift forecasts correspond to different assumptions about what persists into the future, so the benchmark should match the basic structure of the series.
 
-#### Simple Exponential Smoothing (SES)
+### Simple Exponential Smoothing (SES)
 
 **Simple Exponential Smoothing (SES)** is designed for a series with an evolving level but no explicit trend or seasonal component. The level update can be written as
 
@@ -140,7 +162,7 @@ $$
 and the level-only forecast is
 
 $$
-\hat x_{t+h|t}=\ell_t.
+\hat x_{t+h\mid t}=\ell_t.
 $$
 
 A larger $\alpha$ reacts more strongly to the newest observation, while a smaller $\alpha$ produces a smoother level estimate with longer memory.
@@ -157,11 +179,11 @@ $$
 
 up to the contribution from the initial state. The observation weights decay geometrically.
 
-![Exponential smoothing](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/06_exponential_smoothing.png)
+![Exponential smoothing](../../assets/time_series/forecasting/06_exponential_smoothing.png)
 
 The figure shows how the smoothed level reacts to new observations. Higher responsiveness follows recent movements more closely but can also chase short-lived noise.
 
-##### Initial Condition
+#### Initial Condition
 
 A simple initialization is
 
@@ -171,33 +193,33 @@ $$
 
 Another option is to estimate the initial level jointly with $\alpha$ or use an average of early observations. Initialization matters most in short series and when $\alpha$ is small.
 
-##### Forecast Error
+#### Forecast Error
 
 The one-step forecast error is
 
 $$
-e_t=x_t-\hat x_{t|t-1}.
+e_t=x_t-\hat x_{t\mid t-1}.
 $$
 
 These errors can be used to choose the smoothing parameter and to diagnose whether a level-only model is adequate.
 
-##### Sum of Squared Errors (SSE)
+#### Sum of Squared Errors (SSE)
 
 One fitting criterion is
 
 $$
-\mathrm{SSE}(\alpha)=\sum_t(x_t-\hat x_{t|t-1})^2.
+\mathrm{SSE}(\alpha)=\sum_t(x_t-\hat x_{t\mid t-1})^2.
 $$
 
 A value of $\alpha$ can be selected by minimizing this criterion, although state-space formulations often estimate smoothing parameters and initial states jointly by likelihood.
 
-##### Choosing the Optimal Smoothing Parameter
+#### Choosing the Optimal Smoothing Parameter
 
 A value of $\alpha$ close to 1 gives most weight to recent data and adapts quickly. A value close to 0 changes slowly and averages information over a longer effective history.
 
 Choose $\alpha$ from a fitting criterion or temporal validation rather than from visual smoothness alone. A smoother-looking fitted line is not necessarily a better forecast.
 
-##### Recursive Form of SES
+#### Recursive Form of SES
 
 The recursive update
 
@@ -207,7 +229,7 @@ $$
 
 requires only the previous state and the newest observation. This makes SES computationally efficient and naturally suited to sequential updating.
 
-#### Holt’s Linear Trend Method (Double Exponential Smoothing)
+### Holt’s Linear Trend Method (Double Exponential Smoothing)
 
 Holt's method adds a trend state to the evolving level. One common additive formulation is
 
@@ -222,18 +244,18 @@ $$
 with forecast
 
 $$
-\hat x_{t+h|t}=\ell_t+hb_t.
+\hat x_{t+h\mid t}=\ell_t+hb_t.
 $$
 
 The level state estimates the current baseline, while $b_t$ estimates the local slope. Initial values can be set from the first observations or estimated jointly with the smoothing parameters.
 
 A damped-trend variant can be useful when indefinitely extrapolating the current slope is unrealistic.
 
-#### Holt-Winters Seasonal Method (Triple Exponential Smoothing)
+### Holt-Winters Seasonal Method (Triple Exponential Smoothing)
 
 Holt-Winters extends the level and trend states with a seasonal state of period $L$. Additive seasonality is appropriate when seasonal swings are roughly constant in absolute size; multiplicative seasonality is appropriate when they scale with the level.
 
-##### Additive Model
+#### Additive Model
 
 A common additive formulation is
 
@@ -258,13 +280,13 @@ $$
 The $h$-step forecast is
 
 $$
-\hat x_{t+h|t}
+\hat x_{t+h\mid t}
 =\ell_t+hb_t+s_{t+h-L\lceil h/L\rceil}.
 $$
 
-The seasonal index selects the most recent state for the corresponding future season.
+The seasonal index selects the most recent state for the corresponding future season. It cycles through the $L$ estimated seasonal positions as the horizon grows; it does not require an unobserved future seasonal state to be supplied as input.
 
-##### Multiplicative Model
+#### Multiplicative Model
 
 A common multiplicative formulation is
 
@@ -289,15 +311,15 @@ $$
 with forecast
 
 $$
-\hat x_{t+h|t}
+\hat x_{t+h\mid t}
 =(\ell_t+hb_t)s_{t+h-L\lceil h/L\rceil}.
 $$
 
 For additive seasonality, initial seasonal states are commonly centered to sum to zero. For multiplicative seasonality, they are commonly scaled to average 1. The exact initialization and state equations vary across software and ETS formulations, so reproduce the parameterization when comparing results.
 
-### Linear Prediction for Stationary Series
+## Linear Prediction for Stationary Series
 
-For a weakly stationary series with mean $\mu$, a linear predictor of $X_{n+h}$ based on $X_n,\ldots,X_1$ can be written as
+For a weakly stationary series with mean $\mu$, a linear predictor of $X_{n+h}$ based on $X_n,\ldots,X_1$ can be written as follows. The best linear predictor minimizes mean squared error within this linear class. It equals the full conditional mean under joint Gaussianity, but that equality does not follow from weak stationarity alone:
 
 $$
 \hat X_{n+h}
@@ -334,25 +356,25 @@ $$
 
 Algorithms such as Durbin-Levinson and the innovations algorithm exploit Toeplitz and innovations structure to compute predictors efficiently.
 
-### ARAR Algorithm
+## ARAR Algorithm
 
 The **ARAR algorithm** uses an autoregressive prefilter to shorten strong persistence before fitting a lower-order dynamic model. A typical sequence is to filter the persistent series, fit an AR-type or ARMA-type model on the filtered representation, forecast there, and then invert the filter.
 
 The method is useful as a historical forecasting approach for strongly persistent series. As with any transformation, the inverse step and forecast uncertainty must be carried back to the original scale consistently.
 
-### Machine Learning for Time Series Forecasting
+## Machine Learning for Time Series Forecasting
 
 Machine-learning methods can be useful when nonlinear interactions, many predictors, or large collections of related series are available. They are not inherently more accurate than statistical time-series models; performance depends on data volume, signal structure, feature availability, horizon, and the validation design.
 
 The most important adaptation is to preserve the time information. Lag features, rolling summaries, calendar variables, and exogenous predictors must be constructed using only information that would have been available at each forecast origin.
 
-#### Key Challenges in Time Series Forecasting
+### Key Challenges in Time Series Forecasting
 
 Machine-learning forecasting must handle temporal dependence, evolving distributions, seasonality and trend, multi-step prediction, and the possibility of leakage through feature construction or preprocessing.
 
 Many generic ML algorithms do not contain a built-in concept of time. The time-series structure enters through the feature design, target construction, recursive/direct forecasting strategy, and chronological evaluation.
 
-#### Supervised Learning Approach for Time Series
+### Supervised Learning Approach for Time Series
 
 A forecasting problem can be converted into supervised rows. To predict $y_t$, features might include
 
@@ -362,13 +384,13 @@ $$
 
 along with lagged external variables, calendar indicators, and trailing-window summaries.
 
-##### Data Preparation (Feature Engineering for Time Series)
+#### Data Preparation (Feature Engineering for Time Series)
 
 Useful features include lagged values, trailing-window means or variances, calendar variables, known future events, and external predictors. All rolling features should be trailing or otherwise explicitly past-only in a real-time forecast.
 
 The target horizon must also be explicit. A feature table for one-step forecasting is not automatically valid for forecasting 12 steps ahead.
 
-#### Machine Learning Models for Time Series Forecasting
+### Machine Learning Models for Time Series Forecasting
 
 Tree ensembles, boosting models, support-vector regression, and feed-forward neural networks can all be applied after the forecasting problem has been transformed into a supervised dataset.
 
@@ -396,9 +418,9 @@ rf_model.fit(X_train, y_train)
 predictions = rf_model.predict(X_test)
 ```
 
-The chronological split avoids shuffling future rows into training, but a robust evaluation should usually repeat the experiment over several forecast origins rather than rely on one split.
+The chronological split keeps training targets earlier than test targets. In this one-step example, a test row can use the previous realized observation once that value has actually arrived. Forecasting the entire test block from one initial origin would require a different feature construction or recursive strategy. Repeat the procedure over several origins when assessing how it would perform through time.
 
-##### Gradient Boosting Machines (GBM, XGBoost, LightGBM, CatBoost)
+#### Gradient Boosting Machines (GBM, XGBoost, LightGBM, CatBoost)
 
 Gradient boosting builds trees sequentially so that later trees reduce errors left by earlier ones. It can model nonlinear interactions in structured lag-feature datasets and often performs well when there are many informative covariates.
 
@@ -416,7 +438,7 @@ xgb_model.fit(X_train, y_train)
 predictions = xgb_model.predict(X_test)
 ```
 
-##### Support Vector Machines (SVM)
+#### Support Vector Machines (SVM)
 
 Support Vector Regression (SVR) can learn nonlinear relationships through kernels such as the radial basis function. It is sensitive to feature scaling and can become computationally expensive as the training sample grows.
 
@@ -428,7 +450,7 @@ svr_model.fit(X_train, y_train)
 predictions = svr_model.predict(X_test)
 ```
 
-##### Artificial Neural Networks (ANN)
+#### Artificial Neural Networks (ANN)
 
 A feed-forward neural network can map lagged and external features to future targets. Its flexibility can capture nonlinear relationships, but it also increases data requirements and overfitting risk.
 
@@ -445,11 +467,11 @@ mlp_model.fit(X_train, y_train)
 predictions = mlp_model.predict(X_test)
 ```
 
-#### Advanced Neural Network Models for Time Series
+### Advanced Neural Network Models for Time Series
 
 Recurrent architectures process sequences directly and maintain an evolving hidden state. They can represent temporal patterns without manually flattening every lag into a separate feature, although sequence length, training stability, and data volume still matter.
 
-##### Recurrent Neural Networks (RNNs)
+#### Recurrent Neural Networks (RNNs)
 
 A simple RNN passes a hidden state from one time step to the next. Standard RNNs can struggle with long dependencies because gradients may vanish or explode.
 
@@ -469,7 +491,7 @@ model.compile(optimizer='adam', loss='mse')
 model.fit(X_train, y_train, epochs=50, batch_size=32)
 ```
 
-##### Long Short-Term Memory (LSTM)
+#### Long Short-Term Memory (LSTM)
 
 LSTMs introduce gated memory cells that improve gradient flow over longer sequences. They can model nonlinear temporal patterns, but they require careful regularization, scaling, architecture selection, and chronological evaluation.
 
@@ -497,7 +519,7 @@ model.fit(X_train_reshaped, y_train, epochs=100, batch_size=32)
 predictions = model.predict(X_test_reshaped)
 ```
 
-##### Gated Recurrent Units (GRU)
+#### Gated Recurrent Units (GRU)
 
 GRUs use a simpler gating structure than LSTMs and can provide similar performance with fewer parameters in some problems. Neither architecture is universally preferable; the comparison should be made on chronological validation data.
 
@@ -517,30 +539,45 @@ model.compile(optimizer='adam', loss='mse')
 model.fit(X_train, y_train, epochs=50, batch_size=32)
 ```
 
-#### Hybrid Models
+### Hybrid Models
 
 Hybrid approaches combine models that capture different structures. For example, an ARIMA model can describe linear short-memory dynamics while a nonlinear model is fit to residual structure. Boosting and recurrent models can also be combined, but extra stages increase the risk of leakage and overfitting.
 
 Each stage should be trained inside the same historical information boundary, and the hybrid should be compared with its simpler components on identical forecast origins.
 
-### Comparison of Various Models
+## Comparison of Various Models
 
 The table below summarizes common forecasting families. The descriptions are broad; implementations within each family differ substantially.
 
-| Algorithm Name | Description | Strengths | Limitations | Local vs. global use |
-|---|---|---|---|---|
-| **ARIMA** | Models a differenced univariate series with AR and MA terms. | Interpretable linear dynamics; strong baseline for many short-memory series. | Requires careful transformation/order selection; structural breaks and nonlinearities can reduce performance. | Usually fit locally to one series, though parameters can be shared in larger frameworks. |
-| **Prophet** | Additive regression-style model with trend, seasonal Fourier terms, and optional events/holidays. | Convenient handling of calendar effects and changing trend; interpretable components. | Assumptions may be too rigid for strongly autoregressive or irregular dynamics; still requires validation and tuning. | Commonly local, though repeated fitting across many series is possible. |
-| **LSTM** | Gated recurrent neural network for sequential inputs. | Flexible nonlinear sequence representation. | Data- and compute-intensive; many tuning choices; can overfit small datasets. | Can be local or global. |
-| **Holt-Winters Method** | Exponential smoothing with level, trend, and seasonal states. | Simple recursive updates; effective for stable trend and seasonal patterns. | Fixed seasonal structure and trend extrapolation can fail after regime changes. | Usually local. |
-| **SARIMA** | ARIMA with seasonal AR, MA, and differencing terms. | Explicit seasonal lag structure; interpretable linear model. | Order selection can be difficult; multiple seasonalities require extensions. | Usually local. |
-| **Exponential Smoothing / ETS** | State-space family with level, trend, seasonal, and error choices. | Fast, interpretable, and strong for many structured univariate series. | Limited when important nonlinear/exogenous relationships are omitted. | Usually local. |
-| **Random Forest** | Ensemble of decision trees applied to lag and external features. | Nonlinear interactions; little distributional structure required. | Poor extrapolation; multi-step forecasting requires an explicit strategy; feature construction can leak future information. | Can be local or global. |
-| **XGBoost / GBM** | Sequential boosted trees applied to engineered features. | Strong predictive performance on structured covariate-rich data; regularization available. | Tuning and feature engineering matter; poor extrapolation beyond learned tree partitions. | Can be local or global. |
+### Model structure and use
 
-No row is universally best. The relevant comparison is performance, calibration, complexity, and interpretability on the deployment-like forecast experiment.
+| Model family | What it models | Local or global use |
+|---|---|---|
+| **ARIMA** | Models a differenced univariate series with AR and MA terms. | Usually fit locally to one series, though parameters can be shared in larger frameworks. |
+| **Prophet** | Additive regression-style model with trend, seasonal Fourier terms, and optional events/holidays. | Commonly local, though repeated fitting across many series is possible. |
+| **LSTM** | Gated recurrent neural network for sequential inputs. | Can be local or global. |
+| **Holt-Winters Method** | Exponential smoothing with level, trend, and seasonal states. | Usually local. |
+| **SARIMA** | ARIMA with seasonal AR, MA, and differencing terms. | Usually local. |
+| **Exponential Smoothing / ETS** | State-space family with level, trend, seasonal, and error choices. | Usually local. |
+| **Random Forest** | Ensemble of decision trees applied to lag and external features. | Can be local or global. |
+| **XGBoost / GBM** | Sequential boosted trees applied to engineered features. | Can be local or global. |
 
-### Model Evaluation
+### Strengths and limitations
+
+| Model family | Strengths | Limitations |
+|---|---|---|
+| **ARIMA** | Interpretable linear dynamics; strong baseline for many short-memory series. | Requires careful transformation/order selection; structural breaks and nonlinearities can reduce performance. |
+| **Prophet** | Convenient handling of calendar effects and changing trend; interpretable components. | Assumptions may be too rigid for strongly autoregressive or irregular dynamics; still requires validation and tuning. |
+| **LSTM** | Flexible nonlinear sequence representation. | Data- and compute-intensive; many tuning choices; can overfit small datasets. |
+| **Holt-Winters Method** | Simple recursive updates; effective for stable trend and seasonal patterns. | Fixed seasonal structure and trend extrapolation can fail after regime changes. |
+| **SARIMA** | Explicit seasonal lag structure; interpretable linear model. | Order selection can be difficult; multiple seasonalities require extensions. |
+| **Exponential Smoothing / ETS** | Fast, interpretable, and strong for many structured univariate series. | Limited when important nonlinear/exogenous relationships are omitted. |
+| **Random Forest** | Nonlinear interactions; little distributional structure required. | Poor extrapolation; multi-step forecasting requires an explicit strategy; feature construction can leak future information. |
+| **XGBoost / GBM** | Strong predictive performance on structured covariate-rich data; regularization available. | Tuning and feature engineering matter; poor extrapolation beyond learned tree partitions. |
+
+Compare the families on the same forecasting task: target, forecast origins, horizons, available predictors, and evaluation scale. Accuracy and calibration measure predictive behavior, while complexity and interpretability determine whether the method is practical to fit, explain, maintain, and update.
+
+## Model Evaluation
 
 Forecast accuracy must be evaluated out of sample with temporal order preserved. Point-forecast metrics summarize different loss functions:
 
@@ -564,16 +601,16 @@ $$
 
 Residual tests such as Ljung-Box are diagnostics rather than accuracy scores. They assess whether a fitted model has left linear autocorrelation unexplained.
 
-![Forecast errors by horizon](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/forecasting/05_error_by_horizon.png)
+![Forecast errors by horizon](../../assets/time_series/forecasting/05_error_by_horizon.png)
 
 The horizon plot shows why a single average metric can be misleading. A method that is strongest one step ahead may lose its advantage at longer horizons, so evaluation should match the operational forecast horizon.
 
-## Student guide: construct, communicate, and test a forecast
+## Worked examples: constructing and communicating forecasts
 
 A forecast is a conditional statement. Under squared-error loss,
 
 $$
-\hat y_{T+h|T}=E(y_{T+h}\mid\mathcal F_T).
+\hat y_{T+h\mid T}=E(y_{T+h}\mid\mathcal F_T).
 $$
 
 The conditioning set $\mathcal F_T$ is as important as the model family. A forecast that uses a realized future predictor answers a different question from one that uses only information available in deployment.
@@ -583,7 +620,7 @@ The conditioning set $\mathcal F_T$ is as important as the model family. A forec
 For a level series, the naive forecast is
 
 $$
-\hat y_{T+h|T}=y_T.
+\hat y_{T+h\mid T}=y_T.
 $$
 
 For seasonal period $s$, the seasonal-naive rule reuses the latest observation from the same season. A drift forecast extrapolates the historical average change. Report at least one appropriate baseline before presenting ARIMA, state-space, or machine-learning results.
@@ -595,7 +632,7 @@ For a roughly level series,
 $$
 \ell_t=\alpha y_t+(1-\alpha)\ell_{t-1},
 \qquad
-\hat y_{t+h|t}=\ell_t.
+\hat y_{t+h\mid t}=\ell_t.
 $$
 
 If $\ell_{t-1}=100$, $y_t=110$, and $\alpha=0.3$,
@@ -621,7 +658,7 @@ $$
 with
 
 $$
-\hat y_{t+h|t}=\ell_t+hb_t.
+\hat y_{t+h\mid t}=\ell_t+hb_t.
 $$
 
 Holt-Winters adds a seasonal state. The additive version keeps seasonal amplitude in the response units; the multiplicative version lets it scale with the level.
@@ -687,7 +724,7 @@ A combination can improve accuracy when the component errors contain complementa
 
 Forecast uncertainty can come from future shocks, parameter estimation, future predictor values, transformation bias, model uncertainty, and regime changes. Classical model intervals may include only a subset of these sources.
 
-![Forecast paths and expanding prediction intervals](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/14_forecasting_intervals.png)
+![Forecast paths and expanding prediction intervals](../../assets/time_series/student/14_forecasting_intervals.png)
 
 The widening intervals reinforce the distinction between point prediction and uncertainty. Evaluate empirical coverage and width on temporal backtests, and state which uncertainty sources the interval construction includes.
 

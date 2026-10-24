@@ -1,8 +1,23 @@
 # Dynamic Regression
 
+[Time series index](README.md)
+
 Dynamic regression combines external predictors with time-series structure so that the conditional mean can respond to explanatory variables without assuming the remaining errors are independent. Lagged predictors can represent delayed effects, while ARMA or ARIMA errors capture serial dependence left after the regression relationship is specified.
 
 For forecasting, the timing of the predictors is as important as their statistical relationship with the target. A predictor is operationally useful only when its future value is known, scheduled, or itself forecastable at the forecast origin, so alignment, information availability, and residual dynamics must be handled together.
+
+**Reading guide.** Keep three objects separate throughout: the predictor-driven regression component, the serial regression error, and the new innovation. Next distinguish predictors known in advance from predictors that require forecasts. The later worked examples connect lagged effects and error modeling to data alignment, predictor uncertainty, and the assumptions needed to interpret a coefficient or a predictive relationship.
+
+**Related reading:** [regression with ARMA errors](regression_with_arma_errors.md).
+
+**On this page**
+
+- [Formula reference](#formula-reference)
+- [Worked calculation: an external predictor and a lag](#worked-calculation-an-external-predictor-and-a-lag)
+- [Regression component, serial error, and innovation](#regression-component-serial-error-and-innovation)
+- [Lagged Predictors](#lagged-predictors)
+- [Future Predictor Availability](#future-predictor-availability)
+- [Worked examples: the mean, errors, and information set](#worked-examples-the-mean-errors-and-information-set)
 
 ## Formula reference
 
@@ -49,11 +64,13 @@ $$
 
 For forecasting, that calculation is valid only if the required predictor values would be available at the forecast origin. A realized future temperature, exchange rate, or policy variable may itself need to be forecast.
 
-![Dynamic regression with serially correlated errors](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/16_dynamic_regression.png)
+![Dynamic regression with serially correlated errors](../../assets/time_series/student/16_dynamic_regression.png)
 
 The figure separates two sources of structure: the regression mean follows an external predictor, while serial dependence remains in the errors around that mean. Dynamic regression models both pieces rather than forcing the predictor to explain all temporal dependence.
 
-Dynamic regression combines explanatory variables with time-series structure. It is useful when the target depends on external predictors but an ordinary regression leaves autocorrelated residuals.
+## Regression component, serial error, and innovation
+
+Dynamic regression combines explanatory variables with time-series structure. It is useful when the target depends on external predictors but an ordinary regression leaves autocorrelated errors. The fitted innovation residuals from the complete model, rather than the regression errors alone, are the quantities checked for remaining linear dependence.
 
 A basic model is
 
@@ -67,9 +84,9 @@ $$
 \phi(B)n_t=\theta(B)\varepsilon_t.
 $$
 
-Under suitable exogeneity assumptions, ignoring residual autocorrelation need not bias the regression coefficients, but it can invalidate ordinary independent-error standard errors and leave forecastable structure unused.
+With exogenous predictors and suitable regularity conditions, serial correlation need not prevent consistent estimation of the regression coefficients by OLS. It does invalidate the usual independent-error covariance formula in general, and it leaves the predictable part of the serial error unused in forecasts. These conclusions require the exogeneity assumptions to be stated; autocorrelation does not excuse an endogenous predictor.
 
-![Dynamic regression errors](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/01_dynamic_regression_errors.png)
+![Dynamic regression errors](../../assets/time_series/dynamic_multivariate/01_dynamic_regression_errors.png)
 
 The residual plot shows why the error model matters. A regression can track the predictor-driven mean while still leaving runs of positive and negative residuals that an ARMA component can model.
 
@@ -83,7 +100,7 @@ $$
 
 Use lagged predictors when the domain suggests a delayed response. Avoid adding many adjacent lags mechanically, because nearby predictor values are often strongly correlated and can make individual lag coefficients unstable.
 
-![Distributed lag](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/02_distributed_lag.png)
+![Distributed lag](../../assets/time_series/dynamic_multivariate/02_distributed_lag.png)
 
 The figure illustrates how one change in $x_t$ can influence the response across several later periods. The lag coefficients describe the shape and duration of that response.
 
@@ -91,7 +108,7 @@ The figure illustrates how one change in $x_t$ can influence the response across
 
 Future predictor values must be known or forecast separately. Calendar variables and scheduled promotions may be available in advance; future weather and macroeconomic quantities usually are not. Evaluating a model with realized future predictors that would not have been available creates information leakage.
 
-![Future predictor availability](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/03_future_predictor_availability.png)
+![Future predictor availability](../../assets/time_series/dynamic_multivariate/03_future_predictor_availability.png)
 
 The visual distinguishes predictors that are known at the forecast origin from those that must themselves be forecast. This distinction determines whether a reported forecast is operationally reproducible.
 
@@ -103,7 +120,7 @@ A practical workflow is to align timestamps, define what will be known at foreca
 
 See [regression with ARMA errors](regression_with_arma_errors.md) and the companion [notebook](../../notebooks/time_series/dynamic_regression.ipynb).
 
-## Student guide: separate the mean, the errors, and the information set
+## Worked examples: the mean, errors, and information set
 
 Dynamic regression is easiest to understand as three linked questions:
 
@@ -159,7 +176,7 @@ Use three complementary residual views:
 - residual ACF/PACF, for remaining serial dependence;
 - squared residuals, for conditional variance dependence.
 
-An error model is useful only if it improves the complete forecast experiment. A dynamic error term that lowers AIC but fails at future-like forecast origins is not automatically preferable.
+An error model is useful only if it improves the complete forecast experiment. A dynamic error term that lowers AIC but fails at historical forecast origins is not automatically preferable.
 
 ### Distributed lags
 
@@ -183,7 +200,7 @@ $$
 
 and the observation is $7.3$.
 
-The sum of lag coefficients, $1.5$ here, can be interpreted as a cumulative response only under additional assumptions about the predictor path and model stability. When many correlated lags are plausible, domain timing, regularization, polynomial distributed lags, or transfer-function models can provide more stable descriptions.
+The coefficient sum, $1.5$ here, has a specific path interpretation in this finite distributed-lag equation. A permanent one-unit increase in $x$ raises the regression component by 1.5 once both included predictor lags reflect the increase. A one-period pulse instead produces effects of 1.0 and 0.5 in successive periods, also summing to 1.5. Neither interpretation alone establishes a causal effect. When many correlated lags are plausible, domain timing, regularization, polynomial distributed lags, or transfer-function models can provide more stable descriptions.
 
 ### Exogenous predictors and future availability
 
@@ -224,27 +241,27 @@ A regression coefficient describes a conditional association within the specifie
 
 Granger predictability asks whether past values of one series improve prediction of another after conditioning on the included information. It is a predictive concept, not a guarantee that intervening on the predictor would change the target.
 
-![Granger predictability](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/05_granger_predictability.png)
+![Granger predictability](../../assets/time_series/dynamic_multivariate/05_granger_predictability.png)
 
 The figure illustrates the predictive question: does adding the past of one series improve forecasts beyond the target's own history and other included variables?
 
-Feedback between several endogenous series requires a multivariate model rather than a single-equation dynamic regression.
+When several variables respond to one another, a joint multivariate model can make that feedback explicit. A single-equation forecast must still justify how the predictor path is obtained and how its relationship with the error process is handled.
 
-![VAR feedback](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/04_var_feedback.png)
+![VAR feedback](../../assets/time_series/dynamic_multivariate/04_var_feedback.png)
 
 The VAR figure shows reciprocal lagged dependence, where each series can respond to the history of the others. This is different from treating one predictor as externally determined.
 
 Related multivariate models also handle shared stochastic trends and dynamic responses to system-wide shocks.
 
-![Cointegrating spread](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/06_cointegrating_spread.png)
+![Cointegrating spread](../../assets/time_series/dynamic_multivariate/06_cointegrating_spread.png)
 
 A cointegrating spread can remain stable even when the component series are individually non-stationary.
 
-![VECM adjustment](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/07_vecm_adjustment.png)
+![VECM adjustment](../../assets/time_series/dynamic_multivariate/07_vecm_adjustment.png)
 
 The VECM figure shows how deviations from a long-run equilibrium can feed into subsequent changes.
 
-![Impulse response](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/08_impulse_response.png)
+![Impulse response](../../assets/time_series/dynamic_multivariate/08_impulse_response.png)
 
 An impulse-response plot traces the model-implied effect of a specified system shock over future periods. Its interpretation depends on the multivariate identification assumptions, not only on temporal ordering.
 

@@ -1,8 +1,24 @@
 # Multivariate Time Series
 
+[Time series index](README.md)
+
 Multivariate time-series models describe several evolving variables jointly so that cross-lag feedback, shared shocks, and predictive relationships can be represented within one system. They are useful when separate univariate models would ignore information carried by the histories of related series.
 
 Short-run interactions are commonly modeled with VARs, while cointegration and VECMs preserve stable long-run relationships among non-stationary levels. Granger predictability and impulse responses add useful interpretations, but they remain conditional on the chosen information set and, for structural shocks, on explicit identification assumptions.
+
+**Reading guide.** Begin with the joint VAR equation and its stability conditions before interpreting individual coefficients. Then separate incremental predictive information from structural shock identification, and short-run differences from long-run cointegrating relations. The numerical examples show how matrix multiplication, error correction, and forecast evaluation fit together within one explicitly specified system.
+
+**Related reading:** [dynamic regression](dynamic_regression.md).
+
+**On this page**
+
+- [Formula reference](#formula-reference)
+- [Worked calculation: a cointegrating spread](#worked-calculation-a-cointegrating-spread)
+- [Why model several series jointly?](#why-model-several-series-jointly)
+- [Vector Autoregression](#vector-autoregression)
+- [Granger Predictability](#granger-predictability)
+- [Nonstationarity and Cointegration](#nonstationarity-and-cointegration)
+- [Worked examples: system dynamics and interpretation](#worked-examples-system-dynamics-and-interpretation)
 
 ## Formula reference
 
@@ -42,7 +58,7 @@ $$
 y_t-1.4x_t=u_t
 $$
 
-remains stable. Differencing both series would model short-run changes but would discard this level relationship. A VECM keeps both:
+remains stable. A model using only unrestricted short-run differences would omit this error-correction term unless it were added explicitly. Differencing is an algebraic transformation; it is the omission of the lagged level relation from the model that loses the equilibrium information. A VECM keeps both:
 
 $$
 \Delta y_t=\alpha\left(y_{t-1}-1.4x_{t-1}\right)
@@ -51,11 +67,13 @@ $$
 
 The sign and size of $\alpha$ describe how this equation responds after the system moves away from the long-run relation.
 
-![Two levels with a stable cointegrating spread](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/17_multivariate_cointegration.png)
+![Two levels with a stable cointegrating spread](../../assets/time_series/student/17_multivariate_cointegration.png)
 
 The figure shows two non-stationary levels moving together while their spread remains bounded. Cointegration is about this stable combination, not about the individual levels being stationary.
 
-Multivariate time-series methods model several variables jointly so that feedback, shared shocks, cross-predictability, and long-run relationships can be represented within one system.
+## Why model several series jointly?
+
+Multivariate time-series methods model several variables jointly so that feedback, shared shocks, cross-predictability, and long-run relationships can be represented within one system. This joint specification uses both within-series histories and cross-series lag information; it also requires checking residual dependence across equations.
 
 ## Vector Autoregression
 
@@ -67,7 +85,7 @@ $$
 
 Every variable can depend on lagged values of every variable in the system. This flexibility is useful when the variables interact, but the number of coefficients grows quickly, so lag order and system size must remain parsimonious.
 
-![VAR feedback](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/04_var_feedback.png)
+![VAR feedback](../../assets/time_series/dynamic_multivariate/04_var_feedback.png)
 
 The figure illustrates the defining VAR idea: lagged values can feed across equations in both directions. A joint system is appropriate when neither series is naturally treated as fully external to the other.
 
@@ -77,19 +95,19 @@ Lag order can be compared with AIC, BIC, or HQIC, but residual diagnostics, stab
 
 Variable $x$ **Granger-predicts** $y$ when past values of $x$ improve prediction of $y$ after conditioning on the other included past information. The historical term "Granger-causes" is common, but the result is about incremental predictive content rather than intervention or structural causality.
 
-![Granger predictability](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/05_granger_predictability.png)
+![Granger predictability](../../assets/time_series/dynamic_multivariate/05_granger_predictability.png)
 
 The visual compares prediction with and without the additional lagged series. The relevant question is whether including the history of $x$ improves the conditional forecast of $y$ beyond the information already in the model.
 
-Impulse-response functions trace how shocks propagate through a VAR. Their interpretation depends on how contemporaneous innovations are identified; orthogonalized responses can depend on variable ordering.
+Impulse-response functions trace how shocks propagate through a VAR. Their interpretation depends on how the shocks are defined. Reduced-form responses describe the fitted innovation system; structural interpretations need additional identifying assumptions. For example, recursive orthogonalization can make the reported response depend on the ordering of the variables.
 
-![Impulse response](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/08_impulse_response.png)
+![Impulse response](../../assets/time_series/dynamic_multivariate/08_impulse_response.png)
 
 The impulse-response figure connects a one-time identified shock to its model-implied effects across future horizons. Those responses are not uniquely structural until the shock-identification assumptions are specified.
 
 ## Nonstationarity and Cointegration
 
-Independent random walks can produce spurious regression in levels. If integrated variables are not cointegrated, a model in differences is often more appropriate. If they are cointegrated, differencing alone removes the long-run equilibrium relation.
+Independent random walks can produce spurious regression in levels. If integrated variables are not cointegrated, a model in differences is often more appropriate. If they are cointegrated, a model containing only short-run differences omits the lagged equilibrium error; a VECM retains it explicitly.
 
 Two or more $I(1)$ variables are cointegrated when a nontrivial linear combination is stationary. A cointegrated VAR can be written as a vector error-correction model (VECM):
 
@@ -110,17 +128,17 @@ $$
 
 the columns of $\beta$ describe cointegrating relations and $\alpha$ describes how each equation adjusts to deviations from those relations.
 
-![Cointegrating spread](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/06_cointegrating_spread.png)
+![Cointegrating spread](../../assets/time_series/dynamic_multivariate/06_cointegrating_spread.png)
 
 The spread figure shows the stationary combination that is preserved by the VECM rather than discarded through differencing.
 
-![VECM adjustment](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/07_vecm_adjustment.png)
+![VECM adjustment](../../assets/time_series/dynamic_multivariate/07_vecm_adjustment.png)
 
 The adjustment figure shows how disequilibrium at one time point can feed into later changes. The direction of adjustment depends on both the definition of the spread and the signs of the loading coefficients.
 
 A practical workflow is to inspect transformations and stationarity, decide among a levels VAR, differenced VAR, or VECM, choose a parsimonious lag order, fit and diagnose the system, and evaluate forecasts with rolling or expanding origins.
 
-## Student guide: model the system before interpreting individual equations
+## Worked examples: system dynamics and interpretation
 
 Multivariate analysis is useful when variables can affect one another, share shocks, or move together in the long run. It also creates more opportunities for overfitting and interpretation errors. Begin with the data-generating and forecasting question, then decide whether a joint model adds information beyond separate univariate forecasts.
 
@@ -236,7 +254,7 @@ $$
 
 is stationary, the variables are cointegrated. For $x_t=10$ and $y_t=1.4x_t+0.5$, the spread is $0.5$. The levels can move widely while their deviation from the long-run relation remains stable.
 
-If integrated variables are not cointegrated, a VAR in differences may be appropriate. If they are cointegrated, differencing alone discards information that a VECM retains.
+If integrated variables are not cointegrated, a VAR in differences may be appropriate. If they are cointegrated, include the lagged cointegrating relation as well as short-run changes; this is the role of the error-correction term in a VECM.
 
 ### VECM interpretation
 

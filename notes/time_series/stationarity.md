@@ -1,8 +1,30 @@
 # Stationarity in Time Series
 
+[Time series index](README.md)
+
 Stationarity describes which probabilistic features of a time series remain stable when the time origin is shifted. Weak stationarity focuses on a constant mean and variance together with an autocovariance that depends only on lag, while strict stationarity requires the full joint distribution to be invariant to time shifts.
 
 Many classical ARMA calculations rely on this stability because it lets dependence learned in one part of the series remain meaningful elsewhere. Trends, unit roots, seasonality, structural breaks, and changing variance violate stationarity in different ways, so the appropriate response may be detrending, differencing, seasonal modeling, variance transformation, or a model that explicitly allows change.
+
+**Reading guide.** Begin with the definitions of strict and weak stationarity, then use the examples to separate a changing deterministic mean from accumulated random shocks. The tests answer different null hypotheses, so read their results alongside the model equation and plots. The later calculations connect these definitions to transformations and to the practical choice of a stationary representation.
+
+**Related reading:** [random walks](random_walk.md).
+
+**On this page**
+
+- [Formula reference](#formula-reference)
+- [Worked calculation: the stationary AR(1) mean and variance](#worked-calculation-the-stationary-ar1-mean-and-variance)
+- [What remains unchanged when time shifts?](#what-remains-unchanged-when-time-shifts)
+- [Why Do We Care About Stationarity?](#why-do-we-care-about-stationarity)
+- [Intuition for Stationary Time Series](#intuition-for-stationary-time-series)
+- [Strict Stationarity](#strict-stationarity)
+- [Weak (Second-Order) Stationarity](#weak-second-order-stationarity)
+- [Properties of Stationary Processes](#properties-of-stationary-processes)
+- [Examples of Stationary Processes](#examples-of-stationary-processes)
+- [Non-Stationary Processes](#non-stationary-processes)
+- [The Random Walk Model](#the-random-walk-model)
+- [Formal Tests for Stationarity](#formal-tests-for-stationarity)
+- [Worked examples: assumptions, transformations, and tests](#worked-examples-assumptions-transformations-and-tests)
 
 ## Formula reference
 
@@ -58,18 +80,20 @@ The calculation requires $|0.8|<1$. At $\phi=1$, the process is on the unit-root
 
 The figure below contrasts these cases. A stationary AR(1) fluctuates around a stable level, a unit-root process wanders as shocks accumulate, and an explosive process moves increasingly far from its starting region.
 
-![Stationary, unit-root, and explosive AR(1) behavior](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/10_stationarity_cases.png)
+![Stationary, unit-root, and explosive AR(1) behavior](../../assets/time_series/student/10_stationarity_cases.png)
 
-![Stationarity cases](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/06_stationarity_cases.png)
+![Stationarity cases](../../assets/time_series/foundations/06_stationarity_cases.png)
 
 Stationarity describes which probabilistic features of a time series remain stable as time shifts. For weak stationarity, the mean and variance are constant and autocovariance depends only on lag. This condition matters because ARMA models are formulated for stationary series, while ARIMA models handle certain non-stationary series by differencing them before applying an ARMA structure.
+
+## What remains unchanged when time shifts?
 
 Two common definitions are used:
 
 1. Strict stationarity requires the entire joint distribution to be unchanged by a shift in time.
 2. Weak, or second-order, stationarity requires a constant mean and variance and an autocovariance that depends only on lag.
 
-### Why Do We Care About Stationarity?
+## Why Do We Care About Stationarity?
 
 Suppose synthetic stock prices contain an upward deterministic trend together with shorter-term fluctuations, and the goal is to study recurring seasonal variation. The changing level can obscure that seasonal structure, so the mean pattern should be addressed before interpreting the remaining dependence.
 
@@ -89,11 +113,11 @@ The next figure shows this progression: the upper panel contains the original se
 
 The following examples provide two additional views of detrending and its effect on the series.
 
-![detrending example](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/detrending_example.png)
+![detrending example](../../assets/time_series/detrending_example.png)
 
-![Detrending](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/01_detrending.png)
+![Detrending](../../assets/time_series/diagnostics/01_detrending.png)
 
-### Intuition for Stationary Time Series
+## Intuition for Stationary Time Series
 
 A stationary series has a stable probabilistic structure over time. For weak stationarity:
 
@@ -103,13 +127,13 @@ A stationary series has a stable probabilistic structure over time. For weak sta
 
 Deterministic trends or seasonal means violate these conditions. A stationary process can still show persistent or oscillating dependence through its autocovariance function, so stationarity does not mean that the series must look like featureless noise. Stability allows relationships estimated from one part of the series to remain relevant in another part.
 
-### Strict Stationarity
+## Strict Stationarity
 
 A process is said to be **strictly stationary** if the joint distribution of any subset of observations $X_{t_1}, X_{t_2}, \dots, X_{t_k}$ is the same as the distribution of $X_{t_1 + \tau}, X_{t_2 + \tau}, \dots, X_{t_k + \tau}$ for all $\tau$.
 
 In simple terms, the process has the same probabilistic behavior after any common shift in time. Therefore the marginal distribution of $X_t$ does not change with $t$, and any moments that exist—such as the mean, variance, or higher moments—are also time-invariant.
 
-### Weak (Second-Order) Stationarity
+## Weak (Second-Order) Stationarity
 
 Weak stationarity, also known as **second-order stationarity**, requires only a constant **mean**, a constant finite **variance**, and an **autocovariance** that depends solely on the lag between observations, not on time itself.
 
@@ -125,9 +149,9 @@ $$
 
 Weak stationarity is the condition used in many classical time-series calculations because it makes means, variances, autocovariances, and correlations comparable across time.
 
-### Properties of Stationary Processes
+## Properties of Stationary Processes
 
-#### Mean, Variance, and Autocovariance Functions
+### Mean, Variance, and Autocovariance Functions
 
 To analyze a stationary process, we focus on three key functions:
 
@@ -145,9 +169,9 @@ Weak stationarity implies $\mu(t) = \mu$ and $\gamma(r, s)$ depends only on the 
 
 The figure below illustrates the contrast between stable moments and moments that change over time. Changes in the local mean or variance are visual evidence against global weak stationarity.
 
-![Moments changing over time](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/foundations/04_moments_change_over_time.png)
+![Moments changing over time](../../assets/time_series/foundations/04_moments_change_over_time.png)
 
-#### Autocorrelation and Bounds
+### Autocorrelation and Bounds
 
 For a weakly stationary process, the **autocorrelation function** $\rho(k)$, which measures the correlation between two points in the series separated by lag $k$, is bounded by -1 and 1:
 
@@ -157,7 +181,7 @@ $$
 
 This bound can be derived from basic linear algebra principles that apply to correlations between random variables.
 
-#### q-Dependence and q-Correlation
+### q-Dependence and q-Correlation
 
 A stationary series is **q-dependent** if observations separated by more than $q$ time units are independent. IID noise is therefore 0-dependent. An MA($q$) process driven by independent innovations is q-dependent, but general short-memory models such as AR and ARMA processes need not become independent after any finite lag.
 
@@ -169,7 +193,7 @@ $$
 
 White noise is 0-correlated, and an MA($q$) process is q-correlated. Zero autocovariance does not by itself imply independence unless additional assumptions apply. Under standard second-order conditions, a stationary process with an autocovariance that cuts off after lag $q$ admits an MA($q$)-type second-order representation.
 
-#### Linear Processes and Linear Filters
+### Linear Processes and Linear Filters
 
 If $\{Y_t\}$ is a stationary series with mean 0 and autocovariance $\gamma_Y$, then a linear filter:
 
@@ -185,13 +209,13 @@ $$
 \gamma_X(h) = \sum_{j=-\infty}^{\infty} \sum_{k=-\infty}^{\infty} \psi_j \psi_k\, \gamma_Y(h - k + j)
 $$
 
-### Examples of Stationary Processes
+## Examples of Stationary Processes
 
-#### IID Noise vs. White Noise
+### IID Noise vs. White Noise
 
 IID noise with mean 0 and variance $\sigma^2$ is the simplest stationary building block. White noise is slightly weaker: it only requires zero mean and zero autocovariance for nonzero lags (uncorrelated), not full independence.
 
-#### White Noise
+### White Noise
 
 White noise is a basic stationary building block. In the weak white-noise definition, the process has mean zero, constant finite variance, and zero autocovariance at every nonzero lag. Independence and Gaussianity are stronger assumptions, not part of the basic second-order definition. A common special case is Gaussian white noise, for which
 
@@ -225,11 +249,11 @@ $$
 
 Below is a plot of synthetically generated white noise:
 
-![white_noise](https://github.com/user-attachments/assets/a24cc561-f34a-431e-bac0-2f9cd5e62a49)
+![Simulated white noise around a stable mean](https://github.com/user-attachments/assets/a24cc561-f34a-431e-bac0-2f9cd5e62a49)
 
 These properties make weak white noise weakly stationary. Gaussian white noise is also strictly stationary because its joint Gaussian distribution is determined by the constant mean and lag-based covariance structure.
 
-#### Moving Average (MA) Process
+### Moving Average (MA) Process
 
 A moving average process of order $q$, denoted MA($q$), is another weakly stationary model. It is defined as:
 
@@ -266,11 +290,11 @@ $$
 
 The following plot shows an MA(2) realization. Its values can look locally dependent even though the theoretical autocovariance is exactly zero beyond lag 2:
 
-![moving_average](https://github.com/user-attachments/assets/28e1d7fa-243b-4841-afba-afd2188ac400)
+![A stationary MA(2) realization](https://github.com/user-attachments/assets/28e1d7fa-243b-4841-afba-afd2188ac400)
 
 The MA(q) process is weakly stationary because its mean and variance are constant, and the autocovariance depends only on the lag.
 
-### Non-Stationary Processes
+## Non-Stationary Processes
 
 A non-stationary process does not satisfy the relevant stationarity conditions. Its mean, variance, dependence structure, or broader distribution may change over time. Deterministic trends, stochastic trends, seasonal means, structural breaks, and time-varying volatility are common sources.
 
@@ -279,15 +303,15 @@ Two important forms of non-stationarity are:
 1. trend-stationary processes;
 2. difference-stationary processes.
 
-#### Trend-Stationary Processes
+### Trend-Stationary Processes
 
-A **trend-stationary** series has a stable long-term trend around which the data fluctuates. If a time series follows a trend-stationary process, it tends to revert to its trend line after experiencing a disturbance.
+A **trend-stationary** process has a deterministic trend plus a stationary remainder. Its mean can change with time because of the trend, while the remainder has stable moments and lag dependence. In the usual short-memory case, a shock to that remainder fades, so the process returns toward its trend rather than carrying the shock permanently in its level.
 
 **Detrending.**
 
 To achieve stationarity in such series, one can remove the trend component. This is typically done by fitting a trend line (e.g., linear or polynomial) to the data and subtracting it from the original series. The resulting series, with the trend removed, should exhibit stationary behavior.
 
-#### Difference-Stationary Processes
+### Difference-Stationary Processes
 
 A difference-stationary series contains a stochastic trend, typically associated with a unit root. Subtracting a deterministic trend does not remove this accumulated effect of past shocks; differencing is used instead.
 
@@ -295,9 +319,9 @@ A difference-stationary series contains a stochastic trend, typically associated
 
 Taking differences between consecutive observations, or seasonal differences between observations one cycle apart, can remove an appropriate stochastic trend. The resulting series describes changes rather than levels and should be checked again for stationarity.
 
-#### Transformations to Achieve Stationarity
+### Transformations to Achieve Stationarity
 
-To prepare a non-stationary time series for modeling with techniques that require stationarity (like ARIMA), various **transformations** can be applied:
+When a model requires a stationary input, choose a transformation that addresses the identified source of nonstationarity. In ARIMA, for example, the ARMA component is applied after the specified differences; the original level series can remain nonstationary. The transformations below have different purposes and should be assessed separately:
 
 **Differencing**
 
@@ -337,11 +361,11 @@ Choosing $\lambda$ can stabilize variance and improve linearity before modeling.
 - Non-linear trends can be removed by fitting polynomial or exponential functions.
 - Detrending helps in isolating cyclical or seasonal patterns from broader trends.
 
-#### The Random Walk Model
+## The Random Walk Model
 
 A random walk is a classic difference-stationary process. Each value equals the previous value plus a new innovation, so shocks accumulate permanently in the level of the series.
 
-#### Definition
+### Definition
 
 A random walk can be mathematically expressed as:
 
@@ -349,9 +373,9 @@ $$
 X_t = X_{t-1} + Z_t
 $$
 
-where $Z_t$ is an uncorrelated innovation sequence with mean $\mu_Z$ (zero for strict white noise, nonzero for a random walk with drift) and variance $\sigma_Z^2$. For a fixed starting value $X_0$, repeated substitution gives $X_t=X_0+\sum_{j=1}^t Z_j$.
+where $Z_t$ is an uncorrelated innovation sequence with mean $\mu_Z$ (zero under the usual white-noise convention, nonzero when the increments include drift) and variance $\sigma_Z^2$. For a fixed starting value $X_0$, repeated substitution gives $X_t=X_0+\sum_{j=1}^t Z_j$.
 
-#### Properties of a Random Walk
+### Properties of a Random Walk
 
 **Mean.** With fixed $X_0$,
 
@@ -369,11 +393,11 @@ $$
 
 Thus even a zero-drift random walk is non-stationary: its variance increases with time, and shocks have permanent effects on the level.
 
-#### Transforming a Random Walk into a Stationary Series
+### Transforming a Random Walk into a Stationary Series
 
-To utilize statistical models that require stationarity, it's necessary to transform a random walk into a stationary series. This is achieved through **differencing**.
+To apply a stationary model to the dynamics of a random walk, work with its **first differences**. This transformation reverses the accumulation of shocks exactly under the assumed model. Forecasts for changes can then be accumulated back to the level scale, with uncertainty propagated through that reconstruction.
 
-##### Differencing Operator
+#### Differencing Operator
 
 For a random walk, the difference operator $\Delta$ removes the accumulated stochastic trend by recovering the innovation:
 
@@ -391,7 +415,7 @@ The resulting series has the properties of the innovations:
 
 Thus, first differencing a random walk recovers $Z_t$. If $Z_t$ is stationary white noise, the differenced series is stationary.
 
-##### Example of Differencing
+#### Example of Differencing
 
 The following example simulates a zero-drift random walk and computes its first difference:
 
@@ -427,7 +451,7 @@ plt.show()
 **Simulating the random walk.**
 
 - A random walk is generated by taking the cumulative sum of normally distributed random numbers. This produces a series where each value depends on the previous one plus some random noise.
-- The random walk is non-stationary because it lacks a constant mean and variance over time—it drifts unpredictably.
+- With a fixed initial value and zero-mean increments, this random walk has a constant expected level. It is nonstationary because its variance grows with time; the wandering appearance of one realized path is not evidence that its population mean changes.
 
 **Differencing.**
 
@@ -436,15 +460,15 @@ plt.show()
 
 The result plot would look like the following:
 
-![differenced_random_walk](https://github.com/user-attachments/assets/2cebba56-7d3b-470c-9511-56d617be7159)
+![A random-walk level and its stationary first differences](https://github.com/user-attachments/assets/2cebba56-7d3b-470c-9511-56d617be7159)
 
 The upper panel shows the wandering random-walk level, while the lower panel shows the much more stable differenced series. The visual demonstrates why a difference-stationary process is modeled through its changes rather than by treating the original levels as stationary.
 
-### Formal Tests for Stationarity
+## Formal Tests for Stationarity
 
 Visual inspection can reveal trends, changing variance, or structural breaks, but formal tests provide additional evidence. The ADF and KPSS tests are useful together because their null hypotheses point in opposite directions.
 
-#### Augmented Dickey–Fuller (ADF) Test
+### Augmented Dickey–Fuller (ADF) Test
 
 The ADF test evaluates a unit-root null using a regression of the form:
 
@@ -459,7 +483,7 @@ where $\Delta X_t = X_t - X_{t-1}$ and $p$ lagged differences absorb serial corr
 
 A sufficiently negative test statistic, or a small p-value, provides evidence against the unit-root null. The conclusion depends on whether the regression includes an intercept, a trend, or other deterministic terms.
 
-#### KPSS Test
+### KPSS Test
 
 The Kwiatkowski–Phillips–Schmidt–Shin (KPSS) test reverses the direction of evidence:
 
@@ -476,7 +500,7 @@ Using both tests helps organize the evidence:
 | Fail to reject | Fail to reject | Evidence is inconclusive; power may be limited |
 
 
-## Student guide: stationarity is a modeling condition
+## Worked examples: assumptions, transformations, and tests
 
 Stationarity is not a synonym for “the plot looks flat.” It describes which features of the joint distribution remain unchanged when the time index is shifted. The version needed depends on the model and question.
 
@@ -500,7 +524,7 @@ E(X_t)=\mu,
 \mathrm{Cov}(X_t,X_{t-h})=\gamma(h),
 $$
 
-with no dependence on $t$. Many ARMA calculations use weak stationarity. Gaussian processes with constant mean and covariance are strictly stationary as well, but non-Gaussian weakly stationary processes need not be strictly stationary.
+with no dependence on $t$. Many ARMA calculations use weak stationarity. A jointly Gaussian process with a constant mean and covariance depending only on lag is also strictly stationary, because those moments determine every finite-dimensional Gaussian distribution. Weak stationarity does not generally imply strict stationarity for a non-Gaussian process.
 
 ### Numerical AR(1) example
 

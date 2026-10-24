@@ -1,8 +1,14 @@
-# Autocovariance functions and coefficients
+# Autocovariance Functions and Coefficients
+
+[Time series index](README.md)
 
 Autocovariance measures how a time series varies jointly with lagged versions of itself. Lag 0 is the variance, while nonzero lags show the direction and scale of linear dependence between observations separated in time, expressed in the squared units of the original series.
 
 For a weakly stationary process, autocovariance depends only on the lag rather than the absolute time. Normalizing it by the variance produces the unit-free autocorrelation function, while sample estimates require an explicit denominator convention and become noisier as fewer observation pairs remain at larger lags.
+
+**Reading guide.** Start with covariance between two variables, then apply the same calculation to lagged pairs from one series. Keep population quantities and sample estimates separate, and record the sample denominator before comparing numerical results. The later AR(1) calculation shows how a model generates a complete lag pattern rather than just one covariance value.
+
+**Related reading:** [autocorrelation and partial autocorrelation](autocorrelation_function.md).
 
 ## Formula reference
 
@@ -43,20 +49,22 @@ $$
 
 Some software divides each lag-$h$ sum by the pair count $n-h$ instead (here $3$ at lag 1, giving $0.75/3=0.25$). Because different conventions produce different numerical values, state the denominator before comparing estimates. Autocovariance retains squared units, while autocorrelation divides by $\hat\gamma(0)$ and is therefore unit-free.
 
-![Autocovariance of a simulated AR(1)](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/05_autocovariance_ar1.png)
+![Autocovariance of a simulated AR(1)](../../assets/time_series/student/05_autocovariance_ar1.png)
 
-The figure shows how autocovariance changes with lag for a simulated autoregressive series. Autocovariance describes how values of a time series vary jointly with lagged values of the same series. It is useful for identifying dependence across time, but its magnitude depends on the scale of the data and should not be interpreted as a direct measure of causal influence. In autoregressive models, coefficients describe how past values enter the model, while the autocovariance function summarizes the dependence pattern implied by those coefficients.
+The figure shows the lag pattern of a simulated autoregressive series. Autocovariance describes how the series varies jointly with lagged versions of itself; its magnitude also reflects the variance scale of the observations.
 
-### Random Variables (r.v.)
+An AR coefficient and an autocovariance play different roles. The coefficient specifies how a past value enters the model equation, while the autocovariance summarizes the joint variation implied by the complete model. Neither a large autocovariance nor its sign, on its own, identifies a causal influence.
+
+## Random variables and realizations
 
 A random variable (r.v.) maps outcomes in a probability space to real numbers. Random variables may be discrete or continuous.
 
 - A discrete random variable takes values from a countable set. For example, $X$ might take values in $\{45,36,27,\dots\}$.
 - A continuous random variable can take any value in a continuous range. For example, $Y$ might take values in $(10,60)$.
 
-A realization is a specific observed value of a random variable. For example, one realization might be $X=20$ and another $Y=30.29$.
+A realization is a specific observed value of a random variable. Using the example supports above, possible observed values are $x=36$ and $y=30.29$. Lowercase letters distinguish these realized numbers from the random variables $X$ and $Y$ whose distributions describe the possible observations.
 
-### Covariance
+## Covariance
 
 The covariance between two random variables $X$ and $Y$ measures how they vary together linearly. It is defined as
 
@@ -89,9 +97,9 @@ The sign of covariance describes the direction of a linear relationship:
 
 The following figure gives a geometric view of lagged covariance by showing how paired observations contribute positively or negatively depending on their positions relative to the mean.
 
-![Autocovariance geometry](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/01_autocovariance_geometry.png)
+![Autocovariance geometry](../../assets/time_series/dependence/01_autocovariance_geometry.png)
 
-#### Estimation of Covariance
+### Estimation of Covariance
 
 For paired observations $(x_1,y_1),(x_2,y_2),\dots,(x_N,y_N)$, the usual sample covariance is
 
@@ -107,7 +115,7 @@ where
 
 This estimator concerns two variables observed in pairs. For a time series, the same idea is applied to values separated by a lag, which leads to autocovariance.
 
-### Stochastic Processes
+## Stochastic Processes
 
 A stochastic process is a collection of random variables indexed by time or another ordered set:
 
@@ -131,7 +139,7 @@ $$
 
 The distinction matters because theoretical quantities such as covariance and autocovariance describe the stochastic process, while sample estimates are calculated from the observed realization.
 
-### Autocovariance Function
+## Autocovariance Function
 
 The autocovariance function measures the covariance between two values of the same stochastic process at times $s$ and $t$:
 
@@ -149,7 +157,7 @@ $$
 
 Thus, autocovariance extends the idea of variance from one time point to pairs of time points.
 
-### Lagged Autocovariance
+## Lagged Autocovariance
 
 For a weakly stationary process, the covariance between $X_t$ and $X_{t+k}$ depends only on the lag $k$, not on the particular time $t$. The lag-$k$ autocovariance is therefore
 
@@ -159,7 +167,7 @@ $$
 
 This lag-based form makes it possible to summarize dependence across time with one function. Positive values indicate that observations separated by $k$ periods tend to deviate from the mean in the same direction, while negative values indicate opposite deviations.
 
-#### Autocovariance Coefficients
+### Autocovariance Coefficients
 
 For a time series $\{X_t\}$, the population autocovariance at lag $k$ is
 
@@ -183,7 +191,7 @@ $$
 
 The value $c_k$ estimates the population quantity $\gamma_k$. Because fewer observation pairs are available as $k$ increases, estimates at large lags are generally less stable.
 
-#### Assumption of Weak Stationarity
+### Assumption of Weak Stationarity
 
 A process is weakly stationary when its mean is constant, its variance is finite and constant, and its autocovariance depends only on the lag. Under these conditions,
 
@@ -199,7 +207,7 @@ $$
 
 This estimate summarizes the direction and scale of linear dependence between observations separated by $k$ periods. To compare dependence across series with different units or variances, use autocorrelation instead.
 
-## Student guide: units, lags, and finite samples
+## Worked examples: units, lags, and finite samples
 
 The autocovariance at lag $h$ is
 
@@ -223,7 +231,7 @@ $$
 \hat\rho(1)=\frac{0.1875}{1.25}=0.15.
 $$
 
-At larger lags, fewer observation pairs are available. One common convention divides by $n$ at every lag, while another divides by $n-h$. Neither should be treated as the unique sample autocovariance definition without stating the convention; the divisor-$n$ version is the one that guarantees a non-negative-definite autocovariance sequence.
+At larger lags, fewer observation pairs are available. One common convention divides by $n$ at every lag, while another divides by $n-h$. State the convention whenever values are reported or compared. The divisor-$n$ version has a useful structural property: it produces a nonnegative-definite sample autocovariance sequence. Dividing by $n-h$ adjusts for the number of pairs but does not generally retain that property, nor does it make the estimator exactly unbiased when the mean is estimated.
 
 ### AR(1) covariance recursion
 
@@ -253,7 +261,7 @@ $$
 
 The autocovariance therefore decays geometrically with lag, just like the ACF, but it retains the variance scale of the original series. The following figure illustrates that decay for a simulated AR(1) process.
 
-![AR(1) autocovariance](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/05_autocovariance_ar1.png)
+![AR(1) autocovariance](../../assets/time_series/student/05_autocovariance_ar1.png)
 
 ### Cross-covariance caution
 

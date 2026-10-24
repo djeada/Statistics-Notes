@@ -1,8 +1,32 @@
 # Time Series Modeling
 
-Time-series modeling is an iterative process of specifying structure, estimating parameters, diagnosing what remains unexplained, and testing forecasts on future-like data. Choosing an equation is only one step; transformations, initial conditions, residual behavior, and the forecast information set are part of the model as well.
+[Time series index](README.md)
+
+Time-series modeling is an iterative process of specifying structure, estimating parameters, diagnosing what remains unexplained, and testing forecasts on chronologically held-out data. Choosing an equation is only one step; transformations, initial conditions, residual behavior, and the forecast information set are part of the model as well.
 
 A useful model is parsimonious enough to estimate reliably, flexible enough to capture the important dependence, and transparent enough to diagnose. Information criteria can narrow a candidate set, but residual checks and chronological forecast evaluation determine whether the selected model is actually adequate for its intended use.
+
+**Reading guide.** Follow the AR(2) fit to see what is estimated, then use the model-comparison sections to separate fit, complexity, adequacy, and forecasting performance. The final modeling record revisits those decisions as documentation that another reader could reproduce. A lower information criterion narrows the candidates; residual behavior and chronological evaluation still determine whether the procedure is useful.
+
+**Related reading:** [forecast evaluation](forecast_evaluation.md).
+
+**On this page**
+
+- [Formula reference](#formula-reference)
+- [Worked calculation: fit, complexity, and diagnostics](#worked-calculation-fit-complexity-and-diagnostics)
+- [What a fitted model must explain](#what-a-fitted-model-must-explain)
+- [Model Fitting](#model-fitting)
+- [Worked Example: Fitting an AR(2) Model](#worked-example-fitting-an-ar2-model)
+- [Why the Design Matrix Needs Variation](#why-the-design-matrix-needs-variation)
+- [Fitting MA and ARMA Models](#fitting-ma-and-arma-models)
+- [Comparison of Common Models](#comparison-of-common-models)
+- [A Practical Identification and Validation Workflow](#a-practical-identification-and-validation-workflow)
+- [ARMA Identification and Estimation Checklist](#arma-identification-and-estimation-checklist)
+- [Order Selection with AICc](#order-selection-with-aicc)
+- [Parameter Redundancy](#parameter-redundancy)
+- [Model Selection Is Not Only About Fit](#model-selection-is-not-only-about-fit)
+- [Connections to Other Notes](#connections-to-other-notes)
+- [Worked examples: an end-to-end modeling record](#worked-examples-an-end-to-end-modeling-record)
 
 ## Formula reference
 
@@ -49,21 +73,23 @@ $$
 \mathrm{AIC}_B=192+12=204.
 $$
 
-Model B wins this narrow in-sample comparison, but it should not be accepted automatically. If B leaves a residual lag-12 spike while A has approximately white-noise residuals, A may be the more useful forecasting model. Compare candidates on the same observations, inspect residuals, and use temporal backtesting before treating a small information-criterion difference as meaningful.
+Model B has the lower AIC in this in-sample comparison, but that result does not establish that its assumptions are adequate or its forecasts are better. If B leaves a residual lag-12 spike while A has approximately white-noise residuals, A may be the more useful forecasting model. Compare candidates on the same observations, inspect residuals, and use temporal backtesting before treating a small information-criterion difference as meaningful.
 
-![Conditional mean and residual diagnostics for an AR model](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/13_modeling_residual_diagnostics.png)
+![Conditional mean and residual diagnostics for an AR model](../../assets/time_series/student/13_modeling_residual_diagnostics.png)
 
 The figure shows the two parts of model assessment together: the fitted conditional mean should capture the systematic structure, and the residuals should no longer contain obvious predictable dependence.
 
+## What a fitted model must explain
+
 Time-series modeling combines specification, parameter estimation, model selection, diagnostics, and forecast evaluation. The aim is not simply to minimize in-sample error, but to find a parsimonious model whose assumptions are reasonable, whose residuals contain little unexplained structure, and whose forecasts generalize to future observations.
 
-### Model Fitting
+## Model Fitting
 
 Different model classes require different estimation methods. In an autoregressive model, lagged observations are known and can be used as regressors. In MA and ARMA models, lagged innovations are unobserved, so estimation generally relies on likelihood, innovations recursions, or state-space methods.
 
 The estimation method is part of the model specification. Initial conditions, treatment of missing values, and whether the likelihood is conditional or exact can affect numerical results in short samples.
 
-### Worked Example: Fitting an AR(2) Model
+## Worked Example: Fitting an AR(2) Model
 
 Consider
 
@@ -149,15 +175,17 @@ $$
 \hat Y_t=0.328+0.080Y_{t-1}+1.195Y_{t-2}.
 $$
 
-Here $\hat\beta_1+\hat\beta_2\approx1.275>1$ and both roots of $1-0.080z-1.195z^2$ have modulus below 1, so the fitted recursion is explosive: with only four equations and three parameters the fit is essentially interpolation. This example demonstrates only the mechanics of regression-style AR estimation. The fitted coefficients are not the end of the analysis: check the implied stability, residual dependence, competing orders, and out-of-sample performance before using the model.
+The coefficient sum is $\hat\beta_1+\hat\beta_2\approx1.275>1$, and both zeros of $1-0.080z-1.195z^2$ have modulus below 1. The corresponding time-recursion roots lie outside the unit circle, so this fit violates causal stability.
 
-### Why the Design Matrix Needs Variation
+There are only four regression rows for three mean parameters, leaving one residual degree of freedom. The calculation illustrates how to fit an AR equation, while also showing why a short-sample fit is not enough to justify a forecasting model. Check stability, residual dependence, simpler orders, and chronological forecast performance before using the estimated recursion.
+
+## Why the Design Matrix Needs Variation
 
 If observations increase by a constant amount (for example $1,2,3,\ldots$), adjacent lag columns can become linearly dependent once an intercept is included. Then $\mathbf X^\top\mathbf X$ is singular, the inverse in the ordinary least-squares expression does not exist, and the coefficients are not uniquely identified.
 
 This is a general lesson rather than a quirk of one example: inspect the design matrix and data variation before presenting or interpreting an inverse-based estimate.
 
-### Fitting MA and ARMA Models
+## Fitting MA and ARMA Models
 
 An MA(2) model is
 
@@ -167,7 +195,7 @@ $$
 
 The lagged innovations are latent. Treating them as ordinary observed regressors is therefore not valid. Practical estimation commonly uses maximum likelihood, innovations algorithms, or state-space methods. Procedures such as Hannan-Rissanen can also provide useful starting estimates for ARMA likelihood optimization.
 
-### Comparison of Common Models
+## Comparison of Common Models
 
 | Model | Main idea | Typical use | Important assumptions / cautions |
 |---|---|---|---|
@@ -182,7 +210,7 @@ The lagged innovations are latent. Treating them as ordinary observed regressors
 
 The table is a model map, not a ranking. The appropriate class depends on what is being forecast, which structures are present, and which assumptions remain plausible after diagnostics.
 
-### A Practical Identification and Validation Workflow
+## A Practical Identification and Validation Workflow
 
 1. **Explore the series.** Plot the data and identify trend, seasonality, missingness, outliers, structural breaks, and changing variance.
 2. **Assess stationarity.** Use plots, ACF behavior, and tests such as ADF/KPSS as supporting evidence.
@@ -193,11 +221,11 @@ The table is a model map, not a ranking. The appropriate class depends on what i
 7. **Diagnose residuals.** Check residual time plots, ACF/PACF, squared residuals, and relevant tests such as Ljung-Box.
 8. **Evaluate forecasts temporally.** Preserve chronology with holdouts or rolling/expanding origins.
 
-![Temporal validation split](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/08_temporal_validation_split.png)
+![Temporal validation split](../../assets/time_series/diagnostics/08_temporal_validation_split.png)
 
-The figure emphasizes the final step: model selection is incomplete until the complete procedure is tested on future-like observations without information leakage.
+The figure emphasizes the final step: model selection is incomplete until the complete procedure is tested on observations from later periods without information leakage.
 
-### ARMA Identification and Estimation Checklist
+## ARMA Identification and Estimation Checklist
 
 For a stationary series, a common ARMA workflow is:
 
@@ -210,7 +238,7 @@ For a stationary series, a common ARMA workflow is:
 
 For pure AR models, Yule-Walker or Burg estimators can be useful. Innovations algorithms target MA structure, while Hannan-Rissanen can provide starting values before likelihood optimization.
 
-### Order Selection with AICc
+## Order Selection with AICc
 
 The **corrected Akaike Information Criterion (AICc)** adjusts AIC for finite samples. One common form is
 
@@ -220,21 +248,21 @@ $$
 +\frac{2k(k+1)}{n-k-1},
 $$
 
-where $k$ is the number of estimated parameters counted in the likelihood and $n$ is the effective sample size.
+where $k$ is the number of estimated parameters counted in the likelihood and $n$ is the effective sample size. This expression requires $n>k+1$; when the denominator is zero or negative, it cannot be used as an ordinary finite-sample correction.
 
 Lower values indicate a better fit-complexity tradeoff within a comparable candidate set. Parameter-count and effective-sample conventions vary across implementations, so check the software documentation when reproducing exact values.
 
-### Parameter Redundancy
+## Parameter Redundancy
 
 An over-parameterized ARMA model can sometimes represent a simpler process if the AR and MA polynomials share common factors. Such cancellations make parameters redundant and can weaken identification.
 
 Prefer reduced representations without common factors. If estimated roots nearly cancel, treat the apparent complexity with caution rather than interpreting each coefficient as a separate dynamic mechanism.
 
-### Model Selection Is Not Only About Fit
+## Model Selection Is Not Only About Fit
 
-A more complex model can often reduce in-sample error, but that does not guarantee better forecasting. Prefer the simplest model that captures the important dependence, leaves reasonably well-behaved residuals, and performs competitively on future-like observations.
+A more complex model can often reduce in-sample error, but that does not guarantee better forecasting. Prefer the simplest model that captures the important dependence, leaves reasonably well-behaved residuals, and performs competitively on observations from later periods.
 
-### Connections to Other Notes
+## Connections to Other Notes
 
 - See **[stationarity.md](stationarity.md)** before interpreting AR/MA/ARIMA models.
 - See **[autocorrelation_function.md](autocorrelation_function.md)** for ACF/PACF-based identification.
@@ -243,7 +271,7 @@ A more complex model can often reduce in-sample error, but that does not guarant
 - See **[randomness_tests.md](randomness_tests.md)** for residual checks.
 - See **[forecasting.md](forecasting.md)** for forecast construction and uncertainty.
 
-## Student guide: an end-to-end modeling record
+## Worked examples: an end-to-end modeling record
 
 A time-series model is a set of assumptions about the conditional mean, temporal dependence, new shocks, variance behavior, and information available for prediction. Record these assumptions explicitly before comparing software summaries.
 
@@ -266,7 +294,7 @@ For example, a monthly sales forecast issued on the last day of March may use co
 
 Inspect the level series, relevant transformations, first and seasonal differences, rolling mean and variance, missingness and outliers, ACF/PACF, known calendar effects, and possible structural breaks.
 
-![Detrending](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/01_detrending.png)
+![Detrending](../../assets/time_series/diagnostics/01_detrending.png)
 
 The detrending figure shows why preprocessing should follow the mechanism. Removing a deterministic trend can reveal stationary residual structure, while differencing answers a different question by modeling changes rather than deviations around a fitted trend.
 
@@ -323,7 +351,7 @@ Use AICc when the effective sample is not large relative to the parameter count,
 Let
 
 $$
-\hat\varepsilon_t=y_t-\hat y_{t|t-1}
+\hat\varepsilon_t=y_t-\hat y_{t\mid t-1}
 $$
 
 be one-step residuals. A useful residual sequence should have approximately zero mean, little remaining serial correlation, reasonably stable variance, no unexplained trend or break, and no systematic relation to fitted values or predictors.
@@ -338,7 +366,7 @@ $$
 {\sum_{t=1}^{T}(\hat\varepsilon_t-\bar\varepsilon)^2}.
 $$
 
-![Residual ACF](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/02_residual_acf.png)
+![Residual ACF](../../assets/time_series/diagnostics/02_residual_acf.png)
 
 The residual ACF shows whether linear dependence remains after fitting. A visible spike suggests a missing dynamic term, seasonal feature, predictor, or structural component, but the plot alone does not tell which one.
 
@@ -348,7 +376,7 @@ $$
 Q(m)=T(T+2)\sum_{h=1}^{m}\frac{\hat\rho(h)^2}{T-h}.
 $$
 
-![Ljung-Box shape](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/06_ljung_box_shape.png)
+![Ljung-Box shape](../../assets/time_series/diagnostics/06_ljung_box_shape.png)
 
 The figure reinforces that the test aggregates evidence across several lags. A small p-value says the residuals retain linear dependence at one or more tested lags; it does not prescribe the replacement model.
 
@@ -356,15 +384,15 @@ The figure reinforces that the test aggregates evidence across several lags. A s
 
 A residual ACF near zero does not establish independent, homoskedastic residuals. Inspect squared residuals and their dependence as well.
 
-![Residual variance](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/03_residual_variance.png)
+![Residual variance](../../assets/time_series/diagnostics/03_residual_variance.png)
 
 Changing residual spread indicates that the conditional variance may need separate modeling.
 
-![Residual nonlinearity](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/04_residual_nonlinearity.png)
+![Residual nonlinearity](../../assets/time_series/diagnostics/04_residual_nonlinearity.png)
 
 A residual plot can also reveal nonlinear patterns that a linear mean model cannot capture even when ordinary autocorrelation is small.
 
-![Residual distribution](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/05_residual_distribution.png)
+![Residual distribution](../../assets/time_series/diagnostics/05_residual_distribution.png)
 
 Heavy tails or skewness can make Gaussian prediction intervals poorly calibrated even when the conditional mean is adequate. The relevant distributional assumption should match the forecast objective, especially when tail probabilities matter.
 
@@ -372,7 +400,7 @@ Heavy tails or skewness can make Gaussian prediction intervals poorly calibrated
 
 A single stable parameter set can average over multiple regimes. After a break, residuals may show a level shift, a change in persistence, a variance jump, or a change in seasonal amplitude.
 
-![Structural break](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/diagnostics/07_structural_break.png)
+![Structural break](../../assets/time_series/diagnostics/07_structural_break.png)
 
 The break figure shows why an isolated global fit can be misleading: parameters that describe the pre-break period may no longer represent the post-break process.
 
@@ -389,4 +417,4 @@ Keep an auditable record:
 | ARIMA | first difference |  |  |  |  |  |
 | seasonal model | seasonal difference |  |  |  |  |  |
 
-The chosen model should be the simplest candidate that captures the important structure and performs acceptably on future-like data. A lower in-sample criterion paired with poor residuals is a warning, not a victory.
+The chosen model should be the simplest candidate that captures the important structure and performs acceptably on chronologically held-out data. A lower in-sample criterion paired with structured residuals calls for further diagnosis; it does not settle the selection decision.
