@@ -1,29 +1,10 @@
 # Difference Equations
 
-[Time series index](README.md)
+Suppose a quantity retains 70% of its previous value and receives an addition of 2 at every step. The rule determines tomorrow's value from today's value; an initial value determines which particular path follows that rule. A **difference equation** formalizes this kind of discrete-time evolution.
 
-A difference equation describes how a discrete-time quantity evolves from its earlier values. Rather than specifying every term directly, it gives a recursive rule, so the behavior of the sequence is determined by the recursion together with its initial conditions.
+The recursion and its starting conditions answer different questions. The recursion describes the mechanism, while the starting values locate one path within that mechanism. Two paths can begin far apart yet approach the same level, or begin close together and move farther apart, depending on the recursion's coefficients.
 
-For time-series models, the important question is how those recursive effects behave as time passes. Characteristic roots reveal whether deviations decay, oscillate, or grow, which connects difference equations directly to persistence, stability, shock propagation, and autoregressive dynamics.
-
-**Reading guide.** Start with a deterministic recursion and its initial conditions before adding random shocks. In the root calculations, distinguish the roots governing powers of time from roots of a polynomial in the backshift variable: they are reciprocals. This distinction explains why stability is sometimes described using roots inside the unit circle and sometimes using roots outside it.
-
-**Related reading:** [sequences and series](series.md).
-
-## Formula reference
-
-| Case | General formula | Solution / condition |
-|---|---|---|
-| First-order homogeneous | $x_t=ax_{t-1}$ | $x_t=a^tx_0$; stable when $\lvert a\rvert<1$. |
-| First-order with constant | $x_t=c+ax_{t-1}$ | $x_t=x^\star+a^t(x_0-x^\star)$, $x^\star=c/(1-a)$ for $a\ne1$. |
-| First-order with shocks | $x_t=c+ax_{t-1}+\varepsilon_t$ | For $\lvert a\rvert<1$, $x_t=c/(1-a)+\sum_{j=0}^{\infty}a^j\varepsilon_{t-j}$ after the transient. |
-| Order-$p$ homogeneous | $x_t=\sum_{i=1}^{p}\phi_ix_{t-i}$ | Characteristic equation $r^p-\phi_1r^{p-1}-\cdots-\phi_p=0$. |
-| Distinct roots | $r_1,\ldots,r_p$ | $x_t=\sum_{i=1}^{p}C_ir_i^t$. |
-| Repeated root $r$ of multiplicity $m$ | — | Contribution $(C_0+C_1t+\cdots+C_{m-1}t^{m-1})r^t$. |
-| Complex roots | $r=Re^{\pm i\omega}$ | Real solution has the form $R^t[A\cos(\omega t)+B\sin(\omega t)]$. |
-| Stability | all characteristic roots $r_i$ | Homogeneous deviations decay when $\lvert r_i\rvert<1$ for every $i$. |
-| Forced linear recursion | $x_t=\sum_{i=1}^{p}\phi_ix_{t-i}+u_t$ | Solution = homogeneous transient + particular/forced response. |
-| Lag-polynomial form | $\phi(B)x_t=u_t$, $\phi(B)=1-\sum_{i=1}^{p}\phi_iB^i$ | Links difference equations directly to AR models. |
+For time-series modeling, the central question is how an initial deviation or a new shock travels through the recursion. If its influence fades, the system forgets its initial conditions. If it persists, oscillates, or grows, forecasts inherit that behavior. Characteristic roots describe these patterns and connect the algebra of recurrences to AR stability and forecast uncertainty.
 
 ## Worked calculation: a stable recursion
 
@@ -58,9 +39,9 @@ $$
 x_t=x^\star+0.7^t(x_0-x^\star).
 $$
 
-Because $|0.7|<1$, the effect of the starting value shrinks over time. If the coefficient had absolute value greater than 1, the same recursion would amplify deviations instead.
+Subtracting the equilibrium has removed the constant input 2 and left a simpler recursion for deviations. After $t$ steps, the initial deviation has been multiplied by $0.7^t$, which tends to zero. The level itself does not tend to zero: it tends to $2/(1-0.7)$. A coefficient between $-1$ and 0 would also shrink deviations, but their signs would alternate. A coefficient with magnitude above 1 would enlarge deviations instead.
 
-![A stable first-order difference equation](../../assets/time_series/student/02_difference_equation.png)
+![A stable first-order difference equation](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/02_difference_equation.png)
 
 ## Recurrence relations and initial conditions
 
@@ -82,7 +63,7 @@ $$
 a_n=\lambda^n.
 $$
 
-The substitution converts the recurrence into a polynomial equation for $\lambda$. The roots of that polynomial determine the basic patterns that can appear in the sequence.
+Powers are a useful trial solution because shifting their time index changes them by a constant factor: $\lambda^{n-1}=\lambda^n/\lambda$. Substitution therefore turns the recurrence into an algebraic condition on that factor. Each characteristic root supplies one basic time pattern. Linearity then allows those patterns to be combined, with constants chosen to satisfy the initial conditions.
 
 For
 
@@ -173,7 +154,7 @@ $$
 a_n=c_1\lambda_1^n+c_2\lambda_2^n+\dots+c_k\lambda_k^n.
 $$
 
-The constants are determined by the initial conditions. Repeated roots require additional polynomial factors in $n$, while complex roots lead naturally to oscillating terms. These root patterns are important in time-series models because they determine whether responses decay, oscillate, or grow.
+With distinct roots, the basic solutions are independent powers, and the initial conditions determine their coefficients. A repeated root does not supply enough independent powers on its own: factors such as $n\lambda^n$ supply the additional solutions. Complex-conjugate roots combine into real sine and cosine terms multiplied by a changing amplitude. The modulus controls decay or growth; the angle controls oscillation. This explains why a linear recursion can produce cycles without an explicitly seasonal input.
 
 ## Example: Fibonacci Sequence
 
@@ -227,7 +208,7 @@ $$
 a_n=\frac{1}{\sqrt5}\left[\left(\frac{1+\sqrt5}{2}\right)^{n+3}-\left(\frac{1-\sqrt5}{2}\right)^{n+3}\right].
 $$
 
-The recurrence, its characteristic roots, and the closed-form expression all describe the same sequence from different viewpoints.
+The closed form makes a feature less obvious from the recurrence: the positive root $(1+\sqrt5)/2$ exceeds 1, so its contribution eventually dominates. The other root has magnitude below 1 and its alternating contribution fades. This Fibonacci-type example is therefore useful for understanding root behavior, but it is not an example of a stable stationary AR recursion.
 
 ## Relation to Differential Equations
 
@@ -241,7 +222,7 @@ Trying a solution of the form $y(t)=e^{\lambda t}$ produces a characteristic pol
 
 The analogy is useful, but the stability conditions use different boundaries. In discrete time, powers $r^t$ decay when $|r|<1$. In continuous time, exponentials $e^{\lambda t}$ decay when the real part of $\lambda$ is negative. Keep the solution form in view when applying either condition.
 
-## Worked examples: roots, equilibrium, and shocks
+## Stability, initial conditions, and random forcing
 
 For a homogeneous AR(2)-style recursion
 
@@ -255,7 +236,7 @@ $$
 r^2-\phi_1r-\phi_2=0.
 $$
 
-The roots determine whether deviations decay, oscillate, or grow. If both roots have modulus below 1, the homogeneous part decays. Repeated or complex roots can produce slowly decaying or oscillating responses even when the recursion is stable.
+Apply the root condition to the **homogeneous deviation**, not automatically to every part of the observed series. Roots inside the unit circle make the effect of initial conditions vanish. A constant or changing external input can still keep the level away from zero. With random shocks continually entering, a stable path continues to fluctuate even though the influence of each individual shock fades.
 
 ### Numerical first-order example
 
@@ -287,7 +268,7 @@ $$
 x_t=c+\phi x_{t-1}+\varepsilon_t,
 $$
 
-the solution combines three pieces: a transient determined by the initial condition, a long-run equilibrium when one exists, and a weighted sum of past shocks.
+the realized path contains the starting condition, the repeated constant input, and all shocks that have arrived so far. At a finite horizon, repeated substitution gives the initial term $\phi^t x_0$, the constant contribution $c\sum_{j=0}^{t-1}\phi^j$, and the shock contribution $\sum_{j=0}^{t-1}\phi^j\varepsilon_{t-j}$. Separating them prevents the phrase “the system settles” from suggesting that a stochastic path eventually becomes constant.
 
 For $|\phi|<1$, after the initial transient has decayed,
 
@@ -295,10 +276,25 @@ $$
 x_t=\frac{c}{1-\phi}+\sum_{j=0}^{\infty}\phi^j\varepsilon_{t-j}.
 $$
 
-Difference equations therefore connect directly to moving-average representations and forecast uncertainty: the same powers of $\phi$ that govern stability also determine how quickly the effect of a shock fades.
+The infinite shock sum describes the stationary past-driven solution when $|\phi|<1$. A process started at a fixed value at a finite date also has an initial transient; it approaches the stationary behavior as that transient decays. The coefficient on a shock $j$ periods ago is $\phi^j$. Those same coefficients appear squared when calculating the uncertainty contributed by shocks that have not yet arrived.
 
-![Stable and unstable recursions](../../assets/time_series/foundations/02_difference_equation_stability.png)
+![Stable and unstable recursions](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/foundations/02_difference_equation_stability.png)
 
-The figure contrasts decaying and expanding paths, making the root-based stability condition visible in the time domain.
+Read the distance between a path and its equilibrium, or between two paths receiving the same inputs. In the stable cases that distance shrinks; in the unstable cases it grows. This comparison isolates the effect of the recursion from variation caused by different shocks, making the root condition visible without relying on the appearance of one noisy path.
 
-A runnable companion is the [difference equations notebook](../../notebooks/time_series/difference_equations.ipynb).
+A runnable companion is the [difference equations notebook](https://github.com/djeada/Statistics-Notes/blob/main/notebooks/time_series/difference_equations.ipynb).
+
+## Formula reference
+
+| Case | General formula | Solution / condition |
+|---|---|---|
+| First-order homogeneous | $x_t=ax_{t-1}$ | $x_t=a^tx_0$; stable when $\lvert a\rvert<1$. |
+| First-order with constant | $x_t=c+ax_{t-1}$ | $x_t=x^\star+a^t(x_0-x^\star)$, $x^\star=c/(1-a)$ for $a\ne1$. |
+| First-order with shocks | $x_t=c+ax_{t-1}+\varepsilon_t$ | For $\lvert a\rvert<1$, $x_t=c/(1-a)+\sum_{j=0}^{\infty}a^j\varepsilon_{t-j}$ after the transient. |
+| Order-$p$ homogeneous | $x_t=\sum_{i=1}^{p}\phi_ix_{t-i}$ | Characteristic equation $r^p-\phi_1r^{p-1}-\cdots-\phi_p=0$. |
+| Distinct roots | $r_1,\ldots,r_p$ | $x_t=\sum_{i=1}^{p}C_ir_i^t$. |
+| Repeated root $r$ of multiplicity $m$ | — | Contribution $(C_0+C_1t+\cdots+C_{m-1}t^{m-1})r^t$. |
+| Complex roots | $r=Re^{\pm i\omega}$ | Real solution has the form $R^t[A\cos(\omega t)+B\sin(\omega t)]$. |
+| Stability | all characteristic roots $r_i$ | Homogeneous deviations decay when $\lvert r_i\rvert<1$ for every $i$. |
+| Forced linear recursion | $x_t=\sum_{i=1}^{p}\phi_ix_{t-i}+u_t$ | Solution = homogeneous transient + particular/forced response. |
+| Lag-polynomial form | $\phi(B)x_t=u_t$, $\phi(B)=1-\sum_{i=1}^{p}\phi_iB^i$ | Links difference equations directly to AR models. |

@@ -1,33 +1,10 @@
 # Statistical Moments and Time Series
 
-[Time series index](README.md)
+A mean or variance summarizes a distribution, but a time series adds two questions: **which date's distribution**, and **how are values at different dates related**? A single average of the whole record cannot answer both. A rising level can be hidden by that average, and two sequences with identical histograms can have completely different patterns of persistence.
 
-Statistical moments summarize features such as the center, spread, and joint variation of a distribution. In time series, those same quantities acquire a time dimension: the mean and variance may change across the record, and covariance becomes a function of lag as well as scale.
+The mean function $\mu_t=E(X_t)$ describes the center at each date. The variance describes uncertainty around that date's mean. Autocovariance then connects two dates by asking whether their deviations tend to have the same sign or opposite signs. Keeping these quantities separate is the starting point for describing temporal structure.
 
-This makes moment calculations more than descriptive summaries. Stable moments support stationary modeling, while changing means, variances, or lag relationships point to trend, volatility, structural change, or other dynamics that must be represented before a simple stationary model is appropriate.
-
-**Reading guide.** Read the mean and variance examples as descriptions of distributions at particular times, then examine how lagged products add information about ordering. The numerical examples deliberately reuse a few observations so that changes in the denominator or observation order can be checked by hand. Rolling summaries are exploratory estimates; they are not the population moment functions themselves.
-
-**Related reading:** [autocovariance](autocovariance_function.md).
-
-## Formula reference
-
-| Moment / summary | General formula | Time-series interpretation |
-|---|---|---|
-| Raw $k$th moment | $m_k=E[X^k]$ | Describes the marginal distribution at a fixed time. |
-| Central $k$th moment | $\mu_k=E[(X-E[X])^k]$ | $\mu_2$ is variance; higher moments describe shape. |
-| Mean function | $\mu_t=E[X_t]$ | Constant in $t$ under weak stationarity. |
-| Variance | $\mathrm{Var}(X_t)=E[(X_t-\mu_t)^2]$ | Constant in $t$ under weak stationarity. |
-| Standard deviation | $\sigma_t=\sqrt{\mathrm{Var}(X_t)}$ | Expresses spread in the original units. |
-| Skewness | $\gamma_1=E[(X-\mu)^3]/\sigma^3$ | Measures asymmetry of the marginal distribution. |
-| Kurtosis | $\gamma_2=E[(X-\mu)^4]/\sigma^4$ | Normal distribution has kurtosis $3$; excess kurtosis subtracts $3$. |
-| Autocovariance | $\gamma_t(h)=\mathrm{Cov}(X_t,X_{t-h})$ | Under weak stationarity, write $\gamma(h)$ because it depends only on lag. |
-| Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | Scale-free lag dependence. |
-| Cross-covariance | $\gamma_{XY}(h)=\mathrm{Cov}(X_t,Y_{t-h})$ | Describes lead-lag linear association between two series. |
-| Sample mean | $\bar x=n^{-1}\sum_{t=1}^{n}x_t$ | Global level estimate when one mean is meaningful. |
-| Sample variance with divisor $n-1$ | $s^2=(n-1)^{-1}\sum_{t=1}^{n}(x_t-\bar x)^2$ | Unbiased for IID observations with finite variance; serial dependence changes that conclusion. |
-| Rolling mean | $\hat\mu_t^{(w)}=w^{-1}\sum_{j=0}^{w-1}x_{t-j}$ | Local level over a window of width $w$. |
-| Rolling variance | $\hat v_t^{(w)}=(w-1)^{-1}\sum_{j=0}^{w-1}(x_{t-j}-\hat\mu_t^{(w)})^2$ | Local spread over the same window. |
+Population moments refer to the underlying process across possible realizations. Sample means, sample variances, and rolling estimates are calculations on the one realized path we observe. Stationarity can make observations at different dates informative about common population moments, but it does not make them independent. The estimation uncertainty still depends on temporal covariance, which is why independent-sample formulas cannot simply be carried over unchanged.
 
 ## Worked calculation: mean, variance, and lag covariance
 
@@ -57,19 +34,19 @@ $$
 (-2)(0)+(0)(0)+(0)(2)=0.
 $$
 
-Thus this small sample has lag-1 covariance zero, even though zero sample covariance does not imply independence. In a time series, moments must be considered together with their time and lag structure, so a single overall mean or variance can be misleading when those quantities change over time.
+Every adjacent product contains at least one zero, so the lag-1 sum vanishes for this particular ordering. That arithmetic does not show that the data were generated independently. A sample covariance is one noisy summary, and positive and negative contributions can also cancel in other samples. To learn about the process, inspect several relevant lags and consider the assumptions that justify estimating one common lag covariance.
 
-![Series with different sample variances](../../assets/time_series/student/03_moments_mean_and_variance.png)
+![Series with different sample variances](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/03_moments_mean_and_variance.png)
 
 The figure illustrates why the mean alone is not enough to describe a series: two sequences can be centered at similar levels while differing substantially in their spread.
 
-Statistical moments summarize important features of a distribution. In time-series analysis, the same ideas are useful, but they must be interpreted with an additional question: do those features remain stable over time? A changing mean, variance, or dependence structure can be as important as the numerical value of the moment itself.
+The numerical examples illustrate two different summaries of the same data. Marginal moments describe the values without their order. Lagged moments describe pairs chosen by their time separation. Reordering observations leaves the marginal mean and variance unchanged but changes which pairs enter the lag calculation. Any summary intended to describe a time series should make clear which of these two types of information it retains.
 
 ## Introduction to Statistical Moments in Time Series
 
-The **mean** describes the central level of a process, while the **variance** measures the average squared deviation around that level. The standard deviation is the square root of the variance and expresses spread in the original units of the data.
+The **mean** is an expectation over possible outcomes at a fixed date, not a guarantee that the observed series stays near one number. The **variance** is the expected squared distance from that mean. Its square root, the standard deviation, returns the scale to the original units. For example, if observations are in units sold, variance is in squared units sold while standard deviation is again in units sold.
 
-For a time series, these summaries may vary with time. A rising mean can indicate a trend, while a changing variance can indicate periods of greater or lower volatility. The next examples separate these two effects visually.
+A time-varying mean and a time-varying variance can produce superficially similar plots. A changing mean moves the center around which observations fluctuate. A changing variance alters the size of the fluctuations around the center. Fitting a flexible trend to a variance change, or treating a level shift as a burst of volatility, can therefore lead to the wrong model even when the fitted curve looks plausible.
 
 ## Examples of Time Series with Varying Statistical Moments
 
@@ -85,11 +62,11 @@ In this example, the center of the series increases over time while the dispersi
 
 ![Time Series with Varying Standard Deviation](https://github.com/user-attachments/assets/7216800d-c290-4617-853b-e44e0ef95272)
 
-Here the central level is comparatively stable, but the amplitude of the fluctuations changes over time. This is a changing-variance pattern. Financial returns often show similar volatility clustering, with quiet periods followed by periods of larger movements.
+Here the deviations become larger or smaller without a comparable movement in the central level. To investigate that pattern, examine residuals around an appropriate mean model rather than interpreting large raw observations alone. A higher level can naturally produce larger absolute fluctuations, in which case a log transformation may help; volatility clustering can instead remain after that scale effect has been addressed.
 
 The two figures demonstrate why stationarity involves more than checking whether a plot has an obvious trend. Both the level and the variance structure matter.
 
-![Changing moments](../../assets/time_series/foundations/04_moments_change_over_time.png)
+![Changing moments](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/foundations/04_moments_change_over_time.png)
 
 This companion figure places the cases side by side so that changes in the mean and changes in the variance can be distinguished directly.
 
@@ -101,19 +78,19 @@ The following visualization compares an observed sequence with a fitted marginal
 
 ![Time Series vs. Random Variables](https://github.com/user-attachments/assets/c657913b-fe5f-443d-a469-5fdc65bef7fa)
 
-The time-series plot preserves the ordering of observations, while the fitted distribution summarizes only their marginal values. Independent draws from that fitted distribution reproduce the histogram in expectation, but they do not reproduce any serial dependence that may be present in the original sequence.
+The fitted marginal distribution treats the observations as a collection of values. Simulating independent draws from it may reproduce the approximate range and histogram, but it randomizes the order. Runs of high values, alternating signs, or clustered large deviations will generally disappear. Matching the marginal distribution is therefore insufficient for reproducing a time series or assessing uncertainty about an aggregate over time.
 
 A time index does not itself imply dependence: independent noise is also a time series. Weak white noise has zero autocorrelation but can still have nonlinear dependence. Time-series analysis therefore examines the type of dependence supported by the data instead of inferring independence from a flat sample ACF.
 
 ## Implications for Modeling and Analysis
 
-Recognizing temporal dependence is important for estimation, uncertainty quantification, and forecasting. Methods designed for independent observations can give misleading standard errors or forecasts when serial structure is ignored.
+Temporal covariance changes the amount of information in a sample. The variance of a sum contains both the individual variances and the cross-time covariance terms. Positive covariance can make nearby observations carry overlapping information, so the usual independent-sample standard error of an average can be too small. Negative covariance can have the opposite effect. This issue concerns estimation uncertainty even when the sample mean itself remains unbiased.
 
-An **autoregressive (AR)** model represents dependence on past values of the series. A **moving average (MA)** model represents dependence on current and past innovations. An **ARMA** model combines both structures when neither component alone gives an adequate description. These models do not automatically represent trends or seasonality; those features must be handled explicitly when present.
+An **AR** model describes how past observed values contribute to the next value. An **MA** model describes how a finite history of shocks contributes, and an **ARMA** model combines both mechanisms. These equations imply particular covariance patterns; fitting them is one way of explaining the lagged moments. A trend, a seasonal mean, or a structural break must still be represented separately when the chosen stationary equation does not include it.
 
 The ACF, PACF, residual diagnostics, and out-of-sample forecasts help determine whether a proposed dependence structure is useful.
 
-## Worked examples: moments, ordering, and rolling estimates
+## Estimating moments from one ordered path
 
 For a cross-sectional sample, one mean and one variance may summarize the marginal distribution. For a time series, the relevant quantities include
 
@@ -125,7 +102,7 @@ $$
 \gamma_t(h)=\mathrm{Cov}(X_t,X_{t-h}).
 $$
 
-Under weak stationarity, $\mu_t$ and $\gamma_t(0)$ do not depend on $t$, and $\gamma_t(h)$ depends only on the lag $h$. A changing mean or variance makes a single overall summary potentially misleading.
+Weak stationarity removes the date dependence from these first two moment descriptions: the mean is common across dates and the covariance depends on the separation $h$. This allows us to pool lag-$h$ pairs from different parts of the record to estimate one quantity. Without that assumption, the same pooled estimate can mix genuinely different regimes and need not describe any particular date well.
 
 ### Numerical moment calculation
 
@@ -157,7 +134,7 @@ $$
 \gamma_{XY}(h)=\mathrm{Cov}(X_t,Y_{t-h}).
 $$
 
-It can reveal lead-lag association, but it is sensitive to trend, scale, common seasonality, and the sign convention used for the lag. A peak does not establish causality. Transform or detrend only when the modeling question supports it, and interpret any lead-lag pattern in the context of when predictors are actually available.
+With the convention shown above, positive $h$ pairs the current $X_t$ with an earlier $Y_{t-h}$. Reversing the series or the lag sign changes that timing interpretation. A peak can reflect a shared trend, a common seasonal driver, or different publication delays rather than an effect of one series on the other. Write down the actual paired timestamps before using a cross-covariance peak to select predictor lags.
 
 ### Rolling moments
 
@@ -169,14 +146,33 @@ $$
 \hat v_t^{(w)}=\frac1{w-1}\sum_{j=0}^{w-1}(x_{t-j}-\hat\mu_t^{(w)})^2.
 $$
 
-The window size $w$ trades temporal resolution against sampling noise. Short windows react quickly but fluctuate more; long windows are smoother but can hide abrupt changes. Use the same window when making direct comparisons.
+A short window emphasizes recent observations but gives a variable estimate because few observations enter it. A long window reduces that variability while averaging across changes that may matter. Neighboring windows also share most of their observations, so a smooth-looking rolling curve is partly a consequence of overlap. Treat the curve as an exploratory description, check sensitivity to $w$, and use a past-only window for real-time features.
 
 ### Moments do not identify a distribution
 
-Two series can have the same mean and variance but different tails, skewness, autocorrelation, conditional variance, and structural breaks. Conversely, a time series can have a stable marginal histogram while its dependence changes over time.
+Matching the first two marginal moments leaves many features unspecified. Rare large values can produce different tail risk; asymmetric distributions can have different skewness; and the same values can be ordered to produce very different autocorrelation. Even stable unconditional variance can coexist with predictable conditional variance. A mean-and-variance description is useful precisely because it is limited: it isolates a few features that must then be combined with temporal and distributional checks.
 
 Moments are therefore part of the description rather than a complete model. Plot how they evolve and examine temporal dependence separately before deciding whether a stationary model is appropriate.
 
 ### Visual companion
 
 The changing-moments figure above summarizes the main visual lesson of this chapter: inspect the center and spread separately, then relate any changes to the dependence structure and modeling assumptions.
+
+## Formula reference
+
+| Moment / summary | General formula | Time-series interpretation |
+|---|---|---|
+| Raw $k$th moment | $m_k=E[X^k]$ | Describes the marginal distribution at a fixed time. |
+| Central $k$th moment | $\mu_k=E[(X-E[X])^k]$ | $\mu_2$ is variance; higher moments describe shape. |
+| Mean function | $\mu_t=E[X_t]$ | Constant in $t$ under weak stationarity. |
+| Variance | $\mathrm{Var}(X_t)=E[(X_t-\mu_t)^2]$ | Constant in $t$ under weak stationarity. |
+| Standard deviation | $\sigma_t=\sqrt{\mathrm{Var}(X_t)}$ | Expresses spread in the original units. |
+| Skewness | $\gamma_1=E[(X-\mu)^3]/\sigma^3$ | Measures asymmetry of the marginal distribution. |
+| Kurtosis | $\gamma_2=E[(X-\mu)^4]/\sigma^4$ | Normal distribution has kurtosis $3$; excess kurtosis subtracts $3$. |
+| Autocovariance | $\gamma_t(h)=\mathrm{Cov}(X_t,X_{t-h})$ | Under weak stationarity, write $\gamma(h)$ because it depends only on lag. |
+| Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | Scale-free lag dependence. |
+| Cross-covariance | $\gamma_{XY}(h)=\mathrm{Cov}(X_t,Y_{t-h})$ | Describes lead-lag linear association between two series. |
+| Sample mean | $\bar x=n^{-1}\sum_{t=1}^{n}x_t$ | Global level estimate when one mean is meaningful. |
+| Sample variance with divisor $n-1$ | $s^2=(n-1)^{-1}\sum_{t=1}^{n}(x_t-\bar x)^2$ | Unbiased for IID observations with finite variance; serial dependence changes that conclusion. |
+| Rolling mean | $\hat\mu_t^{(w)}=w^{-1}\sum_{j=0}^{w-1}x_{t-j}$ | Local level over a window of width $w$. |
+| Rolling variance | $\hat v_t^{(w)}=(w-1)^{-1}\sum_{j=0}^{w-1}(x_{t-j}-\hat\mu_t^{(w)})^2$ | Local spread over the same window. |

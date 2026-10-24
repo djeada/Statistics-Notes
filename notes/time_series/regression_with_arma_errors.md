@@ -1,29 +1,10 @@
 # Regression with ARMA Errors
 
-[Time series index](README.md)
+A regression can explain the response's relationship with observed predictors while leaving persistent departures around that relationship. **Regression with ARMA errors** models those departures as a time series. Its two equations distinguish the predictor contribution from the dynamic error; the final innovation is the new shock left after both are accounted for.
 
-Regression with ARMA errors separates two kinds of structure that often appear together in time series. The regression component describes the relationship with observed predictors, while the ARMA component models the remaining serial error. Conditional on the complete past, the forecast combines the regression component with the predictable part of that error process.
+For example, temperature may explain the baseline demand level, while yesterday's positive regression error helps predict another positive departure today. The complete forecast uses both pieces. Treating the whole regression error as unpredictable would discard the second piece.
 
-This distinction matters for both inference and forecasting. Autocorrelated errors change the uncertainty around regression coefficients and can contain additional predictive information, so a good model must handle the mean relationship and the temporal error process as parts of one coherent specification.
-
-**Reading guide.** Read the equation as a regression component plus an error process with its own dynamics. The numerical example then separates the serial error into its predictable part and its new innovation. Use that distinction when checking residuals: regression errors can remain correlated by design, while the fitted innovation residuals are the quantities expected to resemble white noise.
-
-**Related reading:** [dynamic regression](dynamic_regression.md).
-
-## Formula reference
-
-| Component / case | General formula | Notes / special case |
-|---|---|---|
-| Regression with dynamic errors | $y_t=x_t^\top\beta+n_t$ | The regression component describes predictor effects; forecasting also uses the predictable part of $n_t$. |
-| ARMA($p,q$) errors | $\phi(B)n_t=\theta(B)\varepsilon_t$ | $\varepsilon_t$ is white noise; MA sign convention can vary. |
-| Combined model | $\phi(B)(y_t-x_t^\top\beta)=\theta(B)\varepsilon_t$ | Compact regression-with-ARMA-errors form. |
-| AR(1) errors | $n_t=\rho n_{t-1}+\varepsilon_t$ | Stationary when $\lvert\rho\rvert<1$. |
-| AR(1) quasi-difference | $y_t-\rho y_{t-1}=\beta_0(1-\rho)+\beta^\top(x_t-\rho x_{t-1})+\varepsilon_t$ | Basis of GLS-style transformations for AR(1) errors. |
-| GLS estimator | $\hat\beta=(X^\top\Sigma^{-1}X)^{-1}X^\top\Sigma^{-1}y$ | Uses the error covariance matrix $\Sigma$. |
-| Error covariance, stationary AR(1) | $\mathrm{Cov}(n_t,n_{t-h})=\sigma_n^2\rho^{\lvert h\rvert}$ | $\sigma_n^2=\sigma_\varepsilon^2/(1-\rho^2)$. |
-| One-step forecast | $\hat y_{t+1\mid t}=x_{t+1}^\top\hat\beta+\hat n_{t+1\mid t}$ | Requires the future predictor vector $x_{t+1}$. |
-| Regression with ARIMA errors | $\phi(B)(1-B)^d n_t=\theta(B)\varepsilon_t$ | Allows nonstationary error structure before differencing. |
-| Dynamic-regression difference form | $\phi(B)(1-B)^d(y_t-x_t^\top\beta)=\theta(B)\varepsilon_t$ | Common ARIMAX/regression-with-ARIMA-errors representation. |
+The serial error has separate implications for inference and prediction. Correlation changes the covariance of the estimated regression coefficients, making ordinary independent-error standard errors unreliable in general. It also creates forecastable structure in the error process. A robust covariance adjustment can address the first issue without addressing the second; an explicit dynamic error model can represent both under its assumptions.
 
 ## Worked calculation: a regression mean plus serial error
 
@@ -41,9 +22,9 @@ $$
 y_t=1+2(3)+0.4=7.4.
 $$
 
-The regression mean is $1+2(3)=7$, but the error is serially dependent. Under suitable exogeneity, ordinary least squares can still estimate the mean coefficients consistently, but the usual independent-error standard errors and forecast formulas are no longer appropriate. Modeling the ARMA error captures the predictable part of $n_t$ and produces uncertainty estimates that reflect the temporal dependence.
+The predictor component is 7 and the observation is 7.4, leaving a regression error of 0.4. That error is not necessarily the new innovation. If the previous regression error was 0.5, the AR(1) predicts $0.7(0.5)=0.35$ of today's departure, leaving a new innovation of only 0.05. Forecasting and residual diagnostics must distinguish these two error sequences.
 
-![A regression mean with autocorrelated errors](../../assets/time_series/student/16_dynamic_regression.png)
+![A regression mean with autocorrelated errors](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/16_dynamic_regression.png)
 
 The figure separates the regression mean from the serial error around it. The covariates explain the systematic mean structure, while the ARMA component describes dependence that remains after conditioning on those predictors.
 
@@ -66,9 +47,9 @@ Here $\varepsilon_t$ is white noise. The signs on the MA coefficients are a conv
 
 ## Why This Matters
 
-Serially correlated errors affect both inference and forecasting. Even when the regression coefficients remain consistently estimable under appropriate exogeneity assumptions, the ordinary independent-error covariance formula is generally wrong. Ignoring residual dependence can therefore produce misleading standard errors, confidence intervals, and tests.
+With serially correlated errors, repeated observations can contain overlapping information about the same regression relationship. Even under exogeneity sufficient for consistent slope estimation, the covariance formula based on independent errors generally misstates precision. Ignoring the dependence can therefore alter confidence intervals and tests without necessarily producing an obviously poor fitted line.
 
-A fitted error process also improves dynamic forecasts because part of the current residual may be predictable from previous residuals. This is different from merely adjusting standard errors after fitting the mean model.
+At a one-step origin, forecast the regression component from the available future predictors and forecast the error from its past. Their sum is the response forecast. In the AR(1)-error example, a current residual departure feeds forward with powers of 0.7. Replacing an error model with a robust standard error does not supply that recursion, because coefficient uncertainty and predictable residual dynamics are different quantities.
 
 ## Practical Workflow
 
@@ -83,7 +64,7 @@ A practical workflow is:
 
 This structure combines explanatory regression with a time-series model for the unexplained dynamics.
 
-## Worked examples: estimating the mean and error process
+## Decomposing departures and fitting their covariance
 
 Write
 
@@ -140,11 +121,11 @@ $$
 =(X^\top\Sigma^{-1}X)^{-1}X^\top\Sigma^{-1}y.
 $$
 
-The transformation accounts for the fact that observations with correlated errors contain overlapping information. In practice, $\Sigma$ is unknown and must be estimated from the ARMA parameters, often jointly or iteratively. Misspecifying the error model can therefore affect both coefficient uncertainty and forecasts.
+GLS reweights and combines rows so that the transformed error covariance is proportional to the identity when the specified $\Sigma$ is correct. For AR(1) errors, subtracting $\rho$ times the previous equation gives $y_t-\rho y_{t-1}$ on the left and the same transformation of **every** predictor on the right. An intercept becomes $\beta_0(1-\rho)$ rather than remaining unchanged. Transforming the response alone would fit a different model.
 
-![Regression with dynamic errors](../../assets/time_series/dynamic_multivariate/01_dynamic_regression_errors.png)
+![Regression with dynamic errors](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/01_dynamic_regression_errors.png)
 
-The figure illustrates this joint view: the regression component follows the predictor-driven mean, while the dynamic error model accounts for systematic departures around it.
+After fitting, the regression errors can still show persistent runs because the ARMA equation is designed to explain them. The estimated innovations should have much less linear serial dependence. Inspecting only the raw regression errors could wrongly reject a successful combined model; inspecting only the fitted mean could wrongly accept one whose final innovations remain structured.
 
 ### Workflow
 
@@ -156,4 +137,23 @@ The figure illustrates this joint view: the regression component follows the pre
 6. Check standardized residuals and parameter stability.
 7. Backtest predictions using only information available at each forecast origin.
 
-See [dynamic regression](dynamic_regression.md) for predictor availability, lagged effects, and forecast scenarios for future covariates.
+See [dynamic regression](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/dynamic_regression.md) for predictor availability, lagged effects, and forecast scenarios for future covariates.
+
+### What the forecast conditions on
+
+A forecast using $x_{t+1}$ assumes that value is known or supplied as a scenario. If the future predictor is forecast separately, ordinary model intervals may be conditional on that supplied path and omit its uncertainty. Report that condition explicitly. When several predictors and the response feed back on one another, a joint model may be more appropriate than treating one predictor path as externally determined.
+
+## Formula reference
+
+| Component / case | General formula | Notes / special case |
+|---|---|---|
+| Regression with dynamic errors | $y_t=x_t^\top\beta+n_t$ | The regression component describes predictor effects; forecasting also uses the predictable part of $n_t$. |
+| ARMA($p,q$) errors | $\phi(B)n_t=\theta(B)\varepsilon_t$ | $\varepsilon_t$ is white noise; MA sign convention can vary. |
+| Combined model | $\phi(B)(y_t-x_t^\top\beta)=\theta(B)\varepsilon_t$ | Compact regression-with-ARMA-errors form. |
+| AR(1) errors | $n_t=\rho n_{t-1}+\varepsilon_t$ | Stationary when $\lvert\rho\rvert<1$. |
+| AR(1) quasi-difference | $y_t-\rho y_{t-1}=\beta_0(1-\rho)+\beta^\top(x_t-\rho x_{t-1})+\varepsilon_t$ | Basis of GLS-style transformations for AR(1) errors. |
+| GLS estimator | $\hat\beta=(X^\top\Sigma^{-1}X)^{-1}X^\top\Sigma^{-1}y$ | Uses the error covariance matrix $\Sigma$. |
+| Error covariance, stationary AR(1) | $\mathrm{Cov}(n_t,n_{t-h})=\sigma_n^2\rho^{\lvert h\rvert}$ | $\sigma_n^2=\sigma_\varepsilon^2/(1-\rho^2)$. |
+| One-step forecast | $\hat y_{t+1\mid t}=x_{t+1}^\top\hat\beta+\hat n_{t+1\mid t}$ | Requires the future predictor vector $x_{t+1}$. |
+| Regression with ARIMA errors | $\phi(B)(1-B)^d n_t=\theta(B)\varepsilon_t$ | Allows nonstationary error structure before differencing. |
+| Dynamic-regression difference form | $\phi(B)(1-B)^d(y_t-x_t^\top\beta)=\theta(B)\varepsilon_t$ | Common ARIMAX/regression-with-ARIMA-errors representation. |

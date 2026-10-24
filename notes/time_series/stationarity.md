@@ -1,54 +1,10 @@
 # Stationarity in Time Series
 
-[Time series index](README.md)
+Stationarity is a statement about a process across possible realizations, not a demand that one plotted path look flat. Imagine moving an observation window from one date to another. If the relevant probability laws stay the same after that common shift, information from one part of the record can describe another part under those laws.
 
-Stationarity describes which probabilistic features of a time series remain stable when the time origin is shifted. Weak stationarity focuses on a constant mean and variance together with an autocovariance that depends only on lag, while strict stationarity requires the full joint distribution to be invariant to time shifts.
+**Weak stationarity** requires a common finite mean and variance, with covariance determined by lag. **Strict stationarity** requires every finite joint distribution to be unchanged by a time shift. A process can fluctuate strongly and remain stationary; it can also look quiet over a short interval while violating stationarity over the full record.
 
-Many classical ARMA calculations rely on this stability because it lets dependence learned in one part of the series remain meaningful elsewhere. Trends, unit roots, seasonality, structural breaks, and changing variance violate stationarity in different ways, so the appropriate response may be detrending, differencing, seasonal modeling, variance transformation, or a model that explicitly allows change.
-
-**Reading guide.** Begin with the definitions of strict and weak stationarity, then use the examples to separate a changing deterministic mean from accumulated random shocks. The tests answer different null hypotheses, so read their results alongside the model equation and plots. The later calculations connect these definitions to transformations and to the practical choice of a stationary representation.
-
-**Related reading:** [random walks](random_walk.md).
-
-**On this page**
-
-- [Formula reference](#formula-reference)
-- [Worked calculation: the stationary AR(1) mean and variance](#worked-calculation-the-stationary-ar1-mean-and-variance)
-- [What remains unchanged when time shifts?](#what-remains-unchanged-when-time-shifts)
-- [Why Do We Care About Stationarity?](#why-do-we-care-about-stationarity)
-- [Intuition for Stationary Time Series](#intuition-for-stationary-time-series)
-- [Strict Stationarity](#strict-stationarity)
-- [Weak (Second-Order) Stationarity](#weak-second-order-stationarity)
-- [Properties of Stationary Processes](#properties-of-stationary-processes)
-- [Examples of Stationary Processes](#examples-of-stationary-processes)
-- [Non-Stationary Processes](#non-stationary-processes)
-- [The Random Walk Model](#the-random-walk-model)
-- [Formal Tests for Stationarity](#formal-tests-for-stationarity)
-- [Worked examples: assumptions, transformations, and tests](#worked-examples-assumptions-transformations-and-tests)
-
-## Formula reference
-
-| Concept / case | General formula | Condition / interpretation |
-|---|---|---|
-| Strict stationarity | $(X_{t_1},\ldots,X_{t_k})\overset d=(X_{t_1+h},\ldots,X_{t_k+h})$ | Holds for every finite set of times and every common shift $h$. |
-| Weak stationarity: mean | $E[X_t]=\mu$ | Constant over time. |
-| Weak stationarity: variance | $\mathrm{Var}(X_t)=\gamma(0)<\infty$ | Constant finite variance. |
-| Weak stationarity: covariance | $\mathrm{Cov}(X_t,X_{t-h})=\gamma(h)$ | Depends only on lag, not calendar time. |
-| ACF | $\rho(h)=\gamma(h)/\gamma(0)$ | For a stationary process, $\rho(-h)=\rho(h)$. |
-| White noise | $E\varepsilon_t=0$, $\mathrm{Var}(\varepsilon_t)=\sigma^2$, $\gamma(h)=0$ for $h\ne0$ | Basic stationary reference process. |
-| MA($q$) covariance (with $\theta_0=1$) | $\gamma(h)=\sigma_\varepsilon^2\sum_{j=0}^{q-\lvert h\rvert}\theta_j\theta_{j+\lvert h\rvert}$ for $\lvert h\rvert\le q$ | Zero for $\lvert h\rvert>q$. |
-| AR(1) | $X_t=c+\phi X_{t-1}+\varepsilon_t$ | Standard causal stationary solution requires $\lvert\phi\rvert<1$. |
-| AR(1) mean | $\mu=c/(1-\phi)$ | Valid for the stationary solution. |
-| AR(1) variance | $\gamma(0)=\sigma_\varepsilon^2/(1-\phi^2)$ | Finite only when $\lvert\phi\rvert<1$. |
-| AR(1) ACF | $\rho(h)=\phi^{\lvert h\rvert}$ | Geometric or alternating decay. |
-| AR($p$) stationarity/causality | $\phi(z)=1-\phi_1z-\cdots-\phi_pz^p=0\Rightarrow \lvert z\rvert>1$ | Standard backshift-root condition. |
-| Linear filter | $X_t=\sum_j\psi_jY_{t-j}$ | Absolute summability $\sum_j\lvert\psi_j\rvert<\infty$ is a strong stability condition. |
-| Random walk | $X_t=X_{t-1}+\varepsilon_t$ | Unit-root boundary; $\mathrm{Var}(X_t\mid X_0)=t\sigma^2$. |
-| First difference | $\Delta X_t=(1-B)X_t=X_t-X_{t-1}$ | Removes one unit-root factor; a random walk becomes white noise. |
-| Seasonal difference | $\Delta_sX_t=(1-B^s)X_t=X_t-X_{t-s}$ | Removes one seasonal unit-root factor at period $s$. |
-| ADF regression | $\Delta X_t=\alpha+\beta t+\gamma X_{t-1}+\sum_{i=1}^{p}\delta_i\Delta X_{t-i}+\varepsilon_t$ | Unit-root null: $H_0:\gamma=0$. |
-| KPSS decomposition | $X_t=d_t+r_t+u_t$, $r_t=r_{t-1}+\eta_t$ | Stationarity null corresponds to zero random-walk variance, $\mathrm{Var}(\eta_t)=0$. |
-| Box-Cox transform | $g_\lambda(x)=(x^\lambda-1)/\lambda$ for $\lambda\ne0$; $g_0(x)=\log x$ | Used mainly to stabilize level-dependent variance, not to remove a unit root by itself. |
+Stationary ARMA theory uses common moments and lag relationships to make estimation and forecasting tractable. A changing deterministic mean, a unit root, a break, and changing variance violate different parts of that setup. Their remedies differ: removing a fitted trend, differencing an accumulated level, including an intervention, and modeling variance are not interchangeable ways of making a plot appear stable.
 
 ## Worked calculation: the stationary AR(1) mean and variance
 
@@ -76,13 +32,13 @@ $$
 \approx2.778.
 $$
 
-The calculation requires $|0.8|<1$. At $\phi=1$, the process is on the unit-root boundary and its variance does not settle to a finite constant. For $|\phi|>1$, deviations grow rather than decay.
+Taking expectations gives $\mu=1+0.8\mu$, hence $\mu=5$. Centering leaves a recursion for deviations. Its variance satisfies $v=0.8^2v+1$, because the new shock is uncorrelated with the previous value. Solving yields $v=1/(1-0.8^2)$. The condition $|0.8|<1$ makes the past-driven shock weights decay. At a unit root they do not decay, and from a fixed starting value the variance keeps increasing.
 
 The figure below contrasts these cases. A stationary AR(1) fluctuates around a stable level, a unit-root process wanders as shocks accumulate, and an explosive process moves increasingly far from its starting region.
 
-![Stationary, unit-root, and explosive AR(1) behavior](../../assets/time_series/student/10_stationarity_cases.png)
+![Stationary, unit-root, and explosive AR(1) behavior](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/10_stationarity_cases.png)
 
-![Stationarity cases](../../assets/time_series/foundations/06_stationarity_cases.png)
+![Stationarity cases](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/foundations/06_stationarity_cases.png)
 
 Stationarity describes which probabilistic features of a time series remain stable as time shifts. For weak stationarity, the mean and variance are constant and autocovariance depends only on lag. This condition matters because ARMA models are formulated for stationary series, while ARIMA models handle certain non-stationary series by differencing them before applying an ARMA structure.
 
@@ -105,7 +61,7 @@ $$
 \text{Stock Price} = z + b \times \text{Time}.
 $$
 
-Here, $z$ is the intercept and $b$ is the slope. Subtracting the fitted trend gives residuals that fluctuate around the estimated mean structure. If the trend specification is appropriate, those residuals are better suited to studying seasonality and short-run dependence.
+The fitted line estimates a deterministic mean, with intercept $z$ and slope $b$. Subtracting it changes the question from the level itself to departures around that line. If those departures have stable variance and lag dependence, a stationary residual model may be suitable. If the apparent trend was instead an accumulated random walk, subtracting a line does not undo the shock accumulation; a smooth residual plot alone cannot establish the required condition.
 
 The next figure shows this progression: the upper panel contains the original series and fitted trend, while the lower panel shows the detrended residuals. The key point is that detrending changes the mean structure; it does not automatically guarantee stationarity.
 
@@ -113,9 +69,9 @@ The next figure shows this progression: the upper panel contains the original se
 
 The following examples provide two additional views of detrending and its effect on the series.
 
-![detrending example](../../assets/time_series/detrending_example.png)
+![detrending example](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/detrending_example.png)
 
-![Detrending](../../assets/time_series/diagnostics/01_detrending.png)
+![Detrending](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/diagnostics/01_detrending.png)
 
 ## Intuition for Stationary Time Series
 
@@ -125,13 +81,13 @@ A stationary series has a stable probabilistic structure over time. For weak sta
 - the variance remains constant; and
 - dependence between observations is determined by their lag, not by their absolute position in time.
 
-Deterministic trends or seasonal means violate these conditions. A stationary process can still show persistent or oscillating dependence through its autocovariance function, so stationarity does not mean that the series must look like featureless noise. Stability allows relationships estimated from one part of the series to remain relevant in another part.
+A fixed December uplift violates a constant unconditional mean, even if December behaves similarly every year. Modeling that uplift explicitly may leave stationary errors. Conversely, a stationary AR process can have long runs above its mean and oscillating covariance without any deterministic trend or seasonal mean. Stationarity concerns which probability features change with the time origin, not whether the process has visible temporal structure.
 
 ## Strict Stationarity
 
 A process is said to be **strictly stationary** if the joint distribution of any subset of observations $X_{t_1}, X_{t_2}, \dots, X_{t_k}$ is the same as the distribution of $X_{t_1 + \tau}, X_{t_2 + \tau}, \dots, X_{t_k + \tau}$ for all $\tau$.
 
-In simple terms, the process has the same probabilistic behavior after any common shift in time. Therefore the marginal distribution of $X_t$ does not change with $t$, and any moments that exist—such as the mean, variance, or higher moments—are also time-invariant.
+The shift must be common to every time in the selected collection. Matching each one-date marginal distribution is insufficient if the dependence between dates changes. Strict stationarity preserves the entire finite-dimensional distribution, including tail behavior and nonlinear dependence. It does not require moments to exist: an IID Cauchy process is strictly stationary even though its mean and variance are undefined.
 
 ## Weak (Second-Order) Stationarity
 
@@ -147,7 +103,7 @@ $$
 \mathrm{Cov}(X_t, X_{t+k}) = \gamma(k)
 $$
 
-Weak stationarity is the condition used in many classical time-series calculations because it makes means, variances, autocovariances, and correlations comparable across time.
+Weak stationarity makes second-order calculations reusable across dates without specifying the full joint law. It neither implies independence nor fixes higher moments. For example, independent observations could alternate between a standard normal distribution and equally likely values $-1$ and $1$. Every date then has mean 0 and variance 1, with zero cross-time covariance, but the marginal distribution alternates. The process is weakly stationary and not strictly stationary.
 
 ## Properties of Stationary Processes
 
@@ -169,7 +125,7 @@ Weak stationarity implies $\mu(t) = \mu$ and $\gamma(r, s)$ depends only on the 
 
 The figure below illustrates the contrast between stable moments and moments that change over time. Changes in the local mean or variance are visual evidence against global weak stationarity.
 
-![Moments changing over time](../../assets/time_series/foundations/04_moments_change_over_time.png)
+![Moments changing over time](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/foundations/04_moments_change_over_time.png)
 
 ### Autocorrelation and Bounds
 
@@ -183,7 +139,7 @@ This bound can be derived from basic linear algebra principles that apply to cor
 
 ### q-Dependence and q-Correlation
 
-A stationary series is **q-dependent** if observations separated by more than $q$ time units are independent. IID noise is therefore 0-dependent. An MA($q$) process driven by independent innovations is q-dependent, but general short-memory models such as AR and ARMA processes need not become independent after any finite lag.
+A **q-dependent** process makes groups of observations independent when the groups are separated by more than $q$ dates. An MA($q$) driven by independent shocks has this property because sufficiently separated groups use disjoint shock sets. An AR process generally retains a decaying contribution from a shock at arbitrarily long lags, so short memory does not necessarily mean independence after some finite cutoff.
 
 A weaker property is **q-correlation**: the autocovariance is zero beyond lag $q$:
 
@@ -191,7 +147,7 @@ $$
 \gamma(h) = 0 \quad \text{for} \quad |h| > q.
 $$
 
-White noise is 0-correlated, and an MA($q$) process is q-correlated. Zero autocovariance does not by itself imply independence unless additional assumptions apply. Under standard second-order conditions, a stationary process with an autocovariance that cuts off after lag $q$ admits an MA($q$)-type second-order representation.
+Weak white noise is 0-correlated: all nonzero-lag covariances vanish. That statement concerns linear association and is weaker than independence. An MA($q$) with weak-white-noise shocks is q-correlated even when its shocks are not independent. Conversely, a valid stationary covariance sequence with a finite cutoff admits an appropriate finite MA second-order representation; this matches covariance behavior without establishing a unique independent-shock mechanism.
 
 ### Linear Processes and Linear Filters
 
@@ -201,7 +157,7 @@ $$
 X_t = \sum_{j=-\infty}^{\infty} \psi_j Y_{t-j} = \psi(B) Y_t
 $$
 
-is also stationary when $\sum_{j=-\infty}^{\infty} |\psi_j| < \infty$. Many ARMA models can be viewed as linear filters applied to white noise.
+is weakly stationary under the sufficient condition $\sum_{j=-\infty}^{\infty}|\psi_j|<\infty$. The condition controls the infinite weighted sum and permits its second moments to be calculated consistently. A filter can nevertheless use future values when negative lags are included. Such a stationary filtered process may be suitable for retrospective analysis while the same filter would be unavailable for a live forecast at its endpoint.
 
 The autocovariance of the filtered process is:
 
@@ -296,7 +252,7 @@ The MA(q) process is weakly stationary because its mean and variance are constan
 
 ## Non-Stationary Processes
 
-A non-stationary process does not satisfy the relevant stationarity conditions. Its mean, variance, dependence structure, or broader distribution may change over time. Deterministic trends, stochastic trends, seasonal means, structural breaks, and time-varying volatility are common sources.
+Identify which feature fails before deciding how to respond. A deterministic linear trend changes the mean; a zero-drift random walk keeps the mean constant but has growing variance; a break can change several features at once. Conditional variance can also vary while unconditional moments remain stationary, as in a covariance-stationary GARCH model. Distinguish changing conditional volatility from a claim that global weak stationarity must fail.
 
 Two important forms of non-stationarity are:
 
@@ -313,11 +269,11 @@ To achieve stationarity in such series, one can remove the trend component. This
 
 ### Difference-Stationary Processes
 
-A difference-stationary series contains a stochastic trend, typically associated with a unit root. Subtracting a deterministic trend does not remove this accumulated effect of past shocks; differencing is used instead.
+A difference-stationary process becomes stationary after an appropriate number of differences. The simplest case is a random walk: $X_t-X_{t-1}$ removes all previously accumulated shocks and leaves the new one. A fitted deterministic trend does not perform that cancellation. The distinction matters for forecasts because a shock to a trend-stationary remainder fades under the usual short-memory model, while a random-walk shock permanently shifts the forecast level.
 
 **Differencing.**
 
-Taking differences between consecutive observations, or seasonal differences between observations one cycle apart, can remove an appropriate stochastic trend. The resulting series describes changes rather than levels and should be checked again for stationarity.
+Ordinary differencing compares adjacent dates; seasonal differencing compares the same position in successive cycles. Each is justified by a particular accumulation or repeating component that cancels in the subtraction. Afterward, inspect the transformed series again: differencing can leave variance changes, seasonal predictors, or structural breaks, and unnecessary differencing can create negative short-lag correlation rather than improve the model.
 
 ### Transformations to Achieve Stationarity
 
@@ -466,7 +422,7 @@ The upper panel shows the wandering random-walk level, while the lower panel sho
 
 ## Formal Tests for Stationarity
 
-Visual inspection can reveal trends, changing variance, or structural breaks, but formal tests provide additional evidence. The ADF and KPSS tests are useful together because their null hypotheses point in opposite directions.
+ADF and KPSS formalize different null hypotheses, so their p-values cannot be read with one common rule such as “small means stationary.” An ADF rejection is evidence against a unit-root specification; a KPSS rejection is evidence against the chosen level- or trend-stationarity specification. Their usefulness comes from comparing these targeted questions with the equation and deterministic terms appropriate to the series.
 
 ### Augmented Dickey–Fuller (ADF) Test
 
@@ -481,7 +437,7 @@ where $\Delta X_t = X_t - X_{t-1}$ and $p$ lagged differences absorb serial corr
 - $H_0$: $\gamma=0$, corresponding to a unit root under the chosen deterministic specification.
 - $H_1$: $\gamma<0$, corresponding to stationarity around the included deterministic terms.
 
-A sufficiently negative test statistic, or a small p-value, provides evidence against the unit-root null. The conclusion depends on whether the regression includes an intercept, a trend, or other deterministic terms.
+In the ADF regression, $\gamma$ corresponds to the deviation of an AR coefficient from the unit-root value. Lagged differences absorb remaining short-run correlation, while an intercept or time trend changes the deterministic alternative. The null distribution is not the ordinary regression t distribution, so use unit-root critical values or the corresponding p-value calculation. A rejection applies to that specification rather than proving that every moment and every regime of the series is stationary.
 
 ### KPSS Test
 
@@ -500,7 +456,7 @@ Using both tests helps organize the evidence:
 | Fail to reject | Fail to reject | Evidence is inconclusive; power may be limited |
 
 
-## Worked examples: assumptions, transformations, and tests
+## Choosing a stationary representation and interpreting test evidence
 
 Stationarity is not a synonym for “the plot looks flat.” It describes which features of the joint distribution remain unchanged when the time index is shifted. The version needed depends on the model and question.
 
@@ -587,7 +543,7 @@ The Augmented Dickey-Fuller test has a unit-root null. The KPSS test usually has
 | both reject | possible trend stationarity, break, or misspecification | inspect plots and specifications |
 | neither reject | low power or insufficient information | gather more evidence |
 
-The outcome depends on whether a constant or trend is included, lag selection, sample length, and structural breaks. Tests should support a modeling decision rather than replace it.
+A trend omitted from the test regression can be mistaken for persistence. Too few lagged differences can leave serial correlation in the test errors; too many can reduce power. A break can make either null a poor approximation to the data. If ADF and KPSS disagree or both reject, inspect these specification choices and the time plot rather than forcing the result into a binary label.
 
 ### Transformations
 
@@ -611,7 +567,7 @@ $$
 \hat\sigma_t^2=\frac1{w-1}\sum_{j=0}^{w-1}(y_{t-j}-\hat\mu_t)^2.
 $$
 
-The window size $w$ is a resolution choice. A short window reacts quickly but is noisy; a long window smooths changes and can conceal a break.
+Rolling moments describe local behavior, not direct observations of the process mean and variance. Short windows are noisy; long windows average across changes. Overlapping windows share data, making adjacent estimates look smoothly related even under a stable process. Examine whether a change is sustained and meaningful relative to that sampling variation, then consider a local or time-varying model if one global specification is unsuitable.
 
 ### Stationarity workflow
 
@@ -623,3 +579,27 @@ The window size $w$ is a resolution choice. A short window reacts quickly but is
 6. Fit a simple candidate after transformation.
 7. Diagnose residuals and forecast behavior.
 8. Reassess whether the transformation matches the deployment question.
+
+## Formula reference
+
+| Concept / case | General formula | Condition / interpretation |
+|---|---|---|
+| Strict stationarity | $(X_{t_1},\ldots,X_{t_k})\overset d=(X_{t_1+h},\ldots,X_{t_k+h})$ | Holds for every finite set of times and every common shift $h$. |
+| Weak stationarity: mean | $E[X_t]=\mu$ | Constant over time. |
+| Weak stationarity: variance | $\mathrm{Var}(X_t)=\gamma(0)<\infty$ | Constant finite variance. |
+| Weak stationarity: covariance | $\mathrm{Cov}(X_t,X_{t-h})=\gamma(h)$ | Depends only on lag, not calendar time. |
+| ACF | $\rho(h)=\gamma(h)/\gamma(0)$ | For a stationary process, $\rho(-h)=\rho(h)$. |
+| White noise | $E\varepsilon_t=0$, $\mathrm{Var}(\varepsilon_t)=\sigma^2$, $\gamma(h)=0$ for $h\ne0$ | Basic stationary reference process. |
+| MA($q$) covariance (with $\theta_0=1$) | $\gamma(h)=\sigma_\varepsilon^2\sum_{j=0}^{q-\lvert h\rvert}\theta_j\theta_{j+\lvert h\rvert}$ for $\lvert h\rvert\le q$ | Zero for $\lvert h\rvert>q$. |
+| AR(1) | $X_t=c+\phi X_{t-1}+\varepsilon_t$ | Standard causal stationary solution requires $\lvert\phi\rvert<1$. |
+| AR(1) mean | $\mu=c/(1-\phi)$ | Valid for the stationary solution. |
+| AR(1) variance | $\gamma(0)=\sigma_\varepsilon^2/(1-\phi^2)$ | Finite only when $\lvert\phi\rvert<1$. |
+| AR(1) ACF | $\rho(h)=\phi^{\lvert h\rvert}$ | Geometric or alternating decay. |
+| AR($p$) stationarity/causality | $\phi(z)=1-\phi_1z-\cdots-\phi_pz^p=0\Rightarrow \lvert z\rvert>1$ | Standard backshift-root condition. |
+| Linear filter | $X_t=\sum_j\psi_jY_{t-j}$ | Absolute summability $\sum_j\lvert\psi_j\rvert<\infty$ is a strong stability condition. |
+| Random walk | $X_t=X_{t-1}+\varepsilon_t$ | Unit-root boundary; $\mathrm{Var}(X_t\mid X_0)=t\sigma^2$. |
+| First difference | $\Delta X_t=(1-B)X_t=X_t-X_{t-1}$ | Removes one unit-root factor; a random walk becomes white noise. |
+| Seasonal difference | $\Delta_sX_t=(1-B^s)X_t=X_t-X_{t-s}$ | Removes one seasonal unit-root factor at period $s$. |
+| ADF regression | $\Delta X_t=\alpha+\beta t+\gamma X_{t-1}+\sum_{i=1}^{p}\delta_i\Delta X_{t-i}+\varepsilon_t$ | Unit-root null: $H_0:\gamma=0$. |
+| KPSS decomposition | $X_t=d_t+r_t+u_t$, $r_t=r_{t-1}+\eta_t$ | Stationarity null corresponds to zero random-walk variance, $\mathrm{Var}(\eta_t)=0$. |
+| Box-Cox transform | $g_\lambda(x)=(x^\lambda-1)/\lambda$ for $\lambda\ne0$; $g_0(x)=\log x$ | Used mainly to stabilize level-dependent variance, not to remove a unit root by itself. |

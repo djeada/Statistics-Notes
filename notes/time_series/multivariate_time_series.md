@@ -1,42 +1,10 @@
 # Multivariate Time Series
 
-[Time series index](README.md)
+Related series can carry predictive information for one another. A demand series may respond to earlier prices, while prices respond to earlier demand. Modeling each series separately ignores those cross-lag relationships. A **multivariate time-series model** writes equations for the variables jointly, allowing each variable to use the included histories of the others.
 
-Multivariate time-series models describe several evolving variables jointly so that cross-lag feedback, shared shocks, and predictive relationships can be represented within one system. They are useful when separate univariate models would ignore information carried by the histories of related series.
+Joint modeling also distinguishes correlated shocks from delayed feedback. Two variables can move together today because their innovations share a driver, because one responds to the other's past, or because both follow a common long-run relation. These mechanisms have different equations and interpretations.
 
-Short-run interactions are commonly modeled with VARs, while cointegration and VECMs preserve stable long-run relationships among non-stationary levels. Granger predictability and impulse responses add useful interpretations, but they remain conditional on the chosen information set and, for structural shocks, on explicit identification assumptions.
-
-**Reading guide.** Begin with the joint VAR equation and its stability conditions before interpreting individual coefficients. Then separate incremental predictive information from structural shock identification, and short-run differences from long-run cointegrating relations. The numerical examples show how matrix multiplication, error correction, and forecast evaluation fit together within one explicitly specified system.
-
-**Related reading:** [dynamic regression](dynamic_regression.md).
-
-**On this page**
-
-- [Formula reference](#formula-reference)
-- [Worked calculation: a cointegrating spread](#worked-calculation-a-cointegrating-spread)
-- [Why model several series jointly?](#why-model-several-series-jointly)
-- [Vector Autoregression](#vector-autoregression)
-- [Granger Predictability](#granger-predictability)
-- [Nonstationarity and Cointegration](#nonstationarity-and-cointegration)
-- [Worked examples: system dynamics and interpretation](#worked-examples-system-dynamics-and-interpretation)
-
-## Formula reference
-
-| Model / quantity | General formula | Notes / special case |
-|---|---|---|
-| Vector mean | $\mu_t=E[y_t]$ | $y_t$ is a $k\times1$ vector. |
-| Cross-covariance matrix | $\Gamma(h)=\mathrm{Cov}(y_t,y_{t-h})$ | Entries contain own- and cross-lag covariances. |
-| VAR($p$) | $y_t=c+A_1y_{t-1}+\cdots+A_py_{t-p}+\varepsilon_t$ | Each equation may use lagged values of every series. |
-| VAR lag polynomial | $A(B)=I-A_1B-\cdots-A_pB^p$ | VAR is $A(B)y_t=c+\varepsilon_t$. |
-| VAR stability | $\det A(z)\ne0$ for $\lvert z\rvert\le1$ | For VAR(1), all eigenvalues of $A_1$ must have modulus below 1. |
-| VAR(1) long-run mean | $\mu=(I-A_1)^{-1}c$ | Requires a stable VAR(1). |
-| VMA representation | $y_t=\mu+\sum_{h=0}^{\infty}\Psi_h\varepsilon_{t-h}$ | For VAR(1), $\Psi_h=A_1^h$. |
-| Impulse response | $\Psi_h$ | Column $j$ gives the response at horizon $h$ to a specified innovation/shock $j$. |
-| Granger restriction | $H_0:A_{1,yx}=\cdots=A_{p,yx}=0$ | Tests whether past $x$ adds predictive information for $y$. |
-| Cointegration | $\beta^\top y_t\sim I(0)$ while components of $y_t$ are $I(1)$ | $\beta$ contains long-run equilibrium relations. |
-| VECM | $\Delta y_t=\Pi y_{t-1}+\sum_{j=1}^{p-1}\Gamma_j\Delta y_{t-j}+\varepsilon_t$ | Reparameterization of a cointegrated VAR. |
-| Cointegration factorization | $\Pi=\alpha\beta^\top$ | $\beta$: long-run relations; $\alpha$: adjustment speeds. |
-| Forecast recursion | $\hat y_{t+h\mid t}=c+\sum_{j=1}^{p}A_j\hat y_{t+h-j\mid t}$ | Use observed values when the lag index is at or before $t$. |
+A VAR represents short-run linear lag dynamics. If the modeled levels contain unit roots, first decide whether their long-run combinations are stationary. Cointegration allows individually nonstationary series to have a stationary spread, and a VECM includes that spread as an error-correction term. Granger tests and impulse responses then ask specific predictive or dynamic questions within the chosen system; they do not supply causal identification on their own.
 
 ## Worked calculation: a cointegrating spread
 
@@ -65,9 +33,9 @@ $$
 +\text{short-run terms}+\varepsilon_t.
 $$
 
-The sign and size of $\alpha$ describe how this equation responds after the system moves away from the long-run relation.
+The current spread of 0.5 is an illustration of the assumed relation, not evidence that a stationary spread exists. Establishing cointegration requires behavior across time and an appropriate model. Given a defined lagged spread, $\alpha$ determines its contribution to the next change. A negative coefficient in the $y$ equation pushes $y$ downward when the defined spread is positive; reversing the spread's sign would reverse that coefficient's interpretation.
 
-![Two levels with a stable cointegrating spread](../../assets/time_series/student/17_multivariate_cointegration.png)
+![Two levels with a stable cointegrating spread](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/17_multivariate_cointegration.png)
 
 The figure shows two non-stationary levels moving together while their spread remains bounded. Cointegration is about this stable combination, not about the individual levels being stationary.
 
@@ -83,25 +51,25 @@ $$
 y_t=c+A_1y_{t-1}+\cdots+A_py_{t-p}+\varepsilon_t.
 $$
 
-Every variable can depend on lagged values of every variable in the system. This flexibility is useful when the variables interact, but the number of coefficients grows quickly, so lag order and system size must remain parsimonious.
+Each VAR equation includes the same lagged information set, but its coefficients can differ. With $k$ variables and $p$ consecutive lags, the lag coefficients alone number $k^2p$. A modest increase in either system size or order can therefore use substantial estimation freedom. Include variables and lags that address the forecasting question, then check whether the added cross-history actually improves predictions beyond separate univariate baselines.
 
-![VAR feedback](../../assets/time_series/dynamic_multivariate/04_var_feedback.png)
+![VAR feedback](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/04_var_feedback.png)
 
-The figure illustrates the defining VAR idea: lagged values can feed across equations in both directions. A joint system is appropriate when neither series is naturally treated as fully external to the other.
+A lagged cross-effect appears as a coefficient connecting one variable's past value to another variable's next equation. This is distinct from contemporaneous covariance between the innovations. Estimating the equations jointly describes both, but a reduced-form VAR still needs additional assumptions to interpret a contemporaneous innovation as a separately identified economic or physical shock.
 
 Lag order can be compared with AIC, BIC, or HQIC, but residual diagnostics, stability, and forecast performance should also be checked.
 
 ## Granger Predictability
 
-Variable $x$ **Granger-predicts** $y$ when past values of $x$ improve prediction of $y$ after conditioning on the other included past information. The historical term "Granger-causes" is common, but the result is about incremental predictive content rather than intervention or structural causality.
+Variable $x$ **Granger-predicts** $y$ if adding the past of $x$ improves prediction of $y$ relative to the specified information set without it. In a linear VAR this can be assessed through restrictions on the relevant lag coefficients, alongside forecast performance. The conclusion depends on which other variables and lags are included: a missing common driver can make $x$ appear informative without establishing that intervening on $x$ changes $y$.
 
-![Granger predictability](../../assets/time_series/dynamic_multivariate/05_granger_predictability.png)
+![Granger predictability](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/05_granger_predictability.png)
 
 The visual compares prediction with and without the additional lagged series. The relevant question is whether including the history of $x$ improves the conditional forecast of $y$ beyond the information already in the model.
 
 Impulse-response functions trace how shocks propagate through a VAR. Their interpretation depends on how the shocks are defined. Reduced-form responses describe the fitted innovation system; structural interpretations need additional identifying assumptions. For example, recursive orthogonalization can make the reported response depend on the ordering of the variables.
 
-![Impulse response](../../assets/time_series/dynamic_multivariate/08_impulse_response.png)
+![Impulse response](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/08_impulse_response.png)
 
 The impulse-response figure connects a one-time identified shock to its model-implied effects across future horizons. Those responses are not uniquely structural until the shock-identification assumptions are specified.
 
@@ -128,17 +96,17 @@ $$
 
 the columns of $\beta$ describe cointegrating relations and $\alpha$ describes how each equation adjusts to deviations from those relations.
 
-![Cointegrating spread](../../assets/time_series/dynamic_multivariate/06_cointegrating_spread.png)
+![Cointegrating spread](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/06_cointegrating_spread.png)
 
 The spread figure shows the stationary combination that is preserved by the VECM rather than discarded through differencing.
 
-![VECM adjustment](../../assets/time_series/dynamic_multivariate/07_vecm_adjustment.png)
+![VECM adjustment](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/07_vecm_adjustment.png)
 
 The adjustment figure shows how disequilibrium at one time point can feed into later changes. The direction of adjustment depends on both the definition of the spread and the signs of the loading coefficients.
 
 A practical workflow is to inspect transformations and stationarity, decide among a levels VAR, differenced VAR, or VECM, choose a parsimonious lag order, fit and diagnose the system, and evaluate forecasts with rolling or expanding origins.
 
-## Worked examples: system dynamics and interpretation
+## Stability, predictive restrictions, and equilibrium adjustment
 
 Multivariate analysis is useful when variables can affect one another, share shocks, or move together in the long run. It also creates more opportunities for overfitting and interpretation errors. Begin with the data-generating and forecasting question, then decide whether a joint model adds information beyond separate univariate forecasts.
 
@@ -194,7 +162,7 @@ $$
 \quad\text{for }|z|\le1.
 $$
 
-For a VAR(1), this is equivalent to requiring the eigenvalues of $A_1$ to lie inside the unit circle. If the largest eigenvalue modulus is close to 1, shocks decay slowly and long-horizon forecasts can be highly uncertain.
+For VAR(1), repeated prediction involves powers of $A_1$. Eigenvalues inside the unit circle make those powers decay, so the effect of a starting deviation or isolated shock eventually fades. An eigenvalue near the boundary gives slow decay. For higher orders, apply the same idea to the companion form, or equivalently inspect the zeros of the lag-polynomial determinant. Keep the eigenvalue and lag-root conventions distinct.
 
 Do not infer stability from a fitted plot alone. Inspect the model roots or eigenvalues and verify that the stationarity assumption matches the variables being modeled.
 
@@ -238,13 +206,13 @@ $$
 y_t=\mu+\sum_{h=0}^{\infty}\Psi_h\varepsilon_{t-h}.
 $$
 
-An impulse-response plot traces one column of $\Psi_h$ over future horizons. At horizon 0 the response is contemporaneous; later responses incorporate the feedback structure of the full system.
+A reduced-form response follows a specified innovation through the system's matrix recursion. At horizon 0 the contemporaneous mapping applies; at later horizons, feedback across all equations propagates it. If innovations are correlated, changing one component while fixing the others is a particular statistical experiment, not automatically an isolated structural intervention. Report the shock definition together with the response plot.
 
 Reduced-form innovations can be correlated across equations, so a separate identification scheme is needed before an innovation can be interpreted as a distinct structural shock. Common approaches include recursive orderings, sign restrictions, external instruments, and structural models. Report the identifying assumptions and test sensitivity when they are contestable.
 
 ### Spurious regression and cointegration
 
-Two unrelated random walks can both display persistent trends. A regression of one level on the other may then produce a high $R^2$ and apparently significant slope even when their innovations are independent.
+Persistent levels can produce an apparently strong regression even when their new shocks are independent. In that setting the usual stationary regression interpretation is unreliable. Cointegration asks a more specific question: does a particular linear combination remove the stochastic trends and leave a stationary error? High correlation in levels is not sufficient, and merely observing that two curves move together does not answer the integration question.
 
 If $x_t$ and $y_t$ are both $I(1)$ but
 
@@ -273,11 +241,11 @@ When $\Pi=\alpha\beta^\top$:
 - $\alpha$ contains the speed and direction of adjustment;
 - $\Gamma_j$ describes short-run lag dynamics.
 
-For a scalar disequilibrium value of 2, if two loading coefficients are $-0.25$ and $0.40$, their error-correction contributions are $-0.5$ and $0.8$ before short-run terms and new shocks are added. The signs must be interpreted together with the exact definition of the cointegrating relation.
+With a lagged spread of 2, loading coefficients $-0.25$ and $0.40$ contribute $-0.5$ and $0.8$ to the two next-period changes. Those are contributions, not the full changes: short-run lag terms and new shocks also enter. Whether the combined movement reduces the disequilibrium depends on how the spread is defined. Interpret the loading vector together with the cointegrating vector rather than naming a coefficient a “speed of adjustment” in isolation.
 
 ### Deterministic terms and transformations
 
-Decide explicitly whether the system includes an intercept in levels, a trend, seasonal deterministic terms, or deterministic terms inside the cointegrating relation. These choices affect cointegration-rank tests and the estimated long-run relationship.
+An intercept in the differenced equations, an intercept inside the cointegrating relation, and a deterministic trend imply different long-run behavior. Seasonal deterministic terms can also explain patterns that would otherwise appear as lag dependence. State where these terms enter before estimating cointegration rank or interpreting equilibrium. The algebraic label VECM does not determine those choices.
 
 Treating a deterministic trend as stochastic integration, or omitting a needed deterministic term, can change the model conclusion substantially.
 
@@ -293,3 +261,21 @@ Treating a deterministic trend as stochastic integration, or omitting a needed d
 8. Use Granger tests and impulse responses only with assumptions stated.
 9. Backtest joint forecasts using temporal origins.
 10. Compare the system against separate univariate baselines.
+
+## Formula reference
+
+| Model / quantity | General formula | Notes / special case |
+|---|---|---|
+| Vector mean | $\mu_t=E[y_t]$ | $y_t$ is a $k\times1$ vector. |
+| Cross-covariance matrix | $\Gamma(h)=\mathrm{Cov}(y_t,y_{t-h})$ | Entries contain own- and cross-lag covariances. |
+| VAR($p$) | $y_t=c+A_1y_{t-1}+\cdots+A_py_{t-p}+\varepsilon_t$ | Each equation may use lagged values of every series. |
+| VAR lag polynomial | $A(B)=I-A_1B-\cdots-A_pB^p$ | VAR is $A(B)y_t=c+\varepsilon_t$. |
+| VAR stability | $\det A(z)\ne0$ for $\lvert z\rvert\le1$ | For VAR(1), all eigenvalues of $A_1$ must have modulus below 1. |
+| VAR(1) long-run mean | $\mu=(I-A_1)^{-1}c$ | Requires a stable VAR(1). |
+| VMA representation | $y_t=\mu+\sum_{h=0}^{\infty}\Psi_h\varepsilon_{t-h}$ | For VAR(1), $\Psi_h=A_1^h$. |
+| Impulse response | $\Psi_h$ | Column $j$ gives the response at horizon $h$ to a specified innovation/shock $j$. |
+| Granger restriction | $H_0:A_{1,yx}=\cdots=A_{p,yx}=0$ | Tests whether past $x$ adds predictive information for $y$. |
+| Cointegration | $\beta^\top y_t\sim I(0)$ while components of $y_t$ are $I(1)$ | $\beta$ contains long-run equilibrium relations. |
+| VECM | $\Delta y_t=\Pi y_{t-1}+\sum_{j=1}^{p-1}\Gamma_j\Delta y_{t-j}+\varepsilon_t$ | Reparameterization of a cointegrated VAR. |
+| Cointegration factorization | $\Pi=\alpha\beta^\top$ | $\beta$: long-run relations; $\alpha$: adjustment speeds. |
+| Forecast recursion | $\hat y_{t+h\mid t}=c+\sum_{j=1}^{p}A_j\hat y_{t+h-j\mid t}$ | Use observed values when the lag index is at or before $t$. |

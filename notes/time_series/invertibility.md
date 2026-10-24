@@ -1,29 +1,10 @@
 # Invertibility in Time Series Models
 
-[Time series index](README.md)
+An MA(1) equation tells us how a current shock and a previous shock combine to form an observation. In practice, however, we observe the combination, not the shocks. To estimate residuals and forecast recursively, we need to work backward from observations to a plausible shock history. **Invertibility** is the condition that makes this past-based reconstruction stable.
 
-Invertibility is the condition that lets a moving-average or ARMA model recover its unobserved innovations from the observed series in a stable way. It turns the shock representation of the model into a usable past-based filter whose coefficients decay rather than grow without bound.
+Stability matters because the available record begins at a finite date. A useful reconstruction gradually forgets an arbitrary starting guess for an unobserved shock. An unstable reconstruction magnifies that guess, so using more observations does not repair the problem.
 
-The condition also resolves an identification problem: different MA parameter values can generate the same second-order behavior. Requiring the roots of the MA polynomial to lie outside the unit circle selects a canonical representation that is stable for estimation, residual analysis, and forecasting.
-
-**Reading guide.** Begin with the inverse weights of an MA(1), then connect their decay to the zeros of the MA polynomial. The MA(2) example shows why the complete polynomial matters more than separate bounds on its coefficients. The final calculations revisit equivalent covariance structures to explain why recovering shocks requires a representation convention as well as an observed dependence pattern.
-
-**Related reading:** [moving-average models](moving_average_models.md).
-
-## Formula reference
-
-| Concept | General formula | Condition / interpretation |
-|---|---|---|
-| MA polynomial | $X_t=\theta(B)\varepsilon_t$, $\theta(B)=1+\theta_1B+\cdots+\theta_qB^q$ | Maps current and past innovations into observations. |
-| Inverse representation | $\varepsilon_t=\theta(B)^{-1}X_t=\sum_{k=0}^{\infty}\pi_kX_{t-k}$ | Invertibility requires a stable past-based inverse filter. |
-| Root condition | $\theta(z)=0\Rightarrow \lvert z\rvert>1$ | Every zero of the MA polynomial must lie outside the unit circle. |
-| MA(1) | $X_t=(1+\theta B)\varepsilon_t$ | Invertible iff $\lvert\theta\rvert<1$. |
-| MA(1) inverse | $(1+\theta B)^{-1}=\sum_{k=0}^{\infty}(-\theta)^kB^k$ | Geometric expansion converges when $\lvert\theta\rvert<1$. |
-| General inverse recursion | $\pi_0=1$, $\pi_k=-\sum_{j=1}^{\min(k,q)}\theta_j\pi_{k-j}$ | Generates the coefficients of $\theta(B)^{-1}$. |
-| ARMA($p,q$) | $\phi(B)X_t=\theta(B)\varepsilon_t$ | Invertibility is controlled by MA roots; causality/stationarity by AR roots. |
-| Seasonal MA part | $\Theta(B^s)=1+\Theta_1B^s+\cdots+\Theta_QB^{Qs}$ | Seasonal MA roots must also satisfy the invertibility root condition. |
-| Absolute-summability criterion | $\sum_{k=0}^{\infty}\lvert\pi_k\rvert<\infty$ | A strong sufficient condition for a stable inverse filter. |
-| Canonical MA(1) choice | $(\theta,\sigma^2)$ versus $(1/\theta,\theta^2\sigma^2)$ | These can have the same autocovariances; choose the invertible representation. |
+Invertibility also chooses among MA specifications that have the same covariance pattern. A parameter and its reciprocal can describe the same MA(1) autocorrelation after the shock variance is rescaled. The invertible form supplies a conventional, stable representation of that observed second-order behavior. It does not by itself identify a unique physical mechanism for generating the shocks.
 
 ## Worked calculation: two MA(1) inverse filters
 
@@ -39,9 +20,9 @@ $$
 \varepsilon_t=(1-0.5B+0.25B^2-0.125B^3+\cdots)X_t.
 $$
 
-The weights shrink, so the inverse representation is stable. If $\theta=2$, the first inverse weights are $1,-2,4,-8,\ldots$ and grow in magnitude. Because reciprocal MA parameters can generate the same autocorrelation structure after rescaling the innovation variance, the usual invertibility convention selects the representation with $|\theta|<1$.
+For $\theta=0.5$, the coefficients attached to increasingly old observations shrink by a factor of one half. For $\theta=2$, they alternate and grow as $1,-2,4,-8,\ldots$. The issue is not that the second MA process has an infinite observation variance; a finite MA filter is stationary under weak-white-noise shocks. The issue is that this particular past-based inverse does not suppress the effect of a distant starting error.
 
-![Inverse-filter weights for invertible and non-invertible MA(1) parameters](../../assets/time_series/student/08_invertibility_inverse_weights.png)
+![Inverse-filter weights for invertible and non-invertible MA(1) parameters](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/08_invertibility_inverse_weights.png)
 
 ## Recovering shocks from observations
 
@@ -49,9 +30,9 @@ In time-series modeling, **invertibility** means that the innovation sequence ca
 
 ## Intuition Behind Invertibility
 
-An MA model maps innovations into observations. Invertibility asks whether this mapping can be reversed using current and past observations with coefficients that decay sufficiently fast.
+The forward equation is easy to evaluate if the shocks are supplied. The inverse must infer them from the observed mixtures. For MA(1), the recursion is $\hat Z_t=X_t-\beta\hat Z_{t-1}$. If two reconstructions start with different guesses, their difference at the next step is multiplied by $-\beta$. This gives a direct operational interpretation of the condition $|\beta|<1$: the initialization error fades rather than expands.
 
-This matters for two related reasons. First, it gives a stable way to infer innovations from observed data. Second, it selects a canonical parameterization when different MA coefficient sets imply the same second-order behavior. Without an invertibility convention, the observable autocovariances may not identify a unique MA representation.
+A stable inverse makes estimated innovations reproducible when the initial guess or retained history changes. The representation convention also avoids reporting reciprocal parameter sets as distinct discoveries when they imply the same observed covariance function. These are related benefits, but neither means that the data reveal an unobserved shock without uncertainty: parameters and starting states still have to be estimated.
 
 ## Mathematical Definition of Invertibility
 
@@ -67,7 +48,7 @@ $$
 \sum_{k=0}^{\infty}|\pi_k|<\infty.
 $$
 
-The exact convergence condition can be stated in several related ways, but the practical idea is the same: increasingly old observations should receive diminishing weight when reconstructing the current innovation.
+Absolute summability bounds the total influence of distant observed values and is a convenient sufficient stability condition. For a finite-order MA polynomial, roots outside the unit circle lead to inverse coefficients that decay geometrically. Near the boundary they can decay slowly, so a theoretically invertible model may still require a long initialization period before an estimated shock history becomes insensitive to starting values.
 
 ## Why is Invertibility Important?
 
@@ -75,7 +56,7 @@ Invertibility provides a unique, stable representation of an MA process under th
 
 A non-invertible MA specification can still be written and numerically fitted, but it is not the canonical representation and can create identification and optimization problems. Software therefore commonly reports the invertible equivalent whenever one exists.
 
-Invertibility also gives an infinite autoregressive representation of the innovation filter, which connects MA models to AR-style recursions.
+Move the lagged-observation terms of the inverse equation to the other side and the MA process acquires an infinite autoregressive form. That does not make it a finite AR model: the inverse generally contains infinitely many lags. The distinction is between a finite shock response in the forward equation and an infinite but decaying observation history in the inverse.
 
 ## General Conditions for Invertibility
 
@@ -136,7 +117,7 @@ $$
 Z_t=\sum_{k=0}^{\infty}(-\beta)^kX_{t-k}.
 $$
 
-The coefficients decay geometrically when $|\beta|<1$, so the inverse filter is stable under that condition.
+At each substitution, one more observed value enters and the unrecovered shock is pushed one date farther into the past. Its coefficient becomes another power of $-\beta$. With $|\beta|<1$, the boundary term vanishes in mean square under finite-variance shocks, which justifies the infinite expression. Writing the expression down formally is not itself proof that this boundary term disappears.
 
 ### Inversion Using the Backward Shift Operator
 
@@ -202,7 +183,7 @@ $$
 
 Both roots therefore lie outside the unit circle, so this MA(2) specification is invertible.
 
-This example also shows why individual coefficient bounds are not the correct general test: invertibility depends on the roots of the full polynomial.
+The coefficient values 0.5 and 0.3 are not tested independently. They jointly determine the two roots of one polynomial, and both root moduli must be checked. A model with a small coefficient at every lag can still fail the root condition; conversely, an invertible higher-order polynomial can contain a coefficient with magnitude above 1. Use the complete polynomial, with the model's actual sign convention.
 
 ## Convergence of the Series in MA Models
 
@@ -216,7 +197,7 @@ $$
 Z_t=X_t-\beta X_{t-1}+\beta^2X_{t-2}-\beta^3X_{t-3}+\dots.
 $$
 
-Mean-square convergence means that finite truncations of this series approach $Z_t$ in expected squared error. When the inverse coefficients decay geometrically, the contribution from the omitted tail becomes negligible.
+Mean-square convergence asks whether the expected squared reconstruction error tends to zero as the retained history grows. In the MA(1) substitution, that error is a distant shock multiplied by a power of $-\beta$, so its mean square contains $\beta^{2(n+1)}\sigma_Z^2$. This calculation explains why decaying inverse weights are sufficient here and why the boundary $|\beta|=1$ does not give the usual stable inverse.
 
 ### Condition for Convergence: $|\beta|<1$
 
@@ -268,11 +249,11 @@ With $|\beta|<1$, the weights decay as the lag increases. The recovered innovati
 
 The figure below visualizes this contrast between decaying and expanding inverse-filter weights.
 
-![Stable and unstable inverse weights](../../assets/time_series/dependence/06_invertibility.png)
+![Stable and unstable inverse weights](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dependence/06_invertibility.png)
 
-## Worked examples: roots and inverse filters
+## Initialization error and equivalent MA representations
 
-Invertibility asks whether unobserved innovations can be represented as a stable function of observed values. It is also the convention that chooses a canonical representation when more than one MA parameterization produces the same covariance structure.
+The numerical comparison below concerns two separate objects: a finite forward shock equation and its proposed infinite inverse. Both parameter choices can generate legitimate stationary MA observations. Only the choice with a decaying past-based inverse forgets the reconstruction's starting error. Keeping those statements separate prevents invertibility from being confused with stationarity.
 
 ### MA(1) calculation
 
@@ -336,4 +317,19 @@ For $\theta\ne0$, replacing $\theta$ by $1/\theta$ preserves the lag-1 autocorre
 
 ### Practical implications
 
-Check fitted MA roots rather than looking only at the raw coefficient values. Be cautious near unit-circle roots, where the inverse decays slowly and numerical estimation can become unstable. Use innovations from the canonical invertible representation for residual diagnostics and forecasting, and do not interpret reciprocal non-invertible coefficients as evidence for a different physical shock mechanism when they describe the same observed second-order behavior.
+Inspect the fitted roots and the model equation together. A root close to the unit circle means that a distant initialization error can remain influential for many observations, so compare reconstructions under different starting values or history lengths. If software reports an invertible equivalent, compare its implied variance and autocovariances with the original specification before interpreting the coefficient change. The new coefficient may express the same second-order process in the standard representation.
+
+## Formula reference
+
+| Concept | General formula | Condition / interpretation |
+|---|---|---|
+| MA polynomial | $X_t=\theta(B)\varepsilon_t$, $\theta(B)=1+\theta_1B+\cdots+\theta_qB^q$ | Maps current and past innovations into observations. |
+| Inverse representation | $\varepsilon_t=\theta(B)^{-1}X_t=\sum_{k=0}^{\infty}\pi_kX_{t-k}$ | Invertibility requires a stable past-based inverse filter. |
+| Root condition | $\theta(z)=0\Rightarrow \lvert z\rvert>1$ | Every zero of the MA polynomial must lie outside the unit circle. |
+| MA(1) | $X_t=(1+\theta B)\varepsilon_t$ | Invertible iff $\lvert\theta\rvert<1$. |
+| MA(1) inverse | $(1+\theta B)^{-1}=\sum_{k=0}^{\infty}(-\theta)^kB^k$ | Geometric expansion converges when $\lvert\theta\rvert<1$. |
+| General inverse recursion | $\pi_0=1$, $\pi_k=-\sum_{j=1}^{\min(k,q)}\theta_j\pi_{k-j}$ | Generates the coefficients of $\theta(B)^{-1}$. |
+| ARMA($p,q$) | $\phi(B)X_t=\theta(B)\varepsilon_t$ | Invertibility is controlled by MA roots; causality/stationarity by AR roots. |
+| Seasonal MA part | $\Theta(B^s)=1+\Theta_1B^s+\cdots+\Theta_QB^{Qs}$ | Seasonal MA roots must also satisfy the invertibility root condition. |
+| Absolute-summability criterion | $\sum_{k=0}^{\infty}\lvert\pi_k\rvert<\infty$ | A strong sufficient condition for a stable inverse filter. |
+| Canonical MA(1) choice | $(\theta,\sigma^2)$ versus $(1/\theta,\theta^2\sigma^2)$ | These can have the same autocovariances; choose the invertible representation. |

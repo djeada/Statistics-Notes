@@ -1,32 +1,10 @@
 # Financial Time Series Models
 
-[Time series index](README.md)
+A price level, its return, and the uncertainty of that return answer different questions. The price records a cumulative level. A return measures proportional change over an interval. A volatility model describes how large an unexpected return is likely to be, even when its sign remains hard to predict.
 
-Financial time series often separate naturally into a price level, a return process, and a time-varying scale of uncertainty. Returns may show little predictable movement in their conditional mean while their magnitude clusters over time, producing periods of calm and periods of elevated volatility.
+This separation is useful when quiet periods are followed by clusters of large positive and negative movements. A mean model can leave almost no linear return autocorrelation while the magnitudes remain strongly dependent. Modeling that dependence requires an equation for conditional variance, not simply more lags in the expected-return equation.
 
-Models such as ARCH and GARCH focus on that conditional variance rather than only on the expected return. A coherent financial model therefore distinguishes the mean, the variance dynamics, and the innovation distribution, because each contributes differently to interval forecasts, tail risk, and the persistence of market shocks.
-
-**Reading guide.** Separate the price representation, conditional mean, conditional variance, and innovation distribution before fitting a model. The ARCH and GARCH calculations use squared shocks to explain why a process can have little return autocorrelation but persistent volatility. The final sections connect that distinction to asymmetric responses, tail quantiles, standardized residual diagnostics, and chronological evaluation.
-
-**Related reading:** [random walks](random_walk.md).
-
-## Formula reference
-
-| Quantity / model | General formula | Notes / special case |
-|---|---|---|
-| Simple return | $R_t=P_t/P_{t-1}-1$ | Gross return is $1+R_t=P_t/P_{t-1}$. |
-| Log return | $r_t=\log(P_t/P_{t-1})$ | Log returns add across time: $\sum_{j=1}^{h}r_{t+j}=\log(P_{t+h}/P_t)$. |
-| Small-return approximation | $\log(1+R_t)\approx R_t$ | Accurate when $\lvert R_t\rvert$ is small. |
-| Mean-variance decomposition | $r_t=\mu_t+\sqrt{h_t}\,z_t$ | $E[z_t]=0$, $\mathrm{Var}(z_t)=1$. |
-| ARCH($q$) | $h_t=\alpha_0+\sum_{i=1}^{q}\alpha_i\varepsilon_{t-i}^2$ | Standard constraints: $\alpha_0>0$, $\alpha_i\ge0$; $\varepsilon_t=r_t-\mu_t$. |
-| GARCH($p,q$) | $h_t=\alpha_0+\sum_{i=1}^{q}\alpha_i\varepsilon_{t-i}^2+\sum_{j=1}^{p}\beta_jh_{t-j}$ | $q$ ARCH terms, $p$ lagged-variance terms. Captures both shock effects and variance persistence. |
-| GARCH(1,1) | $h_t=\alpha_0+\alpha_1\varepsilon_{t-1}^2+\beta_1h_{t-1}$ | Most common basic GARCH specification. |
-| GARCH(1,1) long-run variance | $\bar h=\alpha_0/(1-\alpha_1-\beta_1)$ | Requires $\alpha_1+\beta_1<1$ under the usual covariance-stationary conditions. |
-| GARCH persistence | $\alpha_1+\beta_1$ | Values near 1 imply slowly decaying volatility shocks. |
-| EWMA variance | $h_t=(1-\lambda)\varepsilon_{t-1}^2+\lambda h_{t-1}$ | GARCH-like special case with zero intercept and weights summing to 1. |
-| Threshold / GJR-GARCH | $h_t=\alpha_0+\alpha_1\varepsilon_{t-1}^2+\gamma I(\varepsilon_{t-1}<0)\varepsilon_{t-1}^2+\beta_1h_{t-1}$ | Allows asymmetric volatility response. |
-| Gaussian conditional quantile | $q_{\alpha,t}=\mu_t+z_\alpha\sqrt{h_t}$ | $z_\alpha$ is the standard-normal $\alpha$-quantile (negative for small $\alpha$). |
-| VaR loss convention | $\mathrm{VaR}_{\alpha,t}=-q_{\alpha,t}$ | Only under the convention that positive VaR denotes loss magnitude. |
+ARCH and GARCH specify how recent squared shocks and earlier variance estimates influence the next conditional variance. A complete model still needs a conditional mean and a standardized shock distribution. The variance controls scale, while the distribution controls how probability is allocated within and beyond that scale. Matching one of those features does not automatically match the other.
 
 ## Worked calculation: returns and conditional variance
 
@@ -50,7 +28,7 @@ $$
 
 The squared previous mean-adjusted return, $\varepsilon_{t-1}^2$, contributes the immediate shock effect, while the previous conditional variance carries persistence forward. These illustrative variance parameters are separate from the price-return calculation above and use one consistent return scale throughout the recursion. This is why raw returns can have little autocorrelation even when squared returns remain strongly dependent.
 
-![Synthetic volatility clustering](../../assets/time_series/student/20_financial_volatility.png)
+![Synthetic volatility clustering](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/20_financial_volatility.png)
 
 The figure shows the defining visual feature of many financial return series: quiet periods and volatile periods cluster rather than appearing at a constant scale.
 
@@ -67,9 +45,9 @@ r_t=\log(P_t)-\log(P_{t-1})
 =\log\left(\frac{P_t}{P_{t-1}}\right).
 $$
 
-Working with returns rather than price levels often produces a series whose mean is more stable and whose scale is easier to compare over time. That transformation does not guarantee stationarity, independence, or normality.
+Dividing by the previous price makes a return comparable across different price levels. A movement from 100 to 102 and a movement from 200 to 204 both represent a 2% simple return. Log returns express that proportional change additively over time, which is convenient for aggregation. Neither operation guarantees a stable distribution: breaks, volatility changes, and dependence can remain in returns.
 
-![Prices and returns](../../assets/time_series/financial/01_prices_and_returns.png)
+![Prices and returns](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/financial/01_prices_and_returns.png)
 
 The figure contrasts a persistent price level with its one-period returns. The price path can drift for long periods, while returns fluctuate around a much more stable level and are therefore the more natural target for many short-horizon financial models.
 
@@ -97,9 +75,9 @@ $$
 \log\left(\frac{P_{t+h}}{P_t}\right)=\sum_{j=1}^{h}r_{t+j}.
 $$
 
-![Price and log price](../../assets/time_series/financial/08_price_and_log_price.png)
+![Price and log price](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/financial/08_price_and_log_price.png)
 
-The price/log-price figure illustrates how the logarithm compresses multiplicative growth. A log transformation changes scale and can make proportional movements easier to interpret, but it does not by itself remove stochastic trends.
+A straight trend in log price represents multiplicative growth in price. Taking logs compresses the scale and turns products of gross returns into sums of log returns, but an accumulated stochastic trend can remain in the log level. The separate first-difference step that constructs a log return is what changes the target from log level to proportional increment.
 
 ## ARCH and GARCH
 
@@ -113,7 +91,7 @@ E(z_t)=0,
 \mathrm{Var}(z_t)=1.
 $$
 
-The conditional mean $\mu_t$ describes expected return given the available information, while $h_t$ describes the variance of the unpredictable component. These two pieces can behave very differently.
+The conditional mean describes the center given the past, while $h_t$ describes uncertainty around that center. A large $h_t$ does not predict a positive return: it permits larger deviations in either direction under a symmetric shock distribution. Distinguishing a variance forecast from a direction forecast is essential for interpreting both the equations and a volatility plot.
 
 Here $\varepsilon_t=r_t-\mu_t=\sqrt{h_t}\,z_t$ is the mean-adjusted shock. With $z_t$ independent of the past and standardized to mean zero and variance 1, $h_t$ is its conditional variance. An ARCH($q$) model uses recent squared shocks:
 
@@ -129,19 +107,19 @@ h_t=\alpha_0
 +\sum_{j=1}^{p}\beta_jh_{t-j}.
 $$
 
-With $\alpha_0>0$ and nonnegative ARCH and GARCH coefficients, the variance recursion stays positive under the standard specification.
+A positive intercept and nonnegative shock and lagged-variance coefficients keep the standard recursion positive. Their sizes have separate interpretations: shock coefficients control the immediate response to squared surprises; lagged-variance coefficients carry forward the previous scale estimate. The general $p,q$ naming convention varies across texts and software, so identify the squared-shock and lagged-variance sums in the actual equation before comparing reported orders.
 
 ## Synthetic Volatility Example
 
 The plot below shows a synthetic return series with volatility clustering together with its conditional volatility.
 
-![garch volatility](../../assets/time_series/garch_volatility.png)
+![garch volatility](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/garch_volatility.png)
 
 Large observations tend to occur when the conditional volatility is elevated. The sign of each return remains difficult to predict, but the scale of future fluctuations can be persistent.
 
 These models are widely used when the forecasting target is risk or uncertainty rather than only the conditional mean.
 
-## Worked examples: prices, returns, and volatility
+## Conditional scale, persistence, asymmetry, and tail forecasts
 
 Financial time-series modeling is clearer when the problem is separated into layers:
 
@@ -151,7 +129,7 @@ Financial time-series modeling is clearer when the problem is separated into lay
 4. choose an innovation distribution;
 5. evaluate return, volatility, and risk forecasts with time-respecting backtests.
 
-A model can describe the conditional mean well and still produce poor risk forecasts if its residual variance or tail behavior is misspecified.
+After fitting the mean, distinguish raw residuals from standardized residuals. A large raw residual may be ordinary during a high-variance period. Dividing by the model's conditional standard deviation asks whether it is unusually large relative to the predicted scale. Remaining dependence in squared standardized residuals suggests incomplete variance dynamics; heavy tails in their distribution suggest that the assumed shock shape is still inadequate.
 
 ### Price levels and log returns
 
@@ -200,9 +178,9 @@ $$
 
 A large shock raises next-period variance regardless of its sign in this symmetric ARCH model.
 
-![ARCH variance](../../assets/time_series/financial/02_arch_variance.png)
+![ARCH variance](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/financial/02_arch_variance.png)
 
-The figure shows how a large squared shock enters the next conditional variance. An ARCH equation directly includes only a finite number of squared shocks, but those shocks also affect the scale of later innovations. A volatility disturbance can therefore propagate indirectly beyond that finite lag window; this differs from the finite impulse-response cutoff of an MA($q$) model.
+In ARCH(1), a large shock raises the next variance. That higher variance can produce larger subsequent shocks, which feed back through their squares. Thus a finite number of squared-shock lags in the equation does not imply a finite-duration volatility response like the shock cutoff of an MA model. The response can propagate indirectly through later random innovations.
 
 For ARCH(1), the condition $\alpha_1<1$ is required for a finite unconditional variance under the usual assumptions.
 
@@ -233,9 +211,9 @@ $$
 =\frac{0.01}{0.05}=0.2.
 $$
 
-A persistence value close to 1 means volatility shocks decay slowly and can affect risk forecasts far into the future.
+For forecasts beyond the next variance, the expected squared future shock equals its conditional variance under the standardized-innovation assumptions. The expected variance then moves toward $\bar h$ at a rate governed by $\alpha_1+\beta_1$. Here the sum is 0.95, so departures can decay slowly. The finite unconditional variance formula requires the denominator $1-\alpha_1-\beta_1$ to be positive; it is not a formula to use unchanged at the unit-persistence boundary.
 
-![GARCH persistence](../../assets/time_series/financial/03_garch_persistence.png)
+![GARCH persistence](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/financial/03_garch_persistence.png)
 
 The figure compares variance paths with different persistence levels. As $\alpha_1+\beta_1$ approaches 1, the response to a volatility shock lasts longer and the process returns more slowly toward its long-run variance.
 
@@ -255,13 +233,13 @@ $$
 
 The sign of a return can therefore be difficult to predict even when its magnitude is persistent.
 
-![Returns versus squared returns](../../assets/time_series/financial/04_returns_vs_squared_returns.png)
+![Returns versus squared returns](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/financial/04_returns_vs_squared_returns.png)
 
 The return ACF in the figure is comparatively weak, while the squared-return ACF retains visible structure. This is the diagnostic pattern that motivates conditional-variance models.
 
 ### Asymmetric volatility
 
-Symmetric ARCH/GARCH models respond to $+x$ and $-x$ shocks in the same way because they use squared innovations. Financial markets can exhibit asymmetric responses, with negative shocks followed by larger volatility increases.
+Squaring makes $+x$ and $-x$ contribute equally in a symmetric model. An indicator for a negative shock changes that rule: the squared size still matters, but the sign determines whether an additional coefficient contributes. This lets the model represent a larger next-period variance after a negative shock than after an equally sized positive shock, without claiming that the next return's sign is predictable.
 
 One extension is
 
@@ -273,15 +251,15 @@ $$
 
 If $\gamma>0$, a negative innovation of a given magnitude contributes more to the next variance than a positive innovation of the same magnitude.
 
-![Leverage effect](../../assets/time_series/financial/06_leverage_effect.png)
+![Leverage effect](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/financial/06_leverage_effect.png)
 
 The leverage-effect figure makes that asymmetry visible by comparing the variance response to positive and negative shocks.
 
 ### Innovation distributions
 
-Gaussian innovations make likelihood calculations convenient, but financial returns often have heavier tails than a normal distribution. A Student-$t$ innovation can place more probability on extreme standardized residuals. When $h_t$ is interpreted as conditional variance, standardize the innovation distribution to variance 1; an ordinary Student-$t$ distribution requires degrees of freedom greater than 2 for that variance to exist.
+The innovation distribution describes standardized shocks after their time-varying scale is removed. A Student-$t$ distribution can allocate more probability to large standardized surprises than a normal distribution. To keep $h_t$ as conditional variance, standardize the $t$ shock to variance 1; for degrees of freedom $\nu>2$, this rescales an ordinary $t_\nu$ variable by $\sqrt{(\nu-2)/\nu}$. If the required moments do not exist, variance-based interpretations must be reconsidered.
 
-![Heavy tails](../../assets/time_series/financial/07_heavy_tails.png)
+![Heavy tails](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/financial/07_heavy_tails.png)
 
 The figure emphasizes that matching conditional variance is not enough if the standardized residual distribution still produces more extremes than the assumed normal model. Tail behavior matters directly for interval and risk forecasts.
 
@@ -293,15 +271,15 @@ $$
 q_{\alpha,t+1}=\mu_{t+1}+z_\alpha\sqrt{h_{t+1}}.
 $$
 
-Value-at-Risk is a quantile-based risk measure, while expected shortfall averages outcomes beyond the selected tail quantile. Both require an explicit sign convention and out-of-sample calibration checks.
+The lower return quantile identifies a threshold exceeded downward with probability $\alpha$ under the forecast distribution. With the positive-loss convention, Value-at-Risk negates that return threshold; other conventions can label the probability by its complementary confidence level. Expected shortfall instead averages the relevant tail outcomes. State the convention and units, then check later exceedances and tail behavior rather than treating a fitted quantile as automatically calibrated.
 
-![Volatility shock response](../../assets/time_series/financial/05_volatility_shock_response.png)
+![Volatility shock response](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/financial/05_volatility_shock_response.png)
 
 The shock-response figure shows how a single large innovation affects future conditional volatility. The decay rate determines how quickly risk forecasts return toward their long-run level.
 
 ### Modeling cautions
 
-Prices are usually non-stationary, while returns may be closer to stationary but can still contain breaks and changing distributions. Trading calendars introduce missing or irregular dates, high-frequency data can contain microstructure effects, and corporate actions must be handled correctly before return calculation.
+Return construction depends on the data definition. A stock split can look like an enormous loss if prices are not adjusted consistently. A missing weekend differs from an unobserved trading-day return, and decimal returns differ from percentage-point returns by a factor of 100, making variances differ by 10,000. Resolve units, corporate actions, and the trading calendar before interpreting estimated volatility parameters.
 
 Backtests can also be biased by revised data, survivorship filtering, or parameters estimated over regimes that differ from the evaluation period. Reproduce the information set that would actually have been available at each forecast origin.
 
@@ -315,3 +293,21 @@ Backtests can also be biased by revised data, survivorship filtering, or paramet
 6. Check standardized residuals and squared standardized residuals.
 7. Backtest volatility forecasts and tail quantiles chronologically.
 8. Examine stability across market regimes and innovation distributions.
+
+## Formula reference
+
+| Quantity / model | General formula | Notes / special case |
+|---|---|---|
+| Simple return | $R_t=P_t/P_{t-1}-1$ | Gross return is $1+R_t=P_t/P_{t-1}$. |
+| Log return | $r_t=\log(P_t/P_{t-1})$ | Log returns add across time: $\sum_{j=1}^{h}r_{t+j}=\log(P_{t+h}/P_t)$. |
+| Small-return approximation | $\log(1+R_t)\approx R_t$ | Accurate when $\lvert R_t\rvert$ is small. |
+| Mean-variance decomposition | $r_t=\mu_t+\sqrt{h_t}\,z_t$ | $E[z_t]=0$, $\mathrm{Var}(z_t)=1$. |
+| ARCH($q$) | $h_t=\alpha_0+\sum_{i=1}^{q}\alpha_i\varepsilon_{t-i}^2$ | Standard constraints: $\alpha_0>0$, $\alpha_i\ge0$; $\varepsilon_t=r_t-\mu_t$. |
+| GARCH($p,q$) | $h_t=\alpha_0+\sum_{i=1}^{q}\alpha_i\varepsilon_{t-i}^2+\sum_{j=1}^{p}\beta_jh_{t-j}$ | $q$ ARCH terms, $p$ lagged-variance terms. Captures both shock effects and variance persistence. |
+| GARCH(1,1) | $h_t=\alpha_0+\alpha_1\varepsilon_{t-1}^2+\beta_1h_{t-1}$ | Most common basic GARCH specification. |
+| GARCH(1,1) long-run variance | $\bar h=\alpha_0/(1-\alpha_1-\beta_1)$ | Requires $\alpha_1+\beta_1<1$ under the usual covariance-stationary conditions. |
+| GARCH persistence | $\alpha_1+\beta_1$ | Values near 1 imply slowly decaying volatility shocks. |
+| EWMA variance | $h_t=(1-\lambda)\varepsilon_{t-1}^2+\lambda h_{t-1}$ | GARCH-like special case with zero intercept and weights summing to 1. |
+| Threshold / GJR-GARCH | $h_t=\alpha_0+\alpha_1\varepsilon_{t-1}^2+\gamma I(\varepsilon_{t-1}<0)\varepsilon_{t-1}^2+\beta_1h_{t-1}$ | Allows asymmetric volatility response. |
+| Gaussian conditional quantile | $q_{\alpha,t}=\mu_t+z_\alpha\sqrt{h_t}$ | $z_\alpha$ is the standard-normal $\alpha$-quantile (negative for small $\alpha$). |
+| VaR loss convention | $\mathrm{VaR}_{\alpha,t}=-q_{\alpha,t}$ | Only under the convention that positive VaR denotes loss magnitude. |

@@ -1,53 +1,10 @@
 # Forecasting with Time Series
 
-[Time series index](README.md)
+A forecast answers a dated question: what can be said about a specified future quantity using the information available now? Predicting next month's total sales from today's data is different from predicting tomorrow's sales, and both differ from estimating a past trend with the full record available. The forecast origin, horizon, units, and information set are part of the question.
 
-A time-series forecast is a conditional statement about a future observation given the information available at a specific forecast origin. State the horizon, the quantity being predicted, and the information available when the forecast is issued. A point forecast may target a conditional mean, median, or quantile; these targets answer different questions and should be accompanied by an appropriate account of uncertainty.
+A point forecast also needs a target. The conditional mean minimizes expected squared error; a conditional median minimizes expected absolute error; a quantile answers a tail-probability question. Those values can differ for an asymmetric forecast distribution, so one number cannot automatically serve all three purposes.
 
-Forecasting methods differ in the assumptions they make about persistence, trend, seasonality, nonlinear structure, and future predictors. Useful methods are therefore compared chronologically against simple baselines and judged not only by point accuracy but also by uncertainty calibration, stability across horizons, and whether the required information would actually be available in deployment.
-
-**Reading guide.** Start with simple baselines and recursive smoothing before comparing linear and machine-learning approaches. For every method, distinguish the point forecast from its uncertainty and state how multiple future steps are produced. The final examples return to numerical forecasts, transformations, and communication so that the method comparison remains tied to a concrete forecasting task.
-
-**Related reading:** [forecast evaluation and backtesting](forecast_evaluation.md).
-
-**On this page**
-
-- [Formula reference](#formula-reference)
-- [Worked calculation: a forecast and its uncertainty](#worked-calculation-a-forecast-and-its-uncertainty)
-- [The forecast target and available information](#the-forecast-target-and-available-information)
-- [Components of a Time Series](#components-of-a-time-series)
-- [Forecasting Methods](#forecasting-methods)
-- [Linear Prediction for Stationary Series](#linear-prediction-for-stationary-series)
-- [ARAR Algorithm](#arar-algorithm)
-- [Machine Learning for Time Series Forecasting](#machine-learning-for-time-series-forecasting)
-- [Comparison of Various Models](#comparison-of-various-models)
-- [Model Evaluation](#model-evaluation)
-- [Worked examples: constructing and communicating forecasts](#worked-examples-constructing-and-communicating-forecasts)
-
-## Formula reference
-
-| Forecast / method | General formula | Notes / special case |
-|---|---|---|
-| Conditional-mean forecast | $\hat y_{t+h\mid t}=E(y_{t+h}\mid\mathcal F_t)$ | Optimal under squared-error loss. |
-| Forecast error | $e_{t,h}=y_{t+h}-\hat y_{t+h\mid t}$ | Future shocks make this random at the forecast origin. |
-| Naive forecast | $\hat y_{t+h\mid t}=y_t$ | Optimal conditional mean for a zero-drift random walk. |
-| Seasonal naive | $\hat y_{t+h\mid t}=y_{t+h-s\lceil h/s\rceil}$ | Repeats the latest observation from the corresponding season. |
-| Drift forecast | $\hat y_{t+h\mid t}=y_t+h(y_t-y_1)/(t-1)$ | Extrapolates the average historical change. |
-| Historical-mean forecast | $\hat y_{t+h\mid t}=t^{-1}\sum_{j=1}^{t}y_j$ | Natural baseline for a stable level with little persistence. |
-| SES level update | $\ell_t=\alpha y_t+(1-\alpha)\ell_{t-1}$ | $0<\alpha\le1$. |
-| SES forecast | $\hat y_{t+h\mid t}=\ell_t$ | Same point forecast at every horizon in the level-only model. |
-| Holt level | $\ell_t=\alpha y_t+(1-\alpha)(\ell_{t-1}+b_{t-1})$ | Adds a local trend state. |
-| Holt trend | $b_t=\beta(\ell_t-\ell_{t-1})+(1-\beta)b_{t-1}$ | $0<\beta\le1$. |
-| Holt forecast | $\hat y_{t+h\mid t}=\ell_t+hb_t$ | Damped-trend variants shrink the long-run trend contribution. |
-| Holt-Winters additive forecast | $\hat y_{t+h\mid t}=\ell_t+hb_t+s_{t+h-L\lceil h/L\rceil}$ | Seasonal effects are additive and measured in response units. |
-| Holt-Winters multiplicative forecast | $\hat y_{t+h\mid t}=(\ell_t+hb_t)s_{t+h-L\lceil h/L\rceil}$ | Seasonal amplitude scales with the level. |
-| AR(1) $h$-step forecast | $\hat X_{t+h\mid t}=\mu+\phi^h(X_t-\mu)$ | Mean reversion for $\lvert\phi\rvert<1$. |
-| AR(1) forecast-error variance | $\sigma_h^2=\sigma_\varepsilon^2\sum_{j=0}^{h-1}\phi^{2j}$ | Equals $\sigma_\varepsilon^2(1-\phi^{2h})/(1-\phi^2)$ when $\lvert\phi\rvert\ne1$. |
-| Random-walk forecast variance | $\mathrm{Var}(e_{t,h})=h\sigma_\varepsilon^2$ | Uncertainty grows without bound with horizon. |
-| Linear stationary predictor | $\hat X_{n+h}=\mu+a^\top(X_n-\mu,\ldots,X_1-\mu)^\top$ | Coefficients solve $\Gamma_na=\gamma_n(h)$. |
-| Gaussian prediction interval | $\hat y_{t+h\mid t}\pm z_{1-\alpha/2}\sigma_h$ | Requires an estimated or model-implied forecast-error standard deviation. |
-| Forecast combination | $\hat y=w\hat y^{(1)}+(1-w)\hat y^{(2)}$ | Choose weights using training/validation origins, not the final test period. |
-| Lognormal mean correction | $E(Y\mid\mathcal F)=\exp(\mu_Z+\tfrac12\sigma_Z^2)$ for $Z=\log Y$ Gaussian | Plain exponentiation of the log mean gives the median, not the mean. |
+Forecasting methods specify what persists: the latest level, an estimated trend, a seasonal pattern, a dynamic response to past shocks, or a relationship with predictors. Their usefulness depends on whether that assumption holds over the required horizon. Compare methods against appropriate baselines at historical forecast origins, and assess the uncertainty distribution as well as the point errors.
 
 ## Worked calculation: a forecast and its uncertainty
 
@@ -88,9 +45,9 @@ $$
 
 that is, roughly $(0.69,\,5.71)$.
 
-The point forecast moves toward the long-run mean, while the uncertainty increases with horizon.
+The centered AR(1) forecast multiplies the latest value by another factor of 0.8 for each step, so it returns toward zero. Uncertainty moves in the other direction because each step introduces an additional unknown shock. By the second step, one future shock enters directly and one is multiplied by 0.8; their variance contributions are $1$ and $0.8^2$. This explains the variance 1.64 and the interval calculation above.
 
-![Forecast paths and expanding prediction intervals](../../assets/time_series/student/14_forecasting_intervals.png)
+![Forecast paths and expanding prediction intervals](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/14_forecasting_intervals.png)
 
 The figure shows both parts of a forecast. The central path gives the conditional mean, while the widening interval reflects uncertainty from future shocks that have not yet been observed.
 
@@ -146,13 +103,13 @@ $$
 
 It is a strong baseline for persistent non-seasonal series and is the optimal conditional-mean forecast for a zero-drift random walk.
 
-![Baseline forecasts](../../assets/time_series/forecasting/01_baseline_forecasts.png)
+![Baseline forecasts](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/forecasting/01_baseline_forecasts.png)
 
 The figure compares several simple rules. Naive, seasonal-naive, mean, and drift forecasts correspond to different assumptions about what persists into the future, so the benchmark should match the basic structure of the series.
 
 ### Simple Exponential Smoothing (SES)
 
-**Simple Exponential Smoothing (SES)** is designed for a series with an evolving level but no explicit trend or seasonal component. The level update can be written as
+**Simple exponential smoothing (SES)** maintains one estimate of the current level. A new observation revises that estimate rather than triggering an extrapolation of a permanent slope. The update below is equivalent to “previous level plus $\alpha$ times the new prediction error.” This makes the role of $\alpha$ concrete: it controls how much of the latest surprise is treated as a change in level.
 
 $$
 \ell_t=\alpha x_t+(1-\alpha)\ell_{t-1},
@@ -165,7 +122,7 @@ $$
 \hat x_{t+h\mid t}=\ell_t.
 $$
 
-A larger $\alpha$ reacts more strongly to the newest observation, while a smaller $\alpha$ produces a smoother level estimate with longer memory.
+If $\alpha$ is large, a new surprise moves the level substantially. If it is small, the level changes slowly and averages information over a longer history. Neither behavior is automatically better. A rapidly changing underlying level needs responsiveness; measurement noise can make that same responsiveness chase temporary fluctuations. Choose the parameter through fitting and temporal evaluation rather than through the visual smoothness of the curve.
 
 Repeated substitution gives
 
@@ -179,7 +136,7 @@ $$
 
 up to the contribution from the initial state. The observation weights decay geometrically.
 
-![Exponential smoothing](../../assets/time_series/forecasting/06_exponential_smoothing.png)
+![Exponential smoothing](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/forecasting/06_exponential_smoothing.png)
 
 The figure shows how the smoothed level reacts to new observations. Higher responsiveness follows recent movements more closely but can also chase short-lived noise.
 
@@ -191,7 +148,7 @@ $$
 \ell_1=x_1.
 $$
 
-Another option is to estimate the initial level jointly with $\alpha$ or use an average of early observations. Initialization matters most in short series and when $\alpha$ is small.
+The initialization contributes a term weighted by $(1-\alpha)^t$ after repeated updates. With a small $\alpha$, that weight can remain substantial for many observations, so the first value is not an innocuous choice in a short series. Estimating the initial level jointly with the smoothing parameter, or using an explicitly documented early-data estimate, makes the fitted procedure reproducible.
 
 #### Forecast Error
 
@@ -231,7 +188,7 @@ requires only the previous state and the newest observation. This makes SES comp
 
 ### Holt’s Linear Trend Method (Double Exponential Smoothing)
 
-Holt's method adds a trend state to the evolving level. One common additive formulation is
+Holt's method separates two evolving quantities: a level and a local slope. Before seeing the new observation, the previous slope advances the previous level by one step. The level update then compares that prediction with the observation, and the slope update revises the estimated rate of change. Keeping separate states prevents each short-term surprise from being interpreted as a permanent new trend.
 
 $$
 \ell_t=\alpha x_t+(1-\alpha)(\ell_{t-1}+b_{t-1}),
@@ -249,11 +206,11 @@ $$
 
 The level state estimates the current baseline, while $b_t$ estimates the local slope. Initial values can be set from the first observations or estimated jointly with the smoothing parameters.
 
-A damped-trend variant can be useful when indefinitely extrapolating the current slope is unrealistic.
+The undamped forecast adds the same estimated slope at every future step, which can be unrealistic over long horizons. A damped trend progressively reduces those future slope contributions. Damping changes the extrapolation assumption, not just the appearance of the fitted trend, so compare it at the horizons where the forecasts will be used.
 
 ### Holt-Winters Seasonal Method (Triple Exponential Smoothing)
 
-Holt-Winters extends the level and trend states with a seasonal state of period $L$. Additive seasonality is appropriate when seasonal swings are roughly constant in absolute size; multiplicative seasonality is appropriate when they scale with the level.
+Holt-Winters adds a seasonal state to level and trend. In the additive version, a seasonal state is measured in the response's units; an effect of 10 adds 10 at any level. In the multiplicative version, it is a factor; 1.10 means 10% above the underlying level. The multiplicative equations therefore need a meaningful positive scale and valid divisions, while additive equations can describe fixed seasonal shifts.
 
 #### Additive Model
 
@@ -366,7 +323,7 @@ The method is useful as a historical forecasting approach for strongly persisten
 
 Machine-learning methods can be useful when nonlinear interactions, many predictors, or large collections of related series are available. They are not inherently more accurate than statistical time-series models; performance depends on data volume, signal structure, feature availability, horizon, and the validation design.
 
-The most important adaptation is to preserve the time information. Lag features, rolling summaries, calendar variables, and exogenous predictors must be constructed using only information that would have been available at each forecast origin.
+A machine-learning row must reproduce what would have been known at its forecast origin. To predict $y_t$, a lag-1 feature is $y_{t-1}$, not $y_t$, and a rolling mean must end before the target becomes available. For a longer horizon, some values available to a one-step row become future information. Construct features from the horizon and information timing, then choose the prediction algorithm.
 
 ### Key Challenges in Time Series Forecasting
 
@@ -394,7 +351,7 @@ The target horizon must also be explicit. A feature table for one-step forecasti
 
 Tree ensembles, boosting models, support-vector regression, and feed-forward neural networks can all be applied after the forecasting problem has been transformed into a supervised dataset.
 
-A random forest, for example, can learn nonlinear interactions among lagged values and external predictors. It does not natively propagate its own predictions through future time steps, so multi-step forecasts require a direct, recursive, or multi-output strategy.
+A random forest maps one supplied feature row to a prediction. It does not automatically generate the lagged values needed several steps into the future. A recursive strategy feeds earlier predictions into later feature rows; a direct strategy fits a separate target horizon; a multi-output strategy predicts several horizons together. These are distinct forecasting procedures even when they use the same underlying tree algorithm.
 
 ```python
 from sklearn.ensemble import RandomForestRegressor
@@ -424,7 +381,7 @@ The chronological split keeps training targets earlier than test targets. In thi
 
 Gradient boosting builds trees sequentially so that later trees reduce errors left by earlier ones. It can model nonlinear interactions in structured lag-feature datasets and often performs well when there are many informative covariates.
 
-The flexibility requires tuning and regularization. Tree-based boosting models also extrapolate poorly beyond feature-response patterns represented in the training data, so strong unmodeled trend can be a problem.
+Boosted trees divide the feature space into fitted regions rather than extending a learned linear slope indefinitely. A strong trend that carries future values beyond the training range can therefore be difficult to extrapolate. Lag features, transformations, and a separate trend component may help, but they must be fitted inside the historical training boundary. Evaluate their contribution rather than attributing success or failure to the model family name alone.
 
 ```python
 import xgboost as xgb
@@ -469,7 +426,7 @@ predictions = mlp_model.predict(X_test)
 
 ### Advanced Neural Network Models for Time Series
 
-Recurrent architectures process sequences directly and maintain an evolving hidden state. They can represent temporal patterns without manually flattening every lag into a separate feature, although sequence length, training stability, and data volume still matter.
+A recurrent network updates an internal state as observations arrive. That state can represent information distributed across several earlier dates, reducing the need to supply every lag as a separate flat feature. Training must still decide how long sequences are, how the state is initialized or carried across batches, and which observations are available at prediction time. Sequential architecture does not itself prevent leakage or make a short dataset informative enough for a large model.
 
 #### Recurrent Neural Networks (RNNs)
 
@@ -541,7 +498,7 @@ model.fit(X_train, y_train, epochs=50, batch_size=32)
 
 ### Hybrid Models
 
-Hybrid approaches combine models that capture different structures. For example, an ARIMA model can describe linear short-memory dynamics while a nonlinear model is fit to residual structure. Boosting and recurrent models can also be combined, but extra stages increase the risk of leakage and overfitting.
+A hybrid can first fit a linear dynamic model and then fit a nonlinear model to what remains. The second stage should learn residual structure that is reproducible beyond the training sample, not simply fit the noise left by the first stage. Train both stages within each forecast origin and compare the combined forecasts with each component separately. Otherwise any apparent improvement may come from extra fitting opportunities rather than a useful complementary mechanism.
 
 Each stage should be trained inside the same historical information boundary, and the hybrid should be compared with its simpler components on identical forecast origins.
 
@@ -601,11 +558,11 @@ $$
 
 Residual tests such as Ljung-Box are diagnostics rather than accuracy scores. They assess whether a fitted model has left linear autocorrelation unexplained.
 
-![Forecast errors by horizon](../../assets/time_series/forecasting/05_error_by_horizon.png)
+![Forecast errors by horizon](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/forecasting/05_error_by_horizon.png)
 
 The horizon plot shows why a single average metric can be misleading. A method that is strongest one step ahead may lose its advantage at longer horizons, so evaluation should match the operational forecast horizon.
 
-## Worked examples: constructing and communicating forecasts
+## Forecast targets, transformations, and uncertainty
 
 A forecast is a conditional statement. Under squared-error loss,
 
@@ -708,7 +665,7 @@ $$
 E[\exp(Z)]\ne\exp(E[Z]).
 $$
 
-Under a lognormal assumption, exponentiating the log-scale conditional mean gives the median on the original scale. A mean forecast requires an appropriate bias adjustment. State whether reported point forecasts and intervals target the mean, median, or another functional.
+For a conditional normal distribution on the log scale with mean $m$ and variance $v$, the original-scale median is $e^m$, while the mean is $e^{m+v/2}$. The difference grows with uncertainty because exponentiation stretches the upper tail more than the lower tail. Transform interval endpoints consistently, and state which point target is being reported; exponentiating a log-scale mean does not automatically give an original-scale mean forecast.
 
 ### Forecast combination
 
@@ -718,13 +675,13 @@ $$
 \hat y=w\hat y^{(1)}+(1-w)\hat y^{(2)}.
 $$
 
-A combination can improve accuracy when the component errors contain complementary information. Choose the weight using training or validation origins, not the final test period.
+Combining helps when the errors are complementary: one forecast can offset misses made by the other. If both make almost identical errors, averaging them adds little. The weight therefore belongs to model development and must be chosen from training or validation origins. Evaluating many weights on the final test period turns that period into tuning data and invalidates its role as an independent assessment.
 
 ### Forecast uncertainty
 
 Forecast uncertainty can come from future shocks, parameter estimation, future predictor values, transformation bias, model uncertainty, and regime changes. Classical model intervals may include only a subset of these sources.
 
-![Forecast paths and expanding prediction intervals](../../assets/time_series/student/14_forecasting_intervals.png)
+![Forecast paths and expanding prediction intervals](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/14_forecasting_intervals.png)
 
 The widening intervals reinforce the distinction between point prediction and uncertainty. Evaluate empirical coverage and width on temporal backtests, and state which uncertainty sources the interval construction includes.
 
@@ -740,3 +697,28 @@ A useful forecast report includes:
 6. recent error history;
 7. known future events or predictor assumptions;
 8. limitations and update schedule.
+
+## Formula reference
+
+| Forecast / method | General formula | Notes / special case |
+|---|---|---|
+| Conditional-mean forecast | $\hat y_{t+h\mid t}=E(y_{t+h}\mid\mathcal F_t)$ | Optimal under squared-error loss. |
+| Forecast error | $e_{t,h}=y_{t+h}-\hat y_{t+h\mid t}$ | Future shocks make this random at the forecast origin. |
+| Naive forecast | $\hat y_{t+h\mid t}=y_t$ | Optimal conditional mean for a zero-drift random walk. |
+| Seasonal naive | $\hat y_{t+h\mid t}=y_{t+h-s\lceil h/s\rceil}$ | Repeats the latest observation from the corresponding season. |
+| Drift forecast | $\hat y_{t+h\mid t}=y_t+h(y_t-y_1)/(t-1)$ | Extrapolates the average historical change. |
+| Historical-mean forecast | $\hat y_{t+h\mid t}=t^{-1}\sum_{j=1}^{t}y_j$ | Natural baseline for a stable level with little persistence. |
+| SES level update | $\ell_t=\alpha y_t+(1-\alpha)\ell_{t-1}$ | $0<\alpha\le1$. |
+| SES forecast | $\hat y_{t+h\mid t}=\ell_t$ | Same point forecast at every horizon in the level-only model. |
+| Holt level | $\ell_t=\alpha y_t+(1-\alpha)(\ell_{t-1}+b_{t-1})$ | Adds a local trend state. |
+| Holt trend | $b_t=\beta(\ell_t-\ell_{t-1})+(1-\beta)b_{t-1}$ | $0<\beta\le1$. |
+| Holt forecast | $\hat y_{t+h\mid t}=\ell_t+hb_t$ | Damped-trend variants shrink the long-run trend contribution. |
+| Holt-Winters additive forecast | $\hat y_{t+h\mid t}=\ell_t+hb_t+s_{t+h-L\lceil h/L\rceil}$ | Seasonal effects are additive and measured in response units. |
+| Holt-Winters multiplicative forecast | $\hat y_{t+h\mid t}=(\ell_t+hb_t)s_{t+h-L\lceil h/L\rceil}$ | Seasonal amplitude scales with the level. |
+| AR(1) $h$-step forecast | $\hat X_{t+h\mid t}=\mu+\phi^h(X_t-\mu)$ | Mean reversion for $\lvert\phi\rvert<1$. |
+| AR(1) forecast-error variance | $\sigma_h^2=\sigma_\varepsilon^2\sum_{j=0}^{h-1}\phi^{2j}$ | Equals $\sigma_\varepsilon^2(1-\phi^{2h})/(1-\phi^2)$ when $\lvert\phi\rvert\ne1$. |
+| Random-walk forecast variance | $\mathrm{Var}(e_{t,h})=h\sigma_\varepsilon^2$ | Uncertainty grows without bound with horizon. |
+| Linear stationary predictor | $\hat X_{n+h}=\mu+a^\top(X_n-\mu,\ldots,X_1-\mu)^\top$ | Coefficients solve $\Gamma_na=\gamma_n(h)$. |
+| Gaussian prediction interval | $\hat y_{t+h\mid t}\pm z_{1-\alpha/2}\sigma_h$ | Requires an estimated or model-implied forecast-error standard deviation. |
+| Forecast combination | $\hat y=w\hat y^{(1)}+(1-w)\hat y^{(2)}$ | Choose weights using training/validation origins, not the final test period. |
+| Lognormal mean correction | $E(Y\mid\mathcal F)=\exp(\mu_Z+\tfrac12\sigma_Z^2)$ for $Z=\log Y$ Gaussian | Plain exponentiation of the log mean gives the median, not the mean. |

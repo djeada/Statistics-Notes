@@ -1,31 +1,12 @@
 # Sequences and Series
 
-[Time series index](README.md)
+A time-series model often says that today's observation contains the effects of many earlier shocks. Writing those effects as an infinite sum is convenient, but it raises a concrete question: does including more history settle on a definite answer, or does the approximation keep changing without limit?
 
-Sequences and series provide the convergence language behind many time-series representations. A sequence is an ordered list of terms. A series sums those terms and asks whether their cumulative contribution approaches a finite limit as more terms are included.
+Sequences and series supply the tools for answering that question. A **sequence** is the ordered list of terms; a **series** adds them. The terms of a sequence may approach zero while their sum still grows without bound, so these are separate convergence questions.
 
-These distinctions matter when a dynamic model is rewritten as an infinite weighted history of shocks or observations. The representation is useful only if the successive finite approximations approach a well-defined limit. Conditions such as geometric decay, absolute summability, and mean-square convergence determine whether those infinite representations are mathematically stable and can be approximated accurately with a finite number of terms.
+In a stable AR(1), a shock's weights are $1,\phi,\phi^2,\ldots$. Their decay determines how long the shock remains influential. In an inverse MA filter, similar powers determine whether the hidden shock can be recovered reliably from observations. Both uses require an infinite expression to be the limit of finite calculations.
 
-**Reading guide.** Follow the progression from individual terms to partial sums, then to infinite sums and random filters. The worked calculations revisit the geometric series to answer a new question each time: the limiting value, the size of a discarded tail, or the variance of a weighted shock history. Keep ordinary convergence, absolute convergence, and mean-square convergence distinct.
-
-**Related reading:** [difference equations](difference_equations.md).
-
-## Formula reference
-
-| Concept | General formula | Condition / interpretation |
-|---|---|---|
-| Sequence limit | $\lim_{n\to\infty}a_n=a$ | For every $\epsilon>0$, eventually $\lvert a_n-a\rvert<\epsilon$. |
-| Partial sum | $S_n=\sum_{k=1}^{n}a_k$ | A series converges when $S_n$ has a finite limit. |
-| Infinite series | $\sum_{k=1}^{\infty}a_k=\lim_{n\to\infty}S_n$ | Necessarily $a_n\to0$, but this alone is not sufficient. |
-| Finite geometric sum | $\sum_{k=0}^{n}r^k=(1-r^{n+1})/(1-r)$ | Valid for $r\ne1$. |
-| Infinite geometric sum | $\sum_{k=0}^{\infty}r^k=1/(1-r)$ | Converges exactly when $\lvert r\rvert<1$. |
-| Geometric tail | $\sum_{k=m+1}^{\infty}r^k=r^{m+1}/(1-r)$ | For $\lvert r\rvert<1$; absolute tail is bounded by $\lvert r\rvert^{m+1}/(1-\lvert r\rvert)$. |
-| $p$-series | $\sum_{n=1}^{\infty}n^{-p}$ | Converges iff $p>1$. |
-| Absolute convergence | $\sum_{n=1}^{\infty}\lvert a_n\rvert<\infty$ | Implies ordinary convergence. |
-| Ratio test | $L=\lim\lvert a_{n+1}/a_n\rvert$ | $L<1$: absolute convergence; $L>1$: divergence. |
-| Root test | $L=\limsup\lvert a_n\rvert^{1/n}$ | $L<1$: absolute convergence; $L>1$: divergence. |
-| Mean-square convergence | $E[(X_n-X)^2]\to0$ | Natural convergence notion for stochastic linear filters. |
-| Linear-process variance | $X_t=\sum_{j\ge0}\psi_j\varepsilon_{t-j}$, $\mathrm{Var}(X_t)=\sigma_\varepsilon^2\sum_{j\ge0}\psi_j^2$ | Requires uncorrelated innovations and square-summable coefficients. |
+For numerical terms, examine ordinary and absolute convergence. For sums of random shocks, also examine mean-square convergence: it measures whether the expected squared error from truncating the history tends to zero. These conditions justify different operations and should not be substituted for one another.
 
 ## Worked calculation: a geometric series
 
@@ -53,9 +34,9 @@ $$
 2-1.9375=0.0625.
 $$
 
-This is why a stable linear time-series representation can be approximated by finitely many terms: when the weights decay geometrically, the discarded tail has a known bound.
+The limit 2 tells us where the partial sums are heading; the tail 0.0625 tells us how far this particular approximation remains from that limit. In a time-series filter, knowing that the tail tends to zero is only the first step. To choose a usable truncation length, we need to know how quickly it shrinks and how large an omitted contribution we can tolerate.
 
-![Partial sums of a geometric series](../../assets/time_series/student/01_series_partial_sums.png)
+![Partial sums of a geometric series](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/01_series_partial_sums.png)
 
 The figure shows the partial sums approaching 2. Each added term improves the approximation, but the size of the improvement shrinks because the geometric weights decay.
 
@@ -127,7 +108,7 @@ $$
 \lim_{n\to\infty}\frac{1}{n^3}=0.
 $$
 
-These examples concern the behavior of the individual terms. A series asks a different question: what happens when the terms are accumulated?
+The examples so far concern individual terms. For $a_n=1/n$, the next term eventually becomes very small, but there are infinitely many terms still to add. Small terms therefore do not, by themselves, make a finite total. To study the total, construct a second sequence: the accumulated sums after one term, two terms, and so on.
 
 ## Partial Sums
 
@@ -182,7 +163,7 @@ $$
 \qquad |x|<1.
 $$
 
-This identity is especially useful in time-series analysis because inverse lag polynomials can often be expanded as geometric or power series. The convergence condition determines whether the resulting infinite-lag representation is stable.
+The rational expression $1/(1-x)$ and the infinite series describe the same quantity only within the stated convergence region. Substituting a lag operator into the formal algebra does not remove that restriction. For example, expanding $(1-\phi B)^{-1}$ gives a history with weights $\phi^j$; those weights decay when $|\phi|<1$. Outside that region, the same formal geometric expansion is not a stable past-based representation.
 
 ## Examples of Convergent Series
 
@@ -257,7 +238,7 @@ $$
 
 converges. Absolute convergence implies ordinary convergence. The converse is not always true: the alternating harmonic series converges, but the corresponding series of absolute values is the divergent harmonic series.
 
-Absolute summability is particularly useful for linear filters because it gives a strong form of stability and makes many rearrangements and expectation calculations straightforward.
+Absolute convergence prevents convergence from depending on delicate cancellation between positive and negative terms. If the input to a filter is bounded in magnitude by $M$, an absolutely summable coefficient sequence gives an output bounded by $M\sum_j|\psi_j|$. This is a useful deterministic notion of stability. For uncorrelated random inputs, the weaker requirement of square-summable coefficients can suffice for a finite output variance; the assumptions and the conclusion are different.
 
 ## Convergence Tests
 
@@ -388,7 +369,7 @@ E[(X_n-X)^2]\to0
 \quad\text{as }n\to\infty.
 $$
 
-This notion is important for stochastic processes because infinite linear representations are often interpreted as limits of finite random sums.
+Mean-square convergence treats a finite sum as an approximation to a random quantity and averages its squared error across possible realizations. It is stronger than checking whether one plotted realization happens to settle. If the omitted error has mean zero, its mean square is its variance, so a variance calculation often proves convergence directly. This is why second moments appear so frequently in proofs about infinite time-series filters.
 
 ### Inverting the MA(1) Model
 
@@ -423,7 +404,7 @@ $$
 \end{cases}
 $$
 
-The finite covariance range reflects the finite shock duration of the MA(1): observations more than one period apart share no common innovation.
+At lag 1, the two observations contain one common shock, producing the term $\beta\sigma_Z^2$. Beyond lag 1 they contain disjoint shock indices, so uncorrelated shocks give zero covariance. This finite covariance range belongs to the original MA(1) process. Its inverse filter can still require infinitely many observations: a short forward shock response does not imply a short inverse response.
 
 ### Series Convergence in Mean-Square Sense
 
@@ -433,7 +414,7 @@ $$
 S_n=\sum_{k=0}^{n}(-\beta)^kX_{t-k}.
 $$
 
-Repeated substitution gives the exact decomposition
+Substitute the MA equation into every term of $S_n$. Each interior shock appears twice with opposite coefficients and cancels. The current shock $Z_t$ remains, together with one boundary shock from just beyond the retained history. Keeping that boundary term gives an exact finite identity, rather than assuming that an infinite expansion has already converged:
 
 $$
 Z_t
@@ -467,7 +448,7 @@ $$
 |\beta|<1.
 $$
 
-Thus the same condition that makes the inverse weights decay also makes the finite truncations converge to the innovation in mean square.
+The remaining boundary shock has the same variance at every truncation length; only its coefficient changes. Consequently, the approximation improves precisely when that coefficient tends to zero. For a nondegenerate innovation variance, $|\beta|<1$ makes the squared error vanish, $|\beta|=1$ leaves it unchanged, and $|\beta|>1$ makes it grow. The invertibility condition is therefore visible in an actual approximation error, not only in a polynomial rule.
 
 ### Invertibility Condition
 
@@ -493,7 +474,7 @@ $$
 
 Invertibility therefore links a polynomial root condition, geometric-series convergence, and stable recovery of the innovations.
 
-## Worked examples: convergence and filter stability
+## From convergent coefficients to a well-defined random process
 
 Infinite series appear whenever a stable dynamic model is rewritten as a weighted history of shocks or observations. The geometric identity
 
@@ -545,7 +526,7 @@ $$
 \mathrm{Var}(X_t)=\frac43\sigma^2.
 $$
 
-This calculation connects numerical series convergence directly to the variance of a stochastic linear filter.
+The variance uses **squared** weights because the variance of a weighted shock is its squared coefficient times the shock variance. Cross-products disappear because different shocks are uncorrelated. Thus the numerical sum of weights is 2 in the opening example, while the sum of squared weights is $4/3$ here. Confusing these two sums would give the wrong process variance even though both geometric series converge.
 
 ### Numerical stability
 
@@ -556,12 +537,29 @@ $$
 =\frac{|r|^{m+1}}{|1-r|}
 $$
 
-for any $|r|<1$, By the triangle inequality, the same tail also has the bound
+This is the exact absolute tail when $|r|<1$. A bound expressed only in terms of the magnitude $|r|$ is often more convenient. The triangle inequality gives
 
 $$
 \frac{|r|^{m+1}}{1-|r|}
 $$
 
-in general.
+This bound uses absolute coefficient magnitudes, so it applies whether the geometric weights keep one sign or alternate.
 
-When $r=0.99$, truncation error decays far more slowly than when $r=0.5$. This is the numerical counterpart of persistence in a near-unit-root time-series model: a formally convergent representation can still require a long history before finite approximations become accurate.
+A coefficient close to 1 can make a valid infinite representation expensive to approximate. With $r=0.5$, each additional term halves the remaining geometric contribution. With $r=0.99$, each term reduces it by only about one percent. A fixed truncation length that works well in the first case can be inaccurate in the second. Choose the retained history from an error tolerance or sensitivity check, especially when interpreting a model with strong persistence.
+
+## Formula reference
+
+| Concept | General formula | Condition / interpretation |
+|---|---|---|
+| Sequence limit | $\lim_{n\to\infty}a_n=a$ | For every $\epsilon>0$, eventually $\lvert a_n-a\rvert<\epsilon$. |
+| Partial sum | $S_n=\sum_{k=1}^{n}a_k$ | A series converges when $S_n$ has a finite limit. |
+| Infinite series | $\sum_{k=1}^{\infty}a_k=\lim_{n\to\infty}S_n$ | Necessarily $a_n\to0$, but this alone is not sufficient. |
+| Finite geometric sum | $\sum_{k=0}^{n}r^k=(1-r^{n+1})/(1-r)$ | Valid for $r\ne1$. |
+| Infinite geometric sum | $\sum_{k=0}^{\infty}r^k=1/(1-r)$ | Converges exactly when $\lvert r\rvert<1$. |
+| Geometric tail | $\sum_{k=m+1}^{\infty}r^k=r^{m+1}/(1-r)$ | For $\lvert r\rvert<1$; absolute tail is bounded by $\lvert r\rvert^{m+1}/(1-\lvert r\rvert)$. |
+| $p$-series | $\sum_{n=1}^{\infty}n^{-p}$ | Converges iff $p>1$. |
+| Absolute convergence | $\sum_{n=1}^{\infty}\lvert a_n\rvert<\infty$ | Implies ordinary convergence. |
+| Ratio test | $L=\lim\lvert a_{n+1}/a_n\rvert$ | $L<1$: absolute convergence; $L>1$: divergence. |
+| Root test | $L=\limsup\lvert a_n\rvert^{1/n}$ | $L<1$: absolute convergence; $L>1$: divergence. |
+| Mean-square convergence | $E[(X_n-X)^2]\to0$ | Natural convergence notion for stochastic linear filters. |
+| Linear-process variance | $X_t=\sum_{j\ge0}\psi_j\varepsilon_{t-j}$, $\mathrm{Var}(X_t)=\sigma_\varepsilon^2\sum_{j\ge0}\psi_j^2$ | Requires uncorrelated innovations and square-summable coefficients. |
