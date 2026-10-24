@@ -37,7 +37,7 @@ For a new unit, use the same three-step loop:
 2. **Run a small script.** Scripts isolate one idea at a time and make numerical behavior reproducible.
 3. **Open a notebook.** Use notebooks for simulation, repeated sampling, visual exploration, and comparing modeling choices.
 
-Then use [`exercises/`](exercises/) for practice and [`flashcards/`](flashcards/) / [`quizzes/`](quizzes/) for retrieval.
+Then use [`exercises/`](exercises/) for practice and [`flashcards/`](flashcards/) / [`quizzes/`](quizzes/) for retrieval. Both are also available interactively: [quizzes](https://adamdjellouli.com/tools/quiz_app/?category=statistics) with explanations and scoring, and [flashcards](https://adamdjellouli.com/tools/flash_cards/?category=statistics) that remember what you already know.
 
 ### Example: estimation
 
