@@ -1,31 +1,18 @@
 # Time Series
 
-Time-series methods extend the core statistics curriculum to observations indexed by time, where serial dependence, trend, seasonality, and changing variance make independent-sample methods inadequate.
+Time-series analysis studies observations whose order carries information. A high value followed by another high value suggests a different mechanism from the same values alternating above and below a mean. Trends and seasonal patterns change expected values across dates; serial dependence connects deviations across dates; variance dynamics change the scale of uncertainty. A useful model distinguishes those features instead of treating every visible pattern as one kind of correlation.
 
-**On this page**
+The mathematical foundations below explain how recursions and weighted shock histories create temporal behavior. The linear-model chapters turn that behavior into AR, MA, ARIMA, and seasonal equations. Estimation and diagnostics then ask whether those equations describe the observed series adequately. Forecasting adds a dated information boundary and tests what the complete procedure predicts beyond its training record.
 
-- [How to read this unit](#how-to-read-this-unit)
-- [Notation and conventions](#notation-and-conventions)
-- [Formula reference](#formula-reference)
-- [Prerequisites](#prerequisites)
-- [1. Mathematical and Stochastic Foundations](#1-mathematical-and-stochastic-foundations)
-- [2. Dependence and Stationarity](#2-dependence-and-stationarity)
-- [3. Classical Linear Models](#3-classical-linear-models)
-- [4. Fitting and Diagnostics](#4-fitting-and-diagnostics)
-- [5. Forecasting and Evaluation](#5-forecasting-and-evaluation)
-- [6. Extensions](#6-extensions)
-- [Practice](#practice)
-- [Companion Implementations](#companion-implementations)
-- [Model Selection Map](#model-selection-map)
-- [Terminology](#terminology)
+## The main modeling distinctions
 
-## How to read this unit
+**Levels and changes** answer different questions. A random-walk level accumulates shocks permanently, while its first difference recovers the new increment. Differencing can therefore make the dynamic equation stationary without making the original level stationary. Returning to level forecasts requires reversing the transformation and propagating the resulting uncertainty.
 
-The six sections below form a learning path from mathematical foundations to model extensions. Start with [Time Series Analysis](time_series.md) if you want an overview of the data and modeling questions, then return to the foundations where an unfamiliar definition or calculation needs more work. Read the numbered topics in order for a full treatment of the unit.
+**Observed lags and latent shocks** distinguish AR and MA mechanisms. An AR coefficient feeds an earlier observed value back into the recursion. An MA coefficient carries a particular innovation forward for a finite number of dates. Both can create serial dependence, but their estimation and covariance patterns differ because only the observed lags are directly present in the dataset.
 
-Each chapter opens with a reading guide, a formula reference, and a worked calculation. The conceptual sections develop the definitions and assumptions; the final worked examples revisit them through numerical calculations, interpretation, and practical diagnostics. Repeated examples serve different purposes, such as checking an identity, deriving uncertainty, or validating a forecasting procedure.
+**A regression component and an innovation** are not the same object. External predictors can explain part of the response while leaving a correlated regression error. A dynamic error equation then predicts part of that error, leaving a new innovation. Diagnostics and forecasts need to use the appropriate sequence.
 
-Use the [model selection map](#model-selection-map) to connect a data feature to a starting model, and the [companion implementations](#companion-implementations) to move from an explanation to a reproducible experiment. Keep the full estimation and evaluation procedure in view when comparing methods.
+**Historical reconstruction and forecasting** use different information. A centered smoother or a smoothed latent state can use later observations to estimate an earlier quantity. A forecast issued at that earlier date cannot. Chronological evaluation must reproduce the entire information restriction, including transformations, predictor availability, estimation, and model selection.
 
 ## Notation and conventions
 
@@ -41,60 +28,44 @@ Use the [model selection map](#model-selection-map) to connect a data feature to
 
 The usual MA convention here is $\theta(B)=1+\theta_1B+\cdots+\theta_qB^q$, but a few examples explicitly use minus-signed coefficients. Compare expanded equations before comparing coefficient values across chapters or software. The formula tables are references to the assumptions explained in the text, rather than formulas that apply to every series without qualification.
 
-## Formula reference
-
-| Topic | General formula | Notes / common special case |
-|---|---|---|
-| Mean | $\mu_t=E[X_t]$ | Weak stationarity requires $\mu_t=\mu$ for all $t$. |
-| Autocovariance | $\gamma(t,s)=\mathrm{Cov}(X_t,X_s)$ | For a weakly stationary process, $\gamma(t,s)=\gamma(t-s)$. |
-| Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | $\rho(0)=1$ and $\rho(-h)=\rho(h)$. |
-| Backshift | $B^kX_t=X_{t-k}$ | $\nabla X_t=(1-B)X_t$ and $\nabla_sX_t=(1-B^s)X_t$. |
-| AR($p$) | $X_t=c+\sum_{i=1}^{p}\phi_iX_{t-i}+\varepsilon_t$ | AR(1): $X_t=c+\phi X_{t-1}+\varepsilon_t$. |
-| MA($q$) | $X_t=\mu+\varepsilon_t+\sum_{j=1}^{q}\theta_j\varepsilon_{t-j}$ | MA(1): $X_t=\mu+\varepsilon_t+\theta\varepsilon_{t-1}$. |
-| ARMA($p,q$) | $\phi(B)(X_t-\mu)=\theta(B)\varepsilon_t$ | AR and MA are obtained by setting $q=0$ or $p=0$. |
-| ARIMA($p,d,q$) | $\phi(B)(1-B)^dX_t=c+\theta(B)\varepsilon_t$ | Random walk: ARIMA$(0,1,0)$; ARMA: ARIMA$(p,0,q)$. |
-| SARIMA | $\Phi(B^s)\phi(B)(1-B^s)^D(1-B)^dX_t=\Theta(B^s)\theta(B)\varepsilon_t$ | Seasonal period is $s$; setting $P=D=Q=0$ gives non-seasonal ARIMA. |
-| Forecast error | $e_{t+h\mid t}=X_{t+h}-\hat X_{t+h\mid t}$ | MSE $=n^{-1}\sum e_t^2$; RMSE $=\sqrt{\mathrm{MSE}}$. |
-| State space | $\alpha_t=T_t\alpha_{t-1}+R_t\eta_t$, $\;X_t=Z_t\alpha_t+\varepsilon_t$ | Kalman filtering recursively updates the latent state. |
-
 ## Prerequisites
 
 Before starting this unit, be comfortable with:
 
-- **[Joint Distributions & Covariance](../joint_distributions_and_covariance/README.md)** — covariance, correlation, and dependence;
-- **[Regression](../regression/README.md)** — fitted models, residuals, and regression inference;
-- **[Resampling & Model Assessment](../resampling_and_model_assessment/README.md)** — out-of-sample evaluation and leakage;
+- **[Joint Distributions & Covariance](https://github.com/djeada/Statistics-Notes/tree/main/notes/joint_distributions_and_covariance)** — covariance, correlation, and dependence;
+- **[Regression](https://github.com/djeada/Statistics-Notes/tree/main/notes/regression)** — fitted models, residuals, and regression inference;
+- **[Resampling & Model Assessment](https://github.com/djeada/Statistics-Notes/tree/main/notes/resampling_and_model_assessment)** — out-of-sample evaluation and leakage;
 - basic algebra of sequences and difference equations.
 
 ## 1. Mathematical and Stochastic Foundations
 
-1. **[Series](series.md)** — sequences, series, convergence, and manipulations used in linear-process representations.
-2. **[Difference Equations](difference_equations.md)** — recursive equations behind dynamic models.
-3. **[Time Series](time_series.md)** — what makes time-indexed data different from ordinary cross-sectional data.
-4. **[Statistical Moments and Time Series](statistical_moments_and_time_series.md)** — means, variances, covariance, and higher moments in the time-indexed setting.
-5. **[Stochastic Processes and White Noise](stochastic_processes_and_white_noise.md)** — sample paths, innovations, weak white noise, and the probabilistic foundation for ARMA-type models.
+1. **[Series](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/series.md)** — sequences, series, convergence, and manipulations used in linear-process representations.
+2. **[Difference Equations](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/difference_equations.md)** — recursive equations behind dynamic models.
+3. **[Time Series](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/time_series.md)** — what makes time-indexed data different from ordinary cross-sectional data.
+4. **[Statistical Moments and Time Series](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/statistical_moments_and_time_series.md)** — means, variances, covariance, and higher moments in the time-indexed setting.
+5. **[Stochastic Processes and White Noise](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/stochastic_processes_and_white_noise.md)** — sample paths, innovations, weak white noise, and the probabilistic foundation for ARMA-type models.
 
 ## 2. Dependence and Stationarity
 
-1. **[Stationarity](stationarity.md)** — stability conditions that make many classical models interpretable.
-2. **[Random Walk](random_walk.md)** — the canonical nonstationary process and a bridge to unit-root ideas.
-3. **[Seasonality and Trends](seasonality_and_trends.md)** — deterministic and stochastic structure that must be handled before model identification.
-4. **[Autocovariance Function](autocovariance_function.md)** — dependence measured across lags.
-5. **[Autocorrelation Function](autocorrelation_function.md)** — normalized lag dependence plus PACF ideas used for model identification.
-6. **[Randomness Tests](randomness_tests.md)** — quick checks for residual randomness and remaining dependence.
+1. **[Stationarity](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/stationarity.md)** — stability conditions that make many classical models interpretable.
+2. **[Random Walk](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/random_walk.md)** — the canonical nonstationary process and a bridge to unit-root ideas.
+3. **[Seasonality and Trends](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/seasonality_and_trends.md)** — deterministic and stochastic structure that must be handled before model identification.
+4. **[Autocovariance Function](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/autocovariance_function.md)** — dependence measured across lags.
+5. **[Autocorrelation Function](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/autocorrelation_function.md)** — normalized lag dependence plus PACF ideas used for model identification.
+6. **[Randomness Tests](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/randomness_tests.md)** — quick checks for residual randomness and remaining dependence.
 
 ## 3. Classical Linear Models
 
-1. **[Autoregressive Models](autoregressive_models.md)** — AR models and persistence through lagged observations.
-2. **[Moving Average Models](moving_average_models.md)** — MA models driven by present and past innovations.
-3. **[Backward Shift Operator](backward_shift_operator.md)** — compact polynomial notation for ARMA/ARIMA models.
-4. **[Invertibility](invertibility.md)** — when innovations can be represented stably from observed values.
-5. **[Yule-Walker Equations](yule_walker_equations.md)** — moment equations connecting AR coefficients and autocovariances.
-6. **[ARIMA Models](arima_models.md)** — differencing plus ARMA structure for nonstationary series.
+1. **[Autoregressive Models](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/autoregressive_models.md)** — AR models and persistence through lagged observations.
+2. **[Moving Average Models](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/moving_average_models.md)** — MA models driven by present and past innovations.
+3. **[Backward Shift Operator](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/backward_shift_operator.md)** — compact polynomial notation for ARMA/ARIMA models.
+4. **[Invertibility](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/invertibility.md)** — when innovations can be represented stably from observed values.
+5. **[Yule-Walker Equations](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/yule_walker_equations.md)** — moment equations connecting AR coefficients and autocovariances.
+6. **[ARIMA Models](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/arima_models.md)** — differencing plus ARMA structure for nonstationary series.
 
 ## 4. Fitting and Diagnostics
 
-**[Time-Series Modeling](time_series_modeling.md)** organizes identification, estimation, information criteria, residual checks, and model comparison. A disciplined workflow is: understand the series, handle structural features, assess stationarity, propose parsimonious candidates, estimate with a method appropriate to the model, diagnose residuals, and compare candidates without choosing solely by in-sample fit.
+**[Time-Series Modeling](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/time_series_modeling.md)** organizes identification, estimation, information criteria, residual checks, and model comparison. A disciplined workflow is: understand the series, handle structural features, assess stationarity, propose parsimonious candidates, estimate with a method appropriate to the model, diagnose residuals, and compare candidates without choosing solely by in-sample fit.
 
 Use the same workflow for every model class:
 
@@ -107,23 +78,23 @@ Use the same workflow for every model class:
 
 ## 5. Forecasting and Evaluation
 
-1. **[Forecasting](forecasting.md)** — forecast construction, uncertainty, exponential smoothing, and forecast intervals.
-2. **[Forecast Evaluation and Backtesting](forecast_evaluation.md)** — temporal train/validation/test design, rolling-origin evaluation, baselines, MAE/RMSE/MASE, interval calibration, and leakage.
+1. **[Forecasting](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/forecasting.md)** — forecast construction, uncertainty, exponential smoothing, and forecast intervals.
+2. **[Forecast Evaluation and Backtesting](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/forecast_evaluation.md)** — temporal train/validation/test design, rolling-origin evaluation, baselines, MAE/RMSE/MASE, interval calibration, and leakage.
 
 Randomly shuffled train/test splits are usually inappropriate for forecasting because they can leak future information into model development. Preserve temporal order with holdout-from-the-end, expanding-window, or rolling-origin evaluation.
 
 ## 6. Extensions
 
-1. **[Dynamic Regression](dynamic_regression.md)** — external predictors with ARMA/ARIMA error structure and future-regressor availability.
-2. **[Regression with ARMA Errors](regression_with_arma_errors.md)** — a shorter focused treatment of serially correlated regression errors.
-3. **[Multivariate Time Series](multivariate_time_series.md)** — VAR, Granger predictability, cointegration, and VECM.
-4. **[State-Space Models and the Kalman Filter](state_space_models.md)** — latent-state models, filtering, smoothing, missing observations, and likelihood.
-5. **[Frequency-Domain Analysis](frequency_domain_analysis.md)** — periodograms, spectra, aliasing, leakage, and coherence.
-6. **[Financial Time-Series Models](financial_time_series_models.md)** — volatility-focused models for financial returns.
+1. **[Dynamic Regression](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/dynamic_regression.md)** — external predictors with ARMA/ARIMA error structure and future-regressor availability.
+2. **[Regression with ARMA Errors](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/regression_with_arma_errors.md)** — a shorter focused treatment of serially correlated regression errors.
+3. **[Multivariate Time Series](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/multivariate_time_series.md)** — VAR, Granger predictability, cointegration, and VECM.
+4. **[State-Space Models and the Kalman Filter](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/state_space_models.md)** — latent-state models, filtering, smoothing, missing observations, and likelihood.
+5. **[Frequency-Domain Analysis](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/frequency_domain_analysis.md)** — periodograms, spectra, aliasing, leakage, and coherence.
+6. **[Financial Time-Series Models](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/financial_time_series_models.md)** — volatility-focused models for financial returns.
 
 ## Practice
 
-The [time-series exercise path](../../exercises/time_series/README.md) follows the sections above:
+The [time-series exercise path](https://github.com/djeada/Statistics-Notes/tree/main/exercises/time_series) follows the sections above:
 
 1. foundations and stationarity;
 2. ACF/PACF and ARMA identification;
@@ -138,21 +109,21 @@ Each set links back to the relevant notes and to a small implementation where on
 
 ## Companion Implementations
 
-- [scripts/time_series/](../../scripts/time_series/) contains runnable examples from white noise through forecast backtesting, VAR/VECM, Kalman filtering, and periodograms.
-- [notebooks/time_series/](../../notebooks/time_series/) contains interactive notebooks for foundations, backtesting, dynamic regression, and advanced state-space/frequency-domain ideas.
-- The visualization scripts in [scripts/time_series/](../../scripts/time_series/) write deterministic teaching figures to [assets/time_series/](../../assets/time_series/) when the scientific Python dependencies are installed.
+- [scripts/time_series/](https://github.com/djeada/Statistics-Notes/tree/main/scripts/time_series) contains runnable examples from white noise through forecast backtesting, VAR/VECM, Kalman filtering, and periodograms.
+- [notebooks/time_series/](https://github.com/djeada/Statistics-Notes/tree/main/notebooks/time_series) contains interactive notebooks for foundations, backtesting, dynamic regression, and advanced state-space/frequency-domain ideas.
+- The visualization scripts in [scripts/time_series/](https://github.com/djeada/Statistics-Notes/tree/main/scripts/time_series) write deterministic teaching figures to [assets/time_series/](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series) when the scientific Python dependencies are installed.
 
 The expanded chapters use these topic companions:
 
 | Chapter family | Script | Figures |
 |---|---|---|
-| foundations and stationarity | [foundations_visualizations.py](../../scripts/time_series/foundations_visualizations.py) | [foundations](../../assets/time_series/foundations/) |
-| dependence and diagnostics | [dependence_visualizations.py](../../scripts/time_series/dependence_visualizations.py), [diagnostics_visualizations.py](../../scripts/time_series/diagnostics_visualizations.py) | [dependence](../../assets/time_series/dependence/), [diagnostics](../../assets/time_series/diagnostics/) |
-| ARIMA and seasonality | [arima_seasonality_visualizations.py](../../scripts/time_series/arima_seasonality_visualizations.py) | [arima_seasonality](../../assets/time_series/arima_seasonality/) |
-| forecasting and evaluation | [forecasting_evaluation_visualizations.py](../../scripts/time_series/forecasting_evaluation_visualizations.py) | [forecasting](../../assets/time_series/forecasting/) |
-| dynamic and multivariate models | [dynamic_multivariate_visualizations.py](../../scripts/time_series/dynamic_multivariate_visualizations.py) | [dynamic_multivariate](../../assets/time_series/dynamic_multivariate/) |
-| state space and frequency | [state_space_frequency_visualizations.py](../../scripts/time_series/state_space_frequency_visualizations.py) | [state_space_frequency](../../assets/time_series/state_space_frequency/) |
-| financial models | [financial_time_series_visualizations.py](../../scripts/time_series/financial_time_series_visualizations.py) | [financial](../../assets/time_series/financial/) |
+| foundations and stationarity | [foundations_visualizations.py](https://github.com/djeada/Statistics-Notes/blob/main/scripts/time_series/foundations_visualizations.py) | [foundations](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/foundations) |
+| dependence and diagnostics | [dependence_visualizations.py](https://github.com/djeada/Statistics-Notes/blob/main/scripts/time_series/dependence_visualizations.py), [diagnostics_visualizations.py](https://github.com/djeada/Statistics-Notes/blob/main/scripts/time_series/diagnostics_visualizations.py) | [dependence](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dependence), [diagnostics](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/diagnostics) |
+| ARIMA and seasonality | [arima_seasonality_visualizations.py](https://github.com/djeada/Statistics-Notes/blob/main/scripts/time_series/arima_seasonality_visualizations.py) | [arima_seasonality](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/arima_seasonality) |
+| forecasting and evaluation | [forecasting_evaluation_visualizations.py](https://github.com/djeada/Statistics-Notes/blob/main/scripts/time_series/forecasting_evaluation_visualizations.py) | [forecasting](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/forecasting) |
+| dynamic and multivariate models | [dynamic_multivariate_visualizations.py](https://github.com/djeada/Statistics-Notes/blob/main/scripts/time_series/dynamic_multivariate_visualizations.py) | [dynamic_multivariate](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate) |
+| state space and frequency | [state_space_frequency_visualizations.py](https://github.com/djeada/Statistics-Notes/blob/main/scripts/time_series/state_space_frequency_visualizations.py) | [state_space_frequency](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/state_space_frequency) |
+| financial models | [financial_time_series_visualizations.py](https://github.com/djeada/Statistics-Notes/blob/main/scripts/time_series/financial_time_series_visualizations.py) | [financial](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/financial) |
 
 ## Model Selection Map
 
@@ -174,3 +145,19 @@ Keep three uses of “moving average” distinct:
 - a **rolling mean / moving-average smoother** is a descriptive smoothing operation;
 - an **MA(q) model** is a stochastic model driven by current and lagged innovations;
 - **exponential smoothing** is a forecasting family with recursively updated state estimates.
+
+## Formula reference
+
+| Topic | General formula | Notes / common special case |
+|---|---|---|
+| Mean | $\mu_t=E[X_t]$ | Weak stationarity requires $\mu_t=\mu$ for all $t$. |
+| Autocovariance | $\gamma(t,s)=\mathrm{Cov}(X_t,X_s)$ | For a weakly stationary process, $\gamma(t,s)=\gamma(t-s)$. |
+| Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | $\rho(0)=1$ and $\rho(-h)=\rho(h)$. |
+| Backshift | $B^kX_t=X_{t-k}$ | $\nabla X_t=(1-B)X_t$ and $\nabla_sX_t=(1-B^s)X_t$. |
+| AR($p$) | $X_t=c+\sum_{i=1}^{p}\phi_iX_{t-i}+\varepsilon_t$ | AR(1): $X_t=c+\phi X_{t-1}+\varepsilon_t$. |
+| MA($q$) | $X_t=\mu+\varepsilon_t+\sum_{j=1}^{q}\theta_j\varepsilon_{t-j}$ | MA(1): $X_t=\mu+\varepsilon_t+\theta\varepsilon_{t-1}$. |
+| ARMA($p,q$) | $\phi(B)(X_t-\mu)=\theta(B)\varepsilon_t$ | AR and MA are obtained by setting $q=0$ or $p=0$. |
+| ARIMA($p,d,q$) | $\phi(B)(1-B)^dX_t=c+\theta(B)\varepsilon_t$ | Random walk: ARIMA$(0,1,0)$; ARMA: ARIMA$(p,0,q)$. |
+| SARIMA | $\Phi(B^s)\phi(B)(1-B^s)^D(1-B)^dX_t=\Theta(B^s)\theta(B)\varepsilon_t$ | Seasonal period is $s$; setting $P=D=Q=0$ gives non-seasonal ARIMA. |
+| Forecast error | $e_{t+h\mid t}=X_{t+h}-\hat X_{t+h\mid t}$ | MSE $=n^{-1}\sum e_t^2$; RMSE $=\sqrt{\mathrm{MSE}}$. |
+| State space | $\alpha_t=T_t\alpha_{t-1}+R_t\eta_t$, $\;X_t=Z_t\alpha_t+\varepsilon_t$ | Kalman filtering recursively updates the latent state. |

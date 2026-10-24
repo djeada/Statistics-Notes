@@ -1,31 +1,10 @@
 # Backward Shift Operator
 
-[Time series index](README.md)
+The symbol $B$ means “take the previous observation.” It acts on a sequence: $BX_t=X_{t-1}$, and applying it twice gives $B^2X_t=X_{t-2}$. It is useful because a long equation involving many lags can then be written as a polynomial acting on the whole sequence.
 
-The backward shift operator is a compact notation for referring to earlier observations in a time series. Instead of writing each lag separately, it lets lagged values, differences, and model equations be expressed as polynomials in a single operator.
+For example, $(1-B)X_t$ means the current observation minus the previous one. The 1 is the identity operator, which leaves the observation unchanged. Expanding the expression always returns an ordinary calculation with time-indexed values; there is no new source of randomness in the symbol $B$.
 
-This notation matters because the algebra of those polynomials mirrors the structure of AR, MA, ARIMA, and seasonal models. Expanding an operator always returns to ordinary lagged observations, while factoring and combining operators make stability, differencing, and model structure easier to see.
-
-**Reading guide.** Expand each operator expression into ordinary lagged observations before interpreting the model. The random-walk, MA, and AR examples show the same algebra applied to different inputs. The final calculations combine ordinary and seasonal differences, where writing out every selected observation is a useful check on signs, time alignment, and the number of initial observations lost.
-
-**Related reading:** [ARIMA and SARIMA](arima_models.md).
-
-## Formula reference
-
-| Operation / model | Formula | Interpretation / special case |
-|---|---|---|
-| One-period shift | $BX_t=X_{t-1}$ | $B$ moves the index back by one observation. |
-| $k$-period shift | $B^kX_t=X_{t-k}$ | Repeated application of the lag operator. |
-| First difference | $\nabla X_t=(1-B)X_t=X_t-X_{t-1}$ | Converts levels to one-period changes; removes a unit-root accumulation when present. |
-| $d$th difference | $\nabla^dX_t=(1-B)^dX_t$ | ARIMA uses this with integration order $d$. |
-| Seasonal difference | $\nabla_sX_t=(1-B^s)X_t=X_t-X_{t-s}$ | $s$ is the seasonal period. |
-| Combined differences | $(1-B)^d(1-B^s)^DX_t$ | Used in SARIMA with ordinary order $d$ and seasonal order $D$. |
-| AR polynomial | $\phi(B)=1-\phi_1B-\cdots-\phi_pB^p$ | AR($p$): $\phi(B)X_t=\varepsilon_t$. |
-| MA polynomial | $\theta(B)=1+\theta_1B+\cdots+\theta_qB^q$ | MA($q$): $X_t=\theta(B)\varepsilon_t$. |
-| ARMA | $\phi(B)X_t=\theta(B)\varepsilon_t$ | AR($p$) if $q=0$; MA($q$) if $p=0$. |
-| ARIMA | $\phi(B)(1-B)^dX_t=c+\theta(B)\varepsilon_t$ | ARMA is the special case $d=0$. |
-| SARIMA | $\Phi(B^s)\phi(B)(1-B^s)^D(1-B)^dX_t=\Theta(B^s)\theta(B)\varepsilon_t$ | Adds seasonal AR, differencing, and MA polynomials. |
-| Stable inverse example | $(1-\phi B)^{-1}=\sum_{j=0}^{\infty}\phi^jB^j$ | Valid when $\lvert\phi\rvert<1$. |
+The same algebra connects AR dependence, MA shocks, and differencing. Moving AR lags to the left produces an AR polynomial, while collecting shock lags on the right produces an MA polynomial. Multiplying difference operators specifies several comparisons at once. Factoring a polynomial can reveal a unit root or a seasonal factor that is much harder to recognize in the expanded equation.
 
 ## Worked calculation: differencing with the lag operator
 
@@ -47,9 +26,9 @@ $$
 (1-B)^2y_5=y_5-2y_4+y_3=15-24+13=4.
 $$
 
-The notation is compact, but the calculation is still ordinary subtraction. It becomes especially useful when ordinary and seasonal differences are combined in ARIMA models.
+The first difference is 3 because the level rises from 12 to 15. The second difference is 4 because that rise of 3 follows a fall of 1: the change in the changes is $3-(-1)$. Applying $1-B$ twice therefore does not mean subtracting the observation two periods ago. It gives the coefficients $1,-2,1$, as the expansion shows.
 
-![Backshift and first differences](../../assets/time_series/student/07_backward_shift_difference.png)
+![Backshift and first differences](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/07_backward_shift_difference.png)
 
 ## Definition and repeated shifts
 
@@ -73,7 +52,7 @@ $$
 B^kX_t=X_{t-k}.
 $$
 
-This simple rule lets lagged terms be collected into polynomials, making model equations easier to manipulate and interpret.
+The operator acts on the sequence immediately to its right. In $B^2X_t$ it selects an observed value, while in $B^2Z_t$ it selects a shock. The multiplication rule $B^jB^k=B^{j+k}$ follows from performing one shift after another. Keeping the input sequence explicit avoids confusing an AR lag of an observation with an MA lag of an innovation.
 
 ## Random Walk
 
@@ -107,7 +86,7 @@ $$
 \phi(B)X_t=Z_t.
 $$
 
-Here, $1-B$ is also the first-difference operator: applying it to $X_t$ converts the random-walk level into its one-period change.
+The factor $1-B$ removes the accumulation that defines the random walk. It is called the first-difference operator because it changes the target from a level to a one-period increment. Its polynomial zero is 1, which explains the expression **unit root**. Unlike a stable causal AR polynomial, this factor cannot be inverted into a past-based filter with geometrically decaying coefficients.
 
 ## Moving Average (MA) Process
 
@@ -175,7 +154,7 @@ $$
 \phi(B)X_t=Z_t.
 $$
 
-This is the standard operator form of an AR model: the polynomial $\phi(B)$ collects the dependence on past values into a single expression.
+The minus signs result from moving $0.2X_{t-1}$ and $0.3X_{t-2}$ from the right side to the left. The constant coefficient remains 1 because the current observation has coefficient 1. This bookkeeping matters when constructing software input: a model specified by AR coefficients $(0.2,0.3)$ can require the polynomial array $(1,-0.2,-0.3)$ rather than the coefficients as reported in the fitted equation.
 
 ## Moving Average (MA) Process with a Constant Mean
 
@@ -209,7 +188,7 @@ $$
 X_t-\mu=\beta(B)Z_t.
 $$
 
-In this stationary MA setting, $\mu$ is best interpreted as a constant mean term rather than a time trend. The operator polynomial $\beta(B)$ captures the effect of current and lagged shocks around that mean.
+The constant $\mu$ shifts the entire MA process by the same amount at every date. Since the shocks have mean zero, it is the process mean, not a trend slope. Subtracting it first produces a zero-mean equation to which the shock polynomial applies. In contrast, filtering a nonzero constant with an AR polynomial multiplies it by $\phi(1)$; this is why an AR intercept generally differs from the process mean.
 
 ## Autoregressive (AR) Process of Order $p$
 
@@ -245,7 +224,7 @@ $$
 
 This compact form is useful because algebra on the polynomial $\phi(B)$ corresponds directly to algebra on the model's lag structure.
 
-## Worked examples: expanding and checking operators
+## Combining operators without losing their interpretation
 
 The backward shift operator is defined by
 
@@ -293,9 +272,9 @@ $$
 (1-B)(1-B^{12})y_t=y_t-y_{t-1}-y_{t-12}+y_{t-13}.
 $$
 
-This four-term expression makes the two comparisons explicit and helps prevent indexing errors when implementing seasonal ARIMA models.
+The four terms compare a monthly change with the corresponding change one year earlier: $(y_t-y_{t-1})-(y_{t-12}-y_{t-13})$. The two operators commute for these constant-coefficient filters, so ordinary differencing followed by seasonal differencing gives the same interior values as the reverse order. Both calculations require observations through lag 13; the available sample must reflect that boundary requirement.
 
-![Backshift differences](../../assets/time_series/dependence/05_backshift_differences.png)
+![Backshift differences](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dependence/05_backshift_differences.png)
 
 The figure shows the same idea geometrically: each operator selects lagged observations, and differencing combines those shifted values with positive and negative weights.
 
@@ -317,4 +296,21 @@ The minus signs in the AR polynomial come from moving lagged observations to the
 
 ### Implementation check
 
-For a vector $y$, calculate the operator directly with array shifts and compare it with a library's differencing output. Check the first and last valid indices explicitly. In practice, many mistakes are off-by-one errors at the sample boundary rather than errors in the operator algebra itself.
+Check an implementation against a short sequence before fitting a model. Calculate one valid interior output by hand, write down its timestamp, and verify both its numerical value and its alignment with the software output. A first difference loses one starting observation; the combined monthly operator above needs 13 earlier observations. A correct set of numbers attached to the wrong dates is still an incorrect feature or forecast input.
+
+## Formula reference
+
+| Operation / model | Formula | Interpretation / special case |
+|---|---|---|
+| One-period shift | $BX_t=X_{t-1}$ | $B$ moves the index back by one observation. |
+| $k$-period shift | $B^kX_t=X_{t-k}$ | Repeated application of the lag operator. |
+| First difference | $\nabla X_t=(1-B)X_t=X_t-X_{t-1}$ | Converts levels to one-period changes; removes a unit-root accumulation when present. |
+| $d$th difference | $\nabla^dX_t=(1-B)^dX_t$ | ARIMA uses this with integration order $d$. |
+| Seasonal difference | $\nabla_sX_t=(1-B^s)X_t=X_t-X_{t-s}$ | $s$ is the seasonal period. |
+| Combined differences | $(1-B)^d(1-B^s)^DX_t$ | Used in SARIMA with ordinary order $d$ and seasonal order $D$. |
+| AR polynomial | $\phi(B)=1-\phi_1B-\cdots-\phi_pB^p$ | AR($p$): $\phi(B)X_t=\varepsilon_t$. |
+| MA polynomial | $\theta(B)=1+\theta_1B+\cdots+\theta_qB^q$ | MA($q$): $X_t=\theta(B)\varepsilon_t$. |
+| ARMA | $\phi(B)X_t=\theta(B)\varepsilon_t$ | AR($p$) if $q=0$; MA($q$) if $p=0$. |
+| ARIMA | $\phi(B)(1-B)^dX_t=c+\theta(B)\varepsilon_t$ | ARMA is the special case $d=0$. |
+| SARIMA | $\Phi(B^s)\phi(B)(1-B^s)^D(1-B)^dX_t=\Theta(B^s)\theta(B)\varepsilon_t$ | Adds seasonal AR, differencing, and MA polynomials. |
+| Stable inverse example | $(1-\phi B)^{-1}=\sum_{j=0}^{\infty}\phi^jB^j$ | Valid when $\lvert\phi\rvert<1$. |

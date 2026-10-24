@@ -1,31 +1,12 @@
 # Autocovariance Functions and Coefficients
 
-[Time series index](README.md)
+Take two observations from the same series, subtract the appropriate mean from each, and multiply the deviations. A positive product means that both observations are on the same side of their means; a negative product means that they are on opposite sides. **Autocovariance** is the expectation of this product for observations separated in time.
 
-Autocovariance measures how a time series varies jointly with lagged versions of itself. Lag 0 is the variance, while nonzero lags show the direction and scale of linear dependence between observations separated in time, expressed in the squared units of the original series.
+At lag 0, the two deviations are the same, so autocovariance reduces to variance. At a nonzero lag, it describes the direction and scale of linear association across that separation. It is a property of the joint process, rather than a regression coefficient or a causal effect.
 
-For a weakly stationary process, autocovariance depends only on the lag rather than the absolute time. Normalizing it by the variance produces the unit-free autocorrelation function, while sample estimates require an explicit denominator convention and become noisier as fewer observation pairs remain at larger lags.
+A general process needs a covariance indexed by both dates. Weak stationarity makes a substantial simplification: pairs separated by the same lag share the same population covariance, regardless of where they occur in the record. We can then estimate a lag function from repeated pairs along one path, provided the dependence conditions allow the sample averages to be informative.
 
-**Reading guide.** Start with covariance between two variables, then apply the same calculation to lagged pairs from one series. Keep population quantities and sample estimates separate, and record the sample denominator before comparing numerical results. The later AR(1) calculation shows how a model generates a complete lag pattern rather than just one covariance value.
-
-**Related reading:** [autocorrelation and partial autocorrelation](autocorrelation_function.md).
-
-## Formula reference
-
-| Quantity / model | General formula | Notes / special case |
-|---|---|---|
-| Covariance | $\mathrm{Cov}(X,Y)=E[(X-E[X])(Y-E[Y])]$ | Also $E[XY]-E[X]E[Y]$. |
-| General autocovariance | $\gamma(s,t)=\mathrm{Cov}(X_s,X_t)$ | May depend on both calendar times for a nonstationary process. |
-| Stationary autocovariance | $\gamma(h)=\mathrm{Cov}(X_t,X_{t-h})$ | Depends only on lag $h$ under weak stationarity. |
-| Variance | $\gamma(0)=\mathrm{Var}(X_t)$ | Lag 0 is the process variance. |
-| Symmetry | $\gamma(-h)=\gamma(h)$ | For a real-valued weakly stationary series. |
-| Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | Unit-free normalization of autocovariance. |
-| Sample autocovariance, biased convention | $\hat\gamma(h)=n^{-1}\sum_{t=1}^{n-h}(x_t-\bar x)(x_{t+h}-\bar x)$ | Uses denominator $n$ at every lag. |
-| Sample autocovariance, pair-count convention | $\tilde\gamma(h)=(n-h)^{-1}\sum_{t=1}^{n-h}(x_t-\bar x)(x_{t+h}-\bar x)$ | Another common finite-sample convention. |
-| AR(1) variance | $\gamma(0)=\sigma_\varepsilon^2/(1-\phi^2)$ | Requires $\lvert\phi\rvert<1$. |
-| AR(1) autocovariance | $\gamma(h)=\phi^{\lvert h\rvert}\gamma(0)$ | Geometric decay. |
-| MA($q$) autocovariance | $\gamma(h)=\sigma_\varepsilon^2\sum_{j=0}^{q-h}\theta_j\theta_{j+h}$ for $0\le h\le q$ | Take $\theta_0=1$; $\gamma(h)=0$ for $\lvert h\rvert>q$. |
-| Cross-covariance | $\gamma_{XY}(h)=\mathrm{Cov}(X_t,Y_{t-h})$ | Lag sign convention must be stated explicitly. |
+Autocovariance retains the measurement scale. Multiplying every observation by 10 multiplies each centered product by 100. Dividing by the lag-0 variance removes that scale and produces autocorrelation.
 
 ## Worked calculation: a lagged covariance
 
@@ -47,9 +28,9 @@ $$
 \hat\gamma(1)=\frac{1}{4}\{(-1.5)(-0.5)+(-0.5)(1.5)+(1.5)(0.5)\}=0.1875.
 $$
 
-Some software divides each lag-$h$ sum by the pair count $n-h$ instead (here $3$ at lag 1, giving $0.75/3=0.25$). Because different conventions produce different numerical values, state the denominator before comparing estimates. Autocovariance retains squared units, while autocorrelation divides by $\hat\gamma(0)$ and is therefore unit-free.
+The lag-1 numerator is 0.75. Dividing it by the full sample size 4 gives 0.1875; dividing by the three available pairs gives 0.25. These are two conventions applied to the same observations, not contradictory arithmetic. Record the convention before checking software output. In both cases the product has squared data units, and converting it to an autocorrelation requires using the corresponding lag-0 estimate consistently.
 
-![Autocovariance of a simulated AR(1)](../../assets/time_series/student/05_autocovariance_ar1.png)
+![Autocovariance of a simulated AR(1)](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/05_autocovariance_ar1.png)
 
 The figure shows the lag pattern of a simulated autoregressive series. Autocovariance describes how the series varies jointly with lagged versions of itself; its magnitude also reflects the variance scale of the observations.
 
@@ -66,7 +47,7 @@ A realization is a specific observed value of a random variable. Using the examp
 
 ## Covariance
 
-The covariance between two random variables $X$ and $Y$ measures how they vary together linearly. It is defined as
+Covariance averages the product of two centered random quantities. Centering is essential: it separates their joint fluctuations from their typical levels. Without it, a large positive mean in each variable could make $E(XY)$ large even when the fluctuations are independent. The definition below subtracts those means before forming the product:
 
 $$
 \text{Cov}(X,Y)=E\left[(X-\mu_X)(Y-\mu_Y)\right],
@@ -95,9 +76,9 @@ The sign of covariance describes the direction of a linear relationship:
 - If $\text{Cov}(X,Y)<0$, larger values of $X$ tend to occur with smaller values of $Y$.
 - If $\text{Cov}(X,Y)=0$, there is no linear covariance between $X$ and $Y$, although a nonlinear relationship may still exist.
 
-The following figure gives a geometric view of lagged covariance by showing how paired observations contribute positively or negatively depending on their positions relative to the mean.
+Read each lagged pair as a point relative to the two mean lines. Points in the upper-right and lower-left regions make positive contributions because the centered values share a sign. Points in the other two regions make negative contributions. Their average determines covariance. A curved arrangement can contain strong dependence while these signed products cancel, so zero covariance does not establish independence.
 
-![Autocovariance geometry](../../assets/time_series/dependence/01_autocovariance_geometry.png)
+![Autocovariance geometry](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dependence/01_autocovariance_geometry.png)
 
 ### Estimation of Covariance
 
@@ -113,7 +94,7 @@ where
 - $\bar y=\frac{1}{N}\sum_{t=1}^{N}y_t$ is the sample mean of $y$,
 - $N$ is the number of paired observations.
 
-This estimator concerns two variables observed in pairs. For a time series, the same idea is applied to values separated by a lag, which leads to autocovariance.
+For ordinary paired data, every row contains two measured variables. For lag-$k$ pairs from a time series, the rows are constructed by matching $x_t$ to $x_{t-k}$. Those rows overlap and need not be independent. That is why the familiar covariance formula motivates autocovariance but does not automatically supply its finite-sample bias or uncertainty formulas.
 
 ## Stochastic Processes
 
@@ -137,7 +118,7 @@ $$
 30,29,57,\dots
 $$
 
-The distinction matters because theoretical quantities such as covariance and autocovariance describe the stochastic process, while sample estimates are calculated from the observed realization.
+A theoretical covariance concerns repeated possible realizations of the process at selected dates. A sample covariance averages products formed from the observed path. Equating those two operations requires a justification: stable moments and enough weakening of dependence for the time average to represent the expectation. An observed coefficient is therefore an estimate with sampling variation, not a directly observed population property.
 
 ## Autocovariance Function
 
@@ -165,7 +146,7 @@ $$
 \gamma_k=\gamma(k)=\text{Cov}(X_t,X_{t+k})=E\left[(X_t-\mu)(X_{t+k}-\mu)\right].
 $$
 
-This lag-based form makes it possible to summarize dependence across time with one function. Positive values indicate that observations separated by $k$ periods tend to deviate from the mean in the same direction, while negative values indicate opposite deviations.
+For example, a positive lag-2 covariance means that deviations two periods apart have a positive average product. It does not say that every pair moves together or that the earlier value causes the later value. For a real-valued weakly stationary series, covariance symmetry also gives $\gamma(-k)=\gamma(k)$. Autocovariance summarizes separation, while a predictive model must specify the direction of information use.
 
 ### Autocovariance Coefficients
 
@@ -189,7 +170,7 @@ $$
 \bar x=\frac{1}{N}\sum_{t=1}^{N}x_t.
 $$
 
-The value $c_k$ estimates the population quantity $\gamma_k$. Because fewer observation pairs are available as $k$ increases, estimates at large lags are generally less stable.
+The summation uses only pairs whose two observations lie inside the record. At lag 1 there are $N-1$ such pairs; at lag $N-1$ there is just one. Large-lag estimates are therefore driven by very little direct information, even when the denominator convention continues to divide by $N$. A noisy isolated value far out in a correlogram should be interpreted with that shrinking pair count in mind.
 
 ### Assumption of Weak Stationarity
 
@@ -207,7 +188,7 @@ $$
 
 This estimate summarizes the direction and scale of linear dependence between observations separated by $k$ periods. To compare dependence across series with different units or variances, use autocorrelation instead.
 
-## Worked examples: units, lags, and finite samples
+## Scale, denominator conventions, and model-implied covariance
 
 The autocovariance at lag $h$ is
 
@@ -259,12 +240,29 @@ $$
 \gamma(0)=1.9608,\qquad \gamma(1)=1.3725,\qquad \gamma(2)=0.9608.
 $$
 
-The autocovariance therefore decays geometrically with lag, just like the ACF, but it retains the variance scale of the original series. The following figure illustrates that decay for a simulated AR(1) process.
+The covariance recursion follows because the new AR(1) shock is uncorrelated with the past observation. Multiplying $X_t=\phi X_{t-1}+\varepsilon_t$ by a centered earlier value leaves the earlier covariance multiplied by $\phi$. Iterating gives $\gamma(h)=\phi^{|h|}\gamma(0)$. The coefficient determines the rate and sign pattern of decay, while $\gamma(0)$ determines its scale. Rescaling the data changes the curve's height without changing that relative decay.
 
-![AR(1) autocovariance](../../assets/time_series/student/05_autocovariance_ar1.png)
+![AR(1) autocovariance](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/05_autocovariance_ar1.png)
 
 ### Cross-covariance caution
 
-For two series, the cross-covariance $\gamma_{XY}(h)$ depends on which series is shifted and on the sign convention used for the lag. A peak at positive $h$ therefore does not, by itself, establish that $X$ causes $Y$. Common trends, seasonality, delayed measurement, and release timing can all create apparent lead-lag patterns.
+Cross-covariance is generally asymmetric in the lag: exchanging the two series reverses the timing convention. State whether $\gamma_{XY}(h)$ means pairing $X_t$ with $Y_{t-h}$ or with $Y_{t+h}$. Then check when each value was observed or published. Common trends, common seasonality, and delayed releases can create a convincing peak without identifying a causal direction or providing information that would have been available in a live forecast.
 
-A runnable companion is the [autocovariance notebook](../../notebooks/time_series/autocovariance_function.ipynb).
+A runnable companion is the [autocovariance notebook](https://github.com/djeada/Statistics-Notes/blob/main/notebooks/time_series/autocovariance_function.ipynb).
+
+## Formula reference
+
+| Quantity / model | General formula | Notes / special case |
+|---|---|---|
+| Covariance | $\mathrm{Cov}(X,Y)=E[(X-E[X])(Y-E[Y])]$ | Also $E[XY]-E[X]E[Y]$. |
+| General autocovariance | $\gamma(s,t)=\mathrm{Cov}(X_s,X_t)$ | May depend on both calendar times for a nonstationary process. |
+| Stationary autocovariance | $\gamma(h)=\mathrm{Cov}(X_t,X_{t-h})$ | Depends only on lag $h$ under weak stationarity. |
+| Variance | $\gamma(0)=\mathrm{Var}(X_t)$ | Lag 0 is the process variance. |
+| Symmetry | $\gamma(-h)=\gamma(h)$ | For a real-valued weakly stationary series. |
+| Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | Unit-free normalization of autocovariance. |
+| Sample autocovariance, biased convention | $\hat\gamma(h)=n^{-1}\sum_{t=1}^{n-h}(x_t-\bar x)(x_{t+h}-\bar x)$ | Uses denominator $n$ at every lag. |
+| Sample autocovariance, pair-count convention | $\tilde\gamma(h)=(n-h)^{-1}\sum_{t=1}^{n-h}(x_t-\bar x)(x_{t+h}-\bar x)$ | Another common finite-sample convention. |
+| AR(1) variance | $\gamma(0)=\sigma_\varepsilon^2/(1-\phi^2)$ | Requires $\lvert\phi\rvert<1$. |
+| AR(1) autocovariance | $\gamma(h)=\phi^{\lvert h\rvert}\gamma(0)$ | Geometric decay. |
+| MA($q$) autocovariance | $\gamma(h)=\sigma_\varepsilon^2\sum_{j=0}^{q-h}\theta_j\theta_{j+h}$ for $0\le h\le q$ | Take $\theta_0=1$; $\gamma(h)=0$ for $\lvert h\rvert>q$. |
+| Cross-covariance | $\gamma_{XY}(h)=\mathrm{Cov}(X_t,Y_{t-h})$ | Lag sign convention must be stated explicitly. |

@@ -1,31 +1,10 @@
 # Random Walk Model
 
-[Time series index](README.md)
+A random walk says that the current level is the previous level plus a new increment. If today's shock raises the level by 2, tomorrow starts from that raised level. There is no mean-reverting term that gradually pulls the effect back toward a fixed baseline. Each shock therefore appears once in the changes and remains in all subsequent levels.
 
-A random walk models a level that changes by accumulating new shocks over time. Each shock appears once in the increments and remains in every later level. A realized path can therefore wander far from its starting point even when every one-step increment has expectation zero.
+This mechanism can create long apparent rises and falls even when the expected increment is zero. A visually persistent slope in one realization is not the same as a deterministic trend in the process mean. The cumulative equation and its variance make that distinction precise.
 
-This accumulation makes the level fundamentally non-stationary: uncertainty grows with the forecast horizon, while first differences recover the underlying increments. Random walks are therefore both a basic model of stochastic trends and an important benchmark for deciding whether a more elaborate forecasting model adds value.
-
-**Reading guide.** Follow a single path first, then distinguish its realized movement from the model mean and forecast variance. The derivations explain why shocks remain in the level; the Python example checks that first differencing recovers the simulated increments. The final worked examples use the same mechanism to construct forecasts and compare a random walk with nearby model classes.
-
-**Related reading:** [stationarity](stationarity.md).
-
-## Formula reference
-
-| Quantity / variant | General formula | Interpretation / special case |
-|---|---|---|
-| Random walk | $X_t=X_{t-1}+\varepsilon_t$ | Equivalent to ARIMA$(0,1,0)$. |
-| Cumulative form | $X_t=X_0+\sum_{j=1}^{t}\varepsilon_j$ | Every shock has a permanent effect on the level. |
-| First difference | $\Delta X_t=(1-B)X_t=\varepsilon_t$ | The increments are stationary white noise in the basic model. |
-| Mean, no drift | $E[X_t\mid X_0]=X_0$ | Individual paths still wander. |
-| Variance, no drift | $\mathrm{Var}(X_t\mid X_0)=t\sigma^2$ | Increasing variance makes the level nonstationary. |
-| Covariance | $\mathrm{Cov}(X_s,X_t\mid X_0)=\min(s,t)\sigma^2$ | For independent increments. |
-| Random walk with drift | $X_t=\delta+X_{t-1}+\varepsilon_t$ | ARIMA$(0,1,0)$ with drift under the usual parameterization. |
-| Drift cumulative form | $X_t=X_0+\delta t+\sum_{j=1}^{t}\varepsilon_j$ | $E[X_t\mid X_0]=X_0+\delta t$. |
-| $h$-step forecast | $\hat X_{T+h\mid T}=X_T+h\delta$ | Set $\delta=0$ for the zero-drift random walk. |
-| Forecast-error variance | $\mathrm{Var}(X_{T+h}-\hat X_{T+h\mid T}\mid\mathcal F_T)=h\sigma^2$ | Forecast uncertainty grows linearly in horizon. |
-| Gaussian forecast interval | $\hat X_{T+h\mid T}\pm z_{1-\alpha/2}\sigma\sqrt h$ | Requires Gaussian or approximate Gaussian innovations. |
-| Geometric random walk | $P_t=P_{t-1}e^{\mu+\varepsilon_t}$ | In logs: $\log P_t=\log P_{t-1}+\mu+\varepsilon_t$. |
+The model is useful in two ways. It is a simple description of a stochastic trend, and it supplies the naive forecast against which more complicated methods can be compared. Its level is nonstationary because uncertainty accumulates over time. Its first differences can nevertheless be stationary, because differencing reverses the cumulative construction and recovers the increments.
 
 ## Worked calculation: one path and one forecast
 
@@ -53,13 +32,13 @@ $$
 \mathrm{Var}(X_{3+h}\mid X_3)=h\sigma^2.
 $$
 
-![A simulated random walk](../../assets/time_series/intro_random_walk.png)
+![A simulated random walk](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/intro_random_walk.png)
 
 The plotted path can wander for long periods in one direction even though the model has no deterministic slope. That distinction between a realized path and the process mean is central to understanding random walks.
 
 ## Model definition and assumptions
 
-The **random walk** models a level whose next value equals its current value plus a new random shock. It is widely used as a benchmark because it is simple, persistent, and fundamentally different from a stationary mean-reverting process.
+The defining feature is the coefficient 1 on the previous level. A stationary AR(1) multiplies an earlier shock by successive powers of a coefficient with magnitude below 1, so its effect decays. Here the successive weights are all 1. The following equation therefore describes permanent shock effects, even though the new increment itself can be unpredictable and short-lived.
 
 For the zero-drift form,
 
@@ -73,7 +52,7 @@ where $\varepsilon_t$ has mean zero and variance $\sigma^2$. The moment calculat
 - $X_{t-1}$ is the previous level.
 - $\varepsilon_t$ is the new innovation arriving at time $t$.
 
-The next increment is unpredictable under the model, but the level is highly persistent because every past shock remains embedded in it.
+Under the conditional-mean assumption, the best squared-error forecast of the next increment is zero. That does not make the next level unpredictable in the same sense: it is centered on the latest observed level. Most of the level's information comes from its accumulated history; only the new increment remains unknown. This is why a flat naive forecast can be appropriate for a highly variable path.
 
 ## Evolution of a Random Walk Over Time
 
@@ -97,7 +76,7 @@ $$
 X_t=X_0+\sum_{i=1}^{t}\varepsilon_i.
 $$
 
-This cumulative representation explains both persistence and increasing uncertainty: shocks do not decay away from the level.
+The same shock remains in the formulas for $X_t$, $X_{t+1}$, and every later level. Comparing two paths that receive identical later shocks but differ by one shock today would leave a permanent gap between them. Comparing levels at nearby dates instead reveals substantial overlap in their accumulated shock histories, which explains their strong dependence.
 
 ## Mean and Variance of a Random Walk
 
@@ -111,7 +90,7 @@ $$
 E(X_t)=X_0.
 $$
 
-The expected level is constant in the zero-drift model, even though individual sample paths can wander far from $X_0$.
+Across repeated realizations starting at the same $X_0$, positive and negative mean-zero increments cancel in expectation. The average level therefore stays at $X_0$. Individual paths need not return there, and their spread around it increases. A constant mean is only one part of weak stationarity; the growing variance is enough to rule stationarity out.
 
 If the increments instead have nonzero mean $\delta$, it is clearer to write that mean explicitly as drift, as in the next section.
 
@@ -149,7 +128,7 @@ Thus,
 | $\mathrm{Var}(X_t\mid X_0)$ | $\sigma^2t$ | $\sigma^2t$ |
 | Mean path | flat | linear with slope $\delta$ |
 
-Both versions are non-stationary because their variance grows with $t$. The drift changes the expected path but does not change the accumulation of uncertainty.
+Drift changes the center of the possible paths from $X_0$ to $X_0+\delta t$. It does not alter the independent-shock variance $t\sigma^2$ when $\delta$ is fixed. Subtracting a known drift line therefore removes a deterministic mean but leaves the random-walk accumulation. The detrended level still has growing variance and must not be treated as a stationary error process.
 
 ## Simulation of a Random Walk in Python
 
@@ -173,7 +152,7 @@ plt.grid(True)
 plt.show()
 ```
 
-The array `Z` contains the increments and `np.cumsum()` accumulates them into the level series. Different random seeds produce very different paths even though every simulation follows the same probabilistic model.
+The simulation separates the two objects explicitly: `Z` stores the increments, while `X` stores the level after those increments have accumulated. Repeating the simulation changes the apparent path, not the mechanism. To study the variance statement experimentally, compare values at the same time index across many simulated paths; a rolling variance along one path is a different calculation.
 
 Here is an example realization:
 
@@ -196,7 +175,7 @@ An example sample ACF is shown below:
 
 ![Slowly decaying sample ACF of random-walk levels](https://github.com/user-attachments/assets/82260af5-9278-4e44-b527-554a5ef12aa5)
 
-The slow decay is a diagnostic warning that the level series is not behaving like a short-memory stationary process.
+The large sample autocorrelations arise because successive levels share nearly all their earlier increments. This is not a population stationary ACF whose value depends only on lag. For a fixed start, the level covariance is proportional to the smaller of the two time indices, so both dates matter. A familiar-looking correlogram does not justify applying stationary ARMA identification rules to the level.
 
 ## Removing the Trend with the Difference Operator
 
@@ -242,9 +221,9 @@ The first figure shows the stationary-looking increments; the second shows that 
 
 The contrast between the level and differenced correlograms summarizes the model. In levels, adjacent observations share almost the entire accumulated history, so sample autocorrelations are often high and decay slowly. After differencing, only the new innovations remain, and the persistent correlation pattern disappears under the white-noise assumption.
 
-This is why differencing is the natural transformation for a genuine random walk: it directly reverses the cumulative construction of the process rather than merely flattening the appearance of one realized path.
+First differencing is justified here by the model equation: subtracting the previous level cancels every earlier shock and leaves exactly the new increment. That is a stronger argument than flattening a plot. If a different mechanism produced the apparent trend, the same difference could alter useful signal or introduce unnecessary dependence. Establish which mechanism the transformation is meant to reverse.
 
-## Worked examples: paths, forecasts, and first differences
+## Reading a path and forecasting beyond its endpoint
 
 The random walk is the canonical example of a non-stationary level with stationary increments:
 
@@ -280,7 +259,7 @@ $$
 \mathrm{Var}(X_4\mid X_0)=4.
 $$
 
-The path can move down or up for several observations even when the model has no deterministic trend. One realization should not be interpreted as evidence for a stable slope.
+The four observed increments sum to 1, leaving a final level of 6. Their realized average is positive, but the example was generated under a zero-mean increment model. Estimating a long-run drift from such a short path would mistake a noisy sample average for strong evidence about a persistent mean change. More observations help, but breaks and changing regimes can still make a constant drift inappropriate.
 
 ### Forecasts
 
@@ -312,7 +291,7 @@ The displayed forecast treats the drift as fixed and known. If the drift is esti
 
 ### Why levels are misleading
 
-A random walk is not weakly stationary because its variance increases with time. Its sample ACF often remains large over many lags, and regressions between unrelated random walks can produce apparently strong relationships even when there is no meaningful connection.
+A levels regression can confuse shared persistence with a meaningful relationship. Two independent random walks may both spend long stretches above their starting levels, creating a large fitted association even though their new shocks are independent. Check whether a proposed relationship concerns one-period changes, a stationary deviation from a deterministic trend, or a cointegrating combination of levels; these imply different model specifications.
 
 Differencing removes the unit-root accumulation:
 
@@ -332,3 +311,20 @@ The differenced series is the innovation sequence itself. This does not mean eve
 ### Diagnostics
 
 Inspect the level plot, first differences, rolling variation, and sample ACF before and after differencing. Unit-root tests can provide supporting evidence, but their conclusions depend on deterministic terms, lag choices, sample length, and structural breaks. Report the transformation and model assumption rather than only a p-value.
+
+## Formula reference
+
+| Quantity / variant | General formula | Interpretation / special case |
+|---|---|---|
+| Random walk | $X_t=X_{t-1}+\varepsilon_t$ | Equivalent to ARIMA$(0,1,0)$. |
+| Cumulative form | $X_t=X_0+\sum_{j=1}^{t}\varepsilon_j$ | Every shock has a permanent effect on the level. |
+| First difference | $\Delta X_t=(1-B)X_t=\varepsilon_t$ | The increments are stationary white noise in the basic model. |
+| Mean, no drift | $E[X_t\mid X_0]=X_0$ | Individual paths still wander. |
+| Variance, no drift | $\mathrm{Var}(X_t\mid X_0)=t\sigma^2$ | Increasing variance makes the level nonstationary. |
+| Covariance | $\mathrm{Cov}(X_s,X_t\mid X_0)=\min(s,t)\sigma^2$ | For independent increments. |
+| Random walk with drift | $X_t=\delta+X_{t-1}+\varepsilon_t$ | ARIMA$(0,1,0)$ with drift under the usual parameterization. |
+| Drift cumulative form | $X_t=X_0+\delta t+\sum_{j=1}^{t}\varepsilon_j$ | $E[X_t\mid X_0]=X_0+\delta t$. |
+| $h$-step forecast | $\hat X_{T+h\mid T}=X_T+h\delta$ | Set $\delta=0$ for the zero-drift random walk. |
+| Forecast-error variance | $\mathrm{Var}(X_{T+h}-\hat X_{T+h\mid T}\mid\mathcal F_T)=h\sigma^2$ | Forecast uncertainty grows linearly in horizon. |
+| Gaussian forecast interval | $\hat X_{T+h\mid T}\pm z_{1-\alpha/2}\sigma\sqrt h$ | Requires Gaussian or approximate Gaussian innovations. |
+| Geometric random walk | $P_t=P_{t-1}e^{\mu+\varepsilon_t}$ | In logs: $\log P_t=\log P_{t-1}+\mu+\varepsilon_t$. |

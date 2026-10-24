@@ -1,40 +1,10 @@
 # Dynamic Regression
 
-[Time series index](README.md)
+Suppose electricity demand depends on temperature, but errors from a temperature-only regression stay positive for several days in a row. The predictor explains one source of movement; the residual runs suggest another. **Dynamic regression** represents both the predictor relationship and the remaining time-series dependence instead of asking either component to explain everything.
 
-Dynamic regression combines external predictors with time-series structure so that the conditional mean can respond to explanatory variables without assuming the remaining errors are independent. Lagged predictors can represent delayed effects, while ARMA or ARIMA errors capture serial dependence left after the regression relationship is specified.
+It can also allow delayed predictor effects. An advertising change today may affect several later periods, while yesterday's unexplained deviation can still help predict today's. Lagged predictors describe the first mechanism; a serial error model describes the second.
 
-For forecasting, the timing of the predictors is as important as their statistical relationship with the target. A predictor is operationally useful only when its future value is known, scheduled, or itself forecastable at the forecast origin, so alignment, information availability, and residual dynamics must be handled together.
-
-**Reading guide.** Keep three objects separate throughout: the predictor-driven regression component, the serial regression error, and the new innovation. Next distinguish predictors known in advance from predictors that require forecasts. The later worked examples connect lagged effects and error modeling to data alignment, predictor uncertainty, and the assumptions needed to interpret a coefficient or a predictive relationship.
-
-**Related reading:** [regression with ARMA errors](regression_with_arma_errors.md).
-
-**On this page**
-
-- [Formula reference](#formula-reference)
-- [Worked calculation: an external predictor and a lag](#worked-calculation-an-external-predictor-and-a-lag)
-- [Regression component, serial error, and innovation](#regression-component-serial-error-and-innovation)
-- [Lagged Predictors](#lagged-predictors)
-- [Future Predictor Availability](#future-predictor-availability)
-- [Worked examples: the mean, errors, and information set](#worked-examples-the-mean-errors-and-information-set)
-
-## Formula reference
-
-| Component / case | General formula | Notes / special case |
-|---|---|---|
-| Static regression mean | $y_t=\beta_0+\beta^\top x_t+n_t$ | $n_t$ may still be serially dependent. |
-| ARMA errors | $\phi(B)n_t=\theta(B)\varepsilon_t$ | Gives regression with ARMA errors. |
-| ARIMA errors | $\phi(B)(1-B)^dn_t=\theta(B)\varepsilon_t$ | Allows an integrated error process before differencing. |
-| Combined dynamic regression | $\phi(B)(1-B)^d[y_t-\beta_0-\beta^\top x_t]=\theta(B)\varepsilon_t$ | One common ARIMAX/regression-with-ARIMA-errors form. |
-| Distributed lag | $y_t=\beta_0+\sum_{j=0}^{r}\beta_j^{(x)}x_{t-j}+n_t$ | Captures delayed predictor effects. |
-| Cumulative lag effect | $\sum_{j=0}^{r}\beta_j^{(x)}$ | Interpretable as a total response only under an appropriate sustained-change scenario. |
-| Transfer-function form | $y_t=\beta_0+\frac{\omega(B)}{\delta(B)}B^b x_t+n_t$ | Generalizes finite distributed lags with delay $b$. |
-| One-step forecast | $\hat y_{t+1\mid t}=\hat\beta_0+\hat\beta^\top x_{t+1}+\hat n_{t+1\mid t}$ | Requires $x_{t+1}$ to be known or separately forecast. |
-| $h$-step forecast | $\hat y_{t+h\mid t}=\hat\beta_0+\hat\beta^\top x_{t+h}+\hat n_{t+h\mid t}$ | Predictor-path uncertainty should be included when future $x$ is forecast. |
-| Intervention pulse | $P_t=I(t=T_0)$ | Models a one-period event. |
-| Intervention step | $S_t=I(t\ge T_0)$ | Models a persistent level shift. |
-| AR(1) dynamic error | $n_t=\phi n_{t-1}+\varepsilon_t$ | Stationary when $\lvert\phi\rvert<1$. |
+A forecast additionally needs a source for future predictor values. Tomorrow's weekday is known now; tomorrow's weather is not. A statistically useful relationship can therefore be easy to estimate retrospectively but difficult to use operationally. Define when each predictor becomes available, whether it is revised, and how its future path will be obtained before interpreting the model's forecasting accuracy.
 
 ## Worked calculation: an external predictor and a lag
 
@@ -64,7 +34,7 @@ $$
 
 For forecasting, that calculation is valid only if the required predictor values would be available at the forecast origin. A realized future temperature, exchange rate, or policy variable may itself need to be forecast.
 
-![Dynamic regression with serially correlated errors](../../assets/time_series/student/16_dynamic_regression.png)
+![Dynamic regression with serially correlated errors](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/16_dynamic_regression.png)
 
 The figure separates two sources of structure: the regression mean follows an external predictor, while serial dependence remains in the errors around that mean. Dynamic regression models both pieces rather than forcing the predictor to explain all temporal dependence.
 
@@ -86,9 +56,9 @@ $$
 
 With exogenous predictors and suitable regularity conditions, serial correlation need not prevent consistent estimation of the regression coefficients by OLS. It does invalidate the usual independent-error covariance formula in general, and it leaves the predictable part of the serial error unused in forecasts. These conclusions require the exogeneity assumptions to be stated; autocorrelation does not excuse an endogenous predictor.
 
-![Dynamic regression errors](../../assets/time_series/dynamic_multivariate/01_dynamic_regression_errors.png)
+![Dynamic regression errors](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/01_dynamic_regression_errors.png)
 
-The residual plot shows why the error model matters. A regression can track the predictor-driven mean while still leaving runs of positive and negative residuals that an ARMA component can model.
+Consecutive positive regression errors mean that the predictor component is repeatedly below the observed series. An AR error can carry part of that departure into the next prediction. The final innovation is the difference after both the predictor contribution and the forecastable error contribution have been used. Check that innovation sequence for remaining correlation; the regression error itself is correlated by construction.
 
 ## Lagged Predictors
 
@@ -98,9 +68,9 @@ $$
 y_t=\beta_0+\beta_0^{(x)}x_t+\beta_1^{(x)}x_{t-1}+\cdots+\beta_r^{(x)}x_{t-r}+n_t.
 $$
 
-Use lagged predictors when the domain suggests a delayed response. Avoid adding many adjacent lags mechanically, because nearby predictor values are often strongly correlated and can make individual lag coefficients unstable.
+Choose predictor lags from a plausible response timetable and from the forecasting information set. Several adjacent lags of a persistent predictor often move together, so their separate coefficients can be difficult to estimate. A large positive coefficient at one lag and a large negative coefficient at the next may reflect this instability rather than a meaningful reversal. Examine the combined response and consider parsimonious lag restrictions or regularization when many delays are plausible.
 
-![Distributed lag](../../assets/time_series/dynamic_multivariate/02_distributed_lag.png)
+![Distributed lag](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/02_distributed_lag.png)
 
 The figure illustrates how one change in $x_t$ can influence the response across several later periods. The lag coefficients describe the shape and duration of that response.
 
@@ -108,19 +78,19 @@ The figure illustrates how one change in $x_t$ can influence the response across
 
 Future predictor values must be known or forecast separately. Calendar variables and scheduled promotions may be available in advance; future weather and macroeconomic quantities usually are not. Evaluating a model with realized future predictors that would not have been available creates information leakage.
 
-![Future predictor availability](../../assets/time_series/dynamic_multivariate/03_future_predictor_availability.png)
+![Future predictor availability](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/03_future_predictor_availability.png)
 
 The visual distinguishes predictors that are known at the forecast origin from those that must themselves be forecast. This distinction determines whether a reported forecast is operationally reproducible.
 
-The label **ARIMAX** is used inconsistently across software. Inspect the exact model equation, especially how differencing, intercepts, and exogenous variables are handled, rather than relying on the name alone.
+The name **ARIMAX** does not uniquely specify where the predictor enters. A regression whose residual follows ARIMA and an ARMAX equation with predictors inside an autoregressive response equation can give different coefficient interpretations and forecast recursions. Write the expanded equation, including differencing and intercepts. Then check the software's parameterization against that equation rather than assuming the label supplies the model.
 
 A useful predictor is not automatically causal. Temporal ordering can support forecasting, but it does not by itself identify the effect of an intervention.
 
 A practical workflow is to align timestamps, define what will be known at forecast time, fit the regression mean, inspect residual dependence, add dynamic error structure when justified, diagnose the combined model, and backtest the complete procedure.
 
-See [regression with ARMA errors](regression_with_arma_errors.md) and the companion [notebook](../../notebooks/time_series/dynamic_regression.ipynb).
+See [regression with ARMA errors](https://github.com/djeada/Statistics-Notes/blob/main/notes/time_series/regression_with_arma_errors.md) and the companion [notebook](https://github.com/djeada/Statistics-Notes/blob/main/notebooks/time_series/dynamic_regression.ipynb).
 
-## Worked examples: the mean, errors, and information set
+## Predictor effects, serial errors, and usable future information
 
 Dynamic regression is easiest to understand as three linked questions:
 
@@ -164,11 +134,11 @@ $$
 y_t=8.3.
 $$
 
-The regression mean and the observed value are different objects. The dynamic error model explains why nearby observations can depart from that mean in a related way.
+The value 8 is the predictor contribution; adding the serial error 0.3 gives the observation 8.3. Before observing it, the forecast may already include a predicted part of that 0.3 from earlier errors. The coefficient 1.5 therefore describes the regression component, while the complete one-step mean combines that component with the dynamic error forecast. This separation matters when interpreting fitted values and residual plots.
 
 ### Why OLS residual checks matter
 
-Suppose ordinary least squares produces residuals with lag-1 autocorrelation $0.75$. Even if the slope estimate is consistent under strict exogeneity, the usual independent-error standard error is not the correct measure of uncertainty, and the residual process contains information that can improve forecasts.
+A residual lag-1 correlation of 0.75 says that nearby regression errors have substantial linear association. Under suitable exogeneity, OLS can still estimate the predictor slope consistently, but the independent-error standard-error formula ignores that association. For forecasting, the pattern also suggests information left unused by the mean-only prediction. These are two consequences of the same residual structure: one concerns coefficient uncertainty, the other the forecast equation.
 
 Use three complementary residual views:
 
@@ -215,7 +185,7 @@ Create an explicit availability table before fitting:
 
 If a dynamic regression is evaluated with realized future weather, the result measures performance conditional on perfect future weather information. That can be useful for diagnosis, but it is not the same as an operational forecast.
 
-When $x_{t+h}$ must be forecast, uncertainty in the predictor forecast should also contribute to uncertainty in $y_{t+h}$. Plugging in a single future predictor path generally understates total forecast uncertainty.
+If the predictor must itself be forecast, the response forecast is uncertain both because of future response shocks and because of the unknown predictor path. A plug-in calculation conditions on one assumed path and usually omits the second source. One way to represent it is to generate plausible future predictor paths, produce response forecasts conditional on each path, and combine the resulting distributions under explicitly stated assumptions.
 
 ### Transformations and alignment
 
@@ -227,41 +197,41 @@ Before fitting:
 4. verify that transformations preserve the intended information timing;
 5. document missing-value treatment.
 
-A one-period shift can turn a valid lagged predictor into a leaked future value. A small timestamp table is often the safest way to verify the convention.
+Verify timing with a few explicit rows. For a forecast issued after date $t$, list the target $y_{t+h}$ and the actual publication dates of every predictor value used. A predictor labeled with month $t$ may have been published in month $t+1$, and revised historical data may differ from the vintage available at the origin. Row labels alone do not establish availability.
 
 ### Estimation choices
 
 For a mean equation with serially correlated errors, common approaches include maximum likelihood for regression with ARIMA errors, generalized least squares under a specified covariance model, two-step regression followed by residual modeling, and state-space estimation when missing values or time-varying latent effects matter.
 
-The two-step residual approach is useful for teaching and initialization, but it need not produce the same estimates or uncertainty as joint maximum likelihood. Check how the software handles intercepts, differencing, missing observations, and exogenous variables.
+A two-step approach first estimates a regression while treating the errors one way, then models residuals that depend on those estimates. Joint estimation can revise the regression coefficients as it learns the error covariance, so the resulting parameters and uncertainty need not agree. Two-step fitting remains useful for exploration and initialization, but report it as that procedure rather than as an automatic substitute for joint likelihood or GLS.
 
 ### Interpretation and causality
 
-A regression coefficient describes a conditional association within the specified model. It is not automatically causal. Confounding, reverse feedback, common trends, omitted variables, measurement timing, and interventions can all change the interpretation.
+A coefficient describes how the modeled regression component changes when a predictor changes with the other included terms held fixed. It becomes a causal intervention effect only with additional identification assumptions. Common trends, feedback, omitted drivers, and measurement timing can all create a useful forecast association without supporting that intervention interpretation. Specify the predictive or causal objective before giving the coefficient a substantive meaning.
 
 Granger predictability asks whether past values of one series improve prediction of another after conditioning on the included information. It is a predictive concept, not a guarantee that intervening on the predictor would change the target.
 
-![Granger predictability](../../assets/time_series/dynamic_multivariate/05_granger_predictability.png)
+![Granger predictability](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/05_granger_predictability.png)
 
 The figure illustrates the predictive question: does adding the past of one series improve forecasts beyond the target's own history and other included variables?
 
 When several variables respond to one another, a joint multivariate model can make that feedback explicit. A single-equation forecast must still justify how the predictor path is obtained and how its relationship with the error process is handled.
 
-![VAR feedback](../../assets/time_series/dynamic_multivariate/04_var_feedback.png)
+![VAR feedback](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/04_var_feedback.png)
 
 The VAR figure shows reciprocal lagged dependence, where each series can respond to the history of the others. This is different from treating one predictor as externally determined.
 
 Related multivariate models also handle shared stochastic trends and dynamic responses to system-wide shocks.
 
-![Cointegrating spread](../../assets/time_series/dynamic_multivariate/06_cointegrating_spread.png)
+![Cointegrating spread](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/06_cointegrating_spread.png)
 
 A cointegrating spread can remain stable even when the component series are individually non-stationary.
 
-![VECM adjustment](../../assets/time_series/dynamic_multivariate/07_vecm_adjustment.png)
+![VECM adjustment](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/07_vecm_adjustment.png)
 
 The VECM figure shows how deviations from a long-run equilibrium can feed into subsequent changes.
 
-![Impulse response](../../assets/time_series/dynamic_multivariate/08_impulse_response.png)
+![Impulse response](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dynamic_multivariate/08_impulse_response.png)
 
 An impulse-response plot traces the model-implied effect of a specified system shock over future periods. Its interpretation depends on the multivariate identification assumptions, not only on temporal ordering.
 
@@ -277,3 +247,20 @@ An impulse-response plot traces the model-implied effect of a specified system s
 8. Recheck residuals and parameter stability.
 9. Backtest the entire predictor-plus-target procedure.
 10. Report coefficient interpretation separately from forecasting performance.
+
+## Formula reference
+
+| Component / case | General formula | Notes / special case |
+|---|---|---|
+| Static regression mean | $y_t=\beta_0+\beta^\top x_t+n_t$ | $n_t$ may still be serially dependent. |
+| ARMA errors | $\phi(B)n_t=\theta(B)\varepsilon_t$ | Gives regression with ARMA errors. |
+| ARIMA errors | $\phi(B)(1-B)^dn_t=\theta(B)\varepsilon_t$ | Allows an integrated error process before differencing. |
+| Combined dynamic regression | $\phi(B)(1-B)^d[y_t-\beta_0-\beta^\top x_t]=\theta(B)\varepsilon_t$ | One common ARIMAX/regression-with-ARIMA-errors form. |
+| Distributed lag | $y_t=\beta_0+\sum_{j=0}^{r}\beta_j^{(x)}x_{t-j}+n_t$ | Captures delayed predictor effects. |
+| Cumulative lag effect | $\sum_{j=0}^{r}\beta_j^{(x)}$ | Interpretable as a total response only under an appropriate sustained-change scenario. |
+| Transfer-function form | $y_t=\beta_0+\frac{\omega(B)}{\delta(B)}B^b x_t+n_t$ | Generalizes finite distributed lags with delay $b$. |
+| One-step forecast | $\hat y_{t+1\mid t}=\hat\beta_0+\hat\beta^\top x_{t+1}+\hat n_{t+1\mid t}$ | Requires $x_{t+1}$ to be known or separately forecast. |
+| $h$-step forecast | $\hat y_{t+h\mid t}=\hat\beta_0+\hat\beta^\top x_{t+h}+\hat n_{t+h\mid t}$ | Predictor-path uncertainty should be included when future $x$ is forecast. |
+| Intervention pulse | $P_t=I(t=T_0)$ | Models a one-period event. |
+| Intervention step | $S_t=I(t\ge T_0)$ | Models a persistent level shift. |
+| AR(1) dynamic error | $n_t=\phi n_{t-1}+\varepsilon_t$ | Stationary when $\lvert\phi\rvert<1$. |

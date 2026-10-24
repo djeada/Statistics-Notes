@@ -1,57 +1,10 @@
 # Time Series Analysis
 
-[Time series index](README.md)
+A time series records observations in an order that matters. A week of unusually high demand followed by a week of low demand tells us something different from the same values alternating each day. An unordered sample preserves the values but loses that pattern, even though the pattern may determine tomorrow's demand and the uncertainty around it.
 
-A time series is an ordered set of observations together with an information structure: timestamps, sampling rules, and sequence position determine what can depend on what and what information is available for prediction. Treating the same values as an unordered sample would discard much of the structure that time-series methods are designed to model.
+The observations also need a time interpretation. A daily total, a month-end balance, and an hourly temperature reading describe different quantities. Their timestamps identify when they were measured, while publication times determine when they could actually have been used. A useful analysis starts by defining those quantities and dates before choosing a model.
 
-A useful analysis starts by identifying trend, seasonality, breaks, changing variance, lag dependence, and the forecast information set before choosing a model. Transformations and dynamic models then represent specific mechanisms, while evaluation must preserve chronology so that future information is never used to explain the past.
-
-**Reading guide.** Use the diagnostic gallery to learn what to look for in a time plot, then connect each feature to a modeling decision. The sales example illustrates smoothing; the later worked examples add the information and timing requirements needed for forecasting. Read the workflow as a sequence of decisions, with the target and available information specified before any model is fitted.
-
-**Related reading:** [stochastic processes and white noise](stochastic_processes_and_white_noise.md).
-
-**On this page**
-
-- [Formula reference](#formula-reference)
-- [Worked decomposition: identifying the pieces](#worked-decomposition-identifying-the-pieces)
-- [Observations and their index](#observations-and-their-index)
-- [Ordered Index, Not Just Time](#ordered-index-not-just-time)
-- [First Look: Plotting the Series](#first-look-plotting-the-series)
-- [Goals of Time Series Analysis](#goals-of-time-series-analysis)
-- [Modeling Mindset](#modeling-mindset)
-- [Why temporal structure changes the model](#why-temporal-structure-changes-the-model)
-- [Diagnostic Gallery (Synthetic Examples)](#diagnostic-gallery-synthetic-examples)
-- [Components of a Time Series](#components-of-a-time-series)
-- [Time Series Analysis Techniques](#time-series-analysis-techniques)
-- [A Simple Modeling Workflow](#a-simple-modeling-workflow)
-- [Applications of Time Series Analysis](#applications-of-time-series-analysis)
-- [Example: monthly sales and smoothing](#example-monthly-sales-and-smoothing)
-- [Worked examples: observations, information, and workflow](#worked-examples-observations-information-and-workflow)
-
-## Formula reference
-
-| Topic | General formula | Interpretation / special case |
-|---|---|---|
-| Additive decomposition | $Y_t=T_t+S_t+R_t$ | Trend + seasonal + remainder. |
-| Multiplicative decomposition | $Y_t=T_tS_tR_t$ | Useful when seasonal/remainder scale grows with level. |
-| Mean function | $\mu_t=E[Y_t]$ | Weak stationarity requires $\mu_t=\mu$. |
-| Autocovariance | $\gamma(t,s)=\mathrm{Cov}(Y_t,Y_s)$ | Under weak stationarity, $\gamma(t,s)=\gamma(t-s)$. |
-| Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | Unit-free lag dependence. |
-| Backshift | $B^kY_t=Y_{t-k}$ | Compact lag notation. |
-| First difference | $\Delta Y_t=(1-B)Y_t=Y_t-Y_{t-1}$ | Models one-period changes. |
-| Seasonal difference | $\Delta_sY_t=(1-B^s)Y_t=Y_t-Y_{t-s}$ | Compares the same seasonal position across cycles. |
-| Trailing moving average | $\tilde Y_t=w^{-1}\sum_{j=0}^{w-1}Y_{t-j}$ | Descriptive past-only smoother. |
-| Simple exponential smoothing | $\ell_t=\alpha Y_t+(1-\alpha)\ell_{t-1}$ | Recursive level update; forecast is commonly $\ell_t$. |
-| White noise | $E\varepsilon_t=0$, $\mathrm{Var}(\varepsilon_t)=\sigma^2$, $\gamma_\varepsilon(h)=0$ for $h\ne0$ | Baseline uncorrelated shock process. |
-| Random walk | $Y_t=Y_{t-1}+\varepsilon_t$ | Nonstationary level; $\Delta Y_t=\varepsilon_t$. |
-| AR($p$) | $Y_t=c+\sum_{i=1}^{p}\phi_iY_{t-i}+\varepsilon_t$ | Dependence on observed lagged values. |
-| MA($q$) | $Y_t=\mu+\varepsilon_t+\sum_{j=1}^{q}\theta_j\varepsilon_{t-j}$ | Dependence on current and lagged innovations. |
-| ARMA($p,q$) | $\phi(B)(Y_t-\mu)=\theta(B)\varepsilon_t$ | Stationary short-memory linear model. |
-| ARIMA($p,d,q$) | $\phi(B)(1-B)^dY_t=c+\theta(B)\varepsilon_t$ | Adds differencing for integrated behavior. |
-| SARIMA | $\Phi(B^s)\phi(B)(1-B^s)^D(1-B)^dY_t=\Theta(B^s)\theta(B)\varepsilon_t$ | Adds seasonal AR, MA, and differencing. |
-| Forecast | $\hat Y_{t+h\mid t}=E(Y_{t+h}\mid\mathcal F_t)$ | Conditional mean under squared-error loss. |
-| Forecast error | $e_{t,h}=Y_{t+h}-\hat Y_{t+h\mid t}$ | Must be evaluated using information available at origin $t$. |
-| Nyquist frequency | $f_N=f_s/2$ | Highest uniquely distinguishable frequency under regular sampling. |
+Time-series methods connect three tasks. **Description** identifies changing levels, repeating patterns, unusual events, and dependence. **Modeling** proposes a mechanism for those features, such as a trend plus serially correlated errors. **Forecasting** uses the information available at a particular date to predict later observations. A procedure can be useful for one task and unsuitable for another: a centered smoother can describe history well while using observations unavailable for a real-time forecast.
 
 ## Worked decomposition: identifying the pieces
 
@@ -77,9 +30,9 @@ $$
 
 so the deterministic part is $100+0.5(3)+10=111.5$.
 
-The same trend can therefore produce very different observations at different seasonal positions. This example separates three questions: is the level changing, is a pattern repeating at a known period, and how large is the unpredictable remainder? Those questions determine whether trend modeling, seasonal adjustment or differencing, and a stochastic dependence model are appropriate.
+Between months 3 and 6, the trend component rises from 101.5 to 103, yet the deterministic total falls from 111.5 to 103 because the seasonal contribution falls by 10. A decline in observed sales would therefore not, by itself, establish a declining trend. Decomposition separates changes in the underlying level from changes due to seasonal position and from the unpredictable remainder.
 
-![Series components](../../assets/time_series/foundations/03_series_components.png)
+![Series components](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/foundations/03_series_components.png)
 
 The figure shows these components together. Trend describes slow level movement, seasonality describes regular within-cycle variation, and the remainder captures variation not explained by the chosen decomposition.
 
@@ -103,55 +56,55 @@ The index only needs a meaningful order and direction. Besides clock time, examp
 
 A time plot is one of the most informative first diagnostics. It can reveal trend, repeating seasonality, cycles, changing variance, outliers, missing periods, and structural breaks.
 
-The plot should be read together with a description of what each observation represents. A daily total, a monthly average, and an instantaneous measurement have different meanings even if they share the same timestamps.
+Ask what each plotted point represents. A daily total aggregates all activity during the day; an end-of-day reading records a state at one instant. A missing date can mean an unobserved value, a closed business, or genuinely zero activity. Treating those meanings as interchangeable changes the modeled series. Record the sampling interval, aggregation rule, units, and missing-value meaning alongside the time plot.
 
 The following synthetic examples isolate common patterns.
 
-![synthetic nonlinear trend](../../assets/time_series/intro_nonlinear_trend.png)
+![synthetic nonlinear trend](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/intro_nonlinear_trend.png)
 
 A smooth nonlinear rise suggests that a constant-level stationary model would be inappropriate without a trend component or transformation.
 
-![synthetic seasonal heteroskedastic series](../../assets/time_series/intro_seasonal_heteroskedastic.png)
+![synthetic seasonal heteroskedastic series](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/intro_seasonal_heteroskedastic.png)
 
 Here the seasonal pattern repeats while its amplitude grows. The increasing spread suggests considering a log or other variance-stabilizing transformation before modeling the seasonal structure.
 
-![synthetic structural break](../../assets/time_series/intro_structural_break.png)
+![synthetic structural break](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/intro_structural_break.png)
 
-A structural break changes the data-generating mechanism. Fitting one stable parameter set across both regimes can produce misleading averages.
+A level shift can make a single global mean fall between two regimes without representing either one well. A model fitted across the break may then leave long runs of same-signed residuals on each side. Investigate whether the shift reflects a measurement change, a known intervention, or a change in the underlying process; the appropriate response can be a revised data definition, a predictor, or a model that allows parameters to change.
 
-![synthetic seasonal structural break](../../assets/time_series/intro_seasonal_structural_break.png)
+![synthetic seasonal structural break](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/intro_seasonal_structural_break.png)
 
 This example shows that both the level and seasonal amplitude can change after a break, so simply estimating one seasonal index for the full sample may be inadequate.
 
-![synthetic periodic but nonseasonal signal](../../assets/time_series/intro_periodic_nonseasonal.png)
+![synthetic periodic but nonseasonal signal](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/intro_periodic_nonseasonal.png)
 
 A series can oscillate without having calendar seasonality. Seasonality refers to a fixed repeating period tied to the sampling structure; other periodic or cyclic behavior may have a different mechanism.
 
-![synthetic negative dependence series](../../assets/time_series/intro_negative_dependence.png)
+![synthetic negative dependence series](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/intro_negative_dependence.png)
 
 Negative short-lag dependence tends to produce alternation around the mean.
 
-![synthetic positive dependence series](../../assets/time_series/intro_positive_dependence.png)
+![synthetic positive dependence series](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/intro_positive_dependence.png)
 
 Positive short-lag dependence tends to produce runs of observations on the same side of the mean.
 
-![synthetic white noise](../../assets/time_series/intro_white_noise.png)
+![synthetic white noise](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/intro_white_noise.png)
 
 White noise has a stable mean and variance with no linear autocorrelation at nonzero lags. A finite realization can still show apparent short runs by chance.
 
-![synthetic random walk](../../assets/time_series/intro_random_walk.png)
+![synthetic random walk](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/intro_random_walk.png)
 
 A random walk accumulates shocks, so its level wanders and its variance grows with time. The visual contrast with white noise is a first illustration of stationary versus non-stationary behavior.
 
 ## Goals of Time Series Analysis
 
-Time-series analysis can be used to describe recurring structure, estimate dynamic relationships, detect changes, explain mechanisms, and forecast future values. The appropriate method depends on the goal: a descriptive smoother, a causal analysis, and an operational forecast may use the same dataset but require different assumptions.
+Choose methods by the question. To estimate a historical trend, later observations may legitimately help smooth an earlier level. To issue tomorrow's forecast, those observations do not yet exist. To estimate the effect of an intervention, predictive association alone is insufficient: the analysis needs assumptions about confounding and the intervention mechanism. Description, prediction, and causal explanation can share a dataset while requiring different information and different validation.
 
 ## Modeling Mindset
 
 We often treat the observed series as one realization of an underlying stochastic process. The observations are generally not assumed to be IID because their distributions, conditional means, variances, or lag relationships can depend on time and past information.
 
-Trend and seasonality are forms of systematic time structure, but they are not themselves the same as stochastic serial dependence. After deterministic or evolving mean structure is modeled, the remaining process may still have autocorrelation that requires an ARMA-type description.
+A repeated mean pattern and serial error dependence are different sources of association. If sales are higher every December, the raw series can be highly correlated at annual lags even when deviations from each month's mean are independent. After modeling that seasonal mean, the residuals may still be persistent from one date to the next. The first feature concerns the expected value at each date; the second concerns joint fluctuations around that expectation.
 
 A complete probabilistic specification for observations $X_1,\ldots,X_n$ is their joint distribution,
 
@@ -160,9 +113,9 @@ F(c_1,\ldots,c_n)
 =P(X_1\le c_1,\ldots,X_n\le c_n).
 $$
 
-In practice, specifying a high-dimensional joint distribution directly is usually impractical. Time-series models instead exploit structure: conditional distributions, state equations, means, variances, autocovariances, or factorized likelihoods.
+A joint distribution describes every combination of observations and therefore every form of temporal dependence. Specifying it directly becomes difficult as the record grows. Dynamic models reduce that task by expressing the next value conditional on a limited history, or by evolving a small latent state. Moment-based methods instead describe means and lag covariances. Each approach makes the structure manageable by restricting which relationships are represented.
 
-![Changing moments](../../assets/time_series/foundations/04_moments_change_over_time.png)
+![Changing moments](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/foundations/04_moments_change_over_time.png)
 
 The changing-moments figure illustrates why one global mean and variance can be misleading when the process evolves. Stationarity assumptions should be checked against the time variation visible in the data.
 
@@ -170,7 +123,7 @@ The changing-moments figure illustrates why one global mean and variance can be 
 
 Ordinary regression and time-series modeling are not competing domains. Regression can include time, lagged predictors, calendar effects, and serial-error structures. The distinctive challenge in forecasting is that observations are ordered, future information is unavailable, and uncertainty often depends on forecast horizon.
 
-For electricity consumption, temperature and household characteristics may explain part of the conditional mean, while recent consumption, day-of-week effects, and seasonal dynamics can explain additional temporal structure. A dynamic regression or state-space model can combine both sources of information.
+For electricity demand, temperature can explain heating and cooling needs, the calendar can explain workday patterns, and recent demand can summarize short-run persistence. A forecast for next week must also obtain next week's temperatures or state a weather scenario. A regression with a time-series error model can combine these sources, but evaluating it with the actual future weather would assess a different information set from the one available when the forecast was issued.
 
 For a forecasting application, the regression specification must therefore describe both **which information enters the mean** and **how the remaining errors depend on time**. A static regression with independent errors is one possible specification; temporal terms and serial-error models extend it when the data and forecasting task require them.
 
@@ -192,7 +145,7 @@ The historical line establishes the observed pattern. The linear projection exte
 
 The synthetic examples above form a diagnostic gallery: each plot isolates a feature that changes the modeling decision. Trend suggests a changing mean, seasonality suggests a repeating component, heteroskedasticity suggests changing variance, breaks suggest parameter instability, and positive or negative lag dependence motivates explicit dynamic structure.
 
-The point of the gallery is not to classify a real series from appearance alone. Real data often combine several of these features, so plots should be followed by transformations, lag diagnostics, domain knowledge, and forecast validation.
+Use the gallery to generate specific questions rather than to assign a model by appearance. Does the growing spread remain after a log transformation? Does a level shift align with a change in measurement? Does dependence remain after a known seasonal mean is removed? These questions connect a visible feature to an assumption that can be examined. Real series often combine several features, so a single visual label rarely settles the specification.
 
 ## Components of a Time Series
 
@@ -204,7 +157,7 @@ A time series can often be described in terms of several broad components:
 - **Irregular variation:** variation not explained by the chosen systematic structure.
 - **Structural breaks:** changes in the mechanism itself rather than ordinary fluctuations around one stable model.
 
-A decomposition is a modeling choice, not a unique physical partition. Different smoothers or state-space models can assign variation differently between trend, cycle, seasonality, and remainder.
+A decomposition is not uniquely determined by the data alone. A slowly varying component may be assigned to trend by one smoother and to a cycle by another. The components must reconstruct the observed series under the chosen additive or multiplicative rule, but their separate interpretations depend on the smoothing and state assumptions. State those assumptions before treating a plotted trend as a directly observed physical quantity.
 
 ## Time Series Analysis Techniques
 
@@ -212,7 +165,7 @@ Time-series methods are often grouped into time-domain and frequency-domain appr
 
 ### Time-Domain Methods
 
-Time-domain methods work directly with ordered observations and lags. The autocorrelation function summarizes linear dependence within one series, while cross-correlation describes lagged linear association between two series. Cross-correlation does not by itself establish direction or causality because common trends, seasonality, and omitted variables can create apparent lead-lag patterns.
+Time-domain methods keep the observations on their ordered index and study relationships at selected lags. The ACF asks how one series is associated with itself after a shift. Cross-correlation pairs two series after a shift, but a peak can arise from shared trend or seasonality. A dynamic equation adds a direction: it specifies how information available in earlier observations enters a prediction for a later one.
 
 Common time-domain model families include autoregressive and moving-average models, ARIMA, exponential smoothing, dynamic regression, state-space models, and multivariate VAR/VECM models.
 
@@ -220,7 +173,7 @@ A **rolling moving average** is a descriptive smoother computed from observed va
 
 Exponential smoothing recursively updates latent level, trend, or seasonal states. ARIMA combines differencing with AR and MA dependence. Neither method is universally preferable; each encodes a different representation of evolving structure.
 
-![Linear filter](../../assets/time_series/foundations/08_linear_filter.png)
+![Linear filter](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/foundations/08_linear_filter.png)
 
 The linear-filter figure connects many time-domain operations. Smoothing, differencing, and ARMA representations can all be expressed as weighted combinations of lagged observations or shocks, with different weight patterns serving different purposes.
 
@@ -234,7 +187,7 @@ Wavelet methods add time localization, making them useful when the frequency con
 
 **Parametric methods** specify a finite-dimensional model such as ARMA, VAR, or a state-space system and estimate its parameters. **Non-parametric or weakly parametric methods** estimate features such as autocovariance or spectral density with fewer assumptions about a complete data-generating equation.
 
-Both require assumptions. A non-parametric estimate is not assumption-free; smoothing choices, stationarity, bandwidth, and sampling structure still matter.
+A nonparametric method avoids a fixed finite equation for the entire process, but it still chooses how to pool information. A spectral smoother needs a bandwidth; a covariance estimator needs a lag range and assumptions about stability. Those choices control the tradeoff between resolution and noise, much as model order controls flexibility in a parametric model.
 
 ### Univariate, multivariate, linear, and nonlinear models
 
@@ -288,13 +241,13 @@ Consider the following twelve monthly sales observations. Each row represents on
 
 A time plot preserves the month-by-month ordering and makes the upward movement, including the dips at months 3 and 9, visible. The blue line shows every observation in the table above. The orange line shows the trailing three-month mean calculated in the next section; it begins at month 3, when the first complete window is available.
 
-![Monthly sales and their trailing three-month moving average](../../assets/time_series/monthly_sales_smoothing.svg)
+![Monthly sales and their trailing three-month moving average](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/monthly_sales_smoothing.svg)
 
-The plot suggests an increasing level, but twelve observations are not enough to establish a stable long-run trend or a seasonal pattern. Any forecast should therefore be compared with a simple baseline and treated as highly uncertain.
+The twelve sales values show an increasing level with temporary dips. They cover only one annual cycle, so they cannot establish that a pattern repeats from year to year. A three-month smoother can describe the local rise, but forecasting requires a separate assumption about whether the level, slope, or seasonal behavior continues. Compare that extrapolation with a simple baseline on later data when such observations become available.
 
 ### Applying a trailing moving average
 
-A trailing three-month moving average smooths short-run fluctuations by averaging the current month and the two preceding months. The table rounds fractional averages to the nearest whole unit. The first two entries are unavailable because a complete three-month window does not yet exist:
+For month 3, the trailing average is $(100+120+110)/3=110$. For month 4, it drops month 1 and uses $(120+110+130)/3=120$. The window always ends at the month being summarized. Fractional results are rounded to whole units in the table; the first two rows have no complete window and are left blank rather than being recorded as zeros.
 
 | Month | Sales | Moving Average (Window=3) |
 |---|---:|---:|
@@ -319,7 +272,7 @@ The same data can be fit with simple exponential smoothing (SES):
 
 The actual sales line provides the target, while the SES line shows a recursively updated level estimate. Because SES has no explicit trend component, its appropriateness should be judged against trend-aware alternatives if the upward movement persists.
 
-## Worked examples: observations, information, and workflow
+## Observation support, decomposition, and forecasting information
 
 A time series is not only a vector $y_1,\ldots,y_T$. Timestamps, sampling rules, support, release timing, and order determine which observations can inform a forecast and which dependence patterns are scientifically plausible.
 
@@ -339,7 +292,7 @@ After working through this chapter, you should be able to:
 
 At each time $t$, an observation may be a point measurement, interval total, interval average, event count, or vector of measurements recorded together. These supports are not interchangeable.
 
-Aggregating hourly demand into daily totals changes variance, seasonality, and lag dependence. A model for a daily total should therefore not be interpreted as a model for an instantaneous hourly value.
+Aggregation changes the question as well as the data volume. A daily total combines 24 hourly values, so its variance includes their cross-hour covariances. Within-day peaks can disappear, while weekday effects remain. A good daily-total forecast is not necessarily a good peak-hour forecast. Define the required temporal support before deciding whether aggregation is a useful simplification.
 
 ### Components with a numerical example
 
@@ -365,7 +318,7 @@ $$
 
 The deterministic part is $111.5$. If $\varepsilon_3=-1.2$, the observed value is $110.3$. At $t=6$, $S_6=0$, so the deterministic part is $103$.
 
-A visible difference between the two months therefore need not indicate a change in the long-run trend; it can be entirely due to seasonal phase.
+The numerical contrast is a check on interpretation: the long-run component can rise while the total falls. Before describing a difference between two dates as growth or decline, compare their seasonal positions and identify which component the statement concerns. The noise term then accounts for the remaining departure, such as the observed value 110.3 instead of the deterministic 111.5 at month 3.
 
 For multiplicative behavior,
 
@@ -395,7 +348,7 @@ A trend is not necessarily a unit root, a seasonal pattern is not necessarily a 
 
 Sampling determines which frequencies can be distinguished. With one observation per interval, the Nyquist frequency is $0.5$ cycles per observation. A higher-frequency signal can appear as a lower-frequency alias when the sampling rate is too low.
 
-![Regular and irregular sampling](../../assets/time_series/foundations/07_regular_and_irregular_sampling.png)
+![Regular and irregular sampling](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/foundations/07_regular_and_irregular_sampling.png)
 
 The figure also contrasts regular and irregular timestamps. Standard ACF and Fourier formulas assume a regular grid. Interpolating irregular observations onto such a grid can be useful, but it creates synthetic values and can alter dependence, so it should be treated as a modeling decision.
 
@@ -431,9 +384,9 @@ $$
 \ell_t=\alpha y_t+(1-\alpha)\ell_{t-1}.
 $$
 
-The filtered level can also be used as a forecast. The smoothing parameter controls responsiveness; it is not by itself a measure of model quality.
+To turn a smoothed level into a forecast, specify what persists after the final observation. Simple exponential smoothing assumes that the latest estimated level is the forecast center for every future horizon. Its smoothing parameter controls how quickly the level is updated as observations arrive; it does not by itself quantify future error or establish whether a level-only assumption is appropriate.
 
-![Geometric series](../../assets/time_series/foundations/01_geometric_series.png)
+![Geometric series](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/foundations/01_geometric_series.png)
 
 The geometric-series figure explains why exponential weighting has a long but decaying memory: recursively applied weights shrink geometrically as observations become older.
 
@@ -441,23 +394,23 @@ The geometric-series figure explains why exponential weighting has a long but de
 
 If a forecast is issued at time $t$, define the available information $\mathcal F_t$. Every transformation, feature, parameter estimate, and model choice used in a historical backtest must be based only on information in that set.
 
-This includes scaling, imputation, seasonal adjustment, feature selection, predictor values, and hyperparameter tuning. The same formula can be valid or leaked depending on whether it is recomputed inside each historical training window.
+For example, a seasonal index estimated from the complete record can contain observations later than a historical forecast date. Using it in a backtest leaks future information even if the forecasting equation uses only lagged values. Re-estimate preprocessing, predictor values, and model choices within each historical information boundary. Timing is a property of the complete calculation, not merely of the final regression row.
 
 ### Difference equations and stochastic dynamics
 
 Many time-series models are recursions. Their stability depends on whether the effect of an initial condition or shock decays.
 
-![Difference-equation stability](../../assets/time_series/foundations/02_difference_equation_stability.png)
+![Difference-equation stability](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/foundations/02_difference_equation_stability.png)
 
 The figure shows stable and unstable recursions. In a stable system, deviations shrink over time; in an unstable system, they grow.
 
 ### White noise, random walks, and stationarity
 
-![White noise and random walk](../../assets/time_series/foundations/05_white_noise_random_walk.png)
+![White noise and random walk](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/foundations/05_white_noise_random_walk.png)
 
 White noise has stable second-order properties, while a random walk accumulates shocks and develops increasing level uncertainty.
 
-![Stationarity cases](../../assets/time_series/foundations/06_stationarity_cases.png)
+![Stationarity cases](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/foundations/06_stationarity_cases.png)
 
 The stationarity figure places stable, unit-root, and explosive behavior side by side. These cases can look similar in short samples, which is why plots, root conditions, transformations, and formal tests should be interpreted together.
 
@@ -473,3 +426,28 @@ The stationarity figure places stable, unit-root, and explosive behavior side by
 8. Preserve chronological order in validation.
 9. Diagnose residuals and forecast errors.
 10. Explain the limitations of the chosen representation.
+
+## Formula reference
+
+| Topic | General formula | Interpretation / special case |
+|---|---|---|
+| Additive decomposition | $Y_t=T_t+S_t+R_t$ | Trend + seasonal + remainder. |
+| Multiplicative decomposition | $Y_t=T_tS_tR_t$ | Useful when seasonal/remainder scale grows with level. |
+| Mean function | $\mu_t=E[Y_t]$ | Weak stationarity requires $\mu_t=\mu$. |
+| Autocovariance | $\gamma(t,s)=\mathrm{Cov}(Y_t,Y_s)$ | Under weak stationarity, $\gamma(t,s)=\gamma(t-s)$. |
+| Autocorrelation | $\rho(h)=\gamma(h)/\gamma(0)$ | Unit-free lag dependence. |
+| Backshift | $B^kY_t=Y_{t-k}$ | Compact lag notation. |
+| First difference | $\Delta Y_t=(1-B)Y_t=Y_t-Y_{t-1}$ | Models one-period changes. |
+| Seasonal difference | $\Delta_sY_t=(1-B^s)Y_t=Y_t-Y_{t-s}$ | Compares the same seasonal position across cycles. |
+| Trailing moving average | $\tilde Y_t=w^{-1}\sum_{j=0}^{w-1}Y_{t-j}$ | Descriptive past-only smoother. |
+| Simple exponential smoothing | $\ell_t=\alpha Y_t+(1-\alpha)\ell_{t-1}$ | Recursive level update; forecast is commonly $\ell_t$. |
+| White noise | $E\varepsilon_t=0$, $\mathrm{Var}(\varepsilon_t)=\sigma^2$, $\gamma_\varepsilon(h)=0$ for $h\ne0$ | Baseline uncorrelated shock process. |
+| Random walk | $Y_t=Y_{t-1}+\varepsilon_t$ | Nonstationary level; $\Delta Y_t=\varepsilon_t$. |
+| AR($p$) | $Y_t=c+\sum_{i=1}^{p}\phi_iY_{t-i}+\varepsilon_t$ | Dependence on observed lagged values. |
+| MA($q$) | $Y_t=\mu+\varepsilon_t+\sum_{j=1}^{q}\theta_j\varepsilon_{t-j}$ | Dependence on current and lagged innovations. |
+| ARMA($p,q$) | $\phi(B)(Y_t-\mu)=\theta(B)\varepsilon_t$ | Stationary short-memory linear model. |
+| ARIMA($p,d,q$) | $\phi(B)(1-B)^dY_t=c+\theta(B)\varepsilon_t$ | Adds differencing for integrated behavior. |
+| SARIMA | $\Phi(B^s)\phi(B)(1-B^s)^D(1-B)^dY_t=\Theta(B^s)\theta(B)\varepsilon_t$ | Adds seasonal AR, MA, and differencing. |
+| Forecast | $\hat Y_{t+h\mid t}=E(Y_{t+h}\mid\mathcal F_t)$ | Conditional mean under squared-error loss. |
+| Forecast error | $e_{t,h}=Y_{t+h}-\hat Y_{t+h\mid t}$ | Must be evaluated using information available at origin $t$. |
+| Nyquist frequency | $f_N=f_s/2$ | Highest uniquely distinguishable frequency under regular sampling. |

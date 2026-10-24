@@ -1,48 +1,10 @@
 # Moving Average (MA) Models
 
-[Time series index](README.md)
+A moving-average model explains an observation through a short history of shocks. A temporary disruption may affect today's measurement and leave a smaller effect tomorrow, then disappear. An MA(1) encodes that pattern with one current shock and one lagged shock; an MA($q$) extends the direct response through $q$ lags.
 
-A moving-average model represents the current observation as a finite weighted combination of the current innovation and a fixed number of past innovations. Because each shock enters the model for only a limited number of periods, an MA($q$) process has a finite direct shock response and a theoretical ACF that cuts off after lag $q$.
+The shocks are not the past observations. They are unobserved inputs whose overlapping effects create dependence between observations. This distinction explains both the theoretical covariance cutoff and why estimating an MA model requires more than regressing the series on its observed lags.
 
-The innovations are latent rather than observed regressors, so estimation and identification require more care than a simple regression on lags. Invertibility selects a stable canonical representation, and the stochastic MA model should be kept distinct from rolling moving averages or exponential smoothers, which are transformations of observed data.
-
-**Reading guide.** Start with the finite response to one innovation, then connect the shared shocks to the ACF cutoff. Keep that stochastic model separate from the SMA and EMA smoothers introduced later: they combine observed values rather than latent innovations. The final worked examples link shock duration, parameter estimation, and the root convention used to choose an invertible representation.
-
-**Related reading:** [invertibility](invertibility.md).
-
-**On this page**
-
-- [Formula reference](#formula-reference)
-- [Worked calculation: an MA(1)](#worked-calculation-an-ma1)
-- [Innovations and finite shock duration](#innovations-and-finite-shock-duration)
-- [Overview of Moving Average Models](#overview-of-moving-average-models)
-- [Mathematical Definition of MA Models](#mathematical-definition-of-ma-models)
-- [Examples of MA Models](#examples-of-ma-models)
-- [Properties of MA Models](#properties-of-ma-models)
-- [Identifying the Order $q$ of an MA Model](#identifying-the-order-q-of-an-ma-model)
-- [Example: Moving Average (MA) Model](#example-moving-average-ma-model)
-- [Simple Moving Average (SMA)](#simple-moving-average-sma)
-- [Exponential Moving Average (EMA)](#exponential-moving-average-ema)
-- [Example: Stock Price Analysis](#example-stock-price-analysis)
-- [Worked examples: shock responses and identification](#worked-examples-shock-responses-and-identification)
-
-## Formula reference
-
-| Quantity / case | General formula | Notes / special case |
-|---|---|---|
-| MA($q$) | $Y_t=\mu+\varepsilon_t+\sum_{j=1}^{q}\theta_j\varepsilon_{t-j}$ | Set $\theta_0=1$ for compact summation. |
-| Lag-polynomial form | $Y_t-\mu=\theta(B)\varepsilon_t$, $\theta(B)=1+\theta_1B+\cdots+\theta_qB^q$ | Useful for invertibility and ARMA notation. |
-| Mean | $E[Y_t]=\mu$ | Assuming zero-mean innovations. |
-| Variance | $\gamma(0)=\sigma_\varepsilon^2\sum_{j=0}^{q}\theta_j^2$ | With $\theta_0=1$. |
-| Autocovariance | $\gamma(h)=\sigma_\varepsilon^2\sum_{j=0}^{q-h}\theta_j\theta_{j+h}$, $0\le h\le q$ | $\gamma(h)=0$ for $\lvert h\rvert>q$. |
-| ACF | $\rho(h)=\gamma(h)/\gamma(0)$ | The theoretical ACF cuts off after lag $q$. |
-| MA(1) | $Y_t=\mu+\varepsilon_t+\theta\varepsilon_{t-1}$ | Simplest nontrivial MA model. |
-| MA(1) variance | $\gamma(0)=\sigma_\varepsilon^2(1+\theta^2)$ | — |
-| MA(1) lag-1 ACF | $\rho(1)=\theta/(1+\theta^2)$ | $\rho(h)=0$ for $\lvert h\rvert\ge2$. |
-| Invertibility | roots of $\theta(z)=0$ satisfy $\lvert z\rvert>1$ | For MA(1), equivalent to $\lvert\theta\rvert<1$. |
-| MA(1) inverse | $\varepsilon_t=(1+\theta B)^{-1}(Y_t-\mu)=\sum_{j=0}^{\infty}(-\theta)^j(Y_{t-j}-\mu)$ | Stable for $\lvert\theta\rvert<1$. |
-| Simple moving-average smoother | $\mathrm{SMA}_t=k^{-1}\sum_{j=0}^{k-1}y_{t-j}$ | Descriptive smoother, not an MA($q$) stochastic model. |
-| Exponential smoother | $S_t=\alpha y_t+(1-\alpha)S_{t-1}$ | Another smoother; not an MA($q$) model. |
+The word “average” can be misleading: MA coefficients need not be positive or sum to 1. The equation is a weighted shock model, not necessarily a smoothing operation. A rolling mean or EMA instead transforms observed values into a smoothed series. Those operations appear later so that their inputs, outputs, and purposes can be compared directly with the stochastic MA equation.
 
 ## Worked calculation: an MA(1)
 
@@ -72,7 +34,7 @@ $$
 
 The theoretical ACF of this MA(1) cuts off after lag 1. In a finite sample, later sample autocorrelations will usually not be exactly zero.
 
-![AR and MA identification patterns](../../assets/time_series/student/06_ar_ma_identification.png)
+![AR and MA identification patterns](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/06_ar_ma_identification.png)
 
 ## Innovations and finite shock duration
 
@@ -84,7 +46,7 @@ The name can be confusing: an MA($q$) stochastic model is not the same object as
 
 An MA model represents short-lived shock effects. A new innovation can affect the current observation and the next few observations, but in an MA($q$) process its direct effect disappears after $q$ lags.
 
-This finite shock duration explains the characteristic ACF cutoff of an MA model. It does not mean that the observed series is obtained by smoothing its own past values.
+Two MA observations can be correlated only where their shock histories overlap, under uncorrelated shocks. Observations more than $q$ dates apart contain disjoint shock indices, giving covariance zero. With independent shocks, the separated observations are also independent. Under weak white noise alone, the covariance statement remains valid, but the stronger independence conclusion need not hold.
 
 ## Mathematical Definition of MA Models
 
@@ -108,7 +70,7 @@ Here:
 - $\theta_i$ is the coefficient on the innovation from lag $i$;
 - $q$ is the largest innovation lag included directly in the model.
 
-Weak white noise is sufficient for the covariance calculations below. Likelihood-based estimation often adds stronger distributional assumptions, such as independent Gaussian innovations.
+For the covariance calculations, we need zero-mean shocks with a common finite variance and zero covariance across dates. Independence is not necessary because the calculations use only second moments. A Gaussian likelihood or exact Gaussian prediction interval makes additional distributional assumptions. Distinguish the conditions needed to derive a covariance identity from those used to estimate or forecast probabilistically.
 
 ## Examples of MA Models
 
@@ -144,7 +106,7 @@ The coefficients determine the magnitude and sign of the finite shock response.
 
 ## Properties of MA Models
 
-A finite-order MA process driven by weak white noise is weakly stationary: its constant coefficients combine shocks with a common finite variance and zero cross-time covariance. The resulting mean and variance are constant, and the autocovariance depends only on lag. This stationarity result does not require the MA polynomial to be invertible.
+With fixed coefficients, the same finite combination of shocks is applied at every date. Its mean is therefore $\mu$, and its variance is $\sigma^2\sum_{j=0}^q\theta_j^2$ with $\theta_0=1$. All cross-terms vanish because different shocks are uncorrelated. The same overlap calculation gives a covariance depending only on lag, establishing weak stationarity. Invertibility concerns reversing this mapping and is a separate condition.
 
 ### Theoretical Properties of MA(1) Model
 
@@ -178,7 +140,7 @@ $$
 \rho_h=0.
 $$
 
-The cutoff after lag 1 is a population property. Sample ACF values at later lags fluctuate around zero because they are estimated from a finite dataset.
+At lag 1, the shared shock appears with coefficient 1 in one observation and $\theta_1$ in the other, giving covariance $\theta_1\sigma^2$. At lag 2 there is no shared shock index, so covariance is zero. Dividing by the variance yields the ACF. The cutoff is exact for the population process; estimated correlations from a finite sample fluctuate and will not form a perfectly zero tail.
 
 ### Autocorrelation Function (ACF) in MA Models
 
@@ -192,13 +154,13 @@ Typical identification patterns are therefore:
 
 The PACF usually tails off rather than cutting off sharply. These are ideal population patterns and should be treated as heuristics in finite samples.
 
-![MA shock duration](../../assets/time_series/dependence/04_ma_shock_duration.png)
+![MA shock duration](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dependence/04_ma_shock_duration.png)
 
 The figure shows the mechanism behind the cutoff: a single innovation has a finite sequence of direct effects and then disappears from the model equation.
 
 ## Identifying the Order $q$ of an MA Model
 
-The ACF provides a useful first clue about the order, but order selection should combine visual identification with fitted-model diagnostics.
+A possible cutoff suggests how far the direct shock response might extend. It is only a proposal because sampling noise can create isolated later spikes, and trend or a break can create a broad correlation pattern unrelated to a finite MA mechanism. Fit a small range of plausible orders, use consistent data and likelihood conventions, and check what serial structure remains in the estimated innovations.
 
 ### Step-by-Step Process for Model Selection
 
@@ -260,7 +222,7 @@ $$
 
 ### Defining the MA(1) Model
 
-The value 10 is the process mean. The current observation moves around that mean because of the current shock and half of the previous shock. The lagged shock is not directly observed, which is one reason MA estimation differs from ordinary regression on observed lags.
+The mean is 10 because both shocks have expectation zero; no averaging of past observations is being performed. If the current shock is zero and the previous shock was 2, today's value is $10+0+0.5(2)=11$. Tomorrow that previous shock has left the two-term equation. This makes the meaning of the lagged-shock coefficient concrete without treating the shock as an observed predictor.
 
 ### Theoretical Autocorrelation Function (ACF) of MA(1)
 
@@ -288,7 +250,7 @@ $$
 \mathrm{SMA}_t=\frac{1}{k}\sum_{i=0}^{k-1}y_{t-i}.
 $$
 
-The smoother reduces short-term variation by averaging observations in a fixed window. Unlike an MA($q$) model, it is computed directly from observed values and does not introduce latent innovations as model components.
+The smoother can be calculated directly once the window is chosen. A given observed value enters several neighboring smoothed outputs and then leaves the window. This overlap creates dependence in the smoothed series even if the original observations were independent. That fact helps explain the terminology, but it does not mean that fitting a latent-shock MA model is equivalent to applying a rolling mean to the data.
 
 ## Exponential Moving Average (EMA)
 
@@ -314,7 +276,7 @@ $$
 \mathrm{SMA}_t=\frac{P_t+P_{t-1}+\cdots+P_{t-19}}{20}.
 $$
 
-The window smooths day-to-day fluctuations, but it also introduces lag because every observation receives equal weight until it leaves the window.
+Each price receives weight $1/20$ while it remains in the 20-day window, then its weight drops to zero. A new price replaces the oldest one, so the change in the SMA depends on both. After a sudden permanent rise, the smoother adjusts over several dates as older prices leave the window. The lag is a property of that averaging rule, not evidence of a delayed causal response in prices.
 
 ### EMA Analysis
 
@@ -340,7 +302,7 @@ Practitioners sometimes interpret crossings or divergence between SMA and EMA cu
 
 The figure shows the raw price path together with a 20-day SMA and EMA. The SMA is smoother and typically slower to react, while the EMA follows recent movements more closely. These curves illustrate smoothing behavior, not the innovation structure of an MA($q$) model.
 
-## Worked examples: shock responses and identification
+## From a shock response to estimation and identification
 
 An MA($q$) model describes the current value as a finite weighted sum of current and past innovations:
 
@@ -392,11 +354,11 @@ $$
 1,\quad0.7,\quad-0.35,\quad0,\ldots
 $$
 
-The response can change sign before ending. The theoretical ACF is zero beyond lag 2, although a finite-sample estimate will generally show small later values.
+A positive shock can be followed by a positive contribution at the next date and a negative contribution at the date after that, depending on the MA coefficients. Thus a finite response need not decay smoothly or keep one sign. The response ends after lag 2 in this example because no later coefficient contains that shock. The covariance cutoff follows from the same finite-overlap mechanism.
 
 ### Estimation
 
-Because past innovations such as $\varepsilon_{t-1}$ are unobserved, ordinary least squares on observed lagged values does not solve the MA estimation problem. Common approaches include innovations algorithms, conditional likelihood, exact Gaussian likelihood, state-space recursions, and methods that construct starting values for the latent innovations.
+In AR estimation, an older observed value is already in the dataset. In MA estimation, the required older shock depends on the candidate parameters and on the reconstruction of previous shocks. Changing a coefficient therefore changes an entire inferred innovation sequence. Likelihood, innovations, and state-space methods account for this recursion instead of pretending that those shock lags are fixed observed regressors.
 
 The treatment of initial innovations can matter in short series, so record the estimation method and software convention when reproducing fitted parameters.
 
@@ -410,7 +372,7 @@ $$
 
 the usual invertibility condition is $|\theta|<1$.
 
-![Invertibility](../../assets/time_series/dependence/06_invertibility.png)
+![Invertibility](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/dependence/06_invertibility.png)
 
 The figure illustrates why invertibility matters for identification: the observable covariance pattern can correspond to more than one coefficient representation unless a root convention is imposed.
 
@@ -424,4 +386,22 @@ Keep these three objects distinct:
 | rolling moving average | observed values in a fixed window |
 | exponential smoother | observed values through a recursive level update |
 
-A rolling mean or EMA can be calculated directly from the data. An MA model requires inference about the latent innovation sequence.
+The distinction can be checked by naming the input. The SMA and EMA take the observed series as input and produce a smoothed level. An MA model takes a hypothetical shock sequence as input and produces observations; estimation works backward to infer the shocks and coefficients. Using a smoother may improve a plot, but it does not by itself estimate that probabilistic shock-generating equation.
+
+## Formula reference
+
+| Quantity / case | General formula | Notes / special case |
+|---|---|---|
+| MA($q$) | $Y_t=\mu+\varepsilon_t+\sum_{j=1}^{q}\theta_j\varepsilon_{t-j}$ | Set $\theta_0=1$ for compact summation. |
+| Lag-polynomial form | $Y_t-\mu=\theta(B)\varepsilon_t$, $\theta(B)=1+\theta_1B+\cdots+\theta_qB^q$ | Useful for invertibility and ARMA notation. |
+| Mean | $E[Y_t]=\mu$ | Assuming zero-mean innovations. |
+| Variance | $\gamma(0)=\sigma_\varepsilon^2\sum_{j=0}^{q}\theta_j^2$ | With $\theta_0=1$. |
+| Autocovariance | $\gamma(h)=\sigma_\varepsilon^2\sum_{j=0}^{q-h}\theta_j\theta_{j+h}$, $0\le h\le q$ | $\gamma(h)=0$ for $\lvert h\rvert>q$. |
+| ACF | $\rho(h)=\gamma(h)/\gamma(0)$ | The theoretical ACF cuts off after lag $q$. |
+| MA(1) | $Y_t=\mu+\varepsilon_t+\theta\varepsilon_{t-1}$ | Simplest nontrivial MA model. |
+| MA(1) variance | $\gamma(0)=\sigma_\varepsilon^2(1+\theta^2)$ | — |
+| MA(1) lag-1 ACF | $\rho(1)=\theta/(1+\theta^2)$ | $\rho(h)=0$ for $\lvert h\rvert\ge2$. |
+| Invertibility | roots of $\theta(z)=0$ satisfy $\lvert z\rvert>1$ | For MA(1), equivalent to $\lvert\theta\rvert<1$. |
+| MA(1) inverse | $\varepsilon_t=(1+\theta B)^{-1}(Y_t-\mu)=\sum_{j=0}^{\infty}(-\theta)^j(Y_{t-j}-\mu)$ | Stable for $\lvert\theta\rvert<1$. |
+| Simple moving-average smoother | $\mathrm{SMA}_t=k^{-1}\sum_{j=0}^{k-1}y_{t-j}$ | Descriptive smoother, not an MA($q$) stochastic model. |
+| Exponential smoother | $S_t=\alpha y_t+(1-\alpha)S_{t-1}$ | Another smoother; not an MA($q$) model. |

@@ -1,50 +1,10 @@
 # ARMA, ARIMA, and SARIMA Models
 
-[Time series index](README.md)
+ARMA, ARIMA, and SARIMA describe related mechanisms at increasing levels of structure. An **ARMA** model combines feedback from past observations with the effects of current and past shocks around a stable mean. **ARIMA** first takes differences to remove an integrated level, then models the changes with ARMA. **SARIMA** adds corresponding seasonal operators at a known period.
 
-ARMA models describe stationary linear dependence through a combination of autoregressive terms, which use past observations, and moving-average terms, which use current and past innovations. ARIMA extends that structure by differencing a series with a stochastic trend, while SARIMA adds seasonal differences and seasonal AR or MA effects at a fixed period.
+The distinction is about what is modeled. Forecasting monthly changes is a different equation from forecasting monthly levels, even when the changes are later accumulated into level forecasts. A seasonal lag compares the same position in earlier cycles rather than simply adding many ordinary lags without structure.
 
-Each model order describes a different part of the specification: lagged observations, differences, or lagged innovations. A careful analysis separates the transformation needed to stabilize the series from the dependence that remains afterward, uses the smallest adequate differencing orders, and checks that forecasts are reconstructed and evaluated on the scale that matters.
-
-**Reading guide.** Work through ARMA, ARIMA, and SARIMA in that order: dependence around a stable mean, differencing of stochastic trends, and seasonal lag structure. Keep the differencing orders separate from the AR and MA orders. The final worked examples combine identification, candidate comparison, reconstruction of level forecasts, and residual checks into one modeling procedure.
-
-**Related reading:** [the backshift operator](backward_shift_operator.md).
-
-**On this page**
-
-- [Formula reference](#formula-reference)
-- [Worked calculation: ordinary and seasonal differencing](#worked-calculation-ordinary-and-seasonal-differencing)
-- [Three related model families](#three-related-model-families)
-- [Autoregressive Moving Average (ARMA) Models](#autoregressive-moving-average-arma-models)
-- [Autoregressive Integrated Moving Average (ARIMA) Models](#autoregressive-integrated-moving-average-arima-models)
-- [Seasonal ARIMA Processes (SARIMA)](#seasonal-arima-processes-sarima)
-- [Worked examples: from differencing to an evaluated forecast](#worked-examples-from-differencing-to-an-evaluated-forecast)
-
-## Formula reference
-
-| Model / quantity | General formula | Important special case / condition |
-|---|---|---|
-| White noise | $X_t=\varepsilon_t$ | ARIMA$(0,0,0)$. |
-| AR($p$) | $\phi(B)X_t=c+\varepsilon_t$ | ARIMA$(p,0,0)$. |
-| MA($q$) | $X_t=\mu+\theta(B)\varepsilon_t$ | ARIMA$(0,0,q)$. |
-| ARMA($p,q$) | $\phi(B)X_t=c+\theta(B)\varepsilon_t$ | ARIMA$(p,0,q)$. |
-| Pure integration $I(d)$ | $(1-B)^dX_t=\varepsilon_t$ | ARIMA$(0,d,0)$. |
-| Random walk | $(1-B)X_t=\varepsilon_t$ | ARIMA$(0,1,0)$. |
-| Random walk with drift | $(1-B)X_t=\delta+\varepsilon_t$ | ARIMA$(0,1,0)$ with drift under the usual parameterization. |
-| ARIMA$(p,d,q)$ | $\phi(B)(1-B)^dX_t=c+\theta(B)\varepsilon_t$ | Fit ARMA dynamics to the $d$th-differenced series. |
-| ARIMA$(1,1,1)$ | $(1-\phi B)(1-B)X_t=c+(1+\theta B)\varepsilon_t$ | Common low-order mixed model for first differences. |
-| Ordinary difference | $\nabla^dX_t=(1-B)^dX_t$ | $d=1$: $X_t-X_{t-1}$; $d=2$: $X_t-2X_{t-1}+X_{t-2}$. |
-| Seasonal difference | $\nabla_s^DX_t=(1-B^s)^DX_t$ | $D=1$: $X_t-X_{t-s}$. |
-| SARIMA$(p,d,q)(P,D,Q)_s$ | $\Phi(B^s)\phi(B)(1-B^s)^D(1-B)^dX_t=c+\Theta(B^s)\theta(B)\varepsilon_t$ | General seasonal ARIMA form. |
-| Seasonal random walk | $(1-B^s)X_t=\varepsilon_t$ | SARIMA$(0,0,0)(0,1,0)_s$; seasonal-naive benchmark has the same conditional-mean recursion. |
-| Seasonal AR(1) | $(1-\Phi B^s)X_t=\varepsilon_t$ | SARIMA$(0,0,0)(1,0,0)_s$. |
-| Seasonal MA(1) | $X_t=(1+\Theta B^s)\varepsilon_t$ | SARIMA$(0,0,0)(0,0,1)_s$. |
-| Combined ordinary + seasonal difference | $(1-B)(1-B^s)X_t=X_t-X_{t-1}-X_{t-s}+X_{t-s-1}$ | Frequently used with $d=D=1$. |
-| AR stationarity/causality | $\phi(z)=0\Rightarrow\lvert z\rvert>1$ and $\Phi(z^s)=0\Rightarrow\lvert z\rvert>1$ | Applied after differencing; excludes unit roots from the stationary AR component. |
-| MA invertibility | $\theta(z)=0\Rightarrow\lvert z\rvert>1$ and seasonal MA roots likewise | Gives a stable innovation representation. |
-| ARMA MA($\infty$) form | $X_t=\sum_{j=0}^{\infty}\psi_j\varepsilon_{t-j}$ | Exists for a causal ARMA model. |
-| Invertible AR($\infty$) form | $X_t=\sum_{j=1}^{\infty}\pi_jX_{t-j}+\varepsilon_t$ | Exists for an invertible MA/ARMA representation. |
-| Forecast reintegration, $d=1$ | $\hat X_{T+h\mid T}=\hat X_{T+h-1\mid T}+\widehat{\Delta X}_{T+h\mid T}$ | Cumulate forecasted changes back to the level scale. |
+Separate the decisions represented by the orders. Choose $d$ and $D$ to address ordinary and seasonal integration. Choose $p,q,P,Q$ to describe dependence remaining in the transformed series. A variance-stabilizing transformation addresses another issue and is not replaced by differencing. These decisions interact, but increasing every order until the training fit improves hides which feature each term is supposed to explain.
 
 ## Worked calculation: ordinary and seasonal differencing
 
@@ -72,11 +32,11 @@ $$
 (1-B)(1-B^{12})y_t.
 $$
 
-Use the smallest differencing order that makes the remaining series reasonably stable. Extra differencing can add unnecessary dependence rather than improve the model.
+A difference is a subtraction applied to both signal and noise. It can remove accumulated level behavior, but an extra difference also transforms the noise and reduces the available sample. For a random walk, one difference gives the original shocks; a second gives adjacent shock differences, creating negative short-lag covariance. Prefer a justified transformed process to the visually flattest possible plot.
 
 The following figure contrasts ordinary and seasonal differencing. The main point is that ordinary differencing compares adjacent observations, whereas seasonal differencing compares observations one full seasonal cycle apart.
 
-![Ordinary and seasonal differencing](../../assets/time_series/student/12_arima_and_seasonal_differencing.png)
+![Ordinary and seasonal differencing](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/student/12_arima_and_seasonal_differencing.png)
 
 ## Three related model families
 
@@ -90,7 +50,7 @@ Each extension retains the dependence model while changing which features are ha
 
 ## Autoregressive Moving Average (ARMA) Models
 
-ARMA models combine autoregressive (AR) and moving average (MA) components. The AR part relates the current value to past values, while the MA part relates it to current and past innovations. This combination can represent short-term shocks together with longer-lasting serial dependence.
+The AR component carries earlier observations forward through feedback, while the MA component allows recent innovations to enter directly at selected lags. These are not separate observed series added together: they are two parts of one equation for $X_t$. In ARMA(1,1), for example, the latest shock affects the next observation both through the AR feedback and through its explicit lagged-shock coefficient.
 
 ### Mathematical Definition of ARMA Models
 
@@ -111,7 +71,7 @@ where
 - $\phi(B)=1-\phi_1B-\phi_2B^2-\dots-\phi_pB^p$;
 - $\theta(B)=1+\theta_1B+\theta_2B^2+\dots+\theta_qB^q$.
 
-These polynomials make the model structure compact and are also useful for stating stationarity, causality, and invertibility conditions.
+The AR polynomial collects observed-value feedback on the left; the MA polynomial collects shocks on the right. Their roles explain the two root conditions. Inverting the AR polynomial expresses observations as a past-shock history and requires causal stability. Inverting the MA polynomial recovers shocks from observations and requires invertibility. Sharing a common factor can make the apparent order redundant, so check cancellation before interpreting every coefficient as a distinct mechanism.
 
 ### Stationarity of AR Processes
 
@@ -133,7 +93,7 @@ For an ARMA model without cancellation between the AR and MA polynomials, causal
 
 ### Infinite Order Representations
 
-When the required convergence conditions hold, finite-order AR and MA models can be represented using infinite-order forms. The displayed formulas use a zero-mean or centered series; a nonzero mean must be retained separately rather than silently dropped during inversion. An invertible MA process has an AR($\infty$) representation,
+The infinite representations change the viewpoint without changing the process. A causal AR model can be written as infinitely many decaying shock effects. An invertible MA model can be written with infinitely many observed-value lags. The formulas below use a zero-mean or centered series; a nonzero mean must be handled separately. An infinite representation is useful only when finite truncations converge under the required conditions.
 
 $$
 X_t=\sum_{k=1}^{\infty}\pi_kX_{t-k}+\epsilon_t,
@@ -268,11 +228,11 @@ $$
 
 #### Results and Interpretation
 
-The values show how the MA term mainly affects the short-lag relationship, while the AR coefficient controls the geometric decay that follows. In a long simulation, sample autocorrelations close to these values provide a useful check that the simulated process matches the intended ARMA(1,1) specification.
+For lags after the first, the AR(1) feedback multiplies each autocorrelation by 0.7. The MA coefficient changes the initial correlation from which that decay starts. This is why the ARMA ACF can resemble an AR tail without having the pure-AR lag-1 value. A long simulation checks the numerical implication of the chosen equation; matching the first spike alone would not check the full dependence pattern.
 
 ## Autoregressive Integrated Moving Average (ARIMA) Models
 
-ARIMA models extend ARMA models by adding differencing. The differencing step is used when the original series is not stationary because of a stochastic trend or similar persistent level behavior; the ARMA structure is then fitted to the transformed series.
+The “integrated” part means that the stationary dynamic equation is applied to differences. For $d=1$, define $Y_t=X_t-X_{t-1}$ and model $Y_t$ with ARMA. Reconstructing $X_t$ then accumulates those modeled changes. The original level need not be stationary, and its shock effects can remain permanent even when the differenced ARMA dynamics are stable.
 
 ### Mathematical Definition of ARIMA Models
 
@@ -288,7 +248,7 @@ where
 - $\theta(B)$ is the moving average polynomial;
 - $d$ is the number of ordinary differences applied before fitting the ARMA component.
 
-The aim is not to difference as much as possible, but to use the smallest $d$ that produces a series whose dependence can be modeled as approximately stationary.
+The differencing order determines how the level is reconstructed and therefore affects long-horizon behavior. With $d=1$, a nonzero mean in the stationary changes produces a drift in levels. In an ARMA equation for those changes, the intercept $c$ is generally not that mean: under stationarity it is divided by $1-\sum_i\phi_i$. Record the parameterization when interpreting a reported constant or drift.
 
 ### Determining Differencing Order
 
@@ -301,7 +261,7 @@ Several pieces of evidence should be considered together:
 
 The following synthetic example shows the effect visually. Compare the original sequence with its differenced version: differencing removes persistent level movement so that the remaining changes are easier to model.
 
-![arima differencing](../../assets/time_series/arima_differencing.png)
+![arima differencing](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/arima_differencing.png)
 
 ### Fitting ARIMA Models: Numerical Example
 
@@ -315,7 +275,7 @@ $$
 Y_t=(1-B)X_t=X_t-X_{t-1}.
 $$
 
-The transformed series $Y_t$ now represents one-period changes. If it is approximately stationary, the AR and MA orders can be considered on this scale.
+The values of $Y_t$ describe period-to-period increments. A positive fitted mean on this scale means persistent expected growth in the original level, not a high fixed level. Examine its time plot and covariance pattern to see whether the differencing step has produced a plausible stationary input before selecting AR and MA orders. A unit-root decision and an order-selection decision should not be collapsed into one lookup from the level ACF.
 
 #### Model Identification
 
@@ -363,7 +323,7 @@ $$
 \hat Y_{t+h}=c+\phi\hat Y_{t+h-1}+\theta\hat\epsilon_{t+h-1}.
 $$
 
-For point forecasts beyond the next step, future innovations have conditional expectation zero. The forecasted changes are then accumulated back to the level scale:
+At the forecast origin, recent innovations have been estimated from observed data, so their MA contributions can affect near-term forecasts. Innovations arriving after that origin have conditional expectation zero under the model. Forecast the differenced recursion using those rules, replacing unknown future changes with their forecasts. Then add the forecast changes to the last observed level, as shown below:
 
 $$
 \hat X_{t+h}=\hat X_{t+h-1}+\hat Y_{t+h}.
@@ -414,7 +374,7 @@ $$
 X_t=\phi_1X_{t-1}+\Phi_1X_{t-12}-\phi_1\Phi_1X_{t-13}+\epsilon_t.
 $$
 
-Thus the current value depends on the previous observation, the observation 12 periods earlier, and an interaction at lag 13 created by multiplying the two AR factors.
+The lag-13 interaction is imposed by multiplying the ordinary and seasonal factors. It is not an independently chosen extra AR coefficient. Expanding the product produces a coefficient determined by the ordinary and seasonal coefficients, tying short-lag and annual dependence together. This restricted structure is what distinguishes the multiplicative SARIMA specification from an unrestricted AR model with lags 1, 12, and 13.
 
 #### Example: SARIMA(0, 1, 1)(0, 1, 1)$_{4}$
 
@@ -508,7 +468,7 @@ $$
 \gamma_{13}=\sigma^2\theta_1\Theta_1.
 $$
 
-These values illustrate how non-seasonal, seasonal, and interaction terms leave distinct signatures in the covariance structure.
+List the shock indices present in $X_t$ and in the shifted observation before multiplying coefficients. Covariance comes only from indices shared by the two expressions, because distinct shocks are uncorrelated. The product terms therefore create correlations at seasonal neighbors such as 11 and 13 as well as at 1 and 12. This overlap calculation is more reliable than assuming that seasonality can produce spikes only at exact multiples of the period.
 
 #### Calculating Autocorrelations
 
@@ -540,9 +500,9 @@ Read the panels in sequence. The original series in blue and trend in orange sho
 
 The forecast-versus-actual panel then compares observed values in blue with forecasts in red; shading represents forecast uncertainty. Taken together, the panels connect structure, transformation, and forecast reconstruction. A forecasting evaluation must additionally check that each transformation and fitted component used only information available at the forecast origin.
 
-## Worked examples: from differencing to an evaluated forecast
+## Combining the operators into an evaluated forecasting procedure
 
-The previous sections define the individual ARMA, ARIMA, and SARIMA components. The following examples bring those ideas into one modeling sequence, from deciding what to difference to evaluating forecasts on the original scale.
+The next calculations combine transformation, identification, fitting, and reconstruction. The same fitted ARIMA label can hide different preprocessing and intercept conventions, so follow the actual sequence of operations on the data. A forecast should remain interpretable as a level, change, or growth rate after every transformation has been reversed for reporting.
 
 The letters in ARIMA$(p,d,q)$ describe three linked operations:
 
@@ -592,11 +552,11 @@ Ordinary and seasonal differences can interact. Each difference also removes usa
 
 Seasonality can also behave differently depending on the scale of the series. The next figure contrasts additive seasonality, whose amplitude stays roughly constant, with multiplicative seasonality, whose amplitude grows or shrinks with the series level. This distinction can guide whether a transformation such as a logarithm is useful before fitting a seasonal model.
 
-![Additive and multiplicative seasonality](../../assets/time_series/arima_seasonality/02_additive_multiplicative_seasonality.png)
+![Additive and multiplicative seasonality](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/arima_seasonality/02_additive_multiplicative_seasonality.png)
 
 A decomposition view makes the same idea more concrete by separating an observed series into level or trend, seasonal structure, and remainder. The figure below is useful for seeing which features should be handled by transformation, differencing, or explicit seasonal terms rather than being left for the residual process.
 
-![Additive decomposition](../../assets/time_series/arima_seasonality/03_additive_decomposition.png)
+![Additive decomposition](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/arima_seasonality/03_additive_decomposition.png)
 
 ### Choosing the differencing order
 
@@ -611,11 +571,11 @@ Use several kinds of evidence together:
 
 The purpose of differencing is to remove persistent stochastic level behavior, not simply to make the plot look flatter. The following figure compares different differencing orders and shows why the smallest adequate order is usually preferred.
 
-![Differencing orders](../../assets/time_series/arima_seasonality/01_differencing_orders.png)
+![Differencing orders](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/arima_seasonality/01_differencing_orders.png)
 
 Under-differencing often leaves a slowly decaying ACF and unstable long-horizon forecasts. After an appropriate difference, the ACF should usually look more like that of a short-memory process. The next figure shows this change directly by comparing the ACF before and after differencing.
 
-![ACF before and after differencing](../../assets/time_series/arima_seasonality/04_acf_before_after_differencing.png)
+![ACF before and after differencing](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/arima_seasonality/04_acf_before_after_differencing.png)
 
 Over-differencing creates a different problem: it can introduce a strong negative lag-1 correlation and make the series noisier than necessary. For a random walk,
 
@@ -625,7 +585,7 @@ $$
 
 one difference gives $\nabla y_t=\varepsilon_t$. Differencing again gives $\varepsilon_t-\varepsilon_{t-1}$, an MA(1)-like process with negative lag dependence. The figure below illustrates the visual and autocorrelation consequences of taking this extra, unnecessary difference.
 
-![Over-differencing](../../assets/time_series/arima_seasonality/05_over_differencing.png)
+![Over-differencing](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/arima_seasonality/05_over_differencing.png)
 
 This is why removing visible trend is not, by itself, evidence that additional differencing is better.
 
@@ -658,7 +618,7 @@ The ARIMA$(1,1,1)$ candidate has the lower AIC, so it is preferred by this crite
 
 The following model-order figure illustrates this role of information criteria: they help compare a candidate set, but they do not replace the diagnostics used to determine whether the selected model has captured the relevant dependence.
 
-![Model order selection](../../assets/time_series/arima_seasonality/08_model_order_selection.png)
+![Model order selection](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/arima_seasonality/08_model_order_selection.png)
 
 ### Forecasting from differences
 
@@ -668,11 +628,11 @@ $$
 \hat y_{T+1}=101.2,\qquad \hat y_{T+2}=102.0.
 $$
 
-The second level forecast starts from the first forecasted level, so uncertainty accumulates as the horizon grows. Seasonal differencing requires the corresponding seasonal values to be restored as well.
+The second level forecast includes both predicted increments: $100+1.2+0.8=102$. Its error also includes the errors of both increments, which can be correlated. Do not obtain a level prediction interval by adding interval widths or by summing variances while ignoring those covariances. Propagate the model's joint forecast uncertainty through the same reconstruction. Seasonal integration additionally restores the required earlier seasonal levels.
 
 The next figure shows this inverse transformation visually. The model works on a transformed series internally, but the reported forecast is reconstructed on the level scale so it can be compared directly with the observed data.
 
-![ARIMA level forecast](../../assets/time_series/arima_seasonality/06_arima_level_forecast.png)
+![ARIMA level forecast](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/arima_seasonality/06_arima_level_forecast.png)
 
 ### Seasonal model diagnostics
 
@@ -686,7 +646,7 @@ For monthly data, inspect
 
 A seasonal-naive forecast is especially useful because it provides a simple benchmark: each forecast repeats the most recent observation from the same season. The figure below shows how that benchmark behaves, making it easier to judge whether a fitted seasonal model is adding forecasting value beyond the baseline.
 
-![Seasonal naive forecast](../../assets/time_series/arima_seasonality/07_seasonal_naive_forecast.png)
+![Seasonal naive forecast](https://raw.githubusercontent.com/djeada/Statistics-Notes/main/assets/time_series/arima_seasonality/07_seasonal_naive_forecast.png)
 
 An apparent seasonal AR or MA term can sometimes be a proxy for omitted deterministic calendar structure. When known calendar variables directly describe the mechanism, include them rather than forcing stochastic seasonal terms to absorb the effect.
 
@@ -712,4 +672,30 @@ An apparent seasonal AR or MA term can sometimes be a proxy for omitted determin
 9. Examine interval coverage and forecast errors by horizon.
 10. Document all transformations and the inverse transformation used for reporting.
 
-The workflow is iterative rather than strictly linear. A residual pattern or weak backtest result can send the analysis back to the transformation or model-identification stage, while a strong candidate should remain interpretable on the scale used for reporting.
+A remaining seasonal residual pattern is evidence to revisit the seasonal representation, while unstable transformed values can require reconsidering differencing or a break. After a revision, repeat the chronological evaluation of the whole procedure. The goal is a reproducible relationship between observations, transformed dynamics, and reported forecasts, with each term addressing an identifiable feature rather than simply improving one training statistic.
+
+## Formula reference
+
+| Model / quantity | General formula | Important special case / condition |
+|---|---|---|
+| White noise | $X_t=\varepsilon_t$ | ARIMA$(0,0,0)$. |
+| AR($p$) | $\phi(B)X_t=c+\varepsilon_t$ | ARIMA$(p,0,0)$. |
+| MA($q$) | $X_t=\mu+\theta(B)\varepsilon_t$ | ARIMA$(0,0,q)$. |
+| ARMA($p,q$) | $\phi(B)X_t=c+\theta(B)\varepsilon_t$ | ARIMA$(p,0,q)$. |
+| Pure integration $I(d)$ | $(1-B)^dX_t=\varepsilon_t$ | ARIMA$(0,d,0)$. |
+| Random walk | $(1-B)X_t=\varepsilon_t$ | ARIMA$(0,1,0)$. |
+| Random walk with drift | $(1-B)X_t=\delta+\varepsilon_t$ | ARIMA$(0,1,0)$ with drift under the usual parameterization. |
+| ARIMA$(p,d,q)$ | $\phi(B)(1-B)^dX_t=c+\theta(B)\varepsilon_t$ | Fit ARMA dynamics to the $d$th-differenced series. |
+| ARIMA$(1,1,1)$ | $(1-\phi B)(1-B)X_t=c+(1+\theta B)\varepsilon_t$ | Common low-order mixed model for first differences. |
+| Ordinary difference | $\nabla^dX_t=(1-B)^dX_t$ | $d=1$: $X_t-X_{t-1}$; $d=2$: $X_t-2X_{t-1}+X_{t-2}$. |
+| Seasonal difference | $\nabla_s^DX_t=(1-B^s)^DX_t$ | $D=1$: $X_t-X_{t-s}$. |
+| SARIMA$(p,d,q)(P,D,Q)_s$ | $\Phi(B^s)\phi(B)(1-B^s)^D(1-B)^dX_t=c+\Theta(B^s)\theta(B)\varepsilon_t$ | General seasonal ARIMA form. |
+| Seasonal random walk | $(1-B^s)X_t=\varepsilon_t$ | SARIMA$(0,0,0)(0,1,0)_s$; seasonal-naive benchmark has the same conditional-mean recursion. |
+| Seasonal AR(1) | $(1-\Phi B^s)X_t=\varepsilon_t$ | SARIMA$(0,0,0)(1,0,0)_s$. |
+| Seasonal MA(1) | $X_t=(1+\Theta B^s)\varepsilon_t$ | SARIMA$(0,0,0)(0,0,1)_s$. |
+| Combined ordinary + seasonal difference | $(1-B)(1-B^s)X_t=X_t-X_{t-1}-X_{t-s}+X_{t-s-1}$ | Frequently used with $d=D=1$. |
+| AR stationarity/causality | $\phi(z)=0\Rightarrow\lvert z\rvert>1$ and $\Phi(z^s)=0\Rightarrow\lvert z\rvert>1$ | Applied after differencing; excludes unit roots from the stationary AR component. |
+| MA invertibility | $\theta(z)=0\Rightarrow\lvert z\rvert>1$ and seasonal MA roots likewise | Gives a stable innovation representation. |
+| ARMA MA($\infty$) form | $X_t=\sum_{j=0}^{\infty}\psi_j\varepsilon_{t-j}$ | Exists for a causal ARMA model. |
+| Invertible AR($\infty$) form | $X_t=\sum_{j=1}^{\infty}\pi_jX_{t-j}+\varepsilon_t$ | Exists for an invertible MA/ARMA representation. |
+| Forecast reintegration, $d=1$ | $\hat X_{T+h\mid T}=\hat X_{T+h-1\mid T}+\widehat{\Delta X}_{T+h\mid T}$ | Cumulate forecasted changes back to the level scale. |
