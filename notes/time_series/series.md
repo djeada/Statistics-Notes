@@ -1,8 +1,14 @@
 # Sequences and Series
 
-Sequences and series provide the convergence language behind many time-series representations. A sequence describes an ordered set of terms, while a series asks whether the cumulative effect of those terms approaches a finite limit.
+[Time series index](README.md)
 
-This becomes important when a dynamic model is expanded into an infinite history of shocks or observations. Conditions such as geometric decay, absolute summability, and mean-square convergence determine whether those infinite representations are mathematically stable and can be approximated accurately with a finite number of terms.
+Sequences and series provide the convergence language behind many time-series representations. A sequence is an ordered list of terms. A series sums those terms and asks whether their cumulative contribution approaches a finite limit as more terms are included.
+
+These distinctions matter when a dynamic model is rewritten as an infinite weighted history of shocks or observations. The representation is useful only if the successive finite approximations approach a well-defined limit. Conditions such as geometric decay, absolute summability, and mean-square convergence determine whether those infinite representations are mathematically stable and can be approximated accurately with a finite number of terms.
+
+**Reading guide.** Follow the progression from individual terms to partial sums, then to infinite sums and random filters. The worked calculations revisit the geometric series to answer a new question each time: the limiting value, the size of a discarded tail, or the variance of a weighted shock history. Keep ordinary convergence, absolute convergence, and mean-square convergence distinct.
+
+**Related reading:** [difference equations](difference_equations.md).
 
 ## Formula reference
 
@@ -49,11 +55,11 @@ $$
 
 This is why a stable linear time-series representation can be approximated by finitely many terms: when the weights decay geometrically, the discarded tail has a known bound.
 
-![Partial sums of a geometric series](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/01_series_partial_sums.png)
+![Partial sums of a geometric series](../../assets/time_series/student/01_series_partial_sums.png)
 
 The figure shows the partial sums approaching 2. Each added term improves the approximation, but the size of the improvement shrinks because the geometric weights decay.
 
-### Sequences
+## Sequences
 
 A **sequence** is an ordered list of numbers, formally a function that maps an index such as a natural number $n$ to a value $a_n$:
 
@@ -75,7 +81,7 @@ $$
 
 for all $n>N$. If no finite limit satisfies this condition, the sequence diverges.
 
-#### Examples of Sequences
+### Examples of Sequences
 
 A convergent example is
 
@@ -123,7 +129,7 @@ $$
 
 These examples concern the behavior of the individual terms. A series asks a different question: what happens when the terms are accumulated?
 
-### Partial Sums
+## Partial Sums
 
 For a sequence $\{a_n\}$, the **partial sum** of the first $n$ terms is
 
@@ -143,7 +149,7 @@ $$
 
 and so on. Infinite-series convergence is defined through the behavior of this sequence of partial sums.
 
-### Series
+## Series
 
 A **series** is the formal sum of the terms of a sequence. If the partial sums converge to a finite limit $s$, then
 
@@ -155,7 +161,7 @@ $$
 
 If the partial sums do not approach a finite limit, the series diverges. Therefore, a term sequence approaching zero is necessary for series convergence but is not sufficient; the harmonic series later in the chapter is the standard counterexample.
 
-### Geometric Series and Rational Functions
+## Geometric Series and Rational Functions
 
 A geometric series has the form
 
@@ -178,7 +184,7 @@ $$
 
 This identity is especially useful in time-series analysis because inverse lag polynomials can often be expanded as geometric or power series. The convergence condition determines whether the resulting infinite-lag representation is stable.
 
-### Examples of Convergent Series
+## Examples of Convergent Series
 
 A geometric series with ratio $1/3$ is
 
@@ -214,7 +220,7 @@ $$
 
 These examples illustrate different reasons for convergence: geometric decay, sufficiently fast polynomial decay, and cancellation in an alternating sequence.
 
-### Examples of Divergent Series
+## Examples of Divergent Series
 
 A geometric series with ratio larger than 1 in magnitude diverges. For example,
 
@@ -241,7 +247,7 @@ $$
 
 is more subtle. Its terms do approach zero, but the partial sums still grow without bound. This is why checking $a_n\to0$ is only a necessary condition for convergence.
 
-### Absolute Convergence
+## Absolute Convergence
 
 A series is **absolutely convergent** if
 
@@ -253,9 +259,9 @@ converges. Absolute convergence implies ordinary convergence. The converse is no
 
 Absolute summability is particularly useful for linear filters because it gives a strong form of stability and makes many rearrangements and expectation calculations straightforward.
 
-### Convergence Tests
+## Convergence Tests
 
-Different series have different structures, so no single convergence test is best in every case. The tests below give common ways to compare the tail behavior of a series with a known benchmark.
+Choose a convergence test by the structure of the terms: positivity, alternation, geometric decay, or a useful comparison. The tests below examine the tail of the series, because changing finitely many initial terms cannot change whether the remaining infinite sum converges. For the ratio and root tests, a limiting value of 1 is inconclusive and requires another argument.
 
 **Integral test.** Suppose $f(x)$ is positive, continuous, and decreasing for $x\ge1$, with $f(n)=a_n$. Then
 
@@ -373,7 +379,7 @@ $$
 
 so the geometric series converges.
 
-### Mean-Square Convergence
+## Mean-Square Convergence
 
 For random variables, convergence can be defined through expected squared error. A sequence $X_n$ converges to $X$ in **mean square** if
 
@@ -384,7 +390,7 @@ $$
 
 This notion is important for stochastic processes because infinite linear representations are often interpreted as limits of finite random sums.
 
-#### Inverting the MA(1) Model
+### Inverting the MA(1) Model
 
 Consider
 
@@ -404,7 +410,7 @@ $$
 |\beta|<1.
 $$
 
-#### Autocovariance Function of the MA(1) Process
+### Autocovariance Function of the MA(1) Process
 
 The autocovariance function is
 
@@ -419,7 +425,7 @@ $$
 
 The finite covariance range reflects the finite shock duration of the MA(1): observations more than one period apart share no common innovation.
 
-#### Series Convergence in Mean-Square Sense
+### Series Convergence in Mean-Square Sense
 
 Consider the partial inverse
 
@@ -447,7 +453,7 @@ E[(Z_t-S_n)^2]
 =\beta^{2(n+1)}\sigma_Z^2.
 $$
 
-#### Condition for Convergence
+### Condition for Convergence
 
 Mean-square convergence requires
 
@@ -463,7 +469,7 @@ $$
 
 Thus the same condition that makes the inverse weights decay also makes the finite truncations converge to the innovation in mean square.
 
-#### Invertibility Condition
+### Invertibility Condition
 
 The MA polynomial is
 
@@ -487,7 +493,7 @@ $$
 
 Invertibility therefore links a polynomial root condition, geometric-series convergence, and stable recovery of the innovations.
 
-## Student guide: why convergence appears in time-series filters
+## Worked examples: convergence and filter stability
 
 Infinite series appear whenever a stable dynamic model is rewritten as a weighted history of shocks or observations. The geometric identity
 
@@ -525,7 +531,7 @@ $$
 \sum_{j=0}^{\infty}\psi_j^2<\infty,
 $$
 
-ensures a finite second moment when the shocks are uncorrelated with finite variance. If $\psi_j=0.5^j$, then
+ensures mean-square convergence and a finite variance when the shocks have mean zero, a common finite variance, and zero covariance across time. If $\psi_j=0.5^j$, then
 
 $$
 \sum_{j=0}^{\infty}0.25^j
@@ -550,7 +556,7 @@ $$
 =\frac{|r|^{m+1}}{|1-r|}
 $$
 
-for any $|r|<1$, and is bounded by
+for any $|r|<1$, By the triangle inequality, the same tail also has the bound
 
 $$
 \frac{|r|^{m+1}}{1-|r|}

@@ -1,8 +1,31 @@
 # Autoregressive (AR) Models in Time Series Analysis
 
+[Time series index](README.md)
+
 Autoregressive models describe a time series whose current value depends linearly on its own recent history plus a new innovation. The lag coefficients determine how strongly past observations persist into the present and whether the process tends to decay smoothly, alternate, or oscillate.
 
 The same coefficients also control stationarity, the shape of the ACF and PACF, and the way forecasts return toward a long-run mean. AR modeling therefore connects a simple regression-like equation on lagged values with root conditions, dependence diagnostics, and recursive prediction.
+
+**Reading guide.** Read the model equation as a conditional prediction plus a new shock. Then trace how the same lag coefficients determine persistence, root locations, moment relationships, and forecast uncertainty. The worked examples distinguish a one-step update from the long-run mean, and the estimation sections explain why increasing the lag order changes both flexibility and estimation uncertainty.
+
+**Related reading:** [Yule-Walker equations](yule_walker_equations.md).
+
+**On this page**
+
+- [Formula reference](#formula-reference)
+- [Worked calculation: one AR(2) update](#worked-calculation-one-ar2-update)
+- [From observed lags to a conditional prediction](#from-observed-lags-to-a-conditional-prediction)
+- [Definition of Autoregressive Models](#definition-of-autoregressive-models)
+- [Components of the AR($p$) Model](#components-of-the-arp-model)
+- [Order of an AR Model](#order-of-an-ar-model)
+- [Example: AR(2) Model in Practice](#example-ar2-model-in-practice)
+- [General Interpretation of AR($p$) Models](#general-interpretation-of-arp-models)
+- [Estimation of Parameters](#estimation-of-parameters)
+- [Model Selection for Autoregressive (AR) Models](#model-selection-for-autoregressive-ar-models)
+- [Properties of AR Models](#properties-of-ar-models)
+- [Example: AR(2) Model in Time Series Forecasting](#example-ar2-model-in-time-series-forecasting)
+- [Limitations of AR Models](#limitations-of-ar-models)
+- [Worked examples: persistence, roots, and prediction](#worked-examples-persistence-roots-and-prediction)
 
 ## Formula reference
 
@@ -44,11 +67,13 @@ $$
 
 The shock moves the realized value away from that mean. The AR polynomial is $1-0.6B+0.2B^2$; the location of its roots determines whether the usual causal AR recursion is stationary.
 
-![AR and MA identification patterns](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/06_ar_ma_identification.png)
+![AR and MA identification patterns](../../assets/time_series/student/06_ar_ma_identification.png)
+
+## From observed lags to a conditional prediction
 
 Autoregressive (AR) models describe serial dependence by expressing the current value of a time series as a linear function of its own past values plus a new innovation. The order $p$ in AR($p$) specifies how many lags appear directly in the model.
 
-### Definition of Autoregressive Models
+## Definition of Autoregressive Models
 
 An **autoregressive model of order $p$**, AR($p$), is
 
@@ -64,7 +89,7 @@ $$
 
 The coefficients determine how past observations contribute to the conditional mean of $X_t$, while $\varepsilon_t$ represents the new information that is not predictable from those lags.
 
-### Components of the AR($p$) Model
+## Components of the AR($p$) Model
 
 - $X_t$ is the value of the series at time $t$.
 - $c$ is the intercept. For a stationary AR process, it is generally not equal to the unconditional mean.
@@ -84,9 +109,9 @@ and innovations are uncorrelated across time. Some estimation and forecasting re
 
 The essential idea is therefore simple: the AR part describes predictable linear dependence on observed past values, while the innovation accounts for the new random component at time $t$.
 
-### Order of an AR Model
+## Order of an AR Model
 
-The **order** $p$ is the number of lagged observations that enter the conditional mean directly.
+The **order** $p$ is the largest lag included in the AR polynomial. In the usual consecutive-lag specification, it gives the number of lagged observations entered as predictors. An intermediate coefficient may be zero, so the order need not equal the number of nonzero coefficients.
 
 An AR(1) uses one lag:
 
@@ -108,7 +133,7 @@ $$
 
 A larger order does not automatically produce a better model. Extra lags increase flexibility, but they also introduce more parameters and can make estimation less stable.
 
-### Example: AR(2) Model in Practice
+## Example: AR(2) Model in Practice
 
 Suppose the current measurement $y_t$ is modeled using the previous two measurements:
 
@@ -122,9 +147,9 @@ $$
 E(y_t\mid y_{t-1},y_{t-2})=B_0+B_1y_{t-1}+B_2y_{t-2}.
 $$
 
-The innovation $w_t$ is the difference between that conditional mean and the value that is actually observed.
+The innovation $w_t$ is the observed value minus that conditional mean. Before the observation arrives, the forecast sets the expected innovation to zero; afterward, the realized innovation measures the part of the update that the two lagged values did not predict.
 
-### General Interpretation of AR($p$) Models
+## General Interpretation of AR($p$) Models
 
 An AR($p$) model resembles a regression whose predictors are lagged values of the response itself:
 
@@ -134,7 +159,7 @@ $$
 
 This interpretation is useful for estimation, but the time ordering matters. The lags are not an arbitrary collection of predictors: together, their coefficients determine persistence, oscillation, stationarity, and multi-step forecast behavior.
 
-### Estimation of Parameters
+## Estimation of Parameters
 
 Several methods are commonly used to estimate $c$ and the AR coefficients.
 
@@ -142,7 +167,7 @@ Several methods are commonly used to estimate $c$ and the AR coefficients.
 
 **Yule-Walker estimation** uses the relationship between the AR coefficients and the autocovariances of a stationary process. It is transparent and computationally convenient, especially when the theoretical moment relationships are of interest.
 
-![Yule-Walker recursion](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/07_yule_walker_recursion.png)
+![Yule-Walker recursion](../../assets/time_series/dependence/07_yule_walker_recursion.png)
 
 The recursion makes that moment relationship concrete: once the AR coefficients are fixed, the autocorrelations satisfy a corresponding lag recursion. Yule-Walker estimation reverses this relationship, using sample autocovariances to estimate the AR coefficients.
 
@@ -150,11 +175,11 @@ The recursion makes that moment relationship concrete: once the AR coefficients 
 
 Different implementations can handle initialization and finite samples differently, so estimates need not be identical even when they target the same AR specification.
 
-### Model Selection for Autoregressive (AR) Models
+## Model Selection for Autoregressive (AR) Models
 
 Choosing $p$ requires balancing fit against complexity. ACF and PACF patterns can suggest plausible orders, while information criteria and out-of-sample evaluation help distinguish among candidate models.
 
-#### Autocorrelation Function (ACF)
+### Autocorrelation Function (ACF)
 
 The sample autocorrelation at lag $k$ can be written as
 
@@ -172,9 +197,9 @@ For example, a stationary AR(1) with $\phi=0.8$ has population autocorrelation $
 
 The gradual decay in this plot is the kind of pattern that suggests autoregressive persistence, although a sample ACF alone does not identify the order uniquely.
 
-#### Partial Autocorrelation Function (PACF)
+### Partial Autocorrelation Function (PACF)
 
-The **Partial Autocorrelation Function (PACF)** measures the relationship between $Y_t$ and $Y_{t-k}$ after linearly accounting for the intermediate lags $1,\ldots,k-1$.
+The **partial autocorrelation function (PACF)** measures the remaining linear association between $Y_t$ and $Y_{t-k}$ after projecting out the intermediate lags $1,\ldots,k-1$. This linear adjustment is the relevant operation; it does not generally imply conditional independence or establish a direct causal effect.
 
 For an ideal population AR($p$), the PACF is zero after lag $p$. In finite samples, later partial autocorrelations will not be exactly zero, so the cutoff is interpreted together with uncertainty bands and other diagnostics.
 
@@ -182,15 +207,15 @@ The following plots illustrate the typical ACF and PACF behavior of an AR(2):
 
 ![ACF and PACF Plots](https://github.com/user-attachments/assets/0dd03e98-070e-47db-abad-32dd61c41f31)
 
-![ACF/PACF identification](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/02_acf_pacf_identification.png)
+![ACF/PACF identification](../../assets/time_series/dependence/02_acf_pacf_identification.png)
 
 The key pattern is that the ACF tails off while the PACF concentrates its population signal in the first two lags. These are identification heuristics, not a substitute for fitting and checking candidate models.
 
-#### Information Criteria for Model Selection
+### Information Criteria for Model Selection
 
 Information criteria compare likelihood fit with a penalty for additional parameters.
 
-##### Akaike Information Criterion (AIC)
+#### Akaike Information Criterion (AIC)
 
 The AIC is
 
@@ -200,7 +225,7 @@ $$
 
 where $L$ is the maximized likelihood and $k$ is the number of estimated parameters counted under the chosen convention. Lower values are preferred when comparing models fitted to the same response data with the same likelihood basis.
 
-##### Bayesian Information Criterion (BIC)
+#### Bayesian Information Criterion (BIC)
 
 The BIC is
 
@@ -212,7 +237,7 @@ where $n$ is the sample size. Because its penalty grows with $n$, BIC generally 
 
 Neither criterion establishes that a model is adequate. Residual diagnostics and forecast evaluation are still required.
 
-#### Steps for Selecting the Optimal AR Model Order
+### Steps for Selecting the Optimal AR Model Order
 
 A practical selection process is:
 
@@ -232,7 +257,7 @@ For example, suppose candidate models give
 
 Both criteria favor AR(2) among these candidates. That result supports AR(2), but it should still be checked against residual behavior and out-of-sample forecasts.
 
-### Properties of AR Models
+## Properties of AR Models
 
 **Stationarity in AR models**
 
@@ -254,11 +279,11 @@ For a stationary causal AR model, the ACF tails off with lag. The exact pattern 
 
 For an ideal population AR($p$), the PACF cuts off after lag $p$. This is why the PACF is useful for proposing AR orders, especially when the series is stationary and the sample is reasonably long.
 
-![AR persistence](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/03_ar_persistence.png)
+![AR persistence](../../assets/time_series/dependence/03_ar_persistence.png)
 
 The persistence figure shows how coefficients closer to the unit-root boundary make shocks decay more slowly. That same persistence appears as a slower ACF decay and slower mean reversion in forecasts.
 
-### Example: AR(2) Model in Time Series Forecasting
+## Example: AR(2) Model in Time Series Forecasting
 
 Consider
 
@@ -274,7 +299,7 @@ Suppose
 - $X_{t-1}=10$,
 - $X_{t-2}=5$.
 
-#### AR(2) Model Equation
+### AR(2) Model Equation
 
 Substituting the observed lags gives
 
@@ -283,27 +308,27 @@ X_t=3+0.6(10)-0.2(5)+\varepsilon_t
 =8+\varepsilon_t.
 $$
 
-##### Calculation
+#### Calculation
 
 The one-step conditional mean is therefore
 
 $$
-\hat X_{t|t-1}=8.
+\hat X_{t\mid t-1}=8.
 $$
 
 The realized observation differs from 8 by the new innovation $\varepsilon_t$.
 
-##### Interpretation
+#### Interpretation
 
 The value 8 is the forecast conditional on these particular lag values, not a fixed prediction for every time point. At the next step, the forecast changes because the lagged observations change. Multi-step forecasts recursively replace unknown future values with their conditional forecasts.
 
-#### Visualization
+### Visualization
 
-![ar2_model](https://github.com/djeada/Statistics-Notes/assets/37275728/9cc88c5a-174a-4503-a9cb-a20c43e26ab7)
+![Simulated AR(2) observations and their fitted conditional mean](https://github.com/djeada/Statistics-Notes/assets/37275728/9cc88c5a-174a-4503-a9cb-a20c43e26ab7)
 
 The blue line shows a simulated AR(2) series and the red dashed line shows fitted or predicted values. The relevant comparison is how well the AR(2) conditional mean follows the serial dependence in the data; the remaining deviations should behave like innovations rather than a systematic pattern.
 
-### Limitations of AR Models
+## Limitations of AR Models
 
 **Linearity assumption.** AR models describe linear dependence on past values. Nonlinear thresholds, asymmetric responses, and other nonlinear dynamics require a different specification.
 
@@ -315,7 +340,7 @@ The blue line shows a simulated AR(2) series and the red dashed line shows fitte
 
 **Risk of overfitting.** Increasing $p$ can improve in-sample fit while degrading forecast performance. Temporal validation and parsimonious specifications are therefore important.
 
-## Student guide: persistence, roots, and prediction
+## Worked examples: persistence, roots, and prediction
 
 An AR model explains the current value using observed past values:
 
@@ -405,7 +430,7 @@ $$
 \hat\beta=(X^\top X)^{-1}X^\top y.
 $$
 
-A deterministic trend, seasonal terms, or highly collinear lag columns can make this calculation unstable. Likelihood estimation treats the initial observations and innovation variance differently and may therefore give slightly different estimates.
+A deterministic trend, seasonal terms, or highly collinear lag columns can make this calculation unstable. Conditional and exact likelihood methods can handle initial observations and innovation variance differently, so their finite-sample estimates need not coincide with conditional least squares. The displayed matrix inverse is an algebraic expression; numerical implementations should solve the least-squares problem directly rather than explicitly form the inverse.
 
 The intercept $c$ is not the stationary mean. For AR(1),
 
@@ -426,7 +451,7 @@ provided the denominator is nonzero.
 For a centered AR(1),
 
 $$
-\hat y_{T+h|T}=\phi^hy_T,
+\hat y_{T+h\mid T}=\phi^hy_T,
 $$
 
 and the $h$-step forecast-error variance is

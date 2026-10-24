@@ -1,8 +1,14 @@
 # Backward Shift Operator
 
+[Time series index](README.md)
+
 The backward shift operator is a compact notation for referring to earlier observations in a time series. Instead of writing each lag separately, it lets lagged values, differences, and model equations be expressed as polynomials in a single operator.
 
 This notation matters because the algebra of those polynomials mirrors the structure of AR, MA, ARIMA, and seasonal models. Expanding an operator always returns to ordinary lagged observations, while factoring and combining operators make stability, differencing, and model structure easier to see.
+
+**Reading guide.** Expand each operator expression into ordinary lagged observations before interpreting the model. The random-walk, MA, and AR examples show the same algebra applied to different inputs. The final calculations combine ordinary and seasonal differences, where writing out every selected observation is a useful check on signs, time alignment, and the number of initial observations lost.
+
+**Related reading:** [ARIMA and SARIMA](arima_models.md).
 
 ## Formula reference
 
@@ -10,7 +16,7 @@ This notation matters because the algebra of those polynomials mirrors the struc
 |---|---|---|
 | One-period shift | $BX_t=X_{t-1}$ | $B$ moves the index back by one observation. |
 | $k$-period shift | $B^kX_t=X_{t-k}$ | Repeated application of the lag operator. |
-| First difference | $\nabla X_t=(1-B)X_t=X_t-X_{t-1}$ | Removes one stochastic level component. |
+| First difference | $\nabla X_t=(1-B)X_t=X_t-X_{t-1}$ | Converts levels to one-period changes; removes a unit-root accumulation when present. |
 | $d$th difference | $\nabla^dX_t=(1-B)^dX_t$ | ARIMA uses this with integration order $d$. |
 | Seasonal difference | $\nabla_sX_t=(1-B^s)X_t=X_t-X_{t-s}$ | $s$ is the seasonal period. |
 | Combined differences | $(1-B)^d(1-B^s)^DX_t$ | Used in SARIMA with ordinary order $d$ and seasonal order $D$. |
@@ -43,7 +49,9 @@ $$
 
 The notation is compact, but the calculation is still ordinary subtraction. It becomes especially useful when ordinary and seasonal differences are combined in ARIMA models.
 
-![Backshift and first differences](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/07_backward_shift_difference.png)
+![Backshift and first differences](../../assets/time_series/student/07_backward_shift_difference.png)
+
+## Definition and repeated shifts
 
 The **backward shift operator**, denoted by $B$, is a compact way to refer to earlier observations in a time series. It shifts the time index back by one period and simplifies the notation used in autoregressive, moving average, and mixed models.
 
@@ -67,7 +75,7 @@ $$
 
 This simple rule lets lagged terms be collected into polynomials, making model equations easier to manipulate and interpret.
 
-### Random Walk
+## Random Walk
 
 Consider a simple **random walk**:
 
@@ -101,7 +109,7 @@ $$
 
 Here, $1-B$ is also the first-difference operator: applying it to $X_t$ converts the random-walk level into its one-period change.
 
-### Moving Average (MA) Process
+## Moving Average (MA) Process
 
 Consider a **moving average process of order 2, MA(2)**:
 
@@ -133,9 +141,9 @@ $$
 X_t=\beta(B)Z_t.
 $$
 
-The polynomial $\beta(B)$ therefore summarizes how the current and lagged shocks enter the MA(2) process.
+The polynomial $\beta(B)$ records the lag and coefficient of every shock entering the MA(2). Here its coefficient at lag zero is 1, followed by 0.2 at lag 1 and 0.04 at lag 2. Expanding the polynomial recovers the original equation, so the compact notation preserves the same model.
 
-### Autoregressive (AR) Process
+## Autoregressive (AR) Process
 
 Consider an **autoregressive process of order 2, AR(2)**:
 
@@ -169,7 +177,7 @@ $$
 
 This is the standard operator form of an AR model: the polynomial $\phi(B)$ collects the dependence on past values into a single expression.
 
-### Moving Average (MA) Process with a Constant Mean
+## Moving Average (MA) Process with a Constant Mean
 
 An **MA($q$)** process with a constant term can be written as
 
@@ -203,7 +211,7 @@ $$
 
 In this stationary MA setting, $\mu$ is best interpreted as a constant mean term rather than a time trend. The operator polynomial $\beta(B)$ captures the effect of current and lagged shocks around that mean.
 
-### Autoregressive (AR) Process of Order $p$
+## Autoregressive (AR) Process of Order $p$
 
 An **autoregressive process of order $p$, AR($p$)**, is
 
@@ -237,7 +245,7 @@ $$
 
 This compact form is useful because algebra on the polynomial $\phi(B)$ corresponds directly to algebra on the model's lag structure.
 
-## Student guide: expand the operator before interpreting it
+## Worked examples: expanding and checking operators
 
 The backward shift operator is defined by
 
@@ -287,7 +295,7 @@ $$
 
 This four-term expression makes the two comparisons explicit and helps prevent indexing errors when implementing seasonal ARIMA models.
 
-![Backshift differences](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/05_backshift_differences.png)
+![Backshift differences](../../assets/time_series/dependence/05_backshift_differences.png)
 
 The figure shows the same idea geometrically: each operator selects lagged observations, and differencing combines those shifted values with positive and negative weights.
 
@@ -305,7 +313,7 @@ $$
 \theta(B)=1+\theta_1B+\theta_2B^2.
 $$
 
-Sign conventions differ across texts and software, so inspect the model equation before comparing reported parameter values.
+The minus signs in the AR polynomial come from moving lagged observations to the left side of the equation. The plus signs in this MA polynomial follow the shock convention used here. Other texts use minus-signed MA coefficients, so compare the expanded equations before comparing parameter values or root calculations.
 
 ### Implementation check
 

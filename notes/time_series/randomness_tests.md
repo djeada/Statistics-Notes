@@ -1,8 +1,14 @@
 # Randomness and Trend Tests
 
+[Time series index](README.md)
+
 Randomness tests look for specific kinds of structure that should not appear under a stated null model. In time-series work, they are most useful as diagnostics: one test may target linear autocorrelation, another unusual turning-point behavior, another monotone trend, and another dependence in squared residuals.
 
 No finite set of tests can prove that a series is truly random. Their role is to identify particular departures from an assumed noise process and to be interpreted alongside plots, model assumptions, residual behavior, and out-of-sample forecasting evidence.
+
+**Reading guide.** For each diagnostic, identify what is counted, which null hypothesis supplies its reference distribution, and which kind of model failure it can detect. The turning-point example is a counting exercise before it is a hypothesis test. The final diagnostic sequence combines these targeted checks without treating a large collection of p-values as proof of randomness.
+
+**Related reading:** [model fitting and diagnostics](time_series_modeling.md).
 
 ## Formula reference
 
@@ -33,13 +39,15 @@ the interior observations at positions 2, 3, and 4 are all turning points: posit
 
 For a fitted model, the more important question is whether residuals still contain predictable structure. A residual ACF, a Ljung-Box test, and a plot of squared residuals address different kinds of remaining dependence and should be interpreted together.
 
-![Turning points in a synthetic series](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/turning_points_example.png)
+![Turning points in a synthetic series](../../assets/time_series/turning_points_example.png)
 
 The figure marks local peaks and troughs directly. A sequence with unusually few turning points tends to move persistently in one direction, while unusually many turning points indicate excessive alternation.
 
-When a series looks noisy, diagnostics can still test whether particular forms of structure remain. No single procedure proves that a series is "random"; each test defines a specific null hypothesis and is sensitive to particular alternatives.
+## What each diagnostic tests
 
-### Ljung-Box Q Test (Independence)
+When a series looks noisy, diagnostics can still test whether particular forms of structure remain. Start by stating the null hypothesis, the lags or ordering features examined, and the sample to which the test is applied. A result for raw observations answers a different question from a result for fitted innovation residuals. No single procedure proves randomness across every possible form of dependence.
+
+## Ljung-Box Q test: joint autocorrelation
 
 The **Ljung-Box** test checks whether a collection of autocorrelations is jointly zero:
 
@@ -51,9 +59,9 @@ where $\hat r_k$ is the sample autocorrelation at lag $k$ and $m$ is the maximum
 
 For a raw IID series, the reference distribution is commonly approximated by $\chi^2_m$. When the test is applied to residuals from a fitted ARMA model, the degrees of freedom are typically reduced to $m-p-q$ for a fitted ARMA($p,q$) (when $m>p+q$), although the exact adjustment depends on the setting and implementation.
 
-A rejection means that at least some of the tested linear autocorrelations are inconsistent with the null. It does not identify which new model should be fitted.
+A rejection means that at least some of the tested linear autocorrelations are inconsistent with the null. It does not identify which new model should be fitted. Failure to reject only means that this set of lag correlations has not supplied enough evidence against the null; nonlinear dependence, untested seasonal lags, and low power in a short sample can remain relevant.
 
-### McLeod-Li Test (Squared Series)
+## McLeod-Li Test (Squared Series)
 
 The **McLeod-Li** test applies a Ljung-Box-type statistic to squared observations or squared residuals:
 
@@ -63,11 +71,11 @@ $$
 
 Autocorrelation in the squared series indicates dependence in the magnitude of fluctuations even when the original residuals have little linear autocorrelation. This pattern is consistent with conditional heteroskedasticity and motivates checking models such as ARCH or GARCH, but the test alone does not establish a specific variance model.
 
-![Randomness and residual diagnostics](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/08_randomness_residual_diagnostics.png)
+![Randomness and residual diagnostics](../../assets/time_series/dependence/08_randomness_residual_diagnostics.png)
 
 The figure places mean-dependence and variance-dependence diagnostics side by side. Residual autocorrelation points to structure left in the conditional mean, while autocorrelation in squared residuals points to time-varying conditional variance.
 
-### Turning Point Test (IID vs. Not IID)
+## Turning Point Test (IID vs. Not IID)
 
 A **turning point** occurs at an interior time $t$ when the series changes direction:
 
@@ -95,7 +103,7 @@ can be compared with a normal approximation for sufficiently large $n$. Ties req
 
 The worked example and figure above show exactly what is being counted.
 
-### Difference-Sign Test (Randomness)
+## Sign changes in successive differences
 
 Successive differences are
 
@@ -130,9 +138,9 @@ E(C)=\frac{2(n-2)}{3},
 \mathrm{Var}(C)=\frac{16n-29}{90}.
 $$
 
-The signs of successive differences are not independent under an IID level series because adjacent differences share an observation. Treating them as independent fair coin flips would give the wrong reference distribution for this particular statistic.
+The signs of successive differences are not independent under an IID level series because adjacent differences share an observation. Treating them as independent fair coin flips would give the wrong reference distribution for this particular statistic. This section counts **changes between difference signs**. A test that instead counts positive differences is a different statistic and requires its own reference distribution.
 
-### Rank Test (Detecting Trend)
+## Rank Test (Detecting Trend)
 
 A rank-based trend test looks for monotone association between time and the observed values without requiring a normal marginal distribution.
 
@@ -146,7 +154,7 @@ Values far from zero indicate strong monotone association. Rank methods reduce s
 
 Because several diagnostics are often applied to the same series, isolated p-values should not be interpreted as independent discoveries. Use the tests as targeted checks and relate them to plots, model assumptions, and forecast performance.
 
-## Student guide: randomness is a collection of null hypotheses
+## Worked examples: null hypotheses and diagnostic decisions
 
 There is no single test that proves a time series is random. Different diagnostics ask different questions:
 

@@ -1,8 +1,14 @@
 # Invertibility in Time Series Models
 
+[Time series index](README.md)
+
 Invertibility is the condition that lets a moving-average or ARMA model recover its unobserved innovations from the observed series in a stable way. It turns the shock representation of the model into a usable past-based filter whose coefficients decay rather than grow without bound.
 
 The condition also resolves an identification problem: different MA parameter values can generate the same second-order behavior. Requiring the roots of the MA polynomial to lie outside the unit circle selects a canonical representation that is stable for estimation, residual analysis, and forecasting.
+
+**Reading guide.** Begin with the inverse weights of an MA(1), then connect their decay to the zeros of the MA polynomial. The MA(2) example shows why the complete polynomial matters more than separate bounds on its coefficients. The final calculations revisit equivalent covariance structures to explain why recovering shocks requires a representation convention as well as an observed dependence pattern.
+
+**Related reading:** [moving-average models](moving_average_models.md).
 
 ## Formula reference
 
@@ -35,17 +41,19 @@ $$
 
 The weights shrink, so the inverse representation is stable. If $\theta=2$, the first inverse weights are $1,-2,4,-8,\ldots$ and grow in magnitude. Because reciprocal MA parameters can generate the same autocorrelation structure after rescaling the innovation variance, the usual invertibility convention selects the representation with $|\theta|<1$.
 
-![Inverse-filter weights for invertible and non-invertible MA(1) parameters](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/08_invertibility_inverse_weights.png)
+![Inverse-filter weights for invertible and non-invertible MA(1) parameters](../../assets/time_series/student/08_invertibility_inverse_weights.png)
 
-In time-series modeling, **invertibility** means that the innovation sequence can be recovered as a stable function of the observed series and its past values. The concept is especially important for moving average models, whose equations are written in terms of unobserved current and lagged shocks.
+## Recovering shocks from observations
 
-### Intuition Behind Invertibility
+In time-series modeling, **invertibility** means that the innovation sequence can be recovered as a stable function of the observed series and its past values. The concept is especially important for moving-average models, whose equations use unobserved current and lagged shocks. For the uncentered case, subtract the process mean before applying the zero-mean inverse formulas below.
+
+## Intuition Behind Invertibility
 
 An MA model maps innovations into observations. Invertibility asks whether this mapping can be reversed using current and past observations with coefficients that decay sufficiently fast.
 
 This matters for two related reasons. First, it gives a stable way to infer innovations from observed data. Second, it selects a canonical parameterization when different MA coefficient sets imply the same second-order behavior. Without an invertibility convention, the observable autocovariances may not identify a unique MA representation.
 
-### Mathematical Definition of Invertibility
+## Mathematical Definition of Invertibility
 
 A process $\{X_t\}$ is invertible if its innovation $Z_t$ can be written as a convergent linear filter of present and past observations:
 
@@ -61,7 +69,7 @@ $$
 
 The exact convergence condition can be stated in several related ways, but the practical idea is the same: increasingly old observations should receive diminishing weight when reconstructing the current innovation.
 
-### Why is Invertibility Important?
+## Why is Invertibility Important?
 
 Invertibility provides a unique, stable representation of an MA process under the usual root convention. It makes the recovered innovations usable for residual diagnostics and recursive forecasting, and it avoids interpreting observationally equivalent coefficient sets as different models.
 
@@ -69,7 +77,7 @@ A non-invertible MA specification can still be written and numerically fitted, b
 
 Invertibility also gives an infinite autoregressive representation of the innovation filter, which connects MA models to AR-style recursions.
 
-### General Conditions for Invertibility
+## General Conditions for Invertibility
 
 For an MA($q$),
 
@@ -91,7 +99,7 @@ $$
 
 lies outside the unit circle. This root condition, rather than a separate bound on each individual coefficient, is the general criterion for MA($q$) models.
 
-### Example: MA(1) Process
+## Example: MA(1) Process
 
 Consider
 
@@ -101,7 +109,7 @@ $$
 
 where $Z_t$ is white noise with mean 0 and variance $\sigma_Z^2$.
 
-#### Inversion Using Backward Substitution
+### Inversion Using Backward Substitution
 
 Rearrange the model as
 
@@ -130,7 +138,7 @@ $$
 
 The coefficients decay geometrically when $|\beta|<1$, so the inverse filter is stable under that condition.
 
-#### Inversion Using the Backward Shift Operator
+### Inversion Using the Backward Shift Operator
 
 Write the MA(1) as
 
@@ -159,7 +167,7 @@ $$
 
 which is the same inverse obtained by backward substitution. The operator form makes clear that invertibility is a property of the MA polynomial.
 
-### Example: MA(2) Process
+## Example: MA(2) Process
 
 Consider
 
@@ -196,11 +204,11 @@ Both roots therefore lie outside the unit circle, so this MA(2) specification is
 
 This example also shows why individual coefficient bounds are not the correct general test: invertibility depends on the roots of the full polynomial.
 
-### Convergence of the Series in MA Models
+## Convergence of the Series in MA Models
 
 The inverse representation is useful only if truncating it after many lags gives a progressively better approximation to the innovation. In an invertible model, the inverse-filter coefficients decay, so increasingly distant observations contribute less.
 
-#### Understanding Mean-Square Convergence
+### Understanding Mean-Square Convergence
 
 For the MA(1),
 
@@ -210,7 +218,7 @@ $$
 
 Mean-square convergence means that finite truncations of this series approach $Z_t$ in expected squared error. When the inverse coefficients decay geometrically, the contribution from the omitted tail becomes negligible.
 
-#### Condition for Convergence: $|\beta|<1$
+### Condition for Convergence: $|\beta|<1$
 
 For MA(1), the inverse coefficients are powers of $-\beta$. Thus:
 
@@ -226,7 +234,7 @@ $$
 
 This condition is equivalent to requiring the zero $z=-1/\beta$ of $1+\beta z$ to lie outside the unit circle.
 
-#### Generalization to Higher-Order MA Models
+### Generalization to Higher-Order MA Models
 
 For
 
@@ -242,7 +250,7 @@ $$
 
 The model is invertible when all of these roots lie outside the unit circle. It is not necessary, and is not sufficient in general, to require every $|\theta_j|<1$ separately.
 
-#### Example: MA(1) Process
+### Example: MA(1) Process
 
 For
 
@@ -260,9 +268,9 @@ With $|\beta|<1$, the weights decay as the lag increases. The recovered innovati
 
 The figure below visualizes this contrast between decaying and expanding inverse-filter weights.
 
-![Stable and unstable inverse weights](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/06_invertibility.png)
+![Stable and unstable inverse weights](../../assets/time_series/dependence/06_invertibility.png)
 
-## Student guide: why roots and inverse filters matter
+## Worked examples: roots and inverse filters
 
 Invertibility asks whether unobserved innovations can be represented as a stable function of observed values. It is also the convention that chooses a canonical representation when more than one MA parameterization produces the same covariance structure.
 
@@ -298,7 +306,7 @@ and grows instead. The second representation is therefore not the stable past-ba
 
 ### Root condition
 
-The MA polynomial is
+For a nonzero MA(1) coefficient, the MA polynomial is
 
 $$
 \theta(B)=1+\theta B.
@@ -312,7 +320,7 @@ $$
 |\theta|<1.
 $$
 
-For higher-order MA models, every zero of the MA polynomial must lie outside the unit circle.
+For higher-order MA models, every zero of the MA polynomial must lie outside the unit circle. If the MA(1) coefficient is zero, the model is already white noise: the polynomial is the constant 1 and the inverse is the identity, so no reciprocal-root calculation is needed.
 
 ### Why equivalent models appear
 
@@ -324,7 +332,7 @@ $$
 \gamma(1)=\sigma^2\theta.
 $$
 
-Replacing $\theta$ by $1/\theta$ and rescaling the innovation variance appropriately can preserve the same autocorrelation. Second-order observations alone therefore cannot choose between the two parameterizations. Invertibility supplies the convention that selects the representation with a decaying inverse filter.
+For $\theta\ne0$, replacing $\theta$ by $1/\theta$ preserves the lag-1 autocorrelation. Rescaling the innovation variance from $\sigma^2$ to $\theta^2\sigma^2$ also preserves the variance and hence the complete autocovariance function. Under Gaussian assumptions, that matching covariance structure gives the same observed process distribution; without Gaussianity, it is a second-order equivalence. Second-order observations alone therefore cannot choose between the two parameterizations. Invertibility supplies the convention that selects the representation with a decaying inverse filter.
 
 ### Practical implications
 

@@ -1,14 +1,20 @@
 # Regression with ARMA Errors
 
-Regression with ARMA errors separates two kinds of structure that often appear together in time series. The regression explains how observed predictors shift the conditional mean, while the ARMA component models serial dependence that remains in the unexplained part.
+[Time series index](README.md)
+
+Regression with ARMA errors separates two kinds of structure that often appear together in time series. The regression component describes the relationship with observed predictors, while the ARMA component models the remaining serial error. Conditional on the complete past, the forecast combines the regression component with the predictable part of that error process.
 
 This distinction matters for both inference and forecasting. Autocorrelated errors change the uncertainty around regression coefficients and can contain additional predictive information, so a good model must handle the mean relationship and the temporal error process as parts of one coherent specification.
+
+**Reading guide.** Read the equation as a regression component plus an error process with its own dynamics. The numerical example then separates the serial error into its predictable part and its new innovation. Use that distinction when checking residuals: regression errors can remain correlated by design, while the fitted innovation residuals are the quantities expected to resemble white noise.
+
+**Related reading:** [dynamic regression](dynamic_regression.md).
 
 ## Formula reference
 
 | Component / case | General formula | Notes / special case |
 |---|---|---|
-| Regression with dynamic errors | $y_t=x_t^\top\beta+n_t$ | Predictors explain the conditional mean; $n_t$ contains remaining serial dependence. |
+| Regression with dynamic errors | $y_t=x_t^\top\beta+n_t$ | The regression component describes predictor effects; forecasting also uses the predictable part of $n_t$. |
 | ARMA($p,q$) errors | $\phi(B)n_t=\theta(B)\varepsilon_t$ | $\varepsilon_t$ is white noise; MA sign convention can vary. |
 | Combined model | $\phi(B)(y_t-x_t^\top\beta)=\theta(B)\varepsilon_t$ | Compact regression-with-ARMA-errors form. |
 | AR(1) errors | $n_t=\rho n_{t-1}+\varepsilon_t$ | Stationary when $\lvert\rho\rvert<1$. |
@@ -37,9 +43,11 @@ $$
 
 The regression mean is $1+2(3)=7$, but the error is serially dependent. Under suitable exogeneity, ordinary least squares can still estimate the mean coefficients consistently, but the usual independent-error standard errors and forecast formulas are no longer appropriate. Modeling the ARMA error captures the predictable part of $n_t$ and produces uncertainty estimates that reflect the temporal dependence.
 
-![A regression mean with autocorrelated errors](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/16_dynamic_regression.png)
+![A regression mean with autocorrelated errors](../../assets/time_series/student/16_dynamic_regression.png)
 
 The figure separates the regression mean from the serial error around it. The covariates explain the systematic mean structure, while the ARMA component describes dependence that remains after conditioning on those predictors.
+
+## Model equation and the two error sequences
 
 In many applications, the response $y_t$ depends on observed covariates and still has autocorrelated residual variation. A **regression with ARMA errors** writes
 
@@ -56,13 +64,13 @@ $$
 
 Here $\varepsilon_t$ is white noise. The signs on the MA coefficients are a convention; some texts and software use plus signs instead, so compare full model equations rather than parameter labels alone.
 
-### Why This Matters
+## Why This Matters
 
 Serially correlated errors affect both inference and forecasting. Even when the regression coefficients remain consistently estimable under appropriate exogeneity assumptions, the ordinary independent-error covariance formula is generally wrong. Ignoring residual dependence can therefore produce misleading standard errors, confidence intervals, and tests.
 
 A fitted error process also improves dynamic forecasts because part of the current residual may be predictable from previous residuals. This is different from merely adjusting standard errors after fitting the mean model.
 
-### Practical Workflow
+## Practical Workflow
 
 A practical workflow is:
 
@@ -70,12 +78,12 @@ A practical workflow is:
 2. inspect residual ACF/PACF and plots after fitting a simple mean model;
 3. choose a parsimonious ARMA structure for the remaining serial dependence;
 4. estimate the regression coefficients and error process together, commonly by maximum likelihood or generalized least squares methods;
-5. check that the final standardized residuals no longer contain systematic autocorrelation;
+5. check that the final standardized innovation residuals no longer contain systematic autocorrelation;
 6. evaluate forecasts using only predictors and observations available at each forecast origin.
 
 This structure combines explanatory regression with a time-series model for the unexplained dynamics.
 
-## Student guide: estimate the mean and the error process together
+## Worked examples: estimating the mean and error process
 
 Write
 
@@ -85,7 +93,7 @@ y_t=x_t^\top\beta+n_t,
 \phi(B)n_t=\theta(B)\varepsilon_t.
 $$
 
-The regression part describes how the conditional mean changes with the predictors. The ARMA part describes serial dependence left after that mean has been specified. Keeping those roles separate helps avoid using lagged error structure to compensate for a missing predictor or trend.
+The regression component $x_t^\top\beta$ describes the predictor relationship. The regression error $n_t$ can still be forecast from its own history, so the full conditional mean also includes $E(n_t\mid\mathcal F_{t-1})$ when the required predictors are available. The innovation $\varepsilon_t$ is the new shock after that dynamic prediction. Keeping those roles separate helps avoid using lagged error structure to compensate for a missing predictor or trend.
 
 ### Numerical example
 
@@ -134,7 +142,7 @@ $$
 
 The transformation accounts for the fact that observations with correlated errors contain overlapping information. In practice, $\Sigma$ is unknown and must be estimated from the ARMA parameters, often jointly or iteratively. Misspecifying the error model can therefore affect both coefficient uncertainty and forecasts.
 
-![Regression with dynamic errors](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dynamic_multivariate/01_dynamic_regression_errors.png)
+![Regression with dynamic errors](../../assets/time_series/dynamic_multivariate/01_dynamic_regression_errors.png)
 
 The figure illustrates this joint view: the regression component follows the predictor-driven mean, while the dynamic error model accounts for systematic departures around it.
 

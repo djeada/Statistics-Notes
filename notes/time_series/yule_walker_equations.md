@@ -1,8 +1,14 @@
 # Yule-Walker Equations
 
+[Time series index](README.md)
+
 The Yule-Walker equations connect an autoregressive model's coefficients to its autocovariances and autocorrelations. They translate a recursion written in terms of lagged observations into a set of moment relationships that can be studied theoretically or estimated from data.
 
 For a stationary AR process, this link works in both directions: known coefficients determine the ACF recursion, while estimated autocovariances can be used to solve for the coefficients. The equations are therefore useful for understanding AR dependence, estimating parameters, and checking whether an implied correlation pattern is compatible with stationarity.
+
+**Reading guide.** Use the derivation to connect the model equation to lagged moments, then check the AR(2) examples by substitution. One example intentionally uses coefficients that violate the usual causal stationary assumptions; its impossible correlations demonstrate the need to check those assumptions before accepting an algebraic answer. The matrix form turns the same relationships into a coefficient estimator.
+
+**Related reading:** [autoregressive models](autoregressive_models.md).
 
 ## Formula reference
 
@@ -45,11 +51,13 @@ $$
 
 For example, $\rho_3=0.6(0.1)-0.2(0.5)=-0.04$. The equations turn AR coefficients into restrictions on the autocorrelation pattern that can be compared with a sample ACF.
 
-![Yule-Walker recursion for an AR(2)](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/09_yule_walker_ar2.png)
+![Yule-Walker recursion for an AR(2)](../../assets/time_series/student/09_yule_walker_ar2.png)
+
+## Connecting coefficients and lagged moments
 
 The **Yule-Walker equations** are linear relationships connecting the autocovariances or autocorrelations of a stationary autoregressive process to its AR coefficients. They provide a direct link between a model written in terms of lagged values and the second-order dependence visible in its ACF.
 
-### Definition
+## Model assumptions and moment equations
 
 Consider a zero-mean stationary AR($p$) process
 
@@ -99,16 +107,16 @@ $$
 
 Because $\rho(0)=1$, these equations relate the AR coefficients directly to the autocorrelation sequence. In estimation, the theoretical autocorrelations are replaced by sample estimates.
 
-### Deriving the Yule-Walker Equations
+## Deriving the Yule-Walker Equations
 
-#### Assumptions
+### Assumptions
 
 The derivation uses two main conditions:
 
 1. **Second-order stationarity:** the mean and variance are constant, and $\gamma(k)$ depends only on the lag $k$.
 2. **White-noise innovations:** $E(\varepsilon_t)=0$, $\mathrm{Var}(\varepsilon_t)=\sigma_\varepsilon^2$, and $\varepsilon_t$ is uncorrelated with $X_{t-k}$ for $k\ge1$.
 
-#### Derivation Steps
+### Derivation Steps
 
 For a fixed $k\in\{1,2,\ldots,p\}$, multiply the AR equation by $X_{t-k}$:
 
@@ -190,9 +198,9 @@ $$
 =\hat\gamma(0)-\sum_{j=1}^{p}\hat\phi_j\hat\gamma(j).
 $$
 
-### Example: Yule-Walker Equations for an AR(2) Process
+## Example: Yule-Walker Equations for an AR(2) Process
 
-This example deliberately contrasts an invalid non-stationary coefficient pair with a stationary alternative. The purpose is to show both how the equations are applied and why their results must still satisfy the basic constraints of an autocorrelation function.
+This example deliberately contrasts a coefficient pair that violates the causal stationary assumptions with a valid stationary alternative. The purpose is to show both how the equations are applied and why their results must still satisfy the basic constraints of an autocorrelation function.
 
 The two parameter sets are:
 
@@ -208,9 +216,9 @@ $$
 1-\phi_1z-\phi_2z^2=0
 $$
 
-must lie outside the unit circle. With $\phi_1=3$ and $\phi_2=2$, one root lies inside the unit circle, so the model is not stationary and a valid stationary ACF does not exist. The algebra below is still useful because it shows how the failure appears in the implied correlations.
+must lie outside the unit circle. With $\phi_1=3$ and $\phi_2=2$, one root lies inside the unit circle, so the model has no causal stationary solution with the past-orthogonal innovations assumed in this derivation. A noncausal stationary construction is a different case: its shocks need not be orthogonal to past observations, so these Yule-Walker equations cannot be applied to it unchanged. The algebra below is still useful because it shows how the failure appears in the implied correlations.
 
-#### Write down the model
+### Write down the model
 
 For the non-stationary parameter set,
 
@@ -220,7 +228,7 @@ $$
 
 where $\varepsilon_t$ is white noise with variance $\sigma_\varepsilon^2$.
 
-#### Derive the Yule-Walker equations
+### Derive the Yule-Walker equations
 
 At lag 1,
 
@@ -248,7 +256,7 @@ $$
 \gamma(2)=3[-3\gamma(0)]+2\gamma(0)=-7\gamma(0).
 $$
 
-#### Convert to autocorrelations
+### Convert to autocorrelations
 
 Dividing by $\gamma(0)$ gives
 
@@ -260,7 +268,7 @@ $$
 
 An autocorrelation must lie between $-1$ and $1$, so these values are impossible for a stationary covariance process. The contradiction is another indication that the coefficient pair $(3,2)$ does not define a stationary AR(2).
 
-#### Solve the homogeneous difference equation
+### Solve the homogeneous difference equation
 
 The corresponding AR(2) recursion is
 
@@ -287,7 +295,7 @@ $$
 \rho(k)=c_1\lambda_1^k+c_2\lambda_2^k.
 $$
 
-#### Determine $c_1$ and $c_2$
+### Determine $c_1$ and $c_2$
 
 Using $\rho(0)=1$ and the algebraic value $\rho(1)=-3$ gives
 
@@ -309,9 +317,9 @@ c_1=\frac{-3-\lambda_2}{\lambda_1-\lambda_2},
 c_2=1-c_1.
 $$
 
-Numerically, $c_1\approx-0.591$ and $c_2\approx1.591$. These constants satisfy the formal recursion, but the term involving $|\lambda_1|>1$ grows rather than decays, so the sequence cannot be a stationary ACF.
+Numerically, $c_1\approx-0.591$ and $c_2\approx1.591$. They satisfy the formal recursion, but the term with $|\lambda_1|>1$ grows in magnitude. Together with the impossible value $\rho(1)=-3$, this shows that solving the recursion algebraically has not produced a valid stationary ACF under the stated model assumptions.
 
-#### Quick check: a stationary alternative
+### Quick check: a stationary alternative
 
 Now take $\phi_1=0.3$ and $\phi_2=0.2$. The Yule-Walker equations give
 
@@ -327,7 +335,7 @@ $$
 
 For this parameter set, the roots of the AR polynomial in $z$ lie outside the unit circle. Equivalently, the roots governing the homogeneous recursion in powers of $\lambda$ lie inside the unit circle, so the autocorrelation sequence decays rather than diverges.
 
-#### Matrix form
+### Matrix form
 
 For a general AR($p$), collect the autocorrelations into
 
@@ -367,7 +375,7 @@ $$
 
 In practice, numerical solvers exploit the Toeplitz structure rather than forming the inverse explicitly.
 
-## Student guide: solve the equations and check the result
+## Worked examples: solving and checking the moment equations
 
 For a zero-mean stationary AR($p$), the autocovariances satisfy the AR recursion at every lag $k\ge1$:
 
@@ -406,7 +414,7 @@ $$
 
 The recursion then continues. A sample ACF will not equal these population values exactly, but its pattern should be broadly compatible with the fitted AR coefficients.
 
-![Yule-Walker recursion](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/07_yule_walker_recursion.png)
+![Yule-Walker recursion](../../assets/time_series/dependence/07_yule_walker_recursion.png)
 
 The figure shows how each new autocorrelation is generated from earlier lags. For a stable AR model, the recursion produces a sequence that decays rather than growing without bound.
 

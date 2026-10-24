@@ -1,8 +1,30 @@
 # Moving Average (MA) Models
 
+[Time series index](README.md)
+
 A moving-average model represents the current observation as a finite weighted combination of the current innovation and a fixed number of past innovations. Because each shock enters the model for only a limited number of periods, an MA($q$) process has a finite direct shock response and a theoretical ACF that cuts off after lag $q$.
 
 The innovations are latent rather than observed regressors, so estimation and identification require more care than a simple regression on lags. Invertibility selects a stable canonical representation, and the stochastic MA model should be kept distinct from rolling moving averages or exponential smoothers, which are transformations of observed data.
+
+**Reading guide.** Start with the finite response to one innovation, then connect the shared shocks to the ACF cutoff. Keep that stochastic model separate from the SMA and EMA smoothers introduced later: they combine observed values rather than latent innovations. The final worked examples link shock duration, parameter estimation, and the root convention used to choose an invertible representation.
+
+**Related reading:** [invertibility](invertibility.md).
+
+**On this page**
+
+- [Formula reference](#formula-reference)
+- [Worked calculation: an MA(1)](#worked-calculation-an-ma1)
+- [Innovations and finite shock duration](#innovations-and-finite-shock-duration)
+- [Overview of Moving Average Models](#overview-of-moving-average-models)
+- [Mathematical Definition of MA Models](#mathematical-definition-of-ma-models)
+- [Examples of MA Models](#examples-of-ma-models)
+- [Properties of MA Models](#properties-of-ma-models)
+- [Identifying the Order $q$ of an MA Model](#identifying-the-order-q-of-an-ma-model)
+- [Example: Moving Average (MA) Model](#example-moving-average-ma-model)
+- [Simple Moving Average (SMA)](#simple-moving-average-sma)
+- [Exponential Moving Average (EMA)](#exponential-moving-average-ema)
+- [Example: Stock Price Analysis](#example-stock-price-analysis)
+- [Worked examples: shock responses and identification](#worked-examples-shock-responses-and-identification)
 
 ## Formula reference
 
@@ -50,19 +72,21 @@ $$
 
 The theoretical ACF of this MA(1) cuts off after lag 1. In a finite sample, later sample autocorrelations will usually not be exactly zero.
 
-![AR and MA identification patterns](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/student/06_ar_ma_identification.png)
+![AR and MA identification patterns](../../assets/time_series/student/06_ar_ma_identification.png)
 
-Moving Average (MA) models are a class of univariate time-series models in which the current value is a finite linear combination of current and past innovations. Unlike autoregressive models, they do not use past observed values directly in the model equation.
+## Innovations and finite shock duration
+
+Moving-average (MA) models are a class of univariate time-series models in which the current value is a finite linear combination of current and past innovations. Unlike autoregressive models, they do not use past observed values directly in the model equation.
 
 The name can be confusing: an MA($q$) stochastic model is not the same object as a rolling moving-average smoother. The distinction is made explicit later in the chapter.
 
-### Overview of Moving Average Models
+## Overview of Moving Average Models
 
 An MA model represents short-lived shock effects. A new innovation can affect the current observation and the next few observations, but in an MA($q$) process its direct effect disappears after $q$ lags.
 
 This finite shock duration explains the characteristic ACF cutoff of an MA model. It does not mean that the observed series is obtained by smoothing its own past values.
 
-### Mathematical Definition of MA Models
+## Mathematical Definition of MA Models
 
 A **moving average model of order $q$**, MA($q$), can be written as
 
@@ -86,9 +110,9 @@ Here:
 
 Weak white noise is sufficient for the covariance calculations below. Likelihood-based estimation often adds stronger distributional assumptions, such as independent Gaussian innovations.
 
-### Examples of MA Models
+## Examples of MA Models
 
-#### First-Order Moving Average Model (MA(1))
+### First-Order Moving Average Model (MA(1))
 
 An MA(1) includes the current innovation and one lagged innovation:
 
@@ -98,7 +122,7 @@ $$
 
 A shock at time $t$ therefore affects $Y_t$ and $Y_{t+1}$ directly, but not $Y_{t+2}$ or later observations.
 
-#### Second-Order Moving Average Model (MA(2))
+### Second-Order Moving Average Model (MA(2))
 
 An MA(2) includes two lagged innovations:
 
@@ -108,7 +132,7 @@ $$
 
 A shock can affect three consecutive observations: the current one and the next two.
 
-#### General MA($q$) Model
+### General MA($q$) Model
 
 The general form is
 
@@ -118,11 +142,11 @@ $$
 
 The coefficients determine the magnitude and sign of the finite shock response.
 
-### Properties of MA Models
+## Properties of MA Models
 
-A finite-order MA process is weakly stationary when the innovations have constant mean and variance. Its mean and variance are constant, and its autocovariance depends only on the lag.
+A finite-order MA process driven by weak white noise is weakly stationary: its constant coefficients combine shocks with a common finite variance and zero cross-time covariance. The resulting mean and variance are constant, and the autocovariance depends only on lag. This stationarity result does not require the MA polynomial to be invertible.
 
-#### Theoretical Properties of MA(1) Model
+### Theoretical Properties of MA(1) Model
 
 For
 
@@ -156,7 +180,7 @@ $$
 
 The cutoff after lag 1 is a population property. Sample ACF values at later lags fluctuate around zero because they are estimated from a finite dataset.
 
-#### Autocorrelation Function (ACF) in MA Models
+### Autocorrelation Function (ACF) in MA Models
 
 For an MA($q$), the theoretical autocovariance is exactly zero for $|h|>q$. Lags at or below $q$ can be nonzero, although particular coefficient combinations can make some of them vanish as well.
 
@@ -168,15 +192,15 @@ Typical identification patterns are therefore:
 
 The PACF usually tails off rather than cutting off sharply. These are ideal population patterns and should be treated as heuristics in finite samples.
 
-![MA shock duration](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/04_ma_shock_duration.png)
+![MA shock duration](../../assets/time_series/dependence/04_ma_shock_duration.png)
 
 The figure shows the mechanism behind the cutoff: a single innovation has a finite sequence of direct effects and then disappears from the model equation.
 
-### Identifying the Order $q$ of an MA Model
+## Identifying the Order $q$ of an MA Model
 
 The ACF provides a useful first clue about the order, but order selection should combine visual identification with fitted-model diagnostics.
 
-#### Step-by-Step Process for Model Selection
+### Step-by-Step Process for Model Selection
 
 A practical sequence is:
 
@@ -200,7 +224,7 @@ $$
 
 where $L$ is the maximized likelihood, $k$ is the number of estimated parameters under the chosen convention, and $n$ is the sample size. Lower values are preferred within a comparable candidate set.
 
-#### Example: Selecting an MA(2) Model
+### Example: Selecting an MA(2) Model
 
 Suppose the sample ACF has notable spikes at lags 1 and 2 and no clear signal at later lags. That pattern suggests including MA(2) among the candidates.
 
@@ -214,7 +238,7 @@ If the fitted models give
 
 then both criteria favor MA(2) among these three models. The remaining step is to verify that its residuals no longer contain systematic dependence and that its forecasts are competitive.
 
-### Example: Moving Average (MA) Model
+## Example: Moving Average (MA) Model
 
 Consider
 
@@ -234,11 +258,11 @@ $$
 Y_t=10+w_t+0.5w_{t-1}.
 $$
 
-#### Defining the MA(1) Model
+### Defining the MA(1) Model
 
 The value 10 is the process mean. The current observation moves around that mean because of the current shock and half of the previous shock. The lagged shock is not directly observed, which is one reason MA estimation differs from ordinary regression on observed lags.
 
-#### Theoretical Autocorrelation Function (ACF) of MA(1)
+### Theoretical Autocorrelation Function (ACF) of MA(1)
 
 For $\theta_1=0.5$,
 
@@ -256,7 +280,7 @@ $$
 
 The first-lag spike represents the shared innovation between adjacent observations. Higher-lag population correlations are zero because observations more than one period apart share no innovation in an MA(1). A sample plot will show small nonzero values at later lags because of sampling variation.
 
-### Simple Moving Average (SMA)
+## Simple Moving Average (SMA)
 
 A **simple moving average (SMA)** is a smoother, not an MA($q$) stochastic model. It takes the arithmetic mean of the most recent $k$ observed values:
 
@@ -266,7 +290,7 @@ $$
 
 The smoother reduces short-term variation by averaging observations in a fixed window. Unlike an MA($q$) model, it is computed directly from observed values and does not introduce latent innovations as model components.
 
-### Exponential Moving Average (EMA)
+## Exponential Moving Average (EMA)
 
 An **exponential moving average (EMA)** is another smoothing rule. It updates a level recursively:
 
@@ -278,11 +302,11 @@ where $0<\alpha<1$. Larger values of $\alpha$ place more weight on the newest ob
 
 Again, this is conceptually different from an MA($q$) stochastic model: an EMA is a deterministic transformation of observed data once $\alpha$ and the initial value are fixed.
 
-### Example: Stock Price Analysis
+## Example: Stock Price Analysis
 
 SMA and EMA curves are often plotted with price series as descriptive technical indicators. Their role is to summarize recent levels at different degrees of responsiveness; they do not, by themselves, provide a probabilistic model for future prices.
 
-#### SMA Analysis
+### SMA Analysis
 
 For a 20-day SMA,
 
@@ -292,7 +316,7 @@ $$
 
 The window smooths day-to-day fluctuations, but it also introduces lag because every observation receives equal weight until it leaves the window.
 
-#### EMA Analysis
+### EMA Analysis
 
 A commonly used EMA smoothing factor for a nominal span $N$ is
 
@@ -306,17 +330,17 @@ $$
 \mathrm{EMA}_t=\alpha P_t+(1-\alpha)\mathrm{EMA}_{t-1}.
 $$
 
-Because recent prices receive more weight, the EMA generally reacts faster than an equal-window SMA.
+Under this common span convention, the EMA emphasizes recent prices and gives a decaying weight to older prices rather than dropping them at a fixed window boundary. It can react more quickly to some changes than the corresponding SMA, but the exact comparison depends on the parameter, initialization, and price path.
 
-#### Trend Identification
+### Trend Identification
 
 Practitioners sometimes interpret crossings or divergence between SMA and EMA curves as descriptive signals of changing momentum. Such rules depend on the chosen windows and should not be treated as guaranteed forecasts. Both curves are functions of past and current prices, so their usefulness must be evaluated against an explicit benchmark and out-of-sample data.
 
-![stock_price_analysis](https://github.com/djeada/Statistics-Notes/assets/37275728/69a7a991-b80c-406b-b0c9-129953f80e3f)
+![A price series with a 20-day SMA and an exponential moving average](https://github.com/djeada/Statistics-Notes/assets/37275728/69a7a991-b80c-406b-b0c9-129953f80e3f)
 
 The figure shows the raw price path together with a 20-day SMA and EMA. The SMA is smoother and typically slower to react, while the EMA follows recent movements more closely. These curves illustrate smoothing behavior, not the innovation structure of an MA($q$) model.
 
-## Student guide: shock responses and identification
+## Worked examples: shock responses and identification
 
 An MA($q$) model describes the current value as a finite weighted sum of current and past innovations:
 
@@ -324,7 +348,7 @@ $$
 y_t=\mu+\varepsilon_t+\theta_1\varepsilon_{t-1}+\cdots+\theta_q\varepsilon_{t-q}.
 $$
 
-The innovations are new shocks, not observed lagged values. This is the central difference between MA models and regression-style AR estimation.
+The model inputs are current and lagged shocks rather than observed lags of the response. That difference explains both the finite shock-response pattern and the estimation problem: past shocks must be inferred from the observed series. Under the usual invertibility convention, they can be recovered by a stable past-based filter.
 
 ### MA(1) numerical moments
 
@@ -386,7 +410,7 @@ $$
 
 the usual invertibility condition is $|\theta|<1$.
 
-![Invertibility](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/dependence/06_invertibility.png)
+![Invertibility](../../assets/time_series/dependence/06_invertibility.png)
 
 The figure illustrates why invertibility matters for identification: the observable covariance pattern can correspond to more than one coefficient representation unless a root convention is imposed.
 

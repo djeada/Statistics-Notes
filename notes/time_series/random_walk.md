@@ -1,8 +1,14 @@
 # Random Walk Model
 
-A random walk models a level that changes by accumulating new shocks over time. Each innovation is temporary as an increment but permanent in the level, so the process can drift far from its starting point even when the expected one-step change is zero.
+[Time series index](README.md)
+
+A random walk models a level that changes by accumulating new shocks over time. Each shock appears once in the increments and remains in every later level. A realized path can therefore wander far from its starting point even when every one-step increment has expectation zero.
 
 This accumulation makes the level fundamentally non-stationary: uncertainty grows with the forecast horizon, while first differences recover the underlying increments. Random walks are therefore both a basic model of stochastic trends and an important benchmark for deciding whether a more elaborate forecasting model adds value.
+
+**Reading guide.** Follow a single path first, then distinguish its realized movement from the model mean and forecast variance. The derivations explain why shocks remain in the level; the Python example checks that first differencing recovers the simulated increments. The final worked examples use the same mechanism to construct forecasts and compare a random walk with nearby model classes.
+
+**Related reading:** [stationarity](stationarity.md).
 
 ## Formula reference
 
@@ -47,11 +53,198 @@ $$
 \mathrm{Var}(X_{3+h}\mid X_3)=h\sigma^2.
 $$
 
-![A simulated random walk](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/time_series/intro_random_walk.png)
+![A simulated random walk](../../assets/time_series/intro_random_walk.png)
 
 The plotted path can wander for long periods in one direction even though the model has no deterministic slope. That distinction between a realized path and the process mean is central to understanding random walks.
 
-## Student guide: paths, forecasts, and first differences
+## Model definition and assumptions
+
+The **random walk** models a level whose next value equals its current value plus a new random shock. It is widely used as a benchmark because it is simple, persistent, and fundamentally different from a stationary mean-reverting process.
+
+For the zero-drift form,
+
+$$
+X_t=X_{t-1}+\varepsilon_t,
+$$
+
+where $\varepsilon_t$ has mean zero and variance $\sigma^2$. The moment calculations use uncorrelated increments. The conditional-mean forecasts below use the stronger assumption that each new increment has mean zero given the observed past; independent mean-zero increments satisfy that assumption. Weak white noise alone does not rule out every nonlinear predictable pattern.
+
+- $X_t$ is the level at time $t$.
+- $X_{t-1}$ is the previous level.
+- $\varepsilon_t$ is the new innovation arriving at time $t$.
+
+The next increment is unpredictable under the model, but the level is highly persistent because every past shock remains embedded in it.
+
+## Evolution of a Random Walk Over Time
+
+Starting from $X_0$, repeated substitution gives
+
+$$
+X_1=X_0+\varepsilon_1,
+$$
+
+$$
+X_2=X_0+\varepsilon_1+\varepsilon_2,
+$$
+
+$$
+X_3=X_0+\varepsilon_1+\varepsilon_2+\varepsilon_3,
+$$
+
+and, in general,
+
+$$
+X_t=X_0+\sum_{i=1}^{t}\varepsilon_i.
+$$
+
+This cumulative representation explains both persistence and increasing uncertainty: shocks do not decay away from the level.
+
+## Mean and Variance of a Random Walk
+
+The moments of the level follow directly from the cumulative sum. Assume $X_0$ is fixed and the innovations are independent with mean zero and variance $\sigma^2$.
+
+### Expected Value
+
+Then
+
+$$
+E(X_t)=X_0.
+$$
+
+The expected level is constant in the zero-drift model, even though individual sample paths can wander far from $X_0$.
+
+If the increments instead have nonzero mean $\delta$, it is clearer to write that mean explicitly as drift, as in the next section.
+
+### Variance
+
+Because the innovations are independent,
+
+$$
+\mathrm{Var}(X_t\mid X_0)
+=\mathrm{Var}\left(\sum_{i=1}^{t}\varepsilon_i\right)
+=t\sigma^2.
+$$
+
+The variance therefore grows linearly with time. This time-varying variance is enough to violate weak stationarity, even though the zero-drift mean remains constant.
+
+## Random Walk with Drift
+
+A **random walk with drift** is
+
+$$
+X_t=\delta+X_{t-1}+\varepsilon_t,
+$$
+
+with $E(\varepsilon_t)=0$. Expanding from $X_0$ gives
+
+$$
+X_t=X_0+\delta t+\sum_{i=1}^{t}\varepsilon_i.
+$$
+
+Thus,
+
+| Property | Random Walk ($\delta=0$) | Random Walk with Drift ($\delta\ne0$) |
+|---|---|---|
+| $E(X_t)$ | $X_0$ | $X_0+\delta t$ |
+| $\mathrm{Var}(X_t\mid X_0)$ | $\sigma^2t$ | $\sigma^2t$ |
+| Mean path | flat | linear with slope $\delta$ |
+
+Both versions are non-stationary because their variance grows with $t$. The drift changes the expected path but does not change the accumulation of uncertainty.
+
+## Simulation of a Random Walk in Python
+
+A simulation makes the cumulative structure visible. The following code draws independent standard-normal shocks and forms their cumulative sum.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+N = 1000
+Z = np.random.normal(loc=0, scale=1, size=N)
+X = np.cumsum(np.insert(Z, 0, 0))
+
+plt.figure(figsize=(10, 6))
+plt.plot(X, label="Random Walk")
+plt.title("Simulation of a Random Walk")
+plt.xlabel("Time")
+plt.ylabel("Value")
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+
+The array `Z` contains the increments and `np.cumsum()` accumulates them into the level series. Different random seeds produce very different paths even though every simulation follows the same probabilistic model.
+
+Here is an example realization:
+
+![One simulated random-walk path](https://github.com/user-attachments/assets/0328869d-6a94-4f9b-b623-09e9d3e42311)
+
+The opening synthetic figure shows the same qualitative behavior: local runs and apparent slopes can emerge purely from accumulated noise.
+
+## Autocorrelation of the Random Walk
+
+Because a random walk is non-stationary, it does not have the stationary population ACF used for ARMA processes. A **sample ACF** can still be plotted, and it typically shows large, slowly decaying values because nearby levels share most of the same accumulated shocks.
+
+```python
+from statsmodels.graphics.tsaplots import plot_acf
+
+plot_acf(X, lags=50)
+plt.show()
+```
+
+An example sample ACF is shown below:
+
+![Slowly decaying sample ACF of random-walk levels](https://github.com/user-attachments/assets/82260af5-9278-4e44-b527-554a5ef12aa5)
+
+The slow decay is a diagnostic warning that the level series is not behaving like a short-memory stationary process.
+
+## Removing the Trend with the Difference Operator
+
+The random walk has a **stochastic trend**: shocks accumulate permanently rather than decaying. Even with zero drift, its variance changes with time. First differencing removes this accumulation:
+
+$$
+\Delta X_t=X_t-X_{t-1}=\varepsilon_t.
+$$
+
+For the model assumed here, the differenced series is white noise. The transformation therefore changes the modeling target from the non-stationary level to stationary one-period changes.
+
+## Differencing in Python
+
+The same operation can be computed directly:
+
+```python
+diff_X = np.diff(X)
+
+plt.figure(figsize=(10, 6))
+plt.plot(diff_X, label="Differenced Random Walk")
+plt.title("Differenced Time Series (White Noise)")
+plt.xlabel("Time")
+plt.ylabel("Value")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+plot_acf(diff_X, lags=50)
+plt.show()
+```
+
+`np.diff()` subtracts each observation from the next. Because the simulation explicitly prepends the starting value 0, `np.diff(X)` recovers all `N` generated increments in `Z`, with no increment lost at the boundary. The differenced series should fluctuate around zero with roughly constant variance, while its sample ACF should show no persistent serial correlation beyond ordinary sampling noise.
+
+The corresponding plots are:
+
+![First differences of the simulated random walk](https://github.com/user-attachments/assets/91b7c7e2-9354-42ff-a6da-0312e4bb258b)
+
+![Sample ACF of the recovered random-walk increments](https://github.com/user-attachments/assets/d3b952e4-27aa-4edf-a6f9-955fcc54fee3)
+
+The first figure shows the stationary-looking increments; the second shows that their sample autocorrelations are concentrated around zero rather than decaying slowly from a large positive value.
+
+## Correlogram of a Random Walk
+
+The contrast between the level and differenced correlograms summarizes the model. In levels, adjacent observations share almost the entire accumulated history, so sample autocorrelations are often high and decay slowly. After differencing, only the new innovations remain, and the persistent correlation pattern disappears under the white-noise assumption.
+
+This is why differencing is the natural transformation for a genuine random walk: it directly reverses the cumulative construction of the process rather than merely flattening the appearance of one realized path.
+
+## Worked examples: paths, forecasts, and first differences
 
 The random walk is the canonical example of a non-stationary level with stationary increments:
 
@@ -94,13 +287,13 @@ The path can move down or up for several observations even when the model has no
 For a zero-drift random walk,
 
 $$
-\hat X_{T+h|T}=X_T.
+\hat X_{T+h\mid T}=X_T.
 $$
 
 For the numerical path above at $T=4$, every point forecast equals 6. The forecast-error variance is
 
 $$
-\mathrm{Var}(X_{T+h}-\hat X_{T+h|T}\mid X_T)=h\sigma^2.
+\mathrm{Var}(X_{T+h}-\hat X_{T+h\mid T}\mid X_T)=h\sigma^2.
 $$
 
 If a drift $\delta$ is included,
@@ -112,10 +305,10 @@ $$
 then
 
 $$
-\hat X_{T+h|T}=X_T+h\delta.
+\hat X_{T+h\mid T}=X_T+h\delta.
 $$
 
-Estimate a constant drift cautiously. A structural break or temporary trend can make a single long-run drift parameter misleading.
+The displayed forecast treats the drift as fixed and known. If the drift is estimated, uncertainty about that estimate contributes additional forecast uncertainty beyond the future-shock variance $h\sigma^2$. A structural break or a temporary slope can also make a single drift estimate unreliable across the whole record, so inspect its stability when evaluating longer-horizon forecasts.
 
 ### Why levels are misleading
 
@@ -139,188 +332,3 @@ The differenced series is the innovation sequence itself. This does not mean eve
 ### Diagnostics
 
 Inspect the level plot, first differences, rolling variation, and sample ACF before and after differencing. Unit-root tests can provide supporting evidence, but their conclusions depend on deterministic terms, lag choices, sample length, and structural breaks. Report the transformation and model assumption rather than only a p-value.
-
-The **random walk** models a level whose next value equals its current value plus a new random shock. It is widely used as a benchmark because it is simple, persistent, and fundamentally different from a stationary mean-reverting process.
-
-For the zero-drift form,
-
-$$
-X_t=X_{t-1}+\varepsilon_t,
-$$
-
-where $\varepsilon_t$ is white noise with mean zero and variance $\sigma^2$.
-
-- $X_t$ is the level at time $t$.
-- $X_{t-1}$ is the previous level.
-- $\varepsilon_t$ is the new innovation arriving at time $t$.
-
-The next increment is unpredictable under the model, but the level is highly persistent because every past shock remains embedded in it.
-
-### Evolution of a Random Walk Over Time
-
-Starting from $X_0$, repeated substitution gives
-
-$$
-X_1=X_0+\varepsilon_1,
-$$
-
-$$
-X_2=X_0+\varepsilon_1+\varepsilon_2,
-$$
-
-$$
-X_3=X_0+\varepsilon_1+\varepsilon_2+\varepsilon_3,
-$$
-
-and, in general,
-
-$$
-X_t=X_0+\sum_{i=1}^{t}\varepsilon_i.
-$$
-
-This cumulative representation explains both persistence and increasing uncertainty: shocks do not decay away from the level.
-
-### Mean and Variance of a Random Walk
-
-The moments of the level follow directly from the cumulative sum. Assume $X_0$ is fixed and the innovations are independent with mean zero and variance $\sigma^2$.
-
-#### Expected Value
-
-Then
-
-$$
-E(X_t)=X_0.
-$$
-
-The expected level is constant in the zero-drift model, even though individual sample paths can wander far from $X_0$.
-
-If the increments instead have nonzero mean $\delta$, it is clearer to write that mean explicitly as drift, as in the next section.
-
-#### Variance
-
-Because the innovations are independent,
-
-$$
-\mathrm{Var}(X_t\mid X_0)
-=\mathrm{Var}\left(\sum_{i=1}^{t}\varepsilon_i\right)
-=t\sigma^2.
-$$
-
-The variance therefore grows linearly with time. This time-varying variance is enough to violate weak stationarity, even though the zero-drift mean remains constant.
-
-### Random Walk with Drift
-
-A **random walk with drift** is
-
-$$
-X_t=\delta+X_{t-1}+\varepsilon_t,
-$$
-
-with $E(\varepsilon_t)=0$. Expanding from $X_0$ gives
-
-$$
-X_t=X_0+\delta t+\sum_{i=1}^{t}\varepsilon_i.
-$$
-
-Thus,
-
-| Property | Random Walk ($\delta=0$) | Random Walk with Drift ($\delta\ne0$) |
-|---|---|---|
-| $E(X_t)$ | $X_0$ | $X_0+\delta t$ |
-| $\mathrm{Var}(X_t\mid X_0)$ | $\sigma^2t$ | $\sigma^2t$ |
-| Mean path | flat | linear with slope $\delta$ |
-
-Both versions are non-stationary because their variance grows with $t$. The drift changes the expected path but does not change the accumulation of uncertainty.
-
-### Simulation of a Random Walk in Python
-
-A simulation makes the cumulative structure visible. The following code draws independent standard-normal shocks and forms their cumulative sum.
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-
-N = 1000
-Z = np.random.normal(loc=0, scale=1, size=N)
-X = np.cumsum(np.insert(Z, 0, 0))
-
-plt.figure(figsize=(10, 6))
-plt.plot(X, label="Random Walk")
-plt.title("Simulation of a Random Walk")
-plt.xlabel("Time")
-plt.ylabel("Value")
-plt.legend()
-plt.grid(True)
-plt.show()
-```
-
-The array `Z` contains the increments and `np.cumsum()` accumulates them into the level series. Different random seeds produce very different paths even though every simulation follows the same probabilistic model.
-
-Here is an example realization:
-
-![Figure_1](https://github.com/user-attachments/assets/0328869d-6a94-4f9b-b623-09e9d3e42311)
-
-The opening synthetic figure shows the same qualitative behavior: local runs and apparent slopes can emerge purely from accumulated noise.
-
-### Autocorrelation of the Random Walk
-
-Because a random walk is non-stationary, it does not have the stationary population ACF used for ARMA processes. A **sample ACF** can still be plotted, and it typically shows large, slowly decaying values because nearby levels share most of the same accumulated shocks.
-
-```python
-from statsmodels.graphics.tsaplots import plot_acf
-
-plot_acf(X, lags=50)
-plt.show()
-```
-
-An example sample ACF is shown below:
-
-![Figure_2](https://github.com/user-attachments/assets/82260af5-9278-4e44-b527-554a5ef12aa5)
-
-The slow decay is a diagnostic warning that the level series is not behaving like a short-memory stationary process.
-
-### Removing the Trend with the Difference Operator
-
-The random walk has a **stochastic trend**: shocks accumulate permanently rather than decaying. Even with zero drift, its variance changes with time. First differencing removes this accumulation:
-
-$$
-\Delta X_t=X_t-X_{t-1}=\varepsilon_t.
-$$
-
-For the model assumed here, the differenced series is white noise. The transformation therefore changes the modeling target from the non-stationary level to stationary one-period changes.
-
-### Differencing in Python
-
-The same operation can be computed directly:
-
-```python
-diff_X = np.diff(X)
-
-plt.figure(figsize=(10, 6))
-plt.plot(diff_X, label="Differenced Random Walk")
-plt.title("Differenced Time Series (White Noise)")
-plt.xlabel("Time")
-plt.ylabel("Value")
-plt.legend()
-plt.grid(True)
-plt.show()
-
-plot_acf(diff_X, lags=50)
-plt.show()
-```
-
-`np.diff()` subtracts each observation from the next, recovering the simulated increments apart from the initial indexing convention. The differenced series should fluctuate around zero with roughly constant variance, while its sample ACF should show no persistent serial correlation beyond ordinary sampling noise.
-
-The corresponding plots are:
-
-![Figure_3](https://github.com/user-attachments/assets/91b7c7e2-9354-42ff-a6da-0312e4bb258b)
-
-![Figure_4](https://github.com/user-attachments/assets/d3b952e4-27aa-4edf-a6f9-955fcc54fee3)
-
-The first figure shows the stationary-looking increments; the second shows that their sample autocorrelations are concentrated around zero rather than decaying slowly from a large positive value.
-
-### Correlogram of a Random Walk
-
-The contrast between the level and differenced correlograms summarizes the model. In levels, adjacent observations share almost the entire accumulated history, so sample autocorrelations are often high and decay slowly. After differencing, only the new innovations remain, and the persistent correlation pattern disappears under the white-noise assumption.
-
-This is why differencing is the natural transformation for a genuine random walk: it directly reverses the cumulative construction of the process rather than merely flattening the appearance of one realized path.
