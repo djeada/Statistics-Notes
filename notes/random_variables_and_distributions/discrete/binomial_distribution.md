@@ -2,7 +2,7 @@
 
 A binomial random variable counts successes in a **fixed number of independent trials**. Each trial has two possible labels, success and failure, and the same success probability $p$. “Success” names the event being counted; it need not be desirable. Counting defective products can use exactly the same mathematics as counting products that pass inspection.
 
-Write $X\sim\operatorname{Binomial}(n,p)$, where $n$ is a nonnegative integer and $0\le p\le1$. The possible counts are $0,1,\ldots,n$. The fixed endpoint distinguishes this model from waiting until a success occurs, where the number of trials is random.
+Write $X\sim\mathrm{Binomial}(n,p)$, where $n$ is a nonnegative integer and $0\le p\le1$. The possible counts are $0,1,\ldots,n$. The fixed endpoint distinguishes this model from waiting until a success occurs, where the number of trials is random.
 
 ## Why the probability mass function has a binomial coefficient
 
@@ -37,7 +37,7 @@ Translate the inequality before calculating. “At least 8” means $1-F(7)$; �
 Let $I_j$ be 1 when trial $j$ succeeds and 0 otherwise. Then $X=I_1+\cdots+I_n$. Each indicator has mean $p$ and variance $p(1-p)$, so
 
 $$
-E[X]=np,\qquad \operatorname{Var}(X)=np(1-p).
+E[X]=np,\qquad \mathrm{Var}(X)=np(1-p).
 $$
 
 Expectation adds without requiring independence, but the variance formula uses independence to remove cross-trial covariances. A batch with correlated outcomes can have the same average success probability and a different count variance.

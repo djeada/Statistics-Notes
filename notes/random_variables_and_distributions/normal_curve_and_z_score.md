@@ -79,7 +79,7 @@ For a left-tail table, $\Phi(0)=0.5$, $P(Z>z)=1-\Phi(z)$, and symmetry gives $\P
 
 ## What standardization does not establish
 
-The arithmetic of centering and scaling explains the moments directly: $E[(X-\mu)/\sigma]=0$ and $\operatorname{Var}[(X-\mu)/\sigma]=\sigma^2/\sigma^2=1$. Those two moments do not specify the shape. For example, standardizing a uniform variable on $[0,1]$ produces another uniform variable, now on $[-\sqrt3,\sqrt3]$. It has mean 0 and variance 1, but cannot exceed 2 in magnitude. A standard normal variable can. Using a normal table for the standardized uniform variable would therefore give incorrect tails.
+The arithmetic of centering and scaling explains the moments directly: $E[(X-\mu)/\sigma]=0$ and $\mathrm{Var}[(X-\mu)/\sigma]=\sigma^2/\sigma^2=1$. Those two moments do not specify the shape. For example, standardizing a uniform variable on $[0,1]$ produces another uniform variable, now on $[-\sqrt3,\sqrt3]$. It has mean 0 and variance 1, but cannot exceed 2 in magnitude. A standard normal variable can. Using a normal table for the standardized uniform variable would therefore give incorrect tails.
 
 For observed data, a descriptive score often uses the sample mean $\bar x$ and sample standard deviation $s$: $z_i=(x_i-\bar x)/s$. This centers and rescales that dataset, provided $s>0$, but estimating the reference values does not establish a normal population. An inference procedure for an estimated mean must also account for its sampling uncertainty; a z-score of an individual observation and a standardized sample-mean statistic are different quantities.
 

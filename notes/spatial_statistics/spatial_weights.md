@@ -1243,7 +1243,7 @@ $$
 The covariance is obtained by multiplying this transformation by its transpose:
 
 $$
-\operatorname{Cov}(u)
+\mathrm{Cov}(u)
 =\frac{\sigma^2}{(1-\lambda^2)^2}
 \begin{bmatrix}1+\lambda^2&2\lambda\\2\lambda&1+\lambda^2\end{bmatrix}.
 $$

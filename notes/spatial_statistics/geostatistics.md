@@ -342,12 +342,12 @@ The greater separation has a larger semivariance because the values are less str
 
 A one-dimensional spatial random walk illustrates the distinction. Let $U_1,U_2,\ldots$ be independent steps with mean zero and variance $\sigma_U^2$, and define $Z_k=U_1+\cdots+U_k$. The index $k$ can represent consecutive sites along a transect.
 
-The marginal variance is $\operatorname{Var}(Z_k)=k\sigma_U^2$, which depends on position. There is no common finite $C(0)$ for a second-order stationary model of these values. However, an increment across $h$ sites is a sum of $h$ independent steps, so
+The marginal variance is $\mathrm{Var}(Z_k)=k\sigma_U^2$, which depends on position. There is no common finite $C(0)$ for a second-order stationary model of these values. However, an increment across $h$ sites is a sum of $h$ independent steps, so
 
 $$
 E[Z_{k+h}-Z_k]=0,
 \qquad
-\operatorname{Var}(Z_{k+h}-Z_k)=h\sigma_U^2.
+\mathrm{Var}(Z_{k+h}-Z_k)=h\sigma_U^2.
 $$
 
 The semivariogram is therefore $\gamma(h)=|h|\sigma_U^2/2$ on integer lags. It increases without approaching a sill. This is a valid increment model, not a covariance curve that failed to level off because too few bins were plotted.
@@ -546,7 +546,7 @@ A sampled observation can appear in many pairs. For example, observation A may c
 Suppose a particular lag has zero-mean Gaussian increment $D=Z(s_i)-Z(s_j)$ with variance $2\gamma$. A single pair contributes $V=D^2/2$. It has expectation $\gamma$, while the fourth moment of a zero-mean normal variable gives
 
 $$
-\operatorname{Var}(V)
+\mathrm{Var}(V)
 =\frac14\{3(2\gamma)^2-(2\gamma)^2\}
 =2\gamma^2.
 $$
@@ -556,14 +556,14 @@ One squared difference is consequently very noisy. If $m$ independent pairs all 
 Actual variogram pairs are usually dependent. Under a constant-mean Gaussian field, two pair contributions satisfy
 
 $$
-\operatorname{Cov}\left(\frac{D_{ij}^2}{2},\frac{D_{kl}^2}{2}\right)
-=\frac12\operatorname{Cov}(D_{ij},D_{kl})^2,
+\mathrm{Cov}\left(\frac{D_{ij}^2}{2},\frac{D_{kl}^2}{2}\right)
+=\frac12\mathrm{Cov}(D_{ij},D_{kl})^2,
 $$
 
-where, with $C_{ab}=\operatorname{Cov}(Z(s_a),Z(s_b))$,
+where, with $C_{ab}=\mathrm{Cov}(Z(s_a),Z(s_b))$,
 
 $$
-\operatorname{Cov}(D_{ij},D_{kl})
+\mathrm{Cov}(D_{ij},D_{kl})
 =C_{ik}-C_{il}-C_{jk}+C_{jl}.
 $$
 

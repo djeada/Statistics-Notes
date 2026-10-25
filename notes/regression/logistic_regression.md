@@ -174,7 +174,7 @@ The gradient and Hessian of the log-likelihood are
 
 $$
 \mathbf{g}(\boldsymbol{\beta}) = \mathbf{X}^\top(\mathbf{y} - \mathbf{p}), \qquad
-\mathbf{H}(\boldsymbol{\beta}) = -\mathbf{X}^\top \mathbf{W} \mathbf{X}, \quad \mathbf{W} = \operatorname{diag}\big(p_i(1-p_i)\big).
+\mathbf{H}(\boldsymbol{\beta}) = -\mathbf{X}^\top \mathbf{W} \mathbf{X}, \quad \mathbf{W} = \mathrm{diag}\big(p_i(1-p_i)\big).
 $$
 
 At $\boldsymbol{\beta}^{(0)}$, $\mathbf{y}-\mathbf{p} = \pm 0.5$ and $\mathbf{W} = 0.25\,\mathbf{I}$, so
@@ -192,7 +192,7 @@ $$
 \hat{\beta}_0 = -4.530, \quad \hat{\beta}_1 = 0.618, \quad \hat{\beta}_2 = 0.613
 $$
 
-with standard errors approximately $2.90,\ 0.42,\ 0.84$. First calculate the estimated covariance matrix $\widehat{\operatorname{Var}}(\hat{\boldsymbol\beta})=(\mathbf X^\top\mathbf W\mathbf X)^{-1}$ at the solution, then take square roots of its diagonal entries. These are asymptotic likelihood standard errors, which can be unreliable in a dataset this small. With only 10 observations neither slope is individually significant (Wald $z \approx 1.47$ and $0.73$); the example is meant to show the mechanics, not a strong effect. The maximized log-likelihood is $\ell(\hat{\boldsymbol\beta}) \approx -4.034$, compared with $10 \ln 0.5 \approx -6.931$ for the intercept-only model.
+with standard errors approximately $2.90,\ 0.42,\ 0.84$. First calculate the estimated covariance matrix $\widehat{\mathrm{Var}}(\hat{\boldsymbol\beta})=(\mathbf X^\top\mathbf W\mathbf X)^{-1}$ at the solution, then take square roots of its diagonal entries. These are asymptotic likelihood standard errors, which can be unreliable in a dataset this small. With only 10 observations neither slope is individually significant (Wald $z \approx 1.47$ and $0.73$); the example is meant to show the mechanics, not a strong effect. The maximized log-likelihood is $\ell(\hat{\boldsymbol\beta}) \approx -4.034$, compared with $10 \ln 0.5 \approx -6.931$ for the intercept-only model.
 
 #### 6. Logistic Regression Equation
 

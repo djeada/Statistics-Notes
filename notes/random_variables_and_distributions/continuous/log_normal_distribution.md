@@ -6,7 +6,7 @@ $$
 Y=\ln X\sim\mathcal N(\mu,\sigma^2),\qquad X=e^Y,
 $$
 
-where $\mu\in\mathbb R$ and $\sigma>0$. Write $X\sim\operatorname{LogNormal}(\mu,\sigma^2)$. These parameters describe the log scale: $\mu$ is not the mean of $X$, and $\sigma$ is not its original-scale standard deviation.
+where $\mu\in\mathbb R$ and $\sigma>0$. Write $X\sim\mathrm{LogNormal}(\mu,\sigma^2)$. These parameters describe the log scale: $\mu$ is not the mean of $X$, and $\sigma$ is not its original-scale standard deviation.
 
 The model is natural when several positive multiplicative effects combine, since logarithms turn a product into a sum. It is right-skewed and assigns no probability to zero or negative values. A positive variable is not automatically log-normal; its log-scale distribution must support that modeling assumption.
 
@@ -34,7 +34,7 @@ $$
 where $\Phi$ is the standard normal CDF. Equivalently,
 
 $$
-F(x;\mu,\sigma)=\frac12+\frac12\operatorname{erf}
+F(x;\mu,\sigma)=\frac12+\frac12\mathrm{erf}
 \left(\frac{\ln x-\mu}{\sigma\sqrt2}\right).
 $$
 
@@ -61,7 +61,7 @@ The median is $e^\mu$, because half the log-scale normal probability lies below 
 Using $E[X^2]$ and subtracting $(E[X])^2$ gives
 
 $$
-\operatorname{Var}(X)=\left[e^{\sigma^2}-1\right]e^{2\mu+\sigma^2}.
+\mathrm{Var}(X)=\left[e^{\sigma^2}-1\right]e^{2\mu+\sigma^2}.
 $$
 
 All positive integer moments are finite, but the log-normal MGF $E(e^{tX})$ is infinite for $t>0$. Having every power moment is not sufficient for an MGF to exist in a neighborhood of zero.
@@ -81,7 +81,7 @@ The modeled median is 1 price unit, while the mean is about 1.005 units because 
 ### Price variance
 
 $$
-\operatorname{Var}(X)=\left[e^{0.1^2}-1\right]e^{2(0)+0.1^2}
+\mathrm{Var}(X)=\left[e^{0.1^2}-1\right]e^{2(0)+0.1^2}
 \approx0.0102.
 $$
 

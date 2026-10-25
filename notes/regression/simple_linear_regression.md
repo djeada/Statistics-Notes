@@ -28,7 +28,7 @@ For the simple linear regression model to be valid, several key assumptions must
 
 1. **Conditional mean:** $E[\varepsilon_i\mid\mathbf X]=0$, where $\mathbf X$ denotes the predictor design. The linear expression describes the conditional mean, rather than requiring every point to lie on a line.
 2. **Error dependence:** the classical model assumes errors are independent, or uncorrelated for the Gauss-Markov variance result. Fitted residuals are generally correlated because they share estimated coefficients.
-3. **Homoscedasticity:** $\operatorname{Var}(\varepsilon_i\mid\mathbf X)=\sigma^2$ across observations. Heteroscedasticity changes the usual standard-error formula; it does not by itself prevent fitting least squares.
+3. **Homoscedasticity:** $\mathrm{Var}(\varepsilon_i\mid\mathbf X)=\sigma^2$ across observations. Heteroscedasticity changes the usual standard-error formula; it does not by itself prevent fitting least squares.
 4. **Normal errors:** conditional normality gives exact finite-sample t and F distributions. It is not required for computing least-squares coefficients.
 5. **Predictor measurement:** the interpretation assumes the recorded predictor is the intended quantity. Classical additive measurement error independent of the true predictor and model error attenuates the simple-regression slope toward zero. Other measurement-error mechanisms need not do so.
 

@@ -1,6 +1,6 @@
 # Gamma Distribution
 
-The gamma family models positive quantities with flexible right-skewed shapes. Write $X\sim\operatorname{Gamma}(\alpha,\beta)$, where $\alpha>0$ is the **shape** and $\beta>0$ is the **rate**. This note uses a rate, not a scale; the corresponding scale is $\theta=1/\beta$.
+The gamma family models positive quantities with flexible right-skewed shapes. Write $X\sim\mathrm{Gamma}(\alpha,\beta)$, where $\alpha>0$ is the **shape** and $\beta>0$ is the **rate**. This note uses a rate, not a scale; the corresponding scale is $\theta=1/\beta$.
 
 For an integer shape $\alpha=k$, one construction is a sum of $k$ independent exponential waits with rate $\beta$. It is therefore the wait to the $k$-th event of a constant-rate Poisson process, also called an Erlang distribution. Noninteger shapes define valid gamma distributions too, but do not literally count a fractional number of events.
 
@@ -48,7 +48,7 @@ With an integer shape, adding the independent exponential means and variances gi
 
 $$
 E[X]=\frac{\alpha}{\beta},\qquad
-\operatorname{Var}(X)=\frac{\alpha}{\beta^2}.
+\mathrm{Var}(X)=\frac{\alpha}{\beta^2}.
 $$
 
 For a fixed shape, doubling the rate halves the mean and divides the variance by four. This is why substituting a scale for a rate changes the answer substantially.
@@ -74,7 +74,7 @@ $$
 ### Variance of the interval
 
 $$
-\operatorname{Var}(X)=\frac{2}{(1/3)^2}=18\text{ years}^2.
+\mathrm{Var}(X)=\frac{2}{(1/3)^2}=18\text{ years}^2.
 $$
 
 The standard deviation is $\sqrt{18}\approx4.24$ years. The squared units distinguish variance from an ordinary time interval.

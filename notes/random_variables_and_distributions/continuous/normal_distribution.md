@@ -25,7 +25,7 @@ Standardizing gives $Z=(X-\mu)/\sigma\sim\mathcal N(0,1)$. Thus every normal CDF
 
 $$
 F(x)=\Phi\left(\frac{x-\mu}{\sigma}\right)
-=\frac12\left[1+\operatorname{erf}\left(\frac{x-\mu}{\sigma\sqrt2}\right)\right].
+=\frac12\left[1+\mathrm{erf}\left(\frac{x-\mu}{\sigma\sqrt2}\right)\right].
 $$
 
 The error function is another way to express the same integral; it does not mean the probability equals the density formula. For an interval, standardize both endpoints and subtract their left-tail probabilities.
@@ -69,7 +69,7 @@ This calculation formalizes the symmetry argument. For the normal distribution, 
 The variance and standard deviation are
 
 $$
-\operatorname{Var}(X)=\sigma^2,\qquad \operatorname{SD}(X)=\sigma.
+\mathrm{Var}(X)=\sigma^2,\qquad \mathrm{SD}(X)=\sigma.
 $$
 
 Completing the square in $tx-(x-\mu)^2/(2\sigma^2)$ produces a shifted normal density times a constant. Integrating the density leaves the MGF

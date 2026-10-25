@@ -26,7 +26,7 @@ The descriptive question is whether the observed arrangement aligns with a chose
 
 Inference requires another choice: which arrangements should count as ordinary under a null model? Randomly permuting fixed values over fixed locations assumes those values are exchangeable under the null. This is plausible for independent observations from one common distribution. Independence alone is insufficient when means or variances differ systematically across locations. A north-south mean gradient, for example, is incompatible with freely exchanging northern and southern values under that mean model.
 
-Counts and rates make this distinction concrete. Suppose independent district counts satisfy $C_i\sim\operatorname{Binomial}(n_i,p)$ with one common probability $p$. The rates have the same mean, but variance $p(1-p)/n_i$ varies with district population. A small district is more likely to produce an extreme observed rate than a large one, even under this nonspatial outcome model. An unrestricted rate permutation erases that relationship with the denominators. A model-based null simulation can retain the populations and generate new counts before recomputing the statistic.
+Counts and rates make this distinction concrete. Suppose independent district counts satisfy $C_i\sim\mathrm{Binomial}(n_i,p)$ with one common probability $p$. The rates have the same mean, but variance $p(1-p)/n_i$ varies with district population. A small district is more likely to produce an extreme observed rate than a large one, even under this nonspatial outcome model. An unrestricted rate permutation erases that relationship with the denominators. A model-based null simulation can retain the populations and generate new counts before recomputing the statistic.
 
 The statistic, its numerical scale, and its p-value therefore answer separate questions. A large positive value describes an arrangement with positive weighted co-variation. Its extremeness depends on the graph, the observed distribution, the number of locations, and the stated null. The same numerical I need not imply the same p-value for another graph or sample size.
 
@@ -611,10 +611,10 @@ Use a clearly stated two-sided extremeness rule, usually relative to the null ce
 The usual expectation assumes $w_{ii}=0$. A self-product $z_i^2$ is always nonnegative, whereas a product between two distinct permuted values has negative expectation after centering. If self-weights are retained, the same calculation gives
 
 $$
-E[I]=\frac{n\,\operatorname{tr}(W)-S_0}{(n-1)S_0}.
+E[I]=\frac{n\,\mathrm{tr}(W)-S_0}{(n-1)S_0}.
 $$
 
-Here $\operatorname{tr}(W)$ is the sum of diagonal weights. With $W=I_n$, each location is connected only to itself, I is identically one, and this formula also gives one. Such a result contains no evidence of similarity between different locations. This is a substantive reason for the zero-diagonal convention, as well as a warning against using the familiar null center with an incompatible matrix.
+Here $\mathrm{tr}(W)$ is the sum of diagonal weights. With $W=I_n$, each location is connected only to itself, I is identically one, and this formula also gives one. Such a result contains no evidence of similarity between different locations. This is a substantive reason for the zero-diagonal convention, as well as a warning against using the familiar null center with an incompatible matrix.
 
 ## Geary's C
 
@@ -1257,7 +1257,7 @@ Suppose the null scientific model is $y_i=\beta_0+\beta_1s_i+\epsilon_i$, where 
 Fit the design matrix $X=(\mathbf1,s)$ and calculate residuals $e=(I-H)y$, where $H=X(X^\top X)^{-1}X^\top$. Even under the independent-error null,
 
 $$
-\operatorname{Cov}(e\mid X)=\sigma^2(I-H).
+\mathrm{Cov}(e\mid X)=\sigma^2(I-H).
 $$
 
 The residuals share estimation constraints and generally have unequal marginal variances $\sigma^2(1-h_{ii})$. Freely permuting them is therefore not automatically justified either. In particular, the raw-value expectation $-1/(n-1)$ is not a general residual-I expectation.

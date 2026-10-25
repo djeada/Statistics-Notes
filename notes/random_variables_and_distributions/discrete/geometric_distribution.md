@@ -2,7 +2,7 @@
 
 The geometric distribution counts trials **up to and including the first success**. Unlike a binomial experiment, it does not fix the number of trials in advance. Repeat independent Bernoulli trials with a common success probability $p$ until the first success, and call its trial number $X$.
 
-For $0<p<1$, write $X\sim\operatorname{Geometric}(p)$ with support $\{1,2,3,\ldots\}$. A different convention counts failures before the success. That variable is $Y=X-1$ and starts at 0. The shift changes the mean and event thresholds, so identify what is being counted before using a formula.
+For $0<p<1$, write $X\sim\mathrm{Geometric}(p)$ with support $\{1,2,3,\ldots\}$. A different convention counts failures before the success. That variable is $Y=X-1$ and starts at 0. The shift changes the mean and event thresholds, so identify what is being counted before using a formula.
 
 ## Probability mass function
 
@@ -43,7 +43,7 @@ The earlier failures do not change the future success probability under this mod
 The mean and variance under the total-trials convention are
 
 $$
-E[X]=\frac1p,\qquad \operatorname{Var}(X)=\frac{1-p}{p^2}.
+E[X]=\frac1p,\qquad \mathrm{Var}(X)=\frac{1-p}{p^2}.
 $$
 
 The mean also follows from a restart argument: one trial is always needed; after a failure, the remaining wait has the original distribution. Thus $E[X]=1+(1-p)E[X]$.
@@ -79,7 +79,7 @@ This is a long-run average of first-head waiting times, not a guarantee of a hea
 ### Variance of the wait
 
 $$
-\operatorname{Var}(X)=\frac{1-0.5}{0.5^2}=2.
+\mathrm{Var}(X)=\frac{1-0.5}{0.5^2}=2.
 $$
 
 The variance is in squared trials. The corresponding standard deviation is $\sqrt2$ trials.

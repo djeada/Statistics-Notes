@@ -103,7 +103,7 @@ These relationships help researchers balance the risks of false positives and fa
 Power is a function of the actual alternative, not one fixed property of a test name. For a one-sided z test with known $\sigma$, reject when $Z=(\bar X-\mu_0)/(\sigma/\sqrt n)>z_{1-\alpha}$. At a true mean $\mu_1=\mu_0+\Delta$, $Z$ has mean $\Delta\sqrt n/\sigma$ and variance one, so
 
 ```math
-\operatorname{Power}(\mu_1)
+\mathrm{Power}(\mu_1)
 =1-\Phi\left(z_{1-\alpha}-\frac{\Delta\sqrt n}{\sigma}\right).
 ```
 

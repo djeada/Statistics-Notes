@@ -140,4 +140,4 @@ That identity is developed in **[Covariance](https://github.com/djeada/Statistic
 
 Regression does not simply ask whether two variables are related. It models the conditional behavior of a response given one or more predictors. Joint and conditional distributions therefore provide the probability language needed to make expressions such as $E[Y\mid X=x]$ meaningful.
 
-In the table, $E[XY]=0.3$, because the product is one only in the bottom-right interior cell. Thus $\operatorname{Cov}(X,Y)=0.3-0.5(0.4)=0.1$. The joint model supplies the probabilities from which covariance is computed; the single covariance value does not allow us to reconstruct an arbitrary joint model.
+In the table, $E[XY]=0.3$, because the product is one only in the bottom-right interior cell. Thus $\mathrm{Cov}(X,Y)=0.3-0.5(0.4)=0.1$. The joint model supplies the probabilities from which covariance is computed; the single covariance value does not allow us to reconstruct an arbitrary joint model.

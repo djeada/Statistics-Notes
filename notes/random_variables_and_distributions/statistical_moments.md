@@ -17,7 +17,7 @@ For these to be ordinary finite moments, the relevant absolute power must be int
 The first central moment is zero because $E[X-\mu]=0$. The second is the variance, $\sigma^2=E[(X-\mu)^2]$, whose square root is the standard deviation. Expanding the square gives the useful identity
 
 $$
-\operatorname{Var}(X)=E[X^2]-(E[X])^2.
+\mathrm{Var}(X)=E[X^2]-(E[X])^2.
 $$
 
 For example, if $X$ takes 0 and 2 with equal probability, $E[X]=1$ and $E[X^2]=2$, while the variance is 1. The second raw moment and variance are different because they measure squared distance from different reference points.
@@ -60,7 +60,7 @@ E[X]=M_X^{(1)}(0),
 $$
 
 $$
-\operatorname{Var}(X)=M_X^{(2)}(0)-\bigl(M_X^{(1)}(0)\bigr)^2.
+\mathrm{Var}(X)=M_X^{(2)}(0)-\bigl(M_X^{(1)}(0)\bigr)^2.
 $$
 
 For an exponential variable with rate 1, $M_X(t)=1/(1-t)$ for $t<1$. Its first two derivatives at zero are 1 and 2, yielding mean 1 and variance $2-1^2=1$. Differentiating can therefore replace repeated direct integrations.
@@ -82,7 +82,7 @@ The solid curve is $M_X(t)=\lambda/(\lambda-t)$ for an exponential rate $\lambda
 For each $t<1$, the estimate has finite expectation equal to $M_X(t)$. Its variance requires the stronger condition that $E[e^{2tX}]$ be finite:
 
 $$
-\operatorname{Var}(e^{tX})=M_X(2t)-M_X(t)^2,
+\mathrm{Var}(e^{tX})=M_X(2t)-M_X(t)^2,
 \qquad t<\tfrac12.
 $$
 
@@ -101,7 +101,7 @@ Here $\rho$ is mass density and $r$ is the perpendicular distance; for point mas
 On a number line, the weighted squared deviation from a reference $a$ satisfies
 
 $$
-E[(X-a)^2]=\operatorname{Var}(X)+(\mu-a)^2.
+E[(X-a)^2]=\mathrm{Var}(X)+(\mu-a)^2.
 $$
 
 The cross-term vanishes because $E[X-\mu]=0$. The mean therefore minimizes expected squared distance, just as centering at the center of mass minimizes the corresponding reference-point contribution. Physical inertia has units of mass times squared distance; normalized statistical second moments have squared data units.
@@ -137,10 +137,10 @@ The illustration uses 300 correlated two-dimensional normal observations. The ar
 For a centered physical mass distribution with covariance $\Sigma$ after normalizing mass, the inertia tensor is instead
 
 $$
-J=\operatorname{tr}(\Sigma)I-\Sigma,
+J=\mathrm{tr}(\Sigma)I-\Sigma,
 $$
 
-where $I$ is the identity matrix. Its eigenvectors are the same, but its eigenvalues are $\operatorname{tr}(\Sigma)-\lambda_j$. An axis with large variance **along** it therefore has smaller inertia **about** it, because rotation uses perpendicular distances. In the two-dimensional example, the in-plane axis with projected variance 3.36 has normalized inertia about that axis of approximately 0.28. The common eigenvectors justify the principal-axis analogy; equating the largest projected variance with the largest axial inertia would reverse the comparison.
+where $I$ is the identity matrix. Its eigenvectors are the same, but its eigenvalues are $\mathrm{tr}(\Sigma)-\lambda_j$. An axis with large variance **along** it therefore has smaller inertia **about** it, because rotation uses perpendicular distances. In the two-dimensional example, the in-plane axis with projected variance 3.36 has normalized inertia about that axis of approximately 0.28. The common eigenvectors justify the principal-axis analogy; equating the largest projected variance with the largest axial inertia would reverse the comparison.
 
 ## Historical context and estimation
 

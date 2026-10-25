@@ -18,7 +18,7 @@ The **support** of a measurement is the point, area, volume, or population it re
 For a continuous field Z, an area average is $Z_A=|A|^{-1}\int_A Z(s)\,ds$. Its variance depends on covariance between every pair of positions in A:
 
 $$
-\operatorname{Var}(Z_A)
+\mathrm{Var}(Z_A)
 =\frac1{|A|^2}\int_A\int_A C(s,t)\,ds\,dt.
 $$
 
@@ -39,7 +39,7 @@ Distance enters neighbor definitions, covariance functions, and validation split
 Suppose two measurements each have variance four and correlation 0.8. The variance of their average is
 
 $$
-\operatorname{Var}\left(\frac{Z_1+Z_2}{2}\right)
+\mathrm{Var}\left(\frac{Z_1+Z_2}{2}\right)
 =\frac14(4+4+2\times0.8\times4)=3.6.
 $$
 

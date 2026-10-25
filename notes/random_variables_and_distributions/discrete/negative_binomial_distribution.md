@@ -2,7 +2,7 @@
 
 The negative binomial distribution extends geometric waiting from the **first success** to the **$r$-th success**. Repeat independent Bernoulli trials with a common success probability $p$ and stop when the required positive integer number $r$ of successes has occurred.
 
-Here $X$ counts the total number of trials, including the successful ones. Write $X\sim\operatorname{NegBinomial}(r,p)$, with $X\in\{r,r+1,\ldots\}$ and $0<p<1$. The number of failures before stopping is a different variable, $Y=X-r$, whose support begins at 0. In particular, `scipy.stats.nbinom` uses that failures convention.
+Here $X$ counts the total number of trials, including the successful ones. Write $X\sim\mathrm{NegBinomial}(r,p)$, with $X\in\{r,r+1,\ldots\}$ and $0<p<1$. The number of failures before stopping is a different variable, $Y=X-r$, whose support begins at 0. In particular, `scipy.stats.nbinom` uses that failures convention.
 
 ## Deriving the probability mass function
 
@@ -35,7 +35,7 @@ The CDF is zero below $r$; for noninteger thresholds use the integer floor. An e
 Split the total wait into $r$ successive waits for one success. Under the independent, constant-$p$ trial model, these are independent geometric variables. Adding their means and variances gives
 
 $$
-E[X]=\frac rp,\qquad \operatorname{Var}(X)=\frac{r(1-p)}{p^2}.
+E[X]=\frac rp,\qquad \mathrm{Var}(X)=\frac{r(1-p)}{p^2}.
 $$
 
 Their MGFs multiply as well:
@@ -72,7 +72,7 @@ Five separate mean waits of 10 trials add to an expected total of 50.
 ### Variance of the total
 
 $$
-\operatorname{Var}(X)=\frac{5(1-0.1)}{0.1^2}=450.
+\mathrm{Var}(X)=\frac{5(1-0.1)}{0.1^2}=450.
 $$
 
 The standard deviation is $\sqrt{450}\approx21.21$ trials. The failures variable has mean 45 and the same variance 450.

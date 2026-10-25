@@ -1,6 +1,6 @@
 # Exponential Distribution
 
-The exponential distribution models the wait to the next event in a constant-rate Poisson process. Write $X\sim\operatorname{Exp}(\lambda)$ with rate $\lambda>0$. If time is measured in years, $\lambda$ has units of events per year and $X$ has units of years. Larger rates mean shorter typical waits.
+The exponential distribution models the wait to the next event in a constant-rate Poisson process. Write $X\sim\mathrm{Exp}(\lambda)$ with rate $\lambda>0$. If time is measured in years, $\lambda$ has units of events per year and $X$ has units of years. Larger rates mean shorter typical waits.
 
 The model permits any positive wait rather than a fixed lifetime. Its constant hazard means that surviving for some time does not change the distribution of the remaining wait. That is a substantive assumption for a physical lifetime: an aging or wearing component need not follow it.
 
@@ -50,7 +50,7 @@ Conditioning on survival through $s$ leaves the same probability of waiting more
 The expected wait and its variance are
 
 $$
-E[X]=\frac1\lambda,\qquad \operatorname{Var}(X)=\frac1{\lambda^2}.
+E[X]=\frac1\lambda,\qquad \mathrm{Var}(X)=\frac1{\lambda^2}.
 $$
 
 The standard deviation equals the mean, showing that the distribution permits substantial variation even with one fixed rate. A mean lifetime is not a deadline by which every component has failed.
