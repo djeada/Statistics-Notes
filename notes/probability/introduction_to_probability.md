@@ -1,10 +1,10 @@
 # Introduction to Probability
 
-Probability theory offers a structured approach to assessing the probability of events, allowing for logical and systematic reasoning about their likelihood.
+A probability model specifies possible outcomes and assigns probabilities to events made from those outcomes. The sample space tells us what can happen; the probability law tells us how likely those possibilities are. Listing outcomes does not make them equally likely. For example, two fair dice have equally likely ordered pairs, while the sums formed from those pairs have different probabilities because some sums can be formed in more ways.
 
 ## Introductory Terminology
 
-- An **experiment** refers to any procedure that can be repeated indefinitely and has a clearly defined set of possible outcomes, known as the sample space. Examples include rolling dice, flipping coins, or drawing cards from a deck.
+- A **random experiment** is a procedure or observation whose outcome is uncertain in the model, with a specified set of possible outcomes. Rolling dice, flipping coins, or drawing cards are repeatable examples. A probability model can also describe a one-time uncertain event; literal unlimited repetition is not required to define its sample space or probabilities.
 - The **sample space (S)** represents the complete set of possible outcomes of an experiment. It can be finite or infinite, and either discrete or continuous. For example, for a 6-sided die, the sample space is $S = \{1, 2, 3, 4, 5, 6\}$. For a coin flip, the sample space is $S = \{\text{heads}, \text{tails}\}$. If two coins are flipped simultaneously, the sample space expands to $S = \{(\text{H}, \text{H}), (\text{H}, \text{T}), (\text{T}, \text{H}), (\text{T}, \text{T})\}$.
 - An **event (E)** is any collection of outcomes drawn from the sample space $S$, forming a subset of $S$. An event can consist of a single outcome or multiple outcomes. For example, rolling an even number on a die corresponds to the event $E = \{2, 4, 6\}$, getting tails when flipping a coin is $E = \{\text{tails}\}$, and drawing a heart from a standard deck of cards is $E = \{2\heartsuit, 3\heartsuit, \dots, A\heartsuit\}$.
 
@@ -26,10 +26,10 @@ Each event is a subset of the sample space and represents a particular outcome o
 
 ### Additional Examples
 
-- In **traffic observation**, counting the number of accidents at an intersection over a month defines the sample space as $S = \{0, 1, 2, 3, \dots, n\}$, where $n$ represents a reasonable upper limit based on historical data.
-- The **life span of a light bulb** measured in hours has a sample space of any positive number, formally $S = \{t \mid t > 0\}$. In practice, this could be limited to a range such as $S = \{1, 2, 3, \dots, 10000\}$ hours.
+- In **traffic observation**, a count of accidents in a month can be modeled on $S=\{0,1,2,\ldots\}$. A finite upper limit should follow from an actual constraint or an explicitly truncated model. The largest historical count alone is not a physical limit on future counts.
+- The **lifetime of a light bulb** can be modeled on the positive real line, $S=\{t:t>0\}$. Recording whole hours rounds a continuous lifetime into categories. Stopping observation at 10,000 hours instead creates possible right censoring: a bulb still working at the cutoff has a lifetime exceeding the cutoff, rather than a recorded failure at 10,000 hours. Recording precision and censoring are different features of the experiment.
 - For an individual's **birth month**, the sample space is $S = \{\text{January}, \text{February}, \dots, \text{December}\}$.
-- In the case of **radioactive decay**, where decay occurs in intervals of 1 second, the sample space consists of sequences of decay (D) and non-decay (N), such as $S = \{\text{D}, \text{ND}, \text{NND}, \text{NNND}, \dots\}$.
+- For **radioactive decay**, suppose we record which one-second interval contains the first observed decay. Outcomes can be encoded as D, ND, NND, and so on, where N means no decay yet and D marks the first decay. This discrete recording model does not claim that physical decay occurs only at integer seconds. An unbounded sequence of N symbols can be included as a zero-probability outcome under a model in which eventual decay occurs almost surely.
 - If we record only the **sum of two dice**, the sample space is $S = \{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}$, but these sums are not equally likely (see the example below).
 - In the **seating at a square table** scenario, if two people sit at two different corners of the four corners, the sample space for their seating positions consists of the $4\cdot 3=12$ ordered pairs of distinct positions.
 - When **rolling two dice**, the sample space of ordered pairs (first die, second die) can be laid out in a table:
@@ -47,11 +47,13 @@ For instance, (1,1) means the first die shows 1 and the second die shows 1, and 
 
 ## Probability
 
-Probability is a measure that quantifies the likelihood of a specific event occurring, given a set of possible outcomes. It is a value between 0 and 1, where 0 indicates that the event is impossible, and 1 indicates that the event is certain. Mathematically, the probability of an event A, denoted as P(A), can be expressed (when all outcomes are equally likely) as:
+A probability measure assigns an event $A$ a number between zero and one. Probability zero and one mean almost impossible and almost sure under the model; they need not mean logical impossibility or certainty. In a continuous uniform model on $[0,1]$, any specified point has probability zero even though one point is observed. In a finite sample space with all elementary outcomes equally likely, probabilities can be calculated by counting:
 
 $$
 P(A) = \frac{\text{Number of favorable outcomes}}{\text{Total number of possible outcomes}}
 $$
+
+The sums over individual outcomes in the following formulas apply to discrete, countable sample spaces. Continuous models assign probability by integrating a density over a region, when a density exists. The event-level axioms apply to both types of model. In more advanced probability, events are restricted to measurable subsets so that their probabilities are well defined.
 
 * **Probability of an Outcome (P(s))**: The probability of a particular outcome s is a measure of the likelihood that this outcome will occur when the experiment is performed. It is a value between 0 (impossible event) and 1 (certain event), satisfying:
   * $0 \leq P(s) \leq 1$ for each outcome $s$.
@@ -148,7 +150,7 @@ $$
 
 #### Probability of Drawing a Card Lower than 5
 
-Cards lower than 5 will be the numbers 2, 3, and 4 from each suit. Since there are 4 suits, this gives us 12 cards.
+For this event, “lower than 5” refers to the printed number cards 2, 3, and 4, excluding Aces and face cards. Four suits give 12 such cards. A different game might count an Ace as one, in which case there would be 16 cards and probability $4/13$. The event definition therefore needs to be specified separately from the numerical encoding used for the expected-value example below.
 
 $$
 P(\text{Card} < 5) = \frac{\text{Number of cards lower than 5}}{\text{Total number of cards}} = \frac{12}{52} = \frac{3}{13}
@@ -215,6 +217,8 @@ We can define several events based on these arrangements:
 #### Probability Calculations
 
 With 27 possible outcomes, each equally likely, the probabilities of the events are:
+
+Equal likelihood here comes from independently assigning each labeled ball to one of three cells with probability $1/3$. There are $3^3=27$ assignments. The six assignments with one ball per cell are the $3!$ permutations of the three labels, so $A$ contains $27-6=21$ assignments. Cell one is empty in $2^3=8$ assignments, leaving $27-8=19$ for $B$. Every one-per-cell assignment has cell one occupied, so $A\cap B$ contains $19-6=13$ assignments. If $A$ fails, every cell is occupied and $B$ holds; hence $A\cup B$ is the whole sample space.
 
 $$
 P(A) = \frac{\text{Number of favorable outcomes for A}}{\text{Total outcomes}} = \frac{21}{27}

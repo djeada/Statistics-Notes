@@ -1,23 +1,15 @@
 # Probability
 
-Probability provides the mathematical rules for reasoning about uncertainty before numerical random variables and probability distributions are introduced.
+Probability assigns coherent numerical weights to possible outcomes. A sample space specifies what can happen, and an event is a set of outcomes that answers a particular question. Once a probability model is specified, the same rules apply whether uncertainty concerns a die roll, a sample from a population, or a sequence of dependent events.
 
-## Reading Order
+## Combining and conditioning events
 
-1. **[Introduction to Probability](introduction_to_probability.md)** — experiments, sample spaces, events, and basic probability language.
-2. **[Axioms of Probability](axioms_of_probability.md)** — the formal rules that every probability model must satisfy.
-3. **[Conditional Probability](conditional_probability.md)** — conditioning, dependence, and independence.
-4. **[Total Probability](total_probability.md)** — decompose a problem across a partition of the sample space.
-5. **[Bayes' Theorem](bayes_theorem.md)** — reverse conditional probabilities by combining a prior probability with new evidence.
-6. **[Probability Trees](probability_tree.md)** — visualize sequential conditional probabilities.
-7. **[Geometric Probability](geometric_probability.md)** — calculate probabilities from lengths, areas, or volumes when geometric assumptions make that appropriate.
+The axioms require nonnegative probabilities, total probability one, and additivity for disjoint events. Other rules follow from these requirements. The complement rule counts everything outside an event. The addition rule subtracts an overlap that would otherwise be counted twice.
 
-## Scope Boundary
+Conditioning changes the reference set: after learning that an event occurred, we renormalize probabilities within that event. Independence is the special case in which this information does not change the probability of the other event. Disjointness has a different meaning: two events cannot occur together, so observing one rules out the other.
 
-This unit is primarily about **events** and their probabilities. A random variable is a function that assigns numerical values to outcomes; its PMF, PDF, CDF, moments, and named distribution families belong in **[Random Variables & Distributions](../random_variables_and_distributions/README.md)**.
+## Choosing a useful decomposition
 
-Conditional probability is introduced here at the event level. It returns later in **[Joint Distributions & Covariance](../joint_distributions_and_covariance/README.md)** as conditional distributions of one random variable given another.
+The law of total probability splits a question across mutually exclusive cases that cover the sample space. Bayes' theorem uses the same decomposition to reverse a conditional probability. Probability trees organize sequential cases by multiplying along a path and adding across disjoint paths.
 
-## Next
-
-Continue to **[Random Variables & Distributions](../random_variables_and_distributions/README.md)**.
+Geometric probability replaces counting with length, area, or volume only when the sampling model is uniform in the relevant geometric measure. A random variable then maps outcomes to numbers, allowing the same probability rules to describe distributions, expected values, and numerical summaries of uncertainty.

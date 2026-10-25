@@ -1,33 +1,19 @@
-# Resampling & Model Assessment
+# Resampling and Model Assessment
 
-This unit separates two ideas that are often mixed together: using resampling to approximate uncertainty, and using held-out data to estimate predictive performance.
+Repeatedly rearranging or partitioning a dataset can answer several statistical questions. The interpretation comes from what is resampled and what quantity is recalculated. Similar-looking computer loops can estimate a standard error, test a null hypothesis, or assess predictive performance, but those targets require different assumptions.
 
-## Reading Order
+## Three distinct uses of repeated fitting
 
-1. **[Resampling](resampling.md)** — bootstrap and permutation ideas for approximating sampling behavior or null distributions.
-2. **[Validation and Model Selection](validation_and_model_selection.md)** — train/test splits, cross-validation, leakage, tuning, and nested evaluation.
-3. **[Metrics](metrics.md)** — regression and classification metrics and the questions each metric answers.
+A bootstrap draws from an empirical distribution to approximate how an estimator would vary across new samples. A permutation test rearranges values in a way that is valid under a null hypothesis, then compares the observed statistic with the resulting null distribution. Cross-validation fits on one part of the data and evaluates on held-out observations to estimate performance on a specified prediction task.
 
-## Resampling for Inference vs Resampling for Prediction
+An ordinary bootstrap requires an appropriate representation of the sampling units. A permutation test requires exchangeability under the null, rather than permission to shuffle arbitrary columns. A validation split requires separation that matches deployment: new rows from familiar subjects and observations from entirely new subjects are different prediction targets.
 
-The same computational pattern can serve different goals:
+## Selection is part of training
 
-- a **bootstrap** often approximates an estimator's sampling distribution or standard error;
-- a **permutation test** approximates a null distribution under an exchangeability assumption;
-- **cross-validation** estimates predictive performance on data not used to fit a model;
-- **nested cross-validation** separates model/tuning selection from final performance estimation.
+Scaling, imputation, feature selection, hyperparameter tuning, and threshold choice all use information from data. Fit these steps on training data within each split. If evaluation results influence a modeling choice, those data have become part of selection and no longer provide an untouched assessment of the final choice.
 
-Keeping the target clear prevents a resampling procedure from being interpreted as evidence for a different question than the one it actually estimates.
+Nested validation separates these roles by using inner folds for selection and outer folds for assessment. A final reserved test set can serve the same purpose when there is enough data and it remains unused until the modeling process is fixed.
 
-## Model Assessment Principles
+## A score needs a target
 
-- Evaluate performance on observations not used to fit or tune the model.
-- Match the metric to the decision or scientific goal.
-- Treat preprocessing and feature selection as part of the fitted pipeline to avoid leakage.
-- Compare against simple baselines.
-- Report uncertainty or variability in evaluation when possible.
-- For time-ordered data, do not use shuffled validation schemes that leak future information into the past.
-
-## Next
-
-For independent observations, this completes the main modeling loop. Continue to **[Time Series](../time_series/README.md)** or **[Spatial Statistics](../spatial_statistics/README.md)** when dependence is structured by time or location.
+Regression losses measure different costs of numerical errors. Classification metrics emphasize different combinations of false positives, false negatives, rankings, and probability quality. Compare with simple baselines and report the sample and split strategy alongside the score. Temporal order, spatial proximity, and repeated observations within groups may require structured splits so that evaluation reflects the information available when the model will actually be used.

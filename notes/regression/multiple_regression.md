@@ -37,10 +37,10 @@ Where:
 
 For the multiple linear regression model to provide valid results, several key assumptions must be met:
 
-1. **Linearity** means that the relationship between the dependent variable and each independent variable is linear.
+1. **Linearity in coefficients** means the conditional mean is a linear combination of specified columns of the design matrix. Those columns may include transformations, indicators, or interactions, so the modeled response need not be a straight-line function of every original predictor.
 2. **Independence** assumes that the observations are independent of one another.
 3. **Homoscedasticity** ensures that the variance of the error terms remains constant across all levels of the independent variables.
-4. **Zero-mean errors** requires $E[\varepsilon_i \mid \mathbf{x}_i] = 0$, i.e. the errors are uncorrelated with the predictors.
+4. **Conditional zero-mean errors** requires $E[\boldsymbol\varepsilon\mid\mathbf X]=0$ for the usual fixed-design unbiasedness argument. This implies appropriate zero correlations when moments exist; zero correlation alone is a weaker condition and does not generally imply a correct conditional mean.
 5. **Normality** requires that the error terms are normally distributed; it is needed only for exact small-sample $t$ and $F$ inference, not for unbiasedness of OLS.
 6. Finally, **no perfect multicollinearity** ensures that no predictor is an exact linear combination of the others (strong but imperfect collinearity is allowed, but inflates standard errors).
 
@@ -75,10 +75,22 @@ $$
 - The matrix $\mathbf{X}^\top \mathbf{X}$ must be invertible.
 - This requires that the columns of $\mathbf{X}$ are linearly independent (no perfect multicollinearity).
 
+The inverse formula expresses the mathematical solution. Numerical software usually solves least squares through a QR or singular-value decomposition rather than explicitly forming this inverse, which can worsen conditioning. A full-rank design identifies coefficients; positive residual degrees of freedom, $n>p+1$, are additionally needed to estimate the usual error variance from SSE.
+
 ## Interpretation of Coefficients
 
 - The **intercept ($\hat{\beta}_0$)** represents the expected value of $y$ when all independent variables are zero.
 - The **slope coefficients ($\hat{\beta}_j$)** indicate the expected change in $y$ for a one-unit increase in $x_j$, while holding all other variables constant.
+
+### What “holding the other predictors fixed” means
+
+For an additive model without interactions, the partial slope can be computed by removing the other predictors' linear contributions first. Regress $x_j$ on the remaining design columns and retain residuals $r_{x_j}$. Regress $y$ on those same columns and retain $r_y$. Then
+
+```math
+\hat\beta_j=\frac{r_{x_j}^{\top}r_y}{r_{x_j}^{\top}r_{x_j}}.
+```
+
+This is the Frisch-Waugh-Lovell identity. It explains the conditional comparison: the coefficient uses variation in $x_j$ left after its linear association with the other predictors is removed. If almost no such variation remains, the denominator is small and the slope can be imprecise. If none remains, the coefficient is unidentified. The identity describes adjustment within a model; it does not establish that confounding has been eliminated or that a feasible intervention can vary one predictor while fixing all others.
 
 ## Assessing Model Fit
 
@@ -118,7 +130,7 @@ $$
 
 ### Testing Overall Model Significance
 
-- **Null Hypothesis ($H_0$)**: All $\beta_j = 0$
+- **Null Hypothesis ($H_0$)**: All slope coefficients $\beta_1,\ldots,\beta_p=0$; the intercept remains free.
 - **Alternative Hypothesis ($H_a$)**: At least one $\beta_j \neq 0$
 - **F-Statistic**:
 
@@ -141,6 +153,8 @@ $$
 
 - $R_j^2$ is the $R^2$ from regressing $x_j$ on the other predictors.
 - A VIF value greater than 5 or 10 is a common rule of thumb for problematic multicollinearity. With exactly two predictors, $R_j^2 = r_{x_1x_2}^2$.
+
+Under homoscedastic errors, the conditional variance of a slope is $\sigma^2/[S_{x_jx_j}(1-R_j^2)]$. The VIF therefore compares it with the variance at the same predictor spread and error variance but zero linear predictability from the other predictors. It is a variance multiplier, not a bias measure. Removing a substantively necessary control merely to reduce VIF can change the target coefficient and introduce omitted-variable bias.
 
 ### Remedies
 
@@ -165,6 +179,8 @@ $$
 
 Values close to 2 indicate no first-order autocorrelation ($D \approx 2(1-\hat\rho_1)$); values near 0 suggest positive and values near 4 negative autocorrelation.
 
+The ordering of observations must be meaningful for this diagnostic, typically chronological. Reordering independent cross-sectional rows can change $D$ without changing the regression. A value near two does not rule out every form of dependence, and a formal Durbin-Watson test has assumptions beyond the descriptive formula, including restrictions involving lagged responses.
+
 ## Extensions
 
 ### Interaction Terms
@@ -174,6 +190,8 @@ Include products of independent variables to model interactions:
 $$
 y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 (x_1 x_2) + \varepsilon
 $$
+
+Here the conditional slope for $x_1$ is $\beta_1+\beta_3x_2$. The coefficient $\beta_1$ alone describes that slope at $x_2=0$, not an effect constant across every value of $x_2$. Centering $x_2$ at a meaningful reference can make the main coefficient easier to interpret without changing the fitted interaction surface.
 
 ### Polynomial Regression
 
@@ -243,6 +261,8 @@ Let $\gamma = \beta_1 + \frac{\beta_2}{2}$. The model becomes:
 $$
 y = \beta_0 + \gamma x_1
 $$
+
+Only the combination $\gamma$ is identified by these observations. For example, $(\beta_1,\beta_2)=(5,0)$ and $(3,4)$ both give $\gamma=5$ and identical fitted values wherever $x_2=x_1/2$. Predictions away from that line would differ, but the observed data provide no basis for choosing between them. A generalized inverse can select one coefficient vector; it cannot create the missing information.
 
 Now, we can proceed with a simple linear regression of $y$ on $x_1$.
 
@@ -324,7 +344,7 @@ The predicted values match the actual test scores perfectly.
 
 Plot:
 
-![output(16)](https://github.com/user-attachments/assets/ee0c3bb1-ce28-4418-9bb9-def7d90f273e)
+![Figure for 5. Verify the Model with the Data](https://github.com/user-attachments/assets/ee0c3bb1-ce28-4418-9bb9-def7d90f273e)
 
 ## Example: No Perfect Multicollinearity
 
@@ -466,7 +486,7 @@ $$
 
 - The **intercept ($\hat\beta_0 = 49.182$)** represents the estimated test score when both hours studied and attendance rate are zero. While this value may not have practical significance, it is necessary for constructing the mathematical model.
 - The **coefficient of $x_1$ ($\hat\beta_1 = 3.786$)** suggests that for each additional hour studied, the test score increases by approximately 3.786 points, assuming the attendance rate remains constant.
-- The **coefficient of $x_2$ ($\hat\beta_2 = 0.116$)** indicates that for each 1% increase in attendance rate, the test score rises by approximately 0.116 points, holding hours studied constant.
+- The **attendance coefficient ($\hat\beta_2\approx0.116$)** associates a one-percentage-point attendance increase, such as 80% to 81%, with about 0.116 additional score points, holding study hours fixed. A relative 1% increase from 80% would be only 0.8 percentage point, so the distinction matters. These are fitted associations from five students, not established causal changes.
 
 #### 7. Verify the Model with the Data
 
@@ -530,7 +550,7 @@ $$
 
 Plot:
 
-![output(17)](https://github.com/user-attachments/assets/4cd38537-ee4a-4c6c-b788-fa614394967c)
+![Figure for 7. Verify the Model with the Data](https://github.com/user-attachments/assets/4cd38537-ee4a-4c6c-b788-fa614394967c)
 
 
 ### Checking for Multicollinearity

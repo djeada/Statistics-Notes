@@ -1,6 +1,6 @@
 # Standard Error and Law of Large Numbers
 
-### Expected Value
+## Expected Value
 
 **Expected Value (E)**, also known as the mean, is the long-run average of a random variable, representing the value we anticipate on average from repeated random draws from a population.
 
@@ -18,11 +18,11 @@ $$
 
 This is the statement that the sample mean is an unbiased estimator of the population mean; it follows from linearity of expectation.
 
-### Standard Error
+## Standard Error
 
 **Standard Error (SE)** quantifies the dispersion or variability of a sample statistic, such as the sample mean, from its expected value. It reflects the precision of the sample statistic as an estimator of the population parameter.
 
-The standard error of the sample mean is defined as:
+The standard error is defined as the standard deviation of the sample mean's sampling distribution. For independent observations with a common finite variance $\sigma^2$, this definition gives:
 
 $$
 SE(\bar{x}_n) = \frac{\sigma}{\sqrt{n}}
@@ -35,7 +35,7 @@ where:
 
 As $n$ increases, $SE(\bar{x}_n)$ decreases, implying that larger samples yield more precise estimates of the population mean. The relationship between the standard error and the sample size follows an inverse square root law, meaning that quadrupling the sample size halves the standard error. This emphasizes the diminishing returns effect in terms of accuracy gained by increasing the sample size. When $\sigma$ is unknown it is replaced by the sample standard deviation $s$, giving the estimated standard error $s/\sqrt{n}$.
 
-#### Standard Error for the Sum and Percentages
+### Standard Error for the Sum and Percentages
 
 When dealing with the sum of random draws rather than the sample mean, the expected value and standard error follow these formulas:
 
@@ -71,13 +71,13 @@ $$
 
 This means that the standard deviation of the sum of 100 draws is 20, reflecting the expected variability in the sum.
 
-Together, the expected sum and standard error give us a range of plausible values for the sum:
+These values locate the center and a one-standard-error scale for the sum. They do not alone specify a coverage probability. An approximately normal sum has about 68% of its distribution within one standard error of the center; other distributions can have different coverage. The shorthand is:
 
 $$
 S_n \approx 500 \pm 20
 $$
 
-#### Standard Error for Percentages
+### Standard Error for Percentages
 
 Percentages are often used in scenarios where the variable is binary, such as 1 for success and 0 for failure. In this case, you are interested in the percentage of 1s (successes) in a sample. The formulas for the expected value and standard error of percentages are closely related to those for the mean and sum but scaled to represent percentages.
 
@@ -123,13 +123,13 @@ $$
 SE(\text{percentage of 1s}) = \frac{0.49}{\sqrt{100}} \times 100\% = \frac{0.49}{10} \times 100\% = 4.9\%
 $$
 
-This means that the observed percentage of successes will typically differ from the expected value of 60% by about $4.9\%$ (one standard error). Therefore, the percentage of successes will typically fall within the range:
+The estimated sampling spread is 4.9 **percentage points**. This is an absolute difference on the percentage scale: 60% plus 4.9 percentage points is 64.9%. A relative increase of 4.9% would instead multiply 60% by 1.049. The interval below shows one standard-error distance from the expectation and is not a 95% confidence interval:
 
 $$
 \text{Percentage of 1s} \approx 60\% \pm 4.9\%
 $$
 
-#### Law of Large Numbers (LLN)
+### Law of Large Numbers (LLN)
 
 The Law of Large Numbers (LLN) states that as the sample size $n$ increases, the sample mean $\bar{x}_n$ will tend to converge towards the population mean $\mu$. In other words, the larger the sample size, the closer the sample mean gets to the true mean of the population.
 
@@ -157,7 +157,17 @@ $$
 P\left(\lim_{n \to \infty} \bar{x}_n = \mu\right) = 1
 $$
 
-Almost sure convergence means that with probability 1, the sequence of sample means will eventually settle at the population mean and stay there. For independent and identically distributed observations, both laws hold whenever the population mean $\mu$ exists (is finite); finite variance is not required, although it is needed for the standard-error formula below. The SLLN provides a definitive statement about the long-run behavior of the sample mean.
+Almost sure convergence means that, except on a set of infinite sample sequences with probability zero, for every tolerance $\epsilon>0$ there is a point beyond which all subsequent averages remain within that tolerance of $\mu$. They need not equal $\mu$ exactly and can continue fluctuating on progressively smaller scales. For independent, identically distributed observations, $E[|X_1|]<\infty$ is sufficient for both the weak and strong laws. Finite variance is not required for these laws, although it is needed for the finite standard-error calculations used here.
+
+With finite variance, Chebyshev's inequality gives a direct explanation of the weak law:
+
+```math
+P(|\bar X_n-\mu|>\epsilon)
+\leq\frac{\operatorname{Var}(\bar X_n)}{\epsilon^2}
+=\frac{\sigma^2}{n\epsilon^2}\longrightarrow0.
+```
+
+This argument bounds the chance of a fixed-size error without assuming a normal distribution. It is a sufficient proof under finite variance; other arguments establish the LLN under the weaker finite-absolute-mean condition stated above.
 
 - **Impact on Standard Error**:
 
@@ -196,7 +206,7 @@ $$
 
 As the sample size increases from 25 to 400, the standard error decreases from 2 to 0.5, showing that the estimates of the sample mean become more precise with larger samples.
 
-#### Application to Averages and Percentages
+### Application to Averages and Percentages
 
 The Law of Large Numbers applies to both sample means (averages) and sample proportions (percentages).
 
@@ -240,7 +250,7 @@ The standard error decreases as the sample size increases, indicating that large
 
 III. **Important Note on Sums**:
 
-The Law of Large Numbers is a statement about means and percentages, not sums. The sum $S_n$ does not settle down: its expected value $n\mu$ grows without bound, and its standard error increases with sample size, even though the sum divided by $n$ (the mean) converges to $\mu$.
+The law concerns normalized sums: $S_n/n=\bar X_n$. For independent observations with positive finite variance, the unnormalized sum has standard deviation $\sigma\sqrt n$, so its absolute spread increases. Its expectation is $n\mu$: it grows positively for $\mu>0$, decreases for $\mu<0$, and remains zero for $\mu=0$. The mean can become more precise even while the sum's spread grows, because division by $n$ more than offsets that growth.
 
 The standard error for the sum $S_n$ is given by:
 
@@ -248,7 +258,7 @@ $$
 SE(S_n) = \sqrt{n} \sigma
 $$
 
-As $n$ increases, $\sqrt{n}$ increases, which means the variability of the sum increases with sample size. The sum's spread grows like $\sqrt{n}$ but its center grows like $n$, so relative to its expected value the sum becomes more stable: $SE(S_n)/E(S_n)=\sigma/(\mu\sqrt{n})$ shrinks.
+As $n$ increases, $\sqrt{n}$ increases, which means the variability of the sum increases with sample size. For $\mu\ne0$, the spread relative to the magnitude of the expectation is $SE(S_n)/|E(S_n)|=\sigma/(|\mu|\sqrt n)$, which shrinks as $n$ grows. This relative measure is undefined when $\mu=0$; concentration of the average still holds, but it must be described by absolute distance from zero rather than division by the expectation.
 
 For example:
 

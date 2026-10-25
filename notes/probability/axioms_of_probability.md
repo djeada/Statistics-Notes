@@ -2,7 +2,7 @@
 
 Probability theory is built on a small set of principles, called axioms, that define how probability measures behave. These axioms, formalized by the Russian mathematician Andrey Kolmogorov, provide the foundation for the rules used throughout probability theory.
 
-### The Three Axioms
+## The Three Axioms
 
 I. Non-negativity states that the probability of any event $A$ cannot be negative:
 
@@ -36,7 +36,25 @@ $$
 
 These axioms are the starting point from which many other probability rules can be derived. The following examples show how they work in simple settings.
 
-### Example: Probabilities of Events in a Dice Roll
+## Rules derived from the axioms
+
+The empty event has probability zero. To see this, write the sample space as the disjoint union of itself and the empty set, then apply additivity: $1=1+P(\varnothing)$.
+
+An event and its complement form another disjoint decomposition of the sample space. Consequently $P(A)+P(A^c)=1$, which gives the complement rule. Nonnegativity of $P(A^c)$ also implies $P(A)\leq1$.
+
+If $A\subseteq B$, decompose $B$ into $A$ and $B\setminus A$. Additivity and nonnegativity give $P(B)=P(A)+P(B\setminus A)\geq P(A)$. This is monotonicity: including more possible outcomes cannot lower an event's probability.
+
+For overlapping events, $A\cup B$ is the disjoint union of $A$ and $B\setminus A$. Since $P(B\setminus A)=P(B)-P(A\cap B)$, the general addition rule follows:
+
+```math
+P(A\cup B)=P(A)+P(B)-P(A\cap B).
+```
+
+The intersection is subtracted because it appears in both original terms. This derivation does not assume independence. Disjointness concerns an empty intersection, whereas independence concerns a product of probabilities. If two disjoint events both have positive probability, they are dependent: knowing one occurred makes the other impossible.
+
+Countable additivity extends the disjoint-union rule to infinitely many events. It does not imply that probabilities of all individual points can be added over an uncountable continuum. For a continuous uniform variable, single points have probability zero while an interval can have positive probability. The axioms remain consistent because the interval is an uncountable union, beyond the countable-additivity statement.
+
+## Example: Probabilities of Events in a Dice Roll
 
 Consider a fair six-sided die. The sample space for a single roll is:
 
@@ -50,7 +68,7 @@ $$
 P(\text{any specific number}) = \frac{1}{6}
 $$
 
-#### 1. Probability of Rolling a 5 or 6
+### 1. Probability of Rolling a 5 or 6
 
 The events "rolling a 5" and "rolling a 6" are mutually exclusive because they cannot occur on the same roll.
 
@@ -74,7 +92,7 @@ $$
 
 So, the probability of rolling either a 5 or a 6 is $\frac{1}{3}$.
 
-#### 2. Probability of Rolling an Even or Odd Number
+### 2. Probability of Rolling an Even or Odd Number
 
 Every possible outcome is either even or odd, and no outcome can be both. The two events are therefore mutually exclusive, and together they cover the entire sample space $S$.
 
@@ -98,7 +116,7 @@ $$
 
 This matches the intuitive result: every roll must produce either an even or an odd number.
 
-#### 3. Probability of Rolling an Even Number or a 3
+### 3. Probability of Rolling an Even Number or a 3
 
 The events "rolling an even number" and "rolling a 3" are mutually exclusive because 3 is not even.
 
@@ -134,7 +152,7 @@ $$
 
 So, the probability of rolling either an even number or a 3 is $\frac{2}{3}$.
 
-#### 4. Probability of Rolling an Even Number or a 4
+### 4. Probability of Rolling an Even Number or a 4
 
 In this case, the events "rolling an even number" and "rolling a 4" are not mutually exclusive because 4 is already one of the even outcomes. Simply adding the two probabilities would count the outcome 4 twice.
 
@@ -184,11 +202,11 @@ This also makes sense directly: because every 4 is already an even number, the e
 
 Thus, the probability is $\frac{1}{2}$.
 
-### Example: Deck of Cards
+## Example: Deck of Cards
 
 The same ideas apply to events in a standard deck of 52 playing cards. These examples also illustrate why overlapping events require us to subtract the intersection when calculating a union.
 
-#### 1. Probability of Drawing a Heart or a Queen
+### 1. Probability of Drawing a Heart or a Queen
 
 Consider a standard deck of 52 playing cards. It contains:
 
@@ -253,7 +271,7 @@ $$
 
 Thus, the probability of drawing either a heart or a queen is $\frac{4}{13}$.
 
-#### 2. Drawing an Ace or a Red Card
+### 2. Drawing an Ace or a Red Card
 
 Consider a standard deck of 52 cards. We will calculate the probability of drawing a card that is either an Ace or a red card.
 

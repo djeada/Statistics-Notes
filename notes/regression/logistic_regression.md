@@ -54,6 +54,8 @@ $$
 
 An odds ratio greater than 1 indicates that as $x_j$ increases, the odds of the outcome occurring increase.
 
+If a baseline probability is $p$, multiplying its odds by $a=e^{\beta_j}$ gives the new probability $ap/(1-p+ap)$. For an odds ratio of two, a baseline probability of $0.1$ becomes about $0.182$, while $0.5$ becomes about $0.667$. The same odds ratio therefore gives different probability changes. Locally, for an additive predictor, $\partial p/\partial x_j=\beta_jp(1-p)$, so the probability curve is most responsive near its middle.
+
 ## Estimation of Coefficients
 
 Unlike linear regression, logistic regression does not have a closed-form solution for estimating the coefficients. Instead, coefficients are estimated using **Maximum Likelihood Estimation (MLE)**.
@@ -76,11 +78,13 @@ $$
 
 ### Maximizing the Log-Likelihood
 
+Writing $\eta_i=\mathbf x_i^\top\boldsymbol\beta$, each contribution is $y_i\eta_i-\log(1+e^{\eta_i})$. Its derivative with respect to $\eta_i$ is $y_i-p_i$, and its second derivative is $-p_i(1-p_i)$. Summing over observations yields the gradient and Hessian used below. The nonpositive curvature explains why a full-rank, nonseparated logistic model has a concave optimization problem. Stable implementations evaluate $\log(1+e^{\eta_i})$ without directly exponentiating a very large $\eta_i$.
+
 The goal is to find the coefficients $\boldsymbol{\beta}$ that maximize $\ell(\boldsymbol{\beta})$. This is typically done using iterative numerical methods such as:
 
 - Newton-Raphson method
 - Fisher Scoring
-- Gradient Descent
+- Gradient ascent on the log-likelihood, or gradient descent on the negative log-likelihood
 
 ### Newton-Raphson Method
 
@@ -101,7 +105,7 @@ Where:
 2. **Independent observations** ensure that each data point is independent of the others.
 3. **Linearity in log-odds** means that the logit of the outcome is a linear function of the predictor variables.
 4. **No perfect (and little severe) multicollinearity** among the predictors; otherwise coefficients are unstable.
-5. **No complete separation**: if a linear combination of predictors perfectly splits the classes, the MLE does not exist.
+5. **No complete or quasi-complete separation:** if a hyperplane separates the classes strictly, or separates them weakly with some observations on the boundary, one or more unpenalized coefficients can diverge. Full design rank is also needed for coefficient identification. Finite regularized estimates answer a penalized estimation problem and should not be confused with an existing ordinary MLE.
 6. A **large sample size** is preferred, as maximum likelihood estimation (MLE) performs better with more data.
 
 ## Example
@@ -128,7 +132,7 @@ We aim to predict whether a student will pass a test ($y = 1$) or fail ($y = 0$)
 | 9  | 9  | 4 | 1 |
 | 10 | 10 | 2 | 1 |
 
-The classes overlap (student 4 passes with 4 hours, student 7 fails with 7 hours), so a finite maximum likelihood estimate exists. If one class could be separated perfectly from the other by a hyperplane (complete separation), the likelihood would increase forever as the coefficients grow and the MLE would not exist; software then reports huge coefficients or a convergence warning.
+The outcomes are not perfectly ordered by hours studied: student 4 passes with four hours while student 7 fails with seven. That alone does not rule out separation by both predictors together. In this particular design, a converged fit has a finite coefficient vector and positive-definite observed information, with no separating direction. A separation check must consider the full design matrix. Complete or quasi-complete separation can otherwise drive coefficients to infinity while the likelihood approaches its supremum, producing huge estimates or convergence warnings.
 
 ### Step-by-Step Estimation
 
@@ -188,7 +192,7 @@ $$
 \hat{\beta}_0 = -4.530, \quad \hat{\beta}_1 = 0.618, \quad \hat{\beta}_2 = 0.613
 $$
 
-with standard errors $\approx 2.90,\ 0.42,\ 0.84$ (from $\sqrt{\operatorname{diag}(\mathbf{X}^\top\mathbf{W}\mathbf{X})^{-1}}$ at the solution). With only 10 observations neither slope is individually significant (Wald $z \approx 1.47$ and $0.73$); the example is meant to show the mechanics, not a strong effect. The maximized log-likelihood is $\ell(\hat{\boldsymbol\beta}) \approx -4.034$, compared with $10 \ln 0.5 \approx -6.931$ for the intercept-only model.
+with standard errors approximately $2.90,\ 0.42,\ 0.84$. First calculate the estimated covariance matrix $\widehat{\operatorname{Var}}(\hat{\boldsymbol\beta})=(\mathbf X^\top\mathbf W\mathbf X)^{-1}$ at the solution, then take square roots of its diagonal entries. These are asymptotic likelihood standard errors, which can be unreliable in a dataset this small. With only 10 observations neither slope is individually significant (Wald $z \approx 1.47$ and $0.73$); the example is meant to show the mechanics, not a strong effect. The maximized log-likelihood is $\ell(\hat{\boldsymbol\beta}) \approx -4.034$, compared with $10 \ln 0.5 \approx -6.931$ for the intercept-only model.
 
 #### 6. Logistic Regression Equation
 
@@ -236,7 +240,9 @@ $$
 
 The estimated probability of passing is about 83.7%.
 
-A plot of the fitted probability surface and the 0.5 decision boundary is produced by [logistic_regression.py](../../scripts/regression/logistic_regression.py).
+Student 7 has this predictor combination and actually failed. That is compatible with a probability model: a predicted chance of 83.7% still assigns about 16.3% to failure. Logistic regression does not claim that every observation lies on its most probable class. Assessing its probabilities requires calibration or probability losses as well as a threshold-based confusion matrix.
+
+A plot of the fitted probability surface and the 0.5 decision boundary is produced by [logistic_regression.py](https://github.com/djeada/Statistics-Notes/blob/main/scripts/regression/logistic_regression.py).
 
 ### Model Evaluation
 

@@ -1,8 +1,8 @@
 # Confidence Intervals
 
-A **confidence interval (CI)** is a range of plausible values for a population parameter, such as a mean or proportion, calculated from sample data. It supplements a point estimate by showing the uncertainty around that estimate.
+A **confidence interval** is the output of a sample-based procedure designed to cover a fixed population or model parameter at a stated rate over repeated samples. It supplements a point estimate with uncertainty under the sampling model. The interval's interpretation depends on that procedure and its assumptions: a narrow interval from a biased sample can be precise about the wrong target.
 
-### Definition and Components
+## Definition and Components
 
 Many common confidence intervals can be written as:
 
@@ -51,11 +51,23 @@ Confidence intervals can also be:
 * **Parametric**, where a distributional model is assumed.
 * **Nonparametric**, with fewer assumptions about the population distribution.
 * **Approximate**, often relying on large-sample results such as the Central Limit Theorem.
-* **Exact**, when the interval has the stated coverage under the assumed model.
+* **Exact**, when finite-sample coverage is derived under the assumed model rather than justified only asymptotically. In discrete models, an exact procedure often guarantees coverage at least the nominal level and can be conservative because attainable probabilities change in jumps.
 
 Therefore, confidence intervals are broadly applicable, but **not every confidence-interval formula works in every setting**. The method must match the parameter, sample size, data type, and assumptions.
 
-#### Example: Confidence Interval for the Mean
+## Where the familiar interval formula comes from
+
+If $\bar X$ is normal with known standard error $\sigma/\sqrt n$, then
+
+```math
+P_\mu\left(-z_{1-\alpha/2}\leq
+\frac{\bar X-\mu}{\sigma/\sqrt n}
+\leq z_{1-\alpha/2}\right)=1-\alpha.
+```
+
+Rearrange the same inequalities to put $\mu$ in the middle. The resulting random interval is $\bar X\pm z_{1-\alpha/2}\sigma/\sqrt n$. Coverage follows because the event that the standardized statistic lies between its quantiles is exactly the event that the interval contains $\mu$. Substituting a sample estimate for an unknown scale can change the reference distribution or make this coverage approximate; the replacement needs its own justification.
+
+### Example: Confidence Interval for the Mean
 
 Suppose we simulate sample data from a population with a true mean of 50 and a standard deviation of 5. From the sample, we calculate the sample mean and construct a confidence interval around it.
 
@@ -68,7 +80,7 @@ In the plot:
 
 A single interval either contains the true population mean or it does not. The 95% confidence level refers to the method: over many repeated samples, approximately 95% of intervals constructed in this way would contain the true mean.
 
-#### Example: Confidence Intervals for Simulated Stock Returns
+### Example: Confidence Intervals for Simulated Stock Returns
 
 ![confidence\_interval\_stock\_returns](https://github.com/user-attachments/assets/6ef55b49-6c87-4c69-985c-8c6703f6e554)
 
@@ -81,13 +93,13 @@ The plot shows confidence intervals for the mean of 252 synthetic (seeded, simul
 
 The 90% interval is narrower and therefore more precise, but its long-run coverage is lower. The 99% interval is wider, providing higher coverage at the cost of precision.
 
-### Constructing a Confidence Interval
+## Constructing a Confidence Interval
 
 Suppose the true approval rate among 150 million likely voters is 62%, and a poll surveys 1,200 voters to estimate that rate. Because the poll uses a sample rather than the full population, the estimate is subject to sampling variability. The **standard error (SE)** quantifies that variability.
 
 In practice, the true approval rate is unknown. Here, the known value is used only to illustrate the sampling behavior of the estimator.
 
-#### Step 1: Use the Central Limit Theorem
+### Step 1: Use the Central Limit Theorem
 
 For a sufficiently large random sample, the sampling distribution of a sample proportion is approximately normal. If the population proportion is $p$, its theoretical standard error is:
 
@@ -112,7 +124,7 @@ Thus, the standard error is approximately 0.014, or 1.4 percentage points.
 
 In practice, the population proportion $p$ is unknown, so it is usually replaced by the observed sample proportion $\hat{p}$ when estimating the standard error.
 
-#### Step 2: Construct the 95% Confidence Interval
+### Step 2: Construct the 95% Confidence Interval
 
 A 95% confidence interval uses the critical value $z^* = 1.96$. The common approximation of two standard errors is close, but 1.96 is more precise.
 
@@ -152,7 +164,9 @@ $$
 
 Using the rough critical value of 2 gives a very similar result.
 
-#### Step 3: Understand Confidence vs. Probability
+The Bernoulli approximation assumes independent, comparably sampled responses. With a population of 150 million and $n=1,200$, the finite-population correction is practically one. Unequal survey weights, household clustering, nonresponse, and imperfect population coverage are different issues and are not measured by the simple binomial margin of error. The large expected success and failure counts support the normal approximation here, but the same Wald formula can perform poorly for small samples or proportions close to zero or one.
+
+### Step 3: Understand Confidence vs. Probability
 
 The population parameter is fixed, while the confidence interval varies from sample to sample. Therefore:
 
@@ -160,7 +174,7 @@ The population parameter is fixed, while the confidence interval varies from sam
 * A 95% confidence procedure produces intervals that contain the true parameter in approximately 95% of repeated samples, assuming the method's conditions hold.
 * In the frequentist framework, it is not strictly correct to say that there is a 95% probability that the fixed parameter lies inside one already-calculated interval.
 
-### Confidence Levels and Critical Values
+## Confidence Levels and Critical Values
 
 Common confidence levels and their approximate standard-normal critical values are:
 
@@ -186,7 +200,7 @@ $$
 
 where $t^*_{n-1}$ is the critical value with $n-1$ degrees of freedom. It is larger than $z^*$ (for example, $t^*_{29}=2.045$ at 95% confidence versus $z^*=1.960$) and approaches $z^*$ as $n$ grows. This interval is exact when the data are normal and approximate otherwise.
 
-### Estimating the Standard Error
+## Estimating the Standard Error
 
 When an unknown population quantity appears in the standard-error formula, it is often replaced by a sample estimate. This is called a **plug-in estimate**. For example, $\hat{p}$ can replace an unknown population proportion $p$, and the sample standard deviation $s$ can replace an unknown population standard deviation $\sigma$.
 
@@ -213,7 +227,7 @@ $$
 
 The estimated standard error is therefore about 1.55 percentage points.
 
-#### Constructing the Confidence Interval
+### Constructing the Confidence Interval
 
 Using a 95% confidence level with $z^* = 1.96$:
 
@@ -228,7 +242,7 @@ $$
 
 Expressed as percentages, the interval is approximately 56.96% to 63.04%.
 
-### Width of a Confidence Interval
+## Width of a Confidence Interval
 
 The width of a confidence interval is determined by its margin of error:
 
@@ -241,13 +255,13 @@ Two factors have an especially important effect:
 * A larger **sample size** reduces the standard error and narrows the interval. Because standard error is generally proportional to $1/\sqrt{n}$, halving the interval width requires approximately four times the sample size, all else being equal.
 * A lower **confidence level**, such as 90% instead of 95%, uses a smaller critical value and produces a narrower interval, but also lowers the long-run coverage rate.
 
-### Interpreting the Confidence Level
+## Interpreting the Confidence Level
 
 The confidence level is the proportion of intervals that would contain the true parameter over repeated applications of the same sampling and interval-construction procedure.
 
 For example, if we repeatedly took random samples and calculated a 95% confidence interval from each one, approximately 95% of those intervals would contain the true population parameter, provided the assumptions behind the method were satisfied.
 
-### Example: Health-App Step Counts
+## Example: Health-App Step Counts
 
 Consider two health apps that estimate average daily steps:
 
@@ -256,7 +270,7 @@ Consider two health apps that estimate average daily steps:
 
 App Y communicates both the estimate and its uncertainty. This makes the result more informative, assuming the sample and data-collection methods are reliable.
 
-### A 95% Confidence Interval for a Parameter
+## A 95% Confidence Interval for a Parameter
 
 When the sampling distribution of a point estimate is approximately normal, a 95% confidence interval can be written as:
 
@@ -266,7 +280,7 @@ $$
 
 The value 1.96 comes from the standard normal distribution: approximately 95% of its probability lies between $-1.96$ and $1.96$.
 
-### Example: Carry-on Baggage Weight
+## Example: Carry-on Baggage Weight
 
 Suppose the mean weight in a sample of carry-on bags is 3.2 kg, with a standard error of 0.053 kg. Assuming the normal approximation is appropriate, the 95% confidence interval is:
 
@@ -283,7 +297,7 @@ $$
 
 Thus, the estimated population mean weight is between approximately 3.096 kg and 3.304 kg at the 95% confidence level.
 
-### Example: Calibrating a Digital Thermometer
+## Example: Calibrating a Digital Thermometer
 
 Suppose a digital thermometer is tested repeatedly at a known reference temperature. A confidence interval can be used to estimate the thermometer's **mean reading** at that reference temperature. It does not, by itself, describe the accuracy of every individual future reading.
 
@@ -313,7 +327,9 @@ Using the normal critical value $1.96$ instead would give the slightly narrower 
 
 This interval estimates the thermometer's mean reading under the test conditions.
 
-### Common Misconceptions
+If the reference is 37.0°C, subtracting that fixed value from both endpoints gives an interval for mean calibration bias of approximately $(-0.19,0.19)$°C. This does not imply individual errors are at most 0.19°C. Their variability is closer to the observation scale $s=0.5$°C, and a prediction interval includes that variability in addition to uncertainty in the mean. Repeated readings must also be independent or analyzed with their dependence taken into account.
+
+## Common Misconceptions
 
 A common mistake is to interpret a 95% confidence interval as meaning, “There is a 95% chance that the true mean lies within this specific interval.”
 
@@ -321,7 +337,7 @@ Under the frequentist interpretation, the population parameter is fixed and the 
 
 The correct interpretation is that the method used to construct the interval captures the true population parameter in approximately 95% of repeated samples, assuming its conditions are met.
 
-#### Changing the Confidence Level
+### Changing the Confidence Level
 
 For a normally distributed point estimate with known standard error:
 
@@ -331,11 +347,11 @@ $$
 
 Here, $z^*$ is the critical value for the selected confidence level, and $z^* \times SE$ is the margin of error.
 
-#### Example: Blood-Pressure Readings
+### Example: Blood-Pressure Readings
 
 Suppose blood-pressure readings are normally distributed, the population standard deviation is 12 mmHg, and a random sample of 50 patients has a mean of 130 mmHg. We can calculate 90% and 99% confidence intervals for the population mean.
 
-##### Step 1: Calculate the Standard Error
+#### Step 1: Calculate the Standard Error
 
 $$
 SE = \frac{\sigma}{\sqrt{n}}
@@ -343,12 +359,12 @@ SE = \frac{\sigma}{\sqrt{n}}
 \approx 1.697
 $$
 
-##### Step 2: Determine the Critical Values
+#### Step 2: Determine the Critical Values
 
 * For a 90% confidence level, $z^* \approx 1.645$.
 * For a 99% confidence level, $z^* \approx 2.576$.
 
-##### Step 3: Calculate the Confidence Intervals
+#### Step 3: Calculate the Confidence Intervals
 
 For 90% confidence:
 
@@ -368,7 +384,7 @@ $$
 
 The 99% confidence interval is wider than the 90% confidence interval. This illustrates the trade-off between higher confidence and greater precision.
 
-### Prediction Intervals vs. Confidence Intervals
+## Prediction Intervals vs. Confidence Intervals
 
 A **confidence interval** estimates a population parameter, such as the population mean. A **prediction interval** gives a range of plausible values for a single future observation.
 
@@ -376,6 +392,8 @@ A prediction interval is wider because it must account for both:
 
 * Uncertainty in the estimated mean.
 * Natural variation among individual observations.
+
+For an independent future observation and a sample mean, $\operatorname{Var}(X_{\text{new}}-\bar X)=\sigma^2+\sigma^2/n$. The first term is irreducible variation of the next observation; the second is estimation uncertainty. Taking the square root explains the factor $\sqrt{1+1/n}$ in the prediction formulas, compared with $1/\sqrt n$ in an interval for the mean. This result assumes the future observation follows the same population model as the training data.
 
 For a normally distributed population with known $\sigma$, a 95% prediction interval for a new observation $X_{\text{new}}$ is:
 

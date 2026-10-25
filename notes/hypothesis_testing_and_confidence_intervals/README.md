@@ -1,34 +1,21 @@
-# Hypothesis Testing & Confidence Intervals
+# Hypothesis Testing and Confidence Intervals
 
-This unit uses sampling distributions to quantify uncertainty and compare observed data with claims about population parameters or statistical models.
+Inference connects an observed statistic to uncertainty about a population or statistical model. A confidence interval reports a set of parameter values obtained by a procedure with a specified coverage rate. A hypothesis test compares the observed statistic with what a null model predicts and controls an error rate through its decision rule.
 
-## Reading Order
+## The same sampling model supports both tasks
 
-1. **[Confidence Intervals](confidence_intervals.md)** — interval estimation and repeated-sampling coverage.
-2. **[Null and Alternative Hypotheses](null_hypothesis.md)** — the meaning of $H_0$, $H_a$, and p-values.
-3. **[Hypothesis Testing](hypothesis_testing.md)** — the full workflow: hypotheses, test statistic, reference distribution, p-value, decision, interpretation.
-4. **[Type I and Type II Errors](type_i_and_type_ii_errors.md)** — false positives, false negatives, power, and the trade-offs created by a decision threshold.
-5. **[Multiple Comparisons](multiple_comparisons.md)** — error control when many hypotheses are examined.
-6. **[Analysis of Categorical Data](analysis_of_categorical_data.md)** — inference for counts, proportions, and contingency tables.
+An estimate alone does not show how surprising its distance from a hypothesized value is. The relevant distance depends on its sampling variability. Dividing an estimated difference by a standard error produces a statistic that can be compared with a reference distribution, provided the model and sampling assumptions justify that distribution.
 
-## Confidence Intervals and Tests Are Related
+For matched procedures, a two-sided level-$\alpha$ test rejects exactly those parameter values excluded by its corresponding $100(1-\alpha)\%$ confidence set. This relationship follows by inverting the tests. It should not be assumed when an interval and a test use different approximations, standard errors, or tail conventions.
 
-Both procedures use the sampling behavior of an estimator or test statistic. A two-sided test and a corresponding confidence interval often encode the same evidence in different forms: one asks whether a hypothesized value is plausible under a chosen error rate, while the other reports a range of parameter values compatible with the data under the procedure's assumptions.
+## Interpreting evidence and decisions
 
-Neither procedure repairs poor sampling, dependence that was ignored, model misspecification, or data-dependent analysis choices.
+A p-value describes a tail probability under the null model, including nuisance assumptions and the chosen statistic. It does not assign a probability to the truth of that model. Failing to reject can reflect weak information, while rejecting can reflect a small effect measured precisely. Effect sizes and intervals help distinguish those situations.
 
-## Interpretation Principles
+Type I error is rejection when the null is true. Type II error is failure to reject at a specified alternative. Power depends on that alternative, sample size, variability, and the decision threshold. Examining many hypotheses creates more opportunities for false discoveries, so the family of questions and the error criterion must be specified.
 
-- A p-value is computed **assuming the null hypothesis**; it is not the probability that the null hypothesis is true.
-- Failing to reject $H_0$ is not the same as proving or accepting $H_0$.
-- Statistical significance is not the same as practical importance or large effect size.
-- Confidence levels are properties of repeated-sampling procedures, not posterior probabilities for fixed parameters in the usual frequentist interpretation.
-- Multiplicity matters when many hypotheses are tested or many analysis choices are explored.
+## Counts and group comparisons
 
-## Where ANOVA Goes
+Categorical outcomes lead to inference for proportions and contingency-table probabilities. Expected counts under a null model determine whether an asymptotic chi-square approximation is suitable. ANOVA uses a linear model and an F statistic to compare group means through explained and unexplained variability. Both examples rely on the same principle: the null distribution must correspond to the way the data were generated and analyzed.
 
-ANOVA is organized with **[Regression](../regression/README.md)** rather than here because it is most coherent as a linear-model framework whose F tests are one inferential component. The sampling distribution and hypothesis-testing ideas required for ANOVA are learned in this unit first.
-
-## Next
-
-Continue to **[Regression](../regression/README.md)**.
+No inferential calculation repairs systematic selection bias or unmodeled dependence. Its uncertainty statement applies to the stated sampling or probability model, rather than to every possible source of error in the study.

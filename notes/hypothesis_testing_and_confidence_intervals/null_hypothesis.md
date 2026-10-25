@@ -2,13 +2,9 @@
 
 Statistical hypothesis testing is a method for using sample data to make inferences about a population. Understanding null and alternative hypotheses, along with how p-values are calculated and interpreted, is essential for applying hypothesis tests correctly.
 
-After reading this material, you should be able to explain:
+A hypothesis concerns a population parameter or a probability model, not the particular sample statistic we have already observed. “The coin has head probability $0.5$” is a hypothesis. “Four of these ten tosses were heads” is data. A test uses the probability model in the first statement to evaluate how unusual a statistic calculated from the second statement would be.
 
-* What a null hypothesis is and how it relates to the p-value
-* How to calculate a p-value
-* How to interpret a p-value
-
-### What is Null Hypothesis?
+## What Does a Null Hypothesis Specify?
 
 In statistical hypothesis testing, we define two competing hypotheses about a population parameter:
 
@@ -29,7 +25,7 @@ The plot illustrates the distribution of a test statistic under the assumption t
 * The **vertical dashed red line** marks the observed value of the test statistic calculated from the sample data.
 * The **orange shaded area (tail area)** represents the probability of obtaining a test statistic at least as extreme as the observed value under $H_0$. This area is the p-value. In a **one-tailed test**, only the relevant tail is considered. In a **two-tailed test**, extreme outcomes in both directions are included.
 
-### The Language of Hypothesis Testing
+## The Language of Hypothesis Testing
 
 * If the evidence is strong enough, typically when $p \le \alpha$, we **reject $H_0$**, indicating statistically significant evidence in favor of the alternative hypothesis.
 * When the evidence is insufficient, we **fail to reject $H_0$**. This does not mean that $H_0$ has been shown to be true; it means that the data do not provide enough evidence against it.
@@ -37,7 +33,7 @@ The plot illustrates the distribution of a test statistic under the assumption t
 * A **Type I error** occurs when we reject $H_0$ even though it is true.
 * A **Type II error** occurs when we fail to reject $H_0$ even though the alternative is true.
 
-### Understanding P-Values Through an Analogy
+## Understanding P-Values Through an Analogy
 
 Imagine that you are a **detective** evaluating evidence against a suspect. In this analogy, the **null hypothesis ($H_0$)** is that the suspect is innocent, while the **alternative hypothesis ($H_a$)** is that the suspect is guilty.
 
@@ -53,7 +49,9 @@ A large p-value means the evidence is not sufficiently unusual under $H_0$, so w
 
 The analogy has an important limitation: a p-value is not the probability that the suspect is innocent or guilty. Likewise, in statistical testing it is not the probability that $H_0$ is true or false.
 
-### Interpretation of the P-value
+The statistical calculation also needs a specified definition of “at least as extreme.” In the coin example, a count far from five is extreme for a two-sided fairness question. For a one-sided question about excess heads, only large head counts are extreme. The same data can therefore yield different p-values for different prespecified alternatives. Choosing the direction after observing the result would change the testing procedure and its error rate.
+
+## Interpretation of the P-value
 
 The **p-value** is the probability of obtaining a test statistic at least as extreme as the one observed, assuming that the null hypothesis $H_0$ is true.
 
@@ -62,7 +60,7 @@ The **p-value** is the probability of obtaining a test statistic at least as ext
 * A **small p-value** ($p \le \alpha$) provides evidence against $H_0$, leading us to reject the null hypothesis.
 * A **large p-value** ($p > \alpha$) indicates insufficient evidence to reject $H_0$, so we fail to reject it.
 
-### Example: Coin Toss Experiment
+## Example: Coin Toss Experiment
 
 * The **null hypothesis ($H_0$)** states that the coin is fair:
 
@@ -79,7 +77,7 @@ $$
 * The experiment involves **10 tosses** ($n = 10$).
 * The **observed outcome** is 4 heads and 6 tails.
 
-#### Statistical Test
+### Statistical Test
 
 We use a **binomial test** to calculate the p-value.
 
@@ -120,7 +118,7 @@ $$
 \text{p-value} = 2(0.37695) \approx 0.7539
 $$
 
-#### Decision
+### Decision
 
 * The **significance level ($\alpha$)** is set at 0.05.
 * The p-value is about $0.754$, which is greater than $0.05$.
@@ -129,7 +127,9 @@ $$
 
 This does not mean that we have proved the coin is fair. It only means that the observed result is consistent with what we could reasonably see from a fair coin.
 
-### Additional Considerations
+The probability of exactly four heads is about $0.2051$, whereas the p-value is about $0.7539$ because it includes all equally or more extreme counts. A p-value is a tail probability of the chosen statistic, not the mass of the exact observed dataset. For asymmetric or discrete null models, several two-sided conventions exist; doubling one tail need not agree with summing outcomes of probability no greater than the observed outcome. The fairness example is symmetric, so those two conventions agree here.
+
+## Additional Considerations
 
 * **Statistical power** is the probability of correctly rejecting $H_0$ when the alternative hypothesis is true.
 * **Sample size** affects power; all else being equal, larger samples generally provide greater power.
@@ -137,3 +137,8 @@ This does not mean that we have proved the coin is fair. It only means that the 
 * A **two-tailed test** examines departures in either direction, such as $P(\text{heads}) \neq 0.5$.
 * **Confidence intervals** provide a range of plausible values for a population parameter based on sample data.
 * For many standard two-sided tests, if the corresponding confidence interval does not contain the null value, $H_0$ is rejected at the matching significance level.
+
+
+## Testing absence requires an appropriate question
+
+A large p-value can result from a small effect or from imprecise data. To support a claim that an effect is practically negligible, specify a meaningful margin $\Delta$ and use an equivalence procedure or an interval narrow enough to exclude effects outside $[-\Delta,\Delta]$. That asks whether important differences have been ruled out, whereas an ordinary test of an exact zero asks whether the data provide evidence of a difference. Failure on the second question does not answer the first.

@@ -1,24 +1,11 @@
-# Extensions
+# Statistical Perspectives and Extensions
 
-This unit collects perspectives and advanced topics that are useful but do not belong to the main prerequisite chain.
+Statistical methods can share a likelihood while answering different questions about uncertainty. Frequentist procedures describe how estimators, intervals, and decisions behave across repeated samples. Bayesian procedures update a probability distribution for unknown quantities after conditioning on observed data. The distinction concerns interpretation and calibration, rather than a division between methods that use data and methods that use beliefs.
 
-## Current Topic
+## Evidence, uncertainty, and prediction
 
-- **[Bayesian vs. Frequentist](bayesian_vs_frequentist.md)** — compares two broad ways of interpreting probability, parameters, evidence, and uncertainty.
+A likelihood compares parameter values through the observed data. A prior represents information before those data, and a posterior combines the two. A sampling distribution instead asks how a statistic would vary if the data collection were repeated. Understanding which object a calculation describes prevents a confidence level from being read as a posterior probability or a predictive interval from being read as uncertainty in a mean.
 
-The main curriculum is largely organized around classical frequentist sampling ideas because standard errors, confidence intervals, hypothesis tests, and much of the regression material are written in that language. The Bayesian perspective is therefore most useful after the reader already understands conditional probability, likelihood, estimation, and frequentist inference.
+More advanced topics extend these same ideas. Hierarchical models describe variation across groups; generalized linear models adapt a regression mean to different outcome types; survival models represent event times and censoring. Experimental design and causal inference address what interventions would change, while multivariate methods describe several outcomes together.
 
-## Natural Future Extensions
-
-Topics that fit here or as new advanced units include:
-
-- Bayesian estimation and posterior prediction;
-- hierarchical and multilevel models;
-- generalized linear models beyond logistic regression;
-- survival analysis;
-- causal inference and experimental design;
-- multivariate statistics and dimension reduction;
-- state-space and latent-variable models;
-- multivariate time series and cointegration.
-
-Extensions should link back to the core concepts they depend on rather than restating those foundations.
+State-space models introduce latent evolving quantities, and multivariate time-series models represent linked sequences. These extensions change the model structure while retaining the central tasks of specifying assumptions, estimating unknown quantities, checking the model, and evaluating its conclusions. Increasing model complexity is useful when it represents information the simpler model leaves out and when the available data can support that extra structure.

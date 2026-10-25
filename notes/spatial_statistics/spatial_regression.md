@@ -1,8 +1,6 @@
 # Spatial Regression
 
-Regression models the mean relationship between an outcome and its predictors.
-
-A basic linear model is
+Regression models the mean relationship between an outcome and its predictors. A basic linear model is
 
 $$
 y=X\beta+\varepsilon,
@@ -21,9 +19,7 @@ $$
 \sigma^2 I.
 $$
 
-Spatial data often violate that assumption because nearby observations can have correlated unexplained variation.
-
-A more general model is
+Spatial data often violate that assumption because nearby observations can have correlated unexplained variation. A more general model is
 
 $$
 \boxed{
@@ -35,40 +31,15 @@ $$
 
 Spatial regression becomes important when spatial structure remains after the mean relationship has been modeled.
 
-## Learning objectives
+## Separate the Mean, Dependence, and Inferential Target
 
-After this chapter, you should be able to:
+A spatial pattern in residuals can result from a missing predictor, a wrong mean shape, correlated disturbances, or simultaneous outcome feedback. These mechanisms do not imply the same model. Start by defining the conditional mean and the data support, then ask which remaining dependence representation has a defensible interpretation.
 
-1. explain what spatial regression is trying to model;
-2. distinguish mean misspecification from residual spatial dependence;
-3. explain what correlated errors do and do not imply for OLS;
-4. calculate OLS and GLS estimates in a small numerical example;
-5. explain why GLS uses $\Sigma^{-1}$;
-6. interpret a spatial error model;
-7. interpret a spatial lag/SAR model;
-8. explain why $Wy$ is endogenous in a simultaneous SAR model;
-9. calculate simple direct and indirect SAR effects;
-10. explain spatial confounding;
-11. distinguish raw residuals from whitened/innovation residuals;
-12. separate prediction performance from coefficient interpretation.
+GLS changes the estimation weights through a covariance model. A spatial error model propagates innovations through a neighborhood graph. A SAR outcome model represents simultaneous responses and therefore introduces both endogeneity and feedback effects. Their coefficients and residuals require different interpretations. Spatial confounding adds another issue when a smooth predictor competes with a flexible latent spatial effect. A model can improve prediction without resolving that coefficient ambiguity or establishing causation. The worked matrix examples make these differences explicit before considering diagnostics, sensitivity, and geographic validation.
 
 ## Start with the mean model
 
-Suppose
-
-$$
-y_i
-$$
-
-is an outcome observed at spatial location $s_i$, and
-
-$$
-x_i
-$$
-
-is a predictor.
-
-A linear mean model is
+Suppose $y_i$ is an outcome observed at spatial location $s_i$, and $x_i$ is a predictor. A linear mean model is
 
 $$
 E[y_i\mid X] =
@@ -91,11 +62,9 @@ $$
 
 Spatial regression is useful when independent errors do not adequately represent the residual structure.
 
-## Why the mean must be diagnosed first
+### Why the mean must be diagnosed first
 
-Residual spatial autocorrelation can appear when the mean model is missing systematic spatial structure.
-
-Possible causes include:
+Residual spatial autocorrelation can appear when the mean model is missing systematic spatial structure. Possible causes include:
 
 - an omitted spatially varying predictor;
 - an omitted regional effect;
@@ -103,13 +72,11 @@ Possible causes include:
 - an unmodeled spatial trend;
 - genuine residual spatial dependence.
 
-These mechanisms have different scientific interpretations.
-
-If the mean model is misspecified, a spatial covariance term can absorb variation that should have been explained by the predictors.
+These mechanisms have different scientific interpretations. If the mean model is misspecified, a spatial covariance term can absorb variation that should have been explained by the predictors.
 
 ![Mean misspecification](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/01_mean_misspecification.png)
 
-## Numerical example: omitted spatial trend
+### Numerical example: omitted spatial trend
 
 Suppose observations lie at positions
 
@@ -143,13 +110,7 @@ $$
 \frac{5.2+7.1+9.0+11.2+12.9}{5}.
 $$
 
-The sum is
-
-$$
-45.4,
-$$
-
-so
+The sum is $45.4$, so
 
 $$
 \bar y=9.08.
@@ -161,9 +122,7 @@ $$
 -3.88,\ -1.98,\ -0.08,\ 2.12,\ 3.82.
 $$
 
-These residuals are strongly spatially patterned.
-
-But if we fit the spatial trend
+These residuals are strongly spatially patterned. But if we fit the spatial trend
 
 $$
 5+2s,
@@ -192,17 +151,13 @@ A common misunderstanding is:
 
 > Spatially correlated errors automatically make OLS coefficients biased.
 
-That is not generally true.
-
-If
+That is not generally true. If
 
 $$
 E[\varepsilon\mid X]=0
 $$
 
-and the mean model is correctly specified, OLS can still be unbiased for $\beta$.
-
-However, when the error covariance is non-spherical:
+and the mean model is correctly specified, OLS can still be unbiased for $\beta$. However, when the error covariance is non-spherical:
 
 $$
 \mathrm{Cov}(\varepsilon)=\Sigma\neq\sigma^2I,
@@ -213,7 +168,7 @@ OLS is generally:
 - inefficient compared with GLS;
 - accompanied by incorrect **usual** standard errors if independence is falsely assumed.
 
-## The correct covariance of the OLS estimator
+### The correct covariance of the OLS estimator
 
 Under
 
@@ -233,9 +188,7 @@ $$
 E[\hat\beta_{\text{OLS}}]=\beta
 $$
 
-under exogeneity.
-
-Its covariance is
+under exogeneity. Its covariance is
 
 $$
 \boxed{
@@ -246,33 +199,21 @@ X^\top\Sigma X
 }.
 $$
 
-The familiar formula
+Under the usual spherical covariance assumption
 
 $$
-\sigma^2(X^\top X)^{-1}
+\Sigma=\sigma^2I,
 $$
 
-is only correct under the much simpler covariance assumption
+the sandwich expression reduces to $\sigma^2(X^\top X)^{-1}$. For general spatial covariance, use the full expression or an appropriately justified covariance estimator. Particular designs can produce special cancellations, so spherical covariance is the standard sufficient assumption rather than a necessary condition for every isolated coefficient variance to coincide. This distinction is fundamental.
 
-$$
-\Sigma=\sigma^2I.
-$$
+### What spatial correlation does to information
 
-This distinction is fundamental.
-
-## What spatial correlation does to information
-
-Suppose two nearby observations are extremely similar because their errors are strongly correlated.
-
-They do not contain as much independent information as two equally precise observations whose errors are independent.
-
-Ignoring this redundancy often makes the estimated uncertainty too small.
-
-This parallels the logic of kriging: nearby observations can be informative about the same local process, but they can also be redundant.
+Suppose two nearby observations are extremely similar because their errors are strongly correlated. They do not contain as much independent information as two equally precise observations whose errors are independent. Ignoring this redundancy often makes the estimated uncertainty too small. This parallels the logic of kriging: nearby observations can be informative about the same local process, but they can also be redundant.
 
 ![Spatially correlated residuals](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/02_spatially_correlated_errors.png)
 
-## A structured covariance model
+### A structured covariance model
 
 For point-referenced spatial regression, one common covariance model is
 
@@ -293,11 +234,9 @@ where $I(i=j)$ equals 1 when $i=j$ and 0 otherwise, and
 - $a$ is a spatial scale (the practical range of this exponential model is about $3a$);
 - $\sigma_n^2$ is nugget or independent noise variance.
 
-For nearby locations, $d_{ij}$ is small, so the spatial covariance is large.
+For nearby locations, $d_{ij}$ is small, so the spatial covariance is large. As distance increases, the spatial covariance decreases.
 
-As distance increases, the spatial covariance decreases.
-
-## Numerical covariance example
+### Numerical covariance example
 
 Suppose
 
@@ -371,11 +310,9 @@ $$
 \frac1{\sigma^2}I,
 $$
 
-and the constant factor cancels.
+and the constant factor cancels. GLS therefore reduces to OLS in this special case.
 
-GLS therefore reduces to OLS in this special case.
-
-## What GLS is calculating
+### What GLS is calculating
 
 OLS minimizes
 
@@ -383,9 +320,7 @@ $$
 (y-X\beta)^\top(y-X\beta).
 $$
 
-This is the ordinary unweighted sum of squared residuals.
-
-GLS minimizes
+This is the ordinary unweighted sum of squared residuals. GLS minimizes
 
 $$
 \boxed{
@@ -400,9 +335,9 @@ The inverse covariance matrix adjusts the fitting criterion for:
 - unequal uncertainty;
 - correlation among observations.
 
-Directions in the residual space with greater redundancy receive less effective weight.
+Directions in the residual space with greater redundancy receive less effective weight. More precisely, write a positive-definite covariance as $\Sigma=Q\Lambda Q^\top$. The GLS criterion is $\sum_k (q_k^\top e)^2/\lambda_k$: each residual direction is divided by its variance. Positive correlation can increase the variance of a shared average while decreasing the variance of a contrast. Thus dependence does not uniformly reduce information about every coefficient; the consequence depends on how predictor columns align with the covariance directions.
 
-## Whitening interpretation
+### Whitening interpretation
 
 Suppose $L$ satisfies
 
@@ -410,9 +345,7 @@ $$
 LL^\top=\Sigma.
 $$
 
-For example, $L$ can be a Cholesky factor.
-
-Define transformed data
+For example, $L$ can be a Cholesky factor. Define transformed data
 
 $$
 y^*=L^{-1}y
@@ -444,13 +377,11 @@ $$
 (X^{*\top}X^*)^{-1}X^{*\top}y^*.
 $$
 
-This whitening view is often the clearest way to understand GLS.
+This whitening view is often the clearest way to understand GLS. The transformed **errors** have identity covariance when $\Sigma$ is known. Fitted whitened residuals still satisfy regression constraints: their covariance is $I-H^*$, where $H^*=X^*(X^{*\top}X^*)^{-1}X^{*\top}$. They are therefore neither exactly independent nor equal-variance simply because whitening was used. Residual diagnostics should account for leverage, coefficient fitting, and uncertainty in estimated covariance parameters, for example through model-based simulation.
 
 ## Fully worked OLS versus GLS example
 
-Consider three observations.
-
-The design matrix is
+Consider three observations. The design matrix is
 
 $$
 X=
@@ -474,7 +405,7 @@ $$
 
 The first column is the intercept, and the second is the predictor.
 
-## OLS calculation
+### OLS calculation
 
 First calculate
 
@@ -563,7 +494,7 @@ $$
 }.
 $$
 
-## GLS calculation with correlated errors
+### GLS calculation with correlated errors
 
 Suppose the covariance matrix is
 
@@ -576,9 +507,7 @@ $$
 \end{bmatrix}.
 $$
 
-This is a positive-definite covariance matrix in which adjacent observations have strongly correlated errors.
-
-Its inverse is approximately
+This is a positive-definite covariance matrix in which adjacent observations have strongly correlated errors. Its inverse is approximately
 
 $$
 \Sigma^{-1} =
@@ -631,11 +560,7 @@ $$
 }.
 $$
 
-In this example the slope happens to remain 1.5, while the intercept changes from the OLS estimate $0.833$ to $1.000$.
-
-That is specific to this small example and should not be treated as a general result.
-
-The key point is that GLS changes how observations are combined by accounting for error covariance.
+In this example the slope happens to remain 1.5, while the intercept changes from the OLS estimate $0.833$ to $1.000$. That is specific to this small example and should not be treated as a general result. The key point is that GLS changes how observations are combined by accounting for error covariance.
 
 ## Efficiency: why GLS can estimate coefficients more precisely
 
@@ -648,19 +573,13 @@ $$
 }.
 $$
 
-Under the assumed covariance model, GLS is the efficient linear unbiased estimator.
-
-In repeated samples, OLS and GLS may both be centered on the true coefficient, while GLS has smaller sampling variance.
+Under the assumed covariance model, GLS is the efficient linear unbiased estimator. In repeated samples, OLS and GLS may both be centered on the true coefficient, while GLS has smaller sampling variance.
 
 ![OLS versus GLS sampling](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/03_ols_vs_gls_sampling.png)
 
-## Feasible GLS
+### Feasible GLS
 
-In real applications, $\Sigma$ is almost never known exactly.
-
-Instead, its parameters must be estimated.
-
-The workflow is then roughly:
+In real applications, $\Sigma$ is almost never known exactly. Instead, its parameters must be estimated. The workflow is then roughly:
 
 1. specify a covariance family;
 2. estimate covariance parameters;
@@ -668,17 +587,11 @@ The workflow is then roughly:
 4. replace $\Sigma$ with $\hat\Sigma$;
 5. estimate $\beta$.
 
-This is often called **feasible GLS**.
-
-Uncertainty should ideally account for the fact that $\Sigma$ was estimated rather than known.
-
-The companion simulation uses the true $\Sigma$ only as a teaching device.
+This is often called **feasible GLS**. Uncertainty should ideally account for the fact that $\Sigma$ was estimated rather than known. The companion simulation uses the true $\Sigma$ only as a teaching device.
 
 ## Spatial error models for areal data
 
-For areal data, spatial dependence is often represented through a spatial weights matrix $W$.
-
-A spatial error model can be written
+For areal data, spatial dependence is often represented through a spatial weights matrix $W$. A spatial error model can be written
 
 $$
 y=X\beta+u,
@@ -704,27 +617,15 @@ u=(I-\lambda W)^{-1}\varepsilon
 }.
 $$
 
-## What the spatial error parameter means
+### What the spatial error parameter means
 
-The parameter
-
-$$
-\lambda
-$$
-
-describes spatial dependence in the disturbance process.
-
-A local shock in $\varepsilon$ can propagate through the disturbance process.
-
-This can represent:
+The parameter $\lambda$ describes spatial dependence in the disturbance process. A local shock in $\varepsilon$ can propagate through the disturbance process. This can represent:
 
 - omitted spatially correlated variables;
 - shared measurement processes;
 - latent regional influences.
 
-It does not imply that neighboring observed outcomes directly cause one another.
-
-The implied disturbance covariance is
+It does not imply that neighboring observed outcomes directly cause one another. The implied disturbance covariance is
 
 $$
 \mathrm{Cov}(u)=\sigma^2(I-\lambda W)^{-1}(I-\lambda W^\top)^{-1}
@@ -734,7 +635,7 @@ when $\mathrm{Cov}(\varepsilon)=\sigma^2I$, and the process is well defined when
 
 ![Spatial error propagation](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/04_spatial_error_propagation.png)
 
-## Numerical spatial-error example
+### Numerical spatial-error example
 
 Suppose three regions are arranged in a line:
 
@@ -789,9 +690,7 @@ u
 \end{bmatrix}.
 $$
 
-A shock originating in region A creates correlated disturbance components in B and C.
-
-The propagation occurs in the error process.
+A shock originating in region A creates correlated disturbance components in B and C. The propagation occurs in the error process.
 
 ## Spatial lag / SAR outcome model
 
@@ -803,15 +702,7 @@ y=\rho Wy+X\beta+\varepsilon
 }.
 $$
 
-The term
-
-$$
-Wy
-$$
-
-is the spatial lag of the outcome.
-
-Rearrange:
+The term $Wy$ is the spatial lag of the outcome. Rearrange:
 
 $$
 (I-\rho W)y =
@@ -834,53 +725,27 @@ $$
 (I-\rho W)^{-1}
 $$
 
-is called the spatial multiplier. It exists when $I-\rho W$ is invertible; for a row-standardized $W$, $|\rho|<1$ is sufficient.
+is called the spatial multiplier. It exists when $I-\rho W$ is invertible; for a row-standardized $W$, $|\rho|<1$ is sufficient. A useful feedback interpretation is $S=I+\rho W+\rho^2W^2+\cdots$, which converges when $|\rho|$ times the spectral radius of $W$ is below one. The powers represent successively longer paths through the graph, including paths that return to their source. Matrix invertibility alone is weaker than this series-convergence condition. An estimated coefficient and $W$ should be checked against the parameter domain used by the fitted model.
 
-## Why OLS is generally inappropriate for the SAR lag model
+### Why OLS is generally inappropriate for the SAR lag model
 
-In the SAR model,
-
-$$
-Wy
-$$
-
-contains neighboring outcomes.
-
-But those neighboring outcomes are themselves determined simultaneously by:
+In the SAR model, $Wy$ contains neighboring outcomes. But those neighboring outcomes are themselves determined simultaneously by:
 
 $$
 y=\rho Wy+X\beta+\varepsilon.
 $$
 
-Therefore $Wy$ is generally correlated with the disturbance term.
-
-This creates an endogeneity problem.
-
-Ordinary OLS applied directly to
+Therefore $Wy$ is generally correlated with the disturbance term. This creates an endogeneity problem. Ordinary OLS applied directly to
 
 $$
 y=\rho Wy+X\beta+\varepsilon
 $$
 
-does not generally estimate $\rho$ consistently.
+does not generally estimate $\rho$ consistently. SAR models therefore require methods designed for the simultaneous spatial system, such as maximum likelihood or suitable instrumental-variable or GMM methods.
 
-SAR models therefore require methods designed for the simultaneous spatial system, such as maximum likelihood or suitable instrumental-variable or GMM methods.
+### SAR is not just regression with a neighbor average
 
-## SAR is not just regression with a neighbor average
-
-It is tempting to interpret
-
-$$
-\rho Wy
-$$
-
-as if neighboring outcomes were an ordinary predictor.
-
-But $Wy$ is endogenous because it is constructed from the same jointly determined outcome vector.
-
-The model determines all locations simultaneously.
-
-This changes both estimation and interpretation.
+It is tempting to interpret $\rho Wy$ as if neighboring outcomes were an ordinary predictor. But $Wy$ is endogenous because it is constructed from the same jointly determined outcome vector. The model determines all locations simultaneously. Let $S=(I-\rho W)^{-1}$. Under independent innovations with variance $\sigma^2$, $Wy=WSX\beta+WS\varepsilon$, so $\operatorname{Cov}(Wy,\varepsilon\mid X)=\sigma^2WS$. Feedback paths generally make the relevant regressor-error covariances nonzero. This is a structural endogeneity problem, whereas a spatial error model leaves the mean $X\beta$ exogenous when its own conditional-zero-mean assumption holds. This changes both estimation and interpretation.
 
 ## Direct and indirect effects in SAR models
 
@@ -907,13 +772,9 @@ $$
 }.
 $$
 
-The result is a matrix.
+The result is a matrix. Its diagonal entries describe effects on the same location. Its off-diagonal entries describe spillover effects on other locations.
 
-Its diagonal entries describe effects on the same location.
-
-Its off-diagonal entries describe spillover effects on other locations.
-
-## Three-region SAR impact example
+### Three-region SAR impact example
 
 Again use
 
@@ -980,11 +841,9 @@ $$
 \end{bmatrix}.
 $$
 
-## Interpret one predictor change
+### Interpret one predictor change
 
-Suppose $x_A$ increases by one unit.
-
-The first column of the impact matrix gives the effect:
+Suppose $x_A$ increases by one unit. The first column of the impact matrix gives the effect:
 
 $$
 \Delta E[y]
@@ -1008,17 +867,13 @@ $$
 \beta=2
 $$
 
-is therefore not, by itself, the total effect at A or across the system.
+is therefore not, by itself, the total effect at A or across the system. An impact-matrix entry in row $i$, column $j$ is the modeled response at destination $i$ to a change in predictor $j$. The average direct effect is the mean diagonal entry. The average total effect is the mean row sum, and the average indirect effect is their difference. Here they are approximately $2.254$, $3.333$, and $1.079$. Because $W\mathbf1=\mathbf1$, a simultaneous one-unit increase at every region gives $S\beta\mathbf1=\beta\mathbf1/(1-\rho)$, explaining the total $2/(1-0.4)=3.333$. A change only at A uses one column, rather than this common-change calculation.
 
 ![SAR direct and indirect effects](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/05_sar_impacts.png)
 
 ## Mean structure, spatial error, or spatial lag?
 
-A significant Moran statistic on OLS residuals indicates that spatial structure remains in the residuals.
-
-It does not, by itself, identify which spatial model should be used.
-
-Several explanations are possible.
+A significant Moran statistic on OLS residuals indicates that spatial structure remains in the residuals. It does not, by itself, identify which spatial model should be used. Several explanations are possible.
 
 ### Missing mean structure
 
@@ -1034,11 +889,9 @@ Maybe the scientific mechanism genuinely implies simultaneous outcome spillovers
 
 ### Continuous covariance
 
-For point-referenced data, a distance-based covariance model may be more natural than a discrete $W$.
+For point-referenced data, a distance-based covariance model may be more natural than a discrete $W$. Model choice should follow the scientific mechanism and data support, not only the residual Moran statistic.
 
-Model choice should follow the scientific mechanism and data support, not only the residual Moran statistic.
-
-## A practical decision sequence
+### A practical decision sequence
 
 Before adding a spatial dependence term, ask:
 
@@ -1055,13 +908,7 @@ The answers help narrow the appropriate model class.
 
 ## Spatial confounding
 
-Spatial predictors often vary smoothly over space.
-
-Latent spatial effects also vary smoothly.
-
-The two components can therefore explain similar spatial patterns in the outcome.
-
-Suppose
+Spatial predictors often vary smoothly over space. Latent spatial effects also vary smoothly. The two components can therefore explain similar spatial patterns in the outcome. Suppose
 
 $$
 y(s) =
@@ -1077,13 +924,11 @@ where
 - $x(s)$ is a smooth spatial predictor;
 - $u(s)$ is a flexible spatial random effect.
 
-If $x(s)$ and $u(s)$ have similar spatial scales, the model may struggle to decide which component should explain a broad spatial pattern.
-
-This is called **spatial confounding**.
+If $x(s)$ and $u(s)$ have similar spatial scales, the model may struggle to decide which component should explain a broad spatial pattern. This is called **spatial confounding**.
 
 ![Spatial confounding](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/06_spatial_confounding.png)
 
-## Why spatial confounding matters
+### Why spatial confounding matters
 
 A coefficient estimate can change when we change:
 
@@ -1094,13 +939,9 @@ A coefficient estimate can change when we change:
 - spatial resolution;
 - included covariates.
 
-This does not automatically mean that the spatial model is wrong.
+This does not automatically mean that the spatial model is wrong. It means that the predictor and latent spatial effect are competing to explain similar variation. Coefficient interpretation should therefore be accompanied by sensitivity analysis.
 
-It means that the predictor and latent spatial effect are competing to explain similar variation.
-
-Coefficient interpretation should therefore be accompanied by sensitivity analysis.
-
-## A coefficient is not made causal by adding a spatial effect
+### A coefficient is not made causal by adding a spatial effect
 
 Suppose an observational study estimates
 
@@ -1131,19 +972,13 @@ Causal interpretation requires a separate identification argument.
 
 ## Residual diagnostics after spatial modeling
 
-After fitting a spatial model, the diagnostics should match the model structure.
-
-For a standard OLS fit, inspect ordinary residuals.
-
-For a GLS model,
+After fitting a spatial model, the diagnostics should match the model structure. For a standard OLS fit, inspect ordinary residuals. For a GLS model,
 
 $$
 e=y-X\hat\beta_{\text{GLS}}
 $$
 
-can still be spatially correlated because the model explicitly says the errors have covariance $\Sigma$.
-
-It is therefore often useful to inspect **whitened residuals**:
+can still be spatially correlated because the model explicitly says the errors have covariance $\Sigma$. It is therefore often useful to inspect **whitened residuals**:
 
 $$
 e^* =
@@ -1156,37 +991,27 @@ If the covariance model is adequate, $e^*$ should be much closer to uncorrelated
 
 ![Whitened residuals](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/07_residual_whitening.png)
 
-## Residual Moran's I after GLS
+### Residual Moran's I after GLS
 
 An important point:
 
 > A good GLS model does not necessarily make the raw residual map look spatially independent.
 
-The raw residuals are estimates of a process that the model explicitly allows to be spatially correlated.
+The raw residuals are estimates of a process that the model explicitly allows to be spatially correlated. The more relevant question is whether the remaining unexplained structure, after accounting for the fitted covariance, is compatible with the model. Whitened or innovation residuals provide one way to check this.
 
-The more relevant question is whether the remaining unexplained structure, after accounting for the fitted covariance, is compatible with the model.
+### Residual variograms
 
-Whitened or innovation residuals provide one way to check this.
-
-## Residual variograms
-
-For point-referenced regression, another useful diagnostic is the residual variogram.
-
-After fitting the mean model, calculate residuals
+For point-referenced regression, another useful diagnostic is the residual variogram. After fitting the mean model, calculate residuals
 
 $$
 e_i=y_i-\hat y_i.
 $$
 
-Then examine whether residual semivariance changes with distance.
+Then examine whether residual semivariance changes with distance. If strong structure remains and was not included in the covariance model, the model may be incomplete.
 
-If strong structure remains and was not included in the covariance model, the model may be incomplete.
+### Heteroskedasticity
 
-## Heteroskedasticity
-
-Spatial dependence and heteroskedasticity are separate features of the error structure.
-
-A model can have:
+Spatial dependence and heteroskedasticity are separate features of the error structure. A model can have:
 
 - independent but unequal-variance errors;
 - correlated equal-variance errors;
@@ -1197,11 +1022,9 @@ Therefore residual diagnostics should inspect both:
 - spatial structure;
 - variance patterns.
 
-## Influential locations
+### Influential locations
 
-Spatial data can contain influential observations.
-
-An observation may be influential because it has:
+Spatial data can contain influential observations. An observation may be influential because it has:
 
 - an extreme predictor value;
 - an unusual outcome;
@@ -1213,15 +1036,7 @@ Influence diagnostics should therefore be interpreted together with the observat
 
 ## Prediction and coefficient inference are different goals
 
-A model can predict well because location acts as a proxy for omitted processes.
-
-That does not mean its regression coefficients have strong scientific interpretations.
-
-For example, a flexible spatial effect may absorb most of the broad pattern and yield excellent prediction.
-
-But the estimated coefficient for a smooth exposure may become unstable.
-
-Prediction asks:
+A model can predict well because location acts as a proxy for omitted processes. That does not mean its regression coefficients have strong scientific interpretations. For example, a flexible spatial effect may absorb most of the broad pattern and yield excellent prediction. But the estimated coefficient for a smooth exposure may become unstable. Prediction asks:
 
 > Can we accurately estimate outcomes at new locations?
 
@@ -1231,21 +1046,13 @@ Parameter inference asks:
 
 These goals can conflict.
 
-## Random cross-validation can be too optimistic
+### Random cross-validation can be too optimistic
 
-Suppose nearby locations are strongly correlated.
-
-In ordinary random cross-validation, a held-out point may still have training observations only a short distance away.
-
-A spatial model may predict it very well using nearby information.
-
-But if the deployment task is to predict in a new geographic region, that validation result may be much too optimistic.
-
-Use spatially blocked validation when geographic transfer is the actual prediction goal.
+Suppose nearby locations are strongly correlated. In ordinary random cross-validation, a held-out point may still have training observations only a short distance away. A spatial model may predict it very well using nearby information. But if the deployment task is to predict in a new geographic region, that validation result may be much too optimistic. Use spatially blocked validation when geographic transfer is the actual prediction goal.
 
 ![Prediction versus transfer](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/08_spatial_validation.png)
 
-## Model comparison should use the right target
+### Model comparison should use the right target
 
 If the goal is coefficient inference, compare:
 
@@ -1266,7 +1073,7 @@ Do not choose a model only because it has the smallest in-sample residual sum of
 
 A practical spatial-regression analysis can proceed as follows.
 
-### define the spatial support
+### Define the spatial support
 
 Decide whether data are:
 
@@ -1274,7 +1081,7 @@ Decide whether data are:
 - point-referenced;
 - another structure.
 
-### inspect the response and covariates spatially
+### Inspect the response and covariates spatially
 
 Map:
 
@@ -1283,7 +1090,7 @@ Map:
 - exposure;
 - missingness.
 
-### fit and diagnose the mean structure
+### Fit and diagnose the mean structure
 
 Check:
 
@@ -1292,7 +1099,7 @@ Check:
 - omitted trend;
 - regional effects.
 
-### inspect residual spatial structure
+### Inspect residual spatial structure
 
 Use:
 
@@ -1300,7 +1107,7 @@ Use:
 - residual variograms for point-referenced data;
 - residual maps.
 
-### choose a dependence model scientifically
+### Choose a dependence model scientifically
 
 Possibilities include:
 
@@ -1310,11 +1117,11 @@ Possibilities include:
 - spatial random effects;
 - Gaussian-process regression.
 
-### estimate the model using appropriate methods
+### Estimate the model using appropriate methods
 
 Do not fit an endogenous SAR lag with ordinary OLS.
 
-### inspect model-appropriate residuals
+### Inspect model-appropriate residuals
 
 Use:
 
@@ -1323,7 +1130,7 @@ Use:
 - innovation residuals;
 - residual spatial summaries.
 
-### evaluate coefficient sensitivity
+### Evaluate coefficient sensitivity
 
 Check sensitivity to:
 
@@ -1332,29 +1139,29 @@ Check sensitivity to:
 - spatial scale;
 - included covariates.
 
-### validate according to the prediction task
+### Validate according to the prediction task
 
 Use spatial validation when extrapolation across space matters.
 
 ## Common mistakes
 
-### adding a spatial covariance before diagnosing the mean
+### Adding a spatial covariance before diagnosing the mean
 
 The spatial term may absorb an omitted trend.
 
-### saying correlated errors automatically bias OLS coefficients
+### Saying correlated errors automatically bias OLS coefficients
 
 Under correct mean specification and exogeneity, OLS can remain unbiased, although usual OLS standard errors are generally invalid and OLS is inefficient.
 
-### interpreting $\lambda$ in a spatial error model as outcome spillover
+### Interpreting $\lambda$ in a spatial error model as outcome spillover
 
 It describes dependence in the disturbance process.
 
-### fitting $y$ on $Wy$ using ordinary OLS in a SAR model
+### Fitting $y$ on $Wy$ using ordinary OLS in a SAR model
 
 $Wy$ is generally endogenous.
 
-### interpreting the SAR coefficient $\beta$ like an ordinary regression slope
+### Interpreting the SAR coefficient $\beta$ like an ordinary regression slope
 
 Effects propagate through
 
@@ -1362,15 +1169,15 @@ $$
 (I-\rho W)^{-1}.
 $$
 
-### expecting raw GLS residuals to be spatially independent
+### Expecting raw GLS residuals to be spatially independent
 
 The fitted covariance model explicitly allows correlation in the raw residual process.
 
-### assuming a spatial random effect makes a coefficient causal
+### Assuming a spatial random effect makes a coefficient causal
 
 Causal identification requires more than residual spatial adjustment.
 
-### evaluating geographic transfer using only random cross-validation
+### Evaluating geographic transfer using only random cross-validation
 
 Nearby training observations can make performance look unrealistically good.
 
@@ -1396,9 +1203,7 @@ $$
 \hat\beta_1=1.47.
 $$
 
-The coefficient can be close to the true value because the mean model is correctly specified.
-
-However, the naive OLS standard error assumes independent errors and reports
+The coefficient can be close to the true value because the mean model is correctly specified. However, the naive OLS standard error assumes independent errors and reports
 
 $$
 SE_{\text{naive}}=0.08.
@@ -1410,83 +1215,13 @@ $$
 SE=0.18.
 $$
 
-The main problem with the naive analysis is not necessarily the point estimate.
+The main problem with the naive analysis is not necessarily the point estimate. It is the claim of excessive precision.
 
-It is the claim of excessive precision.
+## Connecting Model Structure to Interpretation
 
-## Concept map
+Start with the spatial response and predictors, define the conditional mean, and diagnose what remains after fitting. If dependence reflects continuous separation, a covariance-based GLS or Gaussian-process formulation may be natural. If a neighborhood graph represents correlated disturbances, a spatial error model describes that process. If the scientific model specifies simultaneous outcome feedback, a SAR lag formulation requires an estimator that addresses endogeneity.
 
-The logic is
-
-$$
-\text{spatial outcome + predictors}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{specify mean }X\beta
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{diagnose residual spatial structure}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{ask why dependence remains}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\begin{array}{ccc}
-\text{continuous covariance}
-&
-\text{spatial error}
-&
-\text{SAR/lag}
-\end{array}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{fit with an estimator appropriate to that structure}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{inspect model-appropriate residuals}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{separate coefficient inference from prediction}.
-$$
-
-The central lesson is:
-
-> Spatial regression is not one model. It is a family of strategies for separating the mean relationship from spatially structured residual or outcome dependence.
+These choices determine what a coefficient means, which residuals should be inspected, and how uncertainty should be calculated. GLS uses covariance-weighted information; SAR effects propagate through a multiplier; a latent spatial effect can compete with smooth covariates. None of those operations by itself establishes a causal interpretation. Evaluate coefficient sensitivity when the goal is explanation and held-out predictive performance when the goal is mapping or transfer. Both can be reported, but a model that excels at one need not excel at the other. The final interpretation should identify the chosen mean, dependence representation, spatial support, and validation target together.
 
 ## Questions students should be able to answer
 

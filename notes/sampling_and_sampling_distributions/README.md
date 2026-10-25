@@ -1,26 +1,18 @@
-# Sampling & Sampling Distributions
+# Sampling and Sampling Distributions
 
-This unit is the bridge from probability models to statistical inference. It asks what happens to a statistic when the sampling process is repeated.
+A population distribution describes an individual observation. A sampling distribution describes a statistic computed from a random sample. Repeating the sampling process produces new observations and a new statistic each time, even when the population parameter remains fixed.
 
-## Reading Order
+## What changes when the sample grows
 
-1. **[Standard Error and the Law of Large Numbers](standard_error_and_lln.md)** — repeated-sample stability and the scale of sampling variability.
-2. **[Sampling Distributions](sampling_distributions.md)** — statistics as random variables, sampling distributions, standard errors, bias, and exact versus asymptotic reference distributions.
-3. **[Central Limit Theorem](central_limit_theorem.md)** — why standardized sums and sample means often become approximately normal.
-4. **[Student's t Distribution](student_t_distribution.md)** — reference distribution for standardized estimates when variance is estimated.
-5. **[Chi-Square Distribution](chi_square_distribution.md)** — reference distribution for sums of squared standard normals and normal-sample variance calculations.
-6. **[F Distribution](f_distribution.md)** — ratio of scaled chi-square variables, used in ANOVA and regression inference.
+For independent observations with variance $\sigma^2$, the sample mean has variance $\sigma^2/n$. Its standard error is therefore $\sigma/\sqrt n$. This explains why averaging improves precision, and why four times as many observations are needed to halve the standard error. Dependence can add covariance terms and invalidate this simple calculation.
 
-## Population Distribution vs Sampling Distribution
+The law of large numbers states that an average converges to its expectation under suitable conditions. The central limit theorem describes the shape of its fluctuations after centering and scaling. The first result concerns concentration; the second concerns an approximate distribution. Neither states that the raw observations become normally distributed.
 
-These are different objects. A population distribution describes individual observations such as $X$. A sampling distribution describes a statistic such as $\bar X$, $S^2$, or a fitted coefficient over hypothetical repeated samples.
+## Reference distributions arise from statistics
 
-That distinction is what gives meaning to a **standard error**: it is the standard deviation of a statistic's sampling distribution (or an estimate of that quantity), not the standard deviation of the raw observations.
+With independent normal data, standardizing a mean by a known standard deviation gives a standard normal statistic. Replacing that standard deviation with an independent estimate introduces additional uncertainty and leads to Student's t. Sums of squared independent standard normals produce chi-square distributions. Ratios of independent chi-square variables divided by their degrees of freedom produce F distributions.
 
-## Why t, Chi-Square, and F Live Here
+These constructions explain why each distribution appears in inference and what assumptions make it applicable. A reference distribution is exact only under its stated model. Large-sample approximations and resampling methods can extend the analysis, but their validity still depends on sampling, dependence, and the statistic being studied.
 
-These distributions can be studied abstractly, but in this repository they are most useful as distributions of standardized statistics under particular assumptions. Teaching them here makes later confidence intervals, tests, ANOVA, and regression inference depend on concepts already introduced rather than on unexplained lookup tables.
 
-## Next
-
-Continue to **[Estimation](../estimation/README.md)**.
+The sampling unit and any dependence between units determine how much information a statistic contains; the row count alone does not settle that question.

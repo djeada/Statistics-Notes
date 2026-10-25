@@ -1,48 +1,29 @@
-# Statistics Notes Curriculum
+# Statistics Notes
 
-The `notes/` directory follows a learning dependency graph rather than grouping material only by historical topic names:
+Statistical analysis connects a question about the world to observations and then to a conclusion with a stated uncertainty. The calculation is only one part of that connection. A numerical answer is useful when the population, sampling process, measured variables, and assumptions describe the question we actually want to answer.
 
-**Foundations → Probability → Random Variables & Distributions → Joint Distributions & Covariance → Sampling & Sampling Distributions → Estimation → Hypothesis Testing & Confidence Intervals → Regression → Resampling & Model Assessment → Time Series → Spatial Statistics → Extensions**
+## From observations to a probability model
 
-Each unit has a `README.md` that explains prerequisites, reading order, and the boundary between neighboring topics.
+A dataset records values for observational units. Descriptive statistics organize those values through frequencies, plots, measures of center, and measures of spread. A mean describes an arithmetic average; a median describes a middle position. Choosing between them requires a purpose, rather than a rule that one summary is always better.
 
-## Core Sequence
+Probability supplies a model for uncertainty. Events describe sets of possible outcomes, and random variables attach numbers to those outcomes. A population distribution describes an individual observation. A joint distribution describes several variables together, including how the behavior of one changes when another is known. Covariance and correlation summarize particular aspects of that joint behavior, while leaving much of the dependence unspecified.
 
-1. **[Foundations](foundations/README.md)** — data, variables, populations, samples, and descriptive summaries.
-2. **[Probability](probability/README.md)** — events, probability laws, conditioning, and Bayes' theorem.
-3. **[Random Variables & Distributions](random_variables_and_distributions/README.md)** — numerical outcomes, PMFs/PDFs/CDFs, moments, and common distribution families.
-4. **[Joint Distributions & Covariance](joint_distributions_and_covariance/README.md)** — multivariate distributions, conditional structure, covariance, and correlation.
-5. **[Sampling & Sampling Distributions](sampling_and_sampling_distributions/README.md)** — repeated-sampling behavior, standard errors, CLT, and reference distributions.
-6. **[Estimation](estimation/README.md)** — point estimators, bias, variance, consistency, method of moments, and likelihood.
-7. **[Hypothesis Testing & Confidence Intervals](hypothesis_testing_and_confidence_intervals/README.md)** — intervals, tests, error rates, multiplicity, and inferential decisions.
-8. **[Regression](regression/README.md)** — linear models, ANOVA, multiple regression, and logistic regression.
-9. **[Resampling & Model Assessment](resampling_and_model_assessment/README.md)** — bootstrap/permutation ideas, validation, model selection, leakage, and metrics.
-10. **[Time Series](time_series/README.md)** — serial dependence, stationarity, forecasting, dynamic regression, multivariate systems, state space, and spectra.
-11. **[Spatial Statistics](spatial_statistics/README.md)** — spatial dependence, geostatistics, point processes, and spatially aware validation.
-12. **[Extensions](extensions/README.md)** — broader inferential perspectives that do not belong to the main prerequisite chain.
+## From a sample to an unknown parameter
 
-## Companion Layers
+A sample statistic is also a random variable before the sample is observed. Repeating a sampling process would produce different means, proportions, variances, or regression coefficients. Their sampling distributions explain why an estimate can differ from the population parameter even when the data collection and calculations are sound.
 
-The implementation layers mirror the same unit names and order:
+The standard deviation of this repeated-sample distribution is a standard error. It measures uncertainty in a statistic, whereas the standard deviation of the raw data measures variation among observations. Larger samples can reduce the first quantity without reducing the second. Neither quantity measures systematic bias caused by a poorly chosen sample or a misspecified model.
 
-- [`scripts/`](../scripts/README.md) contains small runnable demonstrations;
-- [`notebooks/`](../notebooks/README.md) contains interactive simulations and model explorations.
+Estimation, confidence intervals, and hypothesis tests use this sampling behavior for different purposes. Estimation supplies a value; an interval describes uncertainty through a procedure with a coverage property; a test compares a statistic with its behavior under a specified null model. Student's t, chi-square, and F distributions arise as reference distributions for such statistics under particular assumptions.
 
-Use the unit name to move horizontally between explanation, runnable example, and notebook. For example, **Estimation** is available at `notes/estimation/`, `scripts/estimation/`, and `notebooks/estimation/`.
+## From a fitted relationship to a useful prediction
 
-## Why This Split
+Regression models a response conditional on predictors. Linear regression describes a conditional mean; logistic regression describes a conditional probability for a binary outcome. Model coefficients summarize associations under the chosen specification. A causal interpretation also requires a study design or assumptions that address confounding and selection.
 
-The important boundaries are conceptual:
+Good fit on the data used for estimation does not establish predictive accuracy on new observations. Resampling and validation address separate questions: a bootstrap can approximate estimator uncertainty, a permutation test can construct a null distribution, and held-out evaluation can assess prediction. Preprocessing and model selection belong inside the training process so that the evaluation data remain informative about generalization.
 
-- probability describes events before random variables attach numbers to those events;
-- univariate distributions come before joint distributions and covariance;
-- a population distribution differs from the sampling distribution of a statistic;
-- sampling behavior comes before estimation, confidence intervals, and tests;
-- fitting a model differs from evaluating how well it generalizes;
-- time-series and spatial methods extend the core material by relaxing independent-observation assumptions.
+## Dependence changes the analysis
 
-Student's t, chi-square, and F live with sampling distributions because that is where their inferential role becomes meaningful. Covariance and correlation come before regression because regression builds on multivariate dependence rather than defining it.
+Observations close in time or space often share information. Time-series models represent serial dependence and forecast from an information set available at a forecast origin. Spatial models represent neighborhood structure, covariance across locations, or random event locations. In both settings, uncertainty calculations and validation must account for how observations depend on one another.
 
-## Navigation Rules
-
-Section READMEs are the canonical entry points. Individual chapters should focus on their topic rather than repeat the whole prerequisite chain. Cross-links should point backward to prerequisites and forward to the most natural next unit.
+Bayesian inference adds an explicit probability distribution for unknown parameters and updates it using the likelihood. Frequentist inference evaluates procedures through their sampling behavior. Both require defensible models, careful data collection, and interpretations matched to the quantity being estimated.

@@ -1,10 +1,10 @@
 # Conditional Probability and Multiplication Rule
 
-**Conditional Probability** is the likelihood of an event occurring given that another event has already occurred. It is denoted as $P(A|B)$, representing the probability of event $A$ happening, assuming event $B$ has already taken place. This concept is crucial in understanding dependent events in probability theory. The **Multiplication Rule** uses conditional probability to calculate the probability of the intersection of two events. In general it is written as $P(A \cap B) = P(A|B) \times P(B)$ (provided $P(B)>0$). If the events are independent, it simplifies to $P(A \cap B) = P(A) \times P(B)$, as $P(A|B) = P(A)$ in this case. This rule helps in determining joint probabilities of multiple events.
+Conditional probability changes the reference set after information is supplied. In $P(A\mid B)$, we retain outcomes in $B$ and ask what fraction of their probability also lies in $A$. The vertical bar means “given”; it does not require $B$ to happen earlier in time or cause $A$. The multiplication rule reverses this normalization: multiply the conditional fraction by $P(B)$ to recover $P(A\cap B)$. Independence is the special case in which learning $B$ leaves the probability of $A$ unchanged, so the joint probability becomes $P(A)P(B)$.
 
-### Conditional Probability
+## Conditional Probability
 
-Conditional probability refers to the probability of an event $A$ occurring given that another event $B$ has already occurred. It quantifies how the occurrence of one event affects the likelihood of another event. The formal definition of conditional probability is given by:
+Conditioning on an event $B$ with positive probability rescales its total probability to one. Of the original probability mass, only $P(A\cap B)$ supports both the information supplied and the event of interest. Dividing by the retained total $P(B)$ gives the conditional probability:
 
 $$
 P(A|B) = \frac{P(A \cap B)}{P(B)}
@@ -18,10 +18,10 @@ Where:
 
 Important Notes:
 
-- Conditional probability is only defined when $P(B) \neq 0$.
+- This elementary event-ratio definition requires $P(B)>0$. Conditioning on a continuous variable's exact value requires a conditional density or a more general conditional-distribution construction, since the individual event can have probability zero.
 - $P(A|B)$ describes how knowledge of $B$ influences our belief about the likelihood of $A$.
 
-#### Example: Rolling a Die
+### Example: Rolling a Die
 
 Consider a fair six-sided die, where each face shows a number from 1 to 6, and all outcomes are equally likely. 
 
@@ -41,7 +41,7 @@ $$
 P(\text{odd}) = \frac{3}{6} = \frac{1}{2}
 $$
 
-##### Probability of rolling a 4 given an odd outcome
+#### Probability of rolling a 4 given an odd outcome
 
 The conditional probability $P(4 | \text{odd})$ represents the probability of rolling a 4 given that the outcome is known to be an odd number. Since 4 is an even number, it is impossible to roll a 4 if the die shows an odd number. Therefore, the conditional probability is:
 
@@ -49,7 +49,7 @@ $$
 P(4 | \text{odd}) = 0
 $$
 
-##### Probability of rolling an odd number given a 4
+#### Probability of rolling an odd number given a 4
 
 The conditional probability $P(\text{odd} | 4)$ represents the probability that the die shows an odd number, given that a 4 has been rolled. Again, since 4 is even, this event is impossible, so:
 
@@ -57,7 +57,7 @@ $$
 P(\text{odd} | 4) = 0
 $$
 
-##### Probability of rolling a 4 given an even outcome
+#### Probability of rolling a 4 given an even outcome
 
 $P(4 | \text{even})$ represents the probability of rolling a 4, given that we know the die shows an even number.
 
@@ -82,7 +82,7 @@ $$
 
 Thus, the probability of rolling a 4 given that an even number has been rolled is $\frac{1}{3}$.
 
-##### Probability of rolling an even number given a 4
+#### Probability of rolling an even number given a 4
 
 $P(\text{even} | 4)$ represents the probability that the number rolled is even, given that the die shows a 4. This is an easy case because 4 is already an even number. So, we expect $P(\text{even} | 4) = 1$, but let's confirm it using the conditional probability formula:
 
@@ -101,7 +101,7 @@ $$
 
 Thus, the probability that the number is even given that a 4 was rolled is $1$, as expected.
 
-#### Example: Deck of Cards
+### Example: Deck of Cards
 
 Now let’s apply conditional probability to a standard deck of 52 playing cards. Suppose we want to calculate the conditional probability of drawing a king given that the card drawn is a heart.
 
@@ -139,11 +139,13 @@ $$
 
 Thus, the probability of drawing a king given that the card drawn is a heart is $\frac{1}{13}$.
 
-![65566289-77a5-453b-8f85-ea2de49db0c5](https://github.com/djeada/Statistics-Notes/assets/37275728/b0cc8b8e-b795-4998-a2df-a5f5f131c23d)
+This equals the unconditional probability of a king, so “King” and “Heart” are independent for one uniformly selected card. They are not disjoint: the king of hearts belongs to both. By contrast, “4” and “Even” in the die example overlap and are dependent. Overlap alone neither proves nor disproves independence; the probabilities decide it.
 
-### Multiplication Rule for Dependent Events
+![Figure for Example: Deck of Cards](https://github.com/djeada/Statistics-Notes/assets/37275728/b0cc8b8e-b795-4998-a2df-a5f5f131c23d)
 
-If the occurrence of event A in some way influences the occurrence of event B, these events are considered dependent. The general multiplication rule, which holds for any events (and is essential for dependent ones), gives the probability of both events occurring as:
+## Multiplication Rule for Dependent Events
+
+Events are dependent when their joint probability does not equal the product of their probabilities. With positive conditioning probabilities, this is equivalent to learning one event changing the probability of the other. This statistical change need not be causal influence. The general multiplication rule works whether events are dependent or independent:
 
 $$
 P(A \cap B) = P(A|B) \times P(B)
@@ -151,11 +153,11 @@ $$
 
 Here, $P(A|B)$ is the conditional probability of event A given that event B has occurred. It represents the probability of A under the condition that B is known to have occurred.
 
-#### Example: Drawing Two Cards Consecutively from a Deck
+### Example: Drawing Two Cards Consecutively from a Deck
 
 We will compute the probability of two different card-drawing scenarios from a standard deck of 52 playing cards. The multiplication rule follows directly from the definition of conditional probability.
 
-##### Scenario 1: Probability of Drawing Two Diamonds Consecutively
+#### Scenario 1: Probability of Drawing Two Diamonds Consecutively
 
 I. **First Draw (Probability of Drawing a Diamond)**:  
 
@@ -187,9 +189,9 @@ $$
 P(\text{first card Diamond} \cap \text{second card Diamond}) = \frac{13}{52} \times \frac{12}{51} = \frac{13 \times 12}{52 \times 51} = \frac{156}{2652} \approx 0.0588
 $$
 
-![40ae7df7-57fc-413d-8054-d592e9256bc8](https://github.com/djeada/Statistics-Notes/assets/37275728/dc0b84d6-ff74-4681-b329-f67a53512282)
+![Figure for Scenario 1: Probability of Drawing Two Diamonds Consecutively](https://github.com/djeada/Statistics-Notes/assets/37275728/dc0b84d6-ff74-4681-b329-f67a53512282)
 
-##### Scenario 2: Probability of Drawing an Ace Followed by a King
+#### Scenario 2: Probability of Drawing an Ace Followed by a King
 
 I. **First Draw (Probability of Drawing an Ace)**:  
 
@@ -221,11 +223,11 @@ $$
 P(\text{first card Ace} \cap \text{second card King}) = \frac{4}{52} \times \frac{4}{51} = \frac{4 \times 4}{52 \times 51} = \frac{16}{2652} \approx 0.0060
 $$
 
-![20c6bf41-f037-46fa-b741-94f20aa0966f](https://github.com/djeada/Statistics-Notes/assets/37275728/e01bbe6f-a2d3-4109-a290-e9c619b7aa3c)
+![Figure for Scenario 2: Probability of Drawing an Ace Followed by a King](https://github.com/djeada/Statistics-Notes/assets/37275728/e01bbe6f-a2d3-4109-a290-e9c619b7aa3c)
 
-### Multiplication Rule for Independent Events
+## Multiplication Rule for Independent Events
 
-In probability theory, **independence** between two events means that the occurrence of one event does not affect the probability of the other. Formally, two events $A$ and $B$ are independent if:
+In probability theory, **independence** between two events means that the occurrence of one event does not affect the probability of the other. When $P(A)>0$ and $P(B)>0$, independence is equivalent to:
 
 $$
 P(A|B) = P(A) \quad \text{and} \quad P(B|A) = P(B)
@@ -239,7 +241,7 @@ $$
 
 This means that the joint probability of both events occurring is the product of their individual probabilities.
 
-#### Example: Independence of Events in Divisibility
+### Example: Independence of Events in Divisibility
 
 Now let’s examine an example where two events might be independent, based on the set of integers from 1 to 100. The two events are:
 
@@ -292,7 +294,7 @@ The actual value of $P(A \cap B) = \frac{4}{100} = 0.04$.
 
 Since $P(A \cap B) \neq P(A) \cdot P(B)$, the events are **not independent**.
 
-#### Extending the Set to 105
+### Extending the Set to 105
 
 Now, let’s extend the set of integers to 105 and check for independence again.
 
@@ -333,11 +335,15 @@ $$
 
 Since $P(A) \cdot P(B) = P(A \cap B)$, the events are now **independent** with this extended set of numbers.
 
-#### Example: Probability of At Least One of n Independent Events Occurring
+## Independence of more than two events
+
+For three or more events, mutual independence requires product factorization for every subset, not just every pair. For example, toss two independent fair coins, let $A$ mean the first is heads, $B$ the second is heads, and $C$ that the two results agree. Each event has probability $1/2$, and every pair has intersection probability $1/4$. However, $A\cap B\cap C$ has probability $1/4$, rather than $(1/2)^3=1/8$. These events are pairwise independent but not mutually independent. The product of complements below therefore requires mutual independence.
+
+### Example: Probability of At Least One of n Independent Events Occurring
 
 In probability theory, when calculating the probability that at least one of several independent events occurs, the easiest method is often using the **complementary rule**. This approach is particularly useful when dealing with independent events, where directly applying the **inclusion-exclusion principle** (from the addition rule) can become cumbersome as the number of events increases.
 
-##### Case 1: Three Independent Events
+#### Case 1: Three Independent Events
 
 Consider three independent events $A$, $B$, and $C$. We want to find the probability that **at least one of these events occurs**. 
 
@@ -380,7 +386,7 @@ $$
 
 Thus, the probability that at least one of the three events occurs is approximately $0.4213$.
 
-##### Case 2: n Independent Events
+#### Case 2: n Independent Events
 
 For $n$ independent events $A_1, A_2, \dots, A_n$, the same complementary approach can be extended.
 
@@ -404,7 +410,7 @@ $$
 
 This is the complement rule again, which relies on $P(S)=1$.
 
-#### Dice Example: At Least One Six in Three Rolls
+### Dice Example: At Least One Six in Three Rolls
 
 Consider rolling a fair six-sided die three times, and let $A$, $B$, and $C$ represent the events of rolling a six on the first, second, and third rolls, respectively.
 
@@ -430,9 +436,9 @@ Thus, the probability of rolling at least one six in three rolls is approximatel
 
 This example combines the **Multiplication Rule** for independent events with the complement rule.
 
-![3d0579b3-0e10-41ce-b77d-5fc5528908ee](https://github.com/djeada/Statistics-Notes/assets/37275728/813b1539-531f-4a1f-8248-757aca88bf8c)
+![Figure for Dice Example: At Least One Six in Three Rolls](https://github.com/djeada/Statistics-Notes/assets/37275728/813b1539-531f-4a1f-8248-757aca88bf8c)
 
-### The Birthday Paradox
+## The Birthday Paradox
 
 The birthday paradox refers to the surprising probability that in a group of randomly chosen people, at least two will share the same birthday. The intuition might suggest that this probability is low for small groups, but in fact, it's much higher than one might expect. To understand this better, we calculate the complementary probability — the probability that **all** people in the group have **different birthdays**.
 
@@ -442,13 +448,17 @@ Assumptions:
 - We ignore leap years for simplicity.
 - Birthdays are uniformly distributed, meaning each day is equally likely to be a birthday.
 
+- Different people's birthdays are modeled as independent. Relatives or other selected groups can violate that approximation.
+
+The calculation concerns any matching pair in the group, rather than someone matching one designated person's birthday. There are $n(n-1)/2$ possible pairs, which explains why matches become likely well before $n$ approaches 365. Pair-match events overlap, so simply adding their probabilities is only an approximation; the no-match product avoids that double counting.
+
 To find the probability that at least two people share a birthday, we use the complement of the event where all $n$ people have different birthdays. That is:
 
 $$
 P(\text{at least one shared birthday}) = 1 - P(\text{all birthdays different})
 $$
 
-#### For Two People
+### For Two People
 
 For two people, the probability that they **do not** share the same birthday is:
 
@@ -466,7 +476,7 @@ $$
 
 So, the probability is approximately 0.27% for two people.
 
-#### For Three People
+### For Three People
 
 For three people, we first calculate the probability that all three have different birthdays:
 
@@ -484,7 +494,7 @@ $$
 
 This gives a probability of approximately 0.82%.
 
-#### For Four People
+### For Four People
 
 For four people, the probability that all four have different birthdays is:
 
@@ -502,7 +512,7 @@ $$
 
 This gives a probability of approximately 1.64%.
 
-#### General Case for $n$ People
+### General Case for $n$ People
 
 For $n$ people, we generalize this approach. The probability that all $n$ people have different birthdays is calculated by successively multiplying the probabilities that each additional person has a different birthday, given that the previous people have already chosen different birthdays.
 
@@ -530,6 +540,8 @@ $$
 P(\text{at least one shared birthday for } n \text{ people}) = 1 - P(B_n)
 $$
 
+The product applies directly for $1\leq n\leq365$ (and becomes zero when the 366th person is included). For $n>365$, a shared birthday is certain under the 365-day model, by the pigeonhole principle. Continuing the written factors beyond the first zero would not describe conditional probabilities, because the event of all earlier birthdays being distinct already has probability zero.
+
 Let's calculate the probabilities for small group sizes:
 
 - **2 people**: $P(\text{at least one shared birthday}) \approx 0.00274$ (0.27%)
@@ -543,4 +555,4 @@ Let's calculate the probabilities for small group sizes:
 
 Below is the visualization of the probability that at least two people share the same birthday as the group size increases. The red dashed line indicates the 50% probability mark, which occurs at around 23 people:
 
-![output(10)](https://github.com/user-attachments/assets/c0b74baa-a2d8-4695-ac32-ab0fdeb49543)
+![Figure for General Case for $n$ People](https://github.com/user-attachments/assets/c0b74baa-a2d8-4695-ac32-ab0fdeb49543)
