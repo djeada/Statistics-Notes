@@ -6,11 +6,29 @@ Spatial model performance depends not only on which observations are held out, b
 
 Neither design is universally correct. The appropriate validation design is the one that best reproduces the information conditions expected at deployment.
 
-## Define the Information Available at Prediction Time
+## A Validation Score Estimates a Particular Prediction Risk
 
-A validation split is a model of a future prediction situation. Random folds often retain nearby measurements, blocks remove regions, and buffers impose additional separation. The appropriate choice depends on whether the target is interpolation, transfer to a similar region, or extrapolation to unfamiliar conditions. A harder split is not automatically a more relevant split.
+Let D denote the information available to fit a predictor $\hat f_D$. Let Q describe the distribution of locations and predictor values at which it will be used. For squared-error prediction, the target risk conditional on that training information is
 
-Geometry and predictor support both matter. Record how far held-out sites lie from training data, what training information remains after buffering, and whether the tested predictor combinations are represented. Fit data-derived transformations and covariance models within folds when evaluating the complete fitting procedure. A score should also state how errors are aggregated across observations or regions. Fold-level variation and uncertainty calibration can reveal failures hidden by a single mean RMSE, while no resampling scheme can supply evidence for conditions absent from the dataset.
+$$
+R_Q(D)=\int E[(Y(s)-\hat f_D(s,x))^2\mid D,s,x]\,dQ(s,x).
+$$
+
+The distribution Q might weight each resident, each unit of land area, each monitored site, or each future operating region equally. Those are different targets. The information D also matters: predicting next to an operating monitoring station is different from predicting in a region with no measurements nearby.
+
+For a specified conditional mean $\mu_D(s,x)$, the expected squared error at one target separates as
+
+$$
+E[(Y-\hat f_D)^2\mid D,s,x]
+=\operatorname{Var}(Y\mid D,s,x)
++(\mu_D(s,x)-\hat f_D(s,x))^2.
+$$
+
+The first term is uncertainty left after using the available information; the second is error in predicting that conditional mean. Even an ideal predictor has a larger expected error when useful neighboring information is removed.
+
+For example, suppose a Gaussian field has known mean and variance four, and only one relevant training observation is available. With target-to-observation correlation r, its optimal conditional prediction variance is $4(1-r^2)$. A nearby correlation 0.9 gives variance 0.76 and optimal RMSE about 0.872. A distant correlation 0.1 gives variance 3.96 and RMSE about 1.990. The difference persists even with a correct model and perfect computation; it is a difference in the information conditions being evaluated.
+
+A split therefore needs to represent both deployment locations and the observations available around them. “Out of sample” means outcomes were not used for fitting, but does not by itself establish that the spatial prediction problem matches deployment. Random, blocked, and buffered validation estimate useful quantities when those quantities are stated explicitly.
 
 ## Validation is a question about future information
 
@@ -243,6 +261,21 @@ A larger buffer generally increases train-test separation but decreases the trai
 - missing predictor ranges.
 
 Buffer width should therefore reflect deployment conditions rather than being maximized mechanically. When error rises with buffer width, part of the rise can come from greater separation and part from losing training observations or predictor coverage. Record retained training size and covariate support for each fold. A comparison that also subsamples unbuffered training data to a similar size can help distinguish these mechanisms, although it still does not make the geographic tasks identical.
+
+### Constructing a Buffer on an Explicit Set of Sites
+
+Suppose sites lie at integer coordinates 0 through 10 along a line. Hold out sites 4, 5, and 6 as a test region. Without a buffer, the training coordinates are $0,1,2,3,7,8,9,10$. The three targets are one, two, and one unit from their nearest training sites, respectively.
+
+Now remove every training site whose distance to any test site is **at most two**. This removes 2 and 3 on the left, and 7 and 8 on the right, leaving training sites $0,1,9,10$. Target distances become three, four, and three.
+
+| Design | Number of training sites | Nearest distances for targets 4, 5, 6 | Median distance |
+|---|---:|---|---:|
+| Held-out region, no buffer | 8 | 1, 2, 1 | 1 |
+| Same region, buffer of two | 4 | 3, 4, 3 | 3 |
+
+The buffer changes both spatial information and training size. A worse score can reflect either or both. Reporting only “two-unit buffer” conceals the actual prediction distances and how much training data remain. Also state the boundary convention: removing points at distance less than two would retain sites 2 and 8, producing another design.
+
+For a two-dimensional polygon, distance to the test region means the minimum distance to that region, rather than distance to its centroid. A large polygon can have training sites far from its centroid but immediately adjacent to its boundary. If the target is an area average, exclusion should also respect overlapping measurement supports; two values with different centroids can share some of the same underlying observations.
 
 ## Comparing performance with RMSE
 
@@ -477,6 +510,14 @@ Choose validation block and buffer geometry from the deployment question and sci
 
 This is the spatial analogue of nested validation.
 
+### Outcome-Based Spatial Features Must Respect the Prediction Task
+
+An externally measured elevation map can be available at every future prediction site. A neighbor's observed response is different information. If that response would be available when predicting, it can legitimately inform an interpolation model. If the goal is transfer to an unmeasured region, such nearby outcomes may not exist.
+
+A neighborhood response feature must therefore be rebuilt using the permitted observations in each fold. Training examples should not include their own responses through a regional aggregate or through a smoothing operation that includes them. Where feature construction itself estimates a response relationship, an appropriate inner or out-of-fold construction may be needed to prevent a training row's target from leaking into its predictors.
+
+For a simultaneous spatial lag model, forming Wy from the entire observed response vector during validation directly exposes held-out responses. Predict the held-out outcomes using the fitted joint model and the information allowed by deployment instead. Substituting the true held-out outcomes into their neighbors' predictors evaluates a different, easier conditional task. This issue can occur even if the coefficient estimator itself is statistically appropriate.
+
 ## Final geographic test region
 
 If the dataset is large enough, reserve a final geographic region that is never used for:
@@ -551,6 +592,36 @@ Suppose average RMSE is acceptable but one important region performs very poorly
 - population groups or operational strata when relevant.
 
 The reported metrics should support the actual decision. Uncertainty calibration is a separate part of that evaluation. If the model reports 90% prediction intervals, inspect held-out coverage, interval widths, and their variation by distance, region, and predictor novelty. Coverage alone can be made high by very wide intervals, while a low average RMSE can coexist with overconfident uncertainty in a sparsely sampled region. Use an observation-prediction interval for held-out noisy measurements and distinguish it from a latent-field interval.
+
+### Weighting Regions and Weighting Observations Give Different Scores
+
+Suppose region A has 100 test observations with RMSE one, while B has 10 test observations with RMSE three. Their squared-error sums are 100 and 90. Pooling observations gives
+
+$$
+\operatorname{RMSE}_{\mathrm{pooled}}
+=\sqrt{\frac{100+90}{100+10}}
+\approx1.3143.
+$$
+
+The mean of region RMSEs is $(1+3)/2=2$. Giving the two regions equal weight in **mean squared error**, then taking the square root, gives $\sqrt{(1+9)/2}\approx2.2361$. These differences arise from two choices: which units receive equal weight and whether the square root is taken before or after averaging.
+
+If deployment selects a person from a population concentrated in A, an observation- or population-weighted loss may be relevant. If it selects one new region with equal probability and the cost is squared prediction error within that region, equal-region MSE is relevant. Neither should be substituted for the other because it produces a more favorable number. State the target weighting before comparing models, and use identical held-out observations and weights for each comparison.
+
+### Uncertainty in Average Loss Includes Spatial Covariance
+
+For held-out losses $L_1,\ldots,L_m$, the average has variance
+
+$$
+\operatorname{Var}(\bar L)
+=\frac1{m^2}\left[\sum_i\operatorname{Var}(L_i)
++2\sum_{i<j}\operatorname{Cov}(L_i,L_j)\right].
+$$
+
+Nearby prediction errors can make those loss covariances nonzero. Under the illustrative assumption of equal loss variance and common pairwise correlation $\rho_L$, the variance is multiplied by $1+(m-1)\rho_L$ relative to an independence calculation. With 20 losses and $\rho_L=0.2$, that multiplier is 4.8, giving an equivalent independent-loss count of about 4.17 for this average.
+
+This does not supply a universal correction for real spatial data: correlations depend on geometry, loss, fitted model, and sampling design. It explains why many nearby test points cannot simply be counted as independent evidence about performance. Cross-validation folds add another dependence through overlapping training sets. Region-based resampling or model-based uncertainty calculations require enough appropriate units and a clear choice about whether the fitted model is fixed or refitted in each replicate.
+
+For model comparisons, paired loss differences on the same held-out units often provide the relevant target, rather than two unrelated standard errors for two mean scores. Their spatial dependence still needs to be represented. Repeating arbitrary block origins measures sensitivity to split construction; it does not create new independent landscapes.
 
 ## Block orientation can matter
 
@@ -765,11 +836,44 @@ A poor interpretation is:
 
 The model may perform very well for interpolation but poorly for transfer.
 
-## Connecting the Score to Deployment
+## Worked Comparison: A Local Predictor and a Trend Model
 
-Begin with the deployment question, including geographic separation, predictor novelty, measurement support, and which covariate information will be available. Choose holdout geometry that represents those conditions. Within each training partition, perform the data-dependent preprocessing and fitting steps being assessed, then predict the held-out geography without using its outcomes. Report the resulting losses alongside training size, nearest-training distances, fold geometry, and covariate overlap. Inspect geographic variation rather than relying solely on an average score, and distinguish equal-observation weighting from equal-region or target-population weighting. When intervals are supplied, assess their coverage and width for the same observation or latent-field target.
+Consider these observed values along the eleven-site line:
 
-Model selection belongs inside an inner loop or development stage. A reserved geographic test set provides a final assessment only while it remains uninvolved in those choices. Repeated blocking can reveal sensitivity to arbitrary boundaries, but it does not create independent experiments or evidence for environmental regimes that were never observed. A defensible score describes the procedure under the stated information conditions.
+| Coordinate | Observed response |
+|---|---:|
+| 0 | 10.0 |
+| 1 | 11.1 |
+| 2 | 11.9 |
+| 3 | 11.9 |
+| 4 | 11.8 |
+| 5 | 11.8 |
+| 6 | 12.2 |
+| 7 | 13.1 |
+| 8 | 14.2 |
+| 9 | 15.2 |
+| 10 | 15.9 |
+
+Hold out coordinates 4, 5, and 6. Compare two prespecified prediction rules: use the nearest training response, averaging equally when there is a distance tie; or fit an ordinary least-squares line to training response versus coordinate. Evaluate each rule using the same targets with and without the two-unit buffer defined above.
+
+Without the buffer, nearest-site predictions are 11.9, 12.5, and 13.1. The middle target is equally distant from sites 3 and 7, so its prediction is $(11.9+13.1)/2$. Against observed targets 11.8, 11.8, and 12.2, the RMSE is
+
+$$
+\sqrt{\frac{0.1^2+0.7^2+0.9^2}{3}}\approx0.6608.
+$$
+
+With the buffer, nearest-site predictions become 11.1, 13.15, and 15.2, using sites 1 and 9. Their RMSE is approximately 1.9419. Nearby information was especially useful for tracking the locally flatter response around the held-out sites.
+
+The fitted trend lines are approximately $10.35694+0.51111s$ without the buffer and $10.25122+0.55976s$ with it. Substituting the three test coordinates gives the following comparison:
+
+| Training information | Nearest-site RMSE | OLS trend RMSE |
+|---|---:|---:|
+| Eight sites, no buffer | 0.6608 | 1.0160 |
+| Four sites, buffer of two | 1.9419 | 1.1585 |
+
+The local rule performs better for the first information setting, while the trend model performs better for the second. These are calculated results for this small constructed dataset, not claims that either rule usually wins. The buffer also reduces training size, so the score change is not attributable to distance alone.
+
+The example shows why a model can be useful for interpolation yet compare differently when local observations are unavailable. It also shows why one cannot select the validation geometry by whichever score favors a preferred model. Fix the deployment target and assessment design first; use separate development or inner validation for selection; then assess the selected procedure on appropriate held-out information. Three test values are enough to illustrate the calculation, but not to estimate a reliable regional-transfer risk or its uncertainty.
 
 ## Questions students should be able to answer
 

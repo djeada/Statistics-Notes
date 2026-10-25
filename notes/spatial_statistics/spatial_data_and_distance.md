@@ -11,11 +11,30 @@ A map supplies coordinates, but coordinates alone do not define a statistical ob
 
 These choices affect every method that follows.
 
-## What a Spatial Observation Represents
+## Define the Observational Unit and the Quantity of Interest
 
-A coordinate reference system, a measurement support, and a distance metric answer different questions. The CRS places a location on Earth; support describes the point, area, or population represented by a value; distance describes which separations matter for the modeled process. Choosing one does not settle the others. A county centroid can be represented accurately while still being the wrong support for a county-wide rate.
+Suppose a map contains one dot for each of 100 districts. A dot might mark the location of an air-quality instrument, the centroid used to display a district average, or the location of a recorded event. In the first case we observe a measurement at a site; in the second we observe an aggregate over a population or region; in the third the location is itself part of the outcome. The dots can look identical while the variables and probability models differ.
 
-The distinctions are observable in the worked examples. Longitude distances change with latitude, aggregation removes within-block variation, and redrawing boundaries changes regional contrasts. A river or road network can connect locations differently from a straight line. Finally, an observation window limits which neighbors and events are visible. These choices determine whether a conclusion concerns individuals, point measurements, pixels, or regions, so they should be documented before interpreting a spatial statistic.
+Write a point measurement as $Y_i=Z(s_i)+\epsilon_i$, where $Z(s_i)$ is the underlying field value and $\epsilon_i$ is measurement error. An area average instead has the form
+
+$$
+Y_i=\frac{1}{|A_i|}\int_{A_i}Z(s)\,ds+\epsilon_i.
+$$
+
+Here $A_i$ is the measurement region and $|A_i|$ is its area. Placing its value at a centroid does not replace that integral by $Z(s_i)$. A county can contain a hot city center and cool countryside; the temperature at its centroid can differ from its area average or its population-weighted average.
+
+A regional count has another interpretation. If $C_i$ is a case count and $n_i$ is the population at risk, the rate $C_i/n_i$ has a precision that depends on $n_i$. For a simple independent Bernoulli model with common probability $p_i$ within a district,
+
+$$
+E\left[\frac{C_i}{n_i}\right]=p_i,
+\qquad
+\operatorname{Var}\left(\frac{C_i}{n_i}\right)
+=\frac{p_i(1-p_i)}{n_i}.
+$$
+
+Two districts with the same underlying rate can therefore show very different sampling variation. Apparent clusters of extreme observed rates can partly reflect small denominators. The data definition should retain counts and denominators, rather than only the plotted rates.
+
+Finally, distinguish the sampling locations from the quantity sampled. Treating monitoring stations as fixed is a conditional modeling choice. If stations were placed preferentially near suspected high concentrations, the observed values need not represent the landscape uniformly. A field model can still be useful, but interpreting a simple sample average as the regional average would require justification for the sampling design or adjustment for it. Accurate coordinates alone do not resolve this selection issue.
 
 ## Three common spatial data objects
 
@@ -223,6 +242,35 @@ $$
 
 The haversine calculation treats Earth as a sphere of radius $R$. An ellipsoidal geodesic, such as one calculated on WGS84, represents its shape more accurately. Whether the difference matters depends on the distance tolerance and the downstream analysis, rather than a blanket distinction between ordinary and high-accuracy work. Convert angles to radians before trigonometric evaluation. In floating-point code, clipping the computed $a$ to $[0,1]$ avoids invalid square roots caused by tiny rounding excursions. See the [GeographicLib explanation of ellipsoidal geodesics](https://geographiclib.sourceforge.io/html/python/geodesics.html) for the distinct spherical and ellipsoidal problems.
 
+### Why the Haversine Formula Measures Surface Separation
+
+On a sphere, a location with latitude $\phi$ and longitude $\lambda$ corresponds to the unit vector
+
+$$
+v(\phi,\lambda)=
+(\cos\phi\cos\lambda,\ \cos\phi\sin\lambda,\ \sin\phi).
+$$
+
+The dot product of the two location vectors is the cosine of their central angle $c$:
+
+$$
+\cos c
+=\sin\phi_1\sin\phi_2
++\cos\phi_1\cos\phi_2\cos(\lambda_2-\lambda_1).
+$$
+
+An arc of angle $c$ on a sphere of radius $R$ has length $Rc$. Thus the probability or covariance model should receive $Rc$ when separation means the shortest spherical surface route. The straight three-dimensional chord has length $2R\sin(c/2)$ and passes through the sphere; it represents a different geometry.
+
+The identity $\sin^2(c/2)=(1-\cos c)/2$ turns the dot-product relation into the expression $a$ used above. Computing small coordinate differences through squared sines avoids subtracting two numbers extremely close to one, a difficulty with directly taking $\arccos$ of a rounded dot product for nearby sites. The $\operatorname{atan2}$ form then recovers the angle in the correct range from zero to $\pi$.
+
+For a short displacement around latitude $\phi$, this spherical geometry also gives the local approximation
+
+$$
+d^2\approx R^2\{(\Delta\phi)^2+\cos^2\phi\,(\Delta\lambda)^2\}.
+$$
+
+This explains the latitude-dependent longitude conversion. It also shows why applying one global “kilometers per degree” factor to both axes is inadequate. A local projection packages an approximation of this geometry into Cartesian coordinates; its suitability depends on the region and the accuracy required.
+
 ### Worked great-circle example
 
 Consider two locations on the equator: $(0^\circ,0^\circ)$ and $(0^\circ,1^\circ)$. Then
@@ -401,6 +449,25 @@ Independent values give $\sigma^2/m$. Perfectly correlated values give $\sigma^2
 
 ![Aggregation smooths variability](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/data_support_distance/04_support_and_aggregation.png)
 
+### How Much Does Averaging Four Nearby Sensors Help?
+
+Suppose four sensors measure the same kind of spatial quantity, each with variance $\sigma^2=16$. Assume every distinct pair has correlation $\rho=0.75$. Their average has variance
+
+$$
+\begin{aligned}
+\operatorname{Var}(\bar Z)
+&=\frac{1}{4^2}\{4\sigma^2+12\rho\sigma^2\}\\
+&=\frac{\sigma^2}{4}(1+3\rho)\\
+&=4(1+2.25)=13.
+\end{aligned}
+$$
+
+The 12 off-diagonal contributions count ordered sensor pairs. If the sensors were independent, the variance would be four and the standard deviation two. Here the standard deviation is $\sqrt{13}\approx3.606$, only moderately below the individual standard deviation four. Nearby sensors share information, so four readings do not provide the precision of four independent readings.
+
+More generally, $m$ equal-variance measurements with a common pairwise correlation have average variance $\sigma^2\{1+(m-1)\rho\}/m$. An equivalent number of independent measurements for this particular average is $m/[1+(m-1)\rho]$. For the four sensors, it is about $1.231$. This is a summary of the assumed covariance for the mean, rather than a universal effective sample size for every spatial statistic.
+
+If sensors also have independent instrument errors of variance $\tau^2$, averaging reduces that error contribution to $\tau^2/m$ while the shared field component can remain substantial. Increasing instrument precision and increasing spatial coverage therefore address different sources of uncertainty. This distinction helps explain why a densely sampled small patch can estimate a local average well while still providing limited information about the whole landscape.
+
 ### Numerical aggregation example
 
 Suppose eight fine-scale values are $2,\ 4,\ 6,\ 8,\ 12,\ 14,\ 16,\ 18$. Their mean is $10$. The population variance is
@@ -445,6 +512,27 @@ because each pair has within-block variance $1$. Aggregation removes only the wi
 Suppose two fine-scale variables are noisy: $X(s)$ and $Y(s)$. At point level, measurement noise may weaken their observed correlation. If both variables are averaged over larger regions, some small-scale noise may cancel. The area-level correlation can therefore be larger than the point-level correlation.
 
 This change does not show that the individual-level relationship became stronger. Aggregation can alter the mixture of within-region and between-region variation, as well as average away some noise. With unequal population sizes, a mean of regional means also weights people differently from the individual-level mean unless population weights are used. Report both the spatial support and the weighting scheme when interpreting an aggregated association. The reverse can also happen. This is one reason area-level correlations cannot automatically be interpreted as individual-level relationships.
+
+### An Area-Level Association Can Reverse a Within-Area Association
+
+Consider two hypothetical districts, each with 100 people. A binary exposure and a binary outcome have the following counts:
+
+| District | Exposed people | Outcomes among exposed | Unexposed people | Outcomes among unexposed |
+|---|---:|---:|---:|---:|
+| A | 80 | 16 | 20 | 2 |
+| B | 20 | 16 | 80 | 56 |
+
+In A, the observed outcome fractions are $16/80=0.20$ for exposed people and $2/20=0.10$ for unexposed people. In B, they are $16/20=0.80$ and $56/80=0.70$. Within each district, exposure is associated with a ten-percentage-point higher outcome fraction.
+
+Now discard the individual records and retain only district summaries. A has exposure prevalence $0.80$ and overall outcome fraction $18/100=0.18$. B has exposure prevalence $0.20$ and outcome fraction $72/100=0.72$. Across the two district summaries, greater exposure prevalence is associated with a lower outcome fraction. The slope through these two aggregate points is
+
+$$
+\frac{0.72-0.18}{0.20-0.80}=-0.90.
+$$
+
+Both calculations are arithmetically correct. They summarize different variation: the individual comparison within districts and the contrast between districts with different baseline outcomes. Aggregation hides the composition needed to distinguish them. The table illustrates an ecological interpretation problem and a form of Simpson's reversal; it does not identify a causal effect of exposure in either direction.
+
+This is why a district-level regression coefficient cannot automatically be used as an individual-level coefficient. Reporting the geography is necessary, but the substantive target must also be stated: are we explaining differences between district averages, or differences between people within comparable districts?
 
 ## The modifiable areal unit problem
 
@@ -860,11 +948,23 @@ Missing space outside the study region can bias neighborhood and point-process s
 
 A county-level result is not automatically an individual-level result.
 
-## Connecting Geometry to the Statistical Target
+## Worked Design: Temperature Exposure and District Admissions
 
-The modeling sequence begins with the observation, rather than with a preferred spatial method. Identify whether the outcome is a regional value, a point measurement, or an event location. Check coordinates and units, then define the support and observation window. Choose a distance or neighborhood relationship that represents the process and state the scale at which the conclusion is intended to hold.
+Suppose the available measurements are temperature averages on one-kilometer cells, admission counts by district, district populations, and a map of residential population within each cell. The question is whether districts with greater population exposure to heat tend to have higher admission rates. This requires specifying two aggregates, with different denominators.
 
-These decisions remain connected during analysis. Aggregating a raster to districts changes support and can change variance; using road distance instead of straight-line distance changes the neighborhood graph; extending a study boundary changes which events can contribute to a point-pattern summary. A later regression or autocorrelation calculation inherits those choices. The final claim should name the same spatial unit and target quantity used in the data construction. Documenting the choices makes sensitivity analysis interpretable: a changed answer can be traced to a changed support, geometry, or scientific question rather than treated as an unexplained software discrepancy.
+For district $i$, let $T_{ij}$ be the temperature assigned to the part of cell $j$ overlapping the district. Let $n_{ij}$ be the population in that part, so $n_i=\sum_j n_{ij}$. A population-weighted exposure is
+
+$$
+H_i=\frac{\sum_jn_{ij}T_{ij}}{n_i}.
+$$
+
+If a district's two contributing cell parts contain 900 and 100 people at temperatures 30°C and 20°C, then $H_i=29$°C. If those cell parts cover 10% and 90% of district area, the area-weighted temperature is $0.1(30)+0.9(20)=21$°C. The difference arises because most residents occupy the small hotter part. Neither weighting is intrinsically wrong; population exposure and land-surface average are different targets.
+
+Let $C_i$ denote admissions. A simple rate is $R_i=C_i/n_i$, assuming the denominator represents the relevant population and observation period. When combining districts, preserve the counts and populations. For example, one admission among 10 people and nine among 990 people give a combined rate $10/1000=0.01$. The equally weighted average of the two district rates is approximately $0.0545$, because it gives the ten-person district as much influence as the 990-person district.
+
+Before fitting a spatial model, check whether admission counts refer to residence or hospital location, whether repeat admissions are included, whether exposure and outcome periods match, and whether population information has the same geographic boundaries. These choices alter the meaning of $H_i$ and $R_i$, rather than merely altering the appearance of a map.
+
+A district-level Poisson count model might use $\log n_i$ as an offset and $H_i$ as a predictor, with additional covariates and spatial structure as justified. It would describe associations among district-level rates conditional on that specification. Individual exposure-response inference would need additional information about people and their exposures. For prediction in another district, the validation unit and available exposure map should match that intended use.
 
 ## Questions students should be able to answer
 
