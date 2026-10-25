@@ -25,11 +25,19 @@ so a location is not treated as its own neighbor. A weights matrix defines which
 - admissible SAR parameter values;
 - the scientific interpretation of “neighbor.”
 
-## What the Matrix Adds to the Data
+## A Matrix Entry Defines a Specific Operation
 
-Values and coordinates do not uniquely determine a neighborhood graph. Rook and queen contiguity, distance thresholds, nearest neighbors, and distance decay encode different relationships. A useful construction states why those relationships represent the process, how self-links and duplicate locations are treated, and which identifiers define the matrix order.
+For the convention used here, row $i$ identifies the location whose neighborhood is being summarized, while column $j$ identifies the location contributing a value. Thus $w_{ij}$ is the weight applied to $x_j$ when calculating the lag at $i$. Some applications describe directed influence in the opposite verbal direction, so an equation such as $(Wx)_i=\sum_jw_{ij}x_j$ is less ambiguous than an arrow label alone.
 
-Normalization then determines what a lag means. Raw binary weights produce a sum; nonnegative rows normalized to one produce an average. This changes how high-degree and low-degree locations contribute. Directed links, disconnected components, and islands can be intentional features of the geography rather than coding errors. Their implications still need to be carried through Moran statistics and spatial regression. The hand calculations below use small matrices to show each operation, while sensitivity analysis asks whether the conclusion depends on a scientifically plausible change in the neighborhood definition.
+The connection can represent shared borders, movement along a network, or physical proximity. Its strength can be binary or continuous. After choosing it, determine whether a row's total strength should be preserved or normalized away. A count of neighboring cases and an average neighboring rate answer different questions, even when built from the same adjacency graph.
+
+The matrix also defines a relationship between identifiers. If its order is A, B, C but the data vector is accidentally B, A, C, multiplication still returns three numbers. Those numbers summarize the wrong locations. Reordering the observations consistently can be expressed by a permutation matrix $P$: use $x_{\mathrm{new}}=Px$ together with $W_{\mathrm{new}}=PWP^\top$. Then
+
+$$
+W_{\mathrm{new}}x_{\mathrm{new}}=P(Wx),
+$$
+
+so the lag is merely reordered. Reordering only one of them changes the calculation. Stable region identifiers and an explicit alignment check are therefore part of a spatial analysis, including analyses in which the neighborhood graph itself is supplied by another source.
 
 ## What does a spatial weights matrix represent?
 
@@ -323,6 +331,34 @@ This is why row-standardized binary weights are often described as producing a n
 For binary weights, $(Wx)_i$ grows partly with the number of neighbors. A region with eight neighbors can receive a much larger raw lag than a region with two neighbors even when their neighboring values have similar magnitudes. For row-standardized weights, $(W^{(R)}x)_i$ is instead a weighted average. These two forms encode different ideas. Neither is automatically appropriate in every application.
 
 ![Neighbor sum versus neighbor average](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/03_binary_vs_row_standardized.png)
+
+### Row Standardization Changes Relative Contributions
+
+Consider four locations on a line, linked only to immediate neighbors. The binary adjacency and its row-standardized version are
+
+$$
+A=
+\begin{bmatrix}
+0&1&0&0\\
+1&0&1&0\\
+0&1&0&1\\
+0&0&1&0
+\end{bmatrix},
+\qquad
+W=
+\begin{bmatrix}
+0&1&0&0\\
+1/2&0&1/2&0\\
+0&1/2&0&1/2\\
+0&0&1&0
+\end{bmatrix}.
+$$
+
+For $x=(1,2,4,8)^\top$, the raw lag is $Ax=(2,5,10,4)^\top$, while $Wx=(2,2.5,5,4)^\top$. Interior locations have twice as many neighbors as endpoints. Dividing interior rows by two changes their contributions relative to endpoint rows; it is not multiplication of the entire matrix by one common constant.
+
+For this example, Moran's I is approximately $0.2522$ with $A$ and $0.2913$ with $W$, using each matrix's own $S_0$ normalization. A common positive rescaling $aA$ would cancel between Moran's numerator and $S_0$, producing the same statistic as $A$. Row standardization can change it because different rows receive different rescalings. An analysis should therefore report both the underlying neighbor rule and the weight transformation.
+
+Raw inverse-distance weights also have units. Changing kilometers to meters multiplies all $d_{ij}^{-\alpha}$ weights by $1000^{-\alpha}$. Row-standardized relative weights are unchanged under that common conversion, but unstandardized lags are rescaled. A distance threshold must be converted as well; keeping its numerical value while changing units produces a different graph.
 
 ## Distance-band weights
 
@@ -729,6 +765,19 @@ $$
 
 A therefore falls in the low-low quadrant of a Moran scatterplot.
 
+### A Neighbor Average Does Not Necessarily Preserve the Global Mean
+
+Row sums of one ensure that a constant map remains constant: $W(c\mathbf1)=c\mathbf1$. They do not imply that the unweighted mean of every map is preserved. That additional property requires column sums of one, because
+
+$$
+\frac1n\mathbf1^\top Wx
+=\frac1n\sum_j\left(\sum_iw_{ij}\right)x_j.
+$$
+
+A location selected by many other locations can contribute repeatedly to the mean lag. For the four-location example above, the original mean is $3.75$ but the mean of $Wx$ is $3.375$. Thus even when $z=x-\bar x\mathbf1$ is centered, $Wz$ need not have an unweighted mean of zero. The identity $Wz=Wx-\bar x\mathbf1$ is still valid for rows summing to one; it simply does not imply that the mean of its right-hand side vanishes.
+
+This matters for Moran scatterplots. Their through-origin slope uses $z^\top Wz/z^\top z$, whereas an ordinary correlation centers and scales both displayed vectors. Treating the spatial lag as another centered copy of $x$ obscures that distinction.
+
 ## Islands
 
 An **island** is a location with no neighbors under the chosen weights definition. Mathematically,
@@ -896,6 +945,35 @@ away. Thus, $k$-NN fixes each location's number of selected neighbors (its out-d
 ### Distance band and variable degree
 
 A distance band makes the opposite tradeoff. It fixes the physical scale but allows the number of neighbors to vary. Dense regions may have many neighbors. Sparse regions may have few or none. This can be appropriate when the process has a meaningful interaction radius.
+
+## What Repeated Spatial Lags Do
+
+Applying $W$ twice gives $W^2x$. Matrix multiplication shows that
+
+$$
+(W^2x)_i=\sum_j\sum_kw_{ij}w_{jk}x_k.
+$$
+
+The coefficient of $x_k$ adds the weights of two-step paths from $i$ through every intermediate $j$. A path can return to $i$, so $W^2x$ is not simply the average of distinct “second-nearest” locations. Paths can overlap, and their multiplicities matter.
+
+For a three-location line, use
+
+$$
+W=\begin{bmatrix}0&1&0\\1/2&0&1/2\\0&1&0\end{bmatrix},
+\qquad x=\begin{bmatrix}0\\10\\0\end{bmatrix}.
+$$
+
+Then $Wx=(10,0,10)^\top$ and $W^2x=(0,10,0)^\top=x$. Successive neighbor averaging oscillates. The graph is bipartite: every step moves from the middle to an endpoint or from an endpoint to the middle. There is no within-step opportunity to stay in the same part.
+
+Adding self-weight through $W_{\mathrm{lazy}}=(I+W)/2$ changes that operation. Now half of each value is retained and half comes from neighbors. For a finite connected undirected graph with positive degrees, this lazy averaging converges to a constant determined by degree-weighted values. In this example the limiting value is five, not the original unweighted mean $10/3$.
+
+To see the weighting, let $d_i$ be the original degree and $\pi_i=d_i/\sum_jd_j$. For an undirected graph,
+
+$$
+\pi_iw_{ij}=\frac{a_{ij}}{\sum_kd_k}=\pi_jw_{ji}.
+$$
+
+Summing over $i$ gives $\pi^\top W=\pi^\top$, so degree-weighted averages are preserved. The three-location weights are $(1/4,1/2,1/4)$, giving $\pi^\top x=5$. These properties explain what repeated averaging actually estimates; adding self-links changes a spatial statistic or model and should be an explicit choice, rather than a repair applied silently.
 
 ## Spatial weights are part of the model
 
@@ -1145,13 +1223,36 @@ $$
 
 This example contains the main logic needed for the next chapter on spatial autocorrelation.
 
-## Connecting a Graph to a Statistical Conclusion
+## Worked Comparison: One Geographic Graph, Three Statistical Roles
 
-Start with spatial geometry and a substantive connection rule, construct the matrix in the data's identifier order, and inspect its degree distribution, components, islands, and symmetry. Then choose whether total connection strength or relative neighbor weighting is the relevant quantity. Calculating a lag before making that choice risks interpreting a sum as an average.
+Take two neighboring regions with the row-standardized matrix
 
-The same matrix can enter a descriptive statistic or a stochastic model, but its role differs. In Moran's I it weights products of centered observations. In an error model it describes paths through which disturbances propagate. In a lag model it links jointly determined outcomes. The meaning of an estimated dependence parameter therefore depends on the construction and normalization of W.
+$$
+W=\begin{bmatrix}0&1\\1&0\end{bmatrix}.
+$$
 
-Sensitivity analysis should vary scientifically defensible choices, explain what relationship each represents, and report the resulting changes in lags, diagnostics, coefficients, or predictions. Choosing the graph only after inspecting which result is most significant changes the selection procedure and weakens an unadjusted inferential claim.
+As a descriptive operator, $Wx$ exchanges the two observed values: each region's neighborhood consists only of the other region. No probability model is required to compute this lag.
+
+As a disturbance model, write $u=\lambda Wu+\epsilon$, where the two innovations are independent with variance $\sigma^2$. If $|\lambda|<1$,
+
+$$
+u=\frac{1}{1-\lambda^2}
+\begin{bmatrix}1&\lambda\\\lambda&1\end{bmatrix}\epsilon.
+$$
+
+The covariance is obtained by multiplying this transformation by its transpose:
+
+$$
+\operatorname{Cov}(u)
+=\frac{\sigma^2}{(1-\lambda^2)^2}
+\begin{bmatrix}1+\lambda^2&2\lambda\\2\lambda&1+\lambda^2\end{bmatrix}.
+$$
+
+For $\lambda=0.5$ and $\sigma^2=1$, both marginal variances are $20/9$, covariance is $16/9$, and correlation is $0.8$. The same binary $W$ has eigenvalues $1$ and $-1$, so it could not itself serve as a covariance matrix. The stochastic transformation creates a valid positive-definite covariance from independent innovations.
+
+As an outcome-feedback model, $y=\rho Wy+X\beta+\epsilon$ uses the same graph to connect responses, rather than only disturbances. A predictor change in one region can then affect the other region's mean and feed back. The coefficient $\rho$, its admissible range, and the resulting impacts belong to that simultaneous model; they are not properties of the graph alone.
+
+This comparison separates the choices an analyst must make. Geography supplies the connections, normalization supplies their scale, and a statistical model specifies whether they summarize observed values, correlate disturbances, or represent jointly determined outcomes. A reported “spatial effect” is interpretable only after those roles are identified.
 
 ## Questions students should be able to answer
 

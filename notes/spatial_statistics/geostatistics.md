@@ -10,11 +10,17 @@ Geostatistics is used when observations are tied to locations and nearby values 
 
 The central problem is that we usually observe a variable at only a limited set of coordinates, yet we want to understand the spatial process between them. This chapter develops the ideas needed before kriging. The goal is to understand what spatial dependence means, how the semivariogram measures it, why its parameters matter, and what can go wrong when the assumptions do not fit the data.
 
-## From Pair Differences to a Dependence Model
+## How One Observed Map Can Inform a Random-Field Model
 
-The observed map is one realization of a spatial random field. A mean function describes systematic variation, while a residual covariance or semivariogram describes how departures from that mean relate across locations. Pooling information from different pairs requires assumptions about which separations can be treated as comparable. Stationarity concerns location invariance; isotropy additionally removes direction from the dependence model.
+At a sampled site, the observed number is fixed after measurement. The random-field model describes the distribution of possible measurements at that site and their joint relationship with measurements elsewhere. The dataset supplies one realization, rather than hundreds of independent repetitions of the same map.
 
-An empirical semivariogram averages squared pair differences within lag bins. It is an estimate with dependent contributions, not a set of exact independent measurements of a curve. Nugget, sill, range, and anisotropy summarize a fitted model, and their interpretation depends on support and parameterization. The sampling design controls which distances are informative. A valid fitted model converts these descriptive differences into covariances or increment variances that can be used consistently in prediction. Validation then checks whether that model supports useful predictions and realistic uncertainty.
+Suppose five pairs of wells are each separated by approximately 100 m. We cannot estimate a separate covariance for each pair from one pair of observed values. A stationary model pools them by asserting that comparable separation vectors have comparable covariance. Isotropy adds the assertion that direction can be ignored. Pooling is what makes the empirical variogram informative, and the assumptions explain what that pooling is estimating.
+
+The distinction between a mean and a residual matters at this stage. If the west of a region has a systematically lower mean than the east, differences between distant points include that geographic contrast. Treating those differences as draws from one constant-mean covariance model can produce a long apparent range. A residual model instead asks how values fluctuate together after the mean structure has been specified.
+
+Observation support enters the model too. For instrument readings $Y_i=Z(s_i)+\epsilon_i$ with independent error variance $\tau^2$, the covariance between distinct readings is supplied by the field, while each reading's variance contains an additional $\tau^2$. For block averages, covariance is averaged over both blocks. Thus the empirical differences concern the recorded observations and their support; interpreting them as differences of an error-free point field requires an observation model.
+
+The numerical development below begins with covariance and increment variance, then shows what an empirical variogram actually estimates. A fitted curve becomes useful for prediction only when it defines valid variances for the linear combinations used by kriging.
 
 ## The spatial random field
 
@@ -332,6 +338,22 @@ The greater separation has a larger semivariance because the values are less str
 
 ![Covariance and semivariogram](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/geostatistics/03_covariance_and_variogram.png)
 
+### Intrinsic Stationarity Can Hold Without a Constant Field Variance
+
+A one-dimensional spatial random walk illustrates the distinction. Let $U_1,U_2,\ldots$ be independent steps with mean zero and variance $\sigma_U^2$, and define $Z_k=U_1+\cdots+U_k$. The index $k$ can represent consecutive sites along a transect.
+
+The marginal variance is $\operatorname{Var}(Z_k)=k\sigma_U^2$, which depends on position. There is no common finite $C(0)$ for a second-order stationary model of these values. However, an increment across $h$ sites is a sum of $h$ independent steps, so
+
+$$
+E[Z_{k+h}-Z_k]=0,
+\qquad
+\operatorname{Var}(Z_{k+h}-Z_k)=h\sigma_U^2.
+$$
+
+The semivariogram is therefore $\gamma(h)=|h|\sigma_U^2/2$ on integer lags. It increases without approaching a sill. This is a valid increment model, not a covariance curve that failed to level off because too few bins were plotted.
+
+The example shows why a sill is a feature of a chosen bounded stationary model, not part of the definition of every semivariogram. It also explains why $C(0)-C(h)$ should be used only when the corresponding stationary covariance exists. An unbounded empirical variogram could reflect such increment behavior, a deterministic trend, or insufficient spatial extent to observe a plateau; the curve alone does not decide between those explanations.
+
 ## The empirical semivariogram
 
 With real data, the true semivariogram is unknown, so we estimate it from observed pairs. For a lag bin around distance $h$,
@@ -519,6 +541,36 @@ A lag bin based on 150 pairs is generally more stable than one based on 3 pairs.
 
 A sampled observation can appear in many pairs. For example, observation A may contribute to A-B, A-C, A-D, and A-E. As a result, variogram points are not independent observations in the sense assumed by ordinary least squares. They also do not generally have equal sampling variance. For teaching examples, weighted least squares based on pair counts is common and intuitive. More advanced fitting can use likelihood-based methods or specialized variogram-weighting schemes.
 
+### Sampling Uncertainty in an Empirical Semivariance
+
+Suppose a particular lag has zero-mean Gaussian increment $D=Z(s_i)-Z(s_j)$ with variance $2\gamma$. A single pair contributes $V=D^2/2$. It has expectation $\gamma$, while the fourth moment of a zero-mean normal variable gives
+
+$$
+\operatorname{Var}(V)
+=\frac14\{3(2\gamma)^2-(2\gamma)^2\}
+=2\gamma^2.
+$$
+
+One squared difference is consequently very noisy. If $m$ independent pairs all had the same semivariance, their mean would have variance $2\gamma^2/m$, and its standard error relative to $\gamma$ would be $\sqrt{2/m}$. For only five independent pairs, that relative standard error is about 63%. The estimate 1.9 in the worked example should not be interpreted as a precise measurement of a true curve.
+
+Actual variogram pairs are usually dependent. Under a constant-mean Gaussian field, two pair contributions satisfy
+
+$$
+\operatorname{Cov}\left(\frac{D_{ij}^2}{2},\frac{D_{kl}^2}{2}\right)
+=\frac12\operatorname{Cov}(D_{ij},D_{kl})^2,
+$$
+
+where, with $C_{ab}=\operatorname{Cov}(Z(s_a),Z(s_b))$,
+
+$$
+\operatorname{Cov}(D_{ij},D_{kl})
+=C_{ik}-C_{il}-C_{jk}+C_{jl}.
+$$
+
+Pairs can share a site or be correlated through nearby sites. The variance of a bin average therefore includes cross-pair covariance terms as well as individual variances. A bin based on 400 pairs is not equivalent to 400 independent observations, and a single extreme site can influence many of those pairs simultaneously.
+
+For an initial weighted least-squares fit, one can minimize $\sum_b w_b[\hat\gamma_b-\bar\gamma_{\theta,b}]^2$ over valid model parameters $\theta$. Approximate weights proportional to $m_b/\gamma_{\theta,b}^2$ reflect the independent-pair variance calculation, but do not fully represent pair dependence. For a wide bin, $\bar\gamma_{\theta,b}$ can average the model over its actual pair distances rather than evaluate it only at a bin midpoint. Likelihood methods use the joint observation covariance directly, at the cost of additional distributional assumptions and computation.
+
 ## Nugget, partial sill, and sill
 
 A widely used exponential semivariogram model is
@@ -664,6 +716,22 @@ Thus, the exponential model's **practical range** is often taken as approximatel
 $$
 \text{practical range}\approx60.
 $$
+
+### Replicate Readings Can Help Separate Instrument Error from Microscale Variation
+
+Write two readings at the same site as $Y_{i1}=Z(s_i)+\epsilon_{i1}$ and $Y_{i2}=Z(s_i)+\epsilon_{i2}$. Assume errors have mean zero, common variance $\tau^2$, and are independent of each other and the field. The difference removes the shared latent value:
+
+$$
+Y_{i1}-Y_{i2}=\epsilon_{i1}-\epsilon_{i2},
+\qquad
+\frac12E[(Y_{i1}-Y_{i2})^2]=\tau^2.
+$$
+
+For replicate pairs $(10,12)$, $(14,13)$, and $(8,9)$, the half-squared differences are $2$, $0.5$, and $0.5$. Their average is one, giving a simple estimate of measurement-error variance. Three pairs provide little precision, but the calculation identifies the quantity being estimated: variation between separate readings of the same latent site value.
+
+Differences between two nearby sites retain both instrument error and genuine field variation between those sites. Comparing replicate differences with short-distance spatial differences can therefore help separate the two sources. This requires replication close enough in time that the underlying field has not changed, along with a defensible error model. A systematic instrument offset or dependence between repeated errors can invalidate the simple calculation.
+
+The distinction changes prediction. For an error-free latent value, independent instrument noise should affect the observation covariance without being added to the latent target variance. For a new noisy reading, that future reading's noise belongs in its target variance. Calling both components “the nugget” without specifying the observation model leaves this choice unresolved.
 
 ## Comparing common valid variogram models
 
@@ -1066,6 +1134,18 @@ A nugget may contain measurement error, microscale spatial variation, or both. T
 - the latent underlying process; or
 - a future noisy observation.
 
+### A Smooth Increasing Curve Can Still Be an Invalid Variogram
+
+Consider the apparently simple proposal $\gamma(h)=h^4$ at three equally spaced sites 0, 1, and 2. The pairwise semivariogram matrix would be
+
+$$
+\Gamma=\begin{bmatrix}0&1&16\\1&0&1\\16&1&0\end{bmatrix}.
+$$
+
+Use the zero-sum coefficient vector $a=(1,-2,1)^\top$. Direct multiplication gives $a^\top\Gamma a=24>0$. However, a valid variogram requires that expression to be nonpositive for zero-sum $a$. Equivalently, the implied variance of $Z(0)-2Z(1)+Z(2)$ would be $-a^\top\Gamma a=-24$, which is impossible.
+
+Nonnegativity, smoothness, a zero value at the origin, and increasing dissimilarity are therefore insufficient. Validity constrains relationships across several sites simultaneously. Fitting an arbitrary polynomial to empirical variogram points can satisfy the visual requirements while violating these joint constraints. Restricting fitting to a valid model family protects the variances required by subsequent prediction; it does not guarantee that the family fits the scientific process well.
+
 ## A compact worked example from data to interpretation
 
 Suppose an empirical variogram suggests:
@@ -1122,11 +1202,36 @@ $$
 
 This is not a final model. It is an interpretable starting point that should be checked against the empirical variogram, directional behavior, trend, and predictive validation.
 
-## Connecting a Variogram to Spatial Information
+## Worked Model: Distinguishing Trend, Spatial Variation, and Noise
 
-A map and trend analysis identify which differences can reasonably be treated as residual variation. Pair differences produce an empirical semivariogram, and a valid model summarizes their expected behavior across separation and direction. The model is what translates proximity into information about unsampled values. Short-distance pairs help distinguish a nugget from structured variability; broad coverage helps identify a range or plateau; directional coverage supports anisotropy estimation. These are different design requirements, so a large number of observations concentrated in one corner may still leave key parameters uncertain. A smooth fitted curve alone cannot diagnose that lack of information.
+Suppose observations along a transect follow
 
-Before prediction, examine how assumptions and estimation choices affect the result: trend specification, lag bins, outliers, directional behavior, and covariance family. Kriging then uses the fitted dependence among all relevant sites, not merely an average distance to the target. Prediction validation and uncertainty calibration provide an additional check on whether that fitted spatial information is useful for the intended task.
+$$
+Y(s)=10+0.5s+U(s)+\epsilon(s),
+$$
+
+where $U$ is a zero-mean stationary field with covariance $4e^{-|h|/10}$. The measurement errors have mean zero and variance one, are independent across readings, and are independent of $U$. Coordinates are measured in meters, and field values are in a common measurement unit. The mean changes by $0.5h$ over a displacement $h$.
+
+For distinct sites at distance $h>0$, the residual-observation semivariogram is
+
+$$
+\gamma_{\mathrm{res}}(h)=1+4(1-e^{-h/10}).
+$$
+
+The structured field contributes $4(1-e^{-h/10})$ and the two independent measurement errors contribute one after division by two. Thus the nugget is one, the partial sill four, and the total sill five. The exponential scale is 10 m, with structured dependence reduced to about 5% by 30 m.
+
+Raw squared differences also contain the trend. Their expected half-square is
+
+$$
+\frac12E[(Y(s+h)-Y(s))^2]
+=1+4(1-e^{-h/10})+\frac12(0.5h)^2.
+$$
+
+At 10 m, residual semivariance is approximately 3.528, but the raw half-squared difference has expectation 16.028 because the trend adds 12.5. At 30 m, the corresponding quantities are approximately 4.801 and 117.301. The residual model has almost reached its sill, while the raw differences keep increasing rapidly.
+
+A constant-mean variogram fit to those raw differences could respond by selecting a very long range or a much larger sill. That would misdescribe the source of change: broad mean variation would be absorbed into the dependence model. Fitting or otherwise accounting for the mean changes which differences are being pooled.
+
+In practice the trend coefficients and covariance parameters are unknown. One can begin with a scientifically justified mean, examine residual pair differences and directional behavior, and fit the mean and covariance more carefully through joint or iterative methods. The fitted residual variogram then estimates dependence remaining under that mean specification. Its uncertainty still reflects limited sampling geometry, and prediction should be checked on held-out observations with the same measurement support and target definition.
 
 ## Questions students should be able to answer
 

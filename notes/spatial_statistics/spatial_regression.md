@@ -31,11 +31,15 @@ $$
 
 Spatial regression becomes important when spatial structure remains after the mean relationship has been modeled.
 
-## Separate the Mean, Dependence, and Inferential Target
+## Three Ways a Spatial Pattern Can Enter a Regression
 
-A spatial pattern in residuals can result from a missing predictor, a wrong mean shape, correlated disturbances, or simultaneous outcome feedback. These mechanisms do not imply the same model. Start by defining the conditional mean and the data support, then ask which remaining dependence representation has a defensible interpretation.
+Suppose a response increases from west to east. A spatially varying predictor can explain that gradient through the conditional mean $X\beta$. An omitted regional influence can instead leave a gradient in disturbances. A simultaneous interaction model can describe one region's outcome feeding into its neighbors' outcomes. Similar-looking maps can arise from all three mechanisms, but their coefficients and estimators have different meanings.
 
-GLS changes the estimation weights through a covariance model. A spatial error model propagates innovations through a neighborhood graph. A SAR outcome model represents simultaneous responses and therefore introduces both endogeneity and feedback effects. Their coefficients and residuals require different interpretations. Spatial confounding adds another issue when a smooth predictor competes with a flexible latent spatial effect. A model can improve prediction without resolving that coefficient ambiguity or establishing causation. The worked matrix examples make these differences explicit before considering diagnostics, sensitivity, and geographic validation.
+In a covariance model $y=X\beta+u$ with $E[u\mid X]=0$, the conditional mean remains $X\beta$ while $\Sigma$ describes how uncertainty is shared among rows. Correlated disturbances alter coefficient variances and the efficient way to combine observations. They do not by themselves change the conditional slope into an outcome spillover.
+
+In a SAR lag model $y=\rho Wy+X\beta+\epsilon$, solving the equations gives $E[y\mid X]=(I-\rho W)^{-1}X\beta$. A covariate change now propagates through the mean system. The spatially lagged response is jointly determined with y, so treating it as an ordinary exogenous predictor generally fails.
+
+There is also a separate identification question. If an unobserved spatial process is associated with the predictors, $E[u\mid X]=0$ can fail. Modeling its covariance does not establish that missing condition. An analysis must distinguish efficiency under a correctly specified mean, prediction using residual information, and interpretation of a coefficient as an association or causal effect. The examples below derive the relevant calculations rather than assuming that every residual spatial pattern calls for the same adjustment.
 
 ## Start with the mean model
 
@@ -577,6 +581,24 @@ Under the assumed covariance model, GLS is the efficient linear unbiased estimat
 
 ![OLS versus GLS sampling](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_regression/03_ols_vs_gls_sampling.png)
 
+### What the OLS-versus-GLS Example Shows about Precision
+
+Using the example's specified covariance, the actual coefficient covariance matrices are
+
+$$
+\operatorname{Cov}(\hat\beta_{\mathrm{OLS}})
+=\begin{bmatrix}1.04444&-0.4\\-0.4&0.4\end{bmatrix},
+\qquad
+\operatorname{Cov}(\hat\beta_{\mathrm{GLS}})
+=\begin{bmatrix}1&-0.4\\-0.4&0.4\end{bmatrix}.
+$$
+
+GLS reduces the intercept variance here, while the slope variance happens to be unchanged. This is more precise than saying every coefficient must improve strictly. Under the correctly specified known covariance, the covariance difference is positive semidefinite: the variance of every linear coefficient contrast is no greater for GLS, with equality possible for some contrasts.
+
+Spatial dependence can also have opposite consequences for different summaries. For two equal-variance errors with correlation $\rho$, the variance of their average is $\sigma^2(1+\rho)/2$, while the variance of their difference is $2\sigma^2(1-\rho)$. If $\sigma^2=1$ and $\rho=0.8$, these are 0.9 and 0.4. Under independence they would be 0.5 and two. Positive correlation makes the shared level harder to average precisely but makes a paired contrast more precise because the common fluctuation cancels.
+
+For regression, the relevant contrasts are determined by X. A blanket statement that spatial correlation always increases every slope standard error misses this dependence on the design. What fails under an incorrect independence assumption is the usual covariance calculation, rather than a universal direction of error for every coefficient.
+
 ### Feasible GLS
 
 In real applications, $\Sigma$ is almost never known exactly. Instead, its parameters must be estimated. The workflow is then roughly:
@@ -588,6 +610,43 @@ In real applications, $\Sigma$ is almost never known exactly. Instead, its param
 5. estimate $\beta$.
 
 This is often called **feasible GLS**. Uncertainty should ideally account for the fact that $\Sigma$ was estimated rather than known. The companion simulation uses the true $\Sigma$ only as a teaching device.
+
+### Estimating the Covariance: Why Likelihood Includes a Determinant
+
+Let $\Sigma_\theta$ be a positive-definite covariance model indexed by range, variance, nugget, or other parameters $\theta$. Under Gaussian errors, the log-likelihood is
+
+$$
+\ell(\beta,\theta)
+=-\frac12\left\{
+n\log(2\pi)+\log\det\Sigma_\theta
++(y-X\beta)^\top\Sigma_\theta^{-1}(y-X\beta)
+\right\}.
+$$
+
+For fixed $\theta$, maximizing over $\beta$ gives GLS. The quadratic term measures residual size relative to the proposed covariance. The determinant term measures the volume of the corresponding uncertainty distribution and prevents arbitrarily enlarging every variance merely to make standardized residuals small. Both are needed when comparing covariance parameters.
+
+For example, if $\Sigma_\theta=tI$ with a positive variance t and a fixed residual vector e, the criterion contains $n\log t+e^\top e/t$. Increasing t reduces the second term but increases the first. Differentiating gives the maximum-likelihood scale $t=e^\top e/n$ when the residual sum is positive. A criterion based only on the quadratic term would keep favoring larger t.
+
+Estimating the mean consumes information about variability. Restricted maximum likelihood, or REML, accounts for this by using error contrasts that remove X. Up to an additive term that is fixed for a given design, its Gaussian criterion can be written
+
+$$
+-2\ell_R(\theta)
+=\log\det\Sigma_\theta
++\log\det(X^\top\Sigma_\theta^{-1}X)
++y^\top P_\theta y
++(n-p)\log(2\pi),
+$$
+
+where X has p full-rank columns and
+
+$$
+P_\theta=\Sigma_\theta^{-1}
+-\Sigma_\theta^{-1}X(X^\top\Sigma_\theta^{-1}X)^{-1}X^\top\Sigma_\theta^{-1}.
+$$
+
+With $\Sigma_\theta=tI$, this gives the familiar scale estimate SSE divided by $n-p$. The added determinant term changes the covariance-estimation problem; it is not an alternative coefficient formula once the covariance is fixed. REML likelihood values from different fixed-effect designs are generally not comparable as if they were likelihoods of the same error contrasts. Mean-model comparisons usually use a suitable full-likelihood or other explicitly calibrated procedure.
+
+After replacing $\Sigma$ by an estimate, feasible GLS is no longer simply a fixed linear transformation of y. The exact known-covariance unbiasedness and efficiency statements should therefore not be asserted automatically for every finite-sample feasible fit. Standard errors often use plug-in or asymptotic calculations; a fitted-model bootstrap or a full probability model can propagate more of the covariance-estimation uncertainty.
 
 ## Spatial error models for areal data
 
@@ -747,6 +806,34 @@ does not generally estimate $\rho$ consistently. SAR models therefore require me
 
 It is tempting to interpret $\rho Wy$ as if neighboring outcomes were an ordinary predictor. But $Wy$ is endogenous because it is constructed from the same jointly determined outcome vector. The model determines all locations simultaneously. Let $S=(I-\rho W)^{-1}$. Under independent innovations with variance $\sigma^2$, $Wy=WSX\beta+WS\varepsilon$, so $\operatorname{Cov}(Wy,\varepsilon\mid X)=\sigma^2WS$. Feedback paths generally make the relevant regressor-error covariances nonzero. This is a structural endogeneity problem, whereas a spatial error model leaves the mean $X\beta$ exogenous when its own conditional-zero-mean assumption holds. This changes both estimation and interpretation.
 
+### A Two-Region Calculation Shows the Endogeneity
+
+For two regions that are each other's only neighbor, $W=\left[\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right]$. With independent innovation variance $\sigma^2$ and fixed exogenous predictors, the reduced form contains
+
+$$
+y_2=\text{mean contribution}
++\frac{\rho\epsilon_1+\epsilon_2}{1-\rho^2}.
+$$
+
+The regressor $(Wy)_1=y_2$ in the first structural equation is correlated with its error:
+
+$$
+\operatorname{Cov}((Wy)_1,\epsilon_1\mid X)
+=\frac{\rho\sigma^2}{1-\rho^2}.
+$$
+
+At $\rho=0.4$ and $\sigma^2=1$, this covariance is about 0.4762. The issue is present even when the innovations themselves are independent and X is correctly measured. Simultaneous feedback puts the first region's shock into its neighbor's response and then into its own lagged-response regressor.
+
+Under Gaussian innovations, transforming from y to $\epsilon=(I-\rho W)y-X\beta$ also changes the density by a Jacobian. The SAR log-likelihood contains
+
+$$
+\ell=\log|\det(I-\rho W)|
+-\frac n2\log(2\pi\sigma^2)
+-\frac{\|(I-\rho W)y-X\beta\|^2}{2\sigma^2}.
+$$
+
+For the two-region graph, the determinant is $1-\rho^2$. Minimizing the structural residual sum of squares over $\rho$ ignores this density adjustment and is not the same optimization as maximum likelihood. [PySAL's derivation of spatial lag likelihood](https://pysal.org/spreg/notebooks/13_ML_estimation_spatial_lag.html) explicitly includes this term. Instrumental-variable approaches address the regressor-error relation through different assumptions and moment conditions.
+
 ## Direct and indirect effects in SAR models
 
 Suppose there is one predictor $x$:
@@ -905,6 +992,22 @@ Before adding a spatial dependence term, ask:
 8. Is the goal prediction, description, or causal inference?
 
 The answers help narrow the appropriate model class.
+
+### Why Residual Covariance Does Not Select between SEM and SAR
+
+Let $S_a=(I-aW)^{-1}$. A spatial error model with parameter a has mean $X\beta$ and disturbance covariance $\sigma^2S_aS_a^\top$. A spatial lag model with the same parameter and innovation variance has the same covariance matrix but mean $S_aX\beta$.
+
+Their distinction is therefore partly in the mean mechanism. The error model allows a covariate association to remain local in its specified mean while disturbances are correlated. The lag model propagates the covariate contribution through the graph. A statistic summarizing residual similarity cannot by itself establish which mean mechanism generated the data. Identification also depends on X, restrictions, and the sampling process; some specifications can be difficult to distinguish empirically.
+
+For the two-region lag model with one predictor coefficient $\beta=2$ and $\rho=0.4$, the impact matrix is
+
+$$
+\frac{2}{1-0.4^2}
+\begin{bmatrix}1&0.4\\0.4&1\end{bmatrix}
+=\begin{bmatrix}2.3810&0.9524\\0.9524&2.3810\end{bmatrix}.
+$$
+
+A change in one region has a direct association exceeding two because of return paths, and an indirect association with the other region. In the corresponding spatial error mean model, the partial mean derivative is simply two for that region and zero for the other, conditional on its exogeneity assumptions. Interpreting either derivative causally requires a separate argument about the predictor intervention and the stability of the structural system.
 
 ## Spatial confounding
 
@@ -1217,11 +1320,29 @@ $$
 
 The main problem with the naive analysis is not necessarily the point estimate. It is the claim of excessive precision.
 
-## Connecting Model Structure to Interpretation
+## Worked Identification Problem: A Smooth Exposure and an Omitted Regional Process
 
-Start with the spatial response and predictors, define the conditional mean, and diagnose what remains after fitting. If dependence reflects continuous separation, a covariance-based GLS or Gaussian-process formulation may be natural. If a neighborhood graph represents correlated disturbances, a spatial error model describes that process. If the scientific model specifies simultaneous outcome feedback, a SAR lag formulation requires an estimator that addresses endogeneity.
+Suppose the true model is $y=X\beta+u+\epsilon$, with $E[\epsilon\mid X]=0$ but a possible relationship between X and the omitted process u. Ordinary least squares satisfies
 
-These choices determine what a coefficient means, which residuals should be inspected, and how uncertainty should be calculated. GLS uses covariance-weighted information; SAR effects propagate through a multiplier; a latent spatial effect can compete with smooth covariates. None of those operations by itself establishes a causal interpretation. Evaluate coefficient sensitivity when the goal is explanation and held-out predictive performance when the goal is mapping or transfer. Both can be reported, but a model that excels at one need not excel at the other. The final interpretation should identify the chosen mean, dependence representation, spatial support, and validation target together.
+$$
+E[\hat\beta_{\mathrm{OLS}}\mid X]
+=\beta+(X^\top X)^{-1}X^\top E[u\mid X].
+$$
+
+The additional term is a mean-specification problem. Knowing the covariance of u can improve weighting but does not make its conditional mean zero. For a smooth exposure x and an unmeasured process with $E[u\mid x]=\delta x$, the observed conditional slope is $\beta+\delta$. The data do not identify the two contributions from that one association alone.
+
+A related model-fitting problem occurs when an explicit spatial basis includes the same pattern as x. If the model contains both $\beta x$ and $\gamma x$, then any pair with the same sum gives identical fitted means. The separate coefficients are unidentified. A prior or penalty can select an allocation, but the allocation then uses that additional assumption. Nearly overlapping smooth basis patterns give a less extreme version, with unstable allocations and potentially stable predictions.
+
+This explains why adding a flexible spatial effect can improve prediction while making a covariate coefficient more sensitive to the covariance range, smoothing penalty, or prior. It also explains why a spatial adjustment does not automatically remove causal confounding. Useful additional information could include measured common causes, within-region contrasts at a scale that separates the patterns, a design that assigns exposure independently, or justified external restrictions. Each changes the identification argument rather than merely changing a standard-error formula.
+
+Prediction uses another source of information. Under an appropriate fitted covariance model, a response at a new site can be predicted as
+
+$$
+\hat y_0=x_0^\top\hat\beta
++c_0^\top\hat\Sigma^{-1}(y-X\hat\beta),
+$$
+
+where $c_0$ links the target residual with observed residuals. This can work well through local residual information even when the decomposition between a smooth predictor and latent effect is uncertain. Assessing a regional-transfer prediction requires holding out comparable regions; assessing the meaning of $\beta$ requires evidence about identification and sensitivity. A high predictive score does not supply the missing coefficient interpretation.
 
 ## Questions students should be able to answer
 

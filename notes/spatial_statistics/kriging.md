@@ -14,11 +14,29 @@ Kriging is therefore not simply a generic smoother or a distance-weighted averag
 3. the geometry of the sample locations;
 4. the prediction target.
 
-## Specify the Prediction Target First
+## A One-Observation Example Explains the Mean Assumption
 
-A prediction problem must identify the unknown quantity. A latent field value, a new noisy measurement, and an average over a block can have different cross-covariances with the same observed data. The choice changes both the weights and the uncertainty. The mean model also matters: simple kriging treats it as known, ordinary kriging preserves an unknown constant, and universal kriging preserves a specified set of trend functions.
+Suppose an observation $Z_1$ and an unsampled target $Z_0$ have common variance $\sigma^2$, correlation $r$, and common mean $m$. Begin with an idealized noise-free model, so predicting at the observed site would mean predicting the very same random variable.
 
-Once these ingredients are fixed, kriging is a constrained optimization problem. The full dependence matrix accounts for redundancy between observations; distances to the target alone are insufficient. The resulting prediction and variance are conditional on that model. Negative weights, smoothing at sampled sites, or a return toward a mean can each be appropriate under a particular construction. The numerical examples show how those behaviors arise and why validation must use the same target and information conditions as the intended application.
+If $m$ is known, consider a predictor $\hat Z_0=m+w(Z_1-m)$. Its prediction error has mean zero, and variance
+
+$$
+V(w)=\sigma^2(1+w^2-2wr).
+$$
+
+Differentiating with respect to $w$ gives $V'(w)=2\sigma^2(w-r)$, so the best weight is $w=r$ and the minimum variance is $\sigma^2(1-r^2)$. Weak correlation means the observation contributes little information about the target; the predictor stays close to the known mean. This is the simplest form of simple kriging.
+
+If the common mean is unknown, a predictor formed only as $wZ_1$ must be unbiased for every possible $m$. Its expectation is $wm$, so the constraint forces $w=1$. Ordinary kriging with one observation predicts $Z_1$ everywhere, while its error variance is
+
+$$
+\operatorname{Var}(Z_0-Z_1)=2\sigma^2(1-r).
+$$
+
+The two predictions differ because the unknown mean cannot supply a fixed fallback value. With $m=10$, $Z_1=12$, $\sigma^2=4$, and $r=0.5$, simple kriging predicts 11 with variance three. Ordinary kriging predicts 12 with variance four. The difference in variance is $\sigma^2(1-r)^2$, the cost of preserving an unknown mean in this example.
+
+As $r$ tends to zero far from the observation, the simple prediction tends to 10 and its variance tends to four. The ordinary prediction remains 12 and its variance tends to eight. A constant-looking prediction surface can therefore have growing uncertainty. At the observed site, $r=1$ and both procedures reproduce 12 with zero variance under this noise-free same-variable target.
+
+The formal systems below extend this calculation to several observations, correlated information, and more general mean functions. Separate instrument noise changes the observation and target covariances, so the exact-site conclusion must be reconsidered when the target is an underlying latent value or a new reading.
 
 ## The prediction problem
 
@@ -868,6 +886,42 @@ C_{00}-c_0^\top C^{-1}c_0
 
 The first two terms are the simple-kriging variance with a known mean structure. The final nonnegative term accounts for estimating its coefficients. Ordinary kriging is the special case $F=\mathbf1$ and $f_0=1$. This is uncertainty from the mean constraints, separate from additional uncertainty in estimated covariance parameters.
 
+### Universal Kriging Is GLS Trend Estimation Plus Residual Prediction
+
+The augmented equations can be solved in two stages that expose what the predictor is doing. Let $B=F^\top C^{-1}F$, assumed invertible, and let
+
+$$
+\hat\beta=B^{-1}F^\top C^{-1}z,
+\qquad
+q=f_0-F^\top C^{-1}c_0.
+$$
+
+The first expression is the generalized least-squares estimate of the trend coefficients. From the kriging equations, $C\lambda+F\nu=c_0$, so $\lambda=C^{-1}c_0-C^{-1}F\nu$. Substituting into $F^\top\lambda=f_0$ gives $\nu=-B^{-1}q$ and hence
+
+$$
+\lambda=C^{-1}c_0+C^{-1}FB^{-1}q.
+$$
+
+Multiplying by the observations and rearranging produces
+
+$$
+\hat Z_0=f_0^\top\hat\beta
++c_0^\top C^{-1}(z-F\hat\beta).
+$$
+
+The first term predicts the trend at the target. The second predicts a residual using the covariance between the target and observed residuals. This establishes the trend-plus-residual description algebraically; arbitrary ordinary least squares followed by a separately chosen residual smoother is not guaranteed to give the same result.
+
+The variance has the corresponding decomposition
+
+$$
+\operatorname{Var}(Z_0-\hat Z_0)
+=C_{00}-c_0^\top C^{-1}c_0+q^\top B^{-1}q.
+$$
+
+The final term is nonnegative because it is a quadratic form in a positive-definite inverse information matrix. It measures the extra uncertainty needed to estimate the mean terms relevant at the target. If the target's trend basis is poorly represented by the sampled sites, this term can be large even when some observations are geographically nearby.
+
+The calculation treats C and the trend basis as specified. Estimating covariance parameters, selecting the trend terms, or using an uncertain covariate map introduces additional uncertainty beyond this expression. Including more mean terms is therefore a substantive modeling choice with a precision cost, rather than a free way to make the fit more flexible.
+
 ### Universal-kriging trend example
 
 Suppose the mean is
@@ -981,6 +1035,33 @@ A more useful question is:
 
 > "What random quantity are we predicting, and how is the nugget interpreted?"
 
+### Two Instruments at One Site: Smoothing Follows from Their Precision
+
+Suppose a latent site value X has known mean 10 and variance four. Two instruments produce $Y_1=X+\epsilon_1$ and $Y_2=X+\epsilon_2$. Their errors have mean zero and variances one and nine, and are independent of each other and of X. The readings are 12 and nine. The observation covariance and latent cross-covariance are
+
+$$
+C_Y=\begin{bmatrix}5&4\\4&13\end{bmatrix},
+\qquad
+c_X=\begin{bmatrix}4\\4\end{bmatrix}.
+$$
+
+Simple kriging solves $C_Y\lambda=c_X$, giving weights $(36/49,4/49)^\top$. The latent prediction is
+
+$$
+\hat X=10+\frac{36}{49}(12-10)+\frac4{49}(9-10)
+=\frac{558}{49}\approx11.388.
+$$
+
+The less noisy instrument receives nine times the residual weight of the other. The remaining weight is effectively supplied by the known mean. The prediction variance is
+
+$$
+4-c_X^\top C_Y^{-1}c_X=\frac{36}{49}\approx0.735.
+$$
+
+For a new independent reading from the first instrument, the same predicted mean is used but its measurement-error variance one is added, giving approximately 1.735. For the already observed reading $Y_1$, no prediction uncertainty remains if it is retained as known data. Three questions at exactly the same coordinates therefore have three different uncertainty answers.
+
+The covariance matrix is nonsingular because the separate instrument errors distinguish the readings. Duplicating a noise-free observation as if it were a second independent measurement would add no information and can make the kriging system singular. Adding an arbitrary small diagonal term to avoid the singularity implicitly changes the noise model; it should not substitute for identifying duplicated information.
+
 ## Kriging uncertainty versus model uncertainty
 
 The kriging variance is calculated **conditional on the assumed model**. This distinction is important. A small kriging variance does not guarantee an accurate prediction if the model is wrong. Possible model failures include:
@@ -1037,6 +1118,33 @@ Kriging weights are not required to lie between 0 and 1. They can sometimes be n
 - extrapolation.
 
 A negative weight is not automatically a sign of error. However, very large positive and negative weights can indicate difficult sampling geometry or model instability and should be investigated.
+
+## Block Prediction Requires Covariances over the Block
+
+Suppose the target is an average $Z_A=|A|^{-1}\int_A Z(s)\,ds$, rather than a value at one point. Its covariance with observation i is
+
+$$
+(c_A)_i=\frac1{|A|}\int_A\operatorname{Cov}(Z(s_i),Z(s))\,ds,
+$$
+
+and its own variance is
+
+$$
+C_{AA}=\frac1{|A|^2}\int_A\int_A C(s,t)\,ds\,dt.
+$$
+
+Use these in place of the point-target vector and variance. For universal kriging, also average the trend basis over the block: $f_A=|A|^{-1}\int_A f(s)\,ds$. The same constrained system then produces weights for the block target. A centroid target would generally use different covariances even if the centroid lies inside A.
+
+Numerically, these integrals can be approximated with a set of representative points and area weights. Averaging point predictions can reproduce the corresponding block prediction when all points use the same observation set, covariance model, and compatible mean constraints, because the prediction operation is linear in the target covariances and basis. Prediction variances do not average that way.
+
+For example, suppose the prediction errors at two equally weighted target points each have variance four and covariance three. The average's error variance is
+
+$$
+\operatorname{Var}\left(\frac{e_1+e_2}{2}\right)
+=\frac14(4+4+2\times3)=3.5.
+$$
+
+Ignoring error covariance would give two, while simply averaging the two point variances would give four. Both miss the target calculation. A spatial prediction surface alone therefore does not provide the uncertainty of every regional average unless joint prediction-error covariances are available. The [gstat prediction documentation](https://r-spatial.github.io/gstat/reference/krige.html) distinguishes point and block targets and provides an option for a full covariance output.
 
 ## Cross-validation
 
@@ -1243,13 +1351,22 @@ A simple scaling strategy is to use only the nearest $k$ observations for each t
 
 Local kriging is most effective when the covariance range is short relative to the full study region.
 
-## Connecting Dependence Modeling to Prediction
+## Worked Interpretation of the Prediction and Its Interval
 
-A variogram describes expected differences across separation; kriging uses that model to combine observations for a specified target. The connection requires both the observation-to-observation matrix and the observation-to-target vector. The first describes redundancy among the measurements, while the second describes their relevance to the target. Mean constraints complete the system by defining which systematic patterns the predictor must preserve.
+The three-site example gives prediction $11.0799$ and kriging variance approximately $1.3800$. If the model's Gaussian assumptions justify a normal prediction-error distribution and the covariance parameters are treated as known, a nominal 95% prediction interval is approximately
 
-The resulting weighted value and variance answer different questions. Changing the observed values changes the prediction; changing the sampling geometry or assumed covariance changes the weights and modeled uncertainty. Estimating the covariance from the data connects those stages in practice, but the usual plug-in variance treats the fitted parameters as fixed.
+$$
+11.0799\pm1.96\sqrt{1.3800}
+\approx(8.7774,13.3824).
+$$
 
-Validation therefore completes the modeling process. Hold out observations or regions according to the intended prediction task, refit the components being assessed, and compare both errors and uncertainty with the held-out outcomes. This checks whether the mean model, dependence model, and target definition work together, rather than judging the method solely by whether its prediction surface looks smooth.
+This calculation needs a target interpretation. If the nugget 0.2 represents a genuine microscale component of the same field being predicted, the variance includes that component. If it is entirely independent measurement error and the target is the latent structured field at this new coordinate, the observation covariance stays the same but the target variance decreases by 0.2. The weights and mean prediction remain the same here because observation-to-target cross-covariances are unchanged. The latent prediction variance becomes about 1.1800, giving a narrower interval of approximately $(8.9508,13.2091)$.
+
+These intervals still condition on the chosen trend, covariance family, scale, nugget interpretation, and observation geometry. If those parameters were estimated from three observations, the numerical plug-in interval would conceal substantial model-estimation uncertainty. More data, information from an external calibration study, or a procedure that propagates parameter uncertainty would be needed for a defensible uncertainty claim. Gaussianity is also an additional assumption: the best linear unbiased property alone does not provide exact normal tail probabilities.
+
+Transformations introduce another distinction. If a Gaussian predictive model for the logarithm of a positive target gives $Z_0\mid\text{data}\sim N(a,v)$, then the original-scale conditional median is $e^a$, while the conditional mean is $e^{a+v/2}$. With $a=2$ and $v=0.25$, they are approximately 7.389 and 8.373. Exponentiating the fitted log prediction returns a median under this model; it does not automatically return the expected original-scale value.
+
+A 95% interval on the original scale is obtained by exponentiating the log-scale endpoints, yielding an asymmetric interval. The distinction is consequential for totals, expected concentrations, or costs, where the mean may be the relevant target. Its validity depends on the stated conditional Gaussian distribution and which sources of variance v contains. Transforming a model output cannot correct a wrong dependence model or a mismatch between latent and observed targets.
 
 ## Questions students should be able to answer
 

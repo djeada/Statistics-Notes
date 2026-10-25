@@ -20,11 +20,15 @@ Spatial autocorrelation is not a property of the values alone. Its interpretatio
 
 The same dataset can produce different results when “neighbor” is defined differently.
 
-## Description and Inference Use Different Ingredients
+## What the Statistic Describes and What the Test Assumes
 
-A statistic describes the alignment between observed values and a specified neighborhood graph. Its reference distribution adds a probability model for judging that alignment. Global Moran's I uses products of centered neighboring values; Geary's C uses squared differences. Both summarize a whole map and can conceal local variation.
+The descriptive question is whether the observed arrangement aligns with a chosen neighborhood graph. If every value is replaced by a value measured in another positive linear unit, such as Celsius converted to Fahrenheit, centered products and squared deviations rescale together and Moran's I is unchanged. Rearranging those values among locations can change the result because it changes which products receive weight. The statistic concerns the relationship between a map and its graph.
 
-A local statistic can identify high-high, low-low, or contrasting configurations, but a quadrant label is descriptive until it is compared with a justified null distribution. Testing many locations introduces multiplicity, and testing several neighborhood definitions introduces another selection step. Broad spatial trends can also create apparent association among raw values. The worked examples therefore keep the arithmetic, the null mechanism, and the scientific interpretation separate. A significant result establishes a departure from that reference mechanism; identifying residual dependence, stationarity, or a causal process requires further modeling.
+Inference requires another choice: which arrangements should count as ordinary under a null model? Randomly permuting fixed values over fixed locations assumes those values are exchangeable under the null. This is plausible for independent observations from one common distribution. Independence alone is insufficient when means or variances differ systematically across locations. A north-south mean gradient, for example, is incompatible with freely exchanging northern and southern values under that mean model.
+
+Counts and rates make this distinction concrete. Suppose independent district counts satisfy $C_i\sim\operatorname{Binomial}(n_i,p)$ with one common probability $p$. The rates have the same mean, but variance $p(1-p)/n_i$ varies with district population. A small district is more likely to produce an extreme observed rate than a large one, even under this nonspatial outcome model. An unrestricted rate permutation erases that relationship with the denominators. A model-based null simulation can retain the populations and generate new counts before recomputing the statistic.
+
+The statistic, its numerical scale, and its p-value therefore answer separate questions. A large positive value describes an arrangement with positive weighted co-variation. Its extremeness depends on the graph, the observed distribution, the number of locations, and the stated null. The same numerical I need not imply the same p-value for another graph or sample size.
 
 ## What is spatial autocorrelation?
 
@@ -441,6 +445,25 @@ Moran's $I$ is a spatial quadratic-form statistic, not an ordinary Pearson corre
 - the null distribution;
 - permutation or analytic reference values.
 
+### Compare the Moran Scatterplot Slope with Pearson Correlation
+
+For the five-location example, $Q=z^\top z=38.8$, $z^\top Wz=25.8$, and $\sum_i(Wz)_i^2=19.3$. The spatial lag happens to have mean zero in this example. Its through-origin regression slope on $z$ is
+
+$$
+b=\frac{25.8}{38.8}\approx0.66495.
+$$
+
+Because $S_0=n$, this slope is Moran's I. Pearson correlation of the two displayed vectors instead divides by both lengths:
+
+$$
+r_{z,Wz}=\frac{25.8}{\sqrt{38.8\times19.3}}
+\approx0.94281.
+$$
+
+The lag varies less than the original centered values because it averages neighbors. The vectors can consequently have very similar directions while the regression slope is well below one. Pearson correlation removes that difference in scale; Moran's I retains it through its own normalization. In other datasets the lag may also have a nonzero mean, which ordinary correlation centers before calculating its denominator.
+
+This comparison explains why interpreting I as “the correlation between a value and its neighbors” is incomplete. That phrase conveys the sign intuition but not the formula, range, or inferential behavior of the statistic.
+
 ## The finite-sample null expectation
 
 Under the common randomization null in which the observed values are exchangeable over the fixed locations,
@@ -483,6 +506,20 @@ The randomization null says:
 For the five values $2,3,4,8,9$, one possible permutation is $8,2,9,3,4$. Another is $4,9,2,8,3$. For every permutation, calculate Moran's $I$. The collection of permuted statistics forms the reference distribution under exchangeability.
 
 ![Permutation reference distribution](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/04_permutation_distribution.png)
+
+### An Exact Permutation Test for the Five-Location Map
+
+The five distinct values have $5!=120$ assignments to the fixed line graph. For each assignment, retain the same weights, subtract the same overall mean 5.2, and recompute I. Centering does not depend on the assignment, and the denominator stays 38.8; only the weighted products change.
+
+Enumerating all assignments gives a null mean of $-0.25$, matching the derivation above. Exactly six assignments have I at least as large as the observed $25.8/38.8$. For the prespecified positive-association alternative, the exact p-value is therefore
+
+$$
+p_{\mathrm{exact}}=\frac{6}{120}=0.05.
+$$
+
+The observed assignment and all tied assignments belong in the count. There is no Monte Carlo approximation here and no need to add another artificial observed arrangement after all 120 have already been included. Exact probabilities are constrained by this finite set of arrangements, rather than varying continuously with I.
+
+The observed statistic is strongly positive, but five locations provide limited evidence under this randomization model. A tiny p-value does not follow simply from a positive sign or a value near one. The Monte Carlo arithmetic example below illustrates a possible result for another dataset; it is not the permutation result for these five observations.
 
 ### Monte Carlo permutation inference
 
@@ -568,6 +605,16 @@ $$
 #### Two-sided departure
 
 Use a clearly stated two-sided extremeness rule, usually relative to the null center. Do not calculate a one-sided test and then describe it as two-sided.
+
+### Why Self-Weights Change the Null Center
+
+The usual expectation assumes $w_{ii}=0$. A self-product $z_i^2$ is always nonnegative, whereas a product between two distinct permuted values has negative expectation after centering. If self-weights are retained, the same calculation gives
+
+$$
+E[I]=\frac{n\,\operatorname{tr}(W)-S_0}{(n-1)S_0}.
+$$
+
+Here $\operatorname{tr}(W)$ is the sum of diagonal weights. With $W=I_n$, each location is connected only to itself, I is identically one, and this formula also gives one. Such a result contains no evidence of similarity between different locations. This is a substantive reason for the zero-diagonal convention, as well as a warning against using the familiar null center with an incompatible matrix.
 
 ## Geary's C
 
@@ -671,6 +718,25 @@ $$
 Therefore they respond differently to local contrasts and extreme values. Moran's $I$ is often interpreted as a broad global association measure. Geary's $C$ can be more sensitive to local neighbor-to-neighbor differences. Neither statistic is universally better.
 
 ![Moran and Geary comparison](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/05_moran_geary_sensitivity.png)
+
+### When Moran and Geary Have a Simple Algebraic Relationship
+
+Let $r_i=\sum_jw_{ij}$ be row sums and $c_i=\sum_jw_{ji}$ column sums. Expanding the squared differences in Geary's numerator gives
+
+$$
+\sum_{i,j}w_{ij}(z_i-z_j)^2
+=\sum_i(r_i+c_i)z_i^2-2z^\top Wz.
+$$
+
+If every row and every column sums to one, this becomes $2Q-2z^\top Wz$, and $S_0=n$. Consequently
+
+$$
+C=\frac{n-1}{n}(1-I).
+$$
+
+The finite-sample factor is needed: substituting $E[I]=-1/(n-1)$ gives $E[C]=1$. For ordinary row-standardized irregular graphs, column sums need not equal one, so the simplification generally fails.
+
+The line example has $I\approx0.66495$ and $C\approx0.20619$. Substituting I into the special formula would give approximately 0.26804. That disagreement is expected because endpoint and interior degrees differ, making the standardized matrix's column sums unequal. Moran and Geary then emphasize different combinations of observations. Neither discrepancy nor a different numerical ranking is evidence that one calculation is wrong.
 
 ## The spatial lag
 
@@ -851,6 +917,22 @@ A local map can display categories such as:
 ![Local Moran categories](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/06_local_moran_categories.png)
 
 HH and LL are often called local clusters. HL and LH are often called spatial outliers. These labels describe spatial configuration; they do not establish a physical mechanism.
+
+### Complete Local Contributions for the Five Locations
+
+Using $m_2=38.8/5=7.76$, the full decomposition is:
+
+| Location | Centered value $z_i$ | Lag $(Wz)_i$ | Local $I_i$ | Descriptive configuration |
+|---|---:|---:|---:|---|
+| A | -3.2 | -2.2 | 0.9072 | Low-low |
+| B | -2.2 | -2.2 | 0.6237 | Low-low |
+| C | -1.2 | 0.3 | -0.0464 | Low-high |
+| D | 2.8 | 1.3 | 0.4691 | High-high |
+| E | 3.8 | 2.8 | 1.3711 | High-high |
+
+The sum is approximately 3.3247, or $5I$. Location C has an opposite-sign contribution because its own value is below the global mean while its two-neighbor average is slightly above it. E contributes more than D because both its own deviation and its neighborhood deviation are larger. A single global value would conceal that difference.
+
+These are contributions and sign labels, not five significance decisions. A conditional local test can hold $z_i$ fixed and compare its observed neighbors with alternative allocations of the remaining values. An unconditional test can also move the focal value. Those distributions differ, and the five resulting tests share many of the same observations and links. Multiplicity control must use valid p-values for the chosen local null; it cannot compensate for an invalid permutation scheme.
 
 ## Multiple testing
 
@@ -1168,11 +1250,21 @@ A careless interpretation would be:
 
 The second statement is not established by Moran's $I$.
 
-## Connecting a Pattern Summary to an Explanation
+## Worked Null-Model Choice After Fitting a Trend
 
-Center the values, calculate their spatial lag using a justified W, and inspect how neighboring products or differences contribute to a global statistic. Next specify the reference mechanism and the direction of the alternative. The observed value, its null expectation, and its permutation tail probability play different roles: the first describes the map, the second supplies a comparison center, and the third quantifies extremeness under a model.
+Suppose the null scientific model is $y_i=\beta_0+\beta_1s_i+\epsilon_i$, where positions $s_i$ are fixed and errors are independent normal variables with common variance. The claim being assessed is whether the fitted linear trend leaves additional spatial structure. Permuting the raw $y_i$ over locations would destroy the very trend allowed by the null, so that test would answer the wrong question.
 
-If broad trends or covariates explain the raw arrangement, a residual analysis asks whether structure remains after that explanation. Its reference distribution must account for fitting. Local analysis can then investigate where patterns occur, with a stated normalization and multiple-testing strategy. Finally, use an explicit spatial model when the goal is prediction, parameter interpretation, or a mechanism of dependence. A significant global statistic is evidence relevant to those next questions, but it does not choose their answers by itself.
+Fit the design matrix $X=(\mathbf1,s)$ and calculate residuals $e=(I-H)y$, where $H=X(X^\top X)^{-1}X^\top$. Even under the independent-error null,
+
+$$
+\operatorname{Cov}(e\mid X)=\sigma^2(I-H).
+$$
+
+The residuals share estimation constraints and generally have unequal marginal variances $\sigma^2(1-h_{ii})$. Freely permuting them is therefore not automatically justified either. In particular, the raw-value expectation $-1/(n-1)$ is not a general residual-I expectation.
+
+A model-based diagnostic can simulate $y^*=X\hat\beta+\hat\sigma\eta$, with independent standard normal entries in $\eta$, refit the same regression, and compute the residual Moran statistic in each simulation. The statistic is compared with this fitted-model reference, and any model selection performed as part of the assessed procedure must also be represented. Plugging in estimated parameters makes a general parametric-bootstrap calibration approximate, although particular normal-model pivotal statistics can eliminate nuisance parameters.
+
+The result concerns the chosen linear mean, independent normal error model, fixed locations, and fixed W. If the simulated residual maps show the same kind of pattern as the observed residuals, there is little evidence from that diagnostic that additional spatial structure is needed. If the observed pattern is unusual, possible explanations include residual dependence, a wrong trend shape, unequal variances, or an outlier. Inspecting those mechanisms provides a more useful next step than selecting a spatial model solely from a rejected Moran test.
 
 ## Questions students should be able to answer
 

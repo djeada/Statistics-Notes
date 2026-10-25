@@ -19,11 +19,17 @@ In a point process, the locations are the random outcome: $\{s_1,s_2,\ldots,s_n\
 - lightning strikes;
 - animal sightings.
 
-## Counts, Locations, and Marks Have Distinct Roles
+## The Observation Is a Configuration inside a Window
 
-A point process describes random locations inside an observation window, often together with a random event count. Intensity describes expected event density and determines expected counts after integration over a region. Interaction describes arrangement beyond that first-order structure. A dense patch can arise from high intensity without attraction between events.
+For a point process, absence of events in an observed area is information as well as the coordinates where events occurred. A list of five tree locations without the surveyed boundary cannot tell us whether five is a high or low count. If the observer searched only along a path, an apparently empty part of the surrounding forest need not be an observed zero.
 
-The Poisson process supplies a reference with independent disjoint counts. Conditioning on its total count changes the count model while retaining a particular conditional distribution of locations. Nearest-neighbor and K functions then describe spacing at different scales, with boundary corrections needed because the window hides possible neighbors. Simulation envelopes compare these summaries with a stated reference and must distinguish pointwise from whole-curve inference. Marks, such as species or severity, add another random component whose spatial association can be studied separately from the arrangement of event locations.
+The model must therefore specify an observation window W and distinguish the event-generating process from detection. Counts $N(B)$ refer to events within a subset B of that window. Intensity gives their expected density, while joint count behavior describes whether events tend to occur together or avoid one another beyond that density.
+
+Consider a homogeneous Poisson model with intensity 0.2 events per square unit in a window of area 100. The total count has mean and variance 20. Divide the window into disjoint parts of areas 25 and 75. Their counts are independent Poisson variables with means five and 15; their variances are also five and 15.
+
+Now condition on exactly 20 total events. The first part's count is Binomial$(20,0.25)$, and the second part contains the remainder. Each conditional count variance is $20(0.25)(0.75)=3.75$, and their covariance is $-3.75$. The same Poisson process therefore gives independent counts before conditioning and dependent counts after its total is fixed.
+
+This is the distinction between simulating a whole process and simulating locations conditional on an observed count. Both can answer useful questions, but a conditional location test intentionally discards evidence about whether the total count is surprising. Marks add another layer: permuting tree species among fixed stems preserves the locations and count while testing a hypothesis about the species arrangement. These operations keep different parts of the observations fixed and must be interpreted accordingly.
 
 ## What is the random object?
 
@@ -441,6 +447,31 @@ But the count is no longer random. Conditional on $N(W)=n$, the count in a subre
 
 If the observed count is treated as fixed by the study design, conditioning on $n$ can be appropriate. If variability in the total count is scientifically relevant, an unconditional Poisson simulation better represents the full model.
 
+### Deriving the Poisson Point-Pattern Likelihood
+
+Partition W into sufficiently small cells with areas $\Delta A_j$. Under a Poisson model with locally almost constant intensity, the chance that a cell contains no event is approximately $e^{-\lambda(s_j)\Delta A_j}$, while the chance of one is approximately $\lambda(s_j)\Delta A_j e^{-\lambda(s_j)\Delta A_j}$. Counts in disjoint cells are independent.
+
+Multiplying those probabilities across cells and letting their sizes shrink gives, up to a factor independent of the intensity parameters,
+
+$$
+L(\theta)\propto
+\exp\left[-\int_W\lambda_\theta(s)\,ds\right]
+\prod_{i=1}^n\lambda_\theta(s_i).
+$$
+
+Thus
+
+$$
+\ell(\theta)=\sum_{i=1}^n\log\lambda_\theta(s_i)
+-\int_W\lambda_\theta(s)\,ds+\text{constant}.
+$$
+
+The sum rewards intensity at observed events. The integral penalizes predicted events over the whole observed window, including empty parts. Omitting it would let a model increase intensity everywhere without limit. For constant intensity, differentiating $n\log\lambda-\lambda|W|$ yields $\hat\lambda=n/|W|$ when $n>0$, explaining the estimator used above. If no events are observed, the homogeneous likelihood is maximized at the boundary $\lambda=0$ when that boundary is allowed.
+
+For a varying intensity, write $\Lambda_W=\int_W\lambda(s)\,ds$. Conditional on the count, locations have density $f(s)=\lambda(s)/\Lambda_W$. If half of a 100-unit window has intensity 0.1 and the other half intensity 0.3, expected counts are five and 15. Conditional on an event in the window, its probability of being in the higher-intensity half is $15/20=0.75$, even though the halves have equal area.
+
+If $\lambda_\theta(s)=a\,g_\eta(s)$, conditioning on the count cancels the scale a from the location density. Conditional locations can inform the shape parameters $\eta$, while total-count information is needed to estimate the overall scale from this pattern. “Uniform locations” is therefore a property of homogeneous conditional Poisson sampling, rather than a general instruction for simulating every fitted point-process model.
+
 ## Nearest-neighbor distance
 
 For each event, calculate the distance to its nearest other event. For event $i$,
@@ -775,6 +806,44 @@ Then the CSR benchmark becomes a horizontal zero line. Broadly:
 
 This transformation makes departures from CSR easier to visualize, but simulation-based uncertainty is still needed.
 
+### Pair Correlation Explains Why K Is Cumulative
+
+For a stationary isotropic process, the pair-correlation function g(r) compares the density of pairs at separation r with the density under independent Poisson placement at the same intensity. Around a typical event, an annulus of radius r and small width $dr$ has area approximately $2\pi r\,dr$. Its expected additional-event count is $\lambda g(r)2\pi r\,dr$.
+
+Integrating those annuli and dividing by intensity gives
+
+$$
+K(r)=\int_0^r2\pi t\,g(t)\,dt,
+\qquad
+g(r)=\frac{K'(r)}{2\pi r}\quad(r>0)
+$$
+
+when the derivative exists. Poisson placement has $g(r)=1$, recovering $K(r)=\pi r^2$. An excess of pairs at short distances enters every later value of K because it remains part of the cumulative integral. Consequently K above the Poisson curve at 10 m does not establish a new interaction specifically at 10 m. A short-distance excess can explain the difference.
+
+Estimating g requires a local distance-band or smoothing choice and is noisier than estimating a cumulative K curve. The two summaries trade local distance resolution against averaging. Neither supplies a mechanism without an intensity model and an appropriate reference distribution. The cluster example below gives a process for which this cumulative effect can be calculated explicitly.
+
+### A Translation Edge Weight Can Be Calculated from Window Overlap
+
+For a rectangular window of width L and height H, the overlap between W and its translation by displacement $(\Delta x,\Delta y)$ has area
+
+$$
+A_{\mathrm{overlap}}=(L-|\Delta x|)_+(H-|\Delta y|)_+,
+$$
+
+where $(v)_+=\max(v,0)$. Only that overlap permits both ends of a pair with this displacement to be observed. A translation correction therefore weights an observed ordered pair by $|W|/A_{\mathrm{overlap}}$.
+
+In a $10\times10$ window, displacement $(3,4)$ leaves overlap $7\times6=42$. Its pair weight is $100/42\approx2.381$, compared with one in the uncorrected count. Pairs whose displacement is difficult to observe receive more weight. One finite-count normalization consistent with the earlier estimator is
+
+$$
+\hat K_{\mathrm{trans}}(r)
+=\frac{|W|}{n(n-1)}
+\sum_{i\ne j}
+\frac{|W|}{A_{\mathrm{overlap}}(s_i-s_j)}
+\mathbf1(d_{ij}\leq r).
+$$
+
+Some implementations use a different finite-count intensity normalization, which should be checked before comparing small-sample outputs. At large displacements, overlaps can become tiny and individual weights large, increasing variance. Edge correction represents missing pair opportunities under stationarity; it does not make arbitrary long-distance summaries stable or repair a wrong observation window. The [spatstat K documentation](https://search.r-project.org/CRAN/refmans/spatstat.explore/html/Kest.html) describes the available translation, border, and isotropic corrections.
+
 ## Monte Carlo envelopes
 
 A common point-process diagnostic compares an observed summary function with simulations from a reference model. For example, to assess homogeneous CSR:
@@ -838,6 +907,30 @@ A Thomas process is plausible when observed events arise around underlying clust
 - plants dispersed around parent plants;
 - disease cases around local transmission sources;
 - animal locations around resource patches.
+
+### A Thomas Process Produces a Long-Lasting K Excess from Short Clusters
+
+Let parent points follow a homogeneous Poisson process with intensity $\kappa$. Each parent independently produces a Poisson number of offspring with mean m. Displace offspring independently from their parent by a two-dimensional normal vector with covariance $\sigma^2I$. The observed offspring intensity is $\lambda=\kappa m$.
+
+Two offspring from different parents contribute the baseline pair density. Two from the same parent have a displacement difference distributed as $N(0,2\sigma^2I)$, whose density at a displacement of length r is $(4\pi\sigma^2)^{-1}e^{-r^2/(4\sigma^2)}$. This is a density per unit area in displacement space, rather than the density of the scalar distance.
+
+For a Poisson offspring count M with mean m, $E[M(M-1)]=m^2$ is the expected number of ordered pairs from one parent. The same-parent contribution to pair density is therefore $\kappa m^2$ times the displacement density. Dividing by the baseline $\lambda^2=\kappa^2m^2$ gives
+
+$$
+g(r)=1+\frac{1}{4\pi\kappa\sigma^2}
+e^{-r^2/(4\sigma^2)}.
+$$
+
+The mean offspring number cancels from this normalized excess, while the parent intensity and displacement scale remain. Integrating the excess through the annulus formula yields
+
+$$
+K(r)=\pi r^2+
+\frac1\kappa\left(1-e^{-r^2/(4\sigma^2)}\right).
+$$
+
+For $\kappa=0.1$, $m=2$, and $\sigma=0.5$, the event intensity is 0.2. At radius two, $g(2)\approx1.0583$ and $K(2)\approx22.3832$, compared with the Poisson value $4\pi\approx12.5664$. By radius four, g is approximately $1.00000036$, essentially its baseline, but K still exceeds $16\pi$ by almost ten. That persistent K difference accumulates the short-range same-parent pairs; it does not imply substantial additional pair interaction at radius four.
+
+The construction supplies a plausible clustering mechanism, but fitting its summary curve cannot prove that literal biological parents or transmission sources generated an observed pattern. Other cluster mechanisms can produce similar second-order structure. The value of the example is that it connects a specified process, a pair-density calculation, and the cumulative summary in one model.
 
 ## Inhibitory processes
 
@@ -963,6 +1056,22 @@ $$
 
 The second location therefore has much higher expected event density even without interaction.
 
+### A Random Intensity Creates Overdispersion without Conditional Interaction
+
+A Cox process first draws a random intensity surface and then draws a Poisson process conditional on that surface. For a region B, let $\Lambda_B$ be the random integrated intensity. Conditional on it, $N(B)$ has mean and variance $\Lambda_B$. The laws of total expectation and total variance give
+
+$$
+E[N(B)]=E[\Lambda_B],
+\qquad
+\operatorname{Var}(N(B))=E[\Lambda_B]+\operatorname{Var}(\Lambda_B).
+$$
+
+For a numerical example, suppose the integrated intensity of a region is two or ten with equal probability. Then $E[\Lambda_B]=6$ and $\operatorname{Var}(\Lambda_B)=16$, so the marginal count variance is 22. A single Poisson model with the same mean six would have variance six. Averaging over the unobserved low- and high-intensity states produces the extra variation.
+
+The additional variance is caused by variation in the latent environment. Counts in separate regions can also be correlated because their integrated intensities share that environment. Conditional Poisson independence therefore need not imply marginal independence after the intensity surface is averaged out.
+
+For example, a favorable habitat patch can raise event intensity for all locations in that patch. Observing one event then provides information that local intensity may be high, making additional nearby events more likely in the marginal model, even without direct attraction between events. This differs from a fixed inhomogeneous Poisson intensity, where the spatial variation is specified rather than random across realizations. Interpreting overdispersion requires comparable exposure and an explicit account of which variation is conditioned on.
+
 ## Marked point processes
 
 Events can carry additional attributes called **marks**. Examples include:
@@ -1006,6 +1115,14 @@ This concerns dependence in the marks, conditional on or jointly with the event 
 - Are stores of one type located near stores of the same type?
 
 These require mark-specific summaries or models. A point pattern may be CSR while its marks are strongly spatially associated, or vice versa. A random-labeling test holds the event locations fixed and permutes marks under an exchangeable-mark null. A location-process test instead simulates new event positions. These tests preserve different information and assess different hypotheses. If marks depend on covariates or observation effort, unrestricted mark permutations may be inappropriate even when testing only their spatial association.
+
+### A Small Random-Labeling Calculation
+
+Suppose four fixed stems form two close pairs: A-B and C-D. Two stems are red-species trees and two blue-species trees. The observed labels are red, red, blue, blue, so both close pairs match in species.
+
+Under a null that assigns the two red labels exchangeably among these four fixed stems, there are $\binom42=6$ equally likely assignments. Exactly two produce matching labels within both pairs: red-red/blue-blue and blue-blue/red-red. A statistic counting matching close pairs has its maximum value two in the observed pattern, giving an exact upper-tail p-value $2/6=1/3$.
+
+The arrangement looks segregated, but four marked events supply little evidence under this null. The stem locations may themselves be clustered; that feature is held fixed and is not tested by label permutation. Simulating new locations would instead test a location-process hypothesis. If species probabilities vary with habitat, unrestricted random labeling can also be the wrong null; labels may need a covariate model or a justified restricted permutation.
 
 ## Observation bias and exposure
 
@@ -1173,13 +1290,17 @@ The observed value is above the CSR benchmark. Before concluding that trees attr
 
 The numerical difference alone does not identify the underlying mechanism.
 
-## Connecting Event Density to Interaction
+## Worked Interpretation: Event Concentration, Exposure, and Detection
 
-Define an event and the window in which it could have been observed, then model intensity using exposure, environmental conditions, and observation effort as appropriate. This establishes what density variation the reference model already explains. Spacing summaries then ask whether the observed arrangement contains additional structure at scientifically relevant distances.
+Suppose a survey records 80 events in a 400-square-meter window, giving a homogeneous intensity estimate 0.2 events per square meter. An edge-corrected K estimate at radius one is 5.2, above the homogeneous Poisson value $\pi$. This is evidence to investigate, but the numerical comparison combines several modeling questions.
 
-Edge correction and the simulation scheme must match the window and count assumptions. Compare an observed K, L, or nearest-neighbor curve with the same summary calculated from each reference simulation. Specify whether the comparison is exploratory at individual radii or calibrated over the complete distance range. A fitted intensity model adds parameter-estimation uncertainty to that calibration.
+First ask whether all 400 square meters were observed with the same detection probability. Under independent thinning with detection probability q(s), a Poisson process with underlying intensity $\lambda_{\mathrm{true}}(s)$ is observed with intensity $q(s)\lambda_{\mathrm{true}}(s)$. A dense observed patch can result from a higher true event density, greater detection, or both. Without effort or detection information, these components may not be separately identifiable.
 
-If structure remains, clustered, inhibitory, or marked models can represent more specific mechanisms. Their suitability should be judged through the observation process and model diagnostics as well as visual appearance. A clustered-looking map, a short nearest-neighbor distance, or an elevated K curve is a description to explain; it is not by itself evidence of direct attraction or a particular causal mechanism.
+Next ask whether first-order variation is explained by measured habitat or exposure. For counts of events associated with people, an intensity per square kilometer is not a rate per person. A model might write $\lambda(s)=E(s)\exp\{x(s)^\top\beta\}$, with known exposure E(s), so $\log E(s)$ enters as an offset. Omitting that exposure can make a concentration of people appear to be a concentration of individual risk.
+
+If a fitted inhomogeneous Poisson model explains the density gradient, simulations from it should reproduce that gradient in the same window. Compute the same edge-corrected summary for observed and simulated patterns. Testing all radii using separate pointwise envelopes does not give a global 5% test. A possible whole-curve statistic is the maximum standardized deviation over a prespecified radius grid; its reference distribution must be calibrated using the same construction in simulations. Parameter fitting and any model selection are part of that construction.
+
+If residual excess remains, a cluster, Cox, or other interaction model can be considered and checked. If no excess remains, the observed concentration may be adequately represented by the intensity model at the scales examined. Neither conclusion proves a biological mechanism: density, conditional interaction, observation effort, and the choice of scale remain distinct parts of the analysis.
 
 ## Questions students should be able to answer
 
