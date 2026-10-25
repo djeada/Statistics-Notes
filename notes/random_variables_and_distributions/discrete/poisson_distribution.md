@@ -1,6 +1,6 @@
 # Poisson Distribution
 
-A Poisson random variable counts events in a specified interval of time, distance, area, or other exposure. Write $X\sim\operatorname{Poisson}(\lambda)$, where $\lambda$ is the **expected count in that interval**. Its support is $\{0,1,2,\ldots\}$: there is no fixed number of trials that caps the count.
+A Poisson random variable counts events in a specified interval of time, distance, area, or other exposure. Write $X\sim\mathrm{Poisson}(\lambda)$, where $\lambda$ is the **expected count in that interval**. Its support is $\{0,1,2,\ldots\}$: there is no fixed number of trials that caps the count.
 
 A constant-rate Poisson process supplies one mechanism for this distribution. Counts in disjoint intervals are independent, and their mean is proportional to exposure. If the process rate is $r$ events per hour and an interval lasts $T$ hours, the count parameter is $\lambda=rT$. The rate and the expected count coincide numerically only when the exposure is one unit.
 
@@ -35,7 +35,7 @@ For real $x\ge0$, sum through $\lfloor x\rfloor$; for $x<0$, the CDF is zero. â€
 The Poisson model imposes the same value for its mean and variance:
 
 $$
-E[X]=\operatorname{Var}(X)=\lambda.
+E[X]=\mathrm{Var}(X)=\lambda.
 $$
 
 This is a modeling restriction, not an identity for all count data. Changing rates across observation periods or clustered arrivals can produce much more variability than this one-parameter model permits.
@@ -85,7 +85,7 @@ For a half-hour interval the expected count would be $5(0.5)=2.5$, not 5. Adjust
 For many independent trials with small success probability, keep $\lambda=np$ fixed or moderate while increasing $n$ and decreasing $p$. For each fixed count, the binomial probability approaches the corresponding Poisson probability:
 
 $$
-\operatorname{Binomial}(n,p)\approx\operatorname{Poisson}(np).
+\mathrm{Binomial}(n,p)\approx\mathrm{Poisson}(np).
 $$
 
 The approximation replaces a large collection of rare trial events with an event-count model. It is not appropriate merely because a binomial mean is known: a large success probability or a count near the finite upper limit can make the Poisson approximation poor.

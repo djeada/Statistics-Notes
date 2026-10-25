@@ -586,10 +586,10 @@ Under the assumed covariance model, GLS is the efficient linear unbiased estimat
 Using the example's specified covariance, the actual coefficient covariance matrices are
 
 $$
-\operatorname{Cov}(\hat\beta_{\mathrm{OLS}})
+\mathrm{Cov}(\hat\beta_{\mathrm{OLS}})
 =\begin{bmatrix}1.04444&-0.4\\-0.4&0.4\end{bmatrix},
 \qquad
-\operatorname{Cov}(\hat\beta_{\mathrm{GLS}})
+\mathrm{Cov}(\hat\beta_{\mathrm{GLS}})
 =\begin{bmatrix}1&-0.4\\-0.4&0.4\end{bmatrix}.
 $$
 
@@ -804,7 +804,7 @@ does not generally estimate $\rho$ consistently. SAR models therefore require me
 
 ### SAR is not just regression with a neighbor average
 
-It is tempting to interpret $\rho Wy$ as if neighboring outcomes were an ordinary predictor. But $Wy$ is endogenous because it is constructed from the same jointly determined outcome vector. The model determines all locations simultaneously. Let $S=(I-\rho W)^{-1}$. Under independent innovations with variance $\sigma^2$, $Wy=WSX\beta+WS\varepsilon$, so $\operatorname{Cov}(Wy,\varepsilon\mid X)=\sigma^2WS$. Feedback paths generally make the relevant regressor-error covariances nonzero. This is a structural endogeneity problem, whereas a spatial error model leaves the mean $X\beta$ exogenous when its own conditional-zero-mean assumption holds. This changes both estimation and interpretation.
+It is tempting to interpret $\rho Wy$ as if neighboring outcomes were an ordinary predictor. But $Wy$ is endogenous because it is constructed from the same jointly determined outcome vector. The model determines all locations simultaneously. Let $S=(I-\rho W)^{-1}$. Under independent innovations with variance $\sigma^2$, $Wy=WSX\beta+WS\varepsilon$, so $\mathrm{Cov}(Wy,\varepsilon\mid X)=\sigma^2WS$. Feedback paths generally make the relevant regressor-error covariances nonzero. This is a structural endogeneity problem, whereas a spatial error model leaves the mean $X\beta$ exogenous when its own conditional-zero-mean assumption holds. This changes both estimation and interpretation.
 
 ### A Two-Region Calculation Shows the Endogeneity
 
@@ -818,7 +818,7 @@ $$
 The regressor $(Wy)_1=y_2$ in the first structural equation is correlated with its error:
 
 $$
-\operatorname{Cov}((Wy)_1,\epsilon_1\mid X)
+\mathrm{Cov}((Wy)_1,\epsilon_1\mid X)
 =\frac{\rho\sigma^2}{1-\rho^2}.
 $$
 

@@ -1,6 +1,6 @@
 # Uniform Distribution
 
-A continuous uniform variable assigns equal probability to **equal-length subintervals** inside a fixed range. Write $X\sim\operatorname{Uniform}(a,b)$ with $a<b$. The density is constant on $[a,b]$, but no individual point has positive probability.
+A continuous uniform variable assigns equal probability to **equal-length subintervals** inside a fixed range. Write $X\sim\mathrm{Uniform}(a,b)$ with $a<b$. The density is constant on $[a,b]$, but no individual point has positive probability.
 
 For example, under a uniform wait from 2 to 4 seconds, any half-second interval entirely within that range has probability $0.5/2=0.25$. Saying that every exact time is “equally likely” can obscure the fact that all those point probabilities are zero; interval lengths are what determine probabilities.
 
@@ -45,10 +45,10 @@ $$
 E[X]=\frac{a+b}{2}.
 $$
 
-One derivation of the variance writes $X=a+(b-a)U$ with $U\sim\operatorname{Uniform}(0,1)$. For $U$, $E[U]=1/2$ and $E[U^2]=1/3$, so $\operatorname{Var}(U)=1/12$. Shifting by $a$ changes no variance, and scaling by $b-a$ squares that factor:
+One derivation of the variance writes $X=a+(b-a)U$ with $U\sim\mathrm{Uniform}(0,1)$. For $U$, $E[U]=1/2$ and $E[U^2]=1/3$, so $\mathrm{Var}(U)=1/12$. Shifting by $a$ changes no variance, and scaling by $b-a$ squares that factor:
 
 $$
-\operatorname{Var}(X)=\frac{(b-a)^2}{12}.
+\mathrm{Var}(X)=\frac{(b-a)^2}{12}.
 $$
 
 Thus doubling the interval width doubles the standard deviation and multiplies the variance by four.
@@ -98,7 +98,7 @@ E[X]=\frac{2+4}{2}=3\text{ seconds},
 $$
 
 $$
-\operatorname{Var}(X)=\frac{(4-2)^2}{12}=\frac13\text{ seconds}^2.
+\mathrm{Var}(X)=\frac{(4-2)^2}{12}=\frac13\text{ seconds}^2.
 $$
 
 The standard deviation is $1/\sqrt3\approx0.577$ seconds. The mean describes the average event time over repeated independent simulations, while the variance describes the spread of those times.

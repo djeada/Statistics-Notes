@@ -20,7 +20,7 @@ For a specified conditional mean $\mu_D(s,x)$, the expected squared error at one
 
 $$
 E[(Y-\hat f_D)^2\mid D,s,x]
-=\operatorname{Var}(Y\mid D,s,x)
+=\mathrm{Var}(Y\mid D,s,x)
 +(\mu_D(s,x)-\hat f_D(s,x))^2.
 $$
 
@@ -598,7 +598,7 @@ The reported metrics should support the actual decision. Uncertainty calibration
 Suppose region A has 100 test observations with RMSE one, while B has 10 test observations with RMSE three. Their squared-error sums are 100 and 90. Pooling observations gives
 
 $$
-\operatorname{RMSE}_{\mathrm{pooled}}
+\mathrm{RMSE}_{\mathrm{pooled}}
 =\sqrt{\frac{100+90}{100+10}}
 \approx1.3143.
 $$
@@ -612,9 +612,9 @@ If deployment selects a person from a population concentrated in A, an observati
 For held-out losses $L_1,\ldots,L_m$, the average has variance
 
 $$
-\operatorname{Var}(\bar L)
-=\frac1{m^2}\left[\sum_i\operatorname{Var}(L_i)
-+2\sum_{i<j}\operatorname{Cov}(L_i,L_j)\right].
+\mathrm{Var}(\bar L)
+=\frac1{m^2}\left[\sum_i\mathrm{Var}(L_i)
++2\sum_{i<j}\mathrm{Cov}(L_i,L_j)\right].
 $$
 
 Nearby prediction errors can make those loss covariances nonzero. Under the illustrative assumption of equal loss variance and common pairwise correlation $\rho_L$, the variance is multiplied by $1+(m-1)\rho_L$ relative to an independence calculation. With 20 losses and $\rho_L=0.2$, that multiplier is 4.8, giving an equivalent independent-loss count of about 4.17 for this average.

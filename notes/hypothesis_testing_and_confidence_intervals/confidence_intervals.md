@@ -393,7 +393,7 @@ A prediction interval is wider because it must account for both:
 * Uncertainty in the estimated mean.
 * Natural variation among individual observations.
 
-For an independent future observation and a sample mean, $\operatorname{Var}(X_{\text{new}}-\bar X)=\sigma^2+\sigma^2/n$. The first term is irreducible variation of the next observation; the second is estimation uncertainty. Taking the square root explains the factor $\sqrt{1+1/n}$ in the prediction formulas, compared with $1/\sqrt n$ in an interval for the mean. This result assumes the future observation follows the same population model as the training data.
+For an independent future observation and a sample mean, $\mathrm{Var}(X_{\text{new}}-\bar X)=\sigma^2+\sigma^2/n$. The first term is irreducible variation of the next observation; the second is estimation uncertainty. Taking the square root explains the factor $\sqrt{1+1/n}$ in the prediction formulas, compared with $1/\sqrt n$ in an interval for the mean. This result assumes the future observation follows the same population model as the training data.
 
 For a normally distributed population with known $\sigma$, a 95% prediction interval for a new observation $X_{\text{new}}$ is:
 

@@ -28,7 +28,7 @@ A regional count has another interpretation. If $C_i$ is a case count and $n_i$ 
 $$
 E\left[\frac{C_i}{n_i}\right]=p_i,
 \qquad
-\operatorname{Var}\left(\frac{C_i}{n_i}\right)
+\mathrm{Var}\left(\frac{C_i}{n_i}\right)
 =\frac{p_i(1-p_i)}{n_i}.
 $$
 
@@ -261,7 +261,7 @@ $$
 
 An arc of angle $c$ on a sphere of radius $R$ has length $Rc$. Thus the probability or covariance model should receive $Rc$ when separation means the shortest spherical surface route. The straight three-dimensional chord has length $2R\sin(c/2)$ and passes through the sphere; it represents a different geometry.
 
-The identity $\sin^2(c/2)=(1-\cos c)/2$ turns the dot-product relation into the expression $a$ used above. Computing small coordinate differences through squared sines avoids subtracting two numbers extremely close to one, a difficulty with directly taking $\arccos$ of a rounded dot product for nearby sites. The $\operatorname{atan2}$ form then recovers the angle in the correct range from zero to $\pi$.
+The identity $\sin^2(c/2)=(1-\cos c)/2$ turns the dot-product relation into the expression $a$ used above. Computing small coordinate differences through squared sines avoids subtracting two numbers extremely close to one, a difficulty with directly taking $\arccos$ of a rounded dot product for nearby sites. The $\mathrm{atan2}$ form then recovers the angle in the correct range from zero to $\pi$.
 
 For a short displacement around latitude $\phi$, this spherical geometry also gives the local approximation
 
@@ -441,7 +441,7 @@ $$
 If many small-scale fluctuations occur inside regions and only region averages are retained, the resulting area-level data will usually vary less than the original point-level data. This is called a **change-of-support** effect. The amount of smoothing depends on covariance, not just on the number of values being averaged. For $m$ point measurements with common variance $\sigma^2$,
 
 ```math
-\operatorname{Var}\left(\frac1m\sum_iZ(s_i)\right)
+\mathrm{Var}\left(\frac1m\sum_iZ(s_i)\right)
 =\frac1{m^2}\sum_i\sum_j C(s_i,s_j).
 ```
 
@@ -455,7 +455,7 @@ Suppose four sensors measure the same kind of spatial quantity, each with varian
 
 $$
 \begin{aligned}
-\operatorname{Var}(\bar Z)
+\mathrm{Var}(\bar Z)
 &=\frac{1}{4^2}\{4\sigma^2+12\rho\sigma^2\}\\
 &=\frac{\sigma^2}{4}(1+3\rho)\\
 &=4(1+2.25)=13.

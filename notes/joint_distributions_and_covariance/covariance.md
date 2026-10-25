@@ -152,7 +152,7 @@ For independent, identically distributed pairs $(X_i,Y_i)$ with finite second mo
 -n(\bar X-\mu_X)(\bar Y-\mu_Y).
 ```
 
-Taking expectations leaves $(n-1)\operatorname{Cov}(X,Y)$. Using $n$ instead multiplies the expectation by $(n-1)/n$, shrinking it toward zero; for a negative covariance this means a less negative value, rather than a numerically smaller one. The sample statistic $s_{XY}$ estimates the population quantity and should not be written as identically equal to it.
+Taking expectations leaves $(n-1)\mathrm{Cov}(X,Y)$. Using $n$ instead multiplies the expectation by $(n-1)/n$, shrinking it toward zero; for a negative covariance this means a less negative value, rather than a numerically smaller one. The sample statistic $s_{XY}$ estimates the population quantity and should not be written as identically equal to it.
 
 ### Population vs. Sample Covariance
 

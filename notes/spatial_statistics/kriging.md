@@ -29,7 +29,7 @@ Differentiating with respect to $w$ gives $V'(w)=2\sigma^2(w-r)$, so the best we
 If the common mean is unknown, a predictor formed only as $wZ_1$ must be unbiased for every possible $m$. Its expectation is $wm$, so the constraint forces $w=1$. Ordinary kriging with one observation predicts $Z_1$ everywhere, while its error variance is
 
 $$
-\operatorname{Var}(Z_0-Z_1)=2\sigma^2(1-r).
+\mathrm{Var}(Z_0-Z_1)=2\sigma^2(1-r).
 $$
 
 The two predictions differ because the unknown mean cannot supply a fixed fallback value. With $m=10$, $Z_1=12$, $\sigma^2=4$, and $r=0.5$, simple kriging predicts 11 with variance three. Ordinary kriging predicts 12 with variance four. The difference in variance is $\sigma^2(1-r)^2$, the cost of preserving an unknown mean in this example.
@@ -914,7 +914,7 @@ The first term predicts the trend at the target. The second predicts a residual 
 The variance has the corresponding decomposition
 
 $$
-\operatorname{Var}(Z_0-\hat Z_0)
+\mathrm{Var}(Z_0-\hat Z_0)
 =C_{00}-c_0^\top C^{-1}c_0+q^\top B^{-1}q.
 $$
 
@@ -1124,7 +1124,7 @@ A negative weight is not automatically a sign of error. However, very large posi
 Suppose the target is an average $Z_A=|A|^{-1}\int_A Z(s)\,ds$, rather than a value at one point. Its covariance with observation i is
 
 $$
-(c_A)_i=\frac1{|A|}\int_A\operatorname{Cov}(Z(s_i),Z(s))\,ds,
+(c_A)_i=\frac1{|A|}\int_A\mathrm{Cov}(Z(s_i),Z(s))\,ds,
 $$
 
 and its own variance is
@@ -1140,7 +1140,7 @@ Numerically, these integrals can be approximated with a set of representative po
 For example, suppose the prediction errors at two equally weighted target points each have variance four and covariance three. The average's error variance is
 
 $$
-\operatorname{Var}\left(\frac{e_1+e_2}{2}\right)
+\mathrm{Var}\left(\frac{e_1+e_2}{2}\right)
 =\frac14(4+4+2\times3)=3.5.
 $$
 

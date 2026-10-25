@@ -1063,10 +1063,10 @@ A Cox process first draws a random intensity surface and then draws a Poisson pr
 $$
 E[N(B)]=E[\Lambda_B],
 \qquad
-\operatorname{Var}(N(B))=E[\Lambda_B]+\operatorname{Var}(\Lambda_B).
+\mathrm{Var}(N(B))=E[\Lambda_B]+\mathrm{Var}(\Lambda_B).
 $$
 
-For a numerical example, suppose the integrated intensity of a region is two or ten with equal probability. Then $E[\Lambda_B]=6$ and $\operatorname{Var}(\Lambda_B)=16$, so the marginal count variance is 22. A single Poisson model with the same mean six would have variance six. Averaging over the unobserved low- and high-intensity states produces the extra variation.
+For a numerical example, suppose the integrated intensity of a region is two or ten with equal probability. Then $E[\Lambda_B]=6$ and $\mathrm{Var}(\Lambda_B)=16$, so the marginal count variance is 22. A single Poisson model with the same mean six would have variance six. Averaging over the unobserved low- and high-intensity states produces the extra variation.
 
 The additional variance is caused by variation in the latent environment. Counts in separate regions can also be correlated because their integrated intensities share that environment. Conditional Poisson independence therefore need not imply marginal independence after the intensity surface is averaged out.
 

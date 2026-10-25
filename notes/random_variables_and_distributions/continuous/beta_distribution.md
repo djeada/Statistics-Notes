@@ -1,6 +1,6 @@
 # Beta Distribution
 
-The beta distribution models a continuously varying quantity confined to the unit interval, such as an uncertain probability or an underlying proportion. Write $X\sim\operatorname{Beta}(\alpha,\beta)$, where both shape parameters are positive. Unlike a normal model, it assigns no probability outside the permitted range.
+The beta distribution models a continuously varying quantity confined to the unit interval, such as an uncertain probability or an underlying proportion. Write $X\sim\mathrm{Beta}(\alpha,\beta)$, where both shape parameters are positive. Unlike a normal model, it assigns no probability outside the permitted range.
 
 Its shape is flexible. Equal parameters give symmetry about $1/2$; two parameters greater than 1 give an interior peak; a parameter below 1 can concentrate density near the corresponding endpoint. When $\alpha=\beta=1$, the distribution is uniform on $[0,1]$. These are density shapes, not point probabilities at 0 or 1: a beta variable has zero probability of equaling either endpoint exactly.
 
@@ -49,7 +49,7 @@ $$
 Likewise, $E[X^2]=\alpha(\alpha+1)/[(\alpha+\beta)(\alpha+\beta+1)]$. Subtracting the squared mean gives
 
 $$
-\operatorname{Var}(X)=
+\mathrm{Var}(X)=
 \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}.
 $$
 
@@ -57,7 +57,7 @@ The ratio of the parameters sets the mean, while their total controls concentrat
 
 ## Example: manufacturing defect proportions
 
-Suppose an underlying defect proportion varies between manufacturing batches, or is uncertain before a batch is examined, and is modeled by $X\sim\operatorname{Beta}(2,5)$.
+Suppose an underlying defect proportion varies between manufacturing batches, or is uncertain before a batch is examined, and is modeled by $X\sim\mathrm{Beta}(2,5)$.
 
 ### Expected underlying proportion
 
@@ -70,7 +70,7 @@ The model's average underlying proportion is about 28.57%.
 ### Variance of the underlying proportion
 
 $$
-\operatorname{Var}(X)=\frac{2\times5}{(2+5)^2(2+5+1)}
+\mathrm{Var}(X)=\frac{2\times5}{(2+5)^2(2+5+1)}
 =\frac{10}{392}\approx0.0255.
 $$
 
@@ -78,7 +78,7 @@ An observed fraction of defects in a finite sample is not itself continuously di
 
 ## Other intervals and applications
 
-For a bounded quantity on $[a,b]$ with $a<b$, use $Y=a+(b-a)X$. Its mean is $a+(b-a)E[X]$, and its variance is $(b-a)^2\operatorname{Var}(X)$. Rescaling the variable must therefore rescale the moments as well.
+For a bounded quantity on $[a,b]$ with $a<b$, use $Y=a+(b-a)X$. Its mean is $a+(b-a)E[X]$, and its variance is $(b-a)^2\mathrm{Var}(X)$. Rescaling the variable must therefore rescale the moments as well.
 
 Beta models are used for probabilities and proportions in Bayesian analysis, reliability, genetics, and ecology. Shifted and scaled beta families also appear in project-duration models such as PERT. In each use, identify whether the random quantity is an underlying continuous rate or an observed finite count.
 
