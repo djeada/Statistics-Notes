@@ -1,8 +1,8 @@
 # Central Limit Theorem (CLT)
 
-The Central Limit Theorem (CLT) is a fundamental result in statistics. It explains why the distribution of sample means often approaches a normal distribution as the sample size increases, even when the population itself is not normally distributed.
+The central limit theorem describes the fluctuations of a sum or average around its expectation. For independent, identically distributed observations with finite, positive variance, the centered and standardized mean approaches a standard normal distribution as sample size grows. The population can remain skewed or discrete throughout: it is the distribution of the statistic across repeated samples that is approximated.
 
-### Mathematical Background
+## Mathematical Background
 
 Suppose a population has mean $\mu$ and standard deviation $\sigma$. If we repeatedly take sufficiently large random samples of size $n$, then the distribution of the sample means is approximately normal under the usual CLT assumptions.
 
@@ -22,9 +22,9 @@ $$
 
 As $n$ increases, the standard error decreases, so sample means become more tightly concentrated around $\mu$.
 
-### Formal Description
+## Formal Description
 
-Let $X_1, X_2, \ldots, X_n$ be independent and identically distributed random variables, each with mean $\mu$ and variance $\sigma^2$.
+Let $X_1, X_2, \ldots, X_n$ be independent and identically distributed random variables, each with mean $\mu$ and variance $0<\sigma^2<\infty$. Centering a sum subtracts $n\mu$, and dividing by its standard deviation $\sigma\sqrt n$ produces a dimensionless quantity with variance one.
 
 As $n$ tends to infinity, the standardized sum
 
@@ -52,7 +52,7 @@ Important points:
 3. The theorem applies to the distribution of sample means, sums, and some related statistics. It does not make the individual observations normally distributed.
 4. Strongly skewed or heavy-tailed populations may require much larger samples before the normal approximation becomes accurate.
 
-### Implications and Applications
+## Implications and Applications
 
 The CLT allows probabilities involving large samples to be approximated with the normal distribution. This is central to statistical inference.
 
@@ -66,7 +66,7 @@ The CLT is useful because:
 - It makes many otherwise difficult probability calculations manageable.
 - It underlies a large number of statistical methods used in science, engineering, economics, and data analysis.
 
-### Limitations
+## Limitations
 
 The theorem depends on several conditions:
 
@@ -76,11 +76,11 @@ The theorem depends on several conditions:
 - Severe skewness, extreme outliers, or heavy tails can make convergence to normality slow.
 - Dependence between observations can invalidate the standard form of the theorem.
 
-### Visualization
+## Visualization
 
-A histogram of sample means tends to become bell-shaped as the number and size of the samples increase. This is the normal sampling distribution predicted by the CLT.
+The sample size and the number of simulation repetitions have different roles. Increasing the size $n$ of each sample can improve the normal approximation predicted by the CLT. Increasing the number of repeated samples merely makes the histogram a more accurate picture of the sampling distribution for that fixed $n$. One million simulated means of samples of size one would still display the original population distribution, rather than make it normal.
 
-#### Data Generation
+### Data Generation
 
 In this example:
 
@@ -94,7 +94,7 @@ The plot below shows the original exponential population, which is strongly righ
 
 ![Exponential population distribution](https://github.com/user-attachments/assets/66b67dc3-a589-41a3-b812-0b9fb347f78b)
 
-#### Distribution of Sample Means
+### Distribution of Sample Means
 
 For each of the 1,000 samples, the sample mean is calculated using
 
@@ -125,7 +125,13 @@ $$
 SE(\bar{X}) = \frac{\sigma}{\sqrt{n}}
 $$
 
-### Standardizing Using the CLT
+## Concentration and distributional shape are separate claims
+
+The law of large numbers gives $\bar X\to\mu$ under suitable conditions. The CLT refines the picture by studying $\sqrt n(\bar X-\mu)$ rather than the shrinking unscaled difference. Its scale factor prevents the limiting distribution from collapsing to a point. For the exponential model with mean and standard deviation both equal to one, $\bar X$ has variance $1/n$, while $\sqrt n(\bar X-1)$ has variance one and becomes approximately standard normal.
+
+Some distributions have a finite mean but infinite variance; the usual LLN can hold while this classical CLT fails. A Cauchy population lacks even a finite mean, and averaging independent Cauchy observations does not yield the concentration described here. These examples explain why checking moment conditions is more useful than relying on a universal sample-size cutoff.
+
+## Standardizing Using the CLT
 
 A sample statistic can be standardized with a z-score:
 
@@ -143,7 +149,7 @@ $$
 
 The z-score tells us how many standard errors the observed sample mean lies above or below the population mean.
 
-#### Step-by-Step Example
+### Step-by-Step Example
 
 Suppose incomes have the following population parameters:
 
@@ -151,7 +157,7 @@ Suppose incomes have the following population parameters:
 - Population standard deviation: $\sigma = 38{,}000$.
 - Sample size: $n$.
 
-##### Step 1: Calculate the Standard Error
+#### Step 1: Calculate the Standard Error
 
 The standard error of the sample mean is
 
@@ -165,7 +171,7 @@ $$
 SE(\bar{X}) = \frac{38{,}000}{\sqrt{100}} = \frac{38{,}000}{10} = 3{,}800
 $$
 
-##### Step 2: Calculate the z-score
+#### Step 2: Calculate the z-score
 
 Suppose the observed sample mean is $\bar{x} = 70{,}000$. Then
 
@@ -177,9 +183,9 @@ $$
 
 The sample mean is approximately $0.79$ standard errors above the population mean.
 
-### Example: Applying the CLT
+## Example: Applying the CLT
 
-Suppose the heights of a plant species are normally distributed with (so $\bar X$ is exactly normal for every $n$; the CLT is needed only in the unknown-distribution case at the end):
+Suppose independent heights from a plant species follow a normal distribution with the parameters below. The sample mean is then exactly normal for every $n$, since linear combinations of independent normal variables are normal. This provides a reference calculation; the final case explains what changes when the population distribution is unknown:
 
 - Population mean: $\mu = 15$ cm.
 - Population standard deviation: $\sigma = 3$ cm.
@@ -205,7 +211,7 @@ $$
 
 for several sample sizes.
 
-#### Sample Size of 16 Plants
+### Sample Size of 16 Plants
 
 For $n=16$,
 
@@ -249,7 +255,7 @@ $$
 
 The probability is approximately 81.64% (using the rounded $z=\pm1.33$; the unrounded $z=\pm1.3333$ gives 81.76%).
 
-#### Sample Size of 64 Plants
+### Sample Size of 64 Plants
 
 For $n=64$,
 
@@ -293,7 +299,7 @@ $$
 
 The probability is approximately 99.24%.
 
-#### Sample Size of 144 Plants
+### Sample Size of 144 Plants
 
 For $n=144$,
 
@@ -335,7 +341,7 @@ The probability is approximately 99.99%.
 
 As the sample size increases, the standard error decreases. This makes the sample mean more concentrated around the population mean.
 
-#### Unknown Population Distribution
+### Unknown Population Distribution
 
 Suppose the distribution of plant heights is unknown.
 

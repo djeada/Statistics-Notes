@@ -20,7 +20,7 @@ Although these tests address different questions, they use the same basic idea:
 {\text{Expected}}.
 ```
 
-### Categorical Data
+## Categorical Data
 
 **Categorical data** consist of observations classified into groups or categories rather than measured on a numerical scale.
 
@@ -38,7 +38,7 @@ For example, consider Titanic passengers classified by survival status and ticke
 
 Each passenger has one survival status and one ticket-class category.
 
-### Contingency Tables
+## Contingency Tables
 
 A **contingency table**, also called a cross-tabulation or crosstab, summarizes counts for combinations of categorical variables.
 
@@ -54,20 +54,20 @@ Here, $a$ through $h$ represent the observed counts in each cell.
 
 The row and column totals are called **marginal totals**. They are used to calculate expected counts in tests of homogeneity and independence.
 
-### 1. Testing Goodness-of-Fit
+## 1. Testing Goodness-of-Fit
 
 A chi-square goodness-of-fit test compares observed counts for one categorical variable with the counts expected under a specified distribution.
 
-#### Hypotheses
+### Hypotheses
 
 * The **null hypothesis ($H_0$)** states that the population follows the specified categorical distribution.
 * The **alternative hypothesis ($H_A$)** states that the population distribution differs from the specified distribution in at least one category.
 
 The observed and expected counts do not need to match exactly under $H_0$; some difference is expected because of sampling variation.
 
-#### Example: M&M Color Distribution
+### Example: M&M Color Distribution
 
-Suppose we want to test whether the color distribution of M&Ms is consistent with a distribution reported for 2008.
+Suppose we want to compare an M&M color sample with the six reference proportions below, labeled as a 2008 distribution in this teaching example. Treat these numbers as the specified null model. They should not be assumed to describe current products, all factories, or every product type.
 
 **2008 Expected Color Distribution**:
 
@@ -103,7 +103,7 @@ p_{\text{yellow}},p_{\text{red}},p_{\text{brown}})
 
 versus the alternative that at least one population proportion differs.
 
-#### Calculating Expected Counts
+### Calculating Expected Counts
 
 For each category, the expected count is:
 
@@ -139,7 +139,7 @@ The complete expected counts are:
 
 The expected counts also sum to 410.
 
-#### Computing the Chi-Square Statistic
+### Computing the Chi-Square Statistic
 
 The goodness-of-fit statistic is:
 
@@ -164,7 +164,7 @@ For these data the six terms are $0.44,\,0.99,\,0.30,\,0.95,\,1.29,\,0.35$, so:
 
 Each term measures the difference between an observed count and its expected value. Larger differences contribute more to the total statistic.
 
-#### Degrees of Freedom
+### Degrees of Freedom
 
 When all expected proportions are specified in advance (none are estimated from the data):
 
@@ -172,13 +172,13 @@ When all expected proportions are specified in advance (none are estimated from 
 df=k-1.
 ```
 
-If $m$ parameters of the null distribution are estimated from the data, the degrees of freedom drop to $k-1-m$. For 6 colors:
+In a regular multinomial model with $m$ identifiable parameters estimated efficiently from the same category counts, the usual asymptotic adjustment is $k-1-m$. Additional constraints, boundary parameters, or a different estimation scheme can require another calibration. Here no probabilities are estimated from the sample, so for six colors:
 
 ```math
 df=6-1=5.
 ```
 
-#### Decision Rule
+### Decision Rule
 
 Suppose the significance level is:
 
@@ -204,7 +204,7 @@ Equivalently, using a p-value, reject $H_0$ when:
 p\le\alpha.
 ```
 
-#### Interpretation
+### Interpretation
 
 For this example:
 
@@ -217,9 +217,9 @@ Because the p-value is greater than 0.05, the sample does not provide sufficient
 
 Failing to reject $H_0$ does not prove that the distribution is unchanged. It means that the observed differences are not large enough to provide evidence against the specified distribution at the chosen significance level.
 
-#### Visualization
+### Visualization
 
-![output(30)](https://github.com/user-attachments/assets/fc347693-1fbb-468a-bfac-0ac9e0ce5095)
+![Figure for Visualization](https://github.com/user-attachments/assets/fc347693-1fbb-468a-bfac-0ac9e0ce5095)
 
 Analysis Results:
 
@@ -230,16 +230,18 @@ Analysis Results:
 
 Based on this sample, there is insufficient evidence to conclude that the M&M color distribution differs from the specified 2008 distribution.
 
-### 2. Testing Homogeneity
+The terms can be written as squared Pearson residuals, $r_i=(O_i-E_i)/\sqrt{E_i}$. This scaling matters: a discrepancy of ten is more striking against an expectation of five than against an expectation of a thousand. Squaring removes direction, so the total statistic detects departures but does not say which categories are enriched or depleted. Inspecting individual residuals can explain the departure, while formal follow-up tests introduce additional multiplicity.
+
+## 2. Testing Homogeneity
 
 A chi-square test of homogeneity compares the distribution of a categorical variable across several populations or groups.
 
-#### Hypotheses
+### Hypotheses
 
 * **Null Hypothesis ($H_0$)**: The categorical variable has the same distribution in all populations or groups.
 * **Alternative Hypothesis ($H_A$)**: At least one population or group has a different distribution.
 
-#### Example: Titanic Survival by Ticket Class
+### Example: Titanic Survival by Ticket Class
 
 Suppose we want to test whether survival rates are the same across Titanic ticket classes.
 
@@ -255,7 +257,7 @@ Suppose we want to test whether survival rates are the same across Titanic ticke
 
 The null hypothesis is that the survival distribution is the same across all four groups.
 
-#### Calculating Expected Counts
+### Calculating Expected Counts
 
 If the survival distribution were the same across groups, the expected count in cell $(i,j)$ would be:
 
@@ -281,7 +283,9 @@ E_{11}
 
 The observed number of First Class survivors is 203, which is much larger than this expected count.
 
-#### Computing the Chi-Square Statistic
+The expected-count formula follows from fitting a common survival probability, $\hat p=711/2201$. Multiplying $\hat p$ by the First Class total gives $325\hat p\approx104.99$. In an independence formulation the fitted joint cell probability is the product of the empirical row and column proportions, giving the same formula. These expectations are fitted null values, not a claim that every cell should equal its expectation exactly.
+
+### Computing the Chi-Square Statistic
 
 The statistic is:
 
@@ -304,7 +308,7 @@ Summing across all eight cells gives:
 \chi^2\approx190.40.
 ```
 
-#### Degrees of Freedom
+### Degrees of Freedom
 
 For a contingency table:
 
@@ -322,7 +326,7 @@ df
 3.
 ```
 
-#### Decision Rule
+### Decision Rule
 
 At:
 
@@ -350,15 +354,17 @@ The p-value is also extremely small:
 p\approx5.0\times10^{-41}.
 ```
 
-#### Interpretation
+### Interpretation
 
 The data provide very strong evidence that survival rates were not the same across the four Titanic groups.
 
 In other words, survival and ticket-class group are associated in these data. The chi-square test does not explain why the groups differ.
 
-#### Visualization
+The historical table is close to a census of the recorded people on that voyage, rather than a random sample of independent voyages. Its association can be described directly: survival fractions are about 62.5%, 41.4%, 25.2%, and 24.0% for the four rows. A superpopulation interpretation of the tiny p-value requires an additional model, and shared family or evacuation circumstances can violate simple individual independence. The table also cannot isolate a causal effect of ticket class from age, sex, location, or other factors.
 
-![output(31)](https://github.com/user-attachments/assets/443f3e86-d52a-46b0-b427-5d12a7561a0a)
+### Visualization
+
+![Figure for Visualization](https://github.com/user-attachments/assets/443f3e86-d52a-46b0-b427-5d12a7561a0a)
 
 Analysis Results:
 
@@ -369,18 +375,18 @@ Analysis Results:
 
 The data provide strong evidence that survival rates differed among First Class, Second Class, Third Class, and Crew.
 
-### 3. Testing Independence
+## 3. Testing Independence
 
 A chi-square test of independence examines whether two categorical variables are associated within a population.
 
-#### Hypotheses
+### Hypotheses
 
 * The **null hypothesis ($H_0$)** states that the two categorical variables are independent.
 * The **alternative hypothesis ($H_A$)** states that the variables are associated.
 
 If two variables are independent, knowing the value of one does not change the distribution of the other.
 
-#### Example: Gender and Voting Preference
+### Example: Gender and Voting Preference
 
 Suppose we survey individuals to investigate whether gender is associated with voting preference.
 
@@ -394,7 +400,7 @@ Suppose we survey individuals to investigate whether gender is associated with v
 
 If the variables were independent, both gender groups would have the same voting-preference distribution apart from sampling variation.
 
-#### Calculating Expected Counts
+### Calculating Expected Counts
 
 Under independence:
 
@@ -426,7 +432,7 @@ The expected counts are therefore:
 | Male   |      55 |           45 |
 | Female |      55 |           45 |
 
-#### Computing the Chi-Square Statistic
+### Computing the Chi-Square Statistic
 
 The Pearson chi-square statistic is:
 
@@ -444,7 +450,7 @@ For these data:
 \chi^2\approx18.18.
 ```
 
-#### Degrees of Freedom
+### Degrees of Freedom
 
 ```math
 df
@@ -454,7 +460,7 @@ df
 1.
 ```
 
-#### Yates' Correction for Continuity (Optional)
+### Yates' Correction for Continuity (Optional)
 
 For a $2\times2$ table, Yates' continuity correction may be applied:
 
@@ -462,7 +468,7 @@ For a $2\times2$ table, Yates' continuity correction may be applied:
 \chi^2_{\text{Yates}}
 =
 \sum
-\frac{(|O_{ij}-E_{ij}|-0.5)^2}{E_{ij}}.
+\frac{\left[\max\{0,|O_{ij}-E_{ij}|-0.5\}\right]^2}{E_{ij}}.
 ```
 
 For these data:
@@ -488,7 +494,7 @@ p\approx2.01\times10^{-5}.
 
 Both lead to the same conclusion.
 
-#### Decision Rule
+### Decision Rule
 
 At:
 
@@ -510,15 +516,15 @@ Using either statistic:
 
 so we reject $H_0$.
 
-#### Interpretation
+### Interpretation
 
 The data provide strong evidence of an association between gender and voting preference in the sampled population.
 
 This indicates association, not necessarily causation.
 
-#### Visualization
+### Visualization
 
-![output(32)](https://github.com/user-attachments/assets/3465e92f-5782-4e2f-a73b-08c1077054f5)
+![Figure for Visualization](https://github.com/user-attachments/assets/3465e92f-5782-4e2f-a73b-08c1077054f5)
 
 Analysis Results:
 
@@ -531,23 +537,23 @@ Using Yates' continuity correction:
 
 There is strong evidence of an association between gender and voting preference in the observed data.
 
-### Comparing Homogeneity and Independence Tests
+## Comparing Homogeneity and Independence Tests
 
 The chi-square tests of homogeneity and independence use the same test statistic and expected-count formula. Their main difference lies in the research question and how the data are collected.
 
-#### Chi-Square Test of Homogeneity
+### Chi-Square Test of Homogeneity
 
 * The **objective** is to determine whether several populations or groups have the same distribution of a categorical variable.
 * The **data structure** typically involves separate samples or predefined groups.
 * An **example** is comparing the distribution of M&M colors across different product types, such as milk chocolate, peanut, and caramel.
 
-#### Chi-Square Test of Independence
+### Chi-Square Test of Independence
 
 * The **objective** is to determine whether two categorical variables are associated within a population.
 * The **data structure** typically consists of one sample in which each observation is classified by both variables.
 * An **example** is examining the relationship between gender and voting preference in a survey.
 
-#### Key Differences
+### Key Differences
 
 The **population structure** differs:
 
@@ -561,7 +567,9 @@ The **research question** also differs:
 
 The calculations are otherwise essentially the same once the contingency table has been constructed.
 
-### Assumptions and Conditions
+The degrees of freedom also have a useful counting interpretation. An $r\times c$ table has $rc-1$ free proportions after its total is fixed. The independence model uses $(r-1)+(c-1)$ free marginal parameters. Subtracting gives $(rc-1)-(r+c-2)=(r-1)(c-1)$. For independent samples within fixed groups, the homogeneity model leads to the same remaining number of distributional contrasts.
+
+## Assumptions and Conditions
 
 For chi-square tests to be valid, several conditions should be checked:
 
@@ -569,7 +577,7 @@ For chi-square tests to be valid, several conditions should be checked:
 
 2. **Categories are mutually exclusive.** Each observation contributes to one relevant category or table cell.
 
-3. **Observations are independent.** One observation should not determine or duplicate another.
+3. **The underlying observational units follow the assumed sampling model.** Counts in a multinomial table are dependent because they sum to a fixed total; that is already part of the test. The independence requirement concerns the sampled people, rolls, or items, not independence of the cell counts. Repeated responses by the same person or clustered sampling can require a different method.
 
 4. **The sampling design should support the intended inference.**
 
@@ -577,7 +585,7 @@ For chi-square tests to be valid, several conditions should be checked:
 
 These conditions help ensure that the chi-square distribution provides a reasonable approximation to the sampling distribution of the test statistic.
 
-### Practical Application Steps
+## Practical Application Steps
 
 1. **State the hypotheses** and identify the appropriate chi-square test.
 2. **Organize the observed counts** into a frequency table or contingency table.
@@ -597,3 +605,6 @@ These conditions help ensure that the chi-square distribution provides a reasona
 9. **Interpret the result** in the context of the research question.
 
 A chi-square test tells us whether the observed differences are larger than would reasonably be expected under the null hypothesis. It does not, by itself, explain why an association exists or establish causation.
+
+
+For sparse tables, a chi-square approximation may be inaccurate even when the total sample is large. An exact or Monte Carlo procedure can be preferable when justified by the sampling design. Combining categories merely to meet a count threshold changes the question and should be scientifically defensible. Structural zeros also require special handling: a combination that cannot occur is not an ordinary sampling zero, and its restriction changes the model and potentially the degrees of freedom.

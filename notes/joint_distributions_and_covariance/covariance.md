@@ -1,6 +1,6 @@
 # Covariance
 
-Covariance is a fundamental statistical measure that quantifies the degree to which two random variables change together. It indicates the direction of the linear relationship between variables:
+Covariance averages products of deviations from two means. When both deviations have the same sign, their product is positive; when their signs differ, it is negative. The average therefore indicates the direction of linear co-variation, while its numerical size also reflects the units and variability of both measurements:
 
 - A **positive covariance** implies that as one variable increases, the other tends to increase as well.
 - A **negative covariance** suggests that as one variable increases, the other tends to decrease.
@@ -96,6 +96,8 @@ $$
 \text{Cov}(X, X) = \text{Var}(X)
 $$
 
+This identity follows because the product of the two identical centered deviations is a square. More generally, positive covariance raises the variance of a sum because the two variables tend to move in the same direction. Negative covariance can reduce that variance. This is why averaging correlated measurements and combining negatively associated investment returns have different uncertainty consequences even when the individual variances are unchanged.
+
 IV. **Scaling** (a special case of property II, applied in both arguments):
 
 If $a$ and $b$ are constants:
@@ -133,7 +135,7 @@ Where $\sigma_X$ and $\sigma_Y$ are the standard deviations of $X$ and $Y$, resp
 When working with sample data, the sample covariance between two variables $X$ and $Y$ is calculated as:
 
 $$
-s_{XY} = \text{Cov}(X, Y) = \frac{1}{n - 1} \sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})
+s_{XY} = \frac{1}{n - 1} \sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})
 $$
 
 Where:
@@ -142,7 +144,15 @@ Where:
 - $X_i$ and $Y_i$ are the $i$-th observations of variables $X$ and $Y$.
 - $\bar{X}$ and $\bar{Y}$ are the sample means of $X$ and $Y$.
 
-**Note**: The denominator $n - 1$ (Bessel's correction) provides an unbiased estimate of the population covariance when working with a sample. Using $n$ in the denominator would underestimate the population covariance by the factor $(n-1)/n$ on average.
+For independent, identically distributed pairs $(X_i,Y_i)$ with finite second moments, the denominator $n-1$ makes this statistic unbiased for the population covariance. Estimating both means removes an expected covariance contribution:
+
+```math
+\sum_i(X_i-\bar X)(Y_i-\bar Y)
+=\sum_i(X_i-\mu_X)(Y_i-\mu_Y)
+-n(\bar X-\mu_X)(\bar Y-\mu_Y).
+```
+
+Taking expectations leaves $(n-1)\operatorname{Cov}(X,Y)$. Using $n$ instead multiplies the expectation by $(n-1)/n$, shrinking it toward zero; for a negative covariance this means a less negative value, rather than a numerically smaller one. The sample statistic $s_{XY}$ estimates the population quantity and should not be written as identically equal to it.
 
 ### Population vs. Sample Covariance
 
@@ -210,7 +220,7 @@ $$
 Use the sample covariance formula:
 
 $$
-s_{XY} = \text{Cov}(X, Y) = \frac{1}{n - 1} \sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})
+s_{XY} = \frac{1}{n - 1} \sum_{i=1}^{n} (X_i - \bar{X})(Y_i - \bar{Y})
 $$
 
 Since $n = 3$:
@@ -222,7 +232,7 @@ $$
 Interpretation:
 
 - The positive covariance of $2$ indicates that $X$ and $Y$ tend to increase together.
-- Since the data points lie perfectly on a straight line ($Y = 2X$), the covariance reflects a perfect positive linear relationship.
+- The table also shows $Y=2X$ exactly. Covariance by itself does not certify that a relationship is perfect: the value $2$ must be considered alongside $s_X=1$ and $s_Y=2$. Their product equals the covariance, giving the correlation of one calculated below.
 
 ### Step 6: Calculate the Variances (Optional)
 
@@ -231,7 +241,7 @@ For completeness, calculate the variances of $X$ and $Y$:
 #### Variance of $X$
 
 $$
-s_{XX} = \text{Var}(X) = \frac{1}{n - 1} \sum_{i=1}^{n} (X_i - \bar{X})^2
+s_{XX} = \frac{1}{n - 1} \sum_{i=1}^{n} (X_i - \bar{X})^2
 $$
 
 Compute $(X_i - \bar{X})^2$:
@@ -273,7 +283,7 @@ $$
 Compute variance:
 
 $$
-s_{YY} = \text{Var}(Y) = \frac{1}{2} \times 8 = 4
+s_{YY} = \frac{1}{2} \times 8 = 4
 $$
 
 ### Step 7: Calculate the Correlation Coefficient (Optional)
@@ -291,7 +301,7 @@ Interpretation:
 
 Plot:
 
-![output(13)](https://github.com/user-attachments/assets/85baa5bd-7459-4d06-ad4c-6c514eac3899)
+![Figure for Step 7: Calculate the Correlation Coefficient (Optional)](https://github.com/user-attachments/assets/85baa5bd-7459-4d06-ad4c-6c514eac3899)
 
 ## Limitations of Covariance
 
@@ -314,4 +324,4 @@ III. **Not a Measure of Strength**:
 IV. **Linear Relationships Only**:
 
 - Covariance measures only linear relationships.
-- It does not capture non-linear dependencies between variables.
+- It does not characterize general dependence. Some nonlinear relationships have nonzero covariance, while others have zero covariance because positive and negative products cancel. A scatterplot and the joint model provide information that covariance alone cannot supply.

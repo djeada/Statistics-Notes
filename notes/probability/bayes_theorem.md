@@ -1,6 +1,6 @@
 # Bayes' Theorem
 
-Bayes' theorem provides a way to update the probability of an event when new evidence becomes available. It connects conditional probabilities and allows us to revise an initial probability, or prior, in light of additional information.
+Bayes' theorem reverses the direction of a conditional probability. It connects the chance of evidence under a proposed event, $P(B\mid A)$, with the chance of that event after seeing the evidence, $P(A\mid B)$. These quantities use different reference groups. Updating requires both the evidence rate within the event and the event's initial probability, together with the total rate of the evidence across all relevant cases.
 
 The theorem is:
 
@@ -17,7 +17,7 @@ where:
 
 The formula assumes that $P(B) > 0$.
 
-### Derivation from Conditional Probability
+## Derivation from Conditional Probability
 
 Bayes' theorem follows directly from the definition of conditional probability. Recall that:
 
@@ -59,19 +59,19 @@ This form is especially useful in diagnostic and classification problems, where 
 
 For example, suppose $P(A)=0.3$ and $P(B)=0.4$. The diagram below can help visualize the relationship between the events:
 
-![a10438be-8900-4dab-92ce-9c9fcb89875b](https://github.com/djeada/Statistics-Notes/assets/37275728/34f9b564-ba7b-4d70-aa57-ad324c168b82)
+![Figure for Derivation from Conditional Probability](https://github.com/djeada/Statistics-Notes/assets/37275728/34f9b564-ba7b-4d70-aa57-ad324c168b82)
 
 However, these two marginal probabilities alone are not enough to calculate $P(A|B)$. We also need information about how $A$ and $B$ overlap, such as $P(A \cap B)$ or $P(B|A)$.
 
-### Example: Medical Diagnosis
+## Example: Medical Diagnosis
 
-Consider a medical test designed to detect a particular disease. The test has the following characteristics:
+Consider a hypothetical diagnostic test with the characteristics below. These values define a teaching probability model rather than describe a particular clinical test. Assume the rates apply to the population from which the person is selected:
 
 * True positive rate (sensitivity): 95%. If a person has the disease, the test is positive 95% of the time.
 * False positive rate: 5%. If a person does not have the disease, the test is positive 5% of the time.
 * Prevalence of the disease in the general population: 2%.
 
-![9f1ea5e9-cad4-4fc2-a6aa-5fee4f309a2d](https://github.com/djeada/Statistics-Notes/assets/37275728/dbdb3a4d-4f73-4efe-bacb-87a7bab167c7)
+![Figure for Example: Medical Diagnosis](https://github.com/djeada/Statistics-Notes/assets/37275728/dbdb3a4d-4f73-4efe-bacb-87a7bab167c7)
 
 Let $A$ be the event "the person has the disease" and $B$ be the event "the person tests positive."
 
@@ -100,7 +100,7 @@ The given values are:
 * False positive rate: $P(B|A^c) = 0.05$
 * Probability of not having the disease: $P(A^c) = 0.98$
 
-![3a2138ad-9dbb-4b0c-9b5e-8bbaab5d4e70](https://github.com/djeada/Statistics-Notes/assets/37275728/e6d36e01-6d39-4762-b29e-c24d4b8a19d2)
+![Figure for Example: Medical Diagnosis](https://github.com/djeada/Statistics-Notes/assets/37275728/e6d36e01-6d39-4762-b29e-c24d4b8a19d2)
 
 The total probability of a positive test is:
 
@@ -124,9 +124,19 @@ Therefore, given a positive test result, the probability that the person actuall
 
 This example shows why the prevalence of a condition matters. Even a test with high sensitivity can produce a substantial proportion of false positives when the condition itself is rare.
 
-### Example: BSE "Mad Cow" Disease Test
+A frequency table gives the same result without reversing a conditional mentally. In a hypothetical population of 10,000 people, the model gives 200 with the condition and 9,800 without it:
 
-Suppose we want to determine the probability that a cow actually has BSE (Bovine Spongiform Encephalopathy) given that it has tested positive.
+| Group | Positive | Negative | Total |
+|---|---|---|---|
+| Condition present | 190 | 10 | 200 |
+| Condition absent | 490 | 9,310 | 9,800 |
+| Total | 680 | 9,320 | 10,000 |
+
+Among the 680 positives, 190 have the condition, so the desired conditional probability is $190/680\approx0.2794$. Sensitivity instead uses the 200 people with the condition as its denominator: $190/200=0.95$. The shared numerator and different denominators explain why the two percentages differ.
+
+## Example: BSE "Mad Cow" Disease Test
+
+As a second hypothetical calculation, suppose the event of interest is BSE (bovine spongiform encephalopathy) in a cow with a positive test. The rates below are assumed for the example; the calculation illustrates how sensitivity, false-positive rate, and prevalence jointly determine the posterior probability.
 
 Given Quantities:
 
@@ -140,7 +150,7 @@ Here:
 * $B^c$ is the event that the cow does not have BSE,
 * $T$ is the event that the test result is positive.
 
-![bcde4473-8acf-4dd8-a60e-c4a7b551f02d](https://github.com/djeada/Statistics-Notes/assets/37275728/69f47572-5fa7-4365-90f3-983e90340b24)
+![Figure for Example: BSE "Mad Cow" Disease Test](https://github.com/djeada/Statistics-Notes/assets/37275728/69f47572-5fa7-4365-90f3-983e90340b24)
 
 Complementary Probability:
 
@@ -168,7 +178,7 @@ $$
 P(T) = P(T|B) \cdot P(B) + P(T|B^c) \cdot P(B^c)
 $$
 
-![0663c27b-403f-4b28-8a3d-8999625f2bdd](https://github.com/djeada/Statistics-Notes/assets/37275728/51943b61-62d0-4bfb-b5dc-3198d764efdc)
+![Figure for Example: BSE "Mad Cow" Disease Test](https://github.com/djeada/Statistics-Notes/assets/37275728/51943b61-62d0-4bfb-b5dc-3198d764efdc)
 
 Substituting the given values:
 
@@ -192,3 +202,16 @@ $$
 Thus, given a positive BSE test result, the probability that the cow actually has BSE is 12.5%.
 
 As in the medical diagnosis example, the result depends not only on the accuracy of the test but also on the prior prevalence of the disease. When the disease is uncommon, false positives can make up a significant share of all positive test results.
+
+
+## Updating odds separates prevalence from evidence
+
+When the relevant probabilities are positive, dividing the posterior probability of $A$ by that of $A^c$ cancels $P(B)$:
+
+```math
+\frac{P(A\mid B)}{P(A^c\mid B)}
+=\frac{P(B\mid A)}{P(B\mid A^c)}
+\frac{P(A)}{P(A^c)}.
+```
+
+The first ratio on the right is a likelihood ratio. In the first example it is $0.95/0.05=19$, while prior odds are $0.02/0.98=1/49$. Posterior odds are therefore $19/49$, which convert to probability $19/(19+49)=19/68$. Strong evidence multiplies the prior odds; it does not erase the base rate. Applying the same test twice would require the joint conditional behavior of the two results. Squaring the likelihood ratio is justified only with conditional independence given the condition and its absence.

@@ -30,6 +30,16 @@ $$
 
 When $\sigma$ is unknown, this standard error is estimated using the sample standard deviation.
 
+The variance formula follows by expanding the variance of the sum:
+
+```math
+\operatorname{Var}(\bar X)
+=\frac{1}{n^2}\left(\sum_i\operatorname{Var}(X_i)
++2\sum_{i<j}\operatorname{Cov}(X_i,X_j)\right).
+```
+
+Independence makes the covariance terms zero, and equal variances leave $n\sigma^2/n^2$. Positive dependence can make the standard error larger, so counting more rows does not always add as much information as the independent-sample formula suggests. Linearity of expectation, in contrast, does not require independence for $E[\bar X]=\mu$ when each observation has mean $\mu$.
+
 ## Sampling Variability
 
 Two random samples from the same population will rarely produce identical values of $\bar X$, $S^2$, a correlation coefficient, or a regression coefficient. This variability is not a mistake in the calculation; it is an inherent consequence of sampling.
@@ -40,6 +50,12 @@ A sampling distribution answers questions such as:
 - Is it centered on the target parameter?
 - Is its distribution approximately symmetric or skewed?
 - What standardized reference distribution can be used for intervals or tests?
+
+### A small sampling distribution that can be listed exactly
+
+Suppose two independent Bernoulli observations each have success probability $1/2$. The possible ordered samples are $(0,0)$, $(0,1)$, $(1,0)$, and $(1,1)$, each with probability $1/4$. Their means are $0$, $1/2$, $1/2$, and $1$. Thus the sampling distribution assigns probabilities $1/4$, $1/2$, and $1/4$ to those three distinct means.
+
+The individual data distribution has only values zero and one, but the mean's distribution includes one half. Its expectation is $1/2$, and its variance is $1/8=\{(1/2)(1-1/2)\}/2$. This example constructs a sampling distribution without any normal approximation.
 
 ## Bias and Standard Error
 
@@ -63,7 +79,7 @@ Some sampling distributions are available exactly under specific assumptions. Fo
 
 In many other settings the exact distribution is difficult to derive. Large-sample approximations then become important. The **Central Limit Theorem** explains why many standardized sums and averages become approximately normal as the sample size grows under suitable conditions.
 
-Resampling methods provide another route when analytic sampling distributions are unavailable or inconvenient; see **[Resampling & Model Assessment](../resampling_and_model_assessment/README.md)** later in the curriculum.
+Resampling methods provide another route when analytic sampling distributions are unavailable or inconvenient. A bootstrap approximates repeated sampling using an empirical distribution, with the resampling unit chosen to reflect the original design and dependence.
 
 ## Sampling Distribution vs Data Distribution
 
@@ -71,6 +87,6 @@ Do not infer the shape of one directly from the other. A strongly skewed populat
 
 ## From Sampling to Inference
 
-Sampling distributions provide the machinery used later to construct confidence intervals and hypothesis tests. Before doing that, the next unit focuses on **estimators themselves**: what they target and how their quality is judged.
+Sampling distributions connect observed statistics to confidence intervals and hypothesis tests. For any procedure, identify the target parameter, the estimator, and the distribution or approximation used to describe its variation. This makes it possible to assess coverage or error rates under the same model that generated the data.
 
-Continue to **[Central Limit Theorem](central_limit_theorem.md)** and then **[Estimation](../estimation/README.md)**.
+A simulation histogram estimates a sampling distribution; it does not change the distribution by using more simulation repetitions. Sample size controls the statistic being studied, while the number of repetitions controls the accuracy of the simulation summary.

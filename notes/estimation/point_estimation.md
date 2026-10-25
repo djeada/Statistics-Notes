@@ -30,7 +30,7 @@ An estimator is **unbiased** if
 E[\hat\theta]=\theta.
 ```
 
-In other words, across repeated samples, its average value equals the parameter being estimated.
+In other words, across repeated samples generated under the model, its average value equals the parameter being estimated. This is a statement about the rule, not a guarantee that the estimate in the current sample is close to the target. A procedure that overestimates and underestimates by large amounts can still be unbiased if those errors average to zero.
 
 Unbiasedness is useful, but it is not the only desirable property. An unbiased estimator with high variability may be less useful than a slightly biased estimator with substantially lower variance.
 
@@ -80,6 +80,8 @@ E[(\hat\theta-\theta)^2]
 
 This decomposition makes the bias-variance trade-off explicit. An estimator can have some bias yet still achieve a smaller MSE if the reduction in variance is large enough.
 
+To obtain the decomposition, write $\hat\theta-\theta=(\hat\theta-E[\hat\theta])+(E[\hat\theta]-\theta)$ and expand the square. The cross term has expectation zero because $E[\hat\theta-E[\hat\theta]]=0$. The remaining terms are the variance and squared bias. This derivation also shows why both terms must refer to the same target and sampling model.
+
 ## Consistency
 
 An estimator is **consistent** if it converges to the true parameter as the sample size grows. More formally, $\hat\theta_n$ is consistent for $\theta$ if, for every $\varepsilon>0$,
@@ -92,6 +94,8 @@ P(|\hat\theta_n-\theta|>\varepsilon)\to 0
 Informally, as more data become available, the estimator becomes increasingly concentrated near the true parameter.
 
 Consistency is an asymptotic property. A consistent estimator can still perform poorly in small samples, so finite-sample properties such as bias and variance remain important.
+
+One sufficient route to consistency is a mean-squared error tending to zero: Markov's inequality gives $P(|\hat\theta_n-\theta|>\varepsilon)\leq\mathrm{MSE}(\hat\theta_n)/\varepsilon^2$. Thus bias tending to zero together with variance tending to zero is sufficient. Unbiasedness by itself is not sufficient. For example, estimating $\mu$ by the first observation $X_1$ is unbiased for every sample size, but it ignores the additional observations and does not become concentrated as $n$ grows.
 
 ## Method of Moments
 
@@ -121,7 +125,7 @@ Suppose the observed data are $x_1,\ldots,x_n$ and the statistical model has par
 L(\theta;x_1,\ldots,x_n).
 ```
 
-A **maximum-likelihood estimator (MLE)** chooses the parameter value that makes the observed data most likely under the model:
+A **maximum-likelihood estimator (MLE)** chooses a parameter value that maximizes the joint mass or density evaluated at the observed data. For continuous data, a density value is not the probability of observing that exact sample, which is typically zero. It compares how the model distributes probability around the observations. The likelihood varies the parameter while holding the observations fixed:
 
 ```math
 \hat\theta_{\mathrm{MLE}}
@@ -169,6 +173,8 @@ S\log p
 +
 (n-S)\log(1-p).
 ```
+
+For $0<S<n$, differentiating gives $\ell'(p)=S/p-(n-S)/(1-p)$. Equating this to zero yields $S(1-p)=(n-S)p$, hence $p=S/n$. The second derivative is negative, so this stationary point is a maximum. If $S=0$ or $S=n$, there is no interior stationary point; the maximum is at the boundary $p=0$ or $p=1$, respectively.
 
 Maximizing this expression gives
 
@@ -223,13 +229,15 @@ If $X_i\sim\mathrm{Exponential}(\lambda)$ with rate $\lambda$, then $E[X]=1/\lam
 \hat\lambda_{\mathrm{MoM}}=\frac{1}{\bar X}.
 ```
 
-The log-likelihood is $\ell(\lambda)=n\log\lambda-\lambda\sum_i x_i$, whose maximizer is the same value, $\hat\lambda_{\mathrm{MLE}}=1/\bar X$. Although $\bar X$ is unbiased for $1/\lambda$, its reciprocal is not unbiased for $\lambda$:
+The log-likelihood is $\ell(\lambda)=n\log\lambda-\lambda\sum_i x_i$, whose maximizer is the same value, $\hat\lambda_{\mathrm{MLE}}=1/\bar X$. For $n>1$, although $\bar X$ is unbiased for $1/\lambda$, its reciprocal is not unbiased for $\lambda$. A nonlinear transformation does not generally commute with expectation. Here the sum has a gamma distribution, whose inverse moment gives:
 
 ```math
 E\left[\frac{1}{\bar X}\right]=\frac{n}{n-1}\lambda.
 ```
 
 The bias, $\lambda/(n-1)$, shrinks as $n$ grows, so $1/\bar X$ is biased but consistent. The corrected estimator $\frac{n-1}{n\bar X}$ is unbiased.
+
+Both inverse-moment statements require $n>1$. At $n=1$, $E[1/X_1]$ diverges, so a finite bias correction cannot be justified by the displayed expectation. For consistency, the law of large numbers gives $\bar X\to1/\lambda$ in probability, and continuity of the reciprocal at the positive limit gives $1/\bar X\to\lambda$. This argument establishes consistency without claiming finite-sample unbiasedness.
 
 ## Estimation Is Not Yet Inference
 
@@ -241,4 +249,4 @@ To quantify uncertainty, we need additional information about the estimator's sa
 
 These ideas lead naturally to confidence intervals and hypothesis tests.
 
-Continue to **[Hypothesis Testing & Confidence Intervals](../hypothesis_testing_and_confidence_intervals/README.md)**.
+An uncertainty statement should identify the parameter being estimated, the sampling or probability model, and which sources of error the calculation includes.

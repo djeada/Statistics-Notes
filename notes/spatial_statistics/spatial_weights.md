@@ -4,27 +4,19 @@ A spatial weights matrix turns a qualitative statement such as
 
 > “these locations are neighbors”
 
-into a numerical object that can be used in spatial statistics and spatial regression.
-
-For $n$ observations, define
+into a numerical object that can be used in spatial statistics and spatial regression. For $n$ observations, define
 
 $$
 W=[w_{ij}],
 $$
 
-where $w_{ij}$ describes the connection from location $i$ to location $j$.
-
-Usually,
+where $w_{ij}$ describes the connection from location $i$ to location $j$. Usually,
 
 $$
 w_{ii}=0,
 $$
 
-so a location is not treated as its own neighbor.
-
-The spatial weights matrix is not merely bookkeeping. It defines what the analysis means by spatial proximity or connection.
-
-Changing $W$ can change:
+so a location is not treated as its own neighbor. A weights matrix defines which other observations enter a location's neighborhood summary and with what strength. The ordering of its rows and columns must match the ordering of the data vector. A correctly constructed geographic graph paired with a differently sorted data table produces the wrong spatial lag without necessarily producing a numerical error. Retaining stable region identifiers and checking their alignment is therefore part of the model definition. Changing $W$ can change:
 
 - spatial lags;
 - Moran's $I$;
@@ -33,32 +25,15 @@ Changing $W$ can change:
 - admissible SAR parameter values;
 - the scientific interpretation of “neighbor.”
 
-## Learning objectives
+## What the Matrix Adds to the Data
 
-After this chapter, you should be able to:
+Values and coordinates do not uniquely determine a neighborhood graph. Rook and queen contiguity, distance thresholds, nearest neighbors, and distance decay encode different relationships. A useful construction states why those relationships represent the process, how self-links and duplicate locations are treated, and which identifiers define the matrix order.
 
-1. explain what a spatial weights matrix represents;
-2. construct rook and queen contiguity weights;
-3. construct distance-band weights;
-4. construct $k$-nearest-neighbor weights;
-5. explain why directed $k$-NN weights can be asymmetric;
-6. construct inverse-distance weights;
-7. row-standardize a weights matrix;
-8. calculate a spatial lag $Wx$ by hand;
-9. explain the difference between a neighbor sum and a neighbor average;
-10. identify islands and disconnected graph components;
-11. explain why symmetry matters;
-12. perform a sensitivity analysis over plausible weights definitions.
+Normalization then determines what a lag means. Raw binary weights produce a sum; nonnegative rows normalized to one produce an average. This changes how high-degree and low-degree locations contribute. Directed links, disconnected components, and islands can be intentional features of the geography rather than coding errors. Their implications still need to be carried through Moran statistics and spatial regression. The hand calculations below use small matrices to show each operation, while sensitivity analysis asks whether the conclusion depends on a scientifically plausible change in the neighborhood definition.
 
 ## What does a spatial weights matrix represent?
 
-Suppose there are four spatial units:
-
-$$
-A,\ B,\ C,\ D.
-$$
-
-A binary weights matrix might be
+Suppose there are four spatial units: $A,\ B,\ C,\ D$. A binary weights matrix might be
 
 $$
 W=
@@ -91,47 +66,17 @@ The matrix is the numerical representation of the neighborhood graph.
 
 ## The diagonal is usually zero
 
-The diagonal entry
-
-$$
-w_{ii}
-$$
-
-describes the relationship from a location to itself.
-
-For many spatial statistics, the diagonal is set to zero:
+The diagonal entry $w_{ii}$ describes the relationship from a location to itself. For many spatial statistics, the diagonal is set to zero:
 
 $$
 w_{ii}=0.
 $$
 
-Why?
-
-Because the goal is usually to summarize information from other locations.
-
-For example, a spatial lag should describe the neighborhood around location $i$, not reproduce $x_i$ itself.
-
-There are specialized settings in which self-weights are meaningful, but a zero diagonal is the standard default for the methods in this chapter.
+Why? Because the goal is usually to summarize information from other locations. For example, a spatial lag should describe the neighborhood around location $i$, not reproduce $x_i$ itself. There are specialized settings in which self-weights are meaningful, but a zero diagonal is the standard default for the methods in this chapter.
 
 ## Contiguity weights
 
-For polygon data, neighborhood is often defined by shared boundaries.
-
-Let
-
-$$
-A_i
-$$
-
-and
-
-$$
-A_j
-$$
-
-be two polygons.
-
-A binary contiguity weight is
+For polygon data, neighborhood is often defined by shared boundaries. Let $A_i$ and $A_j$ be two polygons. A binary contiguity weight is
 
 $$
 w_{ij} =
@@ -143,11 +88,9 @@ $$
 
 Two common definitions are **rook** and **queen** contiguity.
 
-## Rook contiguity
+### Rook contiguity
 
-Rook contiguity requires two polygons to share an edge of positive length.
-
-Imagine four square cells:
+Rook contiguity requires two polygons to share an edge of positive length. Imagine four square cells:
 
 $$
 \begin{matrix}
@@ -164,9 +107,7 @@ Under rook contiguity:
 - B neighbors D;
 - C neighbors D.
 
-The diagonal contact between A and D does not count.
-
-The binary rook matrix is
+The diagonal contact between A and D does not count. The binary rook matrix is
 
 $$
 W_R=
@@ -178,16 +119,14 @@ W_R=
 \end{bmatrix}.
 $$
 
-## Queen contiguity
+### Queen contiguity
 
 Queen contiguity counts either:
 
 - a shared edge;
 - a shared vertex.
 
-For the same $2\times2$ grid, every cell touches all three other cells either by an edge or a corner.
-
-Therefore
+For the same $2\times2$ grid, every cell touches all three other cells either by an edge or a corner. Therefore
 
 $$
 W_Q=
@@ -201,13 +140,11 @@ $$
 
 ![Rook versus queen contiguity](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/02_rook_vs_queen.png)
 
-### Why does this matter?
+#### Why does this matter?
 
-Rook and queen contiguity define different neighborhoods.
+Rook and queen contiguity define different neighborhoods. If a spatial statistic changes substantially between them, the result is sensitive to whether corner-touching regions are treated as connected.
 
-If a spatial statistic changes substantially between them, the result is sensitive to whether corner-touching regions are treated as connected.
-
-## Worked rook spatial lag
+### Worked rook spatial lag
 
 Use the rook matrix
 
@@ -233,13 +170,7 @@ x=
 \end{bmatrix}.
 $$
 
-The unstandardized spatial lag is
-
-$$
-W_Rx.
-$$
-
-For A,
+The unstandardized spatial lag is $W_Rx$. For A,
 
 $$
 (W_Rx)_A =
@@ -289,9 +220,7 @@ These are neighbor sums, not neighbor averages.
 
 ## Row standardization
 
-A common transformation divides each nonzero row by its row sum.
-
-If
+A common transformation divides each nonzero row by its row sum. If
 
 $$
 s_i=\sum_jw_{ij},
@@ -312,27 +241,11 @@ $$
 \sum_jw_{ij}^{(R)}=1.
 $$
 
-This changes the numerical meaning of $W$.
+This changes the numerical meaning of $W$. For nonnegative weights and a positive row sum, row standardization creates a convex weighted average: the lag lies between the smallest and largest neighboring values. Multiplying every raw weight in a row by the same positive constant leaves this average unchanged. Relative weights within the row still matter. By contrast, raw lags preserve differences in total connection strength, so the two versions answer different questions about neighborhood influence. It is a modeling choice, not merely a computational trick.
 
-It is a modeling choice, not merely a computational trick.
+### Worked row-standardization example
 
-## Worked row-standardization example
-
-In the rook matrix above, every cell has two neighbors.
-
-The first row is
-
-$$
-[0,1,1,0].
-$$
-
-Its row sum is
-
-$$
-2.
-$$
-
-After row standardization,
+In the rook matrix above, every cell has two neighbors. The first row is $[0,1,1,0]$. Its row sum is $2$. After row standardization,
 
 $$
 [0,1,1,0]
@@ -354,15 +267,9 @@ W_R^{(R)} =
 \end{bmatrix}.
 $$
 
-## Row-standardized spatial lag
+### Row-standardized spatial lag
 
-Now compute
-
-$$
-W_R^{(R)}x.
-$$
-
-For A,
+Now compute $W_R^{(R)}x$. For A,
 
 $$
 (W_R^{(R)}x)_A =
@@ -411,43 +318,15 @@ $$
 
 This is why row-standardized binary weights are often described as producing a neighbor average.
 
-## Binary versus row-standardized weights
+### Binary versus row-standardized weights
 
-For binary weights,
-
-$$
-(Wx)_i
-$$
-
-grows partly with the number of neighbors.
-
-A region with eight neighbors can receive a much larger raw lag than a region with two neighbors even when their neighboring values have similar magnitudes.
-
-For row-standardized weights,
-
-$$
-(W^{(R)}x)_i
-$$
-
-is instead a weighted average.
-
-These two forms encode different ideas.
-
-Neither is automatically appropriate in every application.
+For binary weights, $(Wx)_i$ grows partly with the number of neighbors. A region with eight neighbors can receive a much larger raw lag than a region with two neighbors even when their neighboring values have similar magnitudes. For row-standardized weights, $(W^{(R)}x)_i$ is instead a weighted average. These two forms encode different ideas. Neither is automatically appropriate in every application.
 
 ![Neighbor sum versus neighbor average](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/03_binary_vs_row_standardized.png)
 
 ## Distance-band weights
 
-For point coordinates, define
-
-$$
-d_{ij}
-$$
-
-as the distance between locations $i$ and $j$.
-
-A distance-band matrix can be defined as
+For point coordinates, define $d_{ij}$ as the distance between locations $i$ and $j$. A distance-band matrix can be defined as
 
 $$
 \boxed{w_{ij}=\mathbf{1}_{\{0<d_{ij}\le d_0\}}}
@@ -455,7 +334,7 @@ $$
 
 Locations are treated as neighbors when they lie within the threshold $d_0$.
 
-## Worked distance-band example
+### Worked distance-band example
 
 Suppose four locations lie on a line:
 
@@ -469,9 +348,7 @@ C=3,
 D=7
 $$
 
-in kilometers.
-
-Use threshold
+in kilometers. Use threshold
 
 $$
 d_0=2.5\text{ km}.
@@ -514,19 +391,11 @@ W=
 \end{bmatrix}.
 $$
 
-Location D has no neighbors.
+Location D has no neighbors. D is an **island**.
 
-D is an **island**.
+### Threshold choice matters
 
-## Threshold choice matters
-
-If the threshold changes from
-
-$$
-2.5
-$$
-
-to
+If the threshold changes from $2.5$ to
 
 $$
 4.5\text{ km},
@@ -537,9 +406,7 @@ additional links appear:
 - A-C becomes connected;
 - C-D becomes connected.
 
-The graph can change substantially after a modest change in the threshold.
-
-Therefore a threshold should be based on:
+The graph can change substantially after a modest change in the threshold. Therefore a threshold should be based on:
 
 - process scale;
 - measurement geometry;
@@ -550,21 +417,15 @@ It should not be chosen simply because it produces a desired statistical result.
 
 ## $k$-nearest-neighbor weights
 
-A $k$-nearest-neighbor rule connects each observation to its $k$ closest other observations.
-
-For example, with
+A $k$-nearest-neighbor rule connects each observation to its $k$ closest other observations. For example, with
 
 $$
 k=2,
 $$
 
-every location sends connections to its two nearest neighbors.
+every location sends connections to its two nearest neighbors. This is useful when sampling density varies across space. Unlike a fixed distance band, $k$-NN gives every location at least $k$ neighbors as long as there are at least $k+1$ observations, so it creates no islands. (It can still produce disconnected components.)
 
-This is useful when sampling density varies across space.
-
-Unlike a fixed distance band, $k$-NN gives every location at least $k$ neighbors as long as there are at least $k+1$ observations, so it creates no islands. (It can still produce disconnected components.)
-
-## Directed $k$-NN weights can be asymmetric
+### Directed $k$-NN weights can be asymmetric
 
 Suppose three points lie at
 
@@ -582,13 +443,7 @@ $$
 k=1,
 $$
 
-A's nearest neighbor is B.
-
-B's nearest neighbor is A.
-
-C's nearest neighbor is B.
-
-Therefore:
+A's nearest neighbor is B. B's nearest neighbor is A. C's nearest neighbor is B. Therefore:
 
 $$
 w_{CB}=1,
@@ -608,15 +463,13 @@ $$
 
 ![Directed k-nearest neighbors](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/04_knn_asymmetry.png)
 
-This asymmetry is not an error.
+This asymmetry is not an error. It follows from the directed nearest-neighbor rule.
 
-It follows from the directed nearest-neighbor rule.
-
-## Symmetrizing $k$-NN weights
+### Symmetrizing $k$-NN weights
 
 A directed $k$-NN graph can be symmetrized in different ways.
 
-### Union rule
+#### Union rule
 
 Locations $i$ and $j$ are connected if either selects the other:
 
@@ -629,7 +482,7 @@ w_{ij}=1
 w_{ji}=1.
 $$
 
-### Mutual rule
+#### Mutual rule
 
 They are connected only if both select one another:
 
@@ -640,15 +493,11 @@ w_{ij}^{(M)} =
 w_{ij}=w_{ji}=1.
 $$
 
-These rules produce different graphs.
-
-Always state which convention is used.
+These rules produce different graphs. Always state which convention is used.
 
 ## Distance-decay weights
 
-Instead of using a binary decision, distance can enter continuously.
-
-A common form is
+Instead of using a binary decision, distance can enter continuously. A common form is
 
 $$
 \boxed{
@@ -657,21 +506,13 @@ d_{ij}^{-\alpha}
 }
 $$
 
-for
-
-$$
-i\neq j.
-$$
-
-With
+for $i\neq j$. With
 
 $$
 \alpha=1,
 $$
 
-the weight is inverse distance.
-
-With
+the weight is inverse distance. With
 
 $$
 \alpha=2,
@@ -679,7 +520,7 @@ $$
 
 weights decay faster.
 
-## Worked inverse-distance example
+### Worked inverse-distance example
 
 Suppose location A has two neighbors at distances
 
@@ -759,7 +600,7 @@ $$
 
 The closer neighbor therefore receives twice as much weight.
 
-## Coincident points need a safeguard
+### Coincident points need a safeguard
 
 For inverse-distance weights,
 
@@ -767,9 +608,7 @@ $$
 w_{ij}=d_{ij}^{-\alpha},
 $$
 
-a zero distance would cause division by zero.
-
-This can occur if:
+a zero distance would cause division by zero. This can occur if:
 
 - duplicate coordinates exist;
 - several observations share a centroid;
@@ -814,25 +653,11 @@ $$
 
 It is a weighted summary of values at connected locations.
 
-## Spatial lag is not always a mean
+### Spatial lag is not always a mean
 
-The phrase “neighbor average” is correct only when the weights in a row sum to 1.
+The phrase “neighbor average” is correct only when the weights in a row sum to 1. For binary unstandardized weights, $(Wx)_i$ is a neighbor sum. For inverse-distance weights without row standardization, it is a weighted sum. For row-standardized weights, it is a weighted average. This distinction matters when interpreting the resulting values.
 
-For binary unstandardized weights,
-
-$$
-(Wx)_i
-$$
-
-is a neighbor sum.
-
-For inverse-distance weights without row standardization, it is a weighted sum.
-
-For row-standardized weights, it is a weighted average.
-
-This distinction matters when interpreting the resulting values.
-
-## Centered spatial lag
+### Centered spatial lag
 
 For Moran's $I$, define centered observations
 
@@ -840,25 +665,15 @@ $$
 z_i=x_i-\bar x.
 $$
 
-Then calculate
-
-$$
-Wz.
-$$
-
-When the weights are row-standardized, a positive value
+Then calculate $Wz$. When the weights are row-standardized, a positive value
 
 $$
 (Wz)_i>0
 $$
 
-means that the neighborhood average is above the global mean.
+means that the neighborhood average is above the global mean. A negative value means the neighborhood is below the global mean. This interpretation leads directly to the Moran scatterplot.
 
-A negative value means the neighborhood is below the global mean.
-
-This interpretation leads directly to the Moran scatterplot.
-
-## Worked centered-lag example
+### Worked centered-lag example
 
 Use
 
@@ -916,19 +731,13 @@ A therefore falls in the low-low quadrant of a Moran scatterplot.
 
 ## Islands
 
-An **island** is a location with no neighbors under the chosen weights definition.
-
-Mathematically,
+An **island** is a location with no neighbors under the chosen weights definition. Mathematically,
 
 $$
 \sum_jw_{ij}=0.
 $$
 
-For that row, ordinary row standardization would require division by zero.
-
-An explicit convention is therefore needed.
-
-Common options include:
+For that row, ordinary row standardization would require division by zero. An explicit convention is therefore needed. Common options include:
 
 - increase a distance threshold;
 - use $k$-nearest neighbors;
@@ -938,31 +747,19 @@ Common options include:
 
 ![Island created by a small distance band](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/05_islands_and_components.png)
 
-## What happens if an island row remains zero?
+### What happens if an island row remains zero?
 
-Suppose row $i$ is
-
-$$
-[0,0,\ldots,0].
-$$
-
-Then
+Suppose row $i$ is $[0,0,\ldots,0]$. Then
 
 $$
 (Wx)_i=0.
 $$
 
-But zero here does not mean that the neighbors average to zero.
+But zero here does not mean that the neighbors average to zero. It means that the chosen weights definition provides no neighbor information for that location. That distinction should be handled carefully in both plots and models.
 
-It means that the chosen weights definition provides no neighbor information for that location.
+### Disconnected components
 
-That distinction should be handled carefully in both plots and models.
-
-## Disconnected components
-
-A graph can contain several internally connected groups with no links between them.
-
-For example,
+A graph can contain several internally connected groups with no links between them. For example,
 
 $$
 A-B-C
@@ -974,11 +771,7 @@ $$
 D-E-F
 $$
 
-may form two disconnected components.
-
-This is not automatically a problem.
-
-It may represent:
+may form two disconnected components. This is not automatically a problem. It may represent:
 
 - separate islands;
 - separate ecological systems;
@@ -994,17 +787,13 @@ $$
 w_{ij}=w_{ji}
 $$
 
-for every pair.
-
-Binary rook contiguity is naturally symmetric:
+for every pair. Binary rook contiguity is naturally symmetric:
 
 > If A shares an edge with B, B shares an edge with A.
 
-Euclidean distance-band weights are also symmetric.
+Euclidean distance-band weights are also symmetric. Directed $k$-NN weights need not be symmetric.
 
-Directed $k$-NN weights need not be symmetric.
-
-## Why symmetry matters
+### Why symmetry matters
 
 Symmetry can affect:
 
@@ -1014,11 +803,9 @@ Symmetry can affect:
 - interpretation of neighborhood influence;
 - the admissible parameter range in SAR models.
 
-After row standardization, even a matrix that began symmetric may no longer be numerically symmetric when regions have different neighbor counts.
+After row standardization, even a matrix that began symmetric may no longer be numerically symmetric when regions have different neighbor counts. This distinction is important.
 
-This distinction is important.
-
-## Row standardization can destroy symmetry
+### Row standardization can destroy symmetry
 
 Suppose the original binary matrix has
 
@@ -1046,9 +833,15 @@ w_{ij}^{(R)}
 w_{ji}^{(R)}.
 $$
 
-The binary graph is symmetric, but the standardized numerical matrix is not.
+The binary graph is symmetric, but the standardized numerical matrix is not. Let $A$ be a symmetric nonnegative adjacency matrix and $D$ its diagonal matrix of positive degrees. The row-standardized matrix is $D^{-1}A$, which is generally asymmetric, but it is similar to the symmetric matrix $D^{-1/2}AD^{-1/2}$:
 
-## Degree and neighbor count
+```math
+D^{1/2}(D^{-1}A)D^{-1/2}=D^{-1/2}AD^{-1/2}.
+```
+
+Thus it still has real eigenvalues in this special case. A genuinely directed graph need not have this property. Isolated rows require separate treatment because $D^{-1}$ is undefined there. Numerical asymmetry and a directed underlying graph should therefore be distinguished.
+
+### Degree and neighbor count
 
 For a binary graph, the degree of location $i$ is
 
@@ -1057,11 +850,7 @@ $$
 \sum_jw_{ij}.
 $$
 
-It is the number of neighbors for that location.
-
-Mapping or plotting degree is a useful diagnostic.
-
-Very high degree can indicate:
+It is the number of neighbors for that location. Mapping or plotting degree is a useful diagnostic. Very high degree can indicate:
 
 - dense urban sampling;
 - large polygons;
@@ -1075,7 +864,7 @@ Very low degree can indicate:
 
 ![Neighbor count under different constructions](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/06_neighbor_count.png)
 
-## Distance thresholds and graph connectivity
+### Distance thresholds and graph connectivity
 
 As the threshold $d_0$ increases:
 
@@ -1084,49 +873,29 @@ As the threshold $d_0$ increases:
 - components merge;
 - average degree increases.
 
-At very large thresholds, nearly every observation may become connected to every other observation.
+At very large thresholds, nearly every observation may become connected to every other observation. At that point, the weights matrix can lose much of its local spatial meaning. The goal is not simply to maximize connectivity. The graph should represent the scientifically relevant interaction scale.
 
-At that point, the weights matrix can lose much of its local spatial meaning.
+Connectivity is a property of represented paths, not proof that all locations interact physically. A mutual nearest-neighbor rule can reintroduce islands even when the original directed k-nearest-neighbor graph had none. For distance-band weights, distinct observations at identical coordinates also require a decision: the condition $0<d_{ij}$ excludes them as well as excluding self-links. If repeated measurements at one site are meaningful, represent that relationship explicitly rather than silently discarding it.
 
-The goal is not simply to maximize connectivity.
+### $k$-NN and variable physical scale
 
-The graph should represent the scientifically relevant interaction scale.
-
-## $k$-NN and variable physical scale
-
-A $k$-NN rule fixes the number of neighbors but not the distance to them.
-
-In a dense city, the fifth nearest neighbor might be
+A $k$-NN rule fixes the number of neighbors but not the distance to them. In a dense city, the fifth nearest neighbor might be
 
 $$
 200\text{ m}
 $$
 
-away.
-
-In a sparse rural area, the fifth nearest neighbor might be
+away. In a sparse rural area, the fifth nearest neighbor might be
 
 $$
 20\text{ km}
 $$
 
-away.
+away. Thus, $k$-NN fixes each location's number of selected neighbors (its out-degree; in-degree can still vary) at the cost of allowing the physical scale to vary. This tradeoff should be considered in light of the scientific process.
 
-Thus, $k$-NN fixes each location's number of selected neighbors (its out-degree; in-degree can still vary) at the cost of allowing the physical scale to vary.
+### Distance band and variable degree
 
-This tradeoff should be considered in light of the scientific process.
-
-## Distance band and variable degree
-
-A distance band makes the opposite tradeoff.
-
-It fixes the physical scale but allows the number of neighbors to vary.
-
-Dense regions may have many neighbors.
-
-Sparse regions may have few or none.
-
-This can be appropriate when the process has a meaningful interaction radius.
+A distance band makes the opposite tradeoff. It fixes the physical scale but allows the number of neighbors to vary. Dense regions may have many neighbors. Sparse regions may have few or none. This can be appropriate when the process has a meaningful interaction radius.
 
 ## Spatial weights are part of the model
 
@@ -1138,19 +907,11 @@ Suppose Moran's $I$ is calculated with:
 - $k=8$;
 - 5 km threshold.
 
-These are not repeated calculations of one universal statistic.
-
-They answer related but different questions because each defines a different neighborhood structure.
-
-Similarly, a SAR model using $W_1$ is not the same model as a SAR model using $W_2$.
+These are not repeated calculations of one universal statistic. They answer related but different questions because each defines a different neighborhood structure. Similarly, a SAR model using $W_1$ is not the same model as a SAR model using $W_2$.
 
 ## Sensitivity analysis
 
-There is rarely a single uniquely correct $W$.
-
-A strong analysis examines scientifically plausible alternatives.
-
-For example:
+There is rarely a single uniquely correct $W$. A strong analysis examines scientifically plausible alternatives. For example:
 
 $$
 W_1=\text{rook adjacency},
@@ -1173,7 +934,7 @@ Then compare:
 
 ![Sensitivity of spatial lag to W](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_weights/07_weights_sensitivity.png)
 
-## Numerical sensitivity example
+### Numerical sensitivity example
 
 Suppose a location has value
 
@@ -1181,26 +942,14 @@ $$
 x_A=10.
 $$
 
-Under rook contiguity, its neighbors have values
-
-$$
-8,\ 12.
-$$
-
-The row-standardized lag is
+Under rook contiguity, its neighbors have values $8,\ 12$. The row-standardized lag is
 
 $$
 \frac{8+12}{2} =
 10.
 $$
 
-Under queen contiguity, suppose an additional diagonal neighbor has value
-
-$$
-20.
-$$
-
-Then the lag becomes
+Under queen contiguity, suppose an additional diagonal neighbor has value $20$. Then the lag becomes
 
 $$
 \frac{8+12+20}{3} =
@@ -1229,37 +978,43 @@ A weights matrix should be inspected like any other major model input.
 
 ## Common mistakes
 
-### saying only “we used spatial weights”
+### Saying only “we used spatial weights”
 
 Always state explicitly how $W$ was constructed.
 
-### treating row standardization as harmless
+### Treating row standardization as harmless
 
 It changes the interpretation from a raw neighbor sum to a relative weighting or average.
 
-### assuming $k$-NN is symmetric
+### Assuming $k$-NN is symmetric
 
 Directed nearest-neighbor relationships can be one-way.
 
-### ignoring islands
+### Ignoring islands
 
 Rows with zero neighbors require an explicit convention.
 
-### using a huge distance threshold only to eliminate islands
+### Using a huge distance threshold only to eliminate islands
 
 This can create scientifically meaningless long-distance links.
 
-### treating centroid distance as the only meaningful polygon relationship
+### Treating centroid distance as the only meaningful polygon relationship
 
 Adjacency, road links, flow networks, or travel time may be more appropriate.
 
-### forgetting that row standardization can destroy numerical symmetry
+### Forgetting that row standardization can destroy numerical symmetry
 
 The underlying graph may be symmetric while the standardized weights are not.
 
-### choosing $W$ only because it gives the strongest significance
+### Choosing $W$ only because it gives the strongest significance
 
 Weights should be justified independently of the desired result.
+
+## A Neighborhood Matrix Is Not Automatically a Covariance
+
+A symmetric adjacency matrix can have negative eigenvalues and need not be positive semidefinite. It therefore cannot generally be used directly as a covariance matrix. A spatial error model derives a valid covariance through a transformation of independent innovations, while a covariance function is constructed to satisfy validity conditions on the spatial domain. Both can use geographic information, but they are different mathematical objects.
+
+For nonnegative row-standardized weights without islands, $W\mathbf1=\mathbf1$. Consequently $W(x-\bar x\mathbf1)=Wx-\bar x\mathbf1$, which explains the centered-lag interpretation below. At an island row left at zero, this identity does not hold in that form: the zero lag represents missing neighborhood information, not a neighborhood centered exactly at the global mean.
 
 ## Connection to Moran's I
 
@@ -1281,11 +1036,7 @@ $$
 S_0=\sum_i\sum_jw_{ij}.
 $$
 
-The weights matrix enters directly into the numerator.
-
-Changing $W$ therefore changes the statistic.
-
-This is why Moran's $I$ cannot be interpreted without specifying the weights matrix.
+The weights matrix enters directly into the numerator. Changing $W$ therefore changes the statistic. This is why Moran's $I$ cannot be interpreted without specifying the weights matrix.
 
 ## Connection to spatial regression
 
@@ -1301,13 +1052,7 @@ $$
 y=\rho Wy+X\beta+\varepsilon.
 $$
 
-The scientific meaning of $\lambda$ and $\rho$ therefore depends on what $W$ represents.
-
-If $W$ means shared borders, the model propagates across shared borders.
-
-If $W$ means nearest neighbors, it propagates through that graph.
-
-The matrix defines the geometry through which spatial influence is represented.
+The scientific meaning of $\lambda$ and $\rho$ therefore depends on what $W$ represents. If $W$ means shared borders, the model propagates across shared borders. If $W$ means nearest neighbors, it propagates through that graph. The matrix defines the geometry through which spatial influence is represented.
 
 ## Complete worked example
 
@@ -1344,9 +1089,7 @@ W=
 \end{bmatrix}.
 $$
 
-Every row has sum 2.
-
-So row standardization gives
+Every row has sum 2. So row standardization gives
 
 $$
 W^{(R)} =
@@ -1402,73 +1145,13 @@ $$
 
 This example contains the main logic needed for the next chapter on spatial autocorrelation.
 
-## Concept map
+## Connecting a Graph to a Statistical Conclusion
 
-The workflow is
+Start with spatial geometry and a substantive connection rule, construct the matrix in the data's identifier order, and inspect its degree distribution, components, islands, and symmetry. Then choose whether total connection strength or relative neighbor weighting is the relevant quantity. Calculating a lag before making that choice risks interpreting a sum as an average.
 
-$$
-\text{spatial geometry}
-$$
+The same matrix can enter a descriptive statistic or a stochastic model, but its role differs. In Moran's I it weights products of centered observations. In an error model it describes paths through which disturbances propagate. In a lag model it links jointly determined outcomes. The meaning of an estimated dependence parameter therefore depends on the construction and normalization of W.
 
-$$
-\downarrow
-$$
-
-$$
-\text{define scientific neighbor relation}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{construct }W
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{inspect islands, degree, components, symmetry}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{choose raw or standardized weighting}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{calculate }Wx
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{use }W\text{ in Moran, local statistics, or spatial models}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{check sensitivity to reasonable alternatives}.
-$$
-
-The central idea is:
-
-> A spatial weights matrix is a mathematical statement about which locations can influence or summarize one another.
+Sensitivity analysis should vary scientifically defensible choices, explain what relationship each represents, and report the resulting changes in lags, diagnostics, coefficients, or predictions. Choosing the graph only after inspecting which result is most significant changes the selection procedure and weakens an unadjusted inferential claim.
 
 ## Questions students should be able to answer
 
@@ -1487,4 +1170,3 @@ The central idea is:
 13. How do distance bands and $k$-NN rules differ in physical interpretation?
 14. Why should conclusions be checked across plausible $W$ choices?
 15. Why must the construction of $W$ be reported when presenting Moran's $I$?
-

@@ -1,6 +1,6 @@
 # Evaluation Metrics
 
-Evaluation metrics are essential tools for assessing the performance of statistical and machine learning models. They provide quantitative measures that help us understand how well a model is performing and where improvements can be made. In both classification and regression tasks, selecting appropriate evaluation metrics is crucial for model selection, tuning, and validation.
+An evaluation metric turns predictions and observed outcomes into a numerical answer to a particular question. Accuracy measures correct decisions at a threshold; AUC measures ordering; log loss measures probabilistic predictions; absolute and squared errors assign different costs to numerical misses. No single score answers all of these questions. Choose the target and evaluation sample before comparing models, and keep fitting, tuning, and final assessment separate.
 
 ## Classification Metrics
 
@@ -17,8 +17,10 @@ A **confusion matrix** is a tabular representation of the performance of a class
 
 - A **true positive (TP)** occurs when the model correctly predicts a positive class.
 - A **true negative (TN)** happens when the model correctly predicts a negative class.
-- A **false positive (FP)** means the model incorrectly predicts a positive class, which is also known as a Type I error.
-- A **false negative (FN)** refers to the model incorrectly predicting a negative class, known as a Type II error.
+- A **false positive (FP)** is an actually negative case predicted positive.
+- A **false negative (FN)** is an actually positive case predicted negative.
+
+These resemble Type I and Type II decisions when the negative state represents a null hypothesis, but classification counts are not themselves significance levels or test powers. The conditioning populations and decision procedures must be specified before transferring those inferential terms.
 
 ### Key Metrics Derived from the Confusion Matrix
 
@@ -40,7 +42,7 @@ $$
 \text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}
 $$
 
-High precision indicates a low rate of false positives.
+High precision means a small fraction of predicted positives are false positives. Its complement, $FP/(TP+FP)$, differs from the false-positive rate $FP/(FP+TN)$, which conditions on actually negative cases. Precision can change when prevalence changes even if sensitivity and specificity stay constant.
 
 #### Recall (Sensitivity or True Positive Rate)
 
@@ -61,6 +63,8 @@ $$
 $$
 
 High specificity indicates a low rate of false positives.
+
+If the positive prevalence is $\pi$, sensitivity is $s$, and false-positive rate is $f$, then precision is $\pi s/[\pi s+(1-\pi)f]$. For example, sensitivity 0.9 and false-positive rate 0.1 give precision 0.9 in a balanced population, but only about 0.083 when prevalence is 0.01. This calculation explains why class balance and the evaluation population must accompany a precision score.
 
 #### F1 Score
 
@@ -146,14 +150,14 @@ $$
 
 The **Area Under the ROC Curve (AUC-ROC)** is a single scalar value summarizing the model's ability to discriminate between positive and negative classes. An AUC of:
 
-- **1.0**: Perfect classifier.
+- **1.0**: Perfect ranking on the evaluated cases; this does not imply calibrated probabilities or a suitable chosen threshold.
 - **0.5**: No discriminative ability (equivalent to random guessing).
 - **Less than 0.5**: Worse than random guessing (the scores may be inverted).
 
 #### Interpretation
 
 - A higher AUC indicates better model performance.
-- The ROC curve helps in selecting the optimal threshold that balances sensitivity and specificity.
+- An ROC curve displays threshold trade-offs, but it does not identify an optimal threshold without costs, prevalence, or an operational constraint. For a score, AUC can be interpreted as $P(S_+>S_-)+\tfrac12P(S_+=S_-)$, giving half credit to ties. It is a ranking property rather than a calibration measure.
 
 ### Precision-Recall Curve and AUC
 
@@ -161,6 +165,20 @@ In cases of imbalanced datasets, the **Precision-Recall (PR) curve** is more inf
 
 - The **Area Under the PR Curve (AUC-PR)** provides a summary metric that is sensitive to class imbalance. A no-skill classifier has an AUC-PR equal to the positive-class prevalence (not 0.5).
 - A higher area under the PR curve indicates better performance in identifying the positive class.
+
+The prevalence baseline is a population-level reference for an uninformative ranking, rather than an exact finite-sample identity for every numerical integration convention. Average precision summarizes precision at recall increments, while trapezoidal PR area interpolates linearly between plotted points. They can produce different values from the same scores, so report the definition. Precision is undefined with no predicted positives, recall with no actual positives, and some AUC calculations require both classes. Any convention that replaces such undefined values should be stated.
+
+### Probability Quality: Log Loss and Calibration
+
+For binary outcomes $y_i$ and predicted probabilities $p_i$, log loss is
+
+```math
+-\frac1n\sum_i\{y_i\log p_i+(1-y_i)\log(1-p_i)\}.
+```
+
+Lower values are better. A confidently wrong probability incurs a large loss; exact zero assigned to an observed event gives infinite loss. Numerical clipping prevents undefined floating-point operations but changes that boundary behavior and should use a documented convention. The Brier score, $n^{-1}\sum_i(y_i-p_i)^2$, is another probability loss.
+
+Calibration asks whether events predicted near probability $p$ occur about fraction $p$ of the time. A model can rank cases well while systematically overstating all probabilities. AUC cannot detect every such distortion because monotonic score transformations preserve ranking. Threshold metrics also discard the distinction between, for example, probabilities 0.51 and 0.99 once both are classified positive.
 
 ## Regression Metrics
 
@@ -218,6 +236,8 @@ Where:
 
 - MAE is robust to outliers compared to MSE because it does not square the errors.
 - It gives a straightforward measure of average error magnitude.
+
+Absolute loss targets a conditional median: moving a proposed value slightly upward decreases loss for observations above it and increases loss for observations below it, so a median balances the two sides. Squared loss instead targets a conditional mean. The choice of metric therefore changes the best possible prediction, rather than merely changing the display units of one universal notion of accuracy.
 
 #### Mean Squared Error (MSE)
 
@@ -321,7 +341,7 @@ Where:
 
 **Interpretation**:
 
-- Adjusted $R^2$ increases only if adding a predictor raises $R^2$ by more than would be expected from a pure-noise predictor (equivalently, if the new term has $|t|>1$).
+- For nested OLS models on the same observations with an intercept, adding one coefficient increases adjusted $R^2$ exactly when its partial $F=t^2$ exceeds one. This is a model-comparison threshold, not proof that the predictor contains signal. More generally, the corresponding partial F for the added block must exceed one.
 - It can be negative and is not a substitute for out-of-sample validation.
 - It can be used for model selection, especially when comparing models with different numbers of predictors.
 
@@ -437,3 +457,6 @@ $$
 - A very high **$R^2$** does not necessarily indicate that the model generalizes well to new data, so always check for **overfitting** by validating the model on unseen data.
 - Perform **residual analysis** by examining residual plots to ensure assumptions of linearity, homoscedasticity (constant variance), and normality of errors are met.
 - Use **adjusted $R^2$** when comparing models with different numbers of predictors, as it accounts for model complexity.
+
+
+When reporting multiclass classification metrics, specify how classes are aggregated. Macro averaging weights classes equally, micro averaging pools the underlying decisions, and support-weighted averaging weights classes by observed frequency. These answer different questions and can conceal different failures. For regression, $R^2$ is undefined when the evaluated outcomes have zero total variation; some software supplies a finite convenience value, which should not be mistaken for the literal ratio in the formula.

@@ -1,30 +1,15 @@
 # Regression
 
-Regression models a response variable conditionally on one or more predictors. This unit builds on joint distributions, estimation, confidence intervals, and hypothesis testing.
+Regression models a response conditional on one or more predictors. The target can be a numerical conditional mean, such as expected sales at a given price, or a conditional probability, such as the probability of purchase. Choosing the response and predictors gives the model a direction that correlation alone does not have.
 
-## Prerequisites
+## Mean structure and unexplained variation
 
-- **[Joint Distributions & Covariance](../joint_distributions_and_covariance/README.md)** for covariance, correlation, and conditional distributions.
-- **[Estimation](../estimation/README.md)** for estimator concepts.
-- **[Hypothesis Testing & Confidence Intervals](../hypothesis_testing_and_confidence_intervals/README.md)** for standard errors, intervals, tests, and F/t reference distributions.
+A linear regression writes the response as a systematic component plus an error. Least squares chooses coefficients that minimize squared residuals in the observed data. The model errors are unobserved deviations from the population mean; residuals are fitted deviations and inherit constraints from the fitting procedure.
 
-## Reading Order
+With several predictors, each coefficient describes an association conditional on the other included predictors. The interpretation depends on coding, units, interactions, and whether the data contain comparable observations at the predictor combinations being discussed. Multicollinearity can make individual coefficients unstable even when fitted values are reasonably stable.
 
-1. **[Simple Linear Regression](simple_linear_regression.md)** — one predictor, least squares, residuals, fit, and slope inference.
-2. **[Multiple Regression](multiple_regression.md)** — several predictors, partial effects, confounding, multicollinearity, and model interpretation.
-3. **[Analysis of Variance](analysis_of_variance.md)** — group comparisons understood through sums of squares and F tests; closely related to linear regression.
-4. **[Logistic Regression](logistic_regression.md)** — conditional probabilities for binary outcomes using a generalized linear-model perspective.
+## Comparing models and predicting outcomes
 
-## Conceptual Boundaries
+ANOVA represents group differences with indicator predictors and compares nested mean models through sums of squares. Logistic regression uses a linear predictor for log odds, which keeps fitted probabilities between zero and one. Its coefficients act multiplicatively on odds rather than additively on probability.
 
-**Correlation is not regression.** Correlation is symmetric; regression distinguishes response and predictors and models a conditional quantity such as $E[Y\mid X=x]$ or $P(Y=1\mid X=x)$.
-
-**Residuals are not errors.** Model errors are unobserved random variables; residuals are computed after fitting and are used for diagnostics.
-
-**Fitting is not model assessment.** A model can fit the observed sample well and still generalize poorly. Out-of-sample validation, cross-validation, model-selection cautions, and predictive metrics live in **[Resampling & Model Assessment](../resampling_and_model_assessment/README.md)**.
-
-**Association is not causation.** Regression coefficients become causal only under a suitable design or explicit causal assumptions.
-
-## Next
-
-Continue to **[Resampling & Model Assessment](../resampling_and_model_assessment/README.md)** before moving to dependent-data models such as time series.
+Standard errors and hypothesis tests describe uncertainty under a model; residual plots help assess mean and variance assumptions; held-out evaluation assesses prediction on new data. These are related tasks with different targets. Strong training fit does not establish good future prediction, and a statistically precise coefficient does not establish a causal effect. Causal conclusions require a suitable design or assumptions about treatment assignment, confounding, and selection in addition to the regression equation.

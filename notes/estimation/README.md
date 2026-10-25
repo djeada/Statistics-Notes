@@ -1,20 +1,15 @@
 # Estimation
 
-Estimation turns sample information into numerical guesses about unknown population parameters. This unit comes after sampling distributions because estimator quality is defined through repeated-sample behavior.
+Estimation uses observed data to learn the value of an unknown population or model parameter. The parameter could be a mean, a success probability, a variance, or a regression coefficient. An estimator is a rule applied to a possible sample; an estimate is the number obtained from the sample that was actually collected.
 
-## Reading Order
+## How an estimator is evaluated
 
-1. **[Point Estimation](point_estimation.md)** — estimators versus estimates, bias, variance, mean-squared error, consistency, method of moments, and maximum likelihood.
-2. Continue to **[Hypothesis Testing & Confidence Intervals](../hypothesis_testing_and_confidence_intervals/README.md)** to attach uncertainty statements to estimates and compare them with hypothesized values.
+Different samples produce different estimates. Bias measures the difference between an estimator's repeated-sample average and the target parameter. Variance measures its repeated-sample spread. Mean-squared error combines both because an estimator can miss its target through a systematic displacement or through random variability.
 
-## Scope Boundary
+Unbiasedness alone does not guarantee a useful estimate. An estimator centered exactly on the target can vary too widely to guide a decision. Conversely, an estimator with modest bias can have lower mean-squared error when its variance is sufficiently smaller. Consistency addresses a different question: whether estimates concentrate around the target as the amount of information grows.
 
-A **point estimate** is one value, such as $\bar x$ as an estimate of $\mu$. A **confidence interval** is a procedure that uses a sampling distribution or approximation to produce a range with a repeated-sampling coverage property. A **hypothesis test** evaluates how compatible an observed statistic is with a specified null model.
+## Constructing an estimate
 
-Keeping these roles separate avoids treating a point estimate as if it already expressed uncertainty.
+The method of moments matches empirical summaries to their model expectations. Maximum likelihood searches for parameter values under which the observed data have the greatest joint probability mass or density. These procedures can agree, as they do for the Bernoulli success proportion, or yield different estimates with different finite-sample properties.
 
-## Connections
-
-- **[Sampling & Sampling Distributions](../sampling_and_sampling_distributions/README.md)** explains the repeated-sample distributions used to evaluate estimators.
-- **[Regression](../regression/README.md)** estimates several parameters at once; least squares and likelihood are instances of the same estimation ideas introduced here.
-- **[Extensions](../extensions/README.md)** includes the Bayesian-versus-frequentist perspective, where the meaning of estimation and uncertainty differs.
+A point estimate does not quantify its own uncertainty. Its standard error, an interval estimate, or a posterior distribution adds information about precision under stated assumptions. Two datasets can yield the same sample mean while supporting very different levels of confidence in that value. The quality of estimation therefore depends on the model and sampling process as well as the formula used to compute the estimate.

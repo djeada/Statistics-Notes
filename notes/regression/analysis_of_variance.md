@@ -1,6 +1,6 @@
 # ANOVA and the Analysis of Variance for Multiple Groups
 
-### Scenario: Peer Assessment and Student Learning
+## Scenario: Peer Assessment and Student Learning
 
 **Does peer assessment enhance student learning?**
 
@@ -13,7 +13,7 @@
 - The final exam scores were **summarized** and visualized using boxplots.
 - The main objective of the study was to determine if different **instructional methods** significantly affected learning outcomes, as reflected in final exam results.
 
-#### Formulating the Hypotheses
+### Formulating the Hypotheses
 
 To statistically assess the impact of the different treatments, we set up the following hypotheses:
 
@@ -29,7 +29,7 @@ $$
 H_A: \text{At least one } \mu_j \text{ differs}
 $$
 
-#### Comparing Two Groups: The Two-Sample t-Test
+### Comparing Two Groups: The Two-Sample t-Test
 
 When comparing only two groups, the **two-sample t-test** is appropriate. It tests whether there is a significant difference between the means of two independent groups.
 
@@ -66,7 +66,7 @@ III. **Limitations**
 - The t-test is limited to comparing **two** groups.
 - When dealing with more than two groups, running all pairwise t-tests inflates the family-wise Type I error rate (with 3 groups and $\alpha = 0.05$ per test, it is about $1-0.95^3 \approx 0.14$ if the tests were independent).
 
-### ANOVA: Analysis of Variance for Multiple Groups
+## ANOVA: Analysis of Variance for Multiple Groups
 
 To compare **three or more groups**, we use **Analysis of Variance (ANOVA)**. ANOVA tests for significant differences among group means by analyzing variances.
 
@@ -80,11 +80,11 @@ ANOVA Hypotheses:
 - The **null hypothesis (H₀)** in ANOVA states that all group means are equal.
 - The **alternative hypothesis (Hₐ)** suggests that not all group means are equal.
 
-#### The ANOVA Methodology
+### The ANOVA Methodology
 
 ANOVA partitions the total variability in the data into components attributable to various sources.
 
-### Total Sum of Squares (SSTotal)
+## Total Sum of Squares (SSTotal)
 
 The **Total Sum of Squares** measures the total variability in the data:
 
@@ -100,7 +100,7 @@ where:
 
 Note that in this note $SST$ denotes the *treatment* sum of squares (some textbooks use SST for the total). The partition is $SSTotal = SST + SSE$.
 
-#### 1. Treatment Variance (Between-Groups Variability)
+### 1. Treatment Variance (Between-Groups Variability)
 
 **Sum of Squares for Treatments (SST)** measures the variability between the group means and the overall mean:
 
@@ -122,7 +122,7 @@ $$
 
 Degrees of freedom for treatments: $df_{\text{Treatment}} = k - 1$.
 
-#### 2. Error Variance (Within-Groups Variability)
+### 2. Error Variance (Within-Groups Variability)
 
 **Sum of Squares for Error (SSE)** measures the variability within the groups:
 
@@ -145,7 +145,7 @@ where:
 
 - Degrees of freedom for error: $df_{\text{Error}} = N - k$.
 
-#### 3. Calculating the F-Statistic
+### 3. Calculating the F-Statistic
 
 The **F-statistic** compares the between-groups variance to the within-groups variance:
 
@@ -155,7 +155,7 @@ $$
 
 where:
 
-- Under $H_0$, $MST$ and $MSE$ estimate the same variance, so $F \approx 1$.
+- Under $H_0$, $MST$ and $MSE$ both estimate $\sigma^2$. Their random ratio is calibrated by an F distribution, rather than being guaranteed to lie close to one in a small sample. Its expectation, when finite, is $(N-k)/(N-k-2)$ rather than exactly one.
 - A large $F$ value suggests that between-group variability is greater than within-group variability, indicating significant differences among group means.
 
 **F-Distribution**
@@ -163,9 +163,21 @@ where:
 - The F-statistic follows an F-distribution with $df_1 = k - 1$ (numerator degrees of freedom) and $df_2 = N - k$ (denominator degrees of freedom).
 - The p-value is determined based on the F-distribution.
 
-### Example: Peer Assessment Data
+## Why a comparison of variances tests a comparison of means
 
-#### Data Summary
+Write an observation's deviation from the grand mean as
+
+```math
+y_{ij}-\bar y=(y_{ij}-\bar y_j)+(\bar y_j-\bar y).
+```
+
+When squared and summed within each group, the cross term vanishes because $\sum_i(y_{ij}-\bar y_j)=0$. Summing across groups gives $\mathrm{SSTotal}=\mathrm{SSE}+\mathrm{SST}$. Under equal group means, between-group variation comes from sampling noise; different means add systematic variation to the treatment component while within-group deviations still measure noise.
+
+For independent normal errors with common variance, the two scaled sums of squares are independent chi-square variables: $\mathrm{SST}/\sigma^2\sim\chi^2(k-1)$ under the null, and $\mathrm{SSE}/\sigma^2\sim\chi^2(N-k)$. Their ratio after division by degrees of freedom gives the F reference. This is the mathematical link between a mean comparison and variance components.
+
+## Example: Peer Assessment Data
+
+### Data Summary
 
 Suppose we have the following data:
 
@@ -173,7 +185,7 @@ Suppose we have the following data:
 - The **group means** ($\bar{y}_j$) and **variances** ($s_j^2$) are calculated based on the collected data.
 - The **total number of observations** is represented as $N = n_1 + n_2 + n_3$.
 
-#### ANOVA Table Construction
+### ANOVA Table Construction
 
 **ANOVA Table** summarizes the calculations:
 
@@ -191,7 +203,7 @@ Suppose we have the following data:
 | Error       | 38  | 723.8          | 19.05       |       |
 | Total       | 40  | 822.2          |             |       |
 
-#### Calculations
+### Calculations
 
 **SSTotal**:
 
@@ -221,31 +233,31 @@ $$
 - Using F-distribution tables or software, with $df_1 = 2$ and $df_2 = 38$, we find:
 - **p-value** ≈ 0.089
 
-#### Decision
+### Decision
 
 - At a significance level of **$\alpha = 0.05$**, since **$p = 0.089 > 0.05$**, we **fail to reject $H_0$**.
 - There is not enough evidence to conclude that the **treatments** have different effects on student learning.
 
-### Interpretation of ANOVA Results
+## Interpretation of ANOVA Results
 
-#### Understanding the F-Statistic
+### Understanding the F-Statistic
 
 - A **small F-value** (around 1) suggests that the variability between group means is similar to the variability within groups, implying **no significant difference** among group means.
 - A **large F-value** indicates that the variability between group means is greater than the variability within groups, suggesting **significant differences** among group means.
 
-#### P-Value Interpretation
+### P-Value Interpretation
 
-- If the **p-value is less than $\alpha$**, we reject **$H_0$** and conclude that at least one group mean is different.
-- If the **p-value is greater than or equal to $\alpha$**, we fail to reject **$H_0$** and cannot conclude that there are differences among group means.
+- If $p\leq\alpha$, reject $H_0$ and report evidence that not all group means are equal, alongside estimated differences and uncertainty.
+- If $p>\alpha$, fail to reject $H_0$. The analysis has not established equality, and a practically important difference can remain compatible with imprecise data.
 
-#### Conclusion for the Example
+### Conclusion for the Example
 
 - With a **p-value of 0.089**, there is not sufficient evidence at the 5% significance level to claim that peer assessment improves student learning over other methods.
-- Failing to reject $H_0$ is not evidence that the means are equal; the study may simply lack power. A p-value near 0.05 should not be read as a trend, and a larger sample would be needed to say more.
+- Failing to reject does not establish equal means; meaningful differences can remain compatible with the data. The available summary table supports an omnibus comparison but does not supply the group mean differences or their intervals. Those quantities are needed to assess the size and direction of contrasts, while additional observations can improve precision under an appropriate design.
 
-### The One-Way ANOVA Model
+## The One-Way ANOVA Model
 
-#### Statistical Model
+### Statistical Model
 
 The **one-way ANOVA model** expresses each observation as:
 
@@ -261,7 +273,7 @@ where:
   - Mean $E[\epsilon_{ij}] = 0$
   - Variance $Var(\epsilon_{ij}) = \sigma^2$
 
-#### Alternative Representation
+### Alternative Representation
 
 We can express the model in terms of the overall mean $\mu$ and group effects $\tau_j$:
 
@@ -276,41 +288,41 @@ where:
 
 Under this form, $H_0$ is equivalent to $\tau_1 = \tau_2 = \tau_3 = 0$.
 
-#### Assumptions of the Model
+### Assumptions of the Model
 
-1. **Normality**: The residuals $\epsilon_{ij}$ are normally distributed.
+1. **Normality**: The unobserved model errors $\epsilon_{ij}$ are normally distributed for the exact F reference; fitted residuals provide imperfect diagnostic information about that assumption.
 2. **Independence**: Observations are independent.
 3. **Homogeneity of Variance**: The variances within each group are equal ($\sigma^2$ is constant across groups).
 
-### Assumptions of the F-Test
+## Assumptions of the F-Test
 
 For the results of the ANOVA F-test to be valid, certain assumptions must be met:
 
-#### 1. Equal Variances (Homogeneity of Variance)
+### 1. Equal Variances (Homogeneity of Variance)
 
 - The **assumption** is that the variances within each group are equal.
 - This can be **checked** using boxplots for visual inspection of similar spread among groups.
 - **Levene's Test** can be used as a statistical method to test for equal variances.
 - A **rule of thumb** states that if the largest sample standard deviation is no more than twice the smallest, the assumption is reasonable.
 
-#### 2. Independence of Observations
+### 2. Independence of Observations
 
 - The **assumption** is that observations are independent both within and across groups.
-- This is **ensured** by random assignment in experimental studies or random sampling in observational studies.
+- Random sampling and random assignment support particular inferential arguments, but they do not automatically eliminate within-classroom clustering, repeated measurements, or interference between participants. Identify the sampling and assignment unit. If an entire classroom receives one treatment, its students are not independent treatment replicates.
 
-#### 3. Normality of Residuals
+### 3. Normality of Residuals
 
-- The **assumption** is that the residuals ($\epsilon_{ij}$) are normally distributed.
+- The **assumption** concerns normal model errors. Residuals are observed deviations from fitted group means and share constraints introduced by estimation.
 - This can be **checked** by using normal probability plots to assess the normality of residuals.
 - The **Shapiro-Wilk Test** is a formal statistical test for normality.
 
-### Post-ANOVA Testing
+## Post-ANOVA Testing
 
 If the ANOVA F-test leads us to reject $H_0$, indicating that not all group means are equal, we may want to identify **which groups differ**.
 
 Performing multiple t-tests increases the risk of Type I error (false positives). To control for this, we use:
 
-#### 1. Bonferroni Correction
+### 1. Bonferroni Correction
 
 Adjusts the significance level:
   
@@ -320,12 +332,12 @@ $$
   
 Example: For 3 groups, there are $\frac{3 \times 2}{2} = 3$ comparisons, so each is tested at $\alpha' = 0.05/3 \approx 0.0167$.
 
-#### 2. Tukey's Honest Significant Difference (HSD) Test
+### 2. Tukey's Honest Significant Difference (HSD) Test
 
 - Controls the family-wise error rate for all pairwise comparisons, using the studentized range distribution.
 - Computes confidence intervals for all pairwise differences.
 
-#### Steps for Pairwise Comparisons
+### Steps for Pairwise Comparisons
 
 I. **Calculate the Standard Error for Differences**:
 
@@ -343,21 +355,25 @@ III. **Determine the Adjusted p-Values**:
 
 Use the adjusted significance level or critical values from Tukey's distribution.
 
-### Practical Application Steps
+Bonferroni-adjusted t comparisons and Tukey comparisons use different reference calibrations. With equal group sizes, Tukey's studentized-range statistic for a pair is $q=\sqrt2|t|$, using the number of groups and residual degrees of freedom. For unequal sizes, the Tukey-Kramer form uses denominator $\sqrt{(MSE/2)(1/n_i+1/n_j)}$. Thus a t value should not be looked up as if it were a q value.
 
-#### 1. Conduct ANOVA
+Planned contrasts can be specified before observing the data and analyzed with appropriate multiplicity control without requiring a significant omnibus test first. A rejected omnibus test establishes that some means differ; it does not identify which pair differs or guarantee that any chosen pairwise procedure will reject.
+
+## Practical Application Steps
+
+### 1. Conduct ANOVA
 
 - Compute SST, SSE, MST, MSE, and F-statistic.
 - Determine the p-value using the F-distribution.
 - Decide whether to reject $H_0$ based on the p-value.
 
-#### 2. Check Assumptions
+### 2. Check Assumptions
 
 - To check for **equal variances**, use boxplots or formal statistical tests.
 - **Normality** is assessed by examining the residuals.
 - Ensure that the study design supports **independence** of observations.
 
-#### 3. Interpret Results
+### 3. Interpret Results
 
 - If **$H_0$ is not rejected**, conclude that there is no significant difference among group means.
 - If **$H_0$ is rejected**, proceed to post-hoc tests to identify specific group differences.

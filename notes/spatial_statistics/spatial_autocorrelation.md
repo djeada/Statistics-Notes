@@ -1,8 +1,6 @@
 # Spatial Autocorrelation
 
-Spatial autocorrelation asks whether values attached to locations show a systematic spatial pattern.
-
-The idea is:
+Spatial autocorrelation asks whether values attached to locations show a systematic spatial pattern. The idea is:
 
 > Are neighboring locations more similar, or more dissimilar, than we would expect under a stated reference mechanism?
 
@@ -22,28 +20,15 @@ Spatial autocorrelation is not a property of the values alone. Its interpretatio
 
 The same dataset can produce different results when “neighbor” is defined differently.
 
-## Learning objectives
+## Description and Inference Use Different Ingredients
 
-After this chapter, you should be able to:
+A statistic describes the alignment between observed values and a specified neighborhood graph. Its reference distribution adds a probability model for judging that alignment. Global Moran's I uses products of centered neighboring values; Geary's C uses squared differences. Both summarize a whole map and can conceal local variation.
 
-1. explain what spatial autocorrelation means;
-2. construct and interpret a spatial weights matrix;
-3. calculate global Moran's $I$ by hand;
-4. explain why Moran's $I$ is not simply an ordinary correlation coefficient;
-5. explain the finite-sample null expectation $E[I]=-1/(n-1)$;
-6. perform a permutation test conceptually and computationally;
-7. calculate and interpret Geary's $C$;
-8. calculate local Moran statistics and identify HH, LL, HL, and LH locations;
-9. explain the multiple-testing problem in local maps;
-10. explain how a trend can produce apparent spatial autocorrelation;
-11. interpret a Moran scatterplot;
-12. state clearly what Moran's $I$ does and does not establish.
+A local statistic can identify high-high, low-low, or contrasting configurations, but a quadrant label is descriptive until it is compared with a justified null distribution. Testing many locations introduces multiplicity, and testing several neighborhood definitions introduces another selection step. Broad spatial trends can also create apparent association among raw values. The worked examples therefore keep the arithmetic, the null mechanism, and the scientific interpretation separate. A significant result establishes a departure from that reference mechanism; identifying residual dependence, stationarity, or a causal process requires further modeling.
 
 ## What is spatial autocorrelation?
 
-Suppose a variable $x_i$ is observed at each of $n$ spatial locations.
-
-For example:
+Suppose a variable $x_i$ is observed at each of $n$ spatial locations. For example:
 
 | Location | Value |
 |---|---:|
@@ -53,16 +38,12 @@ For example:
 | D | 8 |
 | E | 9 |
 
-If nearby locations tend to have similar values, this is called **positive spatial autocorrelation**.
-
-Examples:
+If nearby locations tend to have similar values, this is called **positive spatial autocorrelation**. Examples:
 
 - high values beside high values;
 - low values beside low values.
 
-If nearby locations tend to have contrasting values, this is called **negative spatial autocorrelation**.
-
-Examples:
+If nearby locations tend to have contrasting values, this is called **negative spatial autocorrelation**. Examples:
 
 - high values beside low values;
 - low values beside high values.
@@ -71,23 +52,13 @@ If the observed arrangement is not distinguishable from the chosen null mechanis
 
 ## Spatial autocorrelation requires a definition of neighborhood
 
-Before calculating Moran's $I$, Geary's $C$, or a local statistic, we must define which locations are spatially connected.
-
-These connections are encoded in the **spatial weights matrix**
+Before calculating Moran's $I$, Geary's $C$, or a local statistic, we must define which locations are spatially connected. These connections are encoded in the **spatial weights matrix**
 
 $$
 W=(w_{ij}).
 $$
 
-The entry
-
-$$
-w_{ij}
-$$
-
-describes how strongly location $j$ contributes to the neighborhood of location $i$.
-
-A common binary definition is
+The entry $w_{ij}$ describes how strongly location $j$ contributes to the neighborhood of location $i$. A common binary definition is
 
 $$
 w_{ij} =
@@ -109,9 +80,7 @@ because a location is not treated as its own neighbor.
 
 ## Common ways to define spatial weights
 
-There is no universally correct $W$.
-
-Common choices include:
+There is no universally correct $W$. Common choices include:
 
 - adjacency: regions sharing a border are neighbors;
 - distance threshold: locations within a chosen distance are neighbors;
@@ -119,9 +88,7 @@ Common choices include:
 - inverse distance: closer observations receive larger weights;
 - network-based distance: connection follows roads, rivers, or another network.
 
-The scientific interpretation changes with the choice of weights.
-
-For example, “neighbor” could mean:
+The scientific interpretation changes with the choice of weights. For example, “neighbor” could mean:
 
 - adjacent county;
 - within 5 km;
@@ -132,23 +99,13 @@ The weights matrix is therefore part of the model specification, not a technical
 
 ## Row-standardization
 
-A common transformation makes every non-isolated row of $W$ sum to 1.
-
-If location $i$ has $k_i$ equally weighted neighbors, then each receives weight
-
-$$
-\frac{1}{k_i}.
-$$
-
-For example, if a location has two neighbors,
+A common transformation makes every non-isolated row of $W$ sum to 1. If location $i$ has $k_i$ equally weighted neighbors, then each receives weight $\frac{1}{k_i}$. For example, if a location has two neighbors,
 
 $$
 w_{ij}=\frac12
 $$
 
-for each neighbor.
-
-The row-standardized spatial lag
+for each neighbor. The row-standardized spatial lag
 
 $$
 (Wz)_i =
@@ -209,9 +166,7 @@ $$
 \sum_i\sum_jw_{ij}z_i z_j
 $$
 
-adds weighted products of centered values for spatially connected observations.
-
-If neighboring values have the same sign:
+adds weighted products of centered values for spatially connected observations. If neighboring values have the same sign:
 
 $$
 (+)(+)>0
@@ -223,17 +178,13 @@ $$
 (-)(-)>0,
 $$
 
-they add positive contributions.
-
-If neighboring values have opposite signs:
+they add positive contributions. If neighboring values have opposite signs:
 
 $$
 (+)(-)<0,
 $$
 
-they add negative contributions.
-
-Moran's $I$ therefore compares neighboring similarity with the overall variation in the data.
+they add negative contributions. Moran's $I$ therefore compares neighboring similarity with the overall variation in the data.
 
 ## Fully worked Moran's I example
 
@@ -256,9 +207,7 @@ x=
 \end{bmatrix}.
 $$
 
-We use row-standardized first-order neighbors.
-
-Thus:
+We use row-standardized first-order neighbors. Thus:
 
 - A has neighbor B;
 - B has neighbors A and C;
@@ -285,7 +234,7 @@ $$
 S_0=5.
 $$
 
-## calculate the mean
+### Calculate the mean
 
 $$
 \bar x =
@@ -294,7 +243,7 @@ $$
 5.2.
 $$
 
-## center the values
+### Center the values
 
 $$
 z_i=x_i-\bar x.
@@ -322,7 +271,7 @@ $$
 
 Low-valued locations have negative deviations, while high-valued locations have positive deviations.
 
-## calculate the denominator
+### Calculate the denominator
 
 The denominator is
 
@@ -349,7 +298,7 @@ $$
 38.80.
 $$
 
-## calculate the spatial lag $Wz$
+### Calculate the spatial lag $Wz$
 
 For A:
 
@@ -400,7 +349,7 @@ Wz =
 \end{bmatrix}.
 $$
 
-## calculate the Moran numerator
+### Calculate the Moran numerator
 
 In matrix form (for any $W$),
 
@@ -437,7 +386,7 @@ z^\top Wz =
 25.80.
 $$
 
-## calculate Moran's I
+### Calculate Moran's I
 
 The formula is
 
@@ -472,19 +421,9 @@ I\approx0.665
 }.
 $$
 
-### Interpretation
+#### Interpretation
 
-The statistic is positive because connected locations tend to have deviations with the same sign.
-
-The sequence
-
-$$
-2,3,4,8,9
-$$
-
-places relatively low values beside low values and relatively high values beside high values.
-
-For this weights matrix, the arrangement produces positive spatial autocorrelation.
+The statistic is positive because connected locations tend to have deviations with the same sign. The sequence $2,3,4,8,9$ places relatively low values beside low values and relatively high values beside high values. For this weights matrix, the arrangement produces positive spatial autocorrelation.
 
 ## Moran's I is not an ordinary Pearson correlation
 
@@ -494,15 +433,9 @@ $$
 -1\le I\le1.
 $$
 
-That is not generally true.
+That is not generally true. The attainable range of Moran's $I$ depends on the spatial weights structure. Let $M=I_n-\mathbf1\mathbf1^\top/n$ be the centering matrix. For symmetric $W$, the sharp bounds are $n/S_0$ times the minimum and maximum eigenvalues of $MWM$ restricted to the mean-zero subspace. The restriction matters because centering adds a constant-vector eigenvalue of zero that is not an available centered-data direction. For asymmetric weights, replace $W$ by $(W+W^\top)/2$ in the quadratic form, since its skew-symmetric part contributes zero. These bounds need not coincide with $[-1,1]$.
 
-The attainable range of Moran's $I$ depends on the spatial weights structure.
-
-For a symmetric $W$, the attainable values lie between $\frac{n}{S_0}\lambda_{\min}$ and $\frac{n}{S_0}\lambda_{\max}$, where $\lambda_{\min}$ and $\lambda_{\max}$ are the extreme eigenvalues of the doubly centered matrix $MWM$ with $M=I-\frac1n\mathbf 1\mathbf 1^\top$. These limits can lie outside $[-1,1]$.
-
-Moran's $I$ is a spatial quadratic-form statistic, not an ordinary Pearson correlation between two independent variables.
-
-Therefore values should be interpreted relative to:
+Moran's $I$ is a spatial quadratic-form statistic, not an ordinary Pearson correlation between two independent variables. Therefore values should be interpreted relative to:
 
 - the chosen $W$;
 - the null distribution;
@@ -533,9 +466,7 @@ E[I] =
 -0.25.
 $$
 
-Under this finite-sample null, the expected value under “no spatial association” is therefore not exactly zero.
-
-For large $n$,
+Under this finite-sample null, the expected value under “no spatial association” is therefore not exactly zero. The negative expectation follows from centering and sampling without replacement. Write $Q=\sum_i z_i^2>0$. Across random assignments, each squared value has expectation $Q/n$. For distinct locations $i\ne j$, the expected product is $-Q/[n(n-1)]$, because the centered values sum to zero. With fixed zero-diagonal weights, summing these products gives expected numerator $-S_0Q/[n(n-1)]$. Dividing by the fixed denominator $Q$ and multiplying by $n/S_0$ yields $-1/(n-1)$. The result assumes $S_0\ne0$, nonconstant values, and the stated randomization scheme. For large $n$,
 
 $$
 -\frac{1}{n-1}
@@ -543,43 +474,19 @@ $$
 
 approaches zero.
 
-## What is the randomization null?
+### What is the randomization null?
 
 The randomization null says:
 
 > Keep the locations and spatial weights matrix fixed, but imagine that the observed values could have been assigned to those locations in any exchangeable ordering.
 
-For the five values
-
-$$
-2,3,4,8,9,
-$$
-
-one possible permutation is
-
-$$
-8,2,9,3,4.
-$$
-
-Another is
-
-$$
-4,9,2,8,3.
-$$
-
-For every permutation, calculate Moran's $I$.
-
-The collection of permuted statistics forms the reference distribution under exchangeability.
+For the five values $2,3,4,8,9$, one possible permutation is $8,2,9,3,4$. Another is $4,9,2,8,3$. For every permutation, calculate Moran's $I$. The collection of permuted statistics forms the reference distribution under exchangeability.
 
 ![Permutation reference distribution](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/04_permutation_distribution.png)
 
-## Monte Carlo permutation inference
+### Monte Carlo permutation inference
 
-If every possible permutation is impractical, draw $M$ random permutations.
-
-For a positive-autocorrelation alternative, let $R$ be the number of permuted statistics at least as large as the observed statistic.
-
-Then a common Monte Carlo pseudo-$p$ value is
+If every possible permutation is impractical, draw $M$ random permutations. For a positive-autocorrelation alternative, let $R$ be the number of permuted statistics at least as large as the observed statistic. Then a common Monte Carlo pseudo-$p$ value is
 
 $$
 \boxed{
@@ -588,7 +495,7 @@ p =
 }.
 $$
 
-### Numerical example
+#### Numerical example
 
 Suppose
 
@@ -596,17 +503,13 @@ $$
 M=999
 $$
 
-permutations are performed.
-
-Assume only
+permutations are performed. Assume only
 
 $$
 R=8
 $$
 
-permuted statistics are at least as large as the observed statistic.
-
-Then
+permuted statistics are at least as large as the observed statistic. Then
 
 $$
 p =
@@ -620,11 +523,9 @@ p=0.009
 }.
 $$
 
-This provides evidence against the chosen exchangeability null in the positive-autocorrelation direction.
+This provides evidence against the chosen exchangeability null in the positive-autocorrelation direction. It does not establish a causal spatial mechanism.
 
-It does not establish a causal spatial mechanism.
-
-## Why add 1 to numerator and denominator?
+### Why add 1 to numerator and denominator?
 
 The correction
 
@@ -632,11 +533,7 @@ $$
 \frac{R+1}{M+1}
 $$
 
-includes the observed arrangement as one member of the reference set.
-
-It also prevents reporting a Monte Carlo $p$-value of exactly zero merely because none of a finite number of simulations was more extreme.
-
-With
+includes the observed arrangement as one member of the reference set. It also prevents reporting a Monte Carlo $p$-value of exactly zero merely because none of a finite number of simulations was more extreme. With
 
 $$
 M=999,
@@ -648,11 +545,9 @@ $$
 \frac1{1000}=0.001.
 $$
 
-## One-sided versus two-sided alternatives
+### One-sided versus two-sided alternatives
 
-The meaning of “at least as extreme” must be defined before inference.
-
-Possible alternatives include:
+The meaning of “at least as extreme” must be defined before inference. Possible alternatives include:
 
 #### Positive spatial autocorrelation
 
@@ -672,15 +567,11 @@ $$
 
 #### Two-sided departure
 
-Use a clearly stated two-sided extremeness rule, usually relative to the null center.
-
-Do not calculate a one-sided test and then describe it as two-sided.
+Use a clearly stated two-sided extremeness rule, usually relative to the null center. Do not calculate a one-sided test and then describe it as two-sided.
 
 ## Geary's C
 
-Geary's $C$ emphasizes squared differences between neighboring observations.
-
-A common form is
+Geary's $C$ emphasizes squared differences between neighboring observations. A common form is
 
 $$
 \boxed{
@@ -700,9 +591,7 @@ Under a common null reference:
 - $C<1$: positive spatial autocorrelation;
 - $C>1$: negative spatial autocorrelation.
 
-Note that this direction is opposite to the usual interpretation of Moran's $I$.
-
-For Moran:
+Note that this direction is opposite to the usual interpretation of Moran's $I$. For Moran:
 
 - larger positive values suggest positive association.
 
@@ -710,11 +599,9 @@ For Geary:
 
 - values below 1 suggest positive association.
 
-## Worked Geary's C example
+### Worked Geary's C example
 
-Use the same five observations and row-standardized weights.
-
-We already calculated
+Use the same five observations and row-standardized weights. We already calculated
 
 $$
 \sum_i(x_i-\bar x)^2=38.8.
@@ -773,27 +660,15 @@ $$
 
 Because this is well below 1, it indicates positive spatial autocorrelation for this example.
 
-## Moran and Geary measure related but different features
+### Moran and Geary measure related but different features
 
-Moran's $I$ uses cross-products:
-
-$$
-z_i z_j.
-$$
-
-Geary's $C$ uses squared differences:
+Moran's $I$ uses cross-products: $z_i z_j$. Geary's $C$ uses squared differences:
 
 $$
 (x_i-x_j)^2.
 $$
 
-Therefore they respond differently to local contrasts and extreme values.
-
-Moran's $I$ is often interpreted as a broad global association measure.
-
-Geary's $C$ can be more sensitive to local neighbor-to-neighbor differences.
-
-Neither statistic is universally better.
+Therefore they respond differently to local contrasts and extreme values. Moran's $I$ is often interpreted as a broad global association measure. Geary's $C$ can be more sensitive to local neighbor-to-neighbor differences. Neither statistic is universally better.
 
 ![Moran and Geary comparison](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/05_moran_geary_sensitivity.png)
 
@@ -806,33 +681,11 @@ $$
 \sum_jw_{ij}z_j
 $$
 
-is called the **spatial lag**.
-
-With row-standardized weights, it is a weighted neighborhood average.
-
-A positive spatial lag means the neighborhood tends to be above the global mean.
-
-A negative spatial lag means the neighborhood tends to be below the global mean.
-
-This interpretation leads naturally to the Moran scatterplot.
+is called the **spatial lag**. With row-standardized weights, it is a weighted neighborhood average. A positive spatial lag means the neighborhood tends to be above the global mean. A negative spatial lag means the neighborhood tends to be below the global mean. This interpretation leads naturally to the Moran scatterplot.
 
 ## Moran scatterplot
 
-A Moran scatterplot places
-
-$$
-z_i
-$$
-
-on the horizontal axis and
-
-$$
-(Wz)_i
-$$
-
-on the vertical axis.
-
-The four quadrants have standard interpretations.
+A Moran scatterplot places $z_i$ on the horizontal axis and $(Wz)_i$ on the vertical axis. The four quadrants have standard interpretations.
 
 ### High-high
 
@@ -876,15 +729,11 @@ A low-valued location is surrounded by high-valued neighbors.
 
 ![Moran scatterplot](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/03_moran_scatterplot.png)
 
-With row-standardized $W$ and centered $z$, the least-squares slope through the origin of $(Wz)_i$ on $z_i$ is $z^\top Wz/z^\top z$, which equals global Moran's $I$ exactly (here $n/S_0=1$).
-
-The scatterplot is a diagnostic display, not a substitute for formal inference.
+The least-squares slope through the origin of $(Wz)_i$ on $z_i$ is $z^\top Wz/z^\top z$. It equals Moran's $I$ when $S_0=n$, as for row-standardized weights with no islands. If some rows remain zero, or another normalization is used, the factor $n/S_0$ must still be applied. The scatterplot slope is a regression summary of these constructed values, not a Pearson correlation between two independently sampled vectors. The scatterplot is a diagnostic display, not a substitute for formal inference.
 
 ## Local Moran statistics
 
-A global statistic can hide important local patterns.
-
-One common local Moran form is
+A global statistic can hide important local patterns. One common local Moran form is
 
 $$
 I_i =
@@ -906,6 +755,8 @@ I_i =
 \frac{z_i(Wz)_i}{m_2}.
 $$
 
+With this normalization, summing local statistics gives $\sum_i I_i=S_0I$. If every row sums to one and there are no islands, then $S_0=n$, and their average equals global Moran's $I$. Software that uses a divisor $n-1$ or another normalization can report different local magnitudes, so compare formulas before comparing numerical outputs.
+
 ### What is being calculated?
 
 The statistic multiplies:
@@ -913,11 +764,9 @@ The statistic multiplies:
 1. the centered value at location $i$;
 2. the average centered value in its neighborhood.
 
-If both have the same sign, $I_i$ tends to be positive.
+If both have the same sign, $I_i$ tends to be positive. If they have opposite signs, $I_i$ tends to be negative.
 
-If they have opposite signs, $I_i$ tends to be negative.
-
-## Worked local Moran example
+### Worked local Moran example
 
 From the five-location example,
 
@@ -959,9 +808,7 @@ I_A\approx0.907
 }.
 $$
 
-Both terms are negative, so A is a **low-low** location.
-
-For location D,
+Both terms are negative, so A is a **low-low** location. For location D,
 
 $$
 z_D=2.8
@@ -986,29 +833,13 @@ $$
 
 Both are positive, so D is a **high-high** location.
 
-## A local category is not automatically significant
+### A local category is not automatically significant
 
-A location can fall in an HH quadrant without being statistically unusual under the chosen null.
+A location can fall in an HH quadrant without being statistically unusual under the chosen null. The category only describes the signs of: $z_i$ and $(Wz)_i$. Statistical significance requires a reference distribution for the local statistic. A common approach uses conditional or unconditional permutations, depending on the local statistic and software implementation.
 
-The category only describes the signs of:
+A conditional local randomization may hold the focal value fixed while rearranging the remaining values among possible neighbors. An unconditional permutation moves all values. Those reference mechanisms answer different questions and can have different null moments. The global expectation $-1/(n-1)$ should not be copied automatically to every local implementation. Always document the exact inferential procedure.
 
-$$
-z_i
-$$
-
-and
-
-$$
-(Wz)_i.
-$$
-
-Statistical significance requires a reference distribution for the local statistic.
-
-A common approach uses conditional or unconditional permutations, depending on the local statistic and software implementation.
-
-Always document the exact inferential procedure.
-
-## Local Moran maps
+### Local Moran maps
 
 A local map can display categories such as:
 
@@ -1019,41 +850,33 @@ A local map can display categories such as:
 
 ![Local Moran categories](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/06_local_moran_categories.png)
 
-HH and LL are often called local clusters.
-
-HL and LH are often called spatial outliers.
-
-These labels describe spatial configuration; they do not establish a physical mechanism.
+HH and LL are often called local clusters. HL and LH are often called spatial outliers. These labels describe spatial configuration; they do not establish a physical mechanism.
 
 ## Multiple testing
 
-If a local statistic is tested at every location, many hypothesis tests are being performed.
-
-Suppose there are
+If a local statistic is tested at every location, many hypothesis tests are being performed. Suppose there are
 
 $$
 m=100
 $$
 
-locations and every null hypothesis is true.
-
-If each is tested at
+locations and every null hypothesis is true. If each is tested at
 
 $$
 \alpha=0.05,
 $$
 
-then under an idealized independent-testing calculation, the expected number of false positives is
+then, if every true-null test has rejection probability exactly 0.05, the expected number of false positives is
 
 $$
 100(0.05)=5.
 $$
 
-Spatial tests are generally dependent, so the exact behavior is more complicated. The core problem remains:
+Linearity of expectation gives this count without requiring independence. Dependence affects the distribution of the number of false positives and the chance of at least one, while conservative tests can reduce the expectation below five. The core problem remains:
 
 > a map of unadjusted $p<0.05$ locations will usually contain false discoveries.
 
-## Responses to multiple testing
+### Responses to multiple testing
 
 Possible strategies include:
 
@@ -1062,11 +885,7 @@ Possible strategies include:
 - simulation-based global procedures;
 - treating local maps as exploratory rather than confirmatory.
 
-One widely used method is the Benjamini-Hochberg false-discovery-rate procedure.
-
-This goal differs from Bonferroni-style family-wise error control.
-
-FDR procedures tolerate some false discoveries while controlling their expected proportion under specified assumptions.
+One widely used method is the Benjamini-Hochberg false-discovery-rate procedure. This goal differs from Bonferroni-style family-wise error control. FDR procedures tolerate some false discoveries while controlling their expected proportion under specified assumptions. For standard Benjamini-Hochberg control, those assumptions include independence or a suitable positive regression dependence condition for the null p-values; spatial proximity alone does not establish it. Bonferroni and Holm control family-wise error for valid p-values under arbitrary dependence. The desired error criterion and the calibration of the individual local tests both need to match the claim being mapped.
 
 ## First-order trend can mimic spatial dependence
 
@@ -1077,23 +896,11 @@ X(s) =
 m(s)+\varepsilon(s),
 $$
 
-where $m(s)$ changes smoothly over space.
-
-Nearby locations will often have similar $m(s)$.
-
-Therefore the raw observations can show positive Moran's $I$ even if
-
-$$
-\varepsilon(s)
-$$
-
-is spatially independent.
-
-This is analogous to trend confounding in geostatistics.
+where $m(s)$ changes smoothly over space. Nearby locations will often have similar $m(s)$. Therefore the raw observations can show positive Moran's $I$ even if $\varepsilon(s)$ is spatially independent. This is analogous to trend confounding in geostatistics.
 
 ![Trend-induced spatial autocorrelation](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/07_trend_vs_residual.png)
 
-## Numerical trend example
+### Numerical trend example
 
 Suppose observations lie along a line at
 
@@ -1107,13 +914,7 @@ $$
 X(x)=5+2x+\varepsilon(x),
 $$
 
-with small independent residuals.
-
-Ignoring the trend produces values that increase smoothly across space.
-
-Neighbors therefore look similar.
-
-If we fit the mean
+with small independent residuals. Ignoring the trend produces values that increase smoothly across space. Neighbors therefore look similar. If we fit the mean
 
 $$
 m(x)=5+2x
@@ -1125,15 +926,9 @@ $$
 e(x)=X(x)-m(x),
 $$
 
-the residual Moran statistic may be near its null reference.
+the residual Moran statistic may be near its null reference. For example, with the five-point line and weights above, the noise-free values $5,7,9,11,13$ give $z=(-4,-2,0,2,4)$, $Wz=(-2,-2,0,2,2)$, $z^\top Wz=24$, $\sum z_i^2=40$, so $I=0.6$, even though there is no residual dependence at all. Note that the null expectation $-1/(n-1)$ applies to raw values under exchangeability; for regression residuals the null mean and variance of $I$ depend on the design matrix and $W$. In this example, the spatial association in the raw values is primarily first-order structure rather than residual dependence.
 
-For example, with the five-point line and weights above, the noise-free values $5,7,9,11,13$ give $z=(-4,-2,0,2,4)$, $Wz=(-2,-2,0,2,2)$, $z^\top Wz=24$, $\sum z_i^2=40$, so $I=0.6$, even though there is no residual dependence at all.
-
-Note that the null expectation $-1/(n-1)$ applies to raw values under exchangeability; for regression residuals the null mean and variance of $I$ depend on the design matrix and $W$.
-
-In this example, the spatial association in the raw values is primarily first-order structure rather than residual dependence.
-
-## Why detrending changes the scientific question
+### Why detrending changes the scientific question
 
 A Moran statistic on raw values asks:
 
@@ -1143,35 +938,19 @@ A Moran statistic on regression residuals asks:
 
 > After accounting for the modeled covariates or trend, does spatial pattern remain?
 
-These are different scientific questions.
-
-Neither is automatically preferable; the appropriate choice depends on the scientific objective.
+These are different scientific questions. Neither is automatically preferable; the appropriate choice depends on the scientific objective.
 
 ## Sensitivity to the spatial weights matrix
 
-Suppose a dataset contains a cluster at a spatial scale of about 2 km.
-
-A weights matrix connecting only observations within 500 m may miss much of that structure.
-
-A weights matrix connecting everything within 10 km may dilute it.
-
-Moran's $I$ is therefore partly scale-dependent through $W$.
+Suppose a dataset contains a cluster at a spatial scale of about 2 km. A weights matrix connecting only observations within 500 m may miss much of that structure. A weights matrix connecting everything within 10 km may dilute it. Moran's $I$ is therefore partly scale-dependent through $W$.
 
 ![Weights-scale sensitivity](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_autocorrelation/08_weights_scale_sensitivity.png)
 
-A good analysis should justify the spatial scale scientifically or examine sensitivity across plausible choices.
-
-Do not search many weight matrices and report only the one producing the smallest $p$-value without acknowledging that model-selection step.
+A good analysis should justify the spatial scale scientifically or examine sensitivity across plausible choices. Do not search many weight matrices and report only the one producing the smallest $p$-value without acknowledging that model-selection step.
 
 ## Isolated observations
 
-Some weights definitions can produce locations with no neighbors.
-
-These are sometimes called **islands**.
-
-For a row-standardized matrix, a row with no neighbors cannot be standardized in the ordinary way.
-
-Possible responses include:
+Some weights definitions can produce locations with no neighbors. These are sometimes called **islands**. For a row-standardized matrix, a row with no neighbors cannot be standardized in the ordinary way. Possible responses include:
 
 - increase the distance threshold;
 - use $k$-nearest neighbors;
@@ -1182,9 +961,7 @@ How islands are handled can affect both global and local statistics.
 
 ## Permutation inference does not prove stationarity
 
-A significant permutation test tells us that the observed arrangement is unusual under the stated exchangeability null.
-
-It does not show that:
+A significant permutation test tells us that the observed arrangement is unusual under the stated exchangeability null. It does not show that:
 
 - the process is stationary;
 - the weights matrix is scientifically correct;
@@ -1213,9 +990,7 @@ These concepts are distinct but easy to confuse.
 
 ### Spatial autocorrelation
 
-Values are attached to known locations.
-
-Example:
+Values are attached to known locations. Example:
 
 $$
 \text{county}\rightarrow\text{unemployment rate}.
@@ -1227,9 +1002,7 @@ Question:
 
 ### Point-process clustering
 
-The event locations themselves are random.
-
-Example:
+The event locations themselves are random. Example:
 
 $$
 \text{locations of burglaries}.
@@ -1245,7 +1018,7 @@ Moran's $I$ is not a generic test of point-pattern clustering.
 
 A practical spatial-autocorrelation analysis can follow this sequence.
 
-### map the observations
+### Map the observations
 
 Look for:
 
@@ -1255,7 +1028,7 @@ Look for:
 - missing areas;
 - boundaries.
 
-### define the scientific neighborhood
+### Define the scientific neighborhood
 
 Construct $W$ from:
 
@@ -1265,7 +1038,7 @@ Construct $W$ from:
 - a network;
 - another justified relationship.
 
-### inspect the weights
+### Inspect the weights
 
 Check:
 
@@ -1274,18 +1047,18 @@ Check:
 - symmetry/asymmetry;
 - row-standardization.
 
-### calculate a global statistic
+### Calculate a global statistic
 
 For example:
 
 - Moran's $I$;
 - Geary's $C$.
 
-### define the null hypothesis
+### Define the null hypothesis
 
 State exactly what is being randomized or assumed.
 
-### perform inference
+### Perform inference
 
 Use:
 
@@ -1293,7 +1066,7 @@ Use:
 - an appropriate analytic reference distribution;
 - another justified procedure.
 
-### investigate first-order structure
+### Investigate first-order structure
 
 Ask whether:
 
@@ -1303,29 +1076,29 @@ Ask whether:
 
 explain the apparent dependence.
 
-### inspect local structure if scientifically useful
+### Inspect local structure if scientifically useful
 
 Calculate local statistics and correct or qualify for multiple testing.
 
-### perform sensitivity analysis
+### Perform sensitivity analysis
 
 Check whether conclusions depend strongly on plausible choices of $W$.
 
-### move to a model if needed
+### Move to a model if needed
 
 Significant spatial autocorrelation is often a diagnostic that a spatial regression, geostatistical, or other explicit spatial model may be needed.
 
 ## Common mistakes
 
-### interpreting Moran's I without stating the weights
+### Interpreting Moran's I without stating the weights
 
 The statistic has no complete meaning without $W$.
 
-### treating Moran's I as an ordinary correlation bounded by $[-1,1]$
+### Treating Moran's I as an ordinary correlation bounded by $[-1,1]$
 
 Its attainable range depends on the weights structure.
 
-### assuming the null expectation is exactly zero
+### Assuming the null expectation is exactly zero
 
 Under common randomization,
 
@@ -1333,27 +1106,27 @@ $$
 E[I]=-\frac1{n-1}.
 $$
 
-### interpreting a significant test as proof of causality
+### Interpreting a significant test as proof of causality
 
 It only rejects or challenges the stated reference mechanism.
 
-### ignoring a large-scale trend
+### Ignoring a large-scale trend
 
 A trend can create strong raw spatial autocorrelation.
 
-### treating HH and LL labels as automatically significant
+### Treating HH and LL labels as automatically significant
 
 Quadrant membership is descriptive.
 
-### mapping many unadjusted local tests
+### Mapping many unadjusted local tests
 
 This creates a multiple-testing problem.
 
-### trying many weights matrices and reporting only the strongest result
+### Trying many weights matrices and reporting only the strongest result
 
 That introduces unreported model-selection uncertainty.
 
-### using Moran's I to answer a point-process question
+### Using Moran's I to answer a point-process question
 
 Point-pattern clustering requires point-process methods.
 
@@ -1365,11 +1138,7 @@ $$
 n=50
 $$
 
-regions.
-
-A row-standardized adjacency matrix is used.
-
-The observed statistic is
+regions. A row-standardized adjacency matrix is used. The observed statistic is
 
 $$
 I=0.31.
@@ -1383,21 +1152,13 @@ E[I] =
 \approx-0.0204.
 $$
 
-A permutation test using
-
-$$
-999
-$$
-
-permutations gives
+A permutation test using $999$ permutations gives
 
 $$
 p=0.004
 $$
 
-for the positive-autocorrelation alternative.
-
-A careful interpretation is:
+for the positive-autocorrelation alternative. A careful interpretation is:
 
 > Values in neighboring regions are more similar than expected under the specified exchangeability/randomization null for this adjacency matrix.
 
@@ -1407,81 +1168,11 @@ A careless interpretation would be:
 
 The second statement is not established by Moran's $I$.
 
-## Concept map
+## Connecting a Pattern Summary to an Explanation
 
-The logic is
+Center the values, calculate their spatial lag using a justified W, and inspect how neighboring products or differences contribute to a global statistic. Next specify the reference mechanism and the direction of the alternative. The observed value, its null expectation, and its permutation tail probability play different roles: the first describes the map, the second supplies a comparison center, and the third quantifies extremeness under a model.
 
-$$
-\text{values attached to locations}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{define spatial weights }W
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{center values and compute spatial lag}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{global Moran / Geary statistic}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{define null/reference mechanism}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{permutation or analytic inference}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{check trend and covariates}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{local analysis + multiple-testing control if needed}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{move to an explicit spatial model when the scientific question requires it}.
-$$
-
-The essential idea is:
-
-> Spatial autocorrelation statistics summarize how values align with a chosen neighborhood structure; their meaning comes from both the weights matrix and the reference model.
+If broad trends or covariates explain the raw arrangement, a residual analysis asks whether structure remains after that explanation. Its reference distribution must account for fitting. Local analysis can then investigate where patterns occur, with a stated normalization and multiple-testing strategy. Finally, use an explicit spatial model when the goal is prediction, parameter interpretation, or a mechanism of dependence. A significant global statistic is evidence relevant to those next questions, but it does not choose their answers by itself.
 
 ## Questions students should be able to answer
 
@@ -1503,4 +1194,4 @@ The essential idea is:
 
 ## Practice
 
-Use the companion [spatial autocorrelation exercises](../../exercises/spatial_statistics/spatial_autocorrelation.md).
+Use the companion [spatial autocorrelation exercises](https://github.com/djeada/Statistics-Notes/blob/main/exercises/spatial_statistics/spatial_autocorrelation.md).

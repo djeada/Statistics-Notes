@@ -1,10 +1,10 @@
 # Geometric Probability
 
-Geometric probability is a fascinating branch of probability theory where outcomes are associated with geometric figures and their measures—such as lengths, areas, and volumes—rather than discrete numerical outcomes. It often deals with continuous random variables and employs integral calculus to calculate probabilities.
+Geometric probability describes random outcomes represented by locations, directions, lengths, or shapes. Under a uniform model, probability is proportional to the relevant geometric measure, such as length on a line or area in a plane. The sampling mechanism determines that measure: uniform angle, uniform radius, and uniform area are different models even when they generate points in the same disk.
 
-In geometric probability, the probability of an event is typically determined by the ratio of the measure (length, area, volume) of the favorable outcomes to the measure of the entire sample space. This approach is particularly useful when dealing with problems involving random points in geometric figures.
+For a region of finite positive measure sampled uniformly, divide the measure of the favorable subset by the measure of the whole region. If the density varies across the region, integrate that density instead. A larger area can then have less probability than a smaller area with higher density. State the uniformity assumption before using an area ratio.
 
-### Example 1: Distance from a Corner in a Square
+## Example 1: Distance from a Corner in a Square
 
 Calculate the probability that a randomly chosen point inside a unit square is at a distance less than $r$ units from a specific corner (the origin).
 
@@ -15,7 +15,7 @@ Calculate the probability that a randomly chosen point inside a unit square is a
 - Let $D$ be the distance from a point $(X, Y)$ inside the square to $O$.
 - We aim to find $P(D < r)$, the probability that $D < r$, where $0 \leq r \leq \sqrt{2}$ (for larger $r$ the probability is simply 1).
 
-![5536c72b-ce5f-4e20-8683-3ede2d2a8a94](https://github.com/djeada/Statistics-Notes/assets/37275728/79a9a1dc-4716-46a1-8c6b-4d0a2da6f47c)
+![Figure for Example 1: Distance from a Corner in a Square](https://github.com/djeada/Statistics-Notes/assets/37275728/79a9a1dc-4716-46a1-8c6b-4d0a2da6f47c)
 
 | Term                           | Description                                                                                          |
 |---------------------------------|------------------------------------------------------------------------------------------------------|
@@ -32,7 +32,7 @@ $$f_{X,Y}(x, y) = \begin{cases}
 
 \end{cases}$$
 
-#### Probability Calculation
+### Probability Calculation
 
 The probability $P(D < r)$ is the ratio of the area of the region where $D < r$ (denoted as $A_E$) to the area of the square $A_S$:
 
@@ -40,7 +40,7 @@ $$P(D < r) = \frac{A_E}{A_S}.$$
 
 Since $A_S = 1$ (unit square), $P(D < r) = A_E$.
 
-### Calculating $A_E$
+## Calculating $A_E$
 
 The calculation of $A_E$ depends on the value of $r$:
 
@@ -50,17 +50,17 @@ The calculation of $A_E$ depends on the value of $r$:
 | **Case 2**     | $1 < r \leq \sqrt{2}$            |
 | **Case 3**     | $r > \sqrt{2}$                   |
 
-#### Case 1: $0 \leq r \leq 1$
+### Case 1: $0 \leq r \leq 1$
 
 In this range, the quarter circle of radius $r$ lies entirely within the square.
 
-##### Calculation
+#### Calculation
 
 The area of a quarter circle of radius $r$ is:
 
 $$A_E = \frac{\pi r^2}{4}.$$
 
-##### Probability
+#### Probability
 
 $$P(D < r) = A_E = \frac{\pi r^2}{4}.$$
 
@@ -68,15 +68,15 @@ $$P(D < r) = A_E = \frac{\pi r^2}{4}.$$
 
 $$P(D < 0.8) = \frac{\pi (0.8)^2}{4} = \frac{\pi \times 0.64}{4} = 0.16\pi \approx 0.5027.$$
 
-#### Case 2: $1 < r \leq \sqrt{2}$
+### Case 2: $1 < r \leq \sqrt{2}$
 
 In this range, the quarter circle extends beyond the square, and we need to calculate the portion of the circle that lies within the square.
 
-##### Visual Representation
+#### Visual Representation
 
 The overlapping area is the quarter circle minus the segments that lie outside the square (shaded regions beyond $x = 1$ and $y = 1$).
 
-##### Calculation
+#### Calculation
 
 I. **Compute the area of the quarter circle**:
 
@@ -85,6 +85,8 @@ $$A_{\text{quarter}} = \frac{\pi r^2}{4}.$$
 II. **Compute the area outside the square but inside the quarter circle**:
 
 Due to symmetry, calculate the area in one of the regions (e.g., where $x > 1$) and double it.
+
+The two excluded pieces do not overlap when $r\leq\sqrt2$: having both $x>1$ and $y>1$ would require $x^2+y^2>2\geq r^2$. This justifies subtracting twice one piece without adding an overlap correction. At $r=1$, the second-case formula joins the quarter-circle area $\pi/4$; at $r=\sqrt2$, it gives one. These boundary checks help detect incorrect segment formulas.
 
 $$A_{\text{outside}} = 2 \int_{x=1}^{r} \sqrt{r^2 - x^2} \, dx.$$
 
@@ -138,7 +140,7 @@ VI. **Final Expression for $A_E$**:
 
 $$A_E = r^2 \left( \arcsin \left( \frac{1}{r} \right) + \frac{\sqrt{r^2 - 1}}{r^2} - \frac{\pi}{4} \right).$$
 
-##### Probability
+#### Probability
 
 $$P(D < r) = A_E = r^2 \left( \arcsin \left( \frac{1}{r} \right) + \frac{\sqrt{r^2 - 1}}{r^2} - \frac{\pi}{4} \right).$$
 
@@ -168,15 +170,15 @@ A_E &\approx (1.2)^2 \left( 0.9851 + \frac{0.6633}{(1.2)^2} - \frac{\pi}{4} \rig
 
 So, $P(D < 1.2) \approx 95.1\%$.
 
-#### Case 3: $r > \sqrt{2}$
+### Case 3: $r > \sqrt{2}$
 
 For $r > \sqrt{2}$, the entire square lies within the circle of radius $r$ centered at the origin. Thus, every point in the square satisfies $D < r$.
 
-##### Probability
+#### Probability
 
 $$P(D < r) = 1.$$
 
-### Example 2: Probability of a Random Chord in a Circle Being Longer Than the Radius
+## Example 2: Probability of a Random Chord in a Circle Being Longer Than the Radius
 
 Calculate the probability that a randomly drawn chord in a circle is longer than the radius of the circle.
 
@@ -186,7 +188,7 @@ Calculate the probability that a randomly drawn chord in a circle is longer than
 - A chord is drawn at random within the circle.
 - We aim to find $P(L > R)$, the probability that the length $L$ of the chord exceeds $R$.
 
-#### Understanding the Problem
+### Understanding the Problem
 
 The problem is known as Bertrand's Paradox, which arises because the probability depends on how "at random" is defined when selecting chords in a circle. There are multiple methods to select a chord at random:
 
@@ -203,7 +205,7 @@ Each method is well defined, but they yield different probabilities for $P(L > R
 | **Sample Space ($S$)**      | All points $(X, Y)$ inside the circle $x^2 + y^2 \leq R^2$, representing possible midpoints of chords. |
 | **Event ($E$)**             | All midpoints $(X, Y)$ such that the corresponding chord has length $L > R$.                         |
 
-##### Relation Between Midpoint and Chord Length
+#### Relation Between Midpoint and Chord Length
 
 A chord's length $L$ is related to its distance $d$ from the center of the circle:
 
@@ -215,7 +217,7 @@ $$2 \sqrt{R^2 - d^2} > R \implies \sqrt{R^2 - d^2} > \frac{R}{2} \implies R^2 - 
 
 Thus, the event $E$ corresponds to all midpoints within a circle of radius $\frac{R\sqrt{3}}{2}$ centered at the origin.
 
-#### Probability Calculation
+### Probability Calculation
 
 I. **Area of the Inner Circle ($A_E$)**:
 
@@ -231,7 +233,11 @@ $$P(L > R) = \frac{A_E}{A_S} = \frac{\frac{3\pi R^2}{4}}{\pi R^2} = \frac{3}{4}.
 
 Therefore, the probability that a randomly drawn chord (using the Random Midpoint Method) is longer than the radius of the circle is $\frac{3}{4}$ or 75%.
 
-### Example 3: Probability That the Sum of Two Random Numbers Is Less Than 1
+For uniform midpoint area, the distance $D$ of the midpoint from the center has CDF $P(D\leq d)=d^2/R^2$ and density $2d/R^2$ on $[0,R]$. A thin ring farther from the center has more area, so its radius is more likely. The random-radial-point method instead makes $D$ uniform on $[0,R]$, producing $P(D<\sqrt3R/2)=\sqrt3/2$.
+
+For random endpoints, the smaller angle $\Theta$ between them is uniform on $[0,\pi]$ and $L=2R\sin(\Theta/2)$. The condition $L>R$ becomes $\Theta>\pi/3$, whose probability is $2/3$. These derivations show that the disagreement comes from different probability laws, not inconsistent rules. The familiar classical Bertrand problem often uses the side length of an inscribed equilateral triangle as its threshold; this example uses the radius, so its numerical probabilities differ from those commonly quoted for that threshold.
+
+## Example 3: Probability That the Sum of Two Random Numbers Is Less Than 1
 
 Calculate the probability that the sum of two independent random numbers $X$ and $Y$, each uniformly distributed between 0 and 1, is less than 1.
 
@@ -240,9 +246,9 @@ Calculate the probability that the sum of two independent random numbers $X$ and
 - Random variables $X$ and $Y$ are independent and uniformly distributed on the interval [0, 1].
 - We aim to find $P(X + Y < 1)$.
 
-#### Mathematical Formulation
+### Mathematical Formulation
 
-##### Joint Probability Density Function
+#### Joint Probability Density Function
 
 Since $X$ and $Y$ are independent and uniformly distributed, their joint PDF is:
 
@@ -259,17 +265,17 @@ $$f_{X,Y}(x, y) = \begin{cases}
 | **Sample Space ($S$)**      | The unit square in the $xy$-plane where $0 \leq x \leq 1$ and $0 \leq y \leq 1$.     |
 | **Event ($E$)**             | The set of points where $x + y < 1$.                                                        |
 
-#### Probability Calculation
+### Probability Calculation
 
 The probability $P(X + Y < 1)$ is the area under the joint PDF over the region $E$:
 
 $$P(X + Y < 1) = \iint_E f_{X,Y}(x, y) \, dx \, dy = \iint_E 1 \, dx \, dy = \text{Area of } E.$$
 
-##### Geometric Interpretation
+#### Geometric Interpretation
 
 The region $E$ is a right triangle within the unit square bounded by $x = 0$, $y = 0$, and $x + y = 1$.
 
-##### Calculating the Area
+#### Calculating the Area
 
 I. **Set Up the Integral**:
 
@@ -292,3 +298,5 @@ $$= \left[ x - \frac{x^2}{2} \right]_{0}^{1} $$
 $$= \left( 1 - \frac{1}{2} \right) - \left( 0 - 0 \right) = \frac{1}{2} $$
 
 Therefore, the probability that the sum of two independent uniform random variables on [0, 1] is less than 1 is $\frac{1}{2}$ or 50%.
+
+The line $x+y=1$ has area zero, so replacing the strict inequality by $X+Y\leq1$ leaves the probability unchanged in this continuous model. The transformation $(x,y)\mapsto(1-x,1-y)$ also maps the below-line triangle to the above-line triangle and preserves uniform area. This symmetry provides an independent check of the integral.

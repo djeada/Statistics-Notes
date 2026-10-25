@@ -5,14 +5,14 @@
 ## Understanding Correlation
 
 - A **positive correlation** occurs when, as one variable increases, the other tends to rise as well.
-- In contrast, a **negative correlation** happens when an increase in one variable results in the other decreasing.
+- A **negative correlation** means larger values of one variable tend to be paired with smaller values of the other. This describes association; it does not state that changing one causes the other to decrease.
 - Lastly, a **zero correlation** indicates that there is no linear relationship between the variables.
 
 **Important Note**: Correlation does not imply causation. A high correlation between two variables does not mean that one variable causes changes in the other.
 
 ## Pearson Correlation Coefficient ($r$)
 
-The **Pearson correlation coefficient** measures the strength and direction of the linear relationship between two continuous variables. It is sensitive to outliers and summarizes only linear association. It can be computed for any data with positive variances; normality is needed only for exact small-sample inference (confidence intervals and tests) about the population correlation.
+The **Pearson correlation coefficient** measures linear association between numerical variables. The variables need not be continuous or normally distributed for the coefficient to be computed. Positive sample variances are required, and finite positive population variances are required for the corresponding population quantity. Outliers can strongly influence the result because covariance uses products of deviations. Distributional and sampling assumptions enter when calculating uncertainty or tests, rather than the arithmetic definition.
 
 ### Definition
 
@@ -60,6 +60,8 @@ General Guidelines:
 | Strong Negative Correlation         | -1.0 ≤ r ≤ -0.7  |
 
 These cut-offs are conventional rules of thumb, not universal; what counts as "strong" depends on the field.
+
+The coefficient is dimensionless because rescaling either measurement multiplies its covariance and standard deviation by matching factors. Positive unit conversions leave correlation unchanged; reversing the direction of one scale changes its sign. A correlation of $0.75$ is not a statement that 75% of observations follow a pattern. In simple least-squares regression with an intercept, its square, $0.5625$, equals the in-sample fraction of centered response variation explained by the fitted line. This interpretation has specific modeling and fitting conditions.
 
 ### Example: Calculating Pearson's $r$
 
@@ -118,7 +120,7 @@ $$
 
 #### Visualization
 
-![output(12)](https://github.com/user-attachments/assets/36a1926f-d285-4a2f-b025-6b2dfa2f1a5e)
+![Figure for Visualization](https://github.com/user-attachments/assets/36a1926f-d285-4a2f-b025-6b2dfa2f1a5e)
 
 **Pearson's $r = 1$** indicates a perfect positive linear relationship between hours studied and test scores. As the number of hours studied increases, the test score increases proportionally.
 
@@ -141,6 +143,8 @@ Where:
 - $n$ is the number of observations.
 
 This shortcut formula is exact only when there are no ties. With ties, assign average ranks and compute the Pearson correlation of the ranks instead.
+
+For example, values $[10,10,30]$ receive ranks $[1.5,1.5,3]$, because the tied observations share the average of positions one and two. Ranking discards the size of a jump from 10 to 30 but preserves ordering. This makes Spearman correlation less sensitive to how extreme a value is, while leaving it sensitive to changes in rank, ties, dependence between observations, and the chosen sample.
 
 ### Calculation Steps
 
@@ -201,14 +205,14 @@ $$
 - When data is ordinal.
 - When the relationship between variables is monotonic but not necessarily linear.
 - When there are outliers that might affect Pearson's $r$.
-- When the variables are not normally distributed.
+- When the scientific question concerns order or a monotonic relation. Non-normal marginals alone do not require replacing Pearson correlation; choose the summary according to the relationship of interest.
 
 ## Comparison of Pearson's $r$ and Spearman's $r_s$
 
 - **Pearson's $r$** measures the strength of a linear relationship.
 - **Spearman's $r_s$** measures the strength of a monotonic relationship.
 - Both coefficients range from -1 to 1.
-- $r_s = \pm 1$ whenever the relationship is perfectly monotonic, whereas $r = \pm 1$ requires an exact linear relationship.
+- With no ties, $r_s=\pm1$ when the observations have exactly matching or reversed rank order, including a strictly monotonic nonlinear relation. With ties, use average ranks; equality requires the centered rank vectors to be proportional. A flat segment that introduces ties in only one variable can prevent perfect rank correlation. Pearson's $r=\pm1$ instead requires an exact affine relationship between the original nonconstant values.
 - Spearman's $r_s$ is less sensitive to outliers and does not require the assumption of normality.
 
 ## Correlation of Two Random Variables
@@ -232,7 +236,7 @@ Where:
 | **Symmetry**       | $\rho_{XY} = \rho_{YX}$                                                         |
 | **Dimensionless**  | The correlation coefficient is unitless.                                        |
 | **Linearity**      | If $\rho_{XY} = \pm 1$, then $Y=a+bX$ with probability 1 (and $b$ has the sign of $\rho_{XY}$). |
-| **Independence**   | If $X$ and $Y$ are independent, $\rho_{XY} = 0$. However, $\rho_{XY} = 0$ does not imply independence unless the variables are jointly normally distributed. |
+| **Independence** | Independence implies zero correlation when finite positive variances exist. The converse fails in general; for a jointly normal pair, zero correlation is sufficient for independence. |
 
 ### Interpretation
 
@@ -284,7 +288,7 @@ Interpretation:
 
 1. **Linearity**: the relationship between $X$ and $Y$ should be approximately straight, because $r$ measures only linear association.
 2. **No extreme outliers or leverage points**, which can dominate $r$.
-3. **Approximate bivariate normality** (and independent observations) is needed for the usual $t$-test and Fisher-$z$ confidence interval for $\rho_{XY}$, but not for computing $r$ itself.
+3. **Independent bivariate normal observations** give the exact usual t test for zero population correlation. The Fisher-z confidence interval is a large-sample approximation even under that model. Other inferential methods can be used under different assumptions; normality is not required to compute the descriptive coefficient.
 4. **Constant spread** (homoscedasticity) is not required for $r$ to be defined, but a funnel-shaped scatter means a single $r$ summarizes the relationship poorly.
 
 If these conditions are violated, Pearson's $r$ may not be an appropriate summary, and a rank-based or other measure may be preferable.

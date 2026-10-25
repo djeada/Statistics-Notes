@@ -1,51 +1,20 @@
 # Spatial Validation
 
-Spatial model performance depends not only on which observations are held out, but also on where those observations are located relative to the training data.
-
-This makes spatial validation fundamentally different from ordinary random train/test splitting.
-
-A random split often leaves test locations surrounded by nearby training observations, so it evaluates an interpolation-like task.
-
-A geographically separated holdout asks a harder question:
+Spatial model performance depends not only on which observations are held out, but also on where those observations are located relative to the training data. This makes spatial validation fundamentally different from ordinary random train/test splitting. A random split often leaves test locations surrounded by nearby training observations, so it evaluates an interpolation-like task. A geographically separated holdout removes some nearby information and often asks a harder prediction question. The actual difficulty also depends on the covariates, sampling density, and training size. Its target is:
 
 > Can the model predict where nearby observations are unavailable?
 
 Neither design is universally correct. The appropriate validation design is the one that best reproduces the information conditions expected at deployment.
 
-## Learning objectives
+## Define the Information Available at Prediction Time
 
-After this chapter, you should be able to:
+A validation split is a model of a future prediction situation. Random folds often retain nearby measurements, blocks remove regions, and buffers impose additional separation. The appropriate choice depends on whether the target is interpolation, transfer to a similar region, or extrapolation to unfamiliar conditions. A harder split is not automatically a more relevant split.
 
-1. explain why random cross-validation can be optimistic for spatial prediction;
-2. distinguish interpolation, spatial transfer, and extrapolation;
-3. construct conceptual random, blocked, and buffered validation schemes;
-4. explain why block size matters;
-5. explain what a spatial buffer accomplishes;
-6. calculate RMSE and compare fold-level performance;
-7. diagnose validation difficulty using train-to-test distance;
-8. identify spatial leakage in preprocessing;
-9. explain why kriging variograms should sometimes be re-estimated inside folds;
-10. distinguish average predictive performance from uncertainty in the performance estimate;
-11. explain why unsupported extrapolation cannot be validated by resampling alone;
-12. design a final geographic test set after model selection.
+Geometry and predictor support both matter. Record how far held-out sites lie from training data, what training information remains after buffering, and whether the tested predictor combinations are represented. Fit data-derived transformations and covariance models within folds when evaluating the complete fitting procedure. A score should also state how errors are aggregated across observations or regions. Fold-level variation and uncertainty calibration can reveal failures hidden by a single mean RMSE, while no resampling scheme can supply evidence for conditions absent from the dataset.
 
 ## Validation is a question about future information
 
-Suppose a model is trained on observations
-
-$$
-\{(s_i,y_i):i\in\mathcal T\}
-$$
-
-and tested on observations
-
-$$
-\{(s_j,y_j):j\in\mathcal V\}.
-$$
-
-A validation score depends on more than the observations assigned to $\mathcal T$ and $\mathcal V$.
-
-It also depends on the geometry:
+Suppose a model is trained on observations $\{(s_i,y_i):i\in\mathcal T\}$ and tested on observations $\{(s_j,y_j):j\in\mathcal V\}$. A validation score depends on more than the observations assigned to $\mathcal T$ and $\mathcal V$. It also depends on the geometry:
 
 $$
 d(s_j,\mathcal T) =
@@ -53,23 +22,15 @@ d(s_j,\mathcal T) =
 d(s_j,s_i).
 $$
 
-This is the distance from test location $s_j$ to its nearest training observation.
-
-For many spatial predictors, prediction becomes easier as this distance decreases.
-
-Thus, two validation designs with the same number of test observations can represent very different prediction tasks.
+This is the distance from test location $s_j$ to its nearest training observation. For many spatial predictors, prediction becomes easier as this distance decreases. Thus, two validation designs with the same number of test observations can represent very different prediction tasks.
 
 ## Three common deployment targets
 
 Spatial validation should begin by defining the intended deployment setting.
 
-## Interpolation
+### Interpolation
 
-Interpolation means predicting inside a region that is already well sampled.
-
-A typical target location has nearby training observations.
-
-Examples include:
+Interpolation means predicting inside a region that is already well sampled. A typical target location has nearby training observations. Examples include:
 
 - filling gaps between monitoring stations;
 - mapping soil properties inside an intensively sampled field;
@@ -79,50 +40,32 @@ A random split can sometimes approximate this situation because held-out observa
 
 ![Random versus spatial holdout geometry](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/01_random_vs_spatial_split.png)
 
-## Spatial transfer
+### Spatial transfer
 
-Spatial transfer means predicting in a geographically distinct region that was not used for training.
-
-Examples include:
+Spatial transfer means predicting in a geographically distinct region that was not used for training. Examples include:
 
 - training on northern districts and predicting southern districts;
 - training on sampled forest stands and predicting a new stand;
 - training in several watersheds and predicting another watershed.
 
-A random split is usually too optimistic for this problem.
+A random split is usually too optimistic for this problem. Blocked or leave-region-out validation is more appropriate.
 
-Blocked or leave-region-out validation is more appropriate.
+### Extrapolation beyond observed conditions
 
-## Extrapolation beyond observed conditions
-
-The most difficult case occurs when a new region differs not only geographically, but also in predictor values or in the data-generating process.
-
-Examples include:
+The most difficult case occurs when a new region differs not only geographically, but also in predictor values or in the data-generating process. Examples include:
 
 - predicting into a hotter climate regime than observed in training;
 - predicting a species into an elevation range absent from training;
 - applying an urban model to rural areas;
 - transferring a disease model to a population with different demographics.
 
-This is **extrapolation**.
-
-No resampling method can create evidence about conditions absent from the original dataset.
-
-Validation can estimate extrapolation performance only when genuinely representative extrapolation regions exist in the data.
+This is **extrapolation**. No resampling method can create evidence about conditions absent from the original dataset. Validation can estimate extrapolation performance only when genuinely representative extrapolation regions exist in the data.
 
 ## Random train/test splitting
 
-In a random split, observations are shuffled and assigned to folds without using geography.
+In a random split, observations are shuffled and assigned to folds without using geography. This is the standard approach in many non-spatial machine-learning settings. For independent observations, random splitting can be appropriate. For spatially dependent observations, however, it can place training and test locations extremely close together. This can create an easier task than the real deployment problem.
 
-This is the standard approach in many non-spatial machine-learning settings.
-
-For independent observations, random splitting can be appropriate.
-
-For spatially dependent observations, however, it can place training and test locations extremely close together.
-
-This can create an easier task than the real deployment problem.
-
-## Why random splits can be optimistic
+### Why random splits can be optimistic
 
 Suppose a test location is only
 
@@ -130,27 +73,19 @@ $$
 50\text{ m}
 $$
 
-from a training observation.
-
-If the spatial correlation range is
+from a training observation. If the spatial correlation range is
 
 $$
 2\text{ km},
 $$
 
-the training observation contains substantial information about the held-out test value.
-
-Now suppose real deployment occurs
+the training observation contains substantial information about the held-out test value. Now suppose real deployment occurs
 
 $$
 10\text{ km}
 $$
 
-from the nearest observation.
-
-The validation and deployment settings are therefore not comparable.
-
-The random split estimates:
+from the nearest observation. The validation and deployment settings are therefore not comparable. The random split estimates:
 
 > performance when nearby training information is usually available.
 
@@ -158,7 +93,7 @@ The deployment task asks:
 
 > performance when nearby information is unavailable.
 
-## A simple distance diagnostic
+### A simple distance diagnostic
 
 For each test observation $j$, calculate
 
@@ -178,17 +113,9 @@ A validation design is more representative of transfer when these distances rese
 
 ![Nearest train-test distance](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/02_nearest_training_distance.png)
 
-## Numerical distance example
+### Numerical distance example
 
-Suppose five test locations have nearest-training distances
-
-$$
-0.2,\ 0.3,\ 0.4,\ 0.5,\ 0.6
-$$
-
-km under random CV.
-
-The mean distance is
+Suppose five test locations have nearest-training distances $0.2,\ 0.3,\ 0.4,\ 0.5,\ 0.6$ km under random CV. The mean distance is
 
 $$
 \frac{0.2+0.3+0.4+0.5+0.6}{5} =
@@ -196,26 +123,18 @@ $$
 0.4\text{ km}.
 $$
 
-Under blocked CV, suppose the distances are
-
-$$
-2.1,\ 2.5,\ 2.7,\ 3.0,\ 3.2.
-$$
-
-The mean is
+Under blocked CV, suppose the distances are $2.1,\ 2.5,\ 2.7,\ 3.0,\ 3.2$. The mean is
 
 $$
 \frac{13.5}{5} =
 2.7\text{ km}.
 $$
 
-These two schemes evaluate very different levels of spatial separation.
+These two schemes evaluate very different levels of spatial separation. Nearest distance is a useful first diagnostic, not a complete description of information. A target with one nearby noisy observation and no others can be harder than one with several moderately close, precise observations. For anisotropic or network processes, measure distance in the geometry the model uses and consider directional coverage as well. Compare the distribution of these summaries with the intended deployment locations.
 
 ## Spatial blocks
 
-A common approach is to partition the study area into geographic blocks and hold out one or more complete blocks.
-
-For example, divide a rectangular region into:
+A common approach is to partition the study area into geographic blocks and hold out one or more complete blocks. For example, divide a rectangular region into:
 
 - vertical strips;
 - horizontal strips;
@@ -226,11 +145,9 @@ For example, divide a rectangular region into:
 
 The blocks should reflect the intended deployment question.
 
-## Leave-one-block-out validation
+### Leave-one-block-out validation
 
-Suppose the region is divided into five spatial blocks.
-
-For fold $k$:
+Suppose the region is divided into five spatial blocks. For fold $k$:
 
 1. block $k$ is the test set;
 2. all other blocks are training data;
@@ -238,19 +155,11 @@ For fold $k$:
 4. predict the held-out block;
 5. calculate performance.
 
-Repeat for all five blocks.
+Repeat for all five blocks. This creates five geographically distinct validation tasks.
 
-This creates five geographically distinct validation tasks.
+### Block size matters
 
-## Block size matters
-
-Very small spatial blocks can leave test observations almost adjacent to training observations.
-
-This weakens the intended geographic separation.
-
-Very large blocks create a harder transfer task but may leave too little training data.
-
-The block size should reflect:
+Very small spatial blocks can leave test observations almost adjacent to training observations. This weakens the intended geographic separation. Very large blocks create a harder transfer task but may leave too little training data. The block size should reflect:
 
 - the spatial dependence range;
 - the expected deployment distance;
@@ -259,7 +168,7 @@ The block size should reflect:
 
 ![Block size sensitivity](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/04_block_size_sensitivity.png)
 
-## Relationship to correlation range
+### Relationship to correlation range
 
 Suppose residual correlation becomes weak after approximately
 
@@ -273,13 +182,7 @@ $$
 500\text{ m}
 $$
 
-wide, test observations near a block edge can still have strongly correlated training observations immediately outside the block.
-
-The validation task remains close to interpolation.
-
-Using blocks several kilometers wide may better assess geographic transfer.
-
-There is no universal rule such as:
+wide, test observations near a block edge can still have strongly correlated training observations immediately outside the block. The validation task remains close to interpolation. Using blocks several kilometers wide may better assess geographic transfer. There is no universal rule such as:
 
 > block size must equal exactly one variogram range.
 
@@ -287,41 +190,23 @@ The dependence range is one useful input, not an automatic choice.
 
 ## Buffered validation
 
-A buffered split adds another layer of geographic separation.
-
-After selecting a test region, remove training observations within distance
-
-$$
-b
-$$
-
-of the test region.
-
-The parameter $b$ is the buffer width.
+A buffered split adds another layer of geographic separation. After selecting a test region, remove training observations within distance $b$ of the test region. The parameter $b$ is the buffer width.
 
 ![Buffered validation geometry](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/05_buffer_geometry.png)
 
-## What the buffer is doing
+### What the buffer is doing
 
-Suppose a held-out test block is surrounded by training observations immediately outside its boundary.
-
-Even when the test block itself is excluded, the task can remain easy.
-
-A buffer imposes an explicit minimum separation.
-
-If
+Suppose a held-out test block is surrounded by training observations immediately outside its boundary. Even when the test block itself is excluded, the task can remain easy. A buffer imposes an explicit minimum separation. If
 
 $$
 b=3\text{ km},
 $$
 
-training observations within 3 km of the test block are removed for that fold.
-
-This asks:
+training observations within 3 km of the test block are removed for that fold. This asks:
 
 > How well can the model predict when nearby training information is unavailable?
 
-## Numerical buffer example
+### Numerical buffer example
 
 Suppose a test site has a training observation
 
@@ -329,33 +214,19 @@ $$
 0.4\text{ km}
 $$
 
-away.
-
-With no buffer, that observation remains available.
-
-With
+away. With no buffer, that observation remains available. With
 
 $$
 b=1\text{ km},
 $$
 
-it is removed.
-
-Suppose the next nearest training observation is
+it is removed. Suppose the next nearest training observation is
 
 $$
 2.3\text{ km}
 $$
 
-away.
-
-The effective test-to-training separation changes from
-
-$$
-0.4
-$$
-
-to
+away. The effective test-to-training separation changes from $0.4$ to
 
 $$
 2.3\text{ km}.
@@ -363,19 +234,15 @@ $$
 
 The validation task becomes substantially more difficult.
 
-## Buffers reduce training data
+### Buffers reduce training data
 
-A larger buffer generally increases train-test separation but decreases the training sample size.
-
-This creates a tradeoff between separation and available training data.
-
-A very large buffer can produce unrealistic training sets with:
+A larger buffer generally increases train-test separation but decreases the training sample size. This creates a tradeoff between separation and available training data. A very large buffer can produce unrealistic training sets with:
 
 - too few observations;
 - poor geographic coverage;
 - missing predictor ranges.
 
-Buffer width should therefore reflect deployment conditions rather than being maximized mechanically.
+Buffer width should therefore reflect deployment conditions rather than being maximized mechanically. When error rises with buffer width, part of the rise can come from greater separation and part from losing training observations or predictor coverage. Record retained training size and covariate support for each fold. A comparison that also subsamples unbuffered training data to a similar size can help distinguish these mechanisms, although it still does not make the geographic tasks identical.
 
 ## Comparing performance with RMSE
 
@@ -394,7 +261,7 @@ $$
 
 Smaller RMSE indicates better predictive accuracy on the response scale.
 
-## Worked RMSE example
+### Worked RMSE example
 
 Suppose four test observations are
 
@@ -426,13 +293,7 @@ $$
 -1,\ 1,\ 1,\ -2.
 $$
 
-Squared errors are
-
-$$
-1,\ 1,\ 1,\ 4.
-$$
-
-Their mean is
+Squared errors are $1,\ 1,\ 1,\ 4$. Their mean is
 
 $$
 \frac{7}{4} =
@@ -452,7 +313,7 @@ $$
 }.
 $$
 
-## Validation design can change the RMSE substantially
+### Validation design can change the RMSE substantially
 
 A spatial predictor can achieve:
 
@@ -473,11 +334,7 @@ $$
 2.4.
 $$
 
-These results are not contradictory.
-
-They describe different prediction tasks.
-
-The correct question is not:
+These results are not contradictory. They describe different prediction tasks. The correct question is not:
 
 > Which RMSE is the true one?
 
@@ -489,9 +346,7 @@ It is:
 
 ## A toy spatial predictor
 
-Inverse-distance weighting is used here only to demonstrate validation geometry.
-
-For a target $s_0$, the predictor is
+Inverse-distance weighting is used here only to demonstrate validation geometry. For a target $s_0$, the predictor is
 
 $$
 \hat y(s_0) =
@@ -510,40 +365,22 @@ w_i =
 \frac1{d(s_i,s_0)^p+\epsilon}.
 $$
 
-Nearby training observations receive larger weight.
+Nearby training observations receive larger weight. This is intentionally simple. The purpose is not to recommend inverse-distance weighting as the preferred spatial model. Its purpose is simply to make the effect of train-test distance easy to see.
 
-This is intentionally simple.
+### Why nearby training data make spatial prediction easier
 
-The purpose is not to recommend inverse-distance weighting as the preferred spatial model.
-
-Its purpose is simply to make the effect of train-test distance easy to see.
-
-## Why nearby training data make spatial prediction easier
-
-Suppose a spatial process is smooth.
-
-Then
+Suppose a spatial process is smooth. Then
 
 $$
 y(s)
 \approx y(s+h)
 $$
 
-for small $h$.
-
-If random CV leaves a training site very close to the test location, the model may recover much of the test value from local information.
-
-A blocked split reduces that advantage.
-
-This is why random CV often estimates interpolation skill rather than spatial transfer skill.
+for small $h$. If random CV leaves a training site very close to the test location, the model may recover much of the test value from local information. A blocked split reduces that advantage. This is why random CV often estimates interpolation skill rather than spatial transfer skill.
 
 ## Leakage can be spatial
 
-Validation can still be optimistic even when the split itself is geographically appropriate.
-
-Leakage occurs whenever information from held-out observations enters the training pipeline.
-
-Examples include:
+Validation can still be optimistic even when the split itself is geographically appropriate. Leakage occurs whenever information from held-out observations enters the training pipeline. Examples include:
 
 - calculating neighborhood features using test observations;
 - interpolating a covariate with the full dataset before splitting;
@@ -553,9 +390,9 @@ Examples include:
 - imputing missing values using the complete dataset;
 - defining a regional aggregate that includes the target observation.
 
-All data-dependent operations should therefore be performed within each training fold.
+Operations learned from the study's outcomes or training sample should be fitted within each fold when assessing the full procedure. A fixed external covariate map that will truly be available at deployment may legitimately be used at test sites. The issue is access to unavailable information, rather than whether a map covers both training and test regions. Document the source and timing of covariates and whether test outcomes influenced their construction.
 
-## Leakage example: neighborhood mean
+### Leakage example: neighborhood mean
 
 Suppose the feature for location $i$ is
 
@@ -565,13 +402,7 @@ x_i^{\text{nbr}} =
 \sum_{j\in N_k(i)}y_j.
 $$
 
-This feature directly uses neighboring outcomes.
-
-If the neighborhood calculation is performed before splitting, a training row can contain information from a held-out test outcome.
-
-The model has then indirectly seen the held-out outcome.
-
-The correct procedure is:
+This feature directly uses neighboring outcomes. If the neighborhood calculation is performed before splitting, a training row can contain information from a held-out test outcome. The model has then indirectly seen the held-out outcome. The correct procedure is:
 
 1. split the data;
 2. construct the neighborhood feature using training observations only;
@@ -580,13 +411,9 @@ The correct procedure is:
 
 ![Spatial leakage](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/06_spatial_leakage.png)
 
-## Preprocessing must be fold-specific
+### Preprocessing must be fold-specific
 
-The same principle applies to ordinary preprocessing.
-
-If a transformation is estimated from data, it belongs inside the resampling loop.
-
-Examples include:
+The same principle applies to ordinary preprocessing. If a transformation is estimated from data, it belongs inside the resampling loop. Examples include:
 
 - feature scaling;
 - PCA;
@@ -601,21 +428,11 @@ This is ordinary machine-learning leakage with an added spatial dimension.
 
 ## Cross-validation for kriging
 
-Leave-one-out kriging removes one sampled site and predicts it from all remaining sites.
+Leave-one-out kriging removes one sampled site and predicts it from all remaining sites. This often leaves nearby observations in the training data. It therefore mainly assesses local interpolation. That may be exactly the right target for a densely sampled mapping problem. It is not necessarily appropriate for transfer to a new geographic region.
 
-This often leaves nearby observations in the training data.
+### Kriging example
 
-It therefore mainly assesses local interpolation.
-
-That may be exactly the right target for a densely sampled mapping problem.
-
-It is not necessarily appropriate for transfer to a new geographic region.
-
-## Kriging example
-
-Suppose a monitoring site is omitted.
-
-Its two nearest remaining sites are only
+Suppose a monitoring site is omitted. Its two nearest remaining sites are only
 
 $$
 150\text{ m}
@@ -627,23 +444,15 @@ $$
 220\text{ m}
 $$
 
-away.
-
-Leave-one-out kriging can perform very well.
-
-But suppose the intended prediction area is
+away. Leave-one-out kriging can perform very well. But suppose the intended prediction area is
 
 $$
 8\text{ km}
 $$
 
-from the nearest monitor.
+from the nearest monitor. Leave-one-out accuracy does not directly estimate performance under that deployment setting. A blocked or buffered holdout is more relevant.
 
-Leave-one-out accuracy does not directly estimate performance under that deployment setting.
-
-A blocked or buffered holdout is more relevant.
-
-## Refit the variogram inside each fold
+### Refit the variogram inside each fold
 
 Suppose the workflow is:
 
@@ -653,29 +462,15 @@ Suppose the workflow is:
 4. krige;
 5. evaluate test error.
 
-If steps 1–3 use the full dataset, the held-out observations influence the model structure before prediction.
+If steps 1–3 use the full dataset, the held-out observations influence the model structure before prediction. That creates leakage. For a clean estimate of the full modeling procedure, fit the variogram and covariance parameters using only the training observations in each fold.
 
-That creates leakage.
+### When full-data covariance fitting may still be useful
 
-For a clean estimate of the full modeling procedure, fit the variogram and covariance parameters using only the training observations in each fold.
-
-## When full-data covariance fitting may still be useful
-
-Sometimes the goal is not to estimate the full model-selection pipeline.
-
-For example, an analyst may want to compare prediction formulas conditional on a covariance model fixed externally from previous studies.
-
-Then keeping that covariance model fixed can be scientifically justified.
-
-The validation design should state clearly which components are fixed and which are re-estimated.
+Sometimes the goal is not to estimate the full model-selection pipeline. For example, an analyst may want to compare prediction formulas conditional on a covariance model fixed externally from previous studies. Then keeping that covariance model fixed can be scientifically justified. The validation design should state clearly which components are fixed and which are re-estimated.
 
 ## Hyperparameter tuning and nested spatial validation
 
-Suppose block size, model type, or hyperparameters are chosen by cross-validation.
-
-If the same folds are then used to report final performance, the estimate can be optimistic because those folds influenced model selection.
-
-A stronger design is:
+Choose validation block and buffer geometry from the deployment question and scientific separation scale. These define the target of assessment and should not be optimized simply to obtain the best score. Model type and predictive hyperparameters can then be selected using an inner validation design consistent with that target. If the same folds are then used to report final performance, the estimate can be optimistic because those folds influenced model selection. A stronger design is:
 
 1. inner spatial CV for model selection;
 2. outer spatial CV or final geographic test set for evaluation.
@@ -692,66 +487,26 @@ If the dataset is large enough, reserve a final geographic region that is never 
 - block-size tuning;
 - model comparison.
 
-Use it only for the final performance estimate.
-
-This design most closely approximates a future geographic deployment.
+Use it only for the final performance estimate. This design most closely approximates a future geographic deployment.
 
 ## Unsupported extrapolation cannot be validated away
 
-Suppose training temperature values lie between
+Suppose training temperature values lie between $10^\circ C$ and $25^\circ C$. Deployment will occur in a region with temperatures $35^\circ C$ to $40^\circ C$. Random or blocked resampling of the original data cannot evaluate model behavior at 40°C because such conditions are absent. The data simply do not contain empirical evidence for that regime. This is a support problem, not a problem that can be solved by a more elaborate cross-validation scheme.
 
-$$
-10^\circ C
-$$
+### Covariate overlap
 
-and
-
-$$
-25^\circ C.
-$$
-
-Deployment will occur in a region with temperatures
-
-$$
-35^\circ C
-$$
-
-to
-
-$$
-40^\circ C.
-$$
-
-Random or blocked resampling of the original data cannot evaluate model behavior at 40°C because such conditions are absent.
-
-The data simply do not contain empirical evidence for that regime.
-
-This is a support problem, not a problem that can be solved by a more elaborate cross-validation scheme.
-
-## Covariate overlap
-
-Spatial transfer should therefore assess not only geographic separation but also predictor overlap.
-
-For each test region, ask:
+Spatial transfer should therefore assess not only geographic separation but also predictor overlap. For each test region, ask:
 
 - Are predictor values represented in training?
 - Are combinations of predictors represented?
 - Is the land-cover or climate regime new?
 - Are measurement systems comparable?
 
-A geographically separated test set can still represent interpolation in covariate space.
-
-Conversely, a geographically nearby test site can still be extrapolative if its predictor values are novel.
+A geographically separated test set can still represent interpolation in covariate space. Conversely, a geographically nearby test site can still be extrapolative if its predictor values are novel.
 
 ## Fold-level performance matters
 
-Suppose five spatial blocks have RMSE:
-
-$$
-1.0,\ 1.1,\ 1.3,\ 2.8,\ 3.1.
-$$
-
-The mean is
+Suppose five spatial blocks have RMSE: $1.0,\ 1.1,\ 1.3,\ 2.8,\ 3.1$. The mean is
 
 $$
 \frac{1.0+1.1+1.3+2.8+3.1}{5} =
@@ -764,13 +519,13 @@ $$
 \text{mean RMSE}=1.86
 $$
 
-(the unweighted mean of fold RMSEs, which differs from the pooled RMSE when folds have different sizes) can hide substantial geographic heterogeneity.
+can hide substantial geographic heterogeneity. This is an unweighted mean of fold RMSEs, not a pooled observation-level RMSE. They generally differ even when folds have equal sizes, because taking a square root and averaging do not commute. Two regions are substantially harder than the others.
 
-Two regions are substantially harder than the others.
+If fold $k$ has size $m_k$ and RMSE $r_k$, the pooled value is $\sqrt{\sum_km_kr_k^2/\sum_km_k}$. For equal fold sizes in this example, it is $\sqrt{(1^2+1.1^2+1.3^2+2.8^2+3.1^2)/5}\approx2.066$, rather than $1.86$. Equal-region averaging weights regions equally, while pooling weights observations equally. For deployment over geographic area or a target population, a further weighting scheme may be needed to represent that target.
 
 ![Fold-level variability](https://raw.githubusercontent.com/djeada/Statistics-Notes/refs/heads/main/assets/spatial_statistics/spatial_validation/08_fold_level_variability.png)
 
-## Why spatial folds are not independent replicates
+### Why spatial folds are not independent replicates
 
 Adjacent or ecologically related blocks can share:
 
@@ -779,47 +534,31 @@ Adjacent or ecologically related blocks can share:
 - measurement practices;
 - unmeasured regional processes.
 
-Five folds are therefore not equivalent to five independent experiments.
-
-A standard error calculated as though the folds were iid replicates can give a misleading sense of precision.
-
-Report:
+Five folds are therefore not equivalent to five independent experiments. A standard error calculated as though the folds were iid replicates can give a misleading sense of precision. Report:
 
 - fold-level metrics;
 - geographic maps;
 - ranges or quantiles;
 - the number and geometry of folds.
 
-## Mean performance versus deployment risk
+### Mean performance versus deployment risk
 
-Suppose average RMSE is acceptable but one important region performs very poorly.
-
-If deployment includes that region, the average alone may be insufficient.
-
-Validation should examine the distribution of errors across:
+Suppose average RMSE is acceptable but one important region performs very poorly. If deployment includes that region, the average alone may be insufficient. Validation should examine the distribution of errors across:
 
 - geography;
 - environmental conditions;
 - distance from training;
 - population groups or operational strata when relevant.
 
-The reported metrics should support the actual decision.
+The reported metrics should support the actual decision. Uncertainty calibration is a separate part of that evaluation. If the model reports 90% prediction intervals, inspect held-out coverage, interval widths, and their variation by distance, region, and predictor novelty. Coverage alone can be made high by very wide intervals, while a low average RMSE can coexist with overconfident uncertainty in a sparsely sampled region. Use an observation-prediction interval for held-out noisy measurements and distinguish it from a latent-field interval.
 
 ## Block orientation can matter
 
-Suppose a process changes mainly east-to-west.
-
-Vertical holdout strips may create stronger extrapolation than horizontal strips.
-
-If transport follows a river or prevailing wind, directional blocking may be scientifically meaningful.
-
-Spatial validation geometry should follow the expected deployment mechanism whenever possible.
+Suppose a process changes mainly east-to-west. Vertical holdout strips may create stronger extrapolation than horizontal strips. If transport follows a river or prevailing wind, directional blocking may be scientifically meaningful. Spatial validation geometry should follow the expected deployment mechanism whenever possible.
 
 ## Leave-region-out validation
 
-Natural regions can sometimes provide more meaningful folds than arbitrary geometric blocks.
-
-Examples include:
+Natural regions can sometimes provide more meaningful folds than arbitrary geometric blocks. Examples include:
 
 - watersheds;
 - hospitals;
@@ -838,21 +577,15 @@ This is often easier to interpret scientifically than arbitrary geometric blocki
 
 ## Repeated spatial validation
 
-A single blocking scheme can be sensitive to arbitrary boundary placement.
-
-One response is to repeat spatial blocking with different:
+A single blocking scheme can be sensitive to arbitrary boundary placement. One response is to repeat spatial blocking with different:
 
 - origins;
 - orientations;
 - region selections.
 
-This reveals how sensitive the results are to validation geometry.
+This reveals how sensitive the results are to validation geometry. However, repeated folds are still not independent experiments. The purpose is robustness analysis, not artificial inflation of the effective sample size.
 
-However, repeated folds are still not independent experiments.
-
-The purpose is robustness analysis, not artificial inflation of the effective sample size.
-
-## Buffer width as a sensitivity parameter
+### Buffer width as a sensitivity parameter
 
 Instead of choosing a single buffer width, compare several plausible values:
 
@@ -860,27 +593,13 @@ $$
 b=0,\ 1,\ 2,\ 4\text{ km}.
 $$
 
-If performance degrades sharply as $b$ increases, the model relies strongly on very local training information.
-
-This can be scientifically informative.
-
-It answers:
+If performance degrades sharply as $b$ increases, the model relies strongly on very local training information. This can be scientifically informative. It answers:
 
 > How quickly does predictive skill decay as we remove nearby observations?
 
-## Block-size sensitivity as a diagnostic
+### Block-size sensitivity as a diagnostic
 
-Similarly, evaluate several block sizes.
-
-Small blocks may approximate interpolation.
-
-Larger blocks approximate increasingly difficult transfer.
-
-The resulting curve is not merely a tuning exercise.
-
-It shows how prediction performance changes as spatial separation increases.
-
-This can be more informative than a single cross-validation score.
+Similarly, evaluate several block sizes. Small blocks may approximate interpolation. Larger blocks approximate increasingly difficult transfer. The resulting curve is not merely a tuning exercise. It shows how prediction performance changes as spatial separation increases. This can be more informative than a single cross-validation score.
 
 ## Comparing validation schemes
 
@@ -895,13 +614,11 @@ A useful report might include:
 | Leave-region-out | transfer to a new natural region |
 | Final geographic test | closest approximation to final deployment |
 
-These designs answer different questions.
-
-Do not rank them by difficulty and assume that the hardest design is automatically the most appropriate.
+These designs answer different questions. Do not rank them by difficulty and assume that the hardest design is automatically the most appropriate.
 
 ## A complete spatial-validation workflow
 
-### define deployment
+### Define deployment
 
 Write down:
 
@@ -910,7 +627,7 @@ Write down:
 - whether new regions are expected;
 - whether predictor conditions may be novel.
 
-### map the data
+### Map the data
 
 Inspect:
 
@@ -920,7 +637,7 @@ Inspect:
 - boundaries;
 - regional differences.
 
-### estimate dependence scale
+### Estimate dependence scale
 
 Use:
 
@@ -930,7 +647,7 @@ Use:
 
 This helps inform block and buffer sizes.
 
-### choose validation geometry
+### Choose validation geometry
 
 Select:
 
@@ -940,11 +657,11 @@ Select:
 - leave-region-out;
 - multiple schemes.
 
-### put all preprocessing inside folds
+### Put all preprocessing inside folds
 
 Prevent both spatial and ordinary leakage.
 
-### refit model components inside folds
+### Refit model components inside folds
 
 When estimating the full modeling procedure, refit:
 
@@ -952,57 +669,57 @@ When estimating the full modeling procedure, refit:
 - covariance parameters;
 - hyperparameters.
 
-### record train-test separation
+### Record train-test separation
 
 Summarize nearest-training distances.
 
-### report fold-level metrics
+### Report fold-level metrics
 
 Do not report only the overall mean performance.
 
-### inspect covariate support
+### Inspect covariate support
 
 Check whether held-out conditions are represented in training.
 
-### reserve final geographic testing if possible
+### Reserve final geographic testing if possible
 
 Keep model selection separate from final evaluation.
 
 ## Common mistakes
 
-### using random CV for a regional-transfer claim
+### Using random CV for a regional-transfer claim
 
 Random CV usually leaves nearby training observations available.
 
-### choosing blocks that are too small
+### Choosing blocks that are too small
 
 Test observations can remain almost adjacent to training data.
 
-### choosing a huge buffer without considering deployment
+### Choosing a huge buffer without considering deployment
 
 A buffer should mimic the real information gap rather than maximize difficulty.
 
-### computing spatial features before splitting
+### Computing spatial features before splitting
 
 This can leak held-out information into training.
 
-### fitting a variogram once on the full dataset during CV
+### Fitting a variogram once on the full dataset during CV
 
 The test fold influences covariance estimation.
 
-### reporting only mean RMSE across spatial folds
+### Reporting only mean RMSE across spatial folds
 
 Regional variation may be large.
 
-### treating folds as independent experimental replicates
+### Treating folds as independent experimental replicates
 
 Spatial folds often share broad processes.
 
-### assuming blocked CV solves extrapolation
+### Assuming blocked CV solves extrapolation
 
 It does not create evidence for predictor conditions absent from the dataset.
 
-### tuning and evaluating on the same spatial folds
+### Tuning and evaluating on the same spatial folds
 
 Model selection can make reported performance optimistic.
 
@@ -1010,7 +727,7 @@ Model selection can make reported performance optimistic.
 
 Suppose a spatial model is evaluated three ways.
 
-#### Random CV
+### Random CV
 
 Median test-to-training distance:
 
@@ -1018,13 +735,9 @@ $$
 0.3\text{ km}.
 $$
 
-RMSE:
+RMSE: $0.8$.
 
-$$
-0.8.
-$$
-
-#### Blocked CV
+### Blocked CV
 
 Median distance:
 
@@ -1032,13 +745,9 @@ $$
 2.5\text{ km}.
 $$
 
-RMSE:
+RMSE: $1.6$.
 
-$$
-1.6.
-$$
-
-#### Buffered blocked CV
+### Buffered blocked CV
 
 Median distance:
 
@@ -1046,13 +755,7 @@ $$
 4.2\text{ km}.
 $$
 
-RMSE:
-
-$$
-2.1.
-$$
-
-A useful interpretation is:
+RMSE: $2.1$. A useful interpretation is:
 
 > Predictive error increases as nearby training information is removed. The random-CV result describes local interpolation, while the buffered result is more representative of prediction several kilometers from sampled sites.
 
@@ -1062,73 +765,11 @@ A poor interpretation is:
 
 The model may perform very well for interpolation but poorly for transfer.
 
-## Concept map
+## Connecting the Score to Deployment
 
-The logic of spatial validation is
+Begin with the deployment question, including geographic separation, predictor novelty, measurement support, and which covariate information will be available. Choose holdout geometry that represents those conditions. Within each training partition, perform the data-dependent preprocessing and fitting steps being assessed, then predict the held-out geography without using its outcomes. Report the resulting losses alongside training size, nearest-training distances, fold geometry, and covariate overlap. Inspect geographic variation rather than relying solely on an average score, and distinguish equal-observation weighting from equal-region or target-population weighting. When intervals are supplied, assess their coverage and width for the same observation or latent-field target.
 
-$$
-\text{deployment question}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{expected geographic separation}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{choose random / block / buffer / region holdout}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{fit all preprocessing using training only}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{predict held-out geography}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{calculate performance + train-test distance}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{inspect fold-level geographic variation}
-$$
-
-$$
-\downarrow
-$$
-
-$$
-\text{compare validation geometry with real deployment}.
-$$
-
-The central lesson is:
-
-> A spatial validation score is meaningful only when the train-test geometry resembles the prediction problem we actually care about.
+Model selection belongs inside an inner loop or development stage. A reserved geographic test set provides a final assessment only while it remains uninvolved in those choices. Repeated blocking can reveal sensitivity to arbitrary boundaries, but it does not create independent experiments or evidence for environmental regimes that were never observed. A defensible score describes the procedure under the stated information conditions.
 
 ## Questions students should be able to answer
 

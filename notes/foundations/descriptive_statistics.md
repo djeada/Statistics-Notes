@@ -1,6 +1,6 @@
 # Descriptive Statistics
 
-Descriptive statistics summarize the main characteristics of a dataset or sample. They help us understand data by describing its frequency, center, spread, and overall distribution.
+Descriptive statistics turn a collection of observations into summaries of frequency, center, spread, and shape. Each summary answers a particular question. A frequency table counts how often values occur; a mean preserves the total when multiplied by the number of observations; a percentile describes position in the ordered data. A useful description combines these views so that one number does not hide a second cluster, a long tail, or an unusual observation.
 
 ## Frequencies and Frequency Tables
 
@@ -121,9 +121,9 @@ The choice of bin boundaries and widths affects the appearance of a grouped dist
 
 ### Visualization
 
-A **histogram** provides a visual representation of the distribution of continuous numerical data. The horizontal axis contains intervals of values, while the vertical axis shows their frequencies or relative frequencies.
+A **histogram** displays a numerical distribution by grouping values into adjacent intervals. With equal-width bins, heights can show frequencies or relative frequencies because the common width makes areas proportional to counts. With unequal widths, use frequency density or probability density instead: the bar's area, rather than its height, must represent the count or probability. Otherwise a wide interval can appear unduly prominent simply because it covers more values.
 
-![image](https://github.com/djeada/Statistics-Notes/assets/37275728/5619116b-f65b-47fc-a1cf-a5bfa0640353)
+![Figure for Visualization](https://github.com/djeada/Statistics-Notes/assets/37275728/5619116b-f65b-47fc-a1cf-a5bfa0640353)
 
 A histogram can help reveal features such as concentration, spread, skewness, gaps, and possible multiple peaks.
 
@@ -165,6 +165,8 @@ G
 For the standard real-valued definition, the observations should be positive.
 
 For positive data, the geometric mean is less than or equal to the arithmetic mean, with equality when all observations are equal.
+
+To average percentage changes, apply the geometric mean to growth factors. A gain of 50% followed by a loss of 50% multiplies an initial value by $1.5\times0.5=0.75$. Its constant two-period growth factor is $\sqrt{0.75}\approx0.866$, corresponding to about a 13.4% loss per period. The arithmetic average of the two percentage changes is zero, which would incorrectly suggest no cumulative change. This example explains why the operation generating the total determines the appropriate average.
 
 * The **median** is the middle value after the observations are ordered. If the dataset contains an even number of observations, the median is usually defined as the mean of the two middle values.
 
@@ -241,7 +243,7 @@ Therefore:
 
 These measures describe the center in different ways. The relatively large value of 35 pulls the mean upward, while the median is less affected by it.
 
-![image](https://github.com/djeada/Statistics-Notes/assets/37275728/8b59fddf-4218-4365-a345-24075da9326f)
+![Figure for Mode](https://github.com/djeada/Statistics-Notes/assets/37275728/8b59fddf-4218-4365-a345-24075da9326f)
 
 ### Choosing Between Mean and Median
 
@@ -265,7 +267,7 @@ If she were instead interested in the company's average salary cost per designer
 
 #### Example 2: Reporting Average Customer Spending in a Bookstore
 
-Tom manages a small bookstore. Most customers spend around $20, but occasionally a customer spends more than $500.
+Tom manages a small bookstore. Most customers spend around \$20, but occasionally a customer spends more than \$500.
 
 If Tom wants to describe the spending of a **typical customer**, the median is useful because it is less affected by unusually large purchases.
 
@@ -322,7 +324,14 @@ s^2
 \sum_{i=1}^{n}(x_i-\bar{x})^2
 ```
 
-The denominator $n-1$ is used when estimating population variance from a sample.
+The denominator $n-1$ corrects the downward bias created by measuring deviations from an estimated mean. The deviations sum to zero, leaving only $n-1$ freely varying deviations. More precisely, for independent observations with common mean $\mu$ and finite variance $\sigma^2$,
+
+```math
+\sum_{i=1}^n(X_i-\bar X)^2
+=\sum_{i=1}^n(X_i-\mu)^2-n(\bar X-\mu)^2.
+```
+
+Taking expectations gives $n\sigma^2-n(\sigma^2/n)=(n-1)\sigma^2$. Dividing by $n-1$ therefore produces an unbiased estimator of the population variance. Dividing by $n$ remains appropriate when the aim is simply to describe the empirical distribution of the observed values.
 
 * The **standard deviation** is the square root of the variance.
 
@@ -410,6 +419,8 @@ Liam's time is therefore about 2.17 standard deviations below the mean.
 Relative to their respective reference distributions, Liam's performance is farther from the average in the favorable direction.
 
 This comparison assumes that the supplied means and standard deviations are meaningful reference values for the athletes being compared.
+
+The comparison is in standard-deviation units, rather than automatically in percentiles. Converting either z-score to a percentile using the standard normal CDF additionally requires an approximately normal reference distribution. If marathon times have a much heavier lower or upper tail than swimming times, the two standardized distances need not correspond to the same relative ranks. The direction of performance also matters: lower times are favorable here, whereas higher scores may be favorable in another event.
 
 ### Understanding Variance
 
@@ -515,7 +526,7 @@ The range, variance, and standard deviation describe spread in different ways. T
 
 However, all three can be affected substantially by extreme values. The IQR is generally more resistant to outliers.
 
-![2a2f7449-2a21-4c44-8ce9-438d7b85135e](https://github.com/djeada/Statistics-Notes/assets/37275728/8a18e3bd-e1cd-44c4-ac04-61f027e10882)
+![Figure for Standard Deviation](https://github.com/djeada/Statistics-Notes/assets/37275728/8a18e3bd-e1cd-44c4-ac04-61f027e10882)
 
 ## Percentiles and Quartiles
 
@@ -595,6 +606,8 @@ r
 
 The 30th percentile therefore lies 80% of the way between the second and third sorted observations.
 
+This interpolation is a convention for estimating a quantile, not a claim that exactly 30% of seven observations lie below the interpolated value. In a small dataset, empirical proportions move in jumps of $1/7$. The interpolation fills the gaps between order statistics so that the reported quantile changes smoothly with the requested percentile.
+
 Those values are:
 
 ```math
@@ -629,7 +642,7 @@ Under this percentile convention, the 30th percentile is therefore approximately
 
 Another valid percentile convention may produce a slightly different value. The important point is to use the same convention consistently when comparing results.
 
-![5ea8e097-b512-40b2-8959-b9d88f4657af](https://github.com/djeada/Statistics-Notes/assets/37275728/f940e95e-4e08-4696-ab10-618cdb49b6da)
+![Figure for Example: Exam Scores](https://github.com/djeada/Statistics-Notes/assets/37275728/f940e95e-4e08-4696-ab10-618cdb49b6da)
 
 ### Quartiles
 
@@ -761,7 +774,7 @@ The interquartile range is:
 
 A boxplot summarizes the distribution using the median, quartiles, and whiskers:
 
-![b0f49b50-ef84-4a8c-908f-e57b69fcd874](https://github.com/djeada/Statistics-Notes/assets/37275728/5b77b42b-4b08-4e69-b33e-7bb36e4d2aae)
+![Figure for Example: Exam Scores](https://github.com/djeada/Statistics-Notes/assets/37275728/5b77b42b-4b08-4e69-b33e-7bb36e4d2aae)
 
 For this dataset:
 

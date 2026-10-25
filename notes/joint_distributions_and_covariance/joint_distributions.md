@@ -60,6 +60,18 @@ $$
 
 The same construction gives the marginal distribution of $Y$.
 
+### A joint table makes the operations concrete
+
+Suppose $X$ and $Y$ indicate whether two products are purchased:
+
+| $X$ | $Y=0$ | $Y=1$ | Marginal $p_X(x)$ |
+|---|---|---|---|
+| 0 | 0.4 | 0.1 | 0.5 |
+| 1 | 0.2 | 0.3 | 0.5 |
+| Marginal $p_Y(y)$ | 0.6 | 0.4 | 1.0 |
+
+The four interior probabilities sum to one. Adding across the first row gives $P(X=0)=0.5$; adding down the second probability column gives $P(Y=1)=0.4$. Neither marginal alone tells us that both products are purchased with probability $0.3$. A model with the same marginals could allocate different mass to that joint event.
+
 A useful way to think about this is that the joint distribution contains the full two-variable model, while each marginal distribution describes only one variable on its own.
 
 ## Conditional Distributions
@@ -80,6 +92,8 @@ $$
 
 This is the random-variable analogue of conditional probability introduced earlier. Regression later builds on the same idea by modeling a conditional mean or conditional probability.
 
+In the table, restricting attention to $Y=1$ retains total probability $0.4$. Dividing the retained joint masses by $0.4$ gives $P(X=1\mid Y=1)=0.3/0.4=0.75$ and $P(X=0\mid Y=1)=0.25$. The normalized probabilities sum to one. For a continuous $Y$, the density ratio defines a conditional density rather than dividing by $P(Y=y)$, which is zero at a single point. More generally conditional distributions are defined almost everywhere with respect to the marginal law.
+
 ## Independence
 
 Random variables $X$ and $Y$ are independent when their joint distribution factors into the product of their marginal distributions. In the discrete case,
@@ -95,6 +109,8 @@ f_{X,Y}(x,y)=f_X(x)f_Y(y).
 $$
 
 If this factorization does not hold, the variables are dependent.
+
+For the purchase table, independence would require $P(X=1,Y=1)=P(X=1)P(Y=1)=0.5(0.4)=0.2$. The actual joint probability is $0.3$, so independence fails. Equivalently, learning that $Y=1$ changes the chance of $X=1$ from $0.5$ to $0.75$. Checking one unequal pair is enough to disprove factorization; proving independence requires the equality throughout the support, or an equivalent event-level argument.
 
 Independence is stronger than zero covariance. Two variables can be dependent in a nonlinear way while still having covariance zero.
 
@@ -118,10 +134,10 @@ $$
 \mathrm{Cov}(X,Y)=E[XY]-E[X]E[Y].
 $$
 
-That identity is developed in **[Covariance](covariance.md)**.
+That identity is developed in **[Covariance](https://github.com/djeada/Statistics-Notes/blob/main/notes/joint_distributions_and_covariance/covariance.md)**.
 
-## Why This Chapter Comes Before Regression
+## Conditional Means and Regression
 
 Regression does not simply ask whether two variables are related. It models the conditional behavior of a response given one or more predictors. Joint and conditional distributions therefore provide the probability language needed to make expressions such as $E[Y\mid X=x]$ meaningful.
 
-Continue with **[Covariance](covariance.md)** and **[Correlation](correlation.md)** before moving to sampling distributions or regression.
+In the table, $E[XY]=0.3$, because the product is one only in the bottom-right interior cell. Thus $\operatorname{Cov}(X,Y)=0.3-0.5(0.4)=0.1$. The joint model supplies the probabilities from which covariance is computed; the single covariance value does not allow us to reconstruct an arbitrary joint model.

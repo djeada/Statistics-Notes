@@ -1,25 +1,15 @@
 # Foundations
 
-This unit establishes the language used everywhere else in the notes. It is about what statistical data are and how to summarize them before introducing probability models.
+Statistics begins by identifying what was observed and what the observations can tell us. An observational unit might be a person, household, product, or measurement occasion. A variable records a characteristic of that unit, and a dataset organizes the recorded values. This language matters because the number of rows need not equal the number of independent pieces of information: several measurements may belong to the same person or location.
 
-## Reading Order
+## Population, sample, parameter, statistic
 
-1. **[Introduction to Statistics](introduction_to_statistics.md)** — populations, samples, variables, data types, descriptive statistics, and inference.
-2. **[Descriptive Statistics](descriptive_statistics.md)** — measures of center, spread, quantiles, frequency summaries, and exploratory descriptions.
+The population is the collection or process the question concerns. The sample is what we actually observe. A parameter describes the population or a probability model; a statistic is calculated from the sample. For example, average income among 500 surveyed adults is a statistic used to estimate average income in a specified city population.
 
-## Scope Boundary
+A calculation can summarize the observed sample exactly while estimating the population poorly. Selection, nonresponse, and measurement problems explain why a larger sample does not automatically make a study representative.
 
-Foundations describes observed data. It does not yet assign probabilities to outcomes or make repeated-sampling claims. Those begin in **[Probability](../probability/README.md)** and **[Sampling & Sampling Distributions](../sampling_and_sampling_distributions/README.md)**.
+## Summaries answer different questions
 
-A useful distinction to carry forward is:
+Frequencies describe how observations are distributed across categories or intervals. Means and medians describe different kinds of center. Standard deviations and interquartile ranges describe different aspects of spread. Graphs reveal features that a single number can conceal, such as a second cluster or a few unusually large observations.
 
-- a **population** is the target collection or data-generating process;
-- a **sample** is the observed subset used for analysis;
-- a **parameter** describes the population model;
-- a **statistic** is computed from the sample.
-
-That distinction becomes central once estimation and inference begin.
-
-## Next
-
-Continue to **[Probability](../probability/README.md)**.
+Describing a dataset requires no claim that it represents a larger population. Making that additional claim requires a sampling design or model. Keeping these two tasks distinct is the starting point for interpreting later probability models and inferential results.
