@@ -1,111 +1,118 @@
-# Normal (Gaussian) Distribution (Continuous)
+# Normal (Gaussian) Distribution
 
-A continuous random variable $X$ follows a normal distribution, denoted as $X \sim \mathcal{N}(\mu,\,\sigma^{2})$, when it has the familiar symmetric bell-shaped density. Its support is the entire real line, so extreme values are possible but receive increasingly small probability in the tails. The normal distribution also appears as an important approximation to standardized sums and sampling distributions through the Central Limit Theorem; under suitable conditions it can approximate distributions such as the binomial.
+The normal distribution is a symmetric continuous model with a center and a scale. Write $X\sim\mathcal N(\mu,\sigma^2)$, where $\mu$ is the mean and $\sigma>0$ is the standard deviation. Increasing $\mu$ shifts the distribution; increasing $\sigma$ spreads its probability over a wider range.
 
-### Probability Density Function (PDF)
+Its support is the entire real line. Extremely distant values have small probability, but there is no finite boundary. This makes the normal useful for approximately symmetric measurements and for suitable approximations to standardized sums, while also limiting its suitability for inherently bounded or strongly skewed observations.
 
-The PDF of a normal distribution is given by:
+## Density and probability
+
+The density is
 
 $$
-f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
+f(x)=\frac{1}{\sigma\sqrt{2\pi}}
+e^{-(x-\mu)^2/(2\sigma^2)}.
 $$
 
-![output(15)](https://github.com/user-attachments/assets/92c0b044-9b2d-4755-b14d-8e7d9068691c)
+The exponent depends on the squared distance from $\mu$ in standard-deviation units, giving symmetry about the mean. The normalizing factor ensures that the area is 1 as the width changes. A narrower curve is taller because its probability occupies a smaller horizontal range.
 
-### Cumulative Distribution Function (CDF)
+![Normal densities with a symmetric bell shape](https://github.com/user-attachments/assets/92c0b044-9b2d-4755-b14d-8e7d9068691c)
 
-The CDF of a normal distribution is given by:
+Probabilities are areas under this curve. In particular, $P(X=x)=0$ for any exact value; the density height $f(x)$ is not that point probability.
 
-$$F(x) = \frac{1}{2} \left[ 1 + \text{erf} \left( \frac{x - \mu}{\sigma \sqrt{2}} \right) \right]$$
+## CDF and standardization
 
-where erf is the error function.
+Standardizing gives $Z=(X-\mu)/\sigma\sim\mathcal N(0,1)$. Thus every normal CDF can be calculated from the standard normal CDF $\Phi$:
 
-![output(16)](https://github.com/user-attachments/assets/7963d182-5904-4849-9c17-698b2d5982ee)
+$$
+F(x)=\Phi\left(\frac{x-\mu}{\sigma}\right)
+=\frac12\left[1+\operatorname{erf}\left(\frac{x-\mu}{\sigma\sqrt2}\right)\right].
+$$
 
-### Expected Value
+The error function is another way to express the same integral; it does not mean the probability equals the density formula. For an interval, standardize both endpoints and subtract their left-tail probabilities.
 
-The expected value (mean) of a normal distribution is given by:
+![Normal CDF increasing most rapidly near the center](https://github.com/user-attachments/assets/7963d182-5904-4849-9c17-698b2d5982ee)
 
-$$E[X] = \mu$$
+## Why the expected value is the center
 
-To derive the expected value, we integrate the product of the PDF and the variable $x$ over the entire range:
+The mean is obtained by weighting each value by its density:
 
-$$E[X] = \int_{-\infty}^{\infty} x \cdot f(x) dx$$
+$$
+E[X]=\int_{-\infty}^{\infty}x f(x)\,dx
+=\int_{-\infty}^{\infty}x\frac{1}{\sigma\sqrt{2\pi}}
+e^{-(x-\mu)^2/(2\sigma^2)}\,dx.
+$$
 
-$$E[X] = \int_{-\infty}^{\infty} x \cdot \frac{1}{\sigma \sqrt {2\pi}}e^{-\frac{(x - \mu)^2}{2\sigma^2}} dx$$
+Let $u=(x-\mu)/(\sqrt2\sigma)$. Then $x=\mu+\sqrt2\sigma u$ and $dx=\sqrt2\sigma\,du$, giving
 
-Let $u = \frac{x - \mu}{\sqrt{2} \sigma}$, so $x = \mu + \sqrt{2} \sigma u$ and $dx = \sqrt{2}\sigma\,du$. The integral becomes:
+$$
+E[X]=\frac1{\sqrt\pi}\int_{-\infty}^{\infty}
+(\mu+\sqrt2\sigma u)e^{-u^2}\,du.
+$$
 
-$$E[X] = \frac{1}{\sqrt{\pi}} \int_{-\infty}^{\infty} (\mu + \sqrt{2} \sigma u) e^{-u^2} du$$
+Split the constant and centered parts:
 
-This integral can be split into two parts:
+$$
+E[X]=\frac{\mu}{\sqrt\pi}\int_{-\infty}^{\infty}e^{-u^2}\,du
++\frac{\sqrt2\sigma}{\sqrt\pi}\int_{-\infty}^{\infty}u e^{-u^2}\,du.
+$$
 
-$$E[X] = \frac{\mu}{\sqrt{\pi}} \int_{-\infty}^{\infty} e^{-u^2} du + \frac{\sqrt{2}\sigma}{\sqrt{\pi}} \int_{-\infty}^{\infty} u e^{-u^2} du$$
+The first integral is $\sqrt\pi$. The second is zero: $u e^{-u^2}$ is odd, so its negative and positive contributions cancel over the symmetric domain. Therefore
 
-The first integral is $\sqrt{\pi}$, and the second is zero because the integrand is odd over a symmetric interval. Therefore,
+$$
+E[X]=\mu.
+$$
 
-$$E[X] = \mu.$$
+This calculation formalizes the symmetry argument. For the normal distribution, the mean, median, and density's mode all coincide at $\mu$.
 
-### Variance and Standard Deviation
+## Variance, MGF, and moments
 
-The variance of a normal distribution is given by:
+The variance and standard deviation are
 
-$$\text{Var}(X) = \sigma^2$$
+$$
+\operatorname{Var}(X)=\sigma^2,\qquad \operatorname{SD}(X)=\sigma.
+$$
 
-The standard deviation is the square root of the variance:
+Completing the square in $tx-(x-\mu)^2/(2\sigma^2)$ produces a shifted normal density times a constant. Integrating the density leaves the MGF
 
-$$\text{SD}(X) = \sigma$$
+$$
+M_X(t)=E[e^{tX}]=e^{\mu t+\sigma^2t^2/2},\qquad t\in\mathbb R.
+$$
 
-### Moment Generating Functions and Moments
+The general derivative rule is
 
-The moment generating function (MGF) of a normal distribution is:
+$$
+E[X^n]=\frac{d^nM_X(t)}{dt^n}\Bigg|_{t=0}.
+$$
 
-$$M_X(t) = E[e^{tX}] = e^{\mu t + \frac{1}{2} \sigma^2 t^2}$$
+Since $M'_X(t)=(\mu+\sigma^2t)M_X(t)$, the first two raw moments are
 
-To find the n-th moment, we take the n-th derivative of the MGF with respect to t and then evaluate it at t=0:
+$$
+E[X]=\mu,\qquad E[X^2]=\sigma^2+\mu^2.
+$$
 
-$$E[X^n] = \frac{d^n M_X(t)}{dt^n}\Bigg|_{t=0}$$
+The second raw moment measures squared distance from zero. Subtracting $\mu^2$ changes the reference point to the mean and gives the variance.
 
-* **First Moment (Mean):**
+## The 68–95–99.7 rule
 
-$$E[X] = \mu$$
+For a normal variable, about 68% of the probability lies within one standard deviation of the mean, 95% within two, and 99.7% within three. The more precise values are 68.27%, 95.45%, and 99.73%.
 
-* **Second Moment (Variance + Mean^2):**
+These are probability statements under the normal model, not exact percentages that every finite sample must contain. A central interval with 95% probability uses about $\mu\pm1.96\sigma$, whereas $\mu\pm2\sigma$ contains about 95.45%.
 
-$$E[X^2] = \sigma^2 + \mu^2$$
+## Example: standardizing test scores
 
-### Empirical Rule (68-95-99.7 Rule)
+Suppose scores are modeled as normal with mean 70 and standard deviation 10. For a score of 85,
 
-The empirical rule, also known as the 68-95-99.7 rule, describes the proportion of the probability mass that falls within certain intervals around the mean:
+$$
+z=\frac{X-\mu}{\sigma},\qquad
+z=\frac{85-70}{10}=1.5.
+$$
 
-* 68% of the probability mass falls within $1\sigma$ of the mean ($\mu \pm \sigma$).
-* 95% of the probability mass falls within $2\sigma$ of the mean ($\mu \pm 2\sigma$).
-* 99.7% of the probability mass falls within $3\sigma$ of the mean ($\mu \pm 3\sigma$).
+The score is 1.5 standard deviations above the mean. Its model percentile comes from $\Phi(1.5)\approx0.9332$, placing it near the 93rd percentile. That is a distribution-based comparison, not an exact rank among a particular finite class.
 
-### Example: Standardizing Test Scores
+The probability of a score above 85 is the complementary upper tail, $1-\Phi(1.5)\approx0.0668$. Standardization preserves order: larger raw scores have larger z-scores because the divisor $\sigma$ is positive.
 
-A teacher aims to standardize her class's test scores, which follow a normal distribution. The mean score is 70, with a standard deviation of 10. Consider a student who scored 85.
+## Applications and interpretation
 
-I. Determining the Student's Z-score:
+The normal family is used for some measurements and errors and as an approximation to sampling distributions under suitable central-limit conditions. A sum becoming approximately normal does not make each summand normal. Likewise, a normally shaped histogram does not by itself establish independence or justify every normal-theory inference procedure. For bounded scores, the normal is an approximation whose usefulness depends on how much probability it assigns beyond the feasible range.
 
-The z-score formula:
-
-$$ z = \frac{(X - \mu)}{\sigma} $$
-
-where $X$ is the score, $\mu$ is the mean, and $\sigma$ is the standard deviation.
-
-For the student's score:
-
-$$ z = \frac{(85 - 70)}{10} = 1.5 $$
-
-II. Identifying the Corresponding Percentile:
-
-To convert a z-score to a percentile, use a standard normal distribution table or a calculator. A z-score of 1.5 gives $\Phi(1.5) \approx 0.9332$, i.e. roughly the 93rd percentile, meaning this student's score is higher than approximately 93% of the class.
-
-### Applications
-
-The normal distribution is a fundamental model in statistics. It is used both as a direct model for approximately symmetric continuous measurements and as an approximation to sampling distributions and other probability models. It underlies many common confidence intervals, hypothesis tests, and regression procedures, but its appropriateness should be justified by the assumptions of the method rather than assumed for every real-valued variable.
-
----
-
-**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/normal_distribution.md)
+**Practice:** [Exercises with worked solutions](https://github.com/djeada/Statistics-Notes/blob/main/exercises/random_variables_and_distributions/normal_distribution.md)

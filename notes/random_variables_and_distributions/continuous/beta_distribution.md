@@ -1,60 +1,85 @@
-# Beta Distribution (Continuous)
+# Beta Distribution
 
-A continuous random variable $X$ follows a beta distribution when its support is the interval $[0,1]$ and its shape is governed by two positive parameters. The beta distribution is denoted as $X \sim \text{Beta}(\alpha, \beta)$, where $\alpha$ and $\beta$ are shape parameters. A shifted and scaled beta distribution can be used for variables constrained to other finite intervals.
+The beta distribution models a continuously varying quantity confined to the unit interval, such as an uncertain probability or an underlying proportion. Write $X\sim\operatorname{Beta}(\alpha,\beta)$, where both shape parameters are positive. Unlike a normal model, it assigns no probability outside the permitted range.
 
-### Probability Density Function (PDF)
+Its shape is flexible. Equal parameters give symmetry about $1/2$; two parameters greater than 1 give an interior peak; a parameter below 1 can concentrate density near the corresponding endpoint. When $\alpha=\beta=1$, the distribution is uniform on $[0,1]$. These are density shapes, not point probabilities at 0 or 1: a beta variable has zero probability of equaling either endpoint exactly.
 
-The PDF of a beta distribution is given by:
+## Density and normalization
 
-$$f(x; \alpha, \beta) = \frac{x^{\alpha - 1}(1 - x)^{\beta - 1}}{B(\alpha, \beta)}$$
+The density on the interior is
 
-for $0 \le x \le 1$ and $\alpha, \beta > 0$, where $B(\alpha, \beta)$ is the beta function.
+$$
+f(x;\alpha,\beta)=\frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)},
+\qquad 0<x<1.
+$$
 
-![output(3)](https://github.com/user-attachments/assets/55124c97-5633-4356-a807-13f1c0369034)
+It is zero outside the unit interval. The denominator is the area under the unnormalized shape:
 
-### Cumulative Distribution Function (CDF)
+$$
+B(\alpha,\beta)=\int_0^1 u^{\alpha-1}(1-u)^{\beta-1}\,du
+=\frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}.
+$$
 
-The CDF of a beta distribution, $F(x; \alpha, \beta)$, does not have a simple closed-form expression but is the integral of the PDF over its domain.
+Dividing by this constant makes the total density integrate to 1. For parameters below 1 the density can grow without bound near an endpoint, but its integral is still finite. The value assigned to the density at the endpoint itself does not change any probability.
 
-![output(4)](https://github.com/user-attachments/assets/8fec2c6f-a124-4254-8f2b-0b0d9e7a9555)
+![Beta densities illustrating different shapes on the unit interval](https://github.com/user-attachments/assets/55124c97-5633-4356-a807-13f1c0369034)
 
-### Expected Value and Variance
+## Cumulative probabilities
 
-The expected value (mean) of a beta distribution is:
+The CDF accumulates density from the lower boundary to the threshold:
 
-$$E[X] = \frac{\alpha}{\alpha + \beta}$$
+$$
+F(x;\alpha,\beta)=\frac{1}{B(\alpha,\beta)}
+\int_0^x u^{\alpha-1}(1-u)^{\beta-1}\,du,
+\qquad 0\le x\le1.
+$$
 
-The variance of a beta distribution is:
+Below 0 it is zero; above 1 it is one. The general calculation uses the regularized incomplete beta function, although particular parameter choices have elementary formulas. For an interval, subtract CDF values: $P(a<X<b)=F(b)-F(a)$ when $0\le a<b\le1$.
 
-$$\text{Var}(X) = \frac{\alpha \beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}$$
+![Beta CDFs accumulating the density over the unit interval](https://github.com/user-attachments/assets/8fec2c6f-a124-4254-8f2b-0b0d9e7a9555)
 
-### Example: Quality Control in Manufacturing
+## Mean, variance, and the role of the parameters
 
-In a manufacturing process, the proportion of defective items produced is assumed to follow a beta distribution with $\alpha = 2$ and $\beta = 5$.
+Multiplying the density by $x$ raises the first exponent by one. Consequently, $E[X]=B(\alpha+1,\beta)/B(\alpha,\beta)$, which simplifies to
 
-Given:
+$$
+E[X]=\frac{\alpha}{\alpha+\beta}.
+$$
 
-- $\alpha = 2$
-- $\beta = 5$
+Likewise, $E[X^2]=\alpha(\alpha+1)/[(\alpha+\beta)(\alpha+\beta+1)]$. Subtracting the squared mean gives
 
-Using the beta distribution formulas:
+$$
+\operatorname{Var}(X)=
+\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}.
+$$
 
-I. What is the expected proportion of defective items?
+The ratio of the parameters sets the mean, while their total controls concentration around that mean. With $m=\alpha/(\alpha+\beta)$ and $\kappa=\alpha+\beta$, the variance is $m(1-m)/(\kappa+1)$. Increasing both parameters proportionally keeps the mean fixed and reduces spread.
 
-Expected proportion of defective items:
+## Example: manufacturing defect proportions
 
-$$E[X] = \frac{2}{2 + 5} \approx 0.2857$$
+Suppose an underlying defect proportion varies between manufacturing batches, or is uncertain before a batch is examined, and is modeled by $X\sim\operatorname{Beta}(2,5)$.
 
-II. What is the variance of this proportion?
+### Expected underlying proportion
 
-Variance of the proportion:
+$$
+E[X]=\frac2{2+5}\approx0.2857.
+$$
 
-$$\text{Var}(X) = \frac{2 \times 5}{(2 + 5)^2(2 + 5 + 1)} \approx 0.0255$$
+The model's average underlying proportion is about 28.57%.
 
-### Applications
+### Variance of the underlying proportion
 
-Beta distributions are widely used in Bayesian statistics and to model probabilities, proportions, and rates on $[0,1]$. Shifted and scaled beta families are also used in project-management models such as PERT. Other applications include reliability engineering, genetics, and ecology.
+$$
+\operatorname{Var}(X)=\frac{2\times5}{(2+5)^2(2+5+1)}
+=\frac{10}{392}\approx0.0255.
+$$
 
----
+An observed fraction of defects in a finite sample is not itself continuously distributed: it takes values such as $0/n,1/n,\ldots,n/n$. Conditional on a particular underlying proportion, a binomial count can describe independent sampled outcomes. The beta model here describes the underlying proportion, keeping that uncertainty separate from finite-sample counting variation.
 
-**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/beta_distribution.md)
+## Other intervals and applications
+
+For a bounded quantity on $[a,b]$ with $a<b$, use $Y=a+(b-a)X$. Its mean is $a+(b-a)E[X]$, and its variance is $(b-a)^2\operatorname{Var}(X)$. Rescaling the variable must therefore rescale the moments as well.
+
+Beta models are used for probabilities and proportions in Bayesian analysis, reliability, genetics, and ecology. Shifted and scaled beta families also appear in project-duration models such as PERT. In each use, identify whether the random quantity is an underlying continuous rate or an observed finite count.
+
+**Practice:** [Exercises with worked solutions](https://github.com/djeada/Statistics-Notes/blob/main/exercises/random_variables_and_distributions/beta_distribution.md)

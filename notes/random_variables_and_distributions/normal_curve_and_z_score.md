@@ -1,163 +1,134 @@
 # The Normal Curve and Z-Scores
 
-### The Normal Curve
+A z-score expresses a value's distance from a mean in standard-deviation units. It turns a height difference in inches or a score difference in points into a dimensionless comparison. When the original variable is normal, this transformation also gives a shared probability scale: the standard normal distribution.
 
-A **normal distribution** (often referred to as the *normal curve* or *Gaussian distribution*) is a continuous probability distribution that is symmetric about the mean, where most of the observations cluster around the central peak and taper off symmetrically towards both ends. Many real-world datasets such as human heights, IQ scores, and measurement errors exhibit this kind of distribution.
+Separate those two uses. Standardizing any variable with a finite mean and positive finite variance gives mean 0 and variance 1. It does **not** make a skewed or multimodal variable normal. Reading normal probabilities from a z-score requires a normal model or a justified normal approximation.
 
-The probability density function (PDF) of the normal distribution is given by:
+## What the normal curve describes
 
-$$
-f(x | \mu, \sigma^2) = \frac{1}{\sigma \sqrt{2 \pi}} e^{ -\frac{(x - \mu)^2}{2\sigma^2} }
-$$
-
-where:
-
-- $\mu$ is the mean,
-- $\sigma^2$ is the variance (with $\sigma$ being the standard deviation),
-- $e$ is Euler's number,
-- $\pi$ is the constant Pi.
-
-This formula describes the shape of the curve mathematically. The mean $\mu$ determines the center of the distribution, and the standard deviation $\sigma$ determines the width of the bell curve.
-
-![output](https://github.com/user-attachments/assets/32acef3f-7617-464c-9527-31ea78679bda)
-
-#### Examples
-
-- The distribution of adult **heights** usually follows a normal pattern, where most individuals cluster around the average height, with fewer people being much shorter or taller.
-- When it comes to **IQ scores**, they are designed to follow a normal distribution, with the average score set at 100 and a standard deviation of 15, meaning most people score close to this mean.
-- Not all data sets are normally distributed; for example, **incomes** tend to be skewed because a small proportion of people earn extremely high salaries, which significantly raises the overall average.
-- Similarly, **house prices** are often skewed, as a small number of very expensive properties can disproportionately affect the overall data, making the mean house price higher than what most people actually pay.
-
-### The Empirical Rule (68-95-99.7 Rule)
-
-The **Empirical Rule** provides a rough estimate for the spread of data in a normal distribution. It applies to any dataset that is approximately normal. The exact probabilities are 68.27%, 95.45%, and 99.73%; the central 95% interval is more precisely $\mu \pm 1.96\sigma$.
-
-- **68% of the data** falls within **1 standard deviation** of the mean, i.e., between $\mu - \sigma$ and $\mu + \sigma$.
-- **95% of the data** falls within **2 standard deviations** of the mean, i.e., between $\mu - 2\sigma$ and $\mu + 2\sigma$.
-- **99.7% of the data** falls within **3 standard deviations** of the mean, i.e., between $\mu - 3\sigma$ and $\mu + 3\sigma$.
-
-#### Example
-Suppose we have a dataset where the heights of fathers are normally distributed with:
-
-- Mean height $\mu = 68.3$ inches,
-- Standard deviation $\sigma = 1.8$ inches.
-
-According to the Empirical Rule:
-
-- About **68%** of the heights will lie between $68.3 - 1.8 = 66.5$ inches and $68.3 + 1.8 = 70.1$ inches.
-- About **95%** of the heights will lie between $68.3 - 2(1.8) = 64.7$ inches and $68.3 + 2(1.8) = 71.9$ inches.
-- About **99.7%** of the heights will lie between $68.3 - 3(1.8) = 62.9$ inches and $68.3 + 3(1.8) = 73.7$ inches.
-
-These intervals can be visualized as follows:
-
-| Interval | Range (inches) | Proportion of data |
-|---|---|---|
-| $\mu \pm \sigma$ | 66.5 to 70.1 | $\approx 68\%$ |
-| $\mu \pm 2\sigma$ | 64.7 to 71.9 | $\approx 95\%$ |
-| $\mu \pm 3\sigma$ | 62.9 to 73.7 | $\approx 99.7\%$ |
-
-![output(1)](https://github.com/user-attachments/assets/b157d1a4-191d-46f4-b341-7822d4257733)
-
-### Standardizing Data and Z-Scores
-
-To compare values from different normal distributions or to work with a standardized form of a dataset, we can convert raw data values to **z-scores**.
-
-#### Definition of Z-Score
-The **z-score** is a way of describing a value in terms of how many standard deviations it is away from the mean. The formula for the z-score is:
+For $X\sim\mathcal N(\mu,\sigma^2)$ with $\sigma>0$, the density is
 
 $$
-z = \frac{x - \mu}{\sigma}
+f(x\mid\mu,\sigma^2)=\frac{1}{\sigma\sqrt{2\pi}}
+e^{-(x-\mu)^2/(2\sigma^2)}.
 $$
 
-Where:
+The mean $\mu$ sets the center, the variance $\sigma^2$ sets squared spread, and the standard deviation $\sigma$ sets spread in the data's units. The constants $e$ and $\pi$ are Euler's number and pi. Values equally far above and below $\mu$ have the same density. The total area is 1, and interval areas are probabilities.
 
-- $x$ is the raw score (the value you are standardizing),
-- $\mu$ is the mean of the dataset,
-- $\sigma$ is the standard deviation.
+![A symmetric normal density centered on its mean](https://github.com/user-attachments/assets/32acef3f-7617-464c-9527-31ea78679bda)
 
-A z-score tells us:
+An approximately normal model can be useful for heights within a suitably defined population or for some measurement errors. Pooling distinct populations can create a mixture instead of one normal curve. Some IQ-score scales are standardized to a mean of 100 and standard deviation of 15, with an approximately normal reference distribution. That construction does not make every set of observed scores exactly normal.
 
-- $z = 0$: The value is exactly at the mean.
-- $z > 0$: The value is above the mean.
-- $z < 0$: The value is below the mean.
+Incomes and house prices often have long right tails: a small number of large values pull the mean upward. Applying z-score arithmetic to such data can describe relative distance, but it does not justify using normal tail areas for those scores.
 
-#### Example
-Suppose a father is 71.9 inches tall. We want to find his z-score given that the mean height is 68.3 inches and the standard deviation is 1.8 inches.
+## The empirical rule and its limits
 
-$$
-z = \frac{71.9 - 68.3}{1.8} = \frac{3.6}{1.8} = 2
-$$
+Under a normal model, the probability within $c$ standard deviations of the mean is $P(-c\le Z\le c)$. For $c=1,2,3$, the probabilities are approximately 68.27%, 95.45%, and 99.73%, commonly summarized as the **68–95–99.7 rule**.
 
-This means that a height of 71.9 inches is 2 standard deviations above the mean.
+These are population probabilities, not fixed percentages that must appear in every finite sample. They also differ from an exact central 95% interval, whose standardized endpoints are approximately $\pm1.96$, not exactly $\pm2$.
 
-Conversely, if a father is 67.4 inches tall:
+### Example: fathers' heights
 
-$$
-z = \frac{67.4 - 68.3}{1.8} = \frac{-0.9}{1.8} = -0.5
-$$
+Suppose the modeled population of fathers has normal heights with $\mu=68.3$ inches and $\sigma=1.8$ inches. Moving one, two, and three standard deviations from the center gives
 
-This means that a height of 67.4 inches is 0.5 standard deviations below the mean.
+| Distance from the mean | Boundary calculation | Range in inches | Normal probability |
+|---|---|---|---:|
+| $\mu\pm\sigma$ | $68.3\pm1.8$ | 66.5 to 70.1 | about 68.27% |
+| $\mu\pm2\sigma$ | $68.3\pm3.6$ | 64.7 to 71.9 | about 95.45% |
+| $\mu\pm3\sigma$ | $68.3\pm5.4$ | 62.9 to 73.7 | about 99.73% |
 
-#### Standard Normal Distribution
-After converting all values in a normal distribution to z-scores, we obtain the **standard normal distribution**, which has:
+![Normal height intervals spanning one, two, and three standard deviations](https://github.com/user-attachments/assets/b157d1a4-191d-46f4-b341-7822d4257733)
 
-- A mean $\mu = 0$,
-- A standard deviation $\sigma = 1$.
+These bands describe the distribution of individual heights. They are not confidence intervals for an estimated mean, which address sampling uncertainty in a different quantity.
 
-The standard normal distribution is often used in statistics because it allows for easy computation of probabilities and comparison across different datasets.
+## Calculating and interpreting a z-score
 
-### Finding Areas Under the Normal Curve
-
-To find the proportion of data within a certain range, we can use **z-scores** to convert the raw data points and then look up the corresponding probabilities using a **z-table** or statistical software. The area under the normal curve between two z-scores represents the proportion of data that lies between those values.
-
-#### Example
-To find the proportion of fathers with heights between 67.4 inches and 71.9 inches, we first compute the z-scores for these heights:
-
-For 67.4 inches:
+Subtracting the mean centers the measurement; dividing by the positive standard deviation changes its units:
 
 $$
-z_{67.4} = \frac{67.4 - 68.3}{1.8} = -0.5
+z=\frac{x-\mu}{\sigma}.
 $$
 
-For 71.9 inches:
+A score of 0 is at the mean, a positive score is above it, and a negative score is below it. The magnitude is the distance in standard deviations. Dividing by variance instead would give the wrong units and would not perform standardization.
+
+For a father 71.9 inches tall,
 
 $$
-z_{71.9} = \frac{71.9 - 68.3}{1.8} = 2
+z=\frac{71.9-68.3}{1.8}=\frac{3.6}{1.8}=2.
 $$
 
-Next, using a z-table (or software), we find the area to the left of these z-scores:
-
-- The area to the left of $z = -0.5$ is approximately **0.3085** (30.85%).
-- The area to the left of $z = 2$ is approximately **0.9772** (97.72%).
-
-Thus, the proportion of fathers with heights between 67.4 and 71.9 inches is:
+For a father 67.4 inches tall,
 
 $$
-P(67.4 \leq \text{height} \leq 71.9) = 0.9772 - 0.3085 = 0.6687 \approx 66.87\%
+z=\frac{67.4-68.3}{1.8}=\frac{-0.9}{1.8}=-0.5.
 $$
 
-![output(2)](https://github.com/user-attachments/assets/58bfcf9b-5769-4e49-af1c-7cced5a44195)
+The first height is two standard deviations above the mean; the second is half a standard deviation below it. The minus sign describes direction, not a negative height or a negative probability.
 
-### Computing Percentiles
+## Why one standard normal table is enough
 
-The **percentile** of a value in a normal distribution tells us the percentage of the data that is less than or equal to that value. To compute percentiles, we:
-
-1. Find the z-score corresponding to the desired percentile using a z-table or statistical software.
-2. Convert the z-score back into the raw data value.
-
-#### Example
-Suppose we want to compute the **30th percentile** of fathers' heights. Using a z-table, we find that the z-score corresponding to the 30th percentile is approximately $z = -0.52$ (more precisely $-0.5244$).
-
-To find the corresponding height, we use the z-score formula in reverse:
+If $X$ is normal, $Z=(X-\mu)/\sigma$ is normal with mean 0 and standard deviation 1. Define its CDF as $\Phi(z)=P(Z\le z)$. Then
 
 $$
-\text{height} = \mu + z\sigma = 68.3 + (-0.52)(1.8) = 68.3 - 0.936 = 67.364 \text{ inches}.
+P(X\le x)=\Phi\left(\frac{x-\mu}{\sigma}\right).
 $$
 
-Thus, the 30th percentile corresponds to a height of approximately **67.36 inches**.
+Changing the original mean or measurement units changes the raw cutoff but not this standardized probability calculation. A z-table may report left-tail areas, upper-tail areas, or areas between zero and $z$; inspect its heading before using an entry.
 
-This process can be applied to any percentile by finding the appropriate z-score and converting it back to the original scale using the mean and standard deviation of the dataset.
+For a left-tail table, $\Phi(0)=0.5$, $P(Z>z)=1-\Phi(z)$, and symmetry gives $\Phi(-z)=1-\Phi(z)$. These relationships let one table answer several different event questions without changing the model.
 
----
+## What standardization does not establish
 
-**Practice:** [Exercises with worked solutions](../../exercises/random_variables_and_distributions/normal_curve_and_z_score.md)
+The arithmetic of centering and scaling explains the moments directly: $E[(X-\mu)/\sigma]=0$ and $\operatorname{Var}[(X-\mu)/\sigma]=\sigma^2/\sigma^2=1$. Those two moments do not specify the shape. For example, standardizing a uniform variable on $[0,1]$ produces another uniform variable, now on $[-\sqrt3,\sqrt3]$. It has mean 0 and variance 1, but cannot exceed 2 in magnitude. A standard normal variable can. Using a normal table for the standardized uniform variable would therefore give incorrect tails.
+
+For observed data, a descriptive score often uses the sample mean $\bar x$ and sample standard deviation $s$: $z_i=(x_i-\bar x)/s$. This centers and rescales that dataset, provided $s>0$, but estimating the reference values does not establish a normal population. An inference procedure for an estimated mean must also account for its sampling uncertainty; a z-score of an individual observation and a standardized sample-mean statistic are different quantities.
+
+## Finding the area between two heights
+
+To find the proportion between 67.4 and 71.9 inches, standardize **both** endpoints using the same mean and standard deviation:
+
+$$
+z_{67.4}=\frac{67.4-68.3}{1.8}=-0.5,
+\qquad
+z_{71.9}=\frac{71.9-68.3}{1.8}=2.
+$$
+
+The left-tail areas are approximately $\Phi(-0.5)=0.3085$ and $\Phi(2)=0.9772$. The area through the upper endpoint includes the unwanted lower tail, so subtract it:
+
+$$
+P(67.4\le X\le71.9)=\Phi(2)-\Phi(-0.5)
+\approx0.9772-0.3085=0.6687.
+$$
+
+The modeled proportion is about 66.87%. Adding the two CDF values would count overlapping left-tail regions rather than the interval between the cutoffs.
+
+![Normal probability between the standardized height cutoffs -0.5 and 2](https://github.com/user-attachments/assets/58bfcf9b-5769-4e49-af1c-7cced5a44195)
+
+For an upper-tail question such as a height above 71.9 inches, use $1-\Phi(2)\approx0.0228$. Because the model has a density, changing the inequality at an exact endpoint does not change these probabilities.
+
+As a check, symmetry gives the same probability below 64.7 inches, which is two standard deviations below the mean. Subtracting both tails leaves about $1-2(0.0228)=0.9544$, with the small discrepancy from 0.9545 due to table rounding.
+
+## Percentile ranks and percentile cutoffs
+
+There are two inverse questions. Given a raw value $x$, its model percentile rank is $100\Phi((x-\mu)/\sigma)$. Given a desired probability $q$, find the cutoff below which that proportion lies:
+
+$$
+z_q=\Phi^{-1}(q),\qquad x_q=\mu+\sigma z_q.
+$$
+
+The inverse CDF takes a probability between 0 and 1 and returns a value; the ordinary CDF takes a value and returns a probability. Confusing these directions is a common source of incorrect table lookups.
+
+### Example: the 30th percentile
+
+For $q=0.30$, the standard normal cutoff is $z_{0.30}\approx-0.5244$. It is negative because the 30th percentile is below the median. Using a table rounded to $z=-0.52$ gives the original-scale calculation
+
+$$
+x_{0.30}\approx68.3+(-0.52)(1.8)
+=68.3-0.936=67.364\text{ inches}.
+$$
+
+Using the more precise z-score instead gives about 67.3561 inches. Both round to about 67.36 inches at two decimal places. Round after the transformation when precision matters, and distinguish rounding in a table from the mathematical definition of the quantile.
+
+The same method applies to any desired percentile under a normal model. A central interval keeps equal tail probabilities; a one-sided upper cutoff instead uses its single tail. Specify which event is intended before selecting the probability supplied to the inverse CDF.
+
+**Practice:** [Exercises with worked solutions](https://github.com/djeada/Statistics-Notes/blob/main/exercises/random_variables_and_distributions/normal_curve_and_z_score.md)

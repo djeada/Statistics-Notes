@@ -1,234 +1,218 @@
 # Introduction to Distributions
 
-A distribution is a function that describes the probability of a random variable. It helps to understand the underlying patterns and characteristics of a dataset. Distributions are widely used in statistics, data analysis, and machine learning for tasks such as hypothesis testing, confidence intervals, and predictive modeling.
+A probability distribution assigns probabilities to the possible values of a random quantity and to events involving those values. It describes a model for what could happen, rather than merely listing the values already observed. A dataset is one realization of that model; its relative frequencies need not equal the population probabilities exactly.
 
-### Random Variables
+The first task is to define the quantity. “Draw a card” describes an experiment, while “count whether the card is a heart” defines a numerical outcome. Once the random variable is clear, its support tells us which values are possible, and its distribution tells us how probability is allocated among them.
 
-Random variables assign numerical values to outcomes of random processes in probability and statistics. Random variables can be **discrete** (taking specific values) or **continuous** (taking any value within a range).
+## Random variables and recorded values
 
-#### Example: Drawing a Card from a Deck
+A real-valued **random variable** is a function that assigns a number to each outcome of an experiment. An uppercase letter such as $X$ denotes the random variable, while a lowercase $x$ denotes a particular value or threshold. Thus $P(X\le x)$ is a probability about the random outcome relative to a fixed number.
 
-- **Suit of the Card (Discrete)**: Assigns a category based on the suit (e.g., hearts, spades).
-- **Rank of the Card (Discrete)**: Numerical value or face (e.g., 2, 10, King).
-- **Color of the Card (Discrete)**: Red or Black.
+The underlying observation may be categorical, but a numerical random variable requires a stated coding. For a fair draw from a standard deck:
 
-#### Example: Weather Forecast
+- **Suit:** code hearts, diamonds, clubs, and spades as $1,2,3,4$. The suit variable is discrete, and the probability of code 1 is $13/52=1/4$.
+- **Rank:** assign ace the value 1, numbered cards their number, and jack, queen, and king the values 11, 12, and 13. State this convention because other games assign different numerical values to the same ranks.
+- **Color:** use an indicator $C=1$ for red and $C=0$ for black. Then $P(C=1)=1/2$.
 
-- **Temperature (Continuous)**: The forecasted temperature in degrees.
-- **Rainfall Amount (Continuous)**: Precipitation depth in millimetres or inches.
-- **Wind Speed (Continuous)**: Speed of the wind in kilometers or miles per hour.
+Changing suit codes changes their arithmetic mean without changing the cards. The numerical coding therefore does not automatically give arithmetic operations a substantive meaning. An indicator mean does have a clear interpretation: it is the probability of the indicated event.
 
-#### Probability Calculations
+For weather, temperature and wind speed are commonly modeled as continuous measurements. An event such as $P(T>20)$ must specify the temperature units, for example degrees Celsius. Rainfall amount needs an additional distinction: a day can have exactly zero rainfall, while positive amounts can vary continuously. A model with a point mass at zero and a continuous positive component is **mixed**, showing why not every distribution fits only the discrete-or-continuous alternatives.
 
-- **Discrete Example (Card Drawing)**: If X represents the suit of a card, $P(X = Hearts)$ is the probability of drawing a heart.
-- **Continuous Example (Temperature)**: If Y represents temperature, $P(Y > 20°C)$ is the chance that the temperature is above 20 degrees Celsius.
-- **General Probability Notations**: Calculate probabilities like $P(X < x), P(X ≤ x), P(X > x), P(X ≥ x)$, where 'x' is a specific value.
+## Support, mass, and density
 
-### Types of Probability Distributions
+A discrete variable has a finite or countably infinite set of possible values. Its **probability mass function** gives the point probabilities:
 
-- **Probability Distribution**: A mathematical description of the likelihood of different outcomes in an experiment or process.
-- **Discrete Probability Distributions**: Used for discrete variables (e.g., counting outcomes like the number of heads in coin flips).
-- **Continuous Probability Distributions**: Used for continuous variables (e.g., measurements like height or weight).
+$$
+p_X(x)=P(X=x),\qquad p_X(x)\ge0,\qquad \sum_xp_X(x)=1.
+$$
 
-#### Example: Probability Distribution of a Discrete Random Variable
+For an event, add the masses of the values that satisfy it. In a count model, $X<3$ and $X\le3$ can differ because $P(X=3)$ can be positive.
 
-Consider a discrete random variable $X$ with the following probability distribution:
+The continuous families in these notes have **probability density functions**. Their probabilities are areas:
+
+$$
+P(a\le X\le b)=\int_a^b f_X(x)\,dx,\qquad P(X=x)=0.
+$$
+
+A density is nonnegative and has total integral 1. It is not bounded above by 1: a uniform distribution on $[0,0.5]$ has density 2 and total area $2(0.5)=1$. Density height has inverse measurement units; integrating it over an interval produces a dimensionless probability. For these continuous models, including or excluding a single endpoint changes no probability.
+
+## One CDF for every type of distribution
+
+The **cumulative distribution function** is defined for discrete, continuous, and mixed variables:
+
+$$
+F_X(x)=P(X\le x).
+$$
+
+It is nondecreasing, approaches 0 as $x\to-\infty$, and approaches 1 as $x\to\infty$. It is also right-continuous: approaching a threshold from above retains the mass already included at the threshold.
+
+The CDF gives interval probabilities without requiring a new rule for each distribution type:
+
+$$
+P(a<X\le b)=F_X(b)-F_X(a).
+$$
+
+The subtraction excludes any mass at $a$, since it subtracts all probability through $a$. To include $a$, subtract the left limit $F_X(a^-)=P(X<a)$ instead. A CDF jump at $a$ has size $F_X(a)-F_X(a^-)=P(X=a)$. For a density model, there are no point-mass jumps, and the density is the CDF derivative where that derivative applies.
+
+## Example: a finite discrete distribution
+
+Consider this distribution on the integers 1 through 10:
 
 | Value of $X$ | Probability $p_X(x)$ |
-|------------------|--------------------------|
-| 1                | 0.05                     |
-| 2                | 0.10                     |
-| 3                | 0.15                     |
-| 4                | 0.20                     |
-| 5                | 0.15                     |
-| 6                | 0.10                     |
-| 7                | 0.08                     |
-| 8                | 0.07                     |
-| 9                | 0.05                     |
-| 10               | 0.05                     |
+|---:|---:|
+| 1 | 0.05 |
+| 2 | 0.10 |
+| 3 | 0.15 |
+| 4 | 0.20 |
+| 5 | 0.15 |
+| 6 | 0.10 |
+| 7 | 0.08 |
+| 8 | 0.07 |
+| 9 | 0.05 |
+| 10 | 0.05 |
 
-- **Higher Probability Values**: The value 4 has the highest probability (0.20), suggesting that it is the most likely outcome.
-- **Comparing Probabilities**: The probability of getting a 4 is higher than getting a 10, as indicated by their respective probabilities (0.20 vs. 0.05).
-- **Sum of Probabilities**: The sum of all these probabilities equals 1, confirming that the table represents a complete probability distribution.
+Every probability is nonnegative, and their sum is 1, so this is a valid complete PMF. The most probable value is 4, with probability 0.20; it is four times as likely as the value 10, whose probability is 0.05. The most probable value is called a **mode**, which is a different summary from the expected value.
 
-This table can be visualized using a bar graph, with the height of each bar representing the likelihood of each outcome.
+![Probability masses for the ten-value discrete example](https://github.com/djeada/Statistics-Notes/assets/37275728/f32e53be-7840-4574-b3e2-2e62782f3ec1)
 
-![be5cfcd9-6dcb-48ab-80a4-c10313a0ace0](https://github.com/djeada/Statistics-Notes/assets/37275728/f32e53be-7840-4574-b3e2-2e62782f3ec1)
+Each bar describes one possible outcome. Adding a set of bars calculates an event probability. Their heights are already probabilities, so no interval width is required as it would be for a density.
 
-#### Example: Roll a Six-Sided Die Until a 6 Appears
+## Example: rolling until the first 6
 
-Roll a fair six-sided die repeatedly until the die shows a 6.
+Roll a fair six-sided die independently until the first 6. Let $X$ be the number of rolls, including the successful roll. For $X=k$, the first $k-1$ rolls must fail and roll $k$ must be a 6:
 
-| Number of Rolls | Probability         |
-|-----------------|---------------------|
-| 1               | 1/6 ≈ 0.1667       |
-| 2               | (5/6) * (1/6) ≈ 0.1389 |
-| 3               | (5/6)^2 * (1/6) ≈ 0.1157 |
-| 4               | (5/6)^3 * (1/6) ≈ 0.0964 |
-| 5               | (5/6)^4 * (1/6) ≈ 0.0803 |
-| 6               | (5/6)^5 * (1/6) ≈ 0.0669 |
+$$
+P(X=k)=\left(\frac56\right)^{k-1}\frac16,\qquad k=1,2,\ldots.
+$$
 
-![bcc766bb-54d8-4005-8a06-e4de2f8b571d](https://github.com/djeada/Statistics-Notes/assets/37275728/e2211233-f9ec-4ed0-b6d6-8696d465aa64)
+The first six entries are
 
-Find the probability that the first 6 appears:
+| Number of rolls | Probability |
+|---:|---|
+| 1 | $1/6\approx0.1667$ |
+| 2 | $(5/6)(1/6)\approx0.1389$ |
+| 3 | $(5/6)^2(1/6)\approx0.1157$ |
+| 4 | $(5/6)^3(1/6)\approx0.0964$ |
+| 5 | $(5/6)^4(1/6)\approx0.0803$ |
+| 6 | $(5/6)^5(1/6)\approx0.0670$ |
 
-1. On the third roll.
-2. On the third or fourth roll.
-3. In less than five rolls.
-4. In no more than three rolls.
-5. After three rolls.
-6. In at least three rolls.
+This table is only the beginning of an infinite support. Its six entries do not sum to 1 because waiting beyond six rolls remains possible; that remaining probability is $(5/6)^6\approx0.3349$.
 
-Now let's do calculations:
+![Geometric waiting probabilities for the first roll showing a 6](https://github.com/djeada/Statistics-Notes/assets/37275728/e2211233-f9ec-4ed0-b6d6-8696d465aa64)
 
-1. $P(3) = (5/6)^2 * (1/6) ≈ 0.1157$
-2. $P(3 \text{ or } 4) = P(3) + P(4) ≈ 0.1157 + 0.0964 ≈ 0.2121$
-3. $P(X < 5) = P(1) + P(2) + P(3) + P(4) ≈ 0.1667 + 0.1389 + 0.1157 + 0.0964 ≈ 0.5177$
-4. $P(X \leq 3) = P(1) + P(2) + P(3) ≈ 0.1667 + 0.1389 + 0.1157 ≈ 0.4213$
-5. $P(X > 3) = 1 - P(X \leq 3) ≈ 1 - 0.4213 ≈ 0.5787$
-6. $P(X \geq 3) = 1 - P(1) - P(2) = 1 - 0.1667 - 0.1389 ≈ 0.6944$ (exactly $(5/6)^2$: the first two rolls must both fail, so the first 6 can only appear on roll 3 or later)
+Translate each question into an event before adding probabilities:
 
-#### Example: Number of Pets Owned by Individuals
+1. **On the third roll:** $P(X=3)=(5/6)^2(1/6)\approx0.1157$.
+2. **On the third or fourth roll:** the two events are disjoint, so $P(X=3\text{ or }X=4)=P(X=3)+P(X=4)\approx0.2122$.
+3. **In fewer than five rolls:** sum counts 1 through 4, or use $P(X<5)=1-(5/6)^4\approx0.5177$.
+4. **In no more than three rolls:** include the endpoint 3, giving $P(X\le3)=1-(5/6)^3\approx0.4213$.
+5. **After three rolls:** all three initial rolls must fail, giving $P(X>3)=(5/6)^3\approx0.5787$.
+6. **In at least three rolls:** only the first two rolls must fail, giving $P(X\ge3)=(5/6)^2\approx0.6944$.
 
-Consider the following probability distribution for the number of pets $N$ owned by individuals.
+The difference between the last two probabilities is $P(X=3)$. Carry extra digits through calculations and round at the end: adding rounded PMF entries can give a different last digit from the exact sum.
+
+## Example: number of pets
+
+Let $N$ count the pets owned by an individual selected from the modeled population:
 
 | $N$ | $P(N)$ |
-|---------|------------|
-| 0       | 0.28       |
-| 1       | 0.35       |
-| 2       | 0.22       |
-| 3       | 0.10       |
-| 4       | 0.04       |
-| 5       | 0.01       |
+|---:|---:|
+| 0 | 0.28 |
+| 1 | 0.35 |
+| 2 | 0.22 |
+| 3 | 0.10 |
+| 4 | 0.04 |
+| 5 | 0.01 |
 
-![3331851a-bd33-48fd-9f30-6e8ef54be22e](https://github.com/djeada/Statistics-Notes/assets/37275728/9c429670-c886-40fa-8017-97ce0b756494)
+![Probability masses for the number of pets owned](https://github.com/djeada/Statistics-Notes/assets/37275728/9c429670-c886-40fa-8017-97ce0b756494)
 
-Find the probability that an individual owns:
+The table describes a complete model with no probability beyond five pets. Its values need not describe every population; they are the assumed probabilities for this example.
 
-1. Less than 2 pets.
-   $P(N < 2) = P(N = 0) + P(N = 1) = 0.28 + 0.35 = 0.63$
-2. More than 3 pets.
-   $P(N > 3) = P(N = 4) + P(N = 5) = 0.04 + 0.01 = 0.05$
-3. 1 or 4 pets.
-   $P(N = 1 \text{ or } N = 4) = P(N = 1) + P(N = 4) = 0.35 + 0.04 = 0.39$
-4. At most 3 pets.
-   $P(N \leq 3) = P(N = 0) + P(N = 1) + P(N = 2) + P(N = 3) = 0.28 + 0.35 + 0.22 + 0.10 = 0.95$
-5. 2 or fewer, or more than 4 pets.
-   $P(N \leq 2 \text{ or } N > 4) = P(N \leq 2) + P(N > 4) = (0.28 + 0.35 + 0.22) + 0.01 = 0.86$
+| Question | Calculation | Probability |
+|---|---|---:|
+| Fewer than 2 pets | $P(N=0)+P(N=1)=0.28+0.35$ | 0.63 |
+| More than 3 pets | $P(N=4)+P(N=5)=0.04+0.01$ | 0.05 |
+| 1 or 4 pets | $P(N=1)+P(N=4)=0.35+0.04$ | 0.39 |
+| At most 3 pets | $0.28+0.35+0.22+0.10$ | 0.95 |
+| 2 or fewer, or more than 4 | $(0.28+0.35+0.22)+0.01$ | 0.86 |
 
-### Expected Value
+All additions combine disjoint possible counts. Here $F_N(2)=0.85$, but the left limit at 2 is 0.63. Their difference, 0.22, is the probability of exactly two pets and illustrates a discrete CDF jump.
 
-- The expected value (often denoted as $E(X)$ or $\mu$) is a fundamental concept in probability, representing the average or mean value of a random variable over a large number of trials or observations.
-- It is calculated as a weighted average of all possible values, with weights being their respective probabilities.
-- The expected value alone might not be sufficient to understand a distribution fully, especially if the distribution is skewed or has heavy tails.
-- The expected value provides a measure of the 'center' of a probability distribution.
-- It does not necessarily correspond to the most probable value but is a long-run average if an experiment is repeated many times.
+## Expected value as a weighted average
 
-#### Calculating Expected Value
-
-- For a discrete random variable: $E(X) = \sum [x_i \times P(x_i)]$, where $x_i$ are the possible values and $P(x_i)$ their probabilities.
-- For a continuous random variable, $E(X) = \int_{-\infty}^{\infty} x\, f_X(x)\,dx$, the integral of the value times the density.
-
-#### Example: Expected Value in a Dice Roll
-Consider a fair six-sided dice roll. Each side, numbered from 1 to 6, has an equal probability of appearing on a single roll. The probability for each outcome is $\frac{1}{6}$. 
-
-Step-by-Step Calculation of Expected Value:
-
-I. List All Possible Outcomes and Their Probabilities.
-
-| Outcome (X) | Probability $P(X)$ |
-|-------------|-------------------------|
-| 1           | 1/6                     |
-| 2           | 1/6                     |
-| 3           | 1/6                     |
-| 4           | 1/6                     |
-| 5           | 1/6                     |
-| 6           | 1/6                     |
-
-II. Multiply Each Outcome by Its Probability.
-
-- For 1: $1 \times \frac{1}{6}$
-- For 2: $2 \times \frac{1}{6}$
-- For 3: $3 \times \frac{1}{6}$
-- For 4: $4 \times \frac{1}{6}$
-- For 5: $5 \times \frac{1}{6}$
-- For 6: $6 \times \frac{1}{6}$
-
-III. Sum Up the Products.
+For a discrete variable, multiply each possible value by its probability and add:
 
 $$
-E(X) = (1 \times \frac{1}{6}) + (2 \times \frac{1}{6}) + (3 \times \frac{1}{6}) + (4 \times \frac{1}{6}) + (5 \times \frac{1}{6}) + (6 \times \frac{1}{6})
+E[X]=\sum_i x_iP(X=x_i).
 $$
 
-$$
-E(X) = \frac{1 + 2 + 3 + 4 + 5 + 6}{6} = \frac{21}{6}
-$$
+For a density model, the analogous operation is
 
 $$
-E(X) = 3.5
+E[X]=\int_{-\infty}^{\infty}x f_X(x)\,dx.
 $$
 
-IV. Interpretation:
+These ordinary finite expectations require the absolute first moment to be finite. The mean summarizes location, but does not determine the mode, tail probabilities, or spread. Repeating independent copies of an integrable variable links the mean to the long-run average through the law of large numbers.
 
-- The expected value of $E(X) = 3.5$ suggests that over a large number of dice rolls, the average value of the outcomes will converge to 3.5.
-- It's important to note that while 3.5 is not a possible outcome of a single roll, it represents the long-term average or the 'center' of the distribution of outcomes.
-- This concept is a cornerstone in probability theory, providing a predictive measure of the behavior of a random variable over many trials.
+For one fair die roll, the weights and contributions are
 
-### Probability Density Function (PDF) - Continuous Variables
-For continuous random variables, the PDF $f_X(x)$ gives the probability *density* at $x$; it is not itself a probability, and it can exceed 1. The area under the curve between two points represents the probability of the variable falling within that range:
+| Outcome $X$ | Probability | Contribution to the mean |
+|---:|---:|---|
+| 1 | $1/6$ | $1(1/6)$ |
+| 2 | $1/6$ | $2(1/6)$ |
+| 3 | $1/6$ | $3(1/6)$ |
+| 4 | $1/6$ | $4(1/6)$ |
+| 5 | $1/6$ | $5(1/6)$ |
+| 6 | $1/6$ | $6(1/6)$ |
 
-$$P(a \le X \le b) = \int_a^b f_X(x)\,dx, \qquad P(X = x) = 0.$$
-
-Properties:
-
-1. Non-negative: $f_X(x) \geq 0$ for all $x$.
-2. Normalization: The total area under the curve of the PDF is 1, i.e. $\int_{-\infty}^{\infty} f_X(x)\,dx = 1$.
-   
-**Joint PDF for Multiple Variables**: For two continuous random variables $X$ and $Y$, the joint PDF $f_{X,Y}(x, y)$ gives the density at a particular point $(x, y)$.
-
-![daee62ad-7315-4736-b786-bb7cafe700e1](https://github.com/djeada/Statistics-Notes/assets/37275728/322cf1f9-e4cf-445d-9e3f-5cf106f41a84)
-
-![9ebbf08c-de34-44c8-b0f3-5632b0faa7e5](https://github.com/djeada/Statistics-Notes/assets/37275728/a6b7b175-2d5b-4bdb-b987-d427949de9da)
-
-### Probability Mass Function (PMF) - Discrete Variables
-
-For discrete random variables, the PMF specifies the probability of the variable taking a particular value $x$. Directly find the probability of specific outcomes.
+Adding the six contributions gives
 
 $$
-p_X(x) = P(X = x)
+E[X]=(1\times\tfrac16)+(2\times\tfrac16)+(3\times\tfrac16)
++(4\times\tfrac16)+(5\times\tfrac16)+(6\times\tfrac16)
+=\frac{1+2+3+4+5+6}{6}=\frac{21}{6}=3.5.
 $$
 
-Properties:
+The die can never show 3.5. The expectation describes the average across repeated rolls, not a new possible outcome or the value predicted to appear most often on one roll.
 
-1. Non-negative: $p_X(x) \geq 0$ for all $x$.
-2. Sum to One: The sum of all probabilities for all possible values of $X$ is 1.
-   
-**Joint PMF for Multiple Variables**: For two discrete random variables $X$ and $Y$, the joint PMF $p_{X,Y}(x, y)$ gives the probability of $X$ and $Y$ simultaneously taking values $x$ and $y$, respectively.
+## Joint distributions: recording two quantities together
 
-![d20b90d0-5240-4f0a-88f5-dfc50cf8e39d](https://github.com/djeada/Statistics-Notes/assets/37275728/a13cbdaa-3cc8-4582-b1ae-ae135119bd5a)
-
-![31d2a302-cacc-472a-a5cc-83e0a640e4d3](https://github.com/djeada/Statistics-Notes/assets/37275728/370352a5-ffbd-467c-acd4-6610f18e109f)
-
-### Cumulative Distribution Function (CDF) - Both Continuous and Discrete Variables
-The CDF shows the probability that a random variable is less than or equal to a specific value $x$. Calculate the probability of the variable falling below a certain threshold.
+A joint distribution describes two variables from the same experiment. For discrete variables,
 
 $$
-F_X(x) = P(X \leq x)
+p_{X,Y}(x,y)=P(X=x,Y=y).
 $$
 
-Properties:
+The masses are nonnegative and sum to 1 over the possible pairs. To obtain the marginal probability of $X=x$, sum the joint masses over all allowed values of $Y$. A pair's probability is not generally the product of the two marginal probabilities; that factorization requires independence.
 
-1. Non-decreasing function.
-2. $\lim_{x \to \infty} F_X(x) = 1$.
-3. $\lim_{x \to -\infty} F_X(x) = 0$.
-4. Right-continuous: For any $x$ and decreasing sequence $x_n$ converging to $x$, $\lim_{x_n \to x^+} F_X(x_n) = F_X(x)$.
-   
-**Joint CDF**: For two variables $X$ and $Y$, $F(a, b) = P(X \leq a, Y \leq b)$. To derive the marginal distribution of $X$: $F_X(a) = \lim_{b \to \infty} F(a, b)$.
+![Joint probability masses for two discrete variables](https://github.com/djeada/Statistics-Notes/assets/37275728/a13cbdaa-3cc8-4582-b1ae-ae135119bd5a)
 
-![1de74524-d5fe-4c04-909f-0cbb6d9ebed7](https://github.com/djeada/Statistics-Notes/assets/37275728/2322fa3e-f2fd-41d1-ab60-3ff1b9c30a50)
+![A second representation of a joint discrete distribution](https://github.com/djeada/Statistics-Notes/assets/37275728/370352a5-ffbd-467c-acd4-6610f18e109f)
 
-![36f05abf-38ae-49c3-898a-18c34edef19d](https://github.com/djeada/Statistics-Notes/assets/37275728/d1c763a8-1ca8-4e7d-a27e-7bf2ca15cd6c)
+For two variables with a joint density $f_{X,Y}(x,y)$, integrate over a region to obtain its probability. A density height at a single pair is not the probability of that pair. Nonnegativity and a total double integral of 1 play the same normalization role as the sum of joint masses.
 
----
+![Joint continuous density over pairs of values](https://github.com/djeada/Statistics-Notes/assets/37275728/322cf1f9-e4cf-445d-9e3f-5cf106f41a84)
 
-**Practice:** [Exercises with worked solutions](../../exercises/random_variables_and_distributions/introduction_to_distributions.md)
+![A second view of a joint continuous density](https://github.com/djeada/Statistics-Notes/assets/37275728/a6b7b175-2d5b-4bdb-b987-d427949de9da)
+
+The joint CDF works in either case:
+
+$$
+F(a,b)=P(X\le a,Y\le b).
+$$
+
+It accumulates probability in the region below both thresholds. Letting the second threshold include its entire range leaves the marginal CDF of the first variable:
+
+$$
+F_X(a)=\lim_{b\to\infty}F(a,b).
+$$
+
+![Joint cumulative probabilities below two thresholds](https://github.com/djeada/Statistics-Notes/assets/37275728/2322fa3e-f2fd-41d1-ab60-3ff1b9c30a50)
+
+![A second representation of a joint cumulative distribution](https://github.com/djeada/Statistics-Notes/assets/37275728/d1c763a8-1ca8-4e7d-a27e-7bf2ca15cd6c)
+
+## Relating a probability model to data
+
+A theoretical PMF, density, or CDF specifies probabilities for possible outcomes. An empirical distribution assigns relative frequencies to the values in a particular sample. Differences between the two can reflect ordinary sampling variation, an inappropriate family, a changing population, or dependence between observations. Check the support and the observation mechanism before choosing a familiar curve, and use the fitted model to calculate the event actually asked about rather than treating a density plot as a list of point probabilities.
+
+**Practice:** [Exercises with worked solutions](https://github.com/djeada/Statistics-Notes/blob/main/exercises/random_variables_and_distributions/introduction_to_distributions.md)

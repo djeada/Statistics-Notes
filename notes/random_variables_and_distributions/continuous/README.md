@@ -1,26 +1,24 @@
 # Continuous Distributions
 
-Choose a continuous distribution by considering support, shape, and the data-generating mechanism rather than by matching a familiar name.
+The continuous families here allocate probability through a density. A point has zero probability, and an interval probability is an area under the density. A density may exceed 1 without violating the probability rules: its total integral, not its maximum height, must equal 1.
 
-| Situation | Useful starting model | Support / role |
+Choose a family using both support and mechanism. A normal density cannot represent a strict positive boundary exactly, while a uniform density assumes much more than merely knowing two bounds.
+
+| Situation | Starting model | Support and interpretation |
 |---|---|---|
-| Roughly equal density over a bounded interval | [Uniform](uniform_distribution.md) | $[a,b]$ |
-| Probability or proportion on the unit interval | [Beta](beta_distribution.md) | $[0,1]$ |
-| Waiting time to the next constant-rate Poisson event | [Exponential](exponential_distribution.md) | positive |
-| Positive waiting-time/size variable with flexible shape | [Gamma](gamma_distribution.md) | positive |
-| Symmetric bell-shaped measurement model | [Normal](normal_distribution.md) | real line |
-| Positive variable whose logarithm is normal | [Log-normal](log_normal_distribution.md) | positive |
+| Equal probability for equal-length subintervals of a bounded range | [Uniform](https://github.com/djeada/Statistics-Notes/blob/main/notes/random_variables_and_distributions/continuous/uniform_distribution.md) | $[a,b]$; constant density |
+| An underlying probability or proportion | [Beta](https://github.com/djeada/Statistics-Notes/blob/main/notes/random_variables_and_distributions/continuous/beta_distribution.md) | $[0,1]$; flexible shape |
+| Wait to the next constant-rate Poisson event | [Exponential](https://github.com/djeada/Statistics-Notes/blob/main/notes/random_variables_and_distributions/continuous/exponential_distribution.md) | Positive time; constant hazard |
+| Accumulated positive waits or another suitable positive quantity | [Gamma](https://github.com/djeada/Statistics-Notes/blob/main/notes/random_variables_and_distributions/continuous/gamma_distribution.md) | Positive; shape and rate control the distribution |
+| Approximately symmetric additive measurements | [Normal](https://github.com/djeada/Statistics-Notes/blob/main/notes/random_variables_and_distributions/continuous/normal_distribution.md) | Entire real line; center and scale |
+| A positive quantity with a normal logarithm | [Log-normal](https://github.com/djeada/Statistics-Notes/blob/main/notes/random_variables_and_distributions/continuous/log_normal_distribution.md) | Positive; multiplicative variation |
 
-## Important Relationships
+## Relationships and parameter meanings
 
-- The exponential distribution is a gamma special case with shape $1$ under compatible parameterizations.
-- If $Y$ is normal, then $X=e^Y$ is log-normal.
-- The normal distribution is especially important because standardized sums and many sampling distributions become approximately normal under suitable conditions.
+An exponential distribution is gamma with shape 1. A sum of independent equal-rate exponential waits is gamma with integer shape. If $Y$ is normal, then $e^Y$ is log-normal, but its original-scale mean is not simply the exponential of the log-scale mean.
 
-Student's t, chi-square, and F are covered in **[Sampling & Sampling Distributions](../../sampling_and_sampling_distributions/README.md)**, where their inferential roles and degrees-of-freedom parameters have context.
+The gamma formulas here use shape $\alpha$ and **rate** $\beta$. Software may instead accept **scale** $\theta=1/\beta$. In the beta distribution, $\beta$ is a second shape parameter, not a rate. A symbol's meaning and units come from the specified family and equation.
 
-## Parameterization Warning
+The normal distribution also approximates suitable standardized sums and sampling distributions. That does not imply that the observations being summed are normal. Student's t, chi-square, and F are developed with their inferential roles in [Sampling and Sampling Distributions](https://github.com/djeada/Statistics-Notes/tree/main/notes/sampling_and_sampling_distributions).
 
-The **gamma** note uses shape $\alpha$ and **rate** $\beta$. Many software libraries expose a scale parameter instead, equal to $1/\beta$. Always translate parameterizations before comparing formulas.
-
-A density value is not a point probability. For an absolutely continuous random variable, probabilities are obtained by integrating the density over intervals.
+For each model, calculate interval probabilities from the CDF or density integral, then interpret the result in the variable's original units and experimental setting.

@@ -1,86 +1,108 @@
-# Exponential Distribution (Continuous)
+# Exponential Distribution
 
-The exponential distribution is a continuous probability distribution that models the time between events in a Poisson point process. The exponential distribution is denoted as $X \sim \text{Exp}(\lambda)$, where $\lambda$ is the rate parameter.
+The exponential distribution models the wait to the next event in a constant-rate Poisson process. Write $X\sim\operatorname{Exp}(\lambda)$ with rate $\lambda>0$. If time is measured in years, $\lambda$ has units of events per year and $X$ has units of years. Larger rates mean shorter typical waits.
 
-### Probability Density Function (PDF)
+The model permits any positive wait rather than a fixed lifetime. Its constant hazard means that surviving for some time does not change the distribution of the remaining wait. That is a substantive assumption for a physical lifetime: an aging or wearing component need not follow it.
 
-The PDF of an exponential distribution is given by:
+## From no events to the CDF and density
 
-$$f(x) =
+The event $X>x$ means that no Poisson event occurs during the first $x$ time units. The expected event count over that interval is $\lambda x$, and the zero-count probability is $e^{-\lambda x}$. Thus
+
+$$
+P(X>x)=e^{-\lambda x},\qquad x\ge0.
+$$
+
+Taking the complement gives the CDF:
+
+$$
+F(x)=1-e^{-\lambda x},\qquad x\ge0,
+$$
+
+with $F(x)=0$ for $x<0$. Differentiating the CDF on the positive half-line gives
+
+$$
+f(x)=
 \begin{cases}
-  \lambda e^{-\lambda x}, & \text{if}\ x \ge 0 \\
-  0, & \text{if}\ x < 0
+\lambda e^{-\lambda x},&x\ge0,\\
+0,&x<0.
 \end{cases}
 $$
 
-![output(7)](https://github.com/user-attachments/assets/a9044ed9-d428-43db-ad2c-bda7e7b05757)
+![Exponential densities decreasing with waiting time](https://github.com/user-attachments/assets/a9044ed9-d428-43db-ad2c-bda7e7b05757)
 
-### Cumulative Distribution Function (CDF)
+The density height is not the probability of failing at exactly that time. Interval probabilities are areas, or differences of CDF values.
 
-The CDF of an exponential distribution is given by:
+![Exponential CDFs increasing from zero toward one](https://github.com/user-attachments/assets/7eca535d-14d9-4da8-8c4e-268f45d0c16b)
 
-$$F(x) = 1 - e^{-\lambda x}$$
+## Memorylessness
 
-![output(8)](https://github.com/user-attachments/assets/7eca535d-14d9-4da8-8c4e-268f45d0c16b)
+For nonnegative $s$ and $t$,
 
-### Expected Value and Variance
+$$
+P(X>s+t\mid X>s)=\frac{e^{-\lambda(s+t)}}{e^{-\lambda s}}
+=e^{-\lambda t}=P(X>t).
+$$
 
-The expected value (mean) of an exponential distribution is equal to the reciprocal of the rate parameter:
+Conditioning on survival through $s$ leaves the same probability of waiting more than another $t$. This does not mean that a survivor starts its physical life over; it states that elapsed age carries no predictive information about the remaining lifetime under the exponential model.
 
-$$E[X] = \frac{1}{\lambda}$$
+## Mean, variance, and moments
 
-The variance of an exponential distribution is given by:
+The expected wait and its variance are
 
-$$\text{Var}(X) = \frac{1}{\lambda^2}$$
+$$
+E[X]=\frac1\lambda,\qquad \operatorname{Var}(X)=\frac1{\lambda^2}.
+$$
 
-### Moment Generating Functions and Moments
+The standard deviation equals the mean, showing that the distribution permits substantial variation even with one fixed rate. A mean lifetime is not a deadline by which every component has failed.
 
-The moment generating function (MGF) of an exponential distribution is:
+To derive moments, integrate the exponentially weighted density:
 
-$$M_X(t) = E[e^{tX}] = \frac{\lambda}{\lambda - t}, \text{ for } t < \lambda$$
+$$
+M_X(t)=E[e^{tX}]=\int_0^\infty \lambda e^{-(\lambda-t)x}\,dx
+=\frac{\lambda}{\lambda-t},\qquad t<\lambda.
+$$
 
-To find the n-th moment, we take the n-th derivative of the MGF with respect to t and then evaluate it at t=0:
+The integral converges only when $\lambda-t>0$. Differentiating gives
 
-$$E[X^n] = \frac{d^n M_X(t)}{dt^n}\Bigg|_{t=0}$$
+$$
+E[X^n]=\frac{d^nM_X(t)}{dt^n}\Bigg|_{t=0}
+=\frac{n!}{\lambda^n},\qquad n=0,1,2,\ldots.
+$$
 
-* **First Moment (Mean):**
+In particular,
 
-$$E[X] = \frac{1}{\lambda}$$
+$$
+E[X]=\frac1\lambda,\qquad E[X^2]=\frac2{\lambda^2}.
+$$
 
-* **Second Moment (Variance + Mean^2):**
+Subtracting the squared mean from the second raw moment leaves $1/\lambda^2$, the variance above.
 
-$$E[X^2] = \frac{2}{\lambda^2}$$
+## Example: equipment failure times
 
-### Example: Equipment Failure Rate Analysis
+An engineer models a component's lifetime as exponential with mean 5 years. The rate is therefore $\lambda=1/5=0.2$ per year, not 5 per year.
 
-An engineer examines the failure rate of a key machine component. This component's time to failure is modeled by an exponential distribution, with an average failure time of 5 years.
+### Failure within the first year
 
-Given:
+Use the CDF because the event is a wait below a threshold:
 
-- Mean time to failure: 5 years
-- The exponential distribution PDF: $f(x; \lambda) = \lambda e^{-\lambda x}$
-- Rate parameter $\lambda$: $\frac{1}{\text{mean time to failure}} = \frac{1}{5}$ per year
+$$
+P(X<1)=1-e^{-1/5}\approx0.1813.
+$$
 
-I. Probability of a component failing within the first year:
+There is about an 18.13% probability of failure in the first year under this model. Replacing $<$ with $\le$ does not change the result because an exact time has zero probability.
 
-The probability that a component fails before a given time $x$ in an exponential distribution is $P(X < x) = 1 - e^{-\lambda x}$.
+### Lasting more than 10 years
 
-For the first year:
+Use the survival probability directly:
 
-$$ P(X < 1) = 1 - e^{-\frac{1}{5}} \approx 0.1813 $$
+$$
+P(X>10)=e^{-10/5}=e^{-2}\approx0.1353.
+$$
 
-II. Probability of a component lasting more than 10 years:
+About 13.53% of modeled lifetimes exceed 10 years. If a component has already survived 10 years, its remaining lifetime still has mean 5 years under the memoryless assumption; it is not forced to fail immediately because it exceeded the original mean.
 
-The probability that a component lasts longer than a given time $x$ in an exponential distribution is $P(X > x) = e^{-\lambda x}$.
+## Applications
 
-For more than 10 years:
+Exponential waits appear in queueing, reliability, and survival models with an approximately constant event hazard. Independent equal-rate exponential stages sum to a gamma distribution. When the rate changes with age or operating conditions, that change needs its own model rather than being hidden inside a single average lifetime.
 
-$$ P(X > 10) = e^{-\frac{10}{5}} = e^{-2} \approx 0.1353 $$
-
-### Applications
-
-Exponential distributions are used in various fields such as reliability theory, queuing theory, and survival analysis. They model waiting times, lifetimes of electronic components, and the time between consecutive events in a Poisson process.
-
----
-
-**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/exponential_distribution.md)
+**Practice:** [Exercises with worked solutions](https://github.com/djeada/Statistics-Notes/blob/main/exercises/random_variables_and_distributions/exponential_distribution.md)
