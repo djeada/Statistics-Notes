@@ -1,81 +1,93 @@
-# Poisson Distribution (Discrete)
+# Poisson Distribution
 
-A discrete random variable X follows a Poisson distribution if the events occur independently and at a constant average rate. The Poisson distribution is denoted as $X \sim \text{Poisson}(\lambda)$, where $\lambda$ is the average rate (or mean) of events occurring in a given interval.
+A Poisson random variable counts events in a specified interval of time, distance, area, or other exposure. Write $X\sim\operatorname{Poisson}(\lambda)$, where $\lambda$ is the **expected count in that interval**. Its support is $\{0,1,2,\ldots\}$: there is no fixed number of trials that caps the count.
 
-### Probability Mass Function (PMF)
+A constant-rate Poisson process supplies one mechanism for this distribution. Counts in disjoint intervals are independent, and their mean is proportional to exposure. If the process rate is $r$ events per hour and an interval lasts $T$ hours, the count parameter is $\lambda=rT$. The rate and the expected count coincide numerically only when the exposure is one unit.
 
-The PMF of a Poisson distribution is given by:
+## Probability mass function
 
-$$P(X=k) = \frac{e^{-\lambda} \lambda^k}{k!}$$
+For $\lambda>0$,
 
-where $k \in \{0, 1, 2, \dots\}$.
+$$
+P(X=k)=\frac{e^{-\lambda}\lambda^k}{k!},\qquad k=0,1,2,\ldots.
+$$
 
-![output(25)](https://github.com/user-attachments/assets/d4b69074-c230-4642-8420-ce020e581a44)
+The masses sum to 1 because $\sum_{k=0}^\infty\lambda^k/k!=e^\lambda$, canceling the factor $e^{-\lambda}$. At $\lambda=0$, the limiting distribution assigns probability 1 to zero events.
 
-### Cumulative Distribution Function (CDF)
+![Poisson probability masses for nonnegative event counts](https://github.com/user-attachments/assets/d4b69074-c230-4642-8420-ce020e581a44)
 
-The CDF of a Poisson distribution is given by:
+As exposure grows at the same rate, the expected count grows. A mean of five events in an hour does not mean that five events occur in every hour; the PMF describes the variability around that mean.
 
-$$F(k) = P(X \le k) = \sum_{i=0}^{k} \frac{e^{-\lambda} \lambda^i}{i!}$$
+## Cumulative probabilities
 
-![output(26)](https://github.com/user-attachments/assets/3fdbcff6-d49f-4850-b9d9-e7fb08532b25)
+For a nonnegative integer $k$,
 
-### Expected Value and Variance
+$$
+F(k)=P(X\le k)=\sum_{i=0}^{k}\frac{e^{-\lambda}\lambda^i}{i!}.
+$$
 
-The expected value (mean) and variance of a Poisson distribution are both equal to the average rate parameter $\lambda$:
+For real $x\ge0$, sum through $\lfloor x\rfloor$; for $x<0$, the CDF is zero. “More than $k$” uses the complement $1-F(k)$, whereas “at least $k$” uses $1-F(k-1)$.
 
-$$E[X] = \text{Var}(X) = \lambda$$
+![Poisson CDF accumulating probability at integer counts](https://github.com/user-attachments/assets/3fdbcff6-d49f-4850-b9d9-e7fb08532b25)
 
-### Moment Generating Functions and Moments
+## Mean, variance, and moments
 
-The moment generating function (MGF) of a Poisson distribution is:
+The Poisson model imposes the same value for its mean and variance:
 
-$$M_X(t) = E[e^{tX}] = e^{\lambda(e^t - 1)}$$
+$$
+E[X]=\operatorname{Var}(X)=\lambda.
+$$
 
-To find the n-th moment, we take the n-th derivative of the MGF with respect to t and then evaluate it at t=0:
+This is a modeling restriction, not an identity for all count data. Changing rates across observation periods or clustered arrivals can produce much more variability than this one-parameter model permits.
 
-$$E[X^n] = \frac{d^n M_X(t)}{dt^n}\Bigg|_{t=0}$$
+The MGF follows by collecting the exponential series:
 
-* **First Moment (Mean):**
+$$
+M_X(t)=E[e^{tX}]=e^{\lambda(e^t-1)},\qquad t\in\mathbb R.
+$$
 
-$$E[X] = \lambda$$
+Differentiating once gives $M'_X(t)=\lambda e^tM_X(t)$. Differentiating again and setting $t=0$ gives the first two raw moments:
 
-* **Second Moment (Variance + Mean^2):**
+$$
+E[X]=\lambda,\qquad E[X^2]=\lambda^2+\lambda.
+$$
 
-$$E[X^2] = \lambda^2 + \lambda$$
+More generally, $E[X^m]=M_X^{(m)}(0)$. Subtracting $\lambda^2$ from the second moment recovers the variance $\lambda$.
 
-### Example: Hospital Emergency Room Visits
+## Example: accident-related emergency-room visits
 
-A hospital's emergency room experiences an average of 5 visits per hour due to accidents. We can model this using a Poisson distribution.
+Suppose accident-related visits average 5 per hour and a constant-rate Poisson model is appropriate over the periods studied. For a one-hour interval, $\lambda=5$. This is a model for visits, which need not equal the number of distinct accidents.
 
-Given:
+### Exactly 3 visits in an hour
 
-- Average rate of events (visits per hour) $\lambda = 5$
+$$
+P(X=3)=\frac{e^{-5}5^3}{3!}\approx0.1404.
+$$
 
-I. What is the probability exactly 3 accidents occur in an hour?
+### More than 7 visits in an hour
 
-For exactly 3 accidents:
+The complement includes counts 0 through 7:
 
-$$ P(X = 3) = \frac{e^{-5} \cdot 5^3}{3!} = 0.1404 $$
+$$
+P(X>7)=1-\sum_{k=0}^{7}\frac{e^{-5}5^k}{k!}\approx0.1334.
+$$
 
-II. What is the probability of more than 7 accidents in an hour?
+### At most 2 visits in an hour
 
-For more than 7 accidents:
+$$
+P(X\le2)=\sum_{k=0}^{2}\frac{e^{-5}5^k}{k!}\approx0.1247.
+$$
 
-$$ P(X > 7) = 1 - \sum_{k=0}^{7} \frac{e^{-5} \cdot 5^k}{k!} = 0.1339 $$
+For a half-hour interval the expected count would be $5(0.5)=2.5$, not 5. Adjusting exposure is part of specifying the distribution before applying its formulas.
 
-III. What is the probability of at most 2 accidents in an hour?
+## Poisson approximation to a binomial count
 
-For at most 2 accidents:
+For many independent trials with small success probability, keep $\lambda=np$ fixed or moderate while increasing $n$ and decreasing $p$. For each fixed count, the binomial probability approaches the corresponding Poisson probability:
 
-$$ P(X \leq 2) = \sum_{k=0}^{2} \frac{e^{-5} \cdot 5^k}{k!} = 0.1247 $$
+$$
+\operatorname{Binomial}(n,p)\approx\operatorname{Poisson}(np).
+$$
 
-### Poisson Approximation to the Binomial Distribution
+The approximation replaces a large collection of rare trial events with an event-count model. It is not appropriate merely because a binomial mean is known: a large success probability or a count near the finite upper limit can make the Poisson approximation poor.
 
-If the number of trials in a binomial distribution is large and the probability of success $p$ is small (with $np$ moderate), then the binomial distribution can be approximated by a Poisson distribution with parameter $\lambda = np$:
-
-$$\text{Binomial}(n, p) \approx \text{Poisson}(np)$$
-
----
-
-**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/poisson_distribution.md)
+**Practice:** [Exercises with worked solutions](https://github.com/djeada/Statistics-Notes/blob/main/exercises/random_variables_and_distributions/poisson_distribution.md)

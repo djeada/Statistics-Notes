@@ -1,55 +1,94 @@
-# Log-Normal Distribution (Continuous)
+# Log-Normal Distribution
 
-A continuous random variable X follows a log-normal distribution if its natural logarithm is normally distributed. The log-normal distribution is useful in modeling continuous random variables that are constrained to be positive. It is denoted as $X \sim \text{LogNormal}(\mu, \sigma^2)$, where $\mu$ and $\sigma^2$ are the mean and variance of the variable's natural logarithm.
+A positive random variable is log-normal when its **natural logarithm** is normal:
 
-### Probability Density Function (PDF)
+$$
+Y=\ln X\sim\mathcal N(\mu,\sigma^2),\qquad X=e^Y,
+$$
 
-The PDF of a log-normal distribution is given by:
+where $\mu\in\mathbb R$ and $\sigma>0$. Write $X\sim\operatorname{LogNormal}(\mu,\sigma^2)$. These parameters describe the log scale: $\mu$ is not the mean of $X$, and $\sigma$ is not its original-scale standard deviation.
 
-$$f(x; \mu, \sigma) = \frac{1}{x \sigma \sqrt{2 \pi}} \exp\left( -\frac{(\ln x - \mu)^2}{2 \sigma^2} \right)$$
+The model is natural when several positive multiplicative effects combine, since logarithms turn a product into a sum. It is right-skewed and assigns no probability to zero or negative values. A positive variable is not automatically log-normal; its log-scale distribution must support that modeling assumption.
 
-for $x > 0$, $\mu \in \mathbb{R}$, and $\sigma > 0$.
+## Deriving the density
 
-![output(13)](https://github.com/user-attachments/assets/49eff855-655b-4c5c-8593-354f1b1cabe0)
+The transformation $y=\ln x$ has derivative $dy/dx=1/x$. The normal density on the log scale must therefore be multiplied by $1/x$ when expressed on the original scale:
 
-### Cumulative Distribution Function (CDF)
+$$
+f(x;\mu,\sigma)=\frac{1}{x\sigma\sqrt{2\pi}}
+\exp\left(-\frac{(\ln x-\mu)^2}{2\sigma^2}\right),\qquad x>0.
+$$
 
-The CDF of a log-normal distribution, $F(x; \mu, \sigma)$, is the normal cumulative distribution function of $\ln(x)$:
+The factor $1/x$ accounts for the changing interval widths under logarithms. Omitting it would not produce a normalized density for $X$.
 
-$$F(x; \mu, \sigma) = \frac{1}{2} + \frac{1}{2} \text{erf}\left( \frac{\ln(x) - \mu}{\sigma \sqrt{2}} \right)$$
+![Log-normal densities on the positive original scale](https://github.com/user-attachments/assets/49eff855-655b-4c5c-8593-354f1b1cabe0)
 
-![output(14)](https://github.com/user-attachments/assets/7ffd1673-cc6c-44dc-a7b3-724abe673ff5)
+## CDF and probabilities
 
-### Expected Value and Variance
+Because the logarithm is increasing, the event $X\le x$ is equivalent to $Y\le\ln x$. Standardizing on the normal scale gives
 
-The expected value (mean) of a log-normal distribution is:
+$$
+F(x;\mu,\sigma)=\Phi\left(\frac{\ln x-\mu}{\sigma}\right),\qquad x>0,
+$$
 
-$$E[X] = \exp\left( \mu + \frac{\sigma^2}{2} \right)$$
+where $\Phi$ is the standard normal CDF. Equivalently,
 
-The variance of a log-normal distribution is:
+$$
+F(x;\mu,\sigma)=\frac12+\frac12\operatorname{erf}
+\left(\frac{\ln x-\mu}{\sigma\sqrt2}\right).
+$$
 
-$$\text{Var}(X) = \left[ \exp(\sigma^2) - 1 \right] \exp(2\mu + \sigma^2)$$
+For $x\le0$, $F(x)=0$. An interval probability is a difference of two CDF values, and the quantile at probability $q$ is $\exp[\mu+\sigma\Phi^{-1}(q)]$.
 
-### Example: Stock Prices
+![Log-normal CDFs obtained from normal probabilities on the log scale](https://github.com/user-attachments/assets/7ffd1673-cc6c-44dc-a7b3-724abe673ff5)
 
-Suppose the logarithm of the daily closing prices of a stock is normally distributed with $\mu = 0$ and $\sigma = 0.1$. 
+## Mean, median, and variance
 
-I. What is the expected price of the stock?
+Since $X^m=e^{mY}$, the normal MGF evaluated at $m$ gives
 
-Expected price of the stock:
+$$
+E[X^m]=\exp\left(m\mu+\frac{m^2\sigma^2}{2}\right).
+$$
 
-$$E[X] = \exp\left( 0 + \frac{0.1^2}{2} \right) \approx 1.005$$
+Setting $m=1$ gives the mean:
 
-II. What is the variance of the stock price?
+$$
+E[X]=\exp\left(\mu+\frac{\sigma^2}{2}\right).
+$$
 
-Variance of the stock price:
+The median is $e^\mu$, because half the log-scale normal probability lies below $\mu$. The mean is larger: the long upper tail pulls the arithmetic average upward. Exponentiating a log-scale mean therefore gives an original-scale median, not the original-scale mean.
 
-$$\text{Var}(X) = \left[ \exp(0.1^2) - 1 \right] \exp(2 \times 0 + 0.1^2) \approx 0.0102$$
+Using $E[X^2]$ and subtracting $(E[X])^2$ gives
 
-### Applications
+$$
+\operatorname{Var}(X)=\left[e^{\sigma^2}-1\right]e^{2\mu+\sigma^2}.
+$$
 
-The log-normal distribution is widely used in finance for modeling stock prices, in environmental science for modeling concentrations of pollutants, and in survival analysis. It is also applied in economics for income distribution and in reliability engineering for representing lifetimes of systems.
+All positive integer moments are finite, but the log-normal MGF $E(e^{tX})$ is infinite for $t>0$. Having every power moment is not sufficient for an MGF to exist in a neighborhood of zero.
 
----
+## Example: an illustrative stock-price scale
 
-**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/log_normal_distribution.md)
+Suppose a stock's closing price at the date being modeled is expressed relative to a fixed price unit, and its logarithm has mean $\mu=0$ and standard deviation $\sigma=0.1$. This specifies a one-date distribution; it does not by itself specify dependence between daily prices.
+
+### Expected price
+
+$$
+E[X]=\exp\left(0+\frac{0.1^2}{2}\right)\approx1.005.
+$$
+
+The modeled median is 1 price unit, while the mean is about 1.005 units because of the right tail.
+
+### Price variance
+
+$$
+\operatorname{Var}(X)=\left[e^{0.1^2}-1\right]e^{2(0)+0.1^2}
+\approx0.0102.
+$$
+
+The unrounded variance is about 0.0101512 in squared price units. If the chosen price unit represents 100 currency units, both the mean and the variance must be rescaled: multiply the mean by 100 and the variance by $100^2$.
+
+## Applications
+
+Log-normal models are used for some prices, incomes, pollutant concentrations, and lifetimes when a normal model on the log scale is plausible. They represent multiplicative variability and positive skew, but should not be selected solely because observations are positive.
+
+**Practice:** [Exercises with worked solutions](https://github.com/djeada/Statistics-Notes/blob/main/exercises/random_variables_and_distributions/log_normal_distribution.md)

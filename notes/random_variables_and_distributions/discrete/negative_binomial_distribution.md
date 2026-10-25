@@ -1,72 +1,84 @@
-# Negative Binomial Distribution (Discrete)
+# Negative Binomial Distribution
 
-A discrete random variable X follows a negative binomial distribution if it represents the number of trials required to achieve a specified number of successes in a sequence of independent Bernoulli trials. The negative binomial distribution is often denoted as $X \sim \text{NegBinomial}(r, p)$, where $r$ is the number of successes required and $p$ is the probability of success on each trial. Here $X$ counts the *total number of trials* (including the $r$ successes), so $X \ge r$. Software such as `scipy.stats.nbinom` instead counts the number of *failures* $Y = X - r$ before the $r$-th success, with support starting at $0$.
+The negative binomial distribution extends geometric waiting from the **first success** to the **$r$-th success**. Repeat independent Bernoulli trials with a common success probability $p$ and stop when the required positive integer number $r$ of successes has occurred.
 
-### Probability Mass Function (PMF)
+Here $X$ counts the total number of trials, including the successful ones. Write $X\sim\operatorname{NegBinomial}(r,p)$, with $X\in\{r,r+1,\ldots\}$ and $0<p<1$. The number of failures before stopping is a different variable, $Y=X-r$, whose support begins at 0. In particular, `scipy.stats.nbinom` uses that failures convention.
 
-The PMF of a negative binomial distribution is given by:
+## Deriving the probability mass function
 
-$$P(X=k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}$$
+For the experiment to stop on trial $k$, the final trial must succeed. Among the first $k-1$ trials there must be exactly $r-1$ successes, which can occupy $\binom{k-1}{r-1}$ sets of positions. Every qualifying sequence contains $r$ successes and $k-r$ failures, so
 
-where $k \in \{r, r+1, r+2, \dots\}$ and $\binom{k-1}{r-1}$ is the binomial coefficient.
+$$
+P(X=k)=\binom{k-1}{r-1}p^r(1-p)^{k-r},\qquad k=r,r+1,\ldots.
+$$
 
-![output(27)](https://github.com/user-attachments/assets/0052ac1b-3aec-4021-a299-2d417968f611)
+Using $\binom kr$ would include arrangements that reached the target before trial $k$. Requiring the last success to be at the stopping date is what gives the correct coefficient.
 
-### Cumulative Distribution Function (CDF)
+![Negative binomial probabilities under a waiting-time convention](https://github.com/user-attachments/assets/0052ac1b-3aec-4021-a299-2d417968f611)
 
-The CDF of a negative binomial distribution is not as straightforward to express in a closed form but is the sum of its PMF values:
+When comparing a plotted count with a formula, check whether the horizontal coordinate counts total trials or failures. A shift by $r$ changes the labels, not the probabilities of the corresponding events.
 
-$$F(k) = P(X \le k) = \sum_{i=r}^{k} \binom{i-1}{r-1} p^r (1-p)^{i-r}$$
+## Cumulative distribution function
 
-![output(28)](https://github.com/user-attachments/assets/9f38fec7-3be9-469a-9744-f88145a75d3d)
+For an integer $k\ge r$,
 
-### Expected Value and Variance
+$$
+F(k)=P(X\le k)=\sum_{i=r}^{k}\binom{i-1}{r-1}p^r(1-p)^{i-r}.
+$$
 
-The expected value (mean) of a negative binomial distribution is:
+The CDF is zero below $r$; for noninteger thresholds use the integer floor. An equivalent way to describe $X\le k$ is that at least $r$ successes have occurred in the first $k$ Bernoulli trials. Consequently, the same probability can be calculated as a binomial upper tail. The identity connects a stopping-time question to a fixed-trial count question.
 
-$$E[X] = \frac{r}{p}$$
+![Negative binomial cumulative probabilities increasing toward one](https://github.com/user-attachments/assets/9f38fec7-3be9-469a-9744-f88145a75d3d)
 
-The variance of a negative binomial distribution is:
+## Mean, variance, and generating function
 
-$$\text{Var}(X) = \frac{r(1-p)}{p^2}$$
+Split the total wait into $r$ successive waits for one success. Under the independent, constant-$p$ trial model, these are independent geometric variables. Adding their means and variances gives
 
-### Moment Generating Function (MGF)
+$$
+E[X]=\frac rp,\qquad \operatorname{Var}(X)=\frac{r(1-p)}{p^2}.
+$$
 
-The moment generating function (MGF) of a negative binomial distribution is:
+Their MGFs multiply as well:
 
-$$M_X(t) = \left(\frac{pe^t}{1 - (1 - p)e^t}\right)^r, \quad t < -\ln(1-p)$$
+$$
+M_X(t)=\left(\frac{pe^t}{1-(1-p)e^t}\right)^r,
+\qquad t<-\ln(1-p).
+$$
 
-### Example: Quality Control Testing
+For $Y=X-r$, the mean becomes $r(1-p)/p$, but the variance is unchanged because subtracting a constant does not change spread. This explains why a software mean can differ from the formula for $X$ without either calculation being wrong. If $p=1$, exactly $r$ trials are needed and the variance is zero.
 
-In quality control testing, an inspector examines products until finding a certain number of defective items. Suppose the probability of a product being defective is 0.1, and the inspector continues testing until 5 defective products are found.
+## Example: quality-control testing
 
-Given:
+An inspector tests independent products until finding five defective items. Label “defective” a success, take $p=0.1$, and let $r=5$. Calling a defect a success is only a counting convention; it does not change its practical meaning.
 
-- Probability of defective product `p = 0.1`
-- Number of defects required `r = 5`
+### Exactly 20 products tested
 
-I. What is the probability that exactly 20 products need to be tested?
+The first 19 products must contain four defects, and product 20 must be defective:
 
-For exactly 20 products tested:
+$$
+P(X=20)=\binom{19}{4}(0.1)^5(0.9)^{15}\approx0.0080.
+$$
 
-$$P(X = 20) = \binom{19}{4} (0.1)^5 (0.9)^{15} ≈ 0.0080$$
+Under the failures convention this same event is $Y=15$, so a software calculation uses the failure count 15, not the total count 20.
 
-II. What is the expected number of products to be tested?
+### Expected number of products
 
-Expected number of products tested:
+$$
+E[X]=\frac5{0.1}=50.
+$$
 
-$$E[X] = \frac{5}{0.1} = 50$$
+Five separate mean waits of 10 trials add to an expected total of 50.
 
-III. What is the variance in the number of products tested?
+### Variance of the total
 
-Variance in the number of products tested:
+$$
+\operatorname{Var}(X)=\frac{5(1-0.1)}{0.1^2}=450.
+$$
 
-$$\text{Var}(X) = \frac{5 \times (1-0.1)}{0.1^2} = 450$$
+The standard deviation is $\sqrt{450}\approx21.21$ trials. The failures variable has mean 45 and the same variance 450.
 
-### Applications
+## Applications and conventions
 
-Negative binomial distributions are commonly used when the number of trials required to reach a specified number of successes is of interest. The same model can describe failures by relabeling the event of interest as a "success." Applications include reliability testing, epidemiology, and ecological studies.
+This waiting-time construction applies to inspection, repeated reliability attempts, and other experiments that stop after a specified count of the event of interest. Negative binomial models are also used for variable count data in epidemiology and ecology, but a count-regression parameterization need not literally describe waiting for an integer number of successes. Identify the support, the counted quantity, and the parameter definitions before transferring formulas between uses.
 
----
-
-**Practice:** [Exercises with worked solutions](../../../exercises/random_variables_and_distributions/negative_binomial_distribution.md)
+**Practice:** [Exercises with worked solutions](https://github.com/djeada/Statistics-Notes/blob/main/exercises/random_variables_and_distributions/negative_binomial_distribution.md)
