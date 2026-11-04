@@ -1,0 +1,49 @@
+order_id,order_date,customer,region,product,qty,unit_price
+1001,2026-01-05,Acme Ltd,East,Notebook,17,4.5
+1002,2026-01-08,Cedar School,West,Pen box,20,6.2
+1003,2026-01-10,Acme Ltd,West,Stapler,1,12.9
+1004,2026-01-11,Acme Ltd,North,Whiteboard,3,55.0
+1005,2026-01-12,Cedar School,East,Notebook,20,4.5
+1006,2026-01-12,Elm Clinic,East,Desk lamp,6,29.0
+1007,2026-01-14,Elm Clinic,West,Whiteboard,1,55.0
+1008,2026-01-14,Birch & Co,South,Pen box,40,6.2
+1009,2026-01-22,Birch & Co,East,Desk lamp,3,29.0
+1010,2026-01-22,Elm Clinic,North,Desk lamp,4,29.0
+1011,2026-01-23,Elm Clinic,South,Notebook,19,4.5
+1012,2026-01-24,Delta Studio,East,Notebook,27,4.5
+1013,2026-02-01,Acme Ltd,West,Office chair,3,89.0
+1014,2026-02-03,Cedar School,West,Notebook,36,4.5
+1015,2026-02-04,Acme Ltd,West,Pen box,16,6.2
+1016,2026-02-09,Elm Clinic,West,Stapler,2,12.9
+1017,2026-02-10,Cedar School,West,Pen box,11,6.2
+1018,2026-02-12,Birch & Co,East,Stapler,6,12.9
+1019,2026-02-12,Acme Ltd,West,Office chair,8,89.0
+1020,2026-02-13,Delta Studio,South,Stapler,4,12.9
+1021,2026-02-13,Birch & Co,East,Desk lamp,1,29.0
+1022,2026-02-14,Delta Studio,South,Office chair,1,89.0
+1023,2026-02-15,Birch & Co,West,Desk lamp,4,29.0
+1024,2026-02-15,Cedar School,North,Notebook,6,4.5
+1025,2026-02-15,Cedar School,West,Notebook,14,4.5
+1026,2026-02-19,Elm Clinic,North,Desk lamp,5,29.0
+1027,2026-02-21,Acme Ltd,West,Office chair,7,89.0
+1028,2026-02-26,Acme Ltd,West,Office chair,1,89.0
+1029,2026-03-01,Elm Clinic,East,Office chair,4,89.0
+1030,2026-03-01,Acme Ltd,South,Office chair,8,89.0
+1031,2026-03-01,Birch & Co,East,Pen box,40,6.2
+1032,2026-03-01,Acme Ltd,South,Stapler,1,12.9
+1033,2026-03-01,Birch & Co,East,Pen box,25,6.2
+1034,2026-03-04,Delta Studio,East,Pen box,10,6.2
+1035,2026-03-06,Acme Ltd,East,Whiteboard,2,55.0
+1036,2026-03-06,Delta Studio,North,Notebook,8,4.5
+1037,2026-03-09,Delta Studio,East,Desk lamp,8,29.0
+1038,2026-03-13,Birch & Co,South,Desk lamp,5,29.0
+1039,2026-03-17,Delta Studio,South,Notebook,13,4.5
+1040,2026-03-18,Birch & Co,East,Notebook,6,4.5
+1041,2026-03-19,Acme Ltd,West,Desk lamp,5,29.0
+1042,2026-03-20,Birch & Co,South,Desk lamp,7,29.0
+1043,2026-03-20,Birch & Co,East,Notebook,26,4.5
+1044,2026-03-21,Cedar School,North,Notebook,19,4.5
+1045,2026-03-21,Cedar School,West,Notebook,36,4.5
+1046,2026-03-22,Delta Studio,East,Stapler,6,12.9
+1047,2026-03-24,Acme Ltd,West,Whiteboard,5,55.0
+1048,2026-03-24,Birch & Co,South,Stapler,6,12.9

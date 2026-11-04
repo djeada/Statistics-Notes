@@ -1,0 +1,435 @@
+{
+ "uid": "stats-21-naive-forecasts",
+ "title": "21 \u00b7 Naive and seasonal naive forecasts",
+ "description": "Benchmark forecasts for 28 days of bakery sales: mean, naive, seasonal naive and drift, and how each performs on the holdout.",
+ "tags": [
+  "statistics-course"
+ ],
+ "timezone": "utc",
+ "schemaVersion": 39,
+ "version": 1,
+ "editable": true,
+ "graphTooltip": 1,
+ "refresh": "",
+ "annotations": {
+  "list": []
+ },
+ "templating": {
+  "list": []
+ },
+ "panels": [
+  {
+   "type": "stat",
+   "title": "Holdout MAE (loaves per day)",
+   "description": "Mean absolute error on the 28-day holdout. Lower is better; any real model must beat the best of these.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "seasonal naive,mean,naive,drift\n23.7143,39.4381,50.5714,59.7889\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "decimals": 1,
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "green",
+        "value": null
+       },
+       {
+        "color": "orange",
+        "value": 30
+       },
+       {
+        "color": "red",
+        "value": 45
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ],
+     "fields": "",
+     "values": false
+    },
+    "colorMode": "value",
+    "graphMode": "none",
+    "textMode": "value_and_name"
+   },
+   "id": 1,
+   "gridPos": {
+    "x": 0,
+    "y": 0,
+    "w": 24,
+    "h": 4
+   }
+  },
+  {
+   "type": "timeseries",
+   "title": "Sales and benchmark forecasts",
+   "description": "History, then four 28-day-ahead forecasts from the last training day.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "time,actual,seasonal naive,naive,mean,drift\n2026-01-05T00:00:00Z,90,,,,\n2026-01-06T00:00:00Z,107,,,,\n2026-01-07T00:00:00Z,121,,,,\n2026-01-08T00:00:00Z,127,,,,\n2026-01-09T00:00:00Z,162,,,,\n2026-01-10T00:00:00Z,205,,,,\n2026-01-11T00:00:00Z,159,,,,\n2026-01-12T00:00:00Z,99,,,,\n2026-01-13T00:00:00Z,109,,,,\n2026-01-14T00:00:00Z,117,,,,\n2026-01-15T00:00:00Z,131,,,,\n2026-01-16T00:00:00Z,162,,,,\n2026-01-17T00:00:00Z,194,,,,\n2026-01-18T00:00:00Z,164,,,,\n2026-01-19T00:00:00Z,102,,,,\n2026-01-20T00:00:00Z,105,,,,\n2026-01-21T00:00:00Z,115,,,,\n2026-01-22T00:00:00Z,135,,,,\n2026-01-23T00:00:00Z,155,,,,\n2026-01-24T00:00:00Z,207,,,,\n2026-01-25T00:00:00Z,157,,,,\n2026-01-26T00:00:00Z,94,,,,\n2026-01-27T00:00:00Z,110,,,,\n2026-01-28T00:00:00Z,116,,,,\n2026-01-29T00:00:00Z,141,,,,\n2026-01-30T00:00:00Z,176,,,,\n2026-01-31T00:00:00Z,206,,,,\n2026-02-01T00:00:00Z,161,,,,\n2026-02-02T00:00:00Z,103,,,,\n2026-02-03T00:00:00Z,110,,,,\n2026-02-04T00:00:00Z,116,,,,\n2026-02-05T00:00:00Z,128,,,,\n2026-02-06T00:00:00Z,175,,,,\n2026-02-07T00:00:00Z,234,,,,\n2026-02-08T00:00:00Z,167,,,,\n2026-02-09T00:00:00Z,104,,,,\n2026-02-10T00:00:00Z,117,,,,\n2026-02-11T00:00:00Z,126,,,,\n2026-02-12T00:00:00Z,136,,,,\n2026-02-13T00:00:00Z,158,,,,\n2026-02-14T00:00:00Z,231,,,,\n2026-02-15T00:00:00Z,165,,,,\n2026-02-16T00:00:00Z,98,,,,\n2026-02-17T00:00:00Z,106,,,,\n2026-02-18T00:00:00Z,127,,,,\n2026-02-19T00:00:00Z,127,,,,\n2026-02-20T00:00:00Z,177,,,,\n2026-02-21T00:00:00Z,227,,,,\n2026-02-22T00:00:00Z,173,,,,\n2026-02-23T00:00:00Z,111,,,,\n2026-02-24T00:00:00Z,123,,,,\n2026-02-25T00:00:00Z,138,,,,\n2026-02-26T00:00:00Z,141,,,,\n2026-02-27T00:00:00Z,169,,,,\n2026-02-28T00:00:00Z,230,,,,\n2026-03-01T00:00:00Z,187,,,,\n2026-03-02T00:00:00Z,111,,,,\n2026-03-03T00:00:00Z,121,,,,\n2026-03-04T00:00:00Z,116,,,,\n2026-03-05T00:00:00Z,139,,,,\n2026-03-06T00:00:00Z,173,,,,\n2026-03-07T00:00:00Z,222,,,,\n2026-03-08T00:00:00Z,180,,,,\n2026-03-09T00:00:00Z,115,,,,\n2026-03-10T00:00:00Z,115,,,,\n2026-03-11T00:00:00Z,127,,,,\n2026-03-12T00:00:00Z,145,,,,\n2026-03-13T00:00:00Z,193,,,,\n2026-03-14T00:00:00Z,203,,,,\n2026-03-15T00:00:00Z,193,,,,\n2026-03-16T00:00:00Z,118,,,,\n2026-03-17T00:00:00Z,124,,,,\n2026-03-18T00:00:00Z,124,,,,\n2026-03-19T00:00:00Z,153,,,,\n2026-03-20T00:00:00Z,179,,,,\n2026-03-21T00:00:00Z,229,,,,\n2026-03-22T00:00:00Z,196,,,,\n2026-03-23T00:00:00Z,121,,,,\n2026-03-24T00:00:00Z,125,,,,\n2026-03-25T00:00:00Z,124,,,,\n2026-03-26T00:00:00Z,132,,,,\n2026-03-27T00:00:00Z,189,,,,\n2026-03-28T00:00:00Z,252,,,,\n2026-03-29T00:00:00Z,188,,,,\n2026-03-30T00:00:00Z,116,,,,\n2026-03-31T00:00:00Z,120,,,,\n2026-04-01T00:00:00Z,144,,,,\n2026-04-02T00:00:00Z,143,,,,\n2026-04-03T00:00:00Z,203,,,,\n2026-04-04T00:00:00Z,231,,,,\n2026-04-05T00:00:00Z,182,,,,\n2026-04-06T00:00:00Z,127,,,,\n2026-04-07T00:00:00Z,127,,,,\n2026-04-08T00:00:00Z,136,,,,\n2026-04-09T00:00:00Z,144,,,,\n2026-04-10T00:00:00Z,190,,,,\n2026-04-11T00:00:00Z,242,,,,\n2026-04-12T00:00:00Z,200,,,,\n2026-04-13T00:00:00Z,134,,,,\n2026-04-14T00:00:00Z,140,,,,\n2026-04-15T00:00:00Z,149,,,,\n2026-04-16T00:00:00Z,147,,,,\n2026-04-17T00:00:00Z,198,,,,\n2026-04-18T00:00:00Z,262,,,,\n2026-04-19T00:00:00Z,235,,,,\n2026-04-20T00:00:00Z,128,,,,\n2026-04-21T00:00:00Z,133,,,,\n2026-04-22T00:00:00Z,51,,,,\n2026-04-23T00:00:00Z,151,,,,\n2026-04-24T00:00:00Z,209,,,,\n2026-04-25T00:00:00Z,239,,,,\n2026-04-26T00:00:00Z,214,,,,\n2026-04-27T00:00:00Z,123,128,214,153.866,215.117\n2026-04-28T00:00:00Z,138,133,214,153.866,216.234\n2026-04-29T00:00:00Z,143,51,214,153.866,217.351\n2026-04-30T00:00:00Z,159,151,214,153.866,218.468\n2026-05-01T00:00:00Z,187,209,214,153.866,219.586\n2026-05-02T00:00:00Z,232,239,214,153.866,220.703\n2026-05-03T00:00:00Z,207,214,214,153.866,221.82\n2026-05-04T00:00:00Z,138,128,214,153.866,222.937\n2026-05-05T00:00:00Z,129,133,214,153.866,224.054\n2026-05-06T00:00:00Z,146,51,214,153.866,225.171\n2026-05-07T00:00:00Z,149,151,214,153.866,226.288\n2026-05-08T00:00:00Z,211,209,214,153.866,227.405\n2026-05-09T00:00:00Z,257,239,214,153.866,228.523\n2026-05-10T00:00:00Z,208,214,214,153.866,229.64\n2026-05-11T00:00:00Z,123,128,214,153.866,230.757\n2026-05-12T00:00:00Z,127,133,214,153.866,231.874\n2026-05-13T00:00:00Z,142,51,214,153.866,232.991\n2026-05-14T00:00:00Z,173,151,214,153.866,234.108\n2026-05-15T00:00:00Z,193,209,214,153.866,235.225\n2026-05-16T00:00:00Z,267,239,214,153.866,236.342\n2026-05-17T00:00:00Z,202,214,214,153.866,237.459\n2026-05-18T00:00:00Z,131,128,214,153.866,238.577\n2026-05-19T00:00:00Z,143,133,214,153.866,239.694\n2026-05-20T00:00:00Z,152,51,214,153.866,240.811\n2026-05-21T00:00:00Z,170,151,214,153.866,241.928\n2026-05-22T00:00:00Z,217,209,214,153.866,243.045\n2026-05-23T00:00:00Z,278,239,214,153.866,244.162\n2026-05-24T00:00:00Z,235,214,214,153.866,245.279\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "drawStyle": "line",
+      "lineWidth": 2,
+      "fillOpacity": 0,
+      "showPoints": "never",
+      "spanNulls": false
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "actual"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#4E79A7"
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "seasonal naive"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#59A14F"
+        }
+       },
+       {
+        "id": "custom.lineStyle",
+        "value": {
+         "fill": "dash",
+         "dash": [
+          10,
+          10
+         ]
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "naive"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#E15759"
+        }
+       },
+       {
+        "id": "custom.lineStyle",
+        "value": {
+         "fill": "dash",
+         "dash": [
+          10,
+          10
+         ]
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "mean"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#F28E2B"
+        }
+       },
+       {
+        "id": "custom.lineStyle",
+        "value": {
+         "fill": "dash",
+         "dash": [
+          10,
+          10
+         ]
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "drift"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#B07AA1"
+        }
+       },
+       {
+        "id": "custom.lineStyle",
+        "value": {
+         "fill": "dash",
+         "dash": [
+          10,
+          10
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 2,
+   "gridPos": {
+    "x": 0,
+    "y": 10,
+    "w": 24,
+    "h": 10
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "Holdout errors (actual - forecast, loaves)",
+   "description": "Seasonal naive errors are small except the four Wednesdays that copy the holiday; naive errors are mostly negative (forecast too high) and follow the weekly cycle.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "day,seasonal naive error,naive error\nMon 27,-5,-91\nTue 28,5,-76\nWed 29,92,-71\nThu 30,8,-55\nFri 01,-22,-27\nSat 02,-7,18\nSun 03,-7,-7\nMon 04,10,-76\nTue 05,-4,-85\nWed 06,95,-68\nThu 07,-2,-65\nFri 08,2,-3\nSat 09,18,43\nSun 10,-6,-6\nMon 11,-5,-91\nTue 12,-6,-87\nWed 13,91,-72\nThu 14,22,-41\nFri 15,-16,-21\nSat 16,28,53\nSun 17,-12,-12\nMon 18,3,-83\nTue 19,10,-71\nWed 20,101,-62\nThu 21,19,-44\nFri 22,8,3\nSat 23,39,64\nSun 24,21,21\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "day",
+    "stacking": "none",
+    "showValue": "never",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 3,
+   "gridPos": {
+    "x": 0,
+    "y": 18,
+    "w": 24,
+    "h": 8
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "MAE and RMSE by method (holdout)",
+   "description": "RMSE exceeds MAE where a few days are far off.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "method,MAE,RMSE\nmean,39.4,51.7\nnaive,50.6,58.4\nsnaive,23.7,38.4\ndrift,59.8,68\nnaive-1,37,45.4\nsnaive-1,14.9,22.6\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "method",
+    "stacking": "none",
+    "showValue": "auto",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 4,
+   "gridPos": {
+    "x": 0,
+    "y": 27,
+    "w": 8,
+    "h": 9
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "Weekday profile (loaves)",
+   "description": "Strong weekly seasonality; holdout is higher on every weekday (growth).",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "day,training mean,holdout mean\nMon,110.7,128.8\nTue,118.2,134.2\nWed,121.7,145.8\nThu,138.8,162.8\nFri,179.2,202\nSat,225.9,258.5\nSun,182.6,213\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "day",
+    "stacking": "none",
+    "showValue": "auto",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 5,
+   "gridPos": {
+    "x": 8,
+    "y": 27,
+    "w": 8,
+    "h": 9
+   }
+  },
+  {
+   "type": "table",
+   "title": "Accuracy table",
+   "description": "All methods on the same 28 holdout days. snaive = seasonal naive; -1 = one step ahead. (RMSE/MAPE are in the workbook.)",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "method,MAE,MASE\nmean,39.44,3.98\nnaive,50.57,5.11\nsnaive,23.71,2.39\ndrift,59.79,6.04\nnaive-1,36.96,3.73\nsnaive-1,14.89,1.5\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+   },
+   "options": {
+    "showHeader": true
+   },
+   "id": 6,
+   "gridPos": {
+    "x": 16,
+    "y": 27,
+    "w": 8,
+    "h": 9
+   }
+  }
+ ],
+ "time": {
+  "from": "2026-01-03T14:38:24Z",
+  "to": "2026-05-25T09:21:36Z"
+ }
+}

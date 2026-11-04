@@ -1,0 +1,22 @@
+customer_id,customer_name,tier
+C001,Acme Ltd,Gold
+C002,Birch & Co,Basic
+C003,Cedar School,Basic
+C004,Delta Studio,Silver
+C005,Elm Clinic,Basic
+C006,Fjord Foods,Gold
+C007,Granite Law,Basic
+C008,Harbor Cafe,Silver
+C009,Iris Dental,Basic
+C010,Juniper Labs,Gold
+C011,Kite Travel,Silver
+C012,Lark Books,Basic
+C013,Maple Bakery,Basic
+C014,Nova Tech,Gold
+C015,Oak Garage,Basic
+C016,Pine Hotel,Silver
+C017,Quartz Design,Basic
+C018,Ridge Gym,Basic
+C019,Sage Spa,Silver
+C020,Tide Marine,Gold
+C007,Granite Law,Gold

@@ -29,6 +29,10 @@ The intended learning sequence is:
 
 **Foundations → Probability → Random Variables & Distributions → Joint Distributions & Covariance → Sampling & Sampling Distributions → Estimation → Hypothesis Testing & Confidence Intervals → Regression → Resampling & Model Assessment → Time Series → Spatial Statistics → Extensions**
 
+## Applied Course (30 lessons)
+
+**[`course/`](course/README.md)** is a hands-on, applied track - from distribution shapes and robust statistics through regression, resampling, forecasting and statistical process control to a monitoring capstone. Each lesson is a folder with `theory.md`, `task.md`, `data.csv`, a solved `solution.xlsx` (live formulas) and a self-contained Grafana `dashboard.json`.
+
 ## How to Use the Repository
 
 For a new unit, use the same three-step loop:

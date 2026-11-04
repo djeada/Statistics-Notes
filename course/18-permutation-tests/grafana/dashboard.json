@@ -1,0 +1,433 @@
+{
+ "uid": "stats-18-permutation",
+ "title": "18 \u00b7 Permutation tests",
+ "description": "Exact permutation test for 5 vs 5 participants: all 252 relabelings, p-value as a proportion, and the t-test for comparison.",
+ "tags": [
+  "statistics-course"
+ ],
+ "timezone": "utc",
+ "schemaVersion": 39,
+ "version": 1,
+ "editable": true,
+ "graphTooltip": 1,
+ "refresh": "",
+ "annotations": {
+  "list": []
+ },
+ "templating": {
+  "list": []
+ },
+ "panels": [
+  {
+   "type": "stat",
+   "title": "Result",
+   "description": "Mean difference new - old and two-sided p-values (252 labelings).",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "observed diff (min),perm p (mean),perm p (median),t-test p\n-4.14,0.0555556,0.119048,0.0470237\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "decimals": 3,
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "blue",
+        "value": null
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ],
+     "fields": "",
+     "values": false
+    },
+    "colorMode": "value",
+    "graphMode": "none",
+    "textMode": "value_and_name"
+   },
+   "id": 1,
+   "gridPos": {
+    "x": 0,
+    "y": 0,
+    "w": 24,
+    "h": 4
+   }
+  },
+  {
+   "type": "xychart",
+   "title": "Task time by flow (1 = new, 2 = old)",
+   "description": "Each dot is a participant (horizontal position is jitter).",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "group_pos,new,old\n1.0732,9.7,\n2.07391,,11.5\n1.00368,14.1,\n0.948592,6.4,\n1.89294,,13.2\n0.972009,11.6,\n0.978034,9.4,\n1.89087,,18.7\n1.8917,,13.4\n2.1198,,15.1\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "show": "points",
+      "pointSize": {
+       "fixed": 6
+      },
+      "lineWidth": 2
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "new"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#4E79A7"
+        }
+       },
+       {
+        "id": "custom.show",
+        "value": "points"
+       },
+       {
+        "id": "custom.pointSize.fixed",
+        "value": 6
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "old"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#F28E2B"
+        }
+       },
+       {
+        "id": "custom.show",
+        "value": "points"
+       },
+       {
+        "id": "custom.pointSize.fixed",
+        "value": 6
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "mapping": "manual",
+    "series": [
+     {
+      "x": "group_pos",
+      "y": "new",
+      "color": {
+       "fixed": "#4E79A7"
+      }
+     },
+     {
+      "x": "group_pos",
+      "y": "old",
+      "color": {
+       "fixed": "#F28E2B"
+      }
+     }
+    ],
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    }
+   },
+   "id": 2,
+   "gridPos": {
+    "x": 0,
+    "y": 9,
+    "w": 8,
+    "h": 9
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "Permutation distribution: mean difference",
+   "description": "Mean difference (new - old, minutes; bucket start) for each of the 252 labelings. Red = at least as extreme as what we observed; their share is the p-value.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "diff_min,at least as extreme as observed,less extreme\n-6,1,\n-5,6,\n-4,,16\n-3,,28\n-2,,31\n-1,,44\n0,,44\n1,,31\n2,,28\n3,,16\n4,6,\n5,1,\n6,,\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "at least as extreme as observed"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#E15759"
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "less extreme"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#9AA5B1"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "xField": "diff_min",
+    "stacking": "normal",
+    "showValue": "never",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 3,
+   "gridPos": {
+    "x": 8,
+    "y": 9,
+    "w": 8,
+    "h": 9
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "Permutation distribution: median difference",
+   "description": "Same for the difference in medians - coarser, because a median of 5 values takes few distinct values.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "diff_min,at least as extreme as observed,less extreme\n-5,6,\n-4,9,6\n-3,,15\n-2,,90\n-1,,\n0,,\n1,,90\n2,,15\n3,9,6\n4,6,\n5,,\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "at least as extreme as observed"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#E15759"
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "less extreme"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#9AA5B1"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "xField": "diff_min",
+    "stacking": "normal",
+    "showValue": "never",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 4,
+   "gridPos": {
+    "x": 16,
+    "y": 9,
+    "w": 8,
+    "h": 9
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "p-values by method",
+   "description": "Two-sided p-values. Compare each bar with 0.05.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "method,p-value\nperm. (mean),0.0555556\nperm. (median),0.119048\nt-test,0.0470237\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "method",
+    "stacking": "none",
+    "showValue": "auto",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 5,
+   "gridPos": {
+    "x": 0,
+    "y": 18,
+    "w": 8,
+    "h": 9
+   }
+  },
+  {
+   "type": "table",
+   "title": "Group summary",
+   "description": "The inputs of the test.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "group,n,mean_min,median_min,sd_min\nnew flow,5,10.24,9.7,2.85\nold flow,5,14.38,13.4,2.73\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+   },
+   "options": {
+    "showHeader": true
+   },
+   "id": 6,
+   "gridPos": {
+    "x": 8,
+    "y": 18,
+    "w": 16,
+    "h": 9
+   }
+  }
+ ],
+ "time": {
+  "from": "now-6h",
+  "to": "now"
+ }
+}

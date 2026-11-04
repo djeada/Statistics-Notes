@@ -1,0 +1,6 @@
+numpy
+pandas
+scipy
+statsmodels
+openpyxl
+# optional, for dashboard screenshots: playwright (then `playwright install chromium`)

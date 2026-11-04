@@ -1,0 +1,9 @@
+apiVersion: 1
+datasources:
+  # Built-in TestData source. The dashboards embed their CSV in the panel queries (scenario "csv_content"),
+  # so nothing else has to be configured.
+  - name: Course TestData
+    uid: course-testdata
+    type: grafana-testdata-datasource
+    access: proxy
+    isDefault: true

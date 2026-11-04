@@ -1,0 +1,382 @@
+{
+ "uid": "stats-09-differencing-growth",
+ "title": "09 \u00b7 Differencing and growth rates",
+ "description": "Levels grow, growth rates are stable: first difference, log return and year-over-year growth of monthly revenue.",
+ "tags": [
+  "statistics-course"
+ ],
+ "timezone": "utc",
+ "schemaVersion": 39,
+ "version": 1,
+ "editable": true,
+ "graphTooltip": 1,
+ "refresh": "",
+ "annotations": {
+  "list": []
+ },
+ "templating": {
+  "list": []
+ },
+ "panels": [
+  {
+   "type": "stat",
+   "title": "Growth summary",
+   "description": "CAGR = (last/first)^(12/(n-1)) - 1; the percent entries are in %.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "CAGR (%),mean monthly log return (%),\"YoY growth, last month (%)\",worst month (%),lag-1 autocorr. level,lag-1 autocorr. log return\n20.613,1.5618,14.2778,-20.3884,0.986762,-0.353397\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "decimals": 2,
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "blue",
+        "value": null
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ],
+     "fields": "",
+     "values": false
+    },
+    "colorMode": "value",
+    "graphMode": "none",
+    "textMode": "value_and_name"
+   },
+   "id": 1,
+   "gridPos": {
+    "x": 0,
+    "y": 0,
+    "w": 24,
+    "h": 4
+   }
+  },
+  {
+   "type": "timeseries",
+   "title": "Revenue (USD): the level",
+   "description": "Trending, growing swings: neither mean nor variance is constant.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "time,revenue_usd\n2020-01-01T00:00:00Z,77473\n2020-02-01T00:00:00Z,81198\n2020-03-01T00:00:00Z,82513\n2020-04-01T00:00:00Z,84428\n2020-05-01T00:00:00Z,85292\n2020-06-01T00:00:00Z,89055\n2020-07-01T00:00:00Z,84734\n2020-08-01T00:00:00Z,83081\n2020-09-01T00:00:00Z,86194\n2020-10-01T00:00:00Z,91486\n2020-11-01T00:00:00Z,92788\n2020-12-01T00:00:00Z,96098\n2021-01-01T00:00:00Z,89985\n2021-02-01T00:00:00Z,92307\n2021-03-01T00:00:00Z,92804\n2021-04-01T00:00:00Z,93291\n2021-05-01T00:00:00Z,96140\n2021-06-01T00:00:00Z,101767\n2021-07-01T00:00:00Z,100226\n2021-08-01T00:00:00Z,99960\n2021-09-01T00:00:00Z,105812\n2021-10-01T00:00:00Z,108126\n2021-11-01T00:00:00Z,114801\n2021-12-01T00:00:00Z,116033\n2022-01-01T00:00:00Z,109637\n2022-02-01T00:00:00Z,111565\n2022-03-01T00:00:00Z,115652\n2022-04-01T00:00:00Z,118965\n2022-05-01T00:00:00Z,122687\n2022-06-01T00:00:00Z,123771\n2022-07-01T00:00:00Z,123768\n2022-08-01T00:00:00Z,120352\n2022-09-01T00:00:00Z,126308\n2022-10-01T00:00:00Z,130669\n2022-11-01T00:00:00Z,137320\n2022-12-01T00:00:00Z,143838\n2023-01-01T00:00:00Z,131513\n2023-02-01T00:00:00Z,136966\n2023-03-01T00:00:00Z,136627\n2023-04-01T00:00:00Z,144229\n2023-05-01T00:00:00Z,144430\n2023-06-01T00:00:00Z,114983\n2023-07-01T00:00:00Z,145914\n2023-08-01T00:00:00Z,145975\n2023-09-01T00:00:00Z,153111\n2023-10-01T00:00:00Z,157132\n2023-11-01T00:00:00Z,163273\n2023-12-01T00:00:00Z,172860\n2024-01-01T00:00:00Z,160506\n2024-02-01T00:00:00Z,163152\n2024-03-01T00:00:00Z,172760\n2024-04-01T00:00:00Z,175169\n2024-05-01T00:00:00Z,179752\n2024-06-01T00:00:00Z,185765\n2024-07-01T00:00:00Z,181855\n2024-08-01T00:00:00Z,184623\n2024-09-01T00:00:00Z,189722\n2024-10-01T00:00:00Z,193781\n2024-11-01T00:00:00Z,203182\n2024-12-01T00:00:00Z,205480\n2025-01-01T00:00:00Z,188029\n2025-02-01T00:00:00Z,199163\n2025-03-01T00:00:00Z,203098\n2025-04-01T00:00:00Z,212991\n2025-05-01T00:00:00Z,208199\n2025-06-01T00:00:00Z,208235\n2025-07-01T00:00:00Z,202684\n2025-08-01T00:00:00Z,205406\n2025-09-01T00:00:00Z,214216\n2025-10-01T00:00:00Z,219319\n2025-11-01T00:00:00Z,231249\n2025-12-01T00:00:00Z,234818\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "currencyUSD",
+     "custom": {
+      "drawStyle": "line",
+      "lineWidth": 2,
+      "fillOpacity": 0,
+      "showPoints": "never",
+      "spanNulls": false
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "revenue_usd"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#4E79A7"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 2,
+   "gridPos": {
+    "x": 0,
+    "y": 9,
+    "w": 12,
+    "h": 9
+   }
+  },
+  {
+   "type": "timeseries",
+   "title": "Monthly change in USD (first difference)",
+   "description": "Removes the trend but the swings grow with the business.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "time,diff_1\n2020-01-01T00:00:00Z,\n2020-02-01T00:00:00Z,3725\n2020-03-01T00:00:00Z,1315\n2020-04-01T00:00:00Z,1915\n2020-05-01T00:00:00Z,864\n2020-06-01T00:00:00Z,3763\n2020-07-01T00:00:00Z,-4321\n2020-08-01T00:00:00Z,-1653\n2020-09-01T00:00:00Z,3113\n2020-10-01T00:00:00Z,5292\n2020-11-01T00:00:00Z,1302\n2020-12-01T00:00:00Z,3310\n2021-01-01T00:00:00Z,-6113\n2021-02-01T00:00:00Z,2322\n2021-03-01T00:00:00Z,497\n2021-04-01T00:00:00Z,487\n2021-05-01T00:00:00Z,2849\n2021-06-01T00:00:00Z,5627\n2021-07-01T00:00:00Z,-1541\n2021-08-01T00:00:00Z,-266\n2021-09-01T00:00:00Z,5852\n2021-10-01T00:00:00Z,2314\n2021-11-01T00:00:00Z,6675\n2021-12-01T00:00:00Z,1232\n2022-01-01T00:00:00Z,-6396\n2022-02-01T00:00:00Z,1928\n2022-03-01T00:00:00Z,4087\n2022-04-01T00:00:00Z,3313\n2022-05-01T00:00:00Z,3722\n2022-06-01T00:00:00Z,1084\n2022-07-01T00:00:00Z,-3\n2022-08-01T00:00:00Z,-3416\n2022-09-01T00:00:00Z,5956\n2022-10-01T00:00:00Z,4361\n2022-11-01T00:00:00Z,6651\n2022-12-01T00:00:00Z,6518\n2023-01-01T00:00:00Z,-12325\n2023-02-01T00:00:00Z,5453\n2023-03-01T00:00:00Z,-339\n2023-04-01T00:00:00Z,7602\n2023-05-01T00:00:00Z,201\n2023-06-01T00:00:00Z,-29447\n2023-07-01T00:00:00Z,30931\n2023-08-01T00:00:00Z,61\n2023-09-01T00:00:00Z,7136\n2023-10-01T00:00:00Z,4021\n2023-11-01T00:00:00Z,6141\n2023-12-01T00:00:00Z,9587\n2024-01-01T00:00:00Z,-12354\n2024-02-01T00:00:00Z,2646\n2024-03-01T00:00:00Z,9608\n2024-04-01T00:00:00Z,2409\n2024-05-01T00:00:00Z,4583\n2024-06-01T00:00:00Z,6013\n2024-07-01T00:00:00Z,-3910\n2024-08-01T00:00:00Z,2768\n2024-09-01T00:00:00Z,5099\n2024-10-01T00:00:00Z,4059\n2024-11-01T00:00:00Z,9401\n2024-12-01T00:00:00Z,2298\n2025-01-01T00:00:00Z,-17451\n2025-02-01T00:00:00Z,11134\n2025-03-01T00:00:00Z,3935\n2025-04-01T00:00:00Z,9893\n2025-05-01T00:00:00Z,-4792\n2025-06-01T00:00:00Z,36\n2025-07-01T00:00:00Z,-5551\n2025-08-01T00:00:00Z,2722\n2025-09-01T00:00:00Z,8810\n2025-10-01T00:00:00Z,5103\n2025-11-01T00:00:00Z,11930\n2025-12-01T00:00:00Z,3569\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "currencyUSD",
+     "custom": {
+      "drawStyle": "line",
+      "lineWidth": 2,
+      "fillOpacity": 0,
+      "showPoints": "never",
+      "spanNulls": false
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "diff_1"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#F28E2B"
+        }
+       },
+       {
+        "id": "custom.drawStyle",
+        "value": "bars"
+       },
+       {
+        "id": "custom.fillOpacity",
+        "value": 60
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 3,
+   "gridPos": {
+    "x": 12,
+    "y": 9,
+    "w": 12,
+    "h": 9
+   }
+  },
+  {
+   "type": "timeseries",
+   "title": "Monthly log return vs 12-month growth (%)",
+   "description": "Monthly returns keep the yearly pattern and the outage; the 12-month growth has no yearly pattern (the outage shows up twice: when it happens and 12 months later).",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "time,monthly log return,12-month log growth\n2020-01-01T00:00:00Z,,\n2020-02-01T00:00:00Z,4.69611,\n2020-03-01T00:00:00Z,1.60652,\n2020-04-01T00:00:00Z,2.29432,\n2020-05-01T00:00:00Z,1.01816,\n2020-06-01T00:00:00Z,4.31735,\n2020-07-01T00:00:00Z,-4.97372,\n2020-08-01T00:00:00Z,-1.97009,\n2020-09-01T00:00:00Z,3.67845,\n2020-10-01T00:00:00Z,5.95854,\n2020-11-01T00:00:00Z,1.41314,\n2020-12-01T00:00:00Z,3.50512,\n2021-01-01T00:00:00Z,-6.57255,14.9714\n2021-02-01T00:00:00Z,2.5477,12.8229\n2021-03-01T00:00:00Z,0.536976,11.7534\n2021-04-01T00:00:00Z,0.52339,9.98245\n2021-05-01T00:00:00Z,3.00818,11.9725\n2021-06-01T00:00:00Z,5.68804,13.3432\n2021-07-01T00:00:00Z,-1.52583,16.7911\n2021-08-01T00:00:00Z,-0.265753,18.4954\n2021-09-01T00:00:00Z,5.68938,20.5063\n2021-10-01T00:00:00Z,2.16333,16.7111\n2021-11-01T00:00:00Z,5.9903,21.2883\n2021-12-01T00:00:00Z,1.06744,18.8506\n2022-01-01T00:00:00Z,-5.66997,19.7532\n2022-02-01T00:00:00Z,1.74325,18.9487\n2022-03-01T00:00:00Z,3.59783,22.0096\n2022-04-01T00:00:00Z,2.82437,24.3106\n2022-05-01T00:00:00Z,3.08071,24.3831\n2022-06-01T00:00:00Z,0.879669,19.5747\n2022-07-01T00:00:00Z,-0.00242386,21.0981\n2022-08-01T00:00:00Z,-2.79881,18.5651\n2022-09-01T00:00:00Z,4.83026,17.7059\n2022-10-01T00:00:00Z,3.3944,18.937\n2022-11-01T00:00:00Z,4.96466,17.9114\n2022-12-01T00:00:00Z,4.63737,21.4813\n2023-01-01T00:00:00Z,-8.9582,18.1931\n2023-02-01T00:00:00Z,4.0627,20.5125\n2023-03-01T00:00:00Z,-0.247813,16.6669\n2023-04-01T00:00:00Z,5.41477,19.2573\n2023-05-01T00:00:00Z,0.139265,16.3159\n2023-06-01T00:00:00Z,-22.8011,-7.36488\n2023-07-01T00:00:00Z,23.8233,16.4609\n2023-08-01T00:00:00Z,0.0417967,19.3015\n2023-09-01T00:00:00Z,4.77278,19.244\n2023-10-01T00:00:00Z,2.59231,18.4419\n2023-11-01T00:00:00Z,3.83374,17.311\n2023-12-01T00:00:00Z,5.70584,18.3794\n2024-01-01T00:00:00Z,-7.41507,19.9226\n2024-02-01T00:00:00Z,1.6351,17.495\n2024-03-01T00:00:00Z,5.72211,23.4649\n2024-04-01T00:00:00Z,1.38479,19.4349\n2024-05-01T00:00:00Z,2.58269,21.8783\n2024-06-01T00:00:00Z,3.29043,47.9698\n2024-07-01T00:00:00Z,-2.12728,22.0192\n2024-08-01T00:00:00Z,1.51062,23.4881\n2024-09-01T00:00:00Z,2.72439,21.4397\n2024-10-01T00:00:00Z,2.11688,20.9642\n2024-11-01T00:00:00Z,4.73735,21.8678\n2024-12-01T00:00:00Z,1.12466,17.2867\n2025-01-01T00:00:00Z,-8.87525,15.8265\n2025-02-01T00:00:00Z,5.75274,19.9441\n2025-03-01T00:00:00Z,1.9565,16.1785\n2025-04-01T00:00:00Z,4.75613,19.5499\n2025-05-01T00:00:00Z,-2.27556,14.6916\n2025-06-01T00:00:00Z,0.0172897,11.4185\n2025-07-01T00:00:00Z,-2.70191,10.8438\n2025-08-01T00:00:00Z,1.33404,10.6673\n2025-09-01T00:00:00Z,4.19963,12.1425\n2025-10-01T00:00:00Z,2.35424,12.3799\n2025-11-01T00:00:00Z,5.29678,12.9393\n2025-12-01T00:00:00Z,1.53157,13.3462\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percent",
+     "custom": {
+      "drawStyle": "line",
+      "lineWidth": 2,
+      "fillOpacity": 0,
+      "showPoints": "never",
+      "spanNulls": false
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "monthly log return"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#E15759"
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "12-month log growth"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#59A14F"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 4,
+   "gridPos": {
+    "x": 0,
+    "y": 18,
+    "w": 12,
+    "h": 9
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "Average monthly log return by calendar month (%)",
+   "description": "Seasonality of growth: strong year-end, weak January.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "month,avg log return (%)\nJan,-7.5\nFeb,3.41\nMar,2.2\nApr,2.87\nMay,1.26\nJun,-1.43\nJul,2.08\nAug,-0.36\nSep,4.32\nOct,3.1\nNov,4.37\nDec,2.93\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "month",
+    "stacking": "none",
+    "showValue": "auto",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 5,
+   "gridPos": {
+    "x": 12,
+    "y": 18,
+    "w": 12,
+    "h": 9
+   }
+  },
+  {
+   "type": "table",
+   "title": "Stability check: spread (IQR) in the first vs last 36 months",
+   "description": "A ratio near 1 means the spread does not depend on the level.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "series,IQR first 36,IQR last 36,ratio\nrevenue level (USD),27013.5,47611.2,1.76\nfirst difference (USD),3433,7197.75,2.1\npercent change,0.0355,0.0439,1.24\nlog return,0.0347,0.043,1.24\n12-month log growth,0.0438,0.0454,1.04\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+   },
+   "options": {
+    "showHeader": true
+   },
+   "id": 6,
+   "gridPos": {
+    "x": 0,
+    "y": 26,
+    "w": 24,
+    "h": 8
+   }
+  }
+ ],
+ "time": {
+  "from": "2019-12-10T09:21:36Z",
+  "to": "2025-12-22T14:38:24Z"
+ }
+}

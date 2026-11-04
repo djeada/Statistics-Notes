@@ -1,0 +1,493 @@
+{
+ "uid": "stats-13-multiple-regression",
+ "title": "13 \u00b7 Multiple regression and confounding",
+ "description": "The same ad-spend slope under four specifications: the confounder (holiday) inflates the simple estimate.",
+ "tags": [
+  "statistics-course"
+ ],
+ "timezone": "utc",
+ "schemaVersion": 39,
+ "version": 1,
+ "editable": true,
+ "graphTooltip": 1,
+ "refresh": "",
+ "annotations": {
+  "list": []
+ },
+ "templating": {
+  "list": []
+ },
+ "panels": [
+  {
+   "type": "stat",
+   "title": "Ad spend effect (units per k$) and fit",
+   "description": "The simple slope is about three times the full-model coefficient.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "simple slope,+price+promo,full model,R2 simple,R2 full,adj R2 full\n17.7883,14.803,5.68944,0.516875,0.924555,0.922557\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "decimals": 2,
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "blue",
+        "value": null
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ],
+     "fields": "",
+     "values": false
+    },
+    "colorMode": "value",
+    "graphMode": "none",
+    "textMode": "value_and_name"
+   },
+   "id": 1,
+   "gridPos": {
+    "x": 0,
+    "y": 0,
+    "w": 24,
+    "h": 4
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "Coefficients by model",
+   "description": "Ad-spend coefficient shrinks and the price coefficient flips sign once holiday is controlled.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "model,ad_spend,unit_price\nsimple,17.7883,6.71657\n+ price + promo,14.803,11.2938\n+ holiday (full),5.68944,-37.9855\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "model",
+    "stacking": "none",
+    "showValue": "auto",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 2,
+   "gridPos": {
+    "x": 0,
+    "y": 9,
+    "w": 12,
+    "h": 9
+   }
+  },
+  {
+   "type": "xychart",
+   "title": "Sales vs ad spend, holiday weeks separated",
+   "description": "Two clouds: holiday weeks sit higher AND further right. The simple line runs through both and is much steeper than the slope inside either cloud.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "ad_normal,sales_normal,ad_holiday,sales_holiday,ad_line,simple_fit\n27.6,374,54,1348,14.5,310.49\n23.3,409,56.8,963,15.7795,333.25\n37.2,843,38.8,945,17.059,356.01\n38.5,677,41.9,1112,18.3385,378.77\n25.2,487,48.4,1241,19.6179,401.53\n28,794,57.7,813,20.8974,424.29\n33.5,453,53.5,1041,22.1769,447.05\n31.1,466,41.2,1212,23.4564,469.81\n38.9,590,36.8,687,24.7359,492.569\n27,463,55.8,912,26.0154,515.329\n31.6,842,48.9,967,27.2949,538.089\n30.5,467,42.3,884,28.5744,560.849\n41.6,549,58,906,29.8538,583.609\n28.6,494,52.3,937,31.1333,606.369\n27.1,457,54.6,969,32.4128,629.129\n23.9,374,49.8,1069,33.6923,651.889\n33.4,443,49.5,693,34.9718,674.649\n31.1,486,35.3,940,36.2513,697.408\n28.6,608,42.9,828,37.5308,720.168\n34.3,499,58.3,1274,38.8103,742.928\n35.4,557,64.4,1213,40.0897,765.688\n28.1,474,50.7,943,41.3692,788.448\n23.8,532,41.4,895,42.6487,811.208\n23.2,416,46.5,931,43.9282,833.968\n31.7,830,49.5,1100,45.2077,856.728\n40.7,858,42.4,925,46.4872,879.487\n23.9,729,38.9,857,47.7667,902.247\n30.3,464,54.8,1093,49.0462,925.007\n36.5,814,50.1,947,50.3256,947.767\n33.2,531,46.8,1263,51.6051,970.527\n22.3,642,47.4,1009,52.8846,993.287\n27.4,434,47.4,1009,54.1641,1016.05\n26,663,47.4,1009,55.4436,1038.81\n40.3,462,47.4,1009,56.7231,1061.57\n27.2,420,47.4,1009,58.0026,1084.33\n32.4,916,47.4,1009,59.2821,1107.09\n35.3,806,47.4,1009,60.5615,1129.85\n25,357,47.4,1009,61.841,1152.61\n14.5,470,47.4,1009,63.1205,1175.37\n32.1,620,47.4,1009,64.4,1198.13\n28.8,427,47.4,1009,64.4,1198.13\n31.1,574,47.4,1009,64.4,1198.13\n27.2,461,47.4,1009,64.4,1198.13\n47.6,926,47.4,1009,64.4,1198.13\n32.4,848,47.4,1009,64.4,1198.13\n28.7,499,47.4,1009,64.4,1198.13\n25.7,765,47.4,1009,64.4,1198.13\n30.1,932,47.4,1009,64.4,1198.13\n24.9,525,47.4,1009,64.4,1198.13\n37.5,675,47.4,1009,64.4,1198.13\n31.1,716,47.4,1009,64.4,1198.13\n33.9,784,47.4,1009,64.4,1198.13\n28.3,515,47.4,1009,64.4,1198.13\n35.9,501,47.4,1009,64.4,1198.13\n34.1,518,47.4,1009,64.4,1198.13\n30,492,47.4,1009,64.4,1198.13\n35.4,838,47.4,1009,64.4,1198.13\n40.4,525,47.4,1009,64.4,1198.13\n27.6,374,47.4,1009,64.4,1198.13\n24.9,747,47.4,1009,64.4,1198.13\n33.5,485,47.4,1009,64.4,1198.13\n28.2,830,47.4,1009,64.4,1198.13\n37.5,670,47.4,1009,64.4,1198.13\n31.5,441,47.4,1009,64.4,1198.13\n25.2,506,47.4,1009,64.4,1198.13\n31.3,585,47.4,1009,64.4,1198.13\n37.1,526,47.4,1009,64.4,1198.13\n19.8,448,47.4,1009,64.4,1198.13\n37.5,463,47.4,1009,64.4,1198.13\n30.4,450,47.4,1009,64.4,1198.13\n26.4,341,47.4,1009,64.4,1198.13\n30.5,417,47.4,1009,64.4,1198.13\n32.6,475,47.4,1009,64.4,1198.13\n35.6,771,47.4,1009,64.4,1198.13\n22.3,428,47.4,1009,64.4,1198.13\n30.1,750,47.4,1009,64.4,1198.13\n29.8,587,47.4,1009,64.4,1198.13\n30.3,616,47.4,1009,64.4,1198.13\n27.9,776,47.4,1009,64.4,1198.13\n25.9,578,47.4,1009,64.4,1198.13\n24.1,400,47.4,1009,64.4,1198.13\n43.9,818,47.4,1009,64.4,1198.13\n35.1,512,47.4,1009,64.4,1198.13\n41.4,630,47.4,1009,64.4,1198.13\n23.4,775,47.4,1009,64.4,1198.13\n29.8,492,47.4,1009,64.4,1198.13\n26.1,512,47.4,1009,64.4,1198.13\n42.9,789,47.4,1009,64.4,1198.13\n27.2,391,47.4,1009,64.4,1198.13\n32.3,633,47.4,1009,64.4,1198.13\n29.9,659,47.4,1009,64.4,1198.13\n32.2,919,47.4,1009,64.4,1198.13\n33.7,773,47.4,1009,64.4,1198.13\n33.1,593,47.4,1009,64.4,1198.13\n42.6,666,47.4,1009,64.4,1198.13\n45.9,687,47.4,1009,64.4,1198.13\n31.5,588,47.4,1009,64.4,1198.13\n38.7,857,47.4,1009,64.4,1198.13\n36.1,384,47.4,1009,64.4,1198.13\n22,421,47.4,1009,64.4,1198.13\n37.4,860,47.4,1009,64.4,1198.13\n33.2,619,47.4,1009,64.4,1198.13\n22.9,467,47.4,1009,64.4,1198.13\n26.1,465,47.4,1009,64.4,1198.13\n30.6,409,47.4,1009,64.4,1198.13\n45.4,819,47.4,1009,64.4,1198.13\n31.6,516,47.4,1009,64.4,1198.13\n29.5,851,47.4,1009,64.4,1198.13\n26.1,314,47.4,1009,64.4,1198.13\n38.5,449,47.4,1009,64.4,1198.13\n24.1,353,47.4,1009,64.4,1198.13\n25.4,488,47.4,1009,64.4,1198.13\n32.4,439,47.4,1009,64.4,1198.13\n28.4,515,47.4,1009,64.4,1198.13\n35,607,47.4,1009,64.4,1198.13\n39.6,748,47.4,1009,64.4,1198.13\n33.9,865,47.4,1009,64.4,1198.13\n28.1,494,47.4,1009,64.4,1198.13\n35.7,556,47.4,1009,64.4,1198.13\n34.5,696,47.4,1009,64.4,1198.13\n23.8,525,47.4,1009,64.4,1198.13\n36.3,917,47.4,1009,64.4,1198.13\n32.8,493,47.4,1009,64.4,1198.13\n35.7,617,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n31.1,719,47.4,1009,64.4,1198.13\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "show": "points",
+      "pointSize": {
+       "fixed": 6
+      },
+      "lineWidth": 2
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "sales_normal"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#4E79A7"
+        }
+       },
+       {
+        "id": "custom.show",
+        "value": "points"
+       },
+       {
+        "id": "custom.pointSize.fixed",
+        "value": 6
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "sales_holiday"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#F28E2B"
+        }
+       },
+       {
+        "id": "custom.show",
+        "value": "points"
+       },
+       {
+        "id": "custom.pointSize.fixed",
+        "value": 6
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "simple_fit"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#E15759"
+        }
+       },
+       {
+        "id": "custom.show",
+        "value": "lines"
+       },
+       {
+        "id": "custom.pointSize.fixed",
+        "value": 6
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "mapping": "manual",
+    "series": [
+     {
+      "x": "ad_normal",
+      "y": "sales_normal",
+      "color": {
+       "fixed": "#4E79A7"
+      }
+     },
+     {
+      "x": "ad_holiday",
+      "y": "sales_holiday",
+      "color": {
+       "fixed": "#F28E2B"
+      }
+     },
+     {
+      "x": "ad_line",
+      "y": "simple_fit",
+      "color": {
+       "fixed": "#E15759"
+      }
+     }
+    ],
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    }
+   },
+   "id": 3,
+   "gridPos": {
+    "x": 12,
+    "y": 9,
+    "w": 12,
+    "h": 9
+   }
+  },
+  {
+   "type": "timeseries",
+   "title": "Weekly sales and fitted values (last 52 weeks)",
+   "description": "The full model tracks the holiday spikes; the simple model (driven by ad spend alone) misses level and timing.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "time,sales,simple_model,full_model\n2024-12-30T00:00:00Z,775,468.806,693.442\n2025-01-06T00:00:00Z,492,582.651,484.013\n2025-01-13T00:00:00Z,1213,1198.13,1244.43\n2025-01-20T00:00:00Z,512,516.835,498.668\n2025-01-27T00:00:00Z,789,815.678,816.541\n2025-02-03T00:00:00Z,391,536.402,421.358\n2025-02-10T00:00:00Z,633,627.122,478.104\n2025-02-17T00:00:00Z,659,584.43,690.159\n2025-02-24T00:00:00Z,919,625.343,860.884\n2025-03-03T00:00:00Z,773,652.025,859.162\n2025-03-10T00:00:00Z,593,641.352,571.162\n2025-03-17T00:00:00Z,943,954.426,1003.83\n2025-03-24T00:00:00Z,666,810.341,610.017\n2025-03-31T00:00:00Z,687,869.043,634.87\n2025-04-07T00:00:00Z,895,788.995,925.468\n2025-04-14T00:00:00Z,588,612.891,483.429\n2025-04-21T00:00:00Z,931,879.715,897.126\n2025-04-28T00:00:00Z,857,740.967,815.817\n2025-05-05T00:00:00Z,384,694.717,488.708\n2025-05-12T00:00:00Z,1100,933.08,1212.84\n2025-05-19T00:00:00Z,925,806.784,872.279\n2025-05-26T00:00:00Z,421,443.903,418.363\n2025-06-02T00:00:00Z,860,717.842,861.6\n2025-06-09T00:00:00Z,619,643.131,574.01\n2025-06-16T00:00:00Z,467,459.912,471.725\n2025-06-23T00:00:00Z,465,516.835,494.49\n2025-06-30T00:00:00Z,409,596.882,412.973\n2025-07-07T00:00:00Z,819,860.148,877.867\n2025-07-14T00:00:00Z,516,614.67,518.185\n2025-07-21T00:00:00Z,851,577.315,738.024\n2025-07-28T00:00:00Z,314,516.835,386.231\n2025-08-04T00:00:00Z,449,737.409,497.425\n2025-08-11T00:00:00Z,353,481.258,385.108\n2025-08-18T00:00:00Z,488,504.383,496.205\n2025-08-25T00:00:00Z,439,628.901,476.014\n2025-09-01T00:00:00Z,515,557.748,509.095\n2025-09-08T00:00:00Z,607,675.15,592.608\n2025-09-15T00:00:00Z,857,744.525,833.374\n2025-09-22T00:00:00Z,1093,1027.36,993.349\n2025-09-29T00:00:00Z,748,756.976,740.788\n2025-10-06T00:00:00Z,865,655.583,900.185\n2025-10-13T00:00:00Z,494,552.411,516.125\n2025-10-20T00:00:00Z,947,943.753,920.267\n2025-10-27T00:00:00Z,556,687.602,444.648\n2025-11-03T00:00:00Z,696,666.256,751.277\n2025-11-10T00:00:00Z,525,475.921,509.513\n2025-11-17T00:00:00Z,917,698.275,868.637\n2025-11-24T00:00:00Z,493,636.016,504.12\n2025-12-01T00:00:00Z,1263,885.052,1225.58\n2025-12-08T00:00:00Z,617,687.602,525.937\n2025-12-15T00:00:00Z,1009,895.725,986.954\n2025-12-22T00:00:00Z,719,605.776,763.461\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "drawStyle": "line",
+      "lineWidth": 2,
+      "fillOpacity": 0,
+      "showPoints": "never",
+      "spanNulls": false
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "sales"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#4E79A7"
+        }
+       },
+       {
+        "id": "custom.drawStyle",
+        "value": "points"
+       },
+       {
+        "id": "custom.pointSize",
+        "value": 8
+       },
+       {
+        "id": "custom.showPoints",
+        "value": "always"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "simple_model"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#E15759"
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "full_model"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#59A14F"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 4,
+   "gridPos": {
+    "x": 0,
+    "y": 18,
+    "w": 12,
+    "h": 9
+   }
+  },
+  {
+   "type": "table",
+   "title": "Full model coefficients",
+   "description": "OLS on all 156 weeks.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "term,estimate,std_error,t\nintercept,1240.55,103.535,11.98\nad_spend_k,5.689,0.859,6.62\nunit_price,-37.985,4.162,-9.13\npromo,175.948,16.287,10.8\nholiday,475.739,25.771,18.46\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+   },
+   "options": {
+    "showHeader": true
+   },
+   "id": 5,
+   "gridPos": {
+    "x": 12,
+    "y": 18,
+    "w": 12,
+    "h": 9
+   }
+  },
+  {
+   "type": "table",
+   "title": "Model comparison",
+   "description": "temp_c is pure noise: R2 creeps up by 0.0001, adjusted R2 goes down.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "model,k,R2,adjusted_R2\nsimple (ad),1,0.5169,0.5137\nad+price+promo,3,0.7543,0.7494\n+ holiday,4,0.9246,0.9226\n+ holiday + temp_c,5,0.9248,0.9223\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+   },
+   "options": {
+    "showHeader": true
+   },
+   "id": 6,
+   "gridPos": {
+    "x": 0,
+    "y": 27,
+    "w": 12,
+    "h": 9
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "Where the bias in the simple slope comes from",
+   "description": "coefficient x slope of that variable on ad spend; the contributions add up to simple slope minus full coefficient.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "term,contribution_to_bias\nunit_price,-4.34363\npromo,1.07063\nholiday,15.3718\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "term",
+    "stacking": "none",
+    "showValue": "auto",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 7,
+   "gridPos": {
+    "x": 12,
+    "y": 27,
+    "w": 12,
+    "h": 9
+   }
+  }
+ ],
+ "time": {
+  "from": "2024-12-26T10:19:12Z",
+  "to": "2025-12-25T13:40:48Z"
+ }
+}
