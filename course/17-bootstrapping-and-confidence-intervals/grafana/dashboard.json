@@ -1,0 +1,371 @@
+{
+ "uid": "stats-17-bootstrap",
+ "title": "17 \u00b7 Bootstrapping and confidence intervals",
+ "description": "A skewed sample of 30 ticket resolution times: classical t interval vs percentile bootstrap (400 resamples).",
+ "tags": [
+  "statistics-course"
+ ],
+ "timezone": "utc",
+ "schemaVersion": 39,
+ "version": 1,
+ "editable": true,
+ "graphTooltip": 1,
+ "refresh": "",
+ "annotations": {
+  "list": []
+ },
+ "templating": {
+  "list": []
+ },
+ "panels": [
+  {
+   "type": "stat",
+   "title": "Estimates and 95% intervals (hours)",
+   "description": "Mean with the symmetric t interval and the percentile bootstrap interval.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "mean,median,t lower,t upper,bootstrap lower,bootstrap upper\n9.39,7.45,6.33462,12.4454,7.04942,12.3775\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "h",
+     "decimals": 2,
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "blue",
+        "value": null
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ],
+     "fields": "",
+     "values": false
+    },
+    "colorMode": "value",
+    "graphMode": "none",
+    "textMode": "value_and_name"
+   },
+   "id": 1,
+   "gridPos": {
+    "x": 0,
+    "y": 0,
+    "w": 24,
+    "h": 4
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "The data: resolution time (4 h buckets)",
+   "description": "30 tickets. Right-skewed: a few very slow tickets.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "bucket_h,tickets\n0-4,8\n4-8,7\n8-12,9\n12-16,2\n16-20,1\n20-24,1\n24-28,1\n28-32,0\n32-36,0\n36-40,1\n40+,0\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "bucket_h",
+    "stacking": "none",
+    "showValue": "auto",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 2,
+   "gridPos": {
+    "x": 0,
+    "y": 9,
+    "w": 8,
+    "h": 9
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "Bootstrap distribution of the mean",
+   "description": "400 resample means; the middle 95% (blue) is the percentile interval. Note the long right arm.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "mean_h,inside 95% interval,outside\n5-6,,1\n6-7,,8\n7-8,57,\n8-9,106,\n9-10,101,\n10-11,75,\n11-12,33,\n12-13,,11\n13-14,,6\n14-15,,2\n15-16,,\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "mean_h",
+    "stacking": "normal",
+    "showValue": "never",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 3,
+   "gridPos": {
+    "x": 8,
+    "y": 9,
+    "w": 8,
+    "h": 9
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "Bootstrap distribution of the median",
+   "description": "Medians of the same 400 resamples; discrete because a median is one of the observed values.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "median_h,inside 95% interval,outside\n3-4,,2\n4-5,,12\n5-6,48,\n6-7,99,\n7-8,69,\n8-9,129,\n9-10,38,\n10-11,,3\n11-12,,\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "median_h",
+    "stacking": "normal",
+    "showValue": "never",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 4,
+   "gridPos": {
+    "x": 16,
+    "y": 9,
+    "w": 8,
+    "h": 9
+   }
+  },
+  {
+   "type": "table",
+   "title": "Interval comparison",
+   "description": "Same data, three intervals.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "method,lower_h,estimate_h,upper_h\nt interval (mean),6.33,9.39,12.45\nbootstrap (mean),7.05,9.39,12.38\nbootstrap (median),4.8,7.45,9.7\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+   },
+   "options": {
+    "showHeader": true
+   },
+   "id": 5,
+   "gridPos": {
+    "x": 0,
+    "y": 18,
+    "w": 12,
+    "h": 9
+   }
+  },
+  {
+   "type": "xychart",
+   "title": "Interval ends vs number of resamples",
+   "description": "The ends settle down as B grows; 400 is the minimum for a stable interval.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "resamples,lower,upper\n25,6.56,12.0647\n50,6.50017,11.4941\n75,6.871,12.344\n100,7.05025,12.579\n125,6.979,12.216\n150,7.09775,12.4223\n175,7.15,13.0955\n200,7.14658,12.8851\n225,7.14533,12.5967\n250,7.14742,12.3965\n275,7.12933,12.359\n300,7.09433,12.3025\n325,7.05933,12.2497\n350,7.11767,12.3665\n375,7.05,12.389\n400,7.04942,12.3775\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "show": "points",
+      "pointSize": {
+       "fixed": 6
+      },
+      "lineWidth": 2
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "lower"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#4E79A7"
+        }
+       },
+       {
+        "id": "custom.show",
+        "value": "lines"
+       },
+       {
+        "id": "custom.pointSize.fixed",
+        "value": 6
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "upper"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#F28E2B"
+        }
+       },
+       {
+        "id": "custom.show",
+        "value": "lines"
+       },
+       {
+        "id": "custom.pointSize.fixed",
+        "value": 6
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "mapping": "manual",
+    "series": [
+     {
+      "x": "resamples",
+      "y": "lower",
+      "color": {
+       "fixed": "#4E79A7"
+      }
+     },
+     {
+      "x": "resamples",
+      "y": "upper",
+      "color": {
+       "fixed": "#F28E2B"
+      }
+     }
+    ],
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    }
+   },
+   "id": 6,
+   "gridPos": {
+    "x": 12,
+    "y": 18,
+    "w": 12,
+    "h": 9
+   }
+  }
+ ],
+ "time": {
+  "from": "now-6h",
+  "to": "now"
+ }
+}

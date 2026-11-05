@@ -1,0 +1,16 @@
+product_name,sku,unit_price,category,weight_kg
+A5 Notebook,NB-101,4.5,Paper,0.2
+Gel Pen Box,PN-210,6.2,Writing,0.15
+Stapler,ST-330,12.9,Desk,0.4
+Desk Lamp,LM-410,29.0,Desk,1.8
+Whiteboard,WB-520,55.0,Board,6.0
+Office Chair,CH-600,89.0,Furniture,9.5
+Paper Ream,PA-115,5.8,Paper,2.5
+Marker Set,MK-225,9.4,Writing,0.3
+Desk Organiser,DO-340,15.5,Desk,0.9
+Monitor Stand,MS-450,34.0,Desk,2.2
+Headset,HS-710,62.0,Tech,0.4
+Webcam,WC-720,48.0,Tech,0.2
+Label Printer,LP-810,79.0,Tech,1.6
+Shredder,SH-820,120.0,Tech,8.0
+Footrest,FR-630,25.0,Furniture,1.5

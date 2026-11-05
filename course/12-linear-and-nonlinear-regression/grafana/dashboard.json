@@ -1,0 +1,505 @@
+{
+ "uid": "stats-12-regression",
+ "title": "12 \u00b7 Linear and nonlinear regression",
+ "description": "Line vs ln(spend) fit: scatter, residuals, holdout error and marginal return.",
+ "tags": [
+  "statistics-course"
+ ],
+ "timezone": "utc",
+ "schemaVersion": 39,
+ "version": 1,
+ "editable": true,
+ "graphTooltip": 1,
+ "refresh": "",
+ "annotations": {
+  "list": []
+ },
+ "templating": {
+  "list": []
+ },
+ "panels": [
+  {
+   "type": "stat",
+   "title": "Fit quality",
+   "description": "R-squared and typical errors (units) for the two models.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "R2 line,R2 log,resid SE line,resid SE log,holdout RMSE line,holdout RMSE log\n0.806479,0.920856,131.011,83.7827,205.445,88.5946\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "decimals": 2,
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "blue",
+        "value": null
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ],
+     "fields": "",
+     "values": false
+    },
+    "colorMode": "value",
+    "graphMode": "none",
+    "textMode": "value_and_name"
+   },
+   "id": 1,
+   "gridPos": {
+    "x": 0,
+    "y": 0,
+    "w": 24,
+    "h": 4
+   }
+  },
+  {
+   "type": "xychart",
+   "title": "Sales vs ad spend with both fits",
+   "description": "Dots: weekly sales. The straight line sits above the dots at both ends and below them in the middle; the log curve follows the cloud.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "ad_spend_k,sales,line_fit,log_fit\n3,769,1131.05,712.233\n3,781,1131.05,712.233\n3.2,703,1134.5,739.227\n4.1,830,1150,842.887\n6.2,1017,1186.17,1015.87\n6.2,1138,1186.17,1015.87\n6.4,899,1189.62,1029.14\n6.8,1068,1196.51,1054.5\n6.9,942,1198.23,1060.61\n7.9,1249,1215.45,1117.22\n8.2,986,1220.62,1132.8\n9.2,1325,1237.85,1180.93\n10,1254,1251.63,1215.81\n12.7,1202,1298.13,1315.78\n13.1,1304,1305.02,1328.75\n13.8,1262,1317.08,1350.52\n14.4,1469,1327.42,1368.33\n14.4,1474,1327.42,1368.33\n14.4,1353,1327.42,1368.33\n14.6,1382,1330.86,1374.1\n15.1,1305,1339.48,1388.18\n15.9,1358,1353.26,1409.77\n16.2,1410,1358.42,1417.59\n16.5,1392,1363.59,1425.27\n16.9,1504,1370.48,1435.28\n17.1,1503,1373.93,1440.2\n17.4,1433,1379.09,1447.48\n18.5,1282,1398.04,1473.12\n19.5,1486,1415.27,1495.14\n19.6,1513,1416.99,1497.28\n20.3,1471,1429.05,1511.95\n20.5,1481,1432.49,1516.05\n20.6,1414,1434.21,1518.09\n20.8,1649,1437.66,1522.13\n20.9,1580,1439.38,1524.14\n21.3,1536,1446.27,1532.07\n21.5,1568,1449.72,1535.98\n21.9,1505,1456.61,1543.69\n23.5,1610,1484.17,1573.18\n23.6,1601,1485.89,1574.96\n23.8,1602,1489.33,1578.49\n24,1531,1492.78,1581.99\n25.6,1648,1520.34,1608.98\n25.9,1577,1525.51,1613.85\n26,1516,1527.23,1615.46\n26.1,1641,1528.95,1617.07\n27.1,1519,1546.18,1632.8\n27.4,1692,1551.35,1637.4\n27.5,1584,1553.07,1638.92\n28,1576,1561.68,1646.46\n28.2,1738,1565.13,1649.44\n28.4,1700,1568.57,1652.39\n28.6,1633,1572.02,1655.33\n28.9,1795,1577.18,1659.69\n28.9,1753,1577.18,1659.69\n29,1587,1578.91,1661.14\n29,1661,1578.91,1661.14\n29.3,1786,1584.07,1665.44\n30.1,1617,1597.85,1676.71\n30.4,1639,1603.02,1680.86\n30.6,1814,1606.47,1683.6\n31.2,1594,1616.8,1691.72\n31.5,1846,1621.97,1695.72\n31.7,1761,1625.41,1698.37\n32.1,1519,1632.3,1703.62\n33.2,1622,1651.25,1717.71\n33.7,1697,1659.86,1723.96\n34.2,1714,1668.48,1730.12\n36.4,1703,1706.37,1756.2\n36.8,1755,1713.26,1760.77\n37,1848,1716.71,1763.04\n37.5,1768,1725.32,1768.65\n37.9,1870,1732.21,1773.09\n38.2,1770,1737.38,1776.39\n38.5,1853,1742.55,1779.66\n38.6,1673,1744.27,1780.74\n38.7,1688,1745.99,1781.83\n39.5,1790,1759.77,1790.38\n39.7,1711,1763.22,1792.5\n40.5,1918,1777,1800.84\n40.7,1871,1780.44,1802.9\n40.8,1799,1782.16,1803.93\n41.6,1978,1795.94,1812.05\n41.6,1725,1795.94,1812.05\n42.5,1786,1811.45,1821\n42.6,1668,1813.17,1821.98\n42.9,1776,1818.34,1824.92\n43,1848,1820.06,1825.89\n43,1848,1820.06,1825.89\n43.1,1822,1821.78,1826.87\n43.5,1787,1828.67,1830.73\n43.5,1799,1828.67,1830.73\n43.5,1866,1828.67,1830.73\n44.1,1881,1839.01,1836.46\n44.6,1949,1847.62,1841.17\n45.4,2032,1861.4,1848.61\n45.9,1914,1870.01,1853.19\n46.5,1980,1880.35,1858.62\n47.7,1801,1901.02,1869.28\n47.7,1846,1901.02,1869.28\n48.3,1905,1911.35,1874.51\n49.7,1792,1935.47,1886.46\n50.1,1811,1942.36,1889.81\n50.3,1781,1945.8,1891.48\n51.9,1956,1973.36,1904.58\n51.9,1856,1973.36,1904.58\n52.5,1927,1983.7,1909.38\n52.6,1783,1985.42,1910.18\n53.6,1997,2002.65,1918.06\n53.8,1938,2006.09,1919.61\n54.3,2067,2014.7,1923.48\n54.5,1880,2018.15,1925.02\n54.9,1773,2025.04,1928.08\n55.9,1984,2042.26,1935.63\n56.8,1799,2057.77,1942.31\n57.3,1911,2066.38,1945.98\n57.6,1937,2071.55,1948.16\n58.4,2035,2085.33,1953.93\n59.4,2138,2102.55,1961.03\n65.4,2004,2205.9,2001.28\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "show": "points",
+      "pointSize": {
+       "fixed": 6
+      },
+      "lineWidth": 2
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "sales"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#4E79A7"
+        }
+       },
+       {
+        "id": "custom.show",
+        "value": "points"
+       },
+       {
+        "id": "custom.pointSize.fixed",
+        "value": 6
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "line_fit"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#F28E2B"
+        }
+       },
+       {
+        "id": "custom.show",
+        "value": "lines"
+       },
+       {
+        "id": "custom.pointSize.fixed",
+        "value": 6
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "log_fit"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#E15759"
+        }
+       },
+       {
+        "id": "custom.show",
+        "value": "lines"
+       },
+       {
+        "id": "custom.pointSize.fixed",
+        "value": 6
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "mapping": "manual",
+    "series": [
+     {
+      "x": "ad_spend_k",
+      "y": "sales",
+      "color": {
+       "fixed": "#4E79A7"
+      }
+     },
+     {
+      "x": "ad_spend_k",
+      "y": "line_fit",
+      "color": {
+       "fixed": "#F28E2B"
+      }
+     },
+     {
+      "x": "ad_spend_k",
+      "y": "log_fit",
+      "color": {
+       "fixed": "#E15759"
+      }
+     }
+    ],
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    }
+   },
+   "id": 2,
+   "gridPos": {
+    "x": 0,
+    "y": 9,
+    "w": 12,
+    "h": 9
+   }
+  },
+  {
+   "type": "xychart",
+   "title": "Residuals vs ad spend",
+   "description": "Line residuals form an arch (curvature); log-model residuals are a patternless band around 0.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "ad_spend_k,resid_line,resid_log\n3,-362.05,56.7672\n3,-350.05,68.7672\n3.2,-431.495,-36.2269\n4.1,-319.998,-12.8875\n6.2,-169.171,1.13494\n6.2,-48.1707,122.135\n6.4,-290.616,-130.144\n6.8,-128.506,13.4986\n6.9,-256.228,-118.607\n7.9,33.5464,131.784\n8.2,-234.621,-146.805\n9.2,87.1536,144.066\n10,2.37342,38.1905\n12.7,-96.1347,-113.781\n13.1,-1.02478,-24.7517\n13.8,-55.0824,-88.525\n14.4,141.582,100.674\n14.4,146.582,105.674\n14.4,25.5824,-15.3261\n14.6,51.1374,7.90472\n15.1,-34.4752,-83.1795\n15.9,4.74458,-51.7721\n16.2,51.577,-7.59028\n16.5,28.4094,-33.265\n16.9,133.519,68.7162\n17.1,129.074,62.7954\n17.4,53.9067,-14.4789\n18.5,-116.041,-191.119\n19.5,70.7338,-9.1375\n19.6,96.0112,15.723\n20.3,41.9536,-40.9543\n20.5,48.5085,-35.055\n20.6,-20.214,-104.09\n20.8,211.341,126.868\n20.9,140.618,55.8624\n21.3,89.7284,3.93302\n21.5,118.283,32.024\n21.9,48.3932,-38.6861\n23.5,125.833,36.8206\n23.6,115.11,26.0445\n23.8,112.665,23.5149\n24,38.2202,-50.9853\n25.6,127.66,39.0207\n25.9,51.4923,-36.8523\n26,-11.2302,-99.4641\n26.1,112.047,23.9303\n27.1,-27.178,-113.796\n27.4,140.654,54.5995\n27.5,30.9319,-54.9242\n28,14.3193,-70.4607\n28.2,172.874,88.5623\n28.4,131.429,47.6064\n28.6,60.9842,-22.3288\n28.9,217.817,135.307\n28.9,175.817,93.3067\n29,8.0941,-74.1381\n29,82.0941,-0.13809\n29.3,201.927,120.557\n30.1,19.1464,-59.7097\n30.4,35.9788,-41.8578\n30.6,207.534,130.399\n31.2,-22.8014,-97.7224\n31.5,224.031,150.275\n31.7,135.586,62.6278\n32.1,-113.304,-184.617\n33.2,-29.2519,-95.7098\n33.7,37.1355,-26.962\n34.2,45.5229,-16.122\n36.4,-3.37258,-53.1978\n36.8,41.7373,-5.76906\n37,131.292,84.9639\n37.5,42.6797,-0.650418\n37.9,137.79,96.9117\n38.2,32.622,-6.38601\n38.5,110.454,73.342\n38.6,-71.2681,-107.743\n38.7,-57.9906,-93.8251\n39.5,30.2292,-0.383228\n39.7,-52.2158,-81.4957\n40.5,141.004,117.16\n40.7,90.5589,68.0993\n40.8,16.8364,-4.92716\n41.6,182.056,165.951\n41.6,-70.9438,-87.049\n42.5,-25.4465,-35.0015\n42.6,-145.169,-153.984\n42.9,-42.3366,-48.9196\n43,27.9409,22.1065\n43,27.9409,22.1065\n43.1,0.218399,-4.86506\n43.5,-41.6717,-43.7289\n43.5,-29.6717,-31.7289\n43.5,37.3283,35.2711\n44.1,41.9932,44.5413\n44.6,101.381,107.826\n45.4,170.6,183.39\n45.9,43.9878,60.8086\n46.5,99.6526,121.377\n47.7,-100.018,-68.2804\n47.7,-55.0176,-23.2804\n48.3,-6.35278,30.4913\n49.7,-143.468,-94.4599\n50.1,-131.358,-78.8127\n50.3,-164.803,-110.479\n51.9,-17.3636,51.4235\n51.9,-117.364,-48.5765\n52.5,-56.6987,17.6159\n52.6,-202.421,-127.18\n53.6,-5.64649,78.9428\n53.8,-68.0915,18.385\n54.3,52.2959,143.516\n54.5,-138.149,-45.0219\n54.9,-252.039,-155.081\n55.9,-58.2645,48.3694\n56.8,-258.767,-143.311\n57.3,-155.38,-34.9769\n57.6,-134.547,-11.161\n58.4,-50.3276,81.0698\n59.4,35.4472,176.968\n65.4,-201.904,2.71979\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "show": "points",
+      "pointSize": {
+       "fixed": 6
+      },
+      "lineWidth": 2
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "resid_line"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#4E79A7"
+        }
+       },
+       {
+        "id": "custom.show",
+        "value": "points"
+       },
+       {
+        "id": "custom.pointSize.fixed",
+        "value": 6
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "resid_log"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#F28E2B"
+        }
+       },
+       {
+        "id": "custom.show",
+        "value": "points"
+       },
+       {
+        "id": "custom.pointSize.fixed",
+        "value": 6
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "mapping": "manual",
+    "series": [
+     {
+      "x": "ad_spend_k",
+      "y": "resid_line",
+      "color": {
+       "fixed": "#4E79A7"
+      }
+     },
+     {
+      "x": "ad_spend_k",
+      "y": "resid_log",
+      "color": {
+       "fixed": "#F28E2B"
+      }
+     }
+    ],
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    }
+   },
+   "id": 3,
+   "gridPos": {
+    "x": 12,
+    "y": 9,
+    "w": 12,
+    "h": 9
+   }
+  },
+  {
+   "type": "timeseries",
+   "title": "Holdout weeks: actual vs predictions",
+   "description": "Models fitted on the first 96 weeks only. The line drifts above the data as spend rises.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "time,actual,line_pred,log_pred\n2025-11-03T00:00:00Z,1997,2108.5,1913.53\n2025-11-10T00:00:00Z,1866,1901.2,1826.82\n2025-11-17T00:00:00Z,1846,1987.4,1865.1\n2025-11-24T00:00:00Z,1856,2073.61,1900.14\n2025-12-01T00:00:00Z,1980,1962.77,1854.51\n2025-12-08T00:00:00Z,1938,2112.6,1915.07\n2025-12-15T00:00:00Z,1848,1890.94,1822.02\n2025-12-22T00:00:00Z,1914,1950.46,1849.12\n2025-12-29T00:00:00Z,1918,1839.63,1797.14\n2026-01-05T00:00:00Z,1905,1999.72,1870.29\n2026-01-12T00:00:00Z,1799,2174.18,1937.61\n2026-01-19T00:00:00Z,1801,1987.4,1865.1\n2026-01-26T00:00:00Z,2035,2207.02,1949.15\n2026-02-02T00:00:00Z,1911,2184.44,1941.25\n2026-02-09T00:00:00Z,2067,2122.87,1918.92\n2026-02-16T00:00:00Z,1984,2155.7,1930.98\n2026-02-23T00:00:00Z,2138,2227.54,1956.2\n2026-03-02T00:00:00Z,1783,2087.97,1905.71\n2026-03-09T00:00:00Z,2004,2350.69,1996.16\n2026-03-16T00:00:00Z,1781,2040.77,1887.14\n2026-03-23T00:00:00Z,1927,2085.92,1904.92\n2026-03-30T00:00:00Z,1937,2190.6,1943.42\n2026-04-06T00:00:00Z,1773,2135.18,1923.48\n2026-04-13T00:00:00Z,1880,2126.97,1920.44\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "drawStyle": "line",
+      "lineWidth": 2,
+      "fillOpacity": 0,
+      "showPoints": "never",
+      "spanNulls": false
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "actual"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#4E79A7"
+        }
+       },
+       {
+        "id": "custom.drawStyle",
+        "value": "points"
+       },
+       {
+        "id": "custom.pointSize",
+        "value": 8
+       },
+       {
+        "id": "custom.showPoints",
+        "value": "always"
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "line_pred"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#E15759"
+        }
+       },
+       {
+        "id": "custom.lineStyle",
+        "value": {
+         "fill": "dash",
+         "dash": [
+          10,
+          10
+         ]
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "log_pred"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#59A14F"
+        }
+       },
+       {
+        "id": "custom.lineStyle",
+        "value": {
+         "fill": "dash",
+         "dash": [
+          10,
+          10
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 4,
+   "gridPos": {
+    "x": 0,
+    "y": 18,
+    "w": 12,
+    "h": 9
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "Marginal sales per extra k$",
+   "description": "The log model: returns shrink as spend rises. The line assumes a constant return.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "ad_spend_k,line,log_model\n10 k$,17.2252,41.8263\n20 k$,17.2252,20.9131\n30 k$,17.2252,13.9421\n40 k$,17.2252,10.4566\n50 k$,17.2252,8.36525\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "ad_spend_k",
+    "stacking": "none",
+    "showValue": "auto",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 5,
+   "gridPos": {
+    "x": 12,
+    "y": 18,
+    "w": 12,
+    "h": 9
+   }
+  }
+ ],
+ "time": {
+  "from": "2025-11-01T09:21:36Z",
+  "to": "2026-04-14T14:38:24Z"
+ }
+}

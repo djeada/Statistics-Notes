@@ -1,0 +1,416 @@
+{
+ "uid": "stats-25-prediction-intervals",
+ "title": "25 \u00b7 Prediction intervals and forecast uncertainty",
+ "description": "Residual-based and empirical-quantile intervals for the seasonal naive forecast, their widening with the horizon and a coverage check on days the intervals were not fitted on.",
+ "tags": [
+  "statistics-course"
+ ],
+ "timezone": "utc",
+ "schemaVersion": 39,
+ "version": 1,
+ "editable": true,
+ "graphTooltip": 1,
+ "refresh": "",
+ "annotations": {
+  "list": []
+ },
+ "templating": {
+  "list": []
+ },
+ "panels": [
+  {
+   "type": "stat",
+   "title": "Out-of-sample coverage, mean of 4 horizons (nominal 80% / 95%)",
+   "description": "Share of days after t = 224 whose actual fell inside the interval. Compare with 0.80 and 0.95.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "normal 80%,empirical 80%,normal 95%,empirical 95%\n0.59127,0.583333,0.80754,0.797619\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percentunit",
+     "decimals": 1,
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "red",
+        "value": null
+       },
+       {
+        "color": "orange",
+        "value": 0.78
+       },
+       {
+        "color": "green",
+        "value": 0.93
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ],
+     "fields": "",
+     "values": false
+    },
+    "colorMode": "value",
+    "graphMode": "none",
+    "textMode": "value_and_name"
+   },
+   "id": 1,
+   "gridPos": {
+    "x": 0,
+    "y": 0,
+    "w": 24,
+    "h": 4
+   }
+  },
+  {
+   "type": "timeseries",
+   "title": "Orders (last 16 weeks) and the 28-day forecast fan",
+   "description": "The ranges widen in weekly steps and are centred on the seasonal naive forecast (the last week repeated).",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "time,orders,forecast,95% lower,95% upper,80% lower,80% upper\n2025-09-01T00:00:00Z,206,,,,,\n2025-09-02T00:00:00Z,209,,,,,\n2025-09-03T00:00:00Z,206,,,,,\n2025-09-04T00:00:00Z,200,,,,,\n2025-09-05T00:00:00Z,205,,,,,\n2025-09-06T00:00:00Z,195,,,,,\n2025-09-07T00:00:00Z,194,,,,,\n2025-09-08T00:00:00Z,219,,,,,\n2025-09-09T00:00:00Z,214,,,,,\n2025-09-10T00:00:00Z,196,,,,,\n2025-09-11T00:00:00Z,187,,,,,\n2025-09-12T00:00:00Z,191,,,,,\n2025-09-13T00:00:00Z,190,,,,,\n2025-09-14T00:00:00Z,177,,,,,\n2025-09-15T00:00:00Z,209,,,,,\n2025-09-16T00:00:00Z,218,,,,,\n2025-09-17T00:00:00Z,199,,,,,\n2025-09-18T00:00:00Z,245,,,,,\n2025-09-19T00:00:00Z,192,,,,,\n2025-09-20T00:00:00Z,194,,,,,\n2025-09-21T00:00:00Z,191,,,,,\n2025-09-22T00:00:00Z,179,,,,,\n2025-09-23T00:00:00Z,168,,,,,\n2025-09-24T00:00:00Z,183,,,,,\n2025-09-25T00:00:00Z,176,,,,,\n2025-09-26T00:00:00Z,211,,,,,\n2025-09-27T00:00:00Z,182,,,,,\n2025-09-28T00:00:00Z,175,,,,,\n2025-09-29T00:00:00Z,181,,,,,\n2025-09-30T00:00:00Z,192,,,,,\n2025-10-01T00:00:00Z,153,,,,,\n2025-10-02T00:00:00Z,159,,,,,\n2025-10-03T00:00:00Z,169,,,,,\n2025-10-04T00:00:00Z,174,,,,,\n2025-10-05T00:00:00Z,183,,,,,\n2025-10-06T00:00:00Z,205,,,,,\n2025-10-07T00:00:00Z,211,,,,,\n2025-10-08T00:00:00Z,186,,,,,\n2025-10-09T00:00:00Z,192,,,,,\n2025-10-10T00:00:00Z,193,,,,,\n2025-10-11T00:00:00Z,206,,,,,\n2025-10-12T00:00:00Z,199,,,,,\n2025-10-13T00:00:00Z,211,,,,,\n2025-10-14T00:00:00Z,200,,,,,\n2025-10-15T00:00:00Z,203,,,,,\n2025-10-16T00:00:00Z,210,,,,,\n2025-10-17T00:00:00Z,212,,,,,\n2025-10-18T00:00:00Z,186,,,,,\n2025-10-19T00:00:00Z,186,,,,,\n2025-10-20T00:00:00Z,212,,,,,\n2025-10-21T00:00:00Z,201,,,,,\n2025-10-22T00:00:00Z,210,,,,,\n2025-10-23T00:00:00Z,251,,,,,\n2025-10-24T00:00:00Z,228,,,,,\n2025-10-25T00:00:00Z,216,,,,,\n2025-10-26T00:00:00Z,204,,,,,\n2025-10-27T00:00:00Z,231,,,,,\n2025-10-28T00:00:00Z,231,,,,,\n2025-10-29T00:00:00Z,231,,,,,\n2025-10-30T00:00:00Z,234,,,,,\n2025-10-31T00:00:00Z,257,,,,,\n2025-11-01T00:00:00Z,215,,,,,\n2025-11-02T00:00:00Z,238,,,,,\n2025-11-03T00:00:00Z,266,,,,,\n2025-11-04T00:00:00Z,245,,,,,\n2025-11-05T00:00:00Z,249,,,,,\n2025-11-06T00:00:00Z,241,,,,,\n2025-11-07T00:00:00Z,244,,,,,\n2025-11-08T00:00:00Z,236,,,,,\n2025-11-09T00:00:00Z,253,,,,,\n2025-11-10T00:00:00Z,257,,,,,\n2025-11-11T00:00:00Z,241,,,,,\n2025-11-12T00:00:00Z,264,,,,,\n2025-11-13T00:00:00Z,263,,,,,\n2025-11-14T00:00:00Z,282,,,,,\n2025-11-15T00:00:00Z,231,,,,,\n2025-11-16T00:00:00Z,224,,,,,\n2025-11-17T00:00:00Z,256,,,,,\n2025-11-18T00:00:00Z,248,,,,,\n2025-11-19T00:00:00Z,256,,,,,\n2025-11-20T00:00:00Z,264,,,,,\n2025-11-21T00:00:00Z,272,,,,,\n2025-11-22T00:00:00Z,223,,,,,\n2025-11-23T00:00:00Z,235,,,,,\n2025-11-24T00:00:00Z,281,,,,,\n2025-11-25T00:00:00Z,275,,,,,\n2025-11-26T00:00:00Z,269,,,,,\n2025-11-27T00:00:00Z,283,,,,,\n2025-11-28T00:00:00Z,278,,,,,\n2025-11-29T00:00:00Z,276,,,,,\n2025-11-30T00:00:00Z,271,,,,,\n2025-12-01T00:00:00Z,284,,,,,\n2025-12-02T00:00:00Z,270,,,,,\n2025-12-03T00:00:00Z,256,,,,,\n2025-12-04T00:00:00Z,249,,,,,\n2025-12-05T00:00:00Z,259,,,,,\n2025-12-06T00:00:00Z,223,,,,,\n2025-12-07T00:00:00Z,244,,,,,\n2025-12-08T00:00:00Z,245,,,,,\n2025-12-09T00:00:00Z,236,,,,,\n2025-12-10T00:00:00Z,249,,,,,\n2025-12-11T00:00:00Z,241,,,,,\n2025-12-12T00:00:00Z,244,,,,,\n2025-12-13T00:00:00Z,243,,,,,\n2025-12-14T00:00:00Z,240,,,,,\n2025-12-15T00:00:00Z,243,,,,,\n2025-12-16T00:00:00Z,247,,,,,\n2025-12-17T00:00:00Z,250,,,,,\n2025-12-18T00:00:00Z,265,,,,,\n2025-12-19T00:00:00Z,271,,,,,\n2025-12-20T00:00:00Z,245,,,,,\n2025-12-21T00:00:00Z,225,225,,,,\n2025-12-22T00:00:00Z,,243,210.075,275.925,221.472,264.528\n2025-12-23T00:00:00Z,,247,214.075,279.925,225.472,268.528\n2025-12-24T00:00:00Z,,250,217.075,282.925,228.472,271.528\n2025-12-25T00:00:00Z,,265,232.075,297.925,243.472,286.528\n2025-12-26T00:00:00Z,,271,238.075,303.925,249.472,292.528\n2025-12-27T00:00:00Z,,245,212.075,277.925,223.472,266.528\n2025-12-28T00:00:00Z,,225,192.075,257.925,203.472,246.528\n2025-12-29T00:00:00Z,,243,202.901,283.099,216.781,269.219\n2025-12-30T00:00:00Z,,247,206.901,287.099,220.781,273.219\n2025-12-31T00:00:00Z,,250,209.901,290.099,223.781,276.219\n2026-01-01T00:00:00Z,,265,224.901,305.099,238.781,291.219\n2026-01-02T00:00:00Z,,271,230.901,311.099,244.781,297.219\n2026-01-03T00:00:00Z,,245,204.901,285.099,218.781,271.219\n2026-01-04T00:00:00Z,,225,184.901,265.099,198.781,251.219\n2026-01-05T00:00:00Z,,243,197.824,288.176,213.461,272.539\n2026-01-06T00:00:00Z,,247,201.824,292.176,217.461,276.539\n2026-01-07T00:00:00Z,,250,204.824,295.176,220.461,279.539\n2026-01-08T00:00:00Z,,265,219.824,310.176,235.461,294.539\n2026-01-09T00:00:00Z,,271,225.824,316.176,241.461,300.539\n2026-01-10T00:00:00Z,,245,199.824,290.176,215.461,274.539\n2026-01-11T00:00:00Z,,225,179.824,270.176,195.461,254.539\n2026-01-12T00:00:00Z,,243,192.482,293.518,209.968,276.032\n2026-01-13T00:00:00Z,,247,196.482,297.518,213.968,280.032\n2026-01-14T00:00:00Z,,250,199.482,300.518,216.968,283.032\n2026-01-15T00:00:00Z,,265,214.482,315.518,231.968,298.032\n2026-01-16T00:00:00Z,,271,220.482,321.518,237.968,304.032\n2026-01-17T00:00:00Z,,245,194.482,295.518,211.968,278.032\n2026-01-18T00:00:00Z,,225,174.482,275.518,191.968,258.032\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "drawStyle": "line",
+      "lineWidth": 2,
+      "fillOpacity": 0,
+      "showPoints": "never",
+      "spanNulls": false
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "orders"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#9AA5B1"
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "forecast"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#4E79A7"
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "95% lower"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#E15759"
+        }
+       },
+       {
+        "id": "custom.lineStyle",
+        "value": {
+         "fill": "dash",
+         "dash": [
+          10,
+          10
+         ]
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "95% upper"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#E15759"
+        }
+       },
+       {
+        "id": "custom.lineStyle",
+        "value": {
+         "fill": "dash",
+         "dash": [
+          10,
+          10
+         ]
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "80% lower"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#F28E2B"
+        }
+       },
+       {
+        "id": "custom.lineStyle",
+        "value": {
+         "fill": "dash",
+         "dash": [
+          10,
+          10
+         ]
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "80% upper"
+      },
+      "properties": [
+       {
+        "id": "color",
+        "value": {
+         "mode": "fixed",
+         "fixedColor": "#F28E2B"
+        }
+       },
+       {
+        "id": "custom.lineStyle",
+        "value": {
+         "fill": "dash",
+         "dash": [
+          10,
+          10
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 2,
+   "gridPos": {
+    "x": 0,
+    "y": 9,
+    "w": 24,
+    "h": 9
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "Error SD by horizon (calibration period)",
+   "description": "The error grows with the horizon, slower than the random-walk rule.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "horizon,SD of error,sqrt(k) rule\n1 wk,13.7941,13.7941\n2 wk,16.7009,19.5078\n3 wk,19.394,23.892\n4 wk,22.7884,27.5881\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "horizon",
+    "stacking": "none",
+    "showValue": "auto",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 3,
+   "gridPos": {
+    "x": 0,
+    "y": 17,
+    "w": 8,
+    "h": 8
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "95% coverage by horizon",
+   "description": "Inside the calibration period the intervals look perfect; afterwards they miss by 10-15 points.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "horizon,\"normal, calibration\",\"normal, after Tcal\",\"empirical, after Tcal\",nominal\n1 wk,0.953917,0.81746,0.833333,0.95\n2 wk,0.952381,0.785714,0.785714,0.95\n3 wk,0.975369,0.809524,0.793651,0.95\n4 wk,0.97449,0.81746,0.777778,0.95\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percentunit",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "horizon",
+    "stacking": "none",
+    "showValue": "auto",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 4,
+   "gridPos": {
+    "x": 8,
+    "y": 17,
+    "w": 8,
+    "h": 8
+   }
+  },
+  {
+   "type": "barchart",
+   "title": "Volatility of the 1-week error (28-day blocks)",
+   "description": "The jump in the September blocks is the regime change the intervals did not know about.",
+   "datasource": {
+    "type": "grafana-testdata-datasource",
+    "uid": "course-testdata"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "datasource": {
+      "type": "grafana-testdata-datasource",
+      "uid": "course-testdata"
+     },
+     "scenarioId": "csv_content",
+     "csvContent": "block start,SD of 1-week error\nFeb 03,7.90243\nMar 03,15.4657\nMar 31,16.2258\nApr 28,15.5146\nMay 26,12.3979\nJun 23,14.8029\nJul 21,11.9578\nAug 18,10.6366\nSep 15,28.219\nOct 13,16.5022\nNov 10,23.3382\n"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "custom": {
+      "fillOpacity": 80
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "xField": "block start",
+    "stacking": "none",
+    "showValue": "auto",
+    "orientation": "vertical",
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "id": 5,
+   "gridPos": {
+    "x": 16,
+    "y": 17,
+    "w": 8,
+    "h": 8
+   }
+  }
+ ],
+ "time": {
+  "from": "2025-08-30T14:38:24Z",
+  "to": "2026-01-19T09:21:36Z"
+ }
+}

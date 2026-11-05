@@ -1,0 +1,151 @@
+expense_id,date,category,vendor,amount,payment,approved
+5001,2026-01-01,Travel,AirNova,759.84,Card,Yes
+5002,2026-01-01,Software,CloudBox,63.52,Card,No
+5003,2026-01-01,Travel,AirNova,126.96,Transfer,Yes
+5004,2026-01-02,Travel,StayWell,182.89,Transfer,Yes
+5005,2026-01-02,Office,PaperPlus,20.06,Cash,Yes
+5006,2026-01-07,Software,CodeDesk,99.88,Card,Yes
+5007,2026-01-07,Travel,AirLink,216.56,Transfer,Yes
+5008,2026-01-07,Software,DataLoop,65.34,Card,Yes
+5009,2026-01-07,Training,LearnHub,325.36,Transfer,Yes
+5010,2026-01-10,Office,DeskDepot,35.52,Transfer,Yes
+5011,2026-01-10,Travel,StayWell,,Transfer,Yes
+5012,2026-01-10,Travel,AirNova,74.91,Card,No
+5013,2026-01-11,Software,DataLoop,106.71,Cash,No
+5014,2026-01-11,Software,CloudBox,109.7,Card,Yes
+5015,2026-01-11,Travel,AirNova,122.79,Transfer,Yes
+5016,2026-01-13,Travel,AirLink,137.89,Cash,Yes
+5017,2026-01-15,Office,DeskDepot,37.72,Transfer,Yes
+5018,2026-01-15,Meals,Lunch Box,21.43,Card,Yes
+5019,2026-01-15,Software,CloudBox,27.1,Card,Yes
+5020,2026-01-15,Meals,Lunch Box,12.85,Card,No
+5021,2026-01-15,Office,DeskDepot,79.3,Card,Yes
+5022,2026-01-17,Meals,Pizza Hub,44.4,Card,Yes
+5023,2026-01-19,Office,PaperPlus,51.76,Transfer,Yes
+5024,2026-01-20,Travel,RailGo,332.17,Card,Yes
+5025,2026-01-21,Meals,Lunch Box,100.1,Card,Yes
+5026,2026-01-21,Travel,RailGo,365.17,Card,Yes
+5027,2026-01-21,Training,LearnHub,865.24,Transfer,Yes
+5028,2026-01-23,Travel,AirLink,123.8,Card,Yes
+5029,2026-01-23,Training,SkillUp,254.81,Card,No
+5030,2026-01-24,Software,CodeDesk,30.78,Card,Yes
+5031,2026-01-24,Meals,Pizza Hub,37.19,Cash,No
+5032,2026-01-24,Meals,Lunch Box,50.05,Card,
+5033,2026-01-26,Travel,AirLink,343.67,Card,Yes
+5034,2026-01-26,Travel,StayWell,405.62,Transfer,Yes
+5035,2026-01-27,Software,DataLoop,67.31,Card,Yes
+5036,2026-01-27,Training,SkillUp,263.47,Card,Yes
+5037,2026-01-28,Meals,Corner Cafe,52.95,Cash,No
+5038,2026-01-29,Travel,StayWell,397.33,Transfer,No
+5039,2026-01-29,Office,PaperPlus,,Card,Yes
+5040,2026-01-29,Meals,Pizza Hub,17.99,Transfer,Yes
+5041,2026-01-30,Software,CodeDesk,81.16,Card,Yes
+5042,2026-01-31,Software,CodeDesk,196.39,Card,Yes
+5043,2026-02-01,Office,DeskDepot,50.11,Card,Yes
+5044,2026-02-01,Software,CodeDesk,17.97,Card,Yes
+5045,2026-02-02,Travel,StayWell,271.84,Card,Yes
+5046,2026-02-02,Meals,Pizza Hub,30.93,Transfer,Yes
+5047,2026-02-04,Meals,Pizza Hub,57.29,Card,
+5048,2026-02-04,Software,DataLoop,99.37,Card,No
+5049,2026-02-04,Meals,Lunch Box,25.43,Card,No
+5050,2026-02-04,Meals,Lunch Box,46.16,Cash,Yes
+5051,2026-02-04,Travel,StayWell,234.12,Cash,Yes
+5052,2026-02-05,Software,CloudBox,23.95,Card,Yes
+5053,2026-02-05,Meals,Corner Cafe,24.82,Transfer,Yes
+5054,2026-02-05,Office,PaperPlus,42.84,Card,Yes
+5055,2026-02-05,Software,DataLoop,169.8,Card,Yes
+5056,2026-02-07,Meals,Lunch Box,19.85,Card,No
+5057,2026-02-09,Meals,Corner Cafe,30.4,Card,Yes
+5058,2026-02-09,Meals,Lunch Box,13.66,Card,No
+5059,2026-02-09,Meals,Lunch Box,25.95,Transfer,Yes
+5060,2026-02-10,Meals,Lunch Box,37.85,Transfer,No
+5061,2026-02-10,Software,DataLoop,48.97,Card,No
+5062,2026-02-12,Software,CloudBox,128.67,Transfer,Yes
+5063,2026-02-13,Travel,RailGo,195.08,Card,Yes
+5064,2026-02-13,Training,SkillUp,610.68,Card,Yes
+5065,2026-02-13,Meals,Lunch Box,37.81,Card,Yes
+5066,2026-02-14,Software,CodeDesk,450.28,Transfer,Yes
+5067,2026-02-14,Office,DeskDepot,18.32,Card,Yes
+5068,2026-02-14,Travel,AirNova,263.97,Card,Yes
+5069,2026-02-17,Training,SkillUp,394.61,Transfer,
+5070,2026-02-17,Meals,Pizza Hub,18.57,Transfer,Yes
+5071,2026-02-18,Travel,AirNova,237.39,Card,No
+5072,2026-02-18,Travel,StayWell,-515.38,Card,Yes
+5073,2026-02-18,Meals,Corner Cafe,34.95,Card,Yes
+5074,2026-02-20,Travel,RailGo,523.0,Cash,
+5075,2026-02-21,Meals,Pizza Hub,26.3,Transfer,Yes
+5076,2026-02-22,Office,DeskDepot,53.19,Transfer,Yes
+5077,2026-02-22,Meals,Corner Cafe,20.75,Card,Yes
+5078,2026-02-22,Office,PaperPlus,31.84,Transfer,Yes
+5079,2026-02-22,Meals,Lunch Box,16.14,Transfer,Yes
+5080,2026-02-23,Office,PaperPlus,10.05,Card,Yes
+5081,2026-02-23,Meals,Pizza Hub,28.19,Card,Yes
+5082,2026-02-23,Travel,AirNova,282.3,Card,Yes
+5083,2026-02-23,Office,DeskDepot,59.03,Transfer,Yes
+5084,2026-02-24,Travel,RailGo,255.17,Transfer,Yes
+5085,2026-02-24,Training,SkillUp,231.69,Card,No
+5086,2026-02-25,Software,CodeDesk,70.18,Card,Yes
+5087,2026-02-26,Meals,Lunch Box,40.6,Card,Yes
+5088,2026-02-27,Meals,Corner Cafe,25.64,Transfer,Yes
+5089,2026-02-27,Meals,Corner Cafe,27.96,Cash,Yes
+5090,2026-02-28,Office,DeskDepot,59.62,Cash,Yes
+5091,2026-02-28,Meals,Pizza Hub,14.03,Card,Yes
+5092,2026-02-28,Training,SkillUp,576.39,Cash,Yes
+5093,2026-03-01,Training,LearnHub,423.5,Transfer,Yes
+5094,2026-03-01,Training,LearnHub,134.57,Transfer,Yes
+5095,2026-03-02,Meals,Pizza Hub,37.53,Card,Yes
+5096,2026-03-03,Software,CloudBox,154.45,Card,Yes
+5097,2026-03-03,Training,SkillUp,374.78,Card,No
+5098,2026-03-04,Travel,AirLink,402.92,Card,Yes
+5099,2026-03-04,Meals,Corner Cafe,,Card,No
+5100,2026-03-05,Meals,Pizza Hub,25.4,Card,Yes
+5101,2026-03-06,Office,PaperPlus,47.65,Card,Yes
+5102,2026-03-06,Office,PaperPlus,90.58,Transfer,Yes
+5103,2026-03-07,Meals,Lunch Box,18.07,Transfer,Yes
+5104,2026-03-07,Software,CloudBox,244.25,Card,Yes
+5105,2026-03-08,Office,DeskDepot,102.7,Card,Yes
+5106,2026-03-08,Travel,AirLink,307.84,Card,Yes
+5107,2026-03-08,Travel,RailGo,312.17,Card,Yes
+5108,2026-03-09,Meals,Lunch Box,32.68,Transfer,
+5109,2026-03-09,Office,DeskDepot,45.98,Transfer,Yes
+5110,2026-03-10,Training,SkillUp,-302.38,Cash,Yes
+5111,2026-03-11,Travel,RailGo,110.81,Card,Yes
+5112,2026-03-11,Travel,AirNova,156.89,Transfer,Yes
+5113,2026-03-11,Travel,RailGo,628.89,Transfer,No
+5114,2026-03-12,Software,DataLoop,146.76,Card,Yes
+5115,2026-03-12,Software,CodeDesk,121.46,Transfer,Yes
+5116,2026-03-12,Meals,Pizza Hub,27.93,Card,Yes
+5117,2026-03-13,Software,CodeDesk,16.71,Transfer,
+5118,2026-03-16,Meals,Lunch Box,26.26,Card,Yes
+5119,2026-03-18,Training,SkillUp,195.57,Transfer,Yes
+5120,2026-03-18,Office,DeskDepot,34.54,Card,Yes
+5121,2026-03-19,Training,LearnHub,207.06,Card,Yes
+5122,2026-03-20,Meals,Corner Cafe,82.34,Card,Yes
+5123,2026-03-20,Office,PaperPlus,36.84,Cash,Yes
+5124,2026-03-20,Meals,Corner Cafe,-35.22,Card,Yes
+5125,2026-03-20,Office,DeskDepot,20.11,Transfer,Yes
+5126,2026-03-21,Travel,RailGo,418.82,Card,No
+5127,2026-03-22,Travel,RailGo,168.27,Card,Yes
+5128,2026-03-22,Software,CodeDesk,-54.95,Transfer,Yes
+5129,2026-03-22,Software,DataLoop,25.72,Card,Yes
+5130,2026-03-22,Travel,AirNova,693.29,Transfer,Yes
+5131,2026-03-23,Travel,AirLink,296.74,Card,Yes
+5132,2026-03-23,Software,CodeDesk,97.75,Card,Yes
+5133,2026-03-23,Travel,AirNova,340.38,Cash,Yes
+5134,2026-03-24,Office,PaperPlus,150.15,Card,Yes
+5135,2026-03-24,Training,LearnHub,269.53,Card,No
+5136,2026-03-26,Software,CodeDesk,46.86,Card,Yes
+5137,2026-03-26,Travel,AirNova,-548.12,Card,No
+5138,2026-03-26,Office,PaperPlus,53.42,Card,Yes
+5139,2026-03-26,Office,DeskDepot,39.21,Card,Yes
+5140,2026-03-26,Travel,AirLink,265.52,Transfer,Yes
+5141,2026-03-27,Travel,AirLink,63.97,Transfer,Yes
+5142,2026-03-27,Training,SkillUp,474.51,Cash,Yes
+5143,2026-03-28,Meals,Lunch Box,10.33,Card,No
+5144,2026-03-28,Training,LearnHub,676.1,Transfer,Yes
+5145,2026-03-28,Training,LearnHub,413.37,Card,Yes
+5146,2026-03-29,Travel,AirNova,1012.32,Transfer,Yes
+5147,2026-03-30,Meals,Corner Cafe,23.72,Transfer,No
+5148,2026-03-30,Meals,Lunch Box,31.73,Card,Yes
+5149,2026-03-30,Software,CodeDesk,61.66,Card,Yes
+5150,2026-03-31,Travel,RailGo,286.25,Card,Yes

@@ -1,0 +1,161 @@
+lead_id,created,name,email,country,source,stage,deal_value
+9001,2026-01-06 ,ZOE TAYLOR,zoe.taylor@delta.com,U.K.,referral,  open,"4,400"
+9002,  2026-01-07 ,Jon  Brown,  jon.brown@acme.com , USA,event,lost, 2800 
+9003,2026-01-08,Olga  Smith,OLGA.SMITH@DELTA.COM,Germany,Referral,open,4600.00
+9004,  2026-01-08,Rosa Mueller ,ROSA.MUELLER@CEDAR.COM ,Poland,Web,lost,1300
+9005,2026-01-10,Vera Taylor,vera.taylor@acme.com ,U.S.A.,event ,  won, 1400 
+9006,2026-01-11 ,  jon nowak,jon.nowak@birch.com,us,referral ,lost,
+9007,2026-01-12 ,Elena Mueller,  elena.mueller@birch.com,Germany,Event,  lost,1700
+9008,2026-01-15,Tara Fischer,tara.fischer@acme.com ,us,  Web,lost,4900.00
+9009,2026-01-16 ,BEN BROWN ,ben.brown@acme.com,PL,Web,won ,"1,700"
+9010,2026-01-17,Zoe Taylor ,zoe.taylor@delta.com,England,  Event,  open, 4400 
+9011,  2026-01-17,elena mueller,ELENA.MUELLER@BIRCH.COM ,DE,referral ,  lost ,1700.00
+9012,  2026-01-18,Quinn Johnson,QUINN.JOHNSON@BIRCH.COM,U.S.A.,event,  lost ,4200.00
+9013,2026-01-19 ,Olga Mueller,olga.mueller@birch.com ,PL,Event ,won, 600 
+9014,2026-01-19,Ugo  Zielinski,UGO.ZIELINSKI@DELTA.COM , USA,  web,  open,$600
+9015,2026-01-20,  Ugo Brown,  ugo.brown@birch.com,USA,  Referral,open,
+9016,2026-01-21 ,kira kowalski,  kira.kowalski@delta.com,Poland ,Web,  OPEN ,800.00
+9017,2026-01-21,Carla Weber,carla.weber@acme.com ,polska,  web,lost,
+9018,2026-01-22 ,Will  Smith,  WILL.SMITH@DELTA.COM,PL,web ,open ,2200.00
+9019,2026-01-22 ,Zoe Wilson,zoe.wilson@delta.com,USA,WEB,  lost ,2500.00
+9020,  2026-01-24,  Jon Taylor,  jon.taylor@birch.com ,DE,Web,WON, 4700 
+9021,2026-01-27 ,Greta Nowak,greta.nowak@birch.com,United States,Referral ,  lost ,$800
+9022,2026-01-28,BEN JOHNSON,  ben.johnson@cedar.com,UK,referral ,open,
+9023,  2026-01-30 ,Greta Wilson,greta.wilson@cedar.com,Poland ,referral,open,900
+9024,  2026-01-30,  Will Kowalski,will.kowalski@birch.com ,DE,Web,WON,4900
+9025,  2026-01-30,  Jon Weber,jon.weber@delta.com ,germany ,  referral,open,"$2,200"
+9026,  2026-02-01 ,Carla Mueller,carla.mueller@delta.com,United Kingdom,Web,  open,"$1,700"
+9027,2026-02-02 ,zoe zielinski ,zoe.zielinski@acme.com,UK,Web,LOST, 2100 
+9028,2026-02-02,Ana Taylor ,ana.taylor@delta.com,Germany,  Referral,won,"3,100"
+9029,  2026-02-02,TARA BROWN,tara.brown@acme.com,England,Referral,open,300.00
+9030,2026-02-04,  Farid Fischer,farid.fischer@acme.com , USA,Web,  won,
+9031,2026-02-05,Ugo Brown,ugo.brown@birch.com,US ,  Event,open,
+9032,  2026-02-06,Olga Johnson,  olga.johnson@birch.com,Poland,web ,open,"$1,100"
+9033,  2026-02-07,iris taylor,  iris.taylor@delta.com ,United States,event,open,4600
+9034,2026-02-07,Elena  Brown,elena.brown@delta.com,polska,  web,  lost, 4400 
+9035,  2026-02-07,Quinn Zielinski,quinn.zielinski@acme.com,U.K.,  Event,open,800
+9036,2026-02-07,Will Mueller,WILL.MUELLER@DELTA.COM,gb,  Referral,open,1800
+9037,2026-02-10,Quinn Lewandowski,quinn.lewandowski@birch.com,Poland ,  WEB,won,"3,800"
+9038,  2026-02-13,LEO LEWANDOWSKI ,leo.lewandowski@acme.com,U.S.A.,REFERRAL,  open,$300
+9039,2026-02-14,mina mueller ,  mina.mueller@birch.com ,Deutschland,Web,  open, 1400 
+9040,2026-02-14,  Sven Taylor,  sven.taylor@delta.com ,polska,Web,won ,4000
+9041,2026-02-15 ,Kira  Weber,  kira.weber@acme.com,U.K.,web,won ,
+9042,2026-02-17 ,mina fischer ,mina.fischer@birch.com, USA,event ,open,2900
+9043,2026-02-18 ,Rosa Weber,rosa.weber@acme.com ,U.S.A.,Referral,won,"$1,000"
+9044,2026-02-19,Pavel Nowak,PAVEL.NOWAK@DELTA.COM,us,Referral,open,3500
+9045,  2026-02-22 ,Quinn Kowalski,  quinn.kowalski@acme.com , USA,web,lost,$700
+9046,2026-02-22,Zoe  Wilson,ZOE.WILSON@DELTA.COM,U.S.A.,  web,lost ,2500.00
+9047,2026-02-23 ,Rosa Zielinski ,ROSA.ZIELINSKI@BIRCH.COM,us,  Referral ,won,1000
+9048,2026-02-23,  Zoe Johnson,zoe.johnson@acme.com,Poland ,Web,  LOST ,1200.00
+9049,2026-02-26,Hugo  Lewandowski,hugo.lewandowski@delta.com,Germany,Web,  OPEN, 4500 
+9050,2026-02-27,tara taylor,tara.taylor@acme.com ,UK,referral,open,"2,200"
+9051,2026-03-03 ,UGO JOHNSON,ugo.johnson@birch.com,US ,  EVENT,  open,
+9052,2026-03-03,Ben Lewandowski ,  ben.lewandowski@delta.com,polska,Event,LOST,"1,600"
+9053,2026-03-03,greta mueller,GRETA.MUELLER@DELTA.COM ,gb,Referral ,  won,"$3,900"
+9054,2026-03-04,Tara Brown,tara.brown@acme.com,gb,  REFERRAL,open,300.00
+9055,2026-03-11,Rosa Nowak ,rosa.nowak@cedar.com ,DE,  web,  lost ,"2,400"
+9056,2026-03-11,Vera Zielinski ,vera.zielinski@birch.com ,Germany,EVENT,LOST ,"$1,100"
+9057,  2026-03-13,Elena Johnson ,  elena.johnson@acme.com,polska,Referral,won,900
+9058,2026-03-13,Xena Taylor,xena.taylor@acme.com,Poland ,Web,  won,"$1,700"
+9059,2026-03-13,Nils Brown,nils.brown@acme.com,Poland ,  WEB,open ,
+9060,2026-03-14,leo kowalski ,LEO.KOWALSKI@BIRCH.COM,us,Web,OPEN,
+9061,2026-03-15,GRETA FISCHER,greta.fischer@birch.com,U.S.A.,REFERRAL,lost,"$4,300"
+9062,2026-03-15,JON WILSON,jon.wilson@cedar.com,gb,Web,lost,2600
+9063,2026-03-16,will wilson,will.wilson@delta.com,US ,Referral ,open ,3600
+9064,2026-03-21,Carla Johnson,CARLA.JOHNSON@BIRCH.COM ,polska,event,won,3800.00
+9065,2026-03-21,Pavel  Wilson,pavel.wilson@acme.com ,us,Web,open,1600.00
+9066,2026-03-23,Carla Fischer ,carla.fischer@birch.com,PL,web,lost ,"$3,500"
+9067,2026-03-24,Yuri Nowak,  yuri.nowak@cedar.com,Poland ,web ,open,2200.00
+9068,  2026-03-24 ,Vera Wilson ,vera.wilson@delta.com,Poland ,  Referral ,lost,3100
+9069,2026-03-26,Zoe  Brown,  zoe.brown@delta.com,Deutschland,Referral,won,2900
+9070,2026-03-27 ,FARID MUELLER,FARID.MUELLER@ACME.COM,PL,  Event,open,4100.00
+9071,2026-03-27,rosa smith,  rosa.smith@cedar.com,USA,Web ,  LOST,2100
+9072,2026-03-27,Sven Weber,sven.weber@acme.com,U.K.,referral ,open,"$4,700"
+9073,  2026-03-28,Rosa  Nowak,  rosa.nowak@cedar.com,Germany,web,  lost,2400.00
+9074,  2026-03-29,FARID BROWN ,farid.brown@acme.com,Germany,event,open ,1900.00
+9075,2026-03-31,Iris Kowalski,IRIS.KOWALSKI@ACME.COM,United States,Web,won, 3500 
+9076,  2026-03-31,  Will Lewandowski,will.lewandowski@acme.com,gb,Event,  open ,"$3,500"
+9077,2026-03-31,nils wilson,  NILS.WILSON@CEDAR.COM,U.K.,  referral,open ,"$4,300"
+9078,2026-03-31 ,  farid weber,farid.weber@birch.com,us,web,open,1800.00
+9079,2026-04-04,  xena fischer,xena.fischer@birch.com,USA,  Web,won ,"3,000"
+9080,  2026-04-04,Xena Johnson,  xena.johnson@birch.com,polska,referral ,open, 2600 
+9081,2026-04-05,  Carla Wilson,carla.wilson@birch.com,Poland ,Web,open,
+9082,2026-04-07,farid wilson ,farid.wilson@acme.com ,Poland ,Event,open, 3800 
+9083,2026-04-07,Pavel Mueller,pavel.mueller@acme.com ,Germany,Referral,lost,
+9084,2026-04-07,Olga Wilson,  olga.wilson@birch.com,United Kingdom,Referral,open,2600.00
+9085,2026-04-08 ,Vera Wilson,vera.wilson@delta.com ,Scotland,  event,  LOST,"$3,100"
+9086,2026-04-09,ANA KOWALSKI,ana.kowalski@cedar.com,us,Referral,lost ,"2,800"
+9087,2026-04-10,MINA WEBER ,mina.weber@delta.com, USA,  WEB,lost,
+9088,2026-04-11,Olga Brown,olga.brown@birch.com,U.K.,Web,  open, 4900 
+9089,  2026-04-11,Xena Kowalski,xena.kowalski@birch.com, USA,Event,won,4800.00
+9090,2026-04-11,Xena Mueller,xena.mueller@birch.com,US ,Web,  lost,"$3,800"
+9091,2026-04-12,Nils Fischer ,nils.fischer@cedar.com,UK,Web ,won,
+9092,2026-04-12 ,  Mina Kowalski,mina.kowalski@birch.com,US ,web,won,"$2,100"
+9093,  2026-04-14,Hugo Wilson,hugo.wilson@cedar.com ,United Kingdom,REFERRAL,won, 1400 
+9094,2026-04-14,Greta Lewandowski,greta.lewandowski@acme.com,us,WEB,open,600
+9095,  2026-04-14,Dev Mueller ,  dev.mueller@delta.com,PL,  Web,  lost , 2300 
+9096,  2026-04-15 ,WILL NOWAK ,will.nowak@delta.com,Poland,referral ,open,"$4,100"
+9097,2026-04-15,Pavel Kowalski,  PAVEL.KOWALSKI@DELTA.COM,U.K.,referral ,won,"4,300"
+9098,2026-04-15,  FARID BROWN,farid.brown@acme.com,DE,  Referral ,open ,"$1,900"
+9099,2026-04-16,Will Fischer,  will.fischer@acme.com ,Poland ,Event,open,"$1,000"
+9100,2026-04-16,Ugo Taylor,ugo.taylor@birch.com ,Germany,Web,open ,"$4,900"
+9101,2026-04-18,Olga Kowalski,olga.kowalski@acme.com,us,Web ,won, 600 
+9102,2026-04-20,Quinn Fischer ,quinn.fischer@cedar.com,U.K.,event,open ,"$1,200"
+9103,  2026-04-20 ,Tara Nowak,tara.nowak@cedar.com,Poland ,Web,won,4100.00
+9104,2026-04-20 ,Pavel  Johnson,PAVEL.JOHNSON@DELTA.COM ,U.S.A.,WEB ,lost ,400
+9105,  2026-04-22 ,Ana  Smith,ana.smith@birch.com,Poland,  event,open ,"4,500"
+9106,2026-04-22,  Rosa Wilson,rosa.wilson@birch.com,Poland,event,open ,500
+9107,  2026-04-23 ,  rosa lewandowski,rosa.lewandowski@cedar.com ,PL,  Web,lost ,3300.00
+9108,2026-04-23,DEV WEBER,dev.weber@delta.com,gb,Web ,won ,400.00
+9109,2026-04-23,Will Fischer,will.fischer@acme.com ,Poland,event ,open ,1000.00
+9110,2026-04-24,Ben Fischer,ben.fischer@birch.com,England,Referral ,lost ,"$2,600"
+9111,2026-04-25,carla nowak,carla.nowak@acme.com,USA,  Web,  lost,1400
+9112,2026-04-26,Pavel Lewandowski,PAVEL.LEWANDOWSKI@CEDAR.COM ,United States,  web,  lost, 2200 
+9113,2026-04-27,Greta Taylor,greta.taylor@delta.com,us,web,  won , 4200 
+9114,2026-04-27,Ana Nowak,  ana.nowak@delta.com,us,  Web ,  lost,"$3,000"
+9115,2026-04-27 ,Quinn Fischer,  quinn.fischer@cedar.com,U.K.,Event,open,1200
+9116,2026-04-29,dev brown,DEV.BROWN@BIRCH.COM,us,Event,open,4500.00
+9117,2026-04-29,Ugo Lewandowski,  ugo.lewandowski@cedar.com,United Kingdom,referral ,open,3800.00
+9118,  2026-04-30,Tara Weber,  tara.weber@acme.com,UK,web ,won,
+9119,2026-04-30,Olga Kowalski ,  olga.kowalski@acme.com,us,web,  won,600
+9120,  2026-05-01,  Vera Brown,  vera.brown@acme.com,U.S.A.,referral ,lost,3700
+9121,2026-05-01,  Sven Lewandowski,sven.lewandowski@cedar.com,gb,  EVENT ,  open,2200.00
+9122,  2026-05-03,Leo Johnson,leo.johnson@birch.com,United States,Web,OPEN,500
+9123,2026-05-03,Nils  Weber,nils.weber@delta.com,US ,  Referral,  OPEN,1500
+9124,2026-05-04 ,ZOE WEBER,  ZOE.WEBER@BIRCH.COM ,USA,Web,lost,
+9125,2026-05-05,Hugo Taylor,hugo.taylor@cedar.com,U.S.A.,  event,  won,1400
+9126,2026-05-06 ,Ben Wilson,ben.wilson@cedar.com,United Kingdom,Web,won ,3300.00
+9127,2026-05-06 ,  Greta Weber ,greta.weber@acme.com,DE,Referral,open,1200
+9128,2026-05-06,Olga Taylor,olga.taylor@acme.com,PL,Referral ,  WON ,
+9129,2026-05-07 ,Will Nowak,will.nowak@delta.com ,Scotland,  Web,OPEN,4100.00
+9130,2026-05-08 ,  Mina Johnson,mina.johnson@birch.com ,Poland ,Web ,OPEN,
+9131,  2026-05-09,Quinn  Wilson,quinn.wilson@birch.com, USA,  referral,open,2700.00
+9132,  2026-05-10 ,Xena Smith,xena.smith@cedar.com,DE,WEB,won,"4,800"
+9133,2026-05-10 ,  carla wilson ,carla.wilson@birch.com,Poland,  event ,open,
+9134,2026-05-11 ,  Nils Mueller ,nils.mueller@delta.com,Scotland,  Web,won,1700.00
+9135,2026-05-13,Will Johnson,will.johnson@acme.com,us,referral,lost ,"$1,800"
+9136,2026-05-13,mina nowak,mina.nowak@delta.com,PL,REFERRAL ,LOST,"$4,400"
+9137,2026-05-13,Pavel  Lewandowski,pavel.lewandowski@cedar.com,U.S.A.,  event,lost, 2200 
+9138,2026-05-15,kira mueller,kira.mueller@delta.com,gb,referral,lost,3200.00
+9139,2026-05-16 ,HUGO FISCHER,HUGO.FISCHER@ACME.COM,Poland,  Event,open, 4600 
+9140,  2026-05-16 ,leo mueller,leo.mueller@acme.com ,germany ,referral ,won,"$4,700"
+9141,2026-05-17,Tara Nowak,tara.nowak@cedar.com,polska,Referral ,won, 4100 
+9142,2026-05-18,Yuri  Taylor,yuri.taylor@delta.com,DE,event ,open ,1500.00
+9143,2026-05-19 ,jon fischer ,jon.fischer@birch.com,Deutschland,Event ,won,"3,600"
+9144,2026-05-26,Dev Weber,dev.weber@delta.com,UK,web,won,400
+9145,2026-05-27,Farid Zielinski,farid.zielinski@cedar.com,gb,web,lost, 2500 
+9146,2026-05-27,  Zoe Fischer,zoe.fischer@birch.com,United Kingdom,web ,won, 3700 
+9147,  2026-05-31 ,Zoe Lewandowski,zoe.lewandowski@birch.com,USA,Event ,won,"1,700"
+9148,2026-06-01,  Ugo Nowak,ugo.nowak@delta.com ,germany ,Referral ,WON ,"4,400"
+9149,2026-06-01,Hugo Johnson ,hugo.johnson@birch.com ,USA,Referral,open,$800
+9150,  2026-06-02,VERA SMITH,VERA.SMITH@BIRCH.COM,United States,  referral,lost,"$1,600"
+9151,2026-06-03 ,  pavel fischer ,PAVEL.FISCHER@ACME.COM,DE,event,  lost,"$3,600"
+9152,  2026-06-05 ,Sven Zielinski,  sven.zielinski@delta.com,polska,web ,OPEN,2900
+9153,2026-06-08,Tara  Kowalski,tara.kowalski@birch.com,UK,referral,open,"$2,400"
+9154,2026-06-17,  greta smith,  greta.smith@birch.com,United States,web,open ,"2,800"
+9155,2026-06-18,Pavel  Taylor,pavel.taylor@birch.com,United Kingdom,  referral,OPEN,3000
+9156,  2026-06-19 ,  Xena Brown,  XENA.BROWN@CEDAR.COM ,us,web,  won ,2600.00
+9157,2026-06-19,jon smith,jon.smith@acme.com,England,web,  OPEN,"3,100"
+9158,2026-06-20 ,LEO NOWAK ,LEO.NOWAK@ACME.COM,DE,  web,OPEN,"$1,700"
+9159,2026-06-20,Dev Wilson,  DEV.WILSON@BIRCH.COM,DE,Referral ,open, 700 
+9160,  2026-06-21 ,carla brown ,  carla.brown@acme.com,gb,  web,open,4300

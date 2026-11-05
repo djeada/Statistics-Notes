@@ -1,0 +1,15 @@
+# Grafana for the course dashboards.  Run from this folder:   docker compose up
+# Then open http://localhost:3000 (anonymous viewer access is on; admin / admin to edit).
+# Every lesson's grafana/dashboard.json is loaded automatically into a folder named after the lesson.
+services:
+  grafana:
+    image: grafana/grafana:11.3.0
+    ports:
+      - "3000:3000"
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_DASHBOARDS_MIN_REFRESH_INTERVAL: 5s
+    volumes:
+      - ./provisioning:/etc/grafana/provisioning:ro
+      - ..:/course:ro
